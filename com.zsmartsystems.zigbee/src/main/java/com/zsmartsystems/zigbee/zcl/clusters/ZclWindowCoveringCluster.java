@@ -36,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T21:33:25Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
 public class ZclWindowCoveringCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -176,7 +176,14 @@ public class ZclWindowCoveringCluster extends ZclCluster {
     public static final int ATTR_INTERMEDIATESETPOINTSTILT = 0x0019;
 
     @Override
-    protected Map<Integer, ZclAttribute> initializeAttributes() {
+    protected Map<Integer, ZclAttribute> initializeClientAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
+
+        return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(20);
 
         attributeMap.put(ATTR_WINDOWCOVERINGTYPE, new ZclAttribute(ZclClusterType.WINDOW_COVERING, ATTR_WINDOWCOVERINGTYPE, "Window Covering Type", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
@@ -238,9 +245,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getWindowCoveringTypeAsync() {
-        return read(attributes.get(ATTR_WINDOWCOVERINGTYPE));
+        return read(serverAttributes.get(ATTR_WINDOWCOVERINGTYPE));
     }
 
     /**
@@ -262,13 +271,15 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getWindowCoveringType(final long refreshPeriod) {
-        if (attributes.get(ATTR_WINDOWCOVERINGTYPE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_WINDOWCOVERINGTYPE).getLastValue();
+        if (serverAttributes.get(ATTR_WINDOWCOVERINGTYPE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_WINDOWCOVERINGTYPE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_WINDOWCOVERINGTYPE));
+        return (Integer) readSync(serverAttributes.get(ATTR_WINDOWCOVERINGTYPE));
     }
 
     /**
@@ -284,9 +295,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setWindowCoveringTypeReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_WINDOWCOVERINGTYPE), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_WINDOWCOVERINGTYPE), minInterval, maxInterval);
     }
 
     /**
@@ -301,9 +314,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPhysicalClosedLimitLiftAsync() {
-        return read(attributes.get(ATTR_PHYSICALCLOSEDLIMITLIFT));
+        return read(serverAttributes.get(ATTR_PHYSICALCLOSEDLIMITLIFT));
     }
 
     /**
@@ -326,13 +341,15 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPhysicalClosedLimitLift(final long refreshPeriod) {
-        if (attributes.get(ATTR_PHYSICALCLOSEDLIMITLIFT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PHYSICALCLOSEDLIMITLIFT).getLastValue();
+        if (serverAttributes.get(ATTR_PHYSICALCLOSEDLIMITLIFT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PHYSICALCLOSEDLIMITLIFT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PHYSICALCLOSEDLIMITLIFT));
+        return (Integer) readSync(serverAttributes.get(ATTR_PHYSICALCLOSEDLIMITLIFT));
     }
 
     /**
@@ -350,9 +367,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPhysicalClosedLimitLiftReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PHYSICALCLOSEDLIMITLIFT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PHYSICALCLOSEDLIMITLIFT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -367,9 +386,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPhysicalClosedLimitTiltAsync() {
-        return read(attributes.get(ATTR_PHYSICALCLOSEDLIMITTILT));
+        return read(serverAttributes.get(ATTR_PHYSICALCLOSEDLIMITTILT));
     }
 
     /**
@@ -392,13 +413,15 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPhysicalClosedLimitTilt(final long refreshPeriod) {
-        if (attributes.get(ATTR_PHYSICALCLOSEDLIMITTILT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PHYSICALCLOSEDLIMITTILT).getLastValue();
+        if (serverAttributes.get(ATTR_PHYSICALCLOSEDLIMITTILT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PHYSICALCLOSEDLIMITTILT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PHYSICALCLOSEDLIMITTILT));
+        return (Integer) readSync(serverAttributes.get(ATTR_PHYSICALCLOSEDLIMITTILT));
     }
 
     /**
@@ -416,9 +439,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPhysicalClosedLimitTiltReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PHYSICALCLOSEDLIMITTILT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PHYSICALCLOSEDLIMITTILT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -433,9 +458,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCurrentPositionLiftAsync() {
-        return read(attributes.get(ATTR_CURRENTPOSITIONLIFT));
+        return read(serverAttributes.get(ATTR_CURRENTPOSITIONLIFT));
     }
 
     /**
@@ -458,13 +485,15 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCurrentPositionLift(final long refreshPeriod) {
-        if (attributes.get(ATTR_CURRENTPOSITIONLIFT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CURRENTPOSITIONLIFT).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTPOSITIONLIFT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTPOSITIONLIFT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CURRENTPOSITIONLIFT));
+        return (Integer) readSync(serverAttributes.get(ATTR_CURRENTPOSITIONLIFT));
     }
 
     /**
@@ -482,9 +511,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setCurrentPositionLiftReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_CURRENTPOSITIONLIFT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_CURRENTPOSITIONLIFT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -499,9 +530,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCurrentPositionTiltAsync() {
-        return read(attributes.get(ATTR_CURRENTPOSITIONTILT));
+        return read(serverAttributes.get(ATTR_CURRENTPOSITIONTILT));
     }
 
     /**
@@ -524,13 +557,15 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCurrentPositionTilt(final long refreshPeriod) {
-        if (attributes.get(ATTR_CURRENTPOSITIONTILT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CURRENTPOSITIONTILT).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTPOSITIONTILT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTPOSITIONTILT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CURRENTPOSITIONTILT));
+        return (Integer) readSync(serverAttributes.get(ATTR_CURRENTPOSITIONTILT));
     }
 
     /**
@@ -548,9 +583,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setCurrentPositionTiltReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_CURRENTPOSITIONTILT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_CURRENTPOSITIONTILT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -564,9 +601,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getNumberOfActuationsLiftAsync() {
-        return read(attributes.get(ATTR_NUMBEROFACTUATIONSLIFT));
+        return read(serverAttributes.get(ATTR_NUMBEROFACTUATIONSLIFT));
     }
 
     /**
@@ -588,13 +627,15 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getNumberOfActuationsLift(final long refreshPeriod) {
-        if (attributes.get(ATTR_NUMBEROFACTUATIONSLIFT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_NUMBEROFACTUATIONSLIFT).getLastValue();
+        if (serverAttributes.get(ATTR_NUMBEROFACTUATIONSLIFT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_NUMBEROFACTUATIONSLIFT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_NUMBEROFACTUATIONSLIFT));
+        return (Integer) readSync(serverAttributes.get(ATTR_NUMBEROFACTUATIONSLIFT));
     }
 
     /**
@@ -611,9 +652,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setNumberOfActuationsLiftReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_NUMBEROFACTUATIONSLIFT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_NUMBEROFACTUATIONSLIFT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -627,9 +670,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getNumberOfActuationsTiltAsync() {
-        return read(attributes.get(ATTR_NUMBEROFACTUATIONSTILT));
+        return read(serverAttributes.get(ATTR_NUMBEROFACTUATIONSTILT));
     }
 
     /**
@@ -651,13 +696,15 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getNumberOfActuationsTilt(final long refreshPeriod) {
-        if (attributes.get(ATTR_NUMBEROFACTUATIONSTILT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_NUMBEROFACTUATIONSTILT).getLastValue();
+        if (serverAttributes.get(ATTR_NUMBEROFACTUATIONSTILT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_NUMBEROFACTUATIONSTILT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_NUMBEROFACTUATIONSTILT));
+        return (Integer) readSync(serverAttributes.get(ATTR_NUMBEROFACTUATIONSTILT));
     }
 
     /**
@@ -674,9 +721,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setNumberOfActuationsTiltReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_NUMBEROFACTUATIONSTILT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_NUMBEROFACTUATIONSTILT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -692,9 +741,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getConfigStatusAsync() {
-        return read(attributes.get(ATTR_CONFIGSTATUS));
+        return read(serverAttributes.get(ATTR_CONFIGSTATUS));
     }
 
     /**
@@ -718,13 +769,15 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getConfigStatus(final long refreshPeriod) {
-        if (attributes.get(ATTR_CONFIGSTATUS).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CONFIGSTATUS).getLastValue();
+        if (serverAttributes.get(ATTR_CONFIGSTATUS).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CONFIGSTATUS).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CONFIGSTATUS));
+        return (Integer) readSync(serverAttributes.get(ATTR_CONFIGSTATUS));
     }
 
     /**
@@ -742,9 +795,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setConfigStatusReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_CONFIGSTATUS), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_CONFIGSTATUS), minInterval, maxInterval);
     }
 
     /**
@@ -762,9 +817,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCurrentPositionLiftPercentageAsync() {
-        return read(attributes.get(ATTR_CURRENTPOSITIONLIFTPERCENTAGE));
+        return read(serverAttributes.get(ATTR_CURRENTPOSITIONLIFTPERCENTAGE));
     }
 
     /**
@@ -790,13 +847,15 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCurrentPositionLiftPercentage(final long refreshPeriod) {
-        if (attributes.get(ATTR_CURRENTPOSITIONLIFTPERCENTAGE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CURRENTPOSITIONLIFTPERCENTAGE).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTPOSITIONLIFTPERCENTAGE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTPOSITIONLIFTPERCENTAGE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CURRENTPOSITIONLIFTPERCENTAGE));
+        return (Integer) readSync(serverAttributes.get(ATTR_CURRENTPOSITIONLIFTPERCENTAGE));
     }
 
     /**
@@ -817,9 +876,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setCurrentPositionLiftPercentageReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_CURRENTPOSITIONLIFTPERCENTAGE), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_CURRENTPOSITIONLIFTPERCENTAGE), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -837,9 +898,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCurrentPositionTiltPercentageAsync() {
-        return read(attributes.get(ATTR_CURRENTPOSITIONTILTPERCENTAGE));
+        return read(serverAttributes.get(ATTR_CURRENTPOSITIONTILTPERCENTAGE));
     }
 
     /**
@@ -865,13 +928,15 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCurrentPositionTiltPercentage(final long refreshPeriod) {
-        if (attributes.get(ATTR_CURRENTPOSITIONTILTPERCENTAGE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CURRENTPOSITIONTILTPERCENTAGE).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTPOSITIONTILTPERCENTAGE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTPOSITIONTILTPERCENTAGE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CURRENTPOSITIONTILTPERCENTAGE));
+        return (Integer) readSync(serverAttributes.get(ATTR_CURRENTPOSITIONTILTPERCENTAGE));
     }
 
     /**
@@ -892,9 +957,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setCurrentPositionTiltPercentageReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_CURRENTPOSITIONTILTPERCENTAGE), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_CURRENTPOSITIONTILTPERCENTAGE), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -909,9 +976,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getInstalledOpenLimitLiftAsync() {
-        return read(attributes.get(ATTR_INSTALLEDOPENLIMITLIFT));
+        return read(serverAttributes.get(ATTR_INSTALLEDOPENLIMITLIFT));
     }
 
     /**
@@ -934,13 +1003,15 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getInstalledOpenLimitLift(final long refreshPeriod) {
-        if (attributes.get(ATTR_INSTALLEDOPENLIMITLIFT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_INSTALLEDOPENLIMITLIFT).getLastValue();
+        if (serverAttributes.get(ATTR_INSTALLEDOPENLIMITLIFT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_INSTALLEDOPENLIMITLIFT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_INSTALLEDOPENLIMITLIFT));
+        return (Integer) readSync(serverAttributes.get(ATTR_INSTALLEDOPENLIMITLIFT));
     }
 
     /**
@@ -958,9 +1029,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setInstalledOpenLimitLiftReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_INSTALLEDOPENLIMITLIFT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_INSTALLEDOPENLIMITLIFT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -975,9 +1048,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getInstalledClosedLimitLiftAsync() {
-        return read(attributes.get(ATTR_INSTALLEDCLOSEDLIMITLIFT));
+        return read(serverAttributes.get(ATTR_INSTALLEDCLOSEDLIMITLIFT));
     }
 
     /**
@@ -1000,13 +1075,15 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getInstalledClosedLimitLift(final long refreshPeriod) {
-        if (attributes.get(ATTR_INSTALLEDCLOSEDLIMITLIFT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_INSTALLEDCLOSEDLIMITLIFT).getLastValue();
+        if (serverAttributes.get(ATTR_INSTALLEDCLOSEDLIMITLIFT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_INSTALLEDCLOSEDLIMITLIFT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_INSTALLEDCLOSEDLIMITLIFT));
+        return (Integer) readSync(serverAttributes.get(ATTR_INSTALLEDCLOSEDLIMITLIFT));
     }
 
     /**
@@ -1024,9 +1101,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setInstalledClosedLimitLiftReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_INSTALLEDCLOSEDLIMITLIFT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_INSTALLEDCLOSEDLIMITLIFT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1042,9 +1121,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getInstalledOpenLimitTiltAsync() {
-        return read(attributes.get(ATTR_INSTALLEDOPENLIMITTILT));
+        return read(serverAttributes.get(ATTR_INSTALLEDOPENLIMITTILT));
     }
 
     /**
@@ -1068,13 +1149,15 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getInstalledOpenLimitTilt(final long refreshPeriod) {
-        if (attributes.get(ATTR_INSTALLEDOPENLIMITTILT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_INSTALLEDOPENLIMITTILT).getLastValue();
+        if (serverAttributes.get(ATTR_INSTALLEDOPENLIMITTILT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_INSTALLEDOPENLIMITTILT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_INSTALLEDOPENLIMITTILT));
+        return (Integer) readSync(serverAttributes.get(ATTR_INSTALLEDOPENLIMITTILT));
     }
 
     /**
@@ -1093,9 +1176,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setInstalledOpenLimitTiltReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_INSTALLEDOPENLIMITTILT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_INSTALLEDOPENLIMITTILT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1111,9 +1196,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getInstalledClosedLimitTiltAsync() {
-        return read(attributes.get(ATTR_INSTALLEDCLOSEDLIMITTILT));
+        return read(serverAttributes.get(ATTR_INSTALLEDCLOSEDLIMITTILT));
     }
 
     /**
@@ -1137,13 +1224,15 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getInstalledClosedLimitTilt(final long refreshPeriod) {
-        if (attributes.get(ATTR_INSTALLEDCLOSEDLIMITTILT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_INSTALLEDCLOSEDLIMITTILT).getLastValue();
+        if (serverAttributes.get(ATTR_INSTALLEDCLOSEDLIMITTILT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_INSTALLEDCLOSEDLIMITTILT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_INSTALLEDCLOSEDLIMITTILT));
+        return (Integer) readSync(serverAttributes.get(ATTR_INSTALLEDCLOSEDLIMITTILT));
     }
 
     /**
@@ -1162,9 +1251,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setInstalledClosedLimitTiltReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_INSTALLEDCLOSEDLIMITTILT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_INSTALLEDCLOSEDLIMITTILT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1179,9 +1270,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param velocityLift the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setVelocityLift(final Integer value) {
-        return write(attributes.get(ATTR_VELOCITYLIFT), value);
+        return write(serverAttributes.get(ATTR_VELOCITYLIFT), value);
     }
 
     /**
@@ -1195,9 +1288,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getVelocityLiftAsync() {
-        return read(attributes.get(ATTR_VELOCITYLIFT));
+        return read(serverAttributes.get(ATTR_VELOCITYLIFT));
     }
 
     /**
@@ -1219,13 +1314,15 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getVelocityLift(final long refreshPeriod) {
-        if (attributes.get(ATTR_VELOCITYLIFT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_VELOCITYLIFT).getLastValue();
+        if (serverAttributes.get(ATTR_VELOCITYLIFT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_VELOCITYLIFT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_VELOCITYLIFT));
+        return (Integer) readSync(serverAttributes.get(ATTR_VELOCITYLIFT));
     }
 
     /**
@@ -1240,9 +1337,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param accelerationTimeLift the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setAccelerationTimeLift(final Integer value) {
-        return write(attributes.get(ATTR_ACCELERATIONTIMELIFT), value);
+        return write(serverAttributes.get(ATTR_ACCELERATIONTIMELIFT), value);
     }
 
     /**
@@ -1256,9 +1355,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAccelerationTimeLiftAsync() {
-        return read(attributes.get(ATTR_ACCELERATIONTIMELIFT));
+        return read(serverAttributes.get(ATTR_ACCELERATIONTIMELIFT));
     }
 
     /**
@@ -1280,13 +1381,15 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAccelerationTimeLift(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACCELERATIONTIMELIFT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACCELERATIONTIMELIFT).getLastValue();
+        if (serverAttributes.get(ATTR_ACCELERATIONTIMELIFT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACCELERATIONTIMELIFT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ACCELERATIONTIMELIFT));
+        return (Integer) readSync(serverAttributes.get(ATTR_ACCELERATIONTIMELIFT));
     }
 
     /**
@@ -1301,9 +1404,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param decelerationTimeLift the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setDecelerationTimeLift(final Integer value) {
-        return write(attributes.get(ATTR_DECELERATIONTIMELIFT), value);
+        return write(serverAttributes.get(ATTR_DECELERATIONTIMELIFT), value);
     }
 
     /**
@@ -1317,9 +1422,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDecelerationTimeLiftAsync() {
-        return read(attributes.get(ATTR_DECELERATIONTIMELIFT));
+        return read(serverAttributes.get(ATTR_DECELERATIONTIMELIFT));
     }
 
     /**
@@ -1341,13 +1448,15 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDecelerationTimeLift(final long refreshPeriod) {
-        if (attributes.get(ATTR_DECELERATIONTIMELIFT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DECELERATIONTIMELIFT).getLastValue();
+        if (serverAttributes.get(ATTR_DECELERATIONTIMELIFT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DECELERATIONTIMELIFT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DECELERATIONTIMELIFT));
+        return (Integer) readSync(serverAttributes.get(ATTR_DECELERATIONTIMELIFT));
     }
 
     /**
@@ -1363,9 +1472,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param mode the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setMode(final Integer value) {
-        return write(attributes.get(ATTR_MODE), value);
+        return write(serverAttributes.get(ATTR_MODE), value);
     }
 
     /**
@@ -1380,9 +1491,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getModeAsync() {
-        return read(attributes.get(ATTR_MODE));
+        return read(serverAttributes.get(ATTR_MODE));
     }
 
     /**
@@ -1405,13 +1518,15 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMode(final long refreshPeriod) {
-        if (attributes.get(ATTR_MODE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MODE).getLastValue();
+        if (serverAttributes.get(ATTR_MODE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MODE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MODE));
+        return (Integer) readSync(serverAttributes.get(ATTR_MODE));
     }
 
     /**
@@ -1428,9 +1543,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param intermediateSetpointsLift the {@link ByteArray} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setIntermediateSetpointsLift(final ByteArray value) {
-        return write(attributes.get(ATTR_INTERMEDIATESETPOINTSLIFT), value);
+        return write(serverAttributes.get(ATTR_INTERMEDIATESETPOINTSLIFT), value);
     }
 
     /**
@@ -1446,9 +1563,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getIntermediateSetpointsLiftAsync() {
-        return read(attributes.get(ATTR_INTERMEDIATESETPOINTSLIFT));
+        return read(serverAttributes.get(ATTR_INTERMEDIATESETPOINTSLIFT));
     }
 
     /**
@@ -1472,13 +1591,15 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link ByteArray} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public ByteArray getIntermediateSetpointsLift(final long refreshPeriod) {
-        if (attributes.get(ATTR_INTERMEDIATESETPOINTSLIFT).isLastValueCurrent(refreshPeriod)) {
-            return (ByteArray) attributes.get(ATTR_INTERMEDIATESETPOINTSLIFT).getLastValue();
+        if (serverAttributes.get(ATTR_INTERMEDIATESETPOINTSLIFT).isLastValueCurrent(refreshPeriod)) {
+            return (ByteArray) serverAttributes.get(ATTR_INTERMEDIATESETPOINTSLIFT).getLastValue();
         }
 
-        return (ByteArray) readSync(attributes.get(ATTR_INTERMEDIATESETPOINTSLIFT));
+        return (ByteArray) readSync(serverAttributes.get(ATTR_INTERMEDIATESETPOINTSLIFT));
     }
 
     /**
@@ -1495,9 +1616,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param intermediateSetpointsTilt the {@link ByteArray} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setIntermediateSetpointsTilt(final ByteArray value) {
-        return write(attributes.get(ATTR_INTERMEDIATESETPOINTSTILT), value);
+        return write(serverAttributes.get(ATTR_INTERMEDIATESETPOINTSTILT), value);
     }
 
     /**
@@ -1513,9 +1636,11 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getIntermediateSetpointsTiltAsync() {
-        return read(attributes.get(ATTR_INTERMEDIATESETPOINTSTILT));
+        return read(serverAttributes.get(ATTR_INTERMEDIATESETPOINTSTILT));
     }
 
     /**
@@ -1539,13 +1664,15 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link ByteArray} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public ByteArray getIntermediateSetpointsTilt(final long refreshPeriod) {
-        if (attributes.get(ATTR_INTERMEDIATESETPOINTSTILT).isLastValueCurrent(refreshPeriod)) {
-            return (ByteArray) attributes.get(ATTR_INTERMEDIATESETPOINTSTILT).getLastValue();
+        if (serverAttributes.get(ATTR_INTERMEDIATESETPOINTSTILT).isLastValueCurrent(refreshPeriod)) {
+            return (ByteArray) serverAttributes.get(ATTR_INTERMEDIATESETPOINTSTILT).getLastValue();
         }
 
-        return (ByteArray) readSync(attributes.get(ATTR_INTERMEDIATESETPOINTSTILT));
+        return (ByteArray) readSync(serverAttributes.get(ATTR_INTERMEDIATESETPOINTSTILT));
     }
 
     /**

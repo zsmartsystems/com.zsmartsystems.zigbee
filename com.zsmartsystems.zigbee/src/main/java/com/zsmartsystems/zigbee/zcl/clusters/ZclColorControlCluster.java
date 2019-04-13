@@ -19,10 +19,12 @@ import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.ColorLoopSetCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.EnhancedMoveHueCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.EnhancedMoveToHueAndSaturationCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.EnhancedMoveToHueCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.EnhancedStepHueCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.MoveColorCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.MoveColorTemperatureCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.MoveHueCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.MoveSaturationCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.MoveToColorCommand;
@@ -31,8 +33,10 @@ import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.MoveToHueAndSaturation
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.MoveToHueCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.MoveToSaturationCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.StepColorCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.StepColorTemperatureCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.StepHueCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.StepSaturationCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.StopMoveStepCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -41,12 +45,21 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * This cluster provides an interface for changing the color of a light. Color is specified
  * according to the Commission Internationale de l'Éclairage (CIE) specification CIE 1931
- * Color Space, [B4]. Color control is carried out in terms of x,y values, as defined by this
+ * Color Space. Color control is carried out in terms of x,y values, as defined by this
  * specification.
+ * <p>
+ * Additionally, color may optionally be controlled in terms of color temperature, or as hue
+ * and saturation values based on optionally variable RGB and W color points. It is recommended
+ * that the hue and saturation are interpreted according to the HSV (aka HSB) color model.
+ * <p>
+ * Control over luminance is not included, as this is provided by means of the Level Control
+ * cluster of the General library. It is recommended that the level provided by this cluster be
+ * interpreted as representing a proportion of the maximum intensity achievable at the
+ * current color.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T21:33:25Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
 public class ZclColorControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -209,7 +222,14 @@ public class ZclColorControlCluster extends ZclCluster {
     public static final int ATTR_COLORTEMPERATUREMAX = 0x400C;
 
     @Override
-    protected Map<Integer, ZclAttribute> initializeAttributes() {
+    protected Map<Integer, ZclAttribute> initializeClientAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
+
+        return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(19);
 
         attributeMap.put(ATTR_CURRENTHUE, new ZclAttribute(ZclClusterType.COLOR_CONTROL, ATTR_CURRENTHUE, "Current Hue", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, true));
@@ -237,7 +257,7 @@ public class ZclColorControlCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
-        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(15);
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(19);
 
         commandMap.put(0x0000, MoveToHueCommand.class);
         commandMap.put(0x0001, MoveHueCommand.class);
@@ -251,9 +271,13 @@ public class ZclColorControlCluster extends ZclCluster {
         commandMap.put(0x0009, StepColorCommand.class);
         commandMap.put(0x000A, MoveToColorTemperatureCommand.class);
         commandMap.put(0x0040, EnhancedMoveToHueCommand.class);
-        commandMap.put(0x0041, EnhancedStepHueCommand.class);
-        commandMap.put(0x0042, EnhancedMoveToHueAndSaturationCommand.class);
-        commandMap.put(0x0043, ColorLoopSetCommand.class);
+        commandMap.put(0x0041, EnhancedMoveHueCommand.class);
+        commandMap.put(0x0042, EnhancedStepHueCommand.class);
+        commandMap.put(0x0043, EnhancedMoveToHueAndSaturationCommand.class);
+        commandMap.put(0x0044, ColorLoopSetCommand.class);
+        commandMap.put(0x0047, StopMoveStepCommand.class);
+        commandMap.put(0x004B, MoveColorTemperatureCommand.class);
+        commandMap.put(0x004C, StepColorTemperatureCommand.class);
 
         return commandMap;
     }
@@ -284,9 +308,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCurrentHueAsync() {
-        return read(attributes.get(ATTR_CURRENTHUE));
+        return read(serverAttributes.get(ATTR_CURRENTHUE));
     }
 
     /**
@@ -314,13 +340,15 @@ public class ZclColorControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCurrentHue(final long refreshPeriod) {
-        if (attributes.get(ATTR_CURRENTHUE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CURRENTHUE).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTHUE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTHUE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CURRENTHUE));
+        return (Integer) readSync(serverAttributes.get(ATTR_CURRENTHUE));
     }
 
     /**
@@ -338,9 +366,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCurrentSaturationAsync() {
-        return read(attributes.get(ATTR_CURRENTSATURATION));
+        return read(serverAttributes.get(ATTR_CURRENTSATURATION));
     }
 
     /**
@@ -366,13 +396,15 @@ public class ZclColorControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCurrentSaturation(final long refreshPeriod) {
-        if (attributes.get(ATTR_CURRENTSATURATION).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CURRENTSATURATION).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTSATURATION).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTSATURATION).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CURRENTSATURATION));
+        return (Integer) readSync(serverAttributes.get(ATTR_CURRENTSATURATION));
     }
 
     /**
@@ -386,9 +418,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRemainingTimeAsync() {
-        return read(attributes.get(ATTR_REMAININGTIME));
+        return read(serverAttributes.get(ATTR_REMAININGTIME));
     }
 
     /**
@@ -410,13 +444,15 @@ public class ZclColorControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRemainingTime(final long refreshPeriod) {
-        if (attributes.get(ATTR_REMAININGTIME).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_REMAININGTIME).getLastValue();
+        if (serverAttributes.get(ATTR_REMAININGTIME).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_REMAININGTIME).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_REMAININGTIME));
+        return (Integer) readSync(serverAttributes.get(ATTR_REMAININGTIME));
     }
 
     /**
@@ -435,9 +471,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCurrentXAsync() {
-        return read(attributes.get(ATTR_CURRENTX));
+        return read(serverAttributes.get(ATTR_CURRENTX));
     }
 
     /**
@@ -464,13 +502,15 @@ public class ZclColorControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCurrentX(final long refreshPeriod) {
-        if (attributes.get(ATTR_CURRENTX).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CURRENTX).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTX).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTX).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CURRENTX));
+        return (Integer) readSync(serverAttributes.get(ATTR_CURRENTX));
     }
 
     /**
@@ -492,9 +532,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setCurrentXReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_CURRENTX), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_CURRENTX), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -513,9 +555,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCurrentYAsync() {
-        return read(attributes.get(ATTR_CURRENTY));
+        return read(serverAttributes.get(ATTR_CURRENTY));
     }
 
     /**
@@ -542,13 +586,15 @@ public class ZclColorControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCurrentY(final long refreshPeriod) {
-        if (attributes.get(ATTR_CURRENTY).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CURRENTY).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTY).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CURRENTY));
+        return (Integer) readSync(serverAttributes.get(ATTR_CURRENTY));
     }
 
     /**
@@ -570,9 +616,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setCurrentYReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_CURRENTY), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_CURRENTY), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -586,9 +634,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDriftCompensationAsync() {
-        return read(attributes.get(ATTR_DRIFTCOMPENSATION));
+        return read(serverAttributes.get(ATTR_DRIFTCOMPENSATION));
     }
 
     /**
@@ -610,13 +660,15 @@ public class ZclColorControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDriftCompensation(final long refreshPeriod) {
-        if (attributes.get(ATTR_DRIFTCOMPENSATION).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DRIFTCOMPENSATION).getLastValue();
+        if (serverAttributes.get(ATTR_DRIFTCOMPENSATION).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DRIFTCOMPENSATION).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DRIFTCOMPENSATION));
+        return (Integer) readSync(serverAttributes.get(ATTR_DRIFTCOMPENSATION));
     }
 
     /**
@@ -630,9 +682,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCompensationTextAsync() {
-        return read(attributes.get(ATTR_COMPENSATIONTEXT));
+        return read(serverAttributes.get(ATTR_COMPENSATIONTEXT));
     }
 
     /**
@@ -654,13 +708,15 @@ public class ZclColorControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link String} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public String getCompensationText(final long refreshPeriod) {
-        if (attributes.get(ATTR_COMPENSATIONTEXT).isLastValueCurrent(refreshPeriod)) {
-            return (String) attributes.get(ATTR_COMPENSATIONTEXT).getLastValue();
+        if (serverAttributes.get(ATTR_COMPENSATIONTEXT).isLastValueCurrent(refreshPeriod)) {
+            return (String) serverAttributes.get(ATTR_COMPENSATIONTEXT).getLastValue();
         }
 
-        return (String) readSync(attributes.get(ATTR_COMPENSATIONTEXT));
+        return (String) readSync(serverAttributes.get(ATTR_COMPENSATIONTEXT));
     }
 
     /**
@@ -685,9 +741,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getColorTemperatureAsync() {
-        return read(attributes.get(ATTR_COLORTEMPERATURE));
+        return read(serverAttributes.get(ATTR_COLORTEMPERATURE));
     }
 
     /**
@@ -720,13 +778,15 @@ public class ZclColorControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getColorTemperature(final long refreshPeriod) {
-        if (attributes.get(ATTR_COLORTEMPERATURE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_COLORTEMPERATURE).getLastValue();
+        if (serverAttributes.get(ATTR_COLORTEMPERATURE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_COLORTEMPERATURE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_COLORTEMPERATURE));
+        return (Integer) readSync(serverAttributes.get(ATTR_COLORTEMPERATURE));
     }
 
     /**
@@ -743,9 +803,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getColorModeAsync() {
-        return read(attributes.get(ATTR_COLORMODE));
+        return read(serverAttributes.get(ATTR_COLORMODE));
     }
 
     /**
@@ -770,13 +832,15 @@ public class ZclColorControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getColorMode(final long refreshPeriod) {
-        if (attributes.get(ATTR_COLORMODE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_COLORMODE).getLastValue();
+        if (serverAttributes.get(ATTR_COLORMODE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_COLORMODE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_COLORMODE));
+        return (Integer) readSync(serverAttributes.get(ATTR_COLORMODE));
     }
 
     /**
@@ -794,9 +858,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getEnhancedCurrentHueAsync() {
-        return read(attributes.get(ATTR_ENHANCEDCURRENTHUE));
+        return read(serverAttributes.get(ATTR_ENHANCEDCURRENTHUE));
     }
 
     /**
@@ -822,13 +888,15 @@ public class ZclColorControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getEnhancedCurrentHue(final long refreshPeriod) {
-        if (attributes.get(ATTR_ENHANCEDCURRENTHUE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ENHANCEDCURRENTHUE).getLastValue();
+        if (serverAttributes.get(ATTR_ENHANCEDCURRENTHUE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ENHANCEDCURRENTHUE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ENHANCEDCURRENTHUE));
+        return (Integer) readSync(serverAttributes.get(ATTR_ENHANCEDCURRENTHUE));
     }
 
     /**
@@ -844,9 +912,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getEnhancedColorModeAsync() {
-        return read(attributes.get(ATTR_ENHANCEDCOLORMODE));
+        return read(serverAttributes.get(ATTR_ENHANCEDCOLORMODE));
     }
 
     /**
@@ -870,13 +940,15 @@ public class ZclColorControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getEnhancedColorMode(final long refreshPeriod) {
-        if (attributes.get(ATTR_ENHANCEDCOLORMODE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ENHANCEDCOLORMODE).getLastValue();
+        if (serverAttributes.get(ATTR_ENHANCEDCOLORMODE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ENHANCEDCOLORMODE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ENHANCEDCOLORMODE));
+        return (Integer) readSync(serverAttributes.get(ATTR_ENHANCEDCOLORMODE));
     }
 
     /**
@@ -892,9 +964,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getColorLoopActiveAsync() {
-        return read(attributes.get(ATTR_COLORLOOPACTIVE));
+        return read(serverAttributes.get(ATTR_COLORLOOPACTIVE));
     }
 
     /**
@@ -918,13 +992,15 @@ public class ZclColorControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getColorLoopActive(final long refreshPeriod) {
-        if (attributes.get(ATTR_COLORLOOPACTIVE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_COLORLOOPACTIVE).getLastValue();
+        if (serverAttributes.get(ATTR_COLORLOOPACTIVE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_COLORLOOPACTIVE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_COLORLOOPACTIVE));
+        return (Integer) readSync(serverAttributes.get(ATTR_COLORLOOPACTIVE));
     }
 
     /**
@@ -940,9 +1016,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getColorLoopDirectionAsync() {
-        return read(attributes.get(ATTR_COLORLOOPDIRECTION));
+        return read(serverAttributes.get(ATTR_COLORLOOPDIRECTION));
     }
 
     /**
@@ -966,13 +1044,15 @@ public class ZclColorControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getColorLoopDirection(final long refreshPeriod) {
-        if (attributes.get(ATTR_COLORLOOPDIRECTION).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_COLORLOOPDIRECTION).getLastValue();
+        if (serverAttributes.get(ATTR_COLORLOOPDIRECTION).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_COLORLOOPDIRECTION).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_COLORLOOPDIRECTION));
+        return (Integer) readSync(serverAttributes.get(ATTR_COLORLOOPDIRECTION));
     }
 
     /**
@@ -987,9 +1067,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getColorLoopTimeAsync() {
-        return read(attributes.get(ATTR_COLORLOOPTIME));
+        return read(serverAttributes.get(ATTR_COLORLOOPTIME));
     }
 
     /**
@@ -1012,13 +1094,15 @@ public class ZclColorControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getColorLoopTime(final long refreshPeriod) {
-        if (attributes.get(ATTR_COLORLOOPTIME).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_COLORLOOPTIME).getLastValue();
+        if (serverAttributes.get(ATTR_COLORLOOPTIME).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_COLORLOOPTIME).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_COLORLOOPTIME));
+        return (Integer) readSync(serverAttributes.get(ATTR_COLORLOOPTIME));
     }
 
     /**
@@ -1032,9 +1116,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getColorLoopStartHueAsync() {
-        return read(attributes.get(ATTR_COLORLOOPSTARTHUE));
+        return read(serverAttributes.get(ATTR_COLORLOOPSTARTHUE));
     }
 
     /**
@@ -1056,13 +1142,15 @@ public class ZclColorControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getColorLoopStartHue(final long refreshPeriod) {
-        if (attributes.get(ATTR_COLORLOOPSTARTHUE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_COLORLOOPSTARTHUE).getLastValue();
+        if (serverAttributes.get(ATTR_COLORLOOPSTARTHUE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_COLORLOOPSTARTHUE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_COLORLOOPSTARTHUE));
+        return (Integer) readSync(serverAttributes.get(ATTR_COLORLOOPSTARTHUE));
     }
 
     /**
@@ -1077,9 +1165,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getColorLoopStoredHueAsync() {
-        return read(attributes.get(ATTR_COLORLOOPSTOREDHUE));
+        return read(serverAttributes.get(ATTR_COLORLOOPSTOREDHUE));
     }
 
     /**
@@ -1102,13 +1192,15 @@ public class ZclColorControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getColorLoopStoredHue(final long refreshPeriod) {
-        if (attributes.get(ATTR_COLORLOOPSTOREDHUE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_COLORLOOPSTOREDHUE).getLastValue();
+        if (serverAttributes.get(ATTR_COLORLOOPSTOREDHUE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_COLORLOOPSTOREDHUE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_COLORLOOPSTOREDHUE));
+        return (Integer) readSync(serverAttributes.get(ATTR_COLORLOOPSTOREDHUE));
     }
 
     /**
@@ -1125,9 +1217,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getColorCapabilitiesAsync() {
-        return read(attributes.get(ATTR_COLORCAPABILITIES));
+        return read(serverAttributes.get(ATTR_COLORCAPABILITIES));
     }
 
     /**
@@ -1152,13 +1246,15 @@ public class ZclColorControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getColorCapabilities(final long refreshPeriod) {
-        if (attributes.get(ATTR_COLORCAPABILITIES).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_COLORCAPABILITIES).getLastValue();
+        if (serverAttributes.get(ATTR_COLORCAPABILITIES).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_COLORCAPABILITIES).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_COLORCAPABILITIES));
+        return (Integer) readSync(serverAttributes.get(ATTR_COLORCAPABILITIES));
     }
 
     /**
@@ -1174,9 +1270,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getColorTemperatureMinAsync() {
-        return read(attributes.get(ATTR_COLORTEMPERATUREMIN));
+        return read(serverAttributes.get(ATTR_COLORTEMPERATUREMIN));
     }
 
     /**
@@ -1200,13 +1298,15 @@ public class ZclColorControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getColorTemperatureMin(final long refreshPeriod) {
-        if (attributes.get(ATTR_COLORTEMPERATUREMIN).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_COLORTEMPERATUREMIN).getLastValue();
+        if (serverAttributes.get(ATTR_COLORTEMPERATUREMIN).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_COLORTEMPERATUREMIN).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_COLORTEMPERATUREMIN));
+        return (Integer) readSync(serverAttributes.get(ATTR_COLORTEMPERATUREMIN));
     }
 
     /**
@@ -1222,9 +1322,11 @@ public class ZclColorControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getColorTemperatureMaxAsync() {
-        return read(attributes.get(ATTR_COLORTEMPERATUREMAX));
+        return read(serverAttributes.get(ATTR_COLORTEMPERATUREMAX));
     }
 
     /**
@@ -1248,13 +1350,15 @@ public class ZclColorControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getColorTemperatureMax(final long refreshPeriod) {
-        if (attributes.get(ATTR_COLORTEMPERATUREMAX).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_COLORTEMPERATUREMAX).getLastValue();
+        if (serverAttributes.get(ATTR_COLORTEMPERATUREMAX).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_COLORTEMPERATUREMAX).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_COLORTEMPERATUREMAX));
+        return (Integer) readSync(serverAttributes.get(ATTR_COLORTEMPERATUREMAX));
     }
 
     /**
@@ -1441,6 +1545,13 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * The Move To Color Temperature Command
+     * <p>
+     * On receipt of this command, a device shall set the value of the ColorMode attribute,
+     * where implemented, to 0x02, and shall then move from its current color to the color given
+     * by the Color Temperature Mireds field.
+     * <p>
+     * The movement shall be continuous, i.e., not a step function, and the time taken to move to
+     * the new color shall be equal to the Transition Time field, in 1/10ths of a second.
      *
      * @param colorTemperature {@link Integer} Color Temperature
      * @param transitionTime {@link Integer} Transition Time
@@ -1458,17 +1569,27 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * The Enhanced Move To Hue Command
+     * <p>
+     * The Enhanced Move to Hue command allows lamps to be moved in a smooth continuous
+     * transition from their current hue to a target hue.
+     * <p>
+     * On receipt of this command, a device shall set the ColorMode attribute to 0x00 and set the
+     * EnhancedColorMode attribute to the value 0x03. The device shall then move from its
+     * current enhanced hue to the value given in the Enhanced Hue field.
+     * <p>
+     * The movement shall be continuous, i.e., not a step function, and the time taken to move to
+     * the new en- hanced hue shall be equal to the Transition Time field.
      *
-     * @param hue {@link Integer} Hue
+     * @param enhancedHue {@link Integer} Enhanced Hue
      * @param direction {@link Integer} Direction
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> enhancedMoveToHueCommand(Integer hue, Integer direction, Integer transitionTime) {
+    public Future<CommandResult> enhancedMoveToHueCommand(Integer enhancedHue, Integer direction, Integer transitionTime) {
         EnhancedMoveToHueCommand command = new EnhancedMoveToHueCommand();
 
         // Set the fields
-        command.setHue(hue);
+        command.setEnhancedHue(enhancedHue);
         command.setDirection(direction);
         command.setTransitionTime(transitionTime);
 
@@ -1476,7 +1597,34 @@ public class ZclColorControlCluster extends ZclCluster {
     }
 
     /**
+     * The Enhanced Move Hue Command
+     * <p>
+     * The Enhanced Move to Hue command allows lamps to be moved in a smooth continuous
+     * transition from their current hue to a target hue.
+     * <p>
+     * On receipt of this command, a device shall set the ColorMode attribute to 0x00 and set the
+     * EnhancedColorMode attribute to the value 0x03. The device shall then move from its
+     * current enhanced hue in an up or down direction in a continuous fashion.
+     *
+     * @param moveMode {@link Integer} Move Mode
+     * @param rate {@link Integer} Rate
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> enhancedMoveHueCommand(Integer moveMode, Integer rate) {
+        EnhancedMoveHueCommand command = new EnhancedMoveHueCommand();
+
+        // Set the fields
+        command.setMoveMode(moveMode);
+        command.setRate(rate);
+
+        return send(command);
+    }
+
+    /**
      * The Enhanced Step Hue Command
+     * <p>
+     * The Enhanced Step Hue command allows lamps to be moved in a stepped transition from their
+     * current hue to a target hue, resulting in a linear transition through XY space.
      *
      * @param stepMode {@link Integer} Step Mode
      * @param stepSize {@link Integer} Step Size
@@ -1496,17 +1644,21 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * The Enhanced Move To Hue And Saturation Command
+     * <p>
+     * The Enhanced Move to Hue and Saturation command allows lamps to be moved in a smooth
+     * continuous transition from their current hue to a target hue and from their current
+     * saturation to a target saturation.
      *
-     * @param hue {@link Integer} Hue
+     * @param enhancedHue {@link Integer} Enhanced Hue
      * @param saturation {@link Integer} Saturation
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> enhancedMoveToHueAndSaturationCommand(Integer hue, Integer saturation, Integer transitionTime) {
+    public Future<CommandResult> enhancedMoveToHueAndSaturationCommand(Integer enhancedHue, Integer saturation, Integer transitionTime) {
         EnhancedMoveToHueAndSaturationCommand command = new EnhancedMoveToHueAndSaturationCommand();
 
         // Set the fields
-        command.setHue(hue);
+        command.setEnhancedHue(enhancedHue);
         command.setSaturation(saturation);
         command.setTransitionTime(transitionTime);
 
@@ -1515,6 +1667,9 @@ public class ZclColorControlCluster extends ZclCluster {
 
     /**
      * The Color Loop Set Command
+     * <p>
+     * The Color Loop Set command allows a color loop to be activated such that the color lamp
+     * cycles through its range of hues.
      *
      * @param updateFlags {@link Integer} Update Flags
      * @param action {@link Integer} Action
@@ -1532,6 +1687,73 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setDirection(direction);
         command.setTransitionTime(transitionTime);
         command.setStartHue(startHue);
+
+        return send(command);
+    }
+
+    /**
+     * The Stop Move Step Command
+     * <p>
+     * The Stop Move Step command is provided to allow Move to and Step commands to be stopped.
+     * (Note this automatically provides symmetry to the Level Control cluster.)
+     * <p>
+     * Upon receipt of this command, any Move to, Move or Step command currently in process
+     * shall be ter- minated. The values of the CurrentHue, EnhancedCurrentHue and
+     * CurrentSaturation attributes shall be left at their present value upon receipt of the
+     * Stop Move Step command, and the RemainingTime attribute shall be set to zero.
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> stopMoveStepCommand() {
+        return send(new StopMoveStepCommand());
+    }
+
+    /**
+     * The Move Color Temperature Command
+     * <p>
+     * The Move Color Temperature command allows the color temperature of a lamp to be moved at a
+     * specified rate.
+     *
+     * @param moveMode {@link Integer} Move Mode
+     * @param rate {@link Integer} Rate
+     * @param colorTemperatureMinimum {@link Integer} Color Temperature Minimum
+     * @param colorTemperatureMaximum {@link Integer} Color Temperature Maximum
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> moveColorTemperatureCommand(Integer moveMode, Integer rate, Integer colorTemperatureMinimum, Integer colorTemperatureMaximum) {
+        MoveColorTemperatureCommand command = new MoveColorTemperatureCommand();
+
+        // Set the fields
+        command.setMoveMode(moveMode);
+        command.setRate(rate);
+        command.setColorTemperatureMinimum(colorTemperatureMinimum);
+        command.setColorTemperatureMaximum(colorTemperatureMaximum);
+
+        return send(command);
+    }
+
+    /**
+     * The Step Color Temperature Command
+     * <p>
+     * The Step Color Temperature command allows the color temperature of a lamp to be stepped
+     * with a specified step size.
+     *
+     * @param stepMode {@link Integer} Step Mode
+     * @param stepSize {@link Integer} Step Size
+     * @param transitionTime {@link Integer} Transition Time
+     * @param colorTemperatureMinimum {@link Integer} Color Temperature Minimum
+     * @param colorTemperatureMaximum {@link Integer} Color Temperature Maximum
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> stepColorTemperatureCommand(Integer stepMode, Integer stepSize, Integer transitionTime, Integer colorTemperatureMinimum, Integer colorTemperatureMaximum) {
+        StepColorTemperatureCommand command = new StepColorTemperatureCommand();
+
+        // Set the fields
+        command.setStepMode(stepMode);
+        command.setStepSize(stepSize);
+        command.setTransitionTime(transitionTime);
+        command.setColorTemperatureMinimum(colorTemperatureMinimum);
+        command.setColorTemperatureMaximum(colorTemperatureMaximum);
 
         return send(command);
     }

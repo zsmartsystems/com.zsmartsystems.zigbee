@@ -15,7 +15,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 /**
  * Toggle Command value object class.
  * <p>
- * Cluster: <b>On/Off</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>On/Off</b>. Command ID 0x02 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the On/Off cluster.
  * <p>
  * On receipt of this command, if a device is in its ‘Off’ state it shall enter its ‘On’ state.
@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class ToggleCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.

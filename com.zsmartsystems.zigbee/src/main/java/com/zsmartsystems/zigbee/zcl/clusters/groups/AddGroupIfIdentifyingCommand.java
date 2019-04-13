@@ -18,7 +18,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Add Group If Identifying Command value object class.
  * <p>
- * Cluster: <b>Groups</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>Groups</b>. Command ID 0x05 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Groups cluster.
  * <p>
  * The add group if identifying command allows the sending device to add group membership in a
@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class AddGroupIfIdentifyingCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.

@@ -63,7 +63,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
 public class ZclKeyEstablishmentCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -92,7 +92,15 @@ public class ZclKeyEstablishmentCluster extends ZclCluster {
     public static final int ATTR_SERVERKEYESTABLISHMENTSUITE = 0x0000;
 
     @Override
-    protected Map<Integer, ZclAttribute> initializeAttributes() {
+    protected Map<Integer, ZclAttribute> initializeClientAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(1);
+
+
+        return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(1);
 
         attributeMap.put(ATTR_SERVERKEYESTABLISHMENTSUITE, new ZclAttribute(ZclClusterType.KEY_ESTABLISHMENT, ATTR_SERVERKEYESTABLISHMENTSUITE, "Server Key Establishment Suite", ZclDataType.ENUMERATION_16_BIT, true, true, false, false));
@@ -133,74 +141,6 @@ public class ZclKeyEstablishmentCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Client Key Establishment Suite</i> attribute [attribute ID <b>0x0000</b>].
-     * <p>
-     * The KeyEstablishmentSuite attribute is 16-bits in length and specifies all the
-     * cryptographic schemes for key establishment on the device. A device shall set the
-     * corresponding bit to 1 for every cryptographic scheme that is supports. All other
-     * cryptographic schemes and reserved bits shall be set to 0.
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is MANDATORY
-     *
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> getClientKeyEstablishmentSuiteAsync() {
-        return read(attributes.get(ATTR_CLIENTKEYESTABLISHMENTSUITE));
-    }
-
-    /**
-     * Synchronously get the <i>Client Key Establishment Suite</i> attribute [attribute ID <b>0x0000</b>].
-     * <p>
-     * The KeyEstablishmentSuite attribute is 16-bits in length and specifies all the
-     * cryptographic schemes for key establishment on the device. A device shall set the
-     * corresponding bit to 1 for every cryptographic scheme that is supports. All other
-     * cryptographic schemes and reserved bits shall be set to 0.
-     * <p>
-     * This method can return cached data if the attribute has already been received.
-     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
-     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
-     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
-     * <p>
-     * This method will block until the response is received or a timeout occurs unless the current value is returned.
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is MANDATORY
-     *
-     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Integer} attribute value, or null on error
-     */
-    public Integer getClientKeyEstablishmentSuite(final long refreshPeriod) {
-        if (attributes.get(ATTR_CLIENTKEYESTABLISHMENTSUITE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CLIENTKEYESTABLISHMENTSUITE).getLastValue();
-        }
-
-        return (Integer) readSync(attributes.get(ATTR_CLIENTKEYESTABLISHMENTSUITE));
-    }
-
-    /**
-     * Set reporting for the <i>Client Key Establishment Suite</i> attribute [attribute ID <b>0x0000</b>].
-     * <p>
-     * The KeyEstablishmentSuite attribute is 16-bits in length and specifies all the
-     * cryptographic schemes for key establishment on the device. A device shall set the
-     * corresponding bit to 1 for every cryptographic scheme that is supports. All other
-     * cryptographic schemes and reserved bits shall be set to 0.
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is MANDATORY
-     *
-     * @param minInterval minimum reporting period
-     * @param maxInterval maximum reporting period
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> setClientKeyEstablishmentSuiteReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_CLIENTKEYESTABLISHMENTSUITE), minInterval, maxInterval);
-    }
-
-    /**
      * Get the <i>Server Key Establishment Suite</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
      * The KeyEstablishmentSuite attribute is 16-bits in length and specifies all the
@@ -213,9 +153,11 @@ public class ZclKeyEstablishmentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getServerKeyEstablishmentSuiteAsync() {
-        return read(attributes.get(ATTR_SERVERKEYESTABLISHMENTSUITE));
+        return read(serverAttributes.get(ATTR_SERVERKEYESTABLISHMENTSUITE));
     }
 
     /**
@@ -239,13 +181,15 @@ public class ZclKeyEstablishmentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getServerKeyEstablishmentSuite(final long refreshPeriod) {
-        if (attributes.get(ATTR_SERVERKEYESTABLISHMENTSUITE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_SERVERKEYESTABLISHMENTSUITE).getLastValue();
+        if (serverAttributes.get(ATTR_SERVERKEYESTABLISHMENTSUITE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_SERVERKEYESTABLISHMENTSUITE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_SERVERKEYESTABLISHMENTSUITE));
+        return (Integer) readSync(serverAttributes.get(ATTR_SERVERKEYESTABLISHMENTSUITE));
     }
 
     /**
@@ -263,9 +207,11 @@ public class ZclKeyEstablishmentCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setServerKeyEstablishmentSuiteReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_SERVERKEYESTABLISHMENTSUITE), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_SERVERKEYESTABLISHMENTSUITE), minInterval, maxInterval);
     }
 
     /**

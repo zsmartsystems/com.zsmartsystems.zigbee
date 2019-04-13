@@ -36,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
 public class ZclIdentifyCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -64,7 +64,14 @@ public class ZclIdentifyCluster extends ZclCluster {
     public static final int ATTR_IDENTIFYTIME = 0x0000;
 
     @Override
-    protected Map<Integer, ZclAttribute> initializeAttributes() {
+    protected Map<Integer, ZclAttribute> initializeClientAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
+
+        return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(1);
 
         attributeMap.put(ATTR_IDENTIFYTIME, new ZclAttribute(ZclClusterType.IDENTIFY, ATTR_IDENTIFYTIME, "Identify Time", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, true, false));
@@ -120,9 +127,11 @@ public class ZclIdentifyCluster extends ZclCluster {
      *
      * @param identifyTime the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setIdentifyTime(final Integer value) {
-        return write(attributes.get(ATTR_IDENTIFYTIME), value);
+        return write(serverAttributes.get(ATTR_IDENTIFYTIME), value);
     }
 
     /**
@@ -144,9 +153,11 @@ public class ZclIdentifyCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getIdentifyTimeAsync() {
-        return read(attributes.get(ATTR_IDENTIFYTIME));
+        return read(serverAttributes.get(ATTR_IDENTIFYTIME));
     }
 
     /**
@@ -176,13 +187,15 @@ public class ZclIdentifyCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getIdentifyTime(final long refreshPeriod) {
-        if (attributes.get(ATTR_IDENTIFYTIME).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_IDENTIFYTIME).getLastValue();
+        if (serverAttributes.get(ATTR_IDENTIFYTIME).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_IDENTIFYTIME).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_IDENTIFYTIME));
+        return (Integer) readSync(serverAttributes.get(ATTR_IDENTIFYTIME));
     }
 
     /**
@@ -207,9 +220,11 @@ public class ZclIdentifyCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setIdentifyTimeReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_IDENTIFYTIME), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_IDENTIFYTIME), minInterval, maxInterval, reportableChange);
     }
 
     /**

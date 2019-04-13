@@ -1,7 +1,9 @@
 <cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0300">
     <name>Color Control</name>
-    <description>This cluster provides an interface for changing the color of a light. Color is specified according to the Commission Internationale de l&apos;&#201;clairage (CIE) specification CIE 1931 Color Space, [B4]. Color control is carried out in terms of x,y values, as defined by this specification.</description>
+    <description>This cluster provides an interface for changing the color of a light. Color is specified according to the Commission Internationale de l&apos;&#201;clairage (CIE) specification CIE 1931 Color Space. Color control is carried out in terms of x,y values, as defined by this specification.</description>
+    <description>Additionally, color MAY optionally be controlled in terms of color temperature, or as hue and saturation values based on optionally variable RGB and W color points. It is recommended that the hue and saturation are interpreted according to the HSV (aka HSB) color model.</description>
+    <description>Control over luminance is not included, as this is provided by means of the Level Control cluster of the General library. It is recommended that the level provided by this cluster be interpreted as representing a proportion of the maximum intensity achievable at the current color.</description>
     <command code="0x00" source="client">
         <name>Move To Hue Command</name>
         <field type="UNSIGNED_8_BIT_INTEGER">
@@ -25,7 +27,7 @@
     </command>
     <command code="0x02" source="client">
         <name>Step Hue Command</name>
-        <field type="ENUMERATION_8_BIT" class="HueStepModeEnum">
+        <field type="ENUMERATION_8_BIT" class="StepModeEnum">
             <name>Step Mode</name>
         </field>
         <field type="UNSIGNED_8_BIT_INTEGER">
@@ -55,7 +57,7 @@
     </command>
     <command code="0x05" source="client">
         <name>Step Saturation Command</name>
-        <field type="ENUMERATION_8_BIT" class="SaturationStepModeEnum">
+        <field type="ENUMERATION_8_BIT" class="StepModeEnum">
             <name>Step Mode</name>
         </field>
         <field type="UNSIGNED_8_BIT_INTEGER">
@@ -112,6 +114,8 @@
     </command>
     <command code="0x0A" source="client">
         <name>Move To Color Temperature Command</name>
+        <description>On receipt of this command, a device SHALL set the value of the ColorMode attribute, where implemented, to 0x02, and SHALL then move from its current color to the color given by the Color Temperature Mireds field.</description>
+        <description>The movement SHALL be continuous, i.e., not a step function, and the time taken to move to the new color SHALL be equal to the Transition Time field, in 1/10ths of a second.</description>
         <field type="UNSIGNED_16_BIT_INTEGER">
             <name>Color Temperature</name>
         </field>
@@ -121,8 +125,12 @@
     </command>
     <command code="0x40" source="client">
         <name>Enhanced Move To Hue Command</name>
+        <description>The Enhanced Move to Hue command allows lamps to be moved in a smooth continuous transition from their current hue to a target hue.</description>
+        <description>On receipt of this command, a device SHALL set the ColorMode attribute to 0x00 and set the EnhancedColorMode attribute to the value 0x03. The device SHALL then move from its current enhanced hue to the value given in the Enhanced Hue field.</description>
+        <description>The movement SHALL be continuous, i.e., not a step function, and the time taken to move to the new en- hanced hue SHALL be equal to the Transition Time field.</description>
+        <description></description>
         <field type="UNSIGNED_16_BIT_INTEGER">
-            <name>Hue</name>
+            <name>Enhanced Hue</name>
         </field>
         <field type="ENUMERATION_8_BIT">
             <name>Direction</name>
@@ -132,8 +140,20 @@
         </field>
     </command>
     <command code="0x41" source="client">
-        <name>Enhanced Step Hue Command</name>
+        <name>Enhanced Move Hue Command</name>
+        <description>The Enhanced Move to Hue command allows lamps to be moved in a smooth continuous transition from their current hue to a target hue.</description>
+        <description>On receipt of this command, a device SHALL set the ColorMode attribute to 0x00 and set the EnhancedColorMode attribute to the value 0x03. The device SHALL then move from its current enhanced hue in an up or down direction in a continuous fashion.</description>
         <field type="ENUMERATION_8_BIT">
+            <name>Move Mode</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Rate</name>
+        </field>
+    </command>
+    <command code="0x42" source="client">
+        <name>Enhanced Step Hue Command</name>
+        <description>The Enhanced Step Hue command allows lamps to be moved in a stepped transition from their current hue to a target hue, resulting in a linear transition through XY space.</description>
+        <field type="ENUMERATION_8_BIT" class="StepModeEnum">
             <name>Step Mode</name>
         </field>
         <field type="UNSIGNED_16_BIT_INTEGER">
@@ -143,10 +163,11 @@
             <name>Transition Time</name>
         </field>
     </command>
-    <command code="0x42" source="client">
+    <command code="0x43" source="client">
         <name>Enhanced Move To Hue And Saturation Command</name>
+        <description>The Enhanced Move to Hue and Saturation command allows lamps to be moved in a smooth continuous transition from their current hue to a target hue and from their current saturation to a target saturation.</description>
         <field type="UNSIGNED_16_BIT_INTEGER">
-            <name>Hue</name>
+            <name>Enhanced Hue</name>
         </field>
         <field type="ENUMERATION_8_BIT">
             <name>Saturation</name>
@@ -155,8 +176,9 @@
             <name>Transition Time</name>
         </field>
     </command>
-    <command code="0x43" source="client">
+    <command code="0x44" source="client">
         <name>Color Loop Set Command</name>
+        <description>The Color Loop Set command allows a color loop to be activated such that the color lamp cycles through its range of hues.</description>
         <field type="BITMAP_8_BIT">
             <name>Update Flags</name>
         </field>
@@ -173,6 +195,47 @@
             <name>Start Hue</name>
         </field>
     </command>
+    <command code="0x47" source="client">
+        <name>Stop Move Step Command</name>
+        <description>The Stop Move Step command is provided to allow Move to and Step commands to be stopped. (Note this automatically provides symmetry to the Level Control cluster.)</description>
+        <description>Upon receipt of this command, any Move to, Move or Step command currently in process SHALL be ter- minated. The values of the CurrentHue, EnhancedCurrentHue and CurrentSaturation attributes SHALL be left at their present value upon receipt of the Stop Move Step command, and the RemainingTime attribute SHALL be set to zero.</description>
+    </command>
+    <command code="0x4B" source="client">
+        <name>Move Color Temperature Command</name>
+        <description>The Move Color Temperature command allows the color temperature of a lamp to be moved at a specified rate.</description>
+        <field type="BITMAP_8_BIT">
+            <name>Move Mode</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Rate</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Color Temperature Minimum</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Color Temperature Maximum</name>
+        </field>
+    </command>
+    <command code="0x4C" source="client">
+        <name>Step Color Temperature Command</name>
+        <description>The Step Color Temperature command allows the color temperature of a lamp to be stepped with a specified step size.</description>
+        <field type="ENUMERATION_8_BIT" class="StepModeEnum">
+            <name>Step Mode</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Step Size</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Transition Time</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Color Temperature Minimum </name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Color Temperature Maximum</name>
+        </field>
+    </command>
+
     <attribute code="0x0000" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false" reportable="true" minimum="0x00" maximum="0xFE" default="0x00">
         <name>Current Hue</name>
         <description>The CurrentHue attribute contains the current hue value of the light. It is updated as fast as practical during commands that change the hue.</description>
@@ -291,5 +354,11 @@
         <value code="0x0010" name="Color Temperature">
         </value>
     </constant>
-
+    <constant class="StepModeEnum">
+        <name>Step Mode</name>
+        <value code="0x01" name="Up">
+        </value>
+        <value code="0x03" name="Down">
+        </value>
+    </constant>
 </cluster>

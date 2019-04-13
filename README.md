@@ -47,7 +47,7 @@ The following clusters are currently supported -:
 | 0202 | FAN_CONTROL | This cluster specifies an interface to control the speed of a fan as part of a heating / cooling system. |
 | 0203 | DEHUMIDIFICATION_CONTROL | This cluster provides an interface to dehumidification functionality. |
 | 0204 | THERMOSTAT_USER_INTERFACE_CONFIGURATION | This cluster provides an interface to allow configuration of the user interface for a thermostat, or a thermostat controller device, that supports a keypad and LCD screen. |
-| 0300 | COLOR_CONTROL | This cluster provides an interface for changing the color of a light. Color is specified according to the Commission Internationale de l'Éclairage (CIE) specification CIE 1931 Color Space, [B4]. Color control is carried out in terms of x,y values, as defined by this specification. |
+| 0300 | COLOR_CONTROL | This cluster provides an interface for changing the color of a light. Color is specified according to the Commission Internationale de l'Éclairage (CIE) specification CIE 1931 Color Space. Color control is carried out in terms of x,y values, as defined by this specification. |
 | 0400 | ILLUMINANCE_MEASUREMENT | The cluster provides an interface to illuminance measurement functionality, including configuration and provision of notifications of illuminance measurements. |
 | 0401 | ILLUMINANCE_LEVEL_SENSING | The cluster provides an interface to illuminance level sensing functionality, including configuration and provision of notifications of whether the illuminance is within, above or below a target band. |
 | 0402 | TEMPERATURE_MEASUREMENT | The server cluster provides an interface to temperature measurement functionality, including configuration and provision of notifications of temperature measurements. |

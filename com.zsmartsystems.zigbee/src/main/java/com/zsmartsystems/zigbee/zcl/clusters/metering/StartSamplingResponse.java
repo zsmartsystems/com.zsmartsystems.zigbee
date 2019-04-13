@@ -18,14 +18,14 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Start Sampling Response value object class.
  * <p>
- * Cluster: <b>Metering</b>. Command is sent <b>FROM</b> the server.
+ * Cluster: <b>Metering</b>. Command ID 0x0D is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the Metering cluster.
  * <p>
  * This command is transmitted by a Metering Device in response to a StartSampling command.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class StartSamplingResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.

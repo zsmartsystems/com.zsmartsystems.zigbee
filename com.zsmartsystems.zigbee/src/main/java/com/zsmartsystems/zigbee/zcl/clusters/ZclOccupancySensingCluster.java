@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T21:33:25Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
 public class ZclOccupancySensingCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -98,7 +98,14 @@ public class ZclOccupancySensingCluster extends ZclCluster {
     public static final int ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD = 0x0022;
 
     @Override
-    protected Map<Integer, ZclAttribute> initializeAttributes() {
+    protected Map<Integer, ZclAttribute> initializeClientAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
+
+        return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(8);
 
         attributeMap.put(ATTR_OCCUPANCY, new ZclAttribute(ZclClusterType.OCCUPANCY_SENSING, ATTR_OCCUPANCY, "Occupancy", ZclDataType.BITMAP_8_BIT, true, true, false, true));
@@ -135,9 +142,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getOccupancyAsync() {
-        return read(attributes.get(ATTR_OCCUPANCY));
+        return read(serverAttributes.get(ATTR_OCCUPANCY));
     }
 
     /**
@@ -161,13 +170,15 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getOccupancy(final long refreshPeriod) {
-        if (attributes.get(ATTR_OCCUPANCY).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_OCCUPANCY).getLastValue();
+        if (serverAttributes.get(ATTR_OCCUPANCY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_OCCUPANCY).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_OCCUPANCY));
+        return (Integer) readSync(serverAttributes.get(ATTR_OCCUPANCY));
     }
 
     /**
@@ -185,9 +196,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setOccupancyReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_OCCUPANCY), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_OCCUPANCY), minInterval, maxInterval);
     }
 
     /**
@@ -200,9 +213,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getOccupancySensorTypeAsync() {
-        return read(attributes.get(ATTR_OCCUPANCYSENSORTYPE));
+        return read(serverAttributes.get(ATTR_OCCUPANCYSENSORTYPE));
     }
 
     /**
@@ -223,13 +238,15 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getOccupancySensorType(final long refreshPeriod) {
-        if (attributes.get(ATTR_OCCUPANCYSENSORTYPE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_OCCUPANCYSENSORTYPE).getLastValue();
+        if (serverAttributes.get(ATTR_OCCUPANCYSENSORTYPE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_OCCUPANCYSENSORTYPE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_OCCUPANCYSENSORTYPE));
+        return (Integer) readSync(serverAttributes.get(ATTR_OCCUPANCYSENSORTYPE));
     }
 
     /**
@@ -244,9 +261,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setOccupancySensorTypeReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_OCCUPANCYSENSORTYPE), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_OCCUPANCYSENSORTYPE), minInterval, maxInterval);
     }
 
     /**
@@ -264,9 +283,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      *
      * @param pirOccupiedToUnoccupiedDelay the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setPirOccupiedToUnoccupiedDelay(final Integer value) {
-        return write(attributes.get(ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY), value);
+        return write(serverAttributes.get(ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY), value);
     }
 
     /**
@@ -283,9 +304,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPirOccupiedToUnoccupiedDelayAsync() {
-        return read(attributes.get(ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY));
+        return read(serverAttributes.get(ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY));
     }
 
     /**
@@ -310,13 +333,15 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPirOccupiedToUnoccupiedDelay(final long refreshPeriod) {
-        if (attributes.get(ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY).getLastValue();
+        if (serverAttributes.get(ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY));
+        return (Integer) readSync(serverAttributes.get(ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY));
     }
 
     /**
@@ -332,9 +357,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      *
      * @param pirUnoccupiedToOccupiedDelay the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setPirUnoccupiedToOccupiedDelay(final Integer value) {
-        return write(attributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY), value);
+        return write(serverAttributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY), value);
     }
 
     /**
@@ -349,9 +376,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPirUnoccupiedToOccupiedDelayAsync() {
-        return read(attributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY));
+        return read(serverAttributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY));
     }
 
     /**
@@ -374,13 +403,15 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPirUnoccupiedToOccupiedDelay(final long refreshPeriod) {
-        if (attributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY).getLastValue();
+        if (serverAttributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY));
+        return (Integer) readSync(serverAttributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY));
     }
 
     /**
@@ -398,9 +429,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      *
      * @param pirUnoccupiedToOccupiedThreshold the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setPirUnoccupiedToOccupiedThreshold(final Integer value) {
-        return write(attributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDTHRESHOLD), value);
+        return write(serverAttributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDTHRESHOLD), value);
     }
 
     /**
@@ -417,9 +450,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPirUnoccupiedToOccupiedThresholdAsync() {
-        return read(attributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDTHRESHOLD));
+        return read(serverAttributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDTHRESHOLD));
     }
 
     /**
@@ -444,13 +479,15 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPirUnoccupiedToOccupiedThreshold(final long refreshPeriod) {
-        if (attributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDTHRESHOLD).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDTHRESHOLD).getLastValue();
+        if (serverAttributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDTHRESHOLD).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDTHRESHOLD).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDTHRESHOLD));
+        return (Integer) readSync(serverAttributes.get(ATTR_PIRUNOCCUPIEDTOOCCUPIEDTHRESHOLD));
     }
 
     /**
@@ -468,9 +505,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      *
      * @param ultraSonicOccupiedToUnoccupiedDelay the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setUltraSonicOccupiedToUnoccupiedDelay(final Integer value) {
-        return write(attributes.get(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY), value);
+        return write(serverAttributes.get(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY), value);
     }
 
     /**
@@ -487,9 +526,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getUltraSonicOccupiedToUnoccupiedDelayAsync() {
-        return read(attributes.get(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY));
+        return read(serverAttributes.get(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY));
     }
 
     /**
@@ -514,13 +555,15 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getUltraSonicOccupiedToUnoccupiedDelay(final long refreshPeriod) {
-        if (attributes.get(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY).getLastValue();
+        if (serverAttributes.get(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY));
+        return (Integer) readSync(serverAttributes.get(ATTR_ULTRASONICOCCUPIEDTOUNOCCUPIEDDELAY));
     }
 
     /**
@@ -536,9 +579,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      *
      * @param ultraSonicUnoccupiedToOccupiedDelay the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setUltraSonicUnoccupiedToOccupiedDelay(final Integer value) {
-        return write(attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY), value);
+        return write(serverAttributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY), value);
     }
 
     /**
@@ -553,9 +598,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getUltraSonicUnoccupiedToOccupiedDelayAsync() {
-        return read(attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY));
+        return read(serverAttributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY));
     }
 
     /**
@@ -578,13 +625,15 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getUltraSonicUnoccupiedToOccupiedDelay(final long refreshPeriod) {
-        if (attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY).getLastValue();
+        if (serverAttributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY));
+        return (Integer) readSync(serverAttributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDDELAY));
     }
 
     /**
@@ -602,9 +651,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      *
      * @param ultrasonicUnoccupiedToOccupiedThreshold the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setUltrasonicUnoccupiedToOccupiedThreshold(final Integer value) {
-        return write(attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD), value);
+        return write(serverAttributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD), value);
     }
 
     /**
@@ -621,9 +672,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getUltrasonicUnoccupiedToOccupiedThresholdAsync() {
-        return read(attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD));
+        return read(serverAttributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD));
     }
 
     /**
@@ -648,12 +701,14 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getUltrasonicUnoccupiedToOccupiedThreshold(final long refreshPeriod) {
-        if (attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD).getLastValue();
+        if (serverAttributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD));
+        return (Integer) readSync(serverAttributes.get(ATTR_ULTRASONICUNOCCUPIEDTOOCCUPIEDTHRESHOLD));
     }
 }

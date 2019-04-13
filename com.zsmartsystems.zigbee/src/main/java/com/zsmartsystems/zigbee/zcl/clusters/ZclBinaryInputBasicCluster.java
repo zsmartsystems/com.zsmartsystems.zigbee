@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T21:33:25Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
 public class ZclBinaryInputBasicCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -166,7 +166,14 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
     public static final int ATTR_APPLICATIONTYPE = 0x0100;
 
     @Override
-    protected Map<Integer, ZclAttribute> initializeAttributes() {
+    protected Map<Integer, ZclAttribute> initializeClientAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
+
+        return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(9);
 
         attributeMap.put(ATTR_ACTIVETEXT, new ZclAttribute(ZclClusterType.BINARY_INPUT_BASIC, ATTR_ACTIVETEXT, "Active Text", ZclDataType.CHARACTER_STRING, false, true, true, false));
@@ -209,9 +216,11 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      *
      * @param activeText the {@link String} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setActiveText(final String value) {
-        return write(attributes.get(ATTR_ACTIVETEXT), value);
+        return write(serverAttributes.get(ATTR_ACTIVETEXT), value);
     }
 
     /**
@@ -231,9 +240,11 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getActiveTextAsync() {
-        return read(attributes.get(ATTR_ACTIVETEXT));
+        return read(serverAttributes.get(ATTR_ACTIVETEXT));
     }
 
     /**
@@ -261,13 +272,15 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link String} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public String getActiveText(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACTIVETEXT).isLastValueCurrent(refreshPeriod)) {
-            return (String) attributes.get(ATTR_ACTIVETEXT).getLastValue();
+        if (serverAttributes.get(ATTR_ACTIVETEXT).isLastValueCurrent(refreshPeriod)) {
+            return (String) serverAttributes.get(ATTR_ACTIVETEXT).getLastValue();
         }
 
-        return (String) readSync(attributes.get(ATTR_ACTIVETEXT));
+        return (String) readSync(serverAttributes.get(ATTR_ACTIVETEXT));
     }
 
     /**
@@ -284,9 +297,11 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      *
      * @param description the {@link String} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setDescription(final String value) {
-        return write(attributes.get(ATTR_DESCRIPTION), value);
+        return write(serverAttributes.get(ATTR_DESCRIPTION), value);
     }
 
     /**
@@ -302,9 +317,11 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDescriptionAsync() {
-        return read(attributes.get(ATTR_DESCRIPTION));
+        return read(serverAttributes.get(ATTR_DESCRIPTION));
     }
 
     /**
@@ -328,13 +345,15 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link String} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public String getDescription(final long refreshPeriod) {
-        if (attributes.get(ATTR_DESCRIPTION).isLastValueCurrent(refreshPeriod)) {
-            return (String) attributes.get(ATTR_DESCRIPTION).getLastValue();
+        if (serverAttributes.get(ATTR_DESCRIPTION).isLastValueCurrent(refreshPeriod)) {
+            return (String) serverAttributes.get(ATTR_DESCRIPTION).getLastValue();
         }
 
-        return (String) readSync(attributes.get(ATTR_DESCRIPTION));
+        return (String) readSync(serverAttributes.get(ATTR_DESCRIPTION));
     }
 
     /**
@@ -355,9 +374,11 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      *
      * @param inactiveText the {@link String} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setInactiveText(final String value) {
-        return write(attributes.get(ATTR_INACTIVETEXT), value);
+        return write(serverAttributes.get(ATTR_INACTIVETEXT), value);
     }
 
     /**
@@ -377,9 +398,11 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getInactiveTextAsync() {
-        return read(attributes.get(ATTR_INACTIVETEXT));
+        return read(serverAttributes.get(ATTR_INACTIVETEXT));
     }
 
     /**
@@ -407,13 +430,15 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link String} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public String getInactiveText(final long refreshPeriod) {
-        if (attributes.get(ATTR_INACTIVETEXT).isLastValueCurrent(refreshPeriod)) {
-            return (String) attributes.get(ATTR_INACTIVETEXT).getLastValue();
+        if (serverAttributes.get(ATTR_INACTIVETEXT).isLastValueCurrent(refreshPeriod)) {
+            return (String) serverAttributes.get(ATTR_INACTIVETEXT).getLastValue();
         }
 
-        return (String) readSync(attributes.get(ATTR_INACTIVETEXT));
+        return (String) readSync(serverAttributes.get(ATTR_INACTIVETEXT));
     }
 
     /**
@@ -434,9 +459,11 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      *
      * @param outOfService the {@link Boolean} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setOutOfService(final Boolean value) {
-        return write(attributes.get(ATTR_OUTOFSERVICE), value);
+        return write(serverAttributes.get(ATTR_OUTOFSERVICE), value);
     }
 
     /**
@@ -456,9 +483,11 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getOutOfServiceAsync() {
-        return read(attributes.get(ATTR_OUTOFSERVICE));
+        return read(serverAttributes.get(ATTR_OUTOFSERVICE));
     }
 
     /**
@@ -486,13 +515,15 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Boolean} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Boolean getOutOfService(final long refreshPeriod) {
-        if (attributes.get(ATTR_OUTOFSERVICE).isLastValueCurrent(refreshPeriod)) {
-            return (Boolean) attributes.get(ATTR_OUTOFSERVICE).getLastValue();
+        if (serverAttributes.get(ATTR_OUTOFSERVICE).isLastValueCurrent(refreshPeriod)) {
+            return (Boolean) serverAttributes.get(ATTR_OUTOFSERVICE).getLastValue();
         }
 
-        return (Boolean) readSync(attributes.get(ATTR_OUTOFSERVICE));
+        return (Boolean) readSync(serverAttributes.get(ATTR_OUTOFSERVICE));
     }
 
     /**
@@ -514,9 +545,11 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setOutOfServiceReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_OUTOFSERVICE), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_OUTOFSERVICE), minInterval, maxInterval);
     }
 
     /**
@@ -540,9 +573,11 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPolarityAsync() {
-        return read(attributes.get(ATTR_POLARITY));
+        return read(serverAttributes.get(ATTR_POLARITY));
     }
 
     /**
@@ -574,13 +609,15 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPolarity(final long refreshPeriod) {
-        if (attributes.get(ATTR_POLARITY).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_POLARITY).getLastValue();
+        if (serverAttributes.get(ATTR_POLARITY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_POLARITY).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_POLARITY));
+        return (Integer) readSync(serverAttributes.get(ATTR_POLARITY));
     }
 
     /**
@@ -600,9 +637,11 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      *
      * @param presentValue the {@link Boolean} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setPresentValue(final Boolean value) {
-        return write(attributes.get(ATTR_PRESENTVALUE), value);
+        return write(serverAttributes.get(ATTR_PRESENTVALUE), value);
     }
 
     /**
@@ -621,9 +660,11 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPresentValueAsync() {
-        return read(attributes.get(ATTR_PRESENTVALUE));
+        return read(serverAttributes.get(ATTR_PRESENTVALUE));
     }
 
     /**
@@ -650,13 +691,15 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Boolean} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Boolean getPresentValue(final long refreshPeriod) {
-        if (attributes.get(ATTR_PRESENTVALUE).isLastValueCurrent(refreshPeriod)) {
-            return (Boolean) attributes.get(ATTR_PRESENTVALUE).getLastValue();
+        if (serverAttributes.get(ATTR_PRESENTVALUE).isLastValueCurrent(refreshPeriod)) {
+            return (Boolean) serverAttributes.get(ATTR_PRESENTVALUE).getLastValue();
         }
 
-        return (Boolean) readSync(attributes.get(ATTR_PRESENTVALUE));
+        return (Boolean) readSync(serverAttributes.get(ATTR_PRESENTVALUE));
     }
 
     /**
@@ -677,9 +720,11 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setPresentValueReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_PRESENTVALUE), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_PRESENTVALUE), minInterval, maxInterval);
     }
 
     /**
@@ -700,9 +745,11 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      *
      * @param reliability the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setReliability(final Integer value) {
-        return write(attributes.get(ATTR_RELIABILITY), value);
+        return write(serverAttributes.get(ATTR_RELIABILITY), value);
     }
 
     /**
@@ -722,9 +769,11 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getReliabilityAsync() {
-        return read(attributes.get(ATTR_RELIABILITY));
+        return read(serverAttributes.get(ATTR_RELIABILITY));
     }
 
     /**
@@ -752,13 +801,15 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getReliability(final long refreshPeriod) {
-        if (attributes.get(ATTR_RELIABILITY).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RELIABILITY).getLastValue();
+        if (serverAttributes.get(ATTR_RELIABILITY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RELIABILITY).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RELIABILITY));
+        return (Integer) readSync(serverAttributes.get(ATTR_RELIABILITY));
     }
 
     /**
@@ -798,9 +849,11 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getStatusFlagsAsync() {
-        return read(attributes.get(ATTR_STATUSFLAGS));
+        return read(serverAttributes.get(ATTR_STATUSFLAGS));
     }
 
     /**
@@ -848,13 +901,15 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getStatusFlags(final long refreshPeriod) {
-        if (attributes.get(ATTR_STATUSFLAGS).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_STATUSFLAGS).getLastValue();
+        if (serverAttributes.get(ATTR_STATUSFLAGS).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_STATUSFLAGS).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_STATUSFLAGS));
+        return (Integer) readSync(serverAttributes.get(ATTR_STATUSFLAGS));
     }
 
     /**
@@ -896,9 +951,11 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setStatusFlagsReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_STATUSFLAGS), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_STATUSFLAGS), minInterval, maxInterval);
     }
 
     /**
@@ -922,9 +979,11 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getApplicationTypeAsync() {
-        return read(attributes.get(ATTR_APPLICATIONTYPE));
+        return read(serverAttributes.get(ATTR_APPLICATIONTYPE));
     }
 
     /**
@@ -956,12 +1015,14 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getApplicationType(final long refreshPeriod) {
-        if (attributes.get(ATTR_APPLICATIONTYPE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_APPLICATIONTYPE).getLastValue();
+        if (serverAttributes.get(ATTR_APPLICATIONTYPE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_APPLICATIONTYPE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_APPLICATIONTYPE));
+        return (Integer) readSync(serverAttributes.get(ATTR_APPLICATIONTYPE));
     }
 }

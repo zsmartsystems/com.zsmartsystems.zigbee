@@ -15,6 +15,7 @@ import org.mockito.Mockito;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.zcl.ZclFrameType;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.ColorLoopSetCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.EnhancedMoveHueCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.EnhancedMoveToHueAndSaturationCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.EnhancedMoveToHueCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.EnhancedStepHueCommand;
@@ -57,9 +58,11 @@ public class ZclColorControlClusterTest {
         assertTrue(cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND,
                 64) instanceof EnhancedMoveToHueCommand);
         assertTrue(
-                cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND, 65) instanceof EnhancedStepHueCommand);
+                cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND, 65) instanceof EnhancedMoveHueCommand);
+        assertTrue(
+                cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND, 66) instanceof EnhancedStepHueCommand);
         assertTrue(cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND,
-                66) instanceof EnhancedMoveToHueAndSaturationCommand);
-        assertTrue(cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND, 67) instanceof ColorLoopSetCommand);
+                67) instanceof EnhancedMoveToHueAndSaturationCommand);
+        assertTrue(cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND, 68) instanceof ColorLoopSetCommand);
     }
 }

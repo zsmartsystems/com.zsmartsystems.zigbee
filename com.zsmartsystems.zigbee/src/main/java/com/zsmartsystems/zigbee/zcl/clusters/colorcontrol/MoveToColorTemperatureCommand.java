@@ -18,12 +18,19 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Move To Color Temperature Command value object class.
  * <p>
- * Cluster: <b>Color Control</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>Color Control</b>. Command ID 0x0A is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Color Control cluster.
+ * <p>
+ * On receipt of this command, a device shall set the value of the ColorMode attribute, where
+ * implemented, to 0x02, and shall then move from its current color to the color given by the
+ * Color Temperature Mireds field.
+ * <p>
+ * The movement shall be continuous, i.e., not a step function, and the time taken to move to the
+ * new color shall be equal to the Transition Time field, in 1/10ths of a second.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class MoveToColorTemperatureCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.

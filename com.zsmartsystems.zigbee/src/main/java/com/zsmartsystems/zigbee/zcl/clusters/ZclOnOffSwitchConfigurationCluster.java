@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T21:33:25Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
 public class ZclOnOffSwitchConfigurationCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -52,7 +52,14 @@ public class ZclOnOffSwitchConfigurationCluster extends ZclCluster {
     public static final int ATTR_SWITCHACTIONS = 0x0010;
 
     @Override
-    protected Map<Integer, ZclAttribute> initializeAttributes() {
+    protected Map<Integer, ZclAttribute> initializeClientAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
+
+        return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(2);
 
         attributeMap.put(ATTR_SWITCHTYPE, new ZclAttribute(ZclClusterType.ON_OFF_SWITCH_CONFIGURATION, ATTR_SWITCHTYPE, "Switch Type", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
@@ -81,9 +88,11 @@ public class ZclOnOffSwitchConfigurationCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getSwitchTypeAsync() {
-        return read(attributes.get(ATTR_SWITCHTYPE));
+        return read(serverAttributes.get(ATTR_SWITCHTYPE));
     }
 
     /**
@@ -105,13 +114,15 @@ public class ZclOnOffSwitchConfigurationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getSwitchType(final long refreshPeriod) {
-        if (attributes.get(ATTR_SWITCHTYPE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_SWITCHTYPE).getLastValue();
+        if (serverAttributes.get(ATTR_SWITCHTYPE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_SWITCHTYPE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_SWITCHTYPE));
+        return (Integer) readSync(serverAttributes.get(ATTR_SWITCHTYPE));
     }
 
     /**
@@ -127,9 +138,11 @@ public class ZclOnOffSwitchConfigurationCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setSwitchTypeReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_SWITCHTYPE), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_SWITCHTYPE), minInterval, maxInterval);
     }
 
     /**
@@ -144,9 +157,11 @@ public class ZclOnOffSwitchConfigurationCluster extends ZclCluster {
      *
      * @param switchActions the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setSwitchActions(final Integer value) {
-        return write(attributes.get(ATTR_SWITCHACTIONS), value);
+        return write(serverAttributes.get(ATTR_SWITCHACTIONS), value);
     }
 
     /**
@@ -160,9 +175,11 @@ public class ZclOnOffSwitchConfigurationCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getSwitchActionsAsync() {
-        return read(attributes.get(ATTR_SWITCHACTIONS));
+        return read(serverAttributes.get(ATTR_SWITCHACTIONS));
     }
 
     /**
@@ -184,13 +201,15 @@ public class ZclOnOffSwitchConfigurationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getSwitchActions(final long refreshPeriod) {
-        if (attributes.get(ATTR_SWITCHACTIONS).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_SWITCHACTIONS).getLastValue();
+        if (serverAttributes.get(ATTR_SWITCHACTIONS).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_SWITCHACTIONS).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_SWITCHACTIONS));
+        return (Integer) readSync(serverAttributes.get(ATTR_SWITCHACTIONS));
     }
 
     /**
@@ -206,8 +225,10 @@ public class ZclOnOffSwitchConfigurationCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setSwitchActionsReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_SWITCHACTIONS), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_SWITCHACTIONS), minInterval, maxInterval);
     }
 }

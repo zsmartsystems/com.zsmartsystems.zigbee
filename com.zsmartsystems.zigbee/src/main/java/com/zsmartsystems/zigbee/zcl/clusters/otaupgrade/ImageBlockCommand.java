@@ -19,7 +19,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Image Block Command value object class.
  * <p>
- * Cluster: <b>Ota Upgrade</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>Ota Upgrade</b>. Command ID 0x03 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Ota Upgrade cluster.
  * <p>
  * The client device requests the image data at its leisure by sending Image Block Request
@@ -37,7 +37,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class ImageBlockCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.

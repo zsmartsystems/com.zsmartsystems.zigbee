@@ -18,7 +18,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * On With Timed Off Command value object class.
  * <p>
- * Cluster: <b>On/Off</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>On/Off</b>. Command ID 0x42 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the On/Off cluster.
  * <p>
  * The On With Timed Off command allows devices to be turned on for a specific duration with a
@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class OnWithTimedOffCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.

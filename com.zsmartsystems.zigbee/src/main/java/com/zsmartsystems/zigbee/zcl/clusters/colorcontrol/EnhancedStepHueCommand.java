@@ -18,12 +18,15 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Enhanced Step Hue Command value object class.
  * <p>
- * Cluster: <b>Color Control</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>Color Control</b>. Command ID 0x42 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Color Control cluster.
+ * <p>
+ * The Enhanced Step Hue command allows lamps to be moved in a stepped transition from their
+ * current hue to a target hue, resulting in a linear transition through XY space.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class EnhancedStepHueCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -33,7 +36,7 @@ public class EnhancedStepHueCommand extends ZclCommand {
     /**
      * The command ID.
      */
-    public static int COMMAND_ID = 0x41;
+    public static int COMMAND_ID = 0x42;
 
     /**
      * Step Mode command message field.

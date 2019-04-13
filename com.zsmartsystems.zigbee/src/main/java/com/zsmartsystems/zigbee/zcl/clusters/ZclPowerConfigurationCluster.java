@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T21:33:25Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
 public class ZclPowerConfigurationCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -202,7 +202,14 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
     public static final int ATTR_BATTERYALARMSTATE = 0x003E;
 
     @Override
-    protected Map<Integer, ZclAttribute> initializeAttributes() {
+    protected Map<Integer, ZclAttribute> initializeClientAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
+
+        return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(23);
 
         attributeMap.put(ATTR_MAINSVOLTAGE, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_MAINSVOLTAGE, "Mains Voltage", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
@@ -253,9 +260,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMainsVoltageAsync() {
-        return read(attributes.get(ATTR_MAINSVOLTAGE));
+        return read(serverAttributes.get(ATTR_MAINSVOLTAGE));
     }
 
     /**
@@ -278,13 +287,15 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMainsVoltage(final long refreshPeriod) {
-        if (attributes.get(ATTR_MAINSVOLTAGE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MAINSVOLTAGE).getLastValue();
+        if (serverAttributes.get(ATTR_MAINSVOLTAGE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MAINSVOLTAGE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MAINSVOLTAGE));
+        return (Integer) readSync(serverAttributes.get(ATTR_MAINSVOLTAGE));
     }
 
     /**
@@ -308,9 +319,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMainsFrequencyAsync() {
-        return read(attributes.get(ATTR_MAINSFREQUENCY));
+        return read(serverAttributes.get(ATTR_MAINSFREQUENCY));
     }
 
     /**
@@ -342,13 +355,15 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMainsFrequency(final long refreshPeriod) {
-        if (attributes.get(ATTR_MAINSFREQUENCY).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MAINSFREQUENCY).getLastValue();
+        if (serverAttributes.get(ATTR_MAINSFREQUENCY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MAINSFREQUENCY).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MAINSFREQUENCY));
+        return (Integer) readSync(serverAttributes.get(ATTR_MAINSFREQUENCY));
     }
 
     /**
@@ -363,9 +378,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param mainsAlarmMask the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setMainsAlarmMask(final Integer value) {
-        return write(attributes.get(ATTR_MAINSALARMMASK), value);
+        return write(serverAttributes.get(ATTR_MAINSALARMMASK), value);
     }
 
     /**
@@ -379,9 +396,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMainsAlarmMaskAsync() {
-        return read(attributes.get(ATTR_MAINSALARMMASK));
+        return read(serverAttributes.get(ATTR_MAINSALARMMASK));
     }
 
     /**
@@ -403,13 +422,15 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMainsAlarmMask(final long refreshPeriod) {
-        if (attributes.get(ATTR_MAINSALARMMASK).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MAINSALARMMASK).getLastValue();
+        if (serverAttributes.get(ATTR_MAINSALARMMASK).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MAINSALARMMASK).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MAINSALARMMASK));
+        return (Integer) readSync(serverAttributes.get(ATTR_MAINSALARMMASK));
     }
 
     /**
@@ -435,9 +456,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param mainsVoltageMinThreshold the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setMainsVoltageMinThreshold(final Integer value) {
-        return write(attributes.get(ATTR_MAINSVOLTAGEMINTHRESHOLD), value);
+        return write(serverAttributes.get(ATTR_MAINSVOLTAGEMINTHRESHOLD), value);
     }
 
     /**
@@ -462,9 +485,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMainsVoltageMinThresholdAsync() {
-        return read(attributes.get(ATTR_MAINSVOLTAGEMINTHRESHOLD));
+        return read(serverAttributes.get(ATTR_MAINSVOLTAGEMINTHRESHOLD));
     }
 
     /**
@@ -497,13 +522,15 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMainsVoltageMinThreshold(final long refreshPeriod) {
-        if (attributes.get(ATTR_MAINSVOLTAGEMINTHRESHOLD).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MAINSVOLTAGEMINTHRESHOLD).getLastValue();
+        if (serverAttributes.get(ATTR_MAINSVOLTAGEMINTHRESHOLD).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MAINSVOLTAGEMINTHRESHOLD).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MAINSVOLTAGEMINTHRESHOLD));
+        return (Integer) readSync(serverAttributes.get(ATTR_MAINSVOLTAGEMINTHRESHOLD));
     }
 
     /**
@@ -529,9 +556,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param mainsVoltageMaxThreshold the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setMainsVoltageMaxThreshold(final Integer value) {
-        return write(attributes.get(ATTR_MAINSVOLTAGEMAXTHRESHOLD), value);
+        return write(serverAttributes.get(ATTR_MAINSVOLTAGEMAXTHRESHOLD), value);
     }
 
     /**
@@ -556,9 +585,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMainsVoltageMaxThresholdAsync() {
-        return read(attributes.get(ATTR_MAINSVOLTAGEMAXTHRESHOLD));
+        return read(serverAttributes.get(ATTR_MAINSVOLTAGEMAXTHRESHOLD));
     }
 
     /**
@@ -591,13 +622,15 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMainsVoltageMaxThreshold(final long refreshPeriod) {
-        if (attributes.get(ATTR_MAINSVOLTAGEMAXTHRESHOLD).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MAINSVOLTAGEMAXTHRESHOLD).getLastValue();
+        if (serverAttributes.get(ATTR_MAINSVOLTAGEMAXTHRESHOLD).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MAINSVOLTAGEMAXTHRESHOLD).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MAINSVOLTAGEMAXTHRESHOLD));
+        return (Integer) readSync(serverAttributes.get(ATTR_MAINSVOLTAGEMAXTHRESHOLD));
     }
 
     /**
@@ -616,9 +649,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param mainsVoltageDwellTripPoint the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setMainsVoltageDwellTripPoint(final Integer value) {
-        return write(attributes.get(ATTR_MAINSVOLTAGEDWELLTRIPPOINT), value);
+        return write(serverAttributes.get(ATTR_MAINSVOLTAGEDWELLTRIPPOINT), value);
     }
 
     /**
@@ -636,9 +671,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMainsVoltageDwellTripPointAsync() {
-        return read(attributes.get(ATTR_MAINSVOLTAGEDWELLTRIPPOINT));
+        return read(serverAttributes.get(ATTR_MAINSVOLTAGEDWELLTRIPPOINT));
     }
 
     /**
@@ -664,13 +701,15 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMainsVoltageDwellTripPoint(final long refreshPeriod) {
-        if (attributes.get(ATTR_MAINSVOLTAGEDWELLTRIPPOINT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MAINSVOLTAGEDWELLTRIPPOINT).getLastValue();
+        if (serverAttributes.get(ATTR_MAINSVOLTAGEDWELLTRIPPOINT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MAINSVOLTAGEDWELLTRIPPOINT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MAINSVOLTAGEDWELLTRIPPOINT));
+        return (Integer) readSync(serverAttributes.get(ATTR_MAINSVOLTAGEDWELLTRIPPOINT));
     }
 
     /**
@@ -685,9 +724,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getBatteryVoltageAsync() {
-        return read(attributes.get(ATTR_BATTERYVOLTAGE));
+        return read(serverAttributes.get(ATTR_BATTERYVOLTAGE));
     }
 
     /**
@@ -710,13 +751,15 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getBatteryVoltage(final long refreshPeriod) {
-        if (attributes.get(ATTR_BATTERYVOLTAGE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_BATTERYVOLTAGE).getLastValue();
+        if (serverAttributes.get(ATTR_BATTERYVOLTAGE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_BATTERYVOLTAGE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_BATTERYVOLTAGE));
+        return (Integer) readSync(serverAttributes.get(ATTR_BATTERYVOLTAGE));
     }
 
     /**
@@ -727,9 +770,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getBatteryPercentageRemainingAsync() {
-        return read(attributes.get(ATTR_BATTERYPERCENTAGEREMAINING));
+        return read(serverAttributes.get(ATTR_BATTERYPERCENTAGEREMAINING));
     }
 
     /**
@@ -748,13 +793,15 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getBatteryPercentageRemaining(final long refreshPeriod) {
-        if (attributes.get(ATTR_BATTERYPERCENTAGEREMAINING).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_BATTERYPERCENTAGEREMAINING).getLastValue();
+        if (serverAttributes.get(ATTR_BATTERYPERCENTAGEREMAINING).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_BATTERYPERCENTAGEREMAINING).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_BATTERYPERCENTAGEREMAINING));
+        return (Integer) readSync(serverAttributes.get(ATTR_BATTERYPERCENTAGEREMAINING));
     }
 
     /**
@@ -769,9 +816,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param batteryManufacturer the {@link String} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setBatteryManufacturer(final String value) {
-        return write(attributes.get(ATTR_BATTERYMANUFACTURER), value);
+        return write(serverAttributes.get(ATTR_BATTERYMANUFACTURER), value);
     }
 
     /**
@@ -785,9 +834,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getBatteryManufacturerAsync() {
-        return read(attributes.get(ATTR_BATTERYMANUFACTURER));
+        return read(serverAttributes.get(ATTR_BATTERYMANUFACTURER));
     }
 
     /**
@@ -809,13 +860,15 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link String} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public String getBatteryManufacturer(final long refreshPeriod) {
-        if (attributes.get(ATTR_BATTERYMANUFACTURER).isLastValueCurrent(refreshPeriod)) {
-            return (String) attributes.get(ATTR_BATTERYMANUFACTURER).getLastValue();
+        if (serverAttributes.get(ATTR_BATTERYMANUFACTURER).isLastValueCurrent(refreshPeriod)) {
+            return (String) serverAttributes.get(ATTR_BATTERYMANUFACTURER).getLastValue();
         }
 
-        return (String) readSync(attributes.get(ATTR_BATTERYMANUFACTURER));
+        return (String) readSync(serverAttributes.get(ATTR_BATTERYMANUFACTURER));
     }
 
     /**
@@ -830,9 +883,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param batterySize the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setBatterySize(final Integer value) {
-        return write(attributes.get(ATTR_BATTERYSIZE), value);
+        return write(serverAttributes.get(ATTR_BATTERYSIZE), value);
     }
 
     /**
@@ -846,9 +901,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getBatterySizeAsync() {
-        return read(attributes.get(ATTR_BATTERYSIZE));
+        return read(serverAttributes.get(ATTR_BATTERYSIZE));
     }
 
     /**
@@ -870,13 +927,15 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getBatterySize(final long refreshPeriod) {
-        if (attributes.get(ATTR_BATTERYSIZE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_BATTERYSIZE).getLastValue();
+        if (serverAttributes.get(ATTR_BATTERYSIZE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_BATTERYSIZE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_BATTERYSIZE));
+        return (Integer) readSync(serverAttributes.get(ATTR_BATTERYSIZE));
     }
 
     /**
@@ -891,9 +950,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param batteryAHrRating the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setBatteryAHrRating(final Integer value) {
-        return write(attributes.get(ATTR_BATTERYAHRRATING), value);
+        return write(serverAttributes.get(ATTR_BATTERYAHRRATING), value);
     }
 
     /**
@@ -907,9 +968,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getBatteryAHrRatingAsync() {
-        return read(attributes.get(ATTR_BATTERYAHRRATING));
+        return read(serverAttributes.get(ATTR_BATTERYAHRRATING));
     }
 
     /**
@@ -931,13 +994,15 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getBatteryAHrRating(final long refreshPeriod) {
-        if (attributes.get(ATTR_BATTERYAHRRATING).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_BATTERYAHRRATING).getLastValue();
+        if (serverAttributes.get(ATTR_BATTERYAHRRATING).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_BATTERYAHRRATING).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_BATTERYAHRRATING));
+        return (Integer) readSync(serverAttributes.get(ATTR_BATTERYAHRRATING));
     }
 
     /**
@@ -952,9 +1017,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param batteryQuantity the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setBatteryQuantity(final Integer value) {
-        return write(attributes.get(ATTR_BATTERYQUANTITY), value);
+        return write(serverAttributes.get(ATTR_BATTERYQUANTITY), value);
     }
 
     /**
@@ -968,9 +1035,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getBatteryQuantityAsync() {
-        return read(attributes.get(ATTR_BATTERYQUANTITY));
+        return read(serverAttributes.get(ATTR_BATTERYQUANTITY));
     }
 
     /**
@@ -992,13 +1061,15 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getBatteryQuantity(final long refreshPeriod) {
-        if (attributes.get(ATTR_BATTERYQUANTITY).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_BATTERYQUANTITY).getLastValue();
+        if (serverAttributes.get(ATTR_BATTERYQUANTITY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_BATTERYQUANTITY).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_BATTERYQUANTITY));
+        return (Integer) readSync(serverAttributes.get(ATTR_BATTERYQUANTITY));
     }
 
     /**
@@ -1013,9 +1084,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param batteryRatedVoltage the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setBatteryRatedVoltage(final Integer value) {
-        return write(attributes.get(ATTR_BATTERYRATEDVOLTAGE), value);
+        return write(serverAttributes.get(ATTR_BATTERYRATEDVOLTAGE), value);
     }
 
     /**
@@ -1029,9 +1102,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getBatteryRatedVoltageAsync() {
-        return read(attributes.get(ATTR_BATTERYRATEDVOLTAGE));
+        return read(serverAttributes.get(ATTR_BATTERYRATEDVOLTAGE));
     }
 
     /**
@@ -1053,13 +1128,15 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getBatteryRatedVoltage(final long refreshPeriod) {
-        if (attributes.get(ATTR_BATTERYRATEDVOLTAGE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_BATTERYRATEDVOLTAGE).getLastValue();
+        if (serverAttributes.get(ATTR_BATTERYRATEDVOLTAGE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_BATTERYRATEDVOLTAGE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_BATTERYRATEDVOLTAGE));
+        return (Integer) readSync(serverAttributes.get(ATTR_BATTERYRATEDVOLTAGE));
     }
 
     /**
@@ -1074,9 +1151,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param batteryAlarmMask the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setBatteryAlarmMask(final Integer value) {
-        return write(attributes.get(ATTR_BATTERYALARMMASK), value);
+        return write(serverAttributes.get(ATTR_BATTERYALARMMASK), value);
     }
 
     /**
@@ -1090,9 +1169,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getBatteryAlarmMaskAsync() {
-        return read(attributes.get(ATTR_BATTERYALARMMASK));
+        return read(serverAttributes.get(ATTR_BATTERYALARMMASK));
     }
 
     /**
@@ -1114,13 +1195,15 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getBatteryAlarmMask(final long refreshPeriod) {
-        if (attributes.get(ATTR_BATTERYALARMMASK).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_BATTERYALARMMASK).getLastValue();
+        if (serverAttributes.get(ATTR_BATTERYALARMMASK).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_BATTERYALARMMASK).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_BATTERYALARMMASK));
+        return (Integer) readSync(serverAttributes.get(ATTR_BATTERYALARMMASK));
     }
 
     /**
@@ -1143,9 +1226,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param batteryVoltageMinThreshold the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setBatteryVoltageMinThreshold(final Integer value) {
-        return write(attributes.get(ATTR_BATTERYVOLTAGEMINTHRESHOLD), value);
+        return write(serverAttributes.get(ATTR_BATTERYVOLTAGEMINTHRESHOLD), value);
     }
 
     /**
@@ -1167,9 +1252,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getBatteryVoltageMinThresholdAsync() {
-        return read(attributes.get(ATTR_BATTERYVOLTAGEMINTHRESHOLD));
+        return read(serverAttributes.get(ATTR_BATTERYVOLTAGEMINTHRESHOLD));
     }
 
     /**
@@ -1199,13 +1286,15 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getBatteryVoltageMinThreshold(final long refreshPeriod) {
-        if (attributes.get(ATTR_BATTERYVOLTAGEMINTHRESHOLD).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_BATTERYVOLTAGEMINTHRESHOLD).getLastValue();
+        if (serverAttributes.get(ATTR_BATTERYVOLTAGEMINTHRESHOLD).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_BATTERYVOLTAGEMINTHRESHOLD).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_BATTERYVOLTAGEMINTHRESHOLD));
+        return (Integer) readSync(serverAttributes.get(ATTR_BATTERYVOLTAGEMINTHRESHOLD));
     }
 
     /**
@@ -1220,9 +1309,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param batteryVoltageThreshold1 the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setBatteryVoltageThreshold1(final Integer value) {
-        return write(attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD1), value);
+        return write(serverAttributes.get(ATTR_BATTERYVOLTAGETHRESHOLD1), value);
     }
 
     /**
@@ -1236,9 +1327,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getBatteryVoltageThreshold1Async() {
-        return read(attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD1));
+        return read(serverAttributes.get(ATTR_BATTERYVOLTAGETHRESHOLD1));
     }
 
     /**
@@ -1260,13 +1353,15 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getBatteryVoltageThreshold1(final long refreshPeriod) {
-        if (attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD1).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD1).getLastValue();
+        if (serverAttributes.get(ATTR_BATTERYVOLTAGETHRESHOLD1).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_BATTERYVOLTAGETHRESHOLD1).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD1));
+        return (Integer) readSync(serverAttributes.get(ATTR_BATTERYVOLTAGETHRESHOLD1));
     }
 
     /**
@@ -1281,9 +1376,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param batteryVoltageThreshold2 the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setBatteryVoltageThreshold2(final Integer value) {
-        return write(attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD2), value);
+        return write(serverAttributes.get(ATTR_BATTERYVOLTAGETHRESHOLD2), value);
     }
 
     /**
@@ -1297,9 +1394,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getBatteryVoltageThreshold2Async() {
-        return read(attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD2));
+        return read(serverAttributes.get(ATTR_BATTERYVOLTAGETHRESHOLD2));
     }
 
     /**
@@ -1321,13 +1420,15 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getBatteryVoltageThreshold2(final long refreshPeriod) {
-        if (attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD2).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD2).getLastValue();
+        if (serverAttributes.get(ATTR_BATTERYVOLTAGETHRESHOLD2).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_BATTERYVOLTAGETHRESHOLD2).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD2));
+        return (Integer) readSync(serverAttributes.get(ATTR_BATTERYVOLTAGETHRESHOLD2));
     }
 
     /**
@@ -1342,9 +1443,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param batteryVoltageThreshold3 the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setBatteryVoltageThreshold3(final Integer value) {
-        return write(attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD3), value);
+        return write(serverAttributes.get(ATTR_BATTERYVOLTAGETHRESHOLD3), value);
     }
 
     /**
@@ -1358,9 +1461,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getBatteryVoltageThreshold3Async() {
-        return read(attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD3));
+        return read(serverAttributes.get(ATTR_BATTERYVOLTAGETHRESHOLD3));
     }
 
     /**
@@ -1382,13 +1487,15 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getBatteryVoltageThreshold3(final long refreshPeriod) {
-        if (attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD3).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD3).getLastValue();
+        if (serverAttributes.get(ATTR_BATTERYVOLTAGETHRESHOLD3).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_BATTERYVOLTAGETHRESHOLD3).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_BATTERYVOLTAGETHRESHOLD3));
+        return (Integer) readSync(serverAttributes.get(ATTR_BATTERYVOLTAGETHRESHOLD3));
     }
 
     /**
@@ -1403,9 +1510,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param batteryPercentageMinThreshold the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setBatteryPercentageMinThreshold(final Integer value) {
-        return write(attributes.get(ATTR_BATTERYPERCENTAGEMINTHRESHOLD), value);
+        return write(serverAttributes.get(ATTR_BATTERYPERCENTAGEMINTHRESHOLD), value);
     }
 
     /**
@@ -1419,9 +1528,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getBatteryPercentageMinThresholdAsync() {
-        return read(attributes.get(ATTR_BATTERYPERCENTAGEMINTHRESHOLD));
+        return read(serverAttributes.get(ATTR_BATTERYPERCENTAGEMINTHRESHOLD));
     }
 
     /**
@@ -1443,13 +1554,15 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getBatteryPercentageMinThreshold(final long refreshPeriod) {
-        if (attributes.get(ATTR_BATTERYPERCENTAGEMINTHRESHOLD).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_BATTERYPERCENTAGEMINTHRESHOLD).getLastValue();
+        if (serverAttributes.get(ATTR_BATTERYPERCENTAGEMINTHRESHOLD).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_BATTERYPERCENTAGEMINTHRESHOLD).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_BATTERYPERCENTAGEMINTHRESHOLD));
+        return (Integer) readSync(serverAttributes.get(ATTR_BATTERYPERCENTAGEMINTHRESHOLD));
     }
 
     /**
@@ -1464,9 +1577,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param batteryPercentageThreshold1 the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setBatteryPercentageThreshold1(final Integer value) {
-        return write(attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD1), value);
+        return write(serverAttributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD1), value);
     }
 
     /**
@@ -1480,9 +1595,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getBatteryPercentageThreshold1Async() {
-        return read(attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD1));
+        return read(serverAttributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD1));
     }
 
     /**
@@ -1504,13 +1621,15 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getBatteryPercentageThreshold1(final long refreshPeriod) {
-        if (attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD1).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD1).getLastValue();
+        if (serverAttributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD1).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD1).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD1));
+        return (Integer) readSync(serverAttributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD1));
     }
 
     /**
@@ -1525,9 +1644,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param batteryPercentageThreshold2 the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setBatteryPercentageThreshold2(final Integer value) {
-        return write(attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD2), value);
+        return write(serverAttributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD2), value);
     }
 
     /**
@@ -1541,9 +1662,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getBatteryPercentageThreshold2Async() {
-        return read(attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD2));
+        return read(serverAttributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD2));
     }
 
     /**
@@ -1565,13 +1688,15 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getBatteryPercentageThreshold2(final long refreshPeriod) {
-        if (attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD2).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD2).getLastValue();
+        if (serverAttributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD2).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD2).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD2));
+        return (Integer) readSync(serverAttributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD2));
     }
 
     /**
@@ -1586,9 +1711,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param batteryPercentageThreshold3 the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setBatteryPercentageThreshold3(final Integer value) {
-        return write(attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD3), value);
+        return write(serverAttributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD3), value);
     }
 
     /**
@@ -1602,9 +1729,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getBatteryPercentageThreshold3Async() {
-        return read(attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD3));
+        return read(serverAttributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD3));
     }
 
     /**
@@ -1626,13 +1755,15 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getBatteryPercentageThreshold3(final long refreshPeriod) {
-        if (attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD3).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD3).getLastValue();
+        if (serverAttributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD3).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD3).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD3));
+        return (Integer) readSync(serverAttributes.get(ATTR_BATTERYPERCENTAGETHRESHOLD3));
     }
 
     /**
@@ -1648,9 +1779,11 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getBatteryAlarmStateAsync() {
-        return read(attributes.get(ATTR_BATTERYALARMSTATE));
+        return read(serverAttributes.get(ATTR_BATTERYALARMSTATE));
     }
 
     /**
@@ -1674,12 +1807,14 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getBatteryAlarmState(final long refreshPeriod) {
-        if (attributes.get(ATTR_BATTERYALARMSTATE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_BATTERYALARMSTATE).getLastValue();
+        if (serverAttributes.get(ATTR_BATTERYALARMSTATE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_BATTERYALARMSTATE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_BATTERYALARMSTATE));
+        return (Integer) readSync(serverAttributes.get(ATTR_BATTERYALARMSTATE));
     }
 }

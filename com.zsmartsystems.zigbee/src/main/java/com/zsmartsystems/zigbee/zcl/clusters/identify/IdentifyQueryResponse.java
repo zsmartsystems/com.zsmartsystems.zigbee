@@ -18,7 +18,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Identify Query Response value object class.
  * <p>
- * Cluster: <b>Identify</b>. Command is sent <b>FROM</b> the server.
+ * Cluster: <b>Identify</b>. Command ID 0x00 is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the Identify cluster.
  * <p>
  * The identify query response command is generated in response to receiving an Identify Query
@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class IdentifyQueryResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.

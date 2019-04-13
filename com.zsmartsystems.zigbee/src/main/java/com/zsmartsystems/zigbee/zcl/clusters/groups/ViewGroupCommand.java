@@ -18,7 +18,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * View Group Command value object class.
  * <p>
- * Cluster: <b>Groups</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>Groups</b>. Command ID 0x01 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Groups cluster.
  * <p>
  * The view group command allows the sending device to request that the receiving entity or
@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class ViewGroupCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.

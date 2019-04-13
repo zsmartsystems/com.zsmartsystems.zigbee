@@ -105,6 +105,7 @@ public abstract class ZigBeeBaseClassGenerator {
         standardTypes.add("Boolean");
         standardTypes.add("Object");
         standardTypes.add("Long");
+        standardTypes.add("Double");
         standardTypes.add("String");
         standardTypes.add("int[]");
 
@@ -390,6 +391,24 @@ public abstract class ZigBeeBaseClassGenerator {
         } else {
             out.println("     * @return the {@link Future<CommandResult>} command result future");
         }
+
+        String replacedBy;
+        if ("Set reporting for".equals(type)) {
+            replacedBy = "setReporting(int attributeId, int minInterval, int maxInterval";
+            if (zclDataType.analogue) {
+                replacedBy += ", Object reportableChange";
+            }
+        } else if (type.contains("Set")) {
+            replacedBy = "writeAttribute(int attributeId, Object value";
+        } else if ("Synchronously get".equals(type)) {
+            replacedBy = "readAttributeValue(int attributeId, long refreshPeriod";
+        } else {
+            replacedBy = "readAttribute(int attributeId";
+        }
+        replacedBy += ")";
+
+        out.println("     * @deprecated As of release 1.2.0, replaced by {@link #" + replacedBy + "}");
+
         out.println("     */");
     }
 

@@ -35,7 +35,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T12:06:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
 public class ZclThermostatCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -112,7 +112,14 @@ public class ZclThermostatCluster extends ZclCluster {
     public static final int ATTR_THERMOSTATRUNNINGMODE = 0x001E;
 
     @Override
-    protected Map<Integer, ZclAttribute> initializeAttributes() {
+    protected Map<Integer, ZclAttribute> initializeClientAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
+
+        return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(25);
 
         attributeMap.put(ATTR_LOCALTEMPERATURE, new ZclAttribute(ZclClusterType.THERMOSTAT, ATTR_LOCALTEMPERATURE, "Local Temperature", ZclDataType.SIGNED_16_BIT_INTEGER, true, true, false, true));
@@ -187,9 +194,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getLocalTemperatureAsync() {
-        return read(attributes.get(ATTR_LOCALTEMPERATURE));
+        return read(serverAttributes.get(ATTR_LOCALTEMPERATURE));
     }
 
     /**
@@ -211,13 +220,15 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getLocalTemperature(final long refreshPeriod) {
-        if (attributes.get(ATTR_LOCALTEMPERATURE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_LOCALTEMPERATURE).getLastValue();
+        if (serverAttributes.get(ATTR_LOCALTEMPERATURE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_LOCALTEMPERATURE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_LOCALTEMPERATURE));
+        return (Integer) readSync(serverAttributes.get(ATTR_LOCALTEMPERATURE));
     }
 
     /**
@@ -234,9 +245,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setLocalTemperatureReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_LOCALTEMPERATURE), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_LOCALTEMPERATURE), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -250,9 +263,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getOutdoorTemperatureAsync() {
-        return read(attributes.get(ATTR_OUTDOORTEMPERATURE));
+        return read(serverAttributes.get(ATTR_OUTDOORTEMPERATURE));
     }
 
     /**
@@ -274,13 +289,15 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getOutdoorTemperature(final long refreshPeriod) {
-        if (attributes.get(ATTR_OUTDOORTEMPERATURE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_OUTDOORTEMPERATURE).getLastValue();
+        if (serverAttributes.get(ATTR_OUTDOORTEMPERATURE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_OUTDOORTEMPERATURE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_OUTDOORTEMPERATURE));
+        return (Integer) readSync(serverAttributes.get(ATTR_OUTDOORTEMPERATURE));
     }
 
     /**
@@ -293,9 +310,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getOccupancyAsync() {
-        return read(attributes.get(ATTR_OCCUPANCY));
+        return read(serverAttributes.get(ATTR_OCCUPANCY));
     }
 
     /**
@@ -316,13 +335,15 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getOccupancy(final long refreshPeriod) {
-        if (attributes.get(ATTR_OCCUPANCY).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_OCCUPANCY).getLastValue();
+        if (serverAttributes.get(ATTR_OCCUPANCY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_OCCUPANCY).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_OCCUPANCY));
+        return (Integer) readSync(serverAttributes.get(ATTR_OCCUPANCY));
     }
 
     /**
@@ -336,9 +357,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAbsMinHeatSetpointLimitAsync() {
-        return read(attributes.get(ATTR_ABSMINHEATSETPOINTLIMIT));
+        return read(serverAttributes.get(ATTR_ABSMINHEATSETPOINTLIMIT));
     }
 
     /**
@@ -360,13 +383,15 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAbsMinHeatSetpointLimit(final long refreshPeriod) {
-        if (attributes.get(ATTR_ABSMINHEATSETPOINTLIMIT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ABSMINHEATSETPOINTLIMIT).getLastValue();
+        if (serverAttributes.get(ATTR_ABSMINHEATSETPOINTLIMIT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ABSMINHEATSETPOINTLIMIT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ABSMINHEATSETPOINTLIMIT));
+        return (Integer) readSync(serverAttributes.get(ATTR_ABSMINHEATSETPOINTLIMIT));
     }
 
     /**
@@ -380,9 +405,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAbsMaxHeatSetpointLimitAsync() {
-        return read(attributes.get(ATTR_ABSMAXHEATSETPOINTLIMIT));
+        return read(serverAttributes.get(ATTR_ABSMAXHEATSETPOINTLIMIT));
     }
 
     /**
@@ -404,13 +431,15 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAbsMaxHeatSetpointLimit(final long refreshPeriod) {
-        if (attributes.get(ATTR_ABSMAXHEATSETPOINTLIMIT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ABSMAXHEATSETPOINTLIMIT).getLastValue();
+        if (serverAttributes.get(ATTR_ABSMAXHEATSETPOINTLIMIT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ABSMAXHEATSETPOINTLIMIT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ABSMAXHEATSETPOINTLIMIT));
+        return (Integer) readSync(serverAttributes.get(ATTR_ABSMAXHEATSETPOINTLIMIT));
     }
 
     /**
@@ -424,9 +453,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAbsMinCoolSetpointLimitAsync() {
-        return read(attributes.get(ATTR_ABSMINCOOLSETPOINTLIMIT));
+        return read(serverAttributes.get(ATTR_ABSMINCOOLSETPOINTLIMIT));
     }
 
     /**
@@ -448,13 +479,15 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAbsMinCoolSetpointLimit(final long refreshPeriod) {
-        if (attributes.get(ATTR_ABSMINCOOLSETPOINTLIMIT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ABSMINCOOLSETPOINTLIMIT).getLastValue();
+        if (serverAttributes.get(ATTR_ABSMINCOOLSETPOINTLIMIT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ABSMINCOOLSETPOINTLIMIT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ABSMINCOOLSETPOINTLIMIT));
+        return (Integer) readSync(serverAttributes.get(ATTR_ABSMINCOOLSETPOINTLIMIT));
     }
 
     /**
@@ -468,9 +501,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAbsMaxCoolSetpointLimitAsync() {
-        return read(attributes.get(ATTR_ABSMAXCOOLSETPOINTLIMIT));
+        return read(serverAttributes.get(ATTR_ABSMAXCOOLSETPOINTLIMIT));
     }
 
     /**
@@ -492,13 +527,15 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAbsMaxCoolSetpointLimit(final long refreshPeriod) {
-        if (attributes.get(ATTR_ABSMAXCOOLSETPOINTLIMIT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ABSMAXCOOLSETPOINTLIMIT).getLastValue();
+        if (serverAttributes.get(ATTR_ABSMAXCOOLSETPOINTLIMIT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ABSMAXCOOLSETPOINTLIMIT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ABSMAXCOOLSETPOINTLIMIT));
+        return (Integer) readSync(serverAttributes.get(ATTR_ABSMAXCOOLSETPOINTLIMIT));
     }
 
     /**
@@ -513,9 +550,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPiCoolingDemandAsync() {
-        return read(attributes.get(ATTR_PICOOLINGDEMAND));
+        return read(serverAttributes.get(ATTR_PICOOLINGDEMAND));
     }
 
     /**
@@ -538,13 +577,15 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPiCoolingDemand(final long refreshPeriod) {
-        if (attributes.get(ATTR_PICOOLINGDEMAND).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PICOOLINGDEMAND).getLastValue();
+        if (serverAttributes.get(ATTR_PICOOLINGDEMAND).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PICOOLINGDEMAND).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PICOOLINGDEMAND));
+        return (Integer) readSync(serverAttributes.get(ATTR_PICOOLINGDEMAND));
     }
 
     /**
@@ -559,9 +600,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPiHeatingDemandAsync() {
-        return read(attributes.get(ATTR_PIHEATINGDEMAND));
+        return read(serverAttributes.get(ATTR_PIHEATINGDEMAND));
     }
 
     /**
@@ -584,13 +627,15 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPiHeatingDemand(final long refreshPeriod) {
-        if (attributes.get(ATTR_PIHEATINGDEMAND).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PIHEATINGDEMAND).getLastValue();
+        if (serverAttributes.get(ATTR_PIHEATINGDEMAND).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PIHEATINGDEMAND).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PIHEATINGDEMAND));
+        return (Integer) readSync(serverAttributes.get(ATTR_PIHEATINGDEMAND));
     }
 
     /**
@@ -601,9 +646,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getHvacSystemTypeConfigurationAsync() {
-        return read(attributes.get(ATTR_HVACSYSTEMTYPECONFIGURATION));
+        return read(serverAttributes.get(ATTR_HVACSYSTEMTYPECONFIGURATION));
     }
 
     /**
@@ -622,13 +669,15 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getHvacSystemTypeConfiguration(final long refreshPeriod) {
-        if (attributes.get(ATTR_HVACSYSTEMTYPECONFIGURATION).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_HVACSYSTEMTYPECONFIGURATION).getLastValue();
+        if (serverAttributes.get(ATTR_HVACSYSTEMTYPECONFIGURATION).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_HVACSYSTEMTYPECONFIGURATION).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_HVACSYSTEMTYPECONFIGURATION));
+        return (Integer) readSync(serverAttributes.get(ATTR_HVACSYSTEMTYPECONFIGURATION));
     }
 
     /**
@@ -639,9 +688,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getLocalTemperatureCalibrationAsync() {
-        return read(attributes.get(ATTR_LOCALTEMPERATURECALIBRATION));
+        return read(serverAttributes.get(ATTR_LOCALTEMPERATURECALIBRATION));
     }
 
     /**
@@ -660,13 +711,15 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getLocalTemperatureCalibration(final long refreshPeriod) {
-        if (attributes.get(ATTR_LOCALTEMPERATURECALIBRATION).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_LOCALTEMPERATURECALIBRATION).getLastValue();
+        if (serverAttributes.get(ATTR_LOCALTEMPERATURECALIBRATION).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_LOCALTEMPERATURECALIBRATION).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_LOCALTEMPERATURECALIBRATION));
+        return (Integer) readSync(serverAttributes.get(ATTR_LOCALTEMPERATURECALIBRATION));
     }
 
     /**
@@ -677,9 +730,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getOccupiedCoolingSetpointAsync() {
-        return read(attributes.get(ATTR_OCCUPIEDCOOLINGSETPOINT));
+        return read(serverAttributes.get(ATTR_OCCUPIEDCOOLINGSETPOINT));
     }
 
     /**
@@ -698,13 +753,15 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getOccupiedCoolingSetpoint(final long refreshPeriod) {
-        if (attributes.get(ATTR_OCCUPIEDCOOLINGSETPOINT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_OCCUPIEDCOOLINGSETPOINT).getLastValue();
+        if (serverAttributes.get(ATTR_OCCUPIEDCOOLINGSETPOINT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_OCCUPIEDCOOLINGSETPOINT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_OCCUPIEDCOOLINGSETPOINT));
+        return (Integer) readSync(serverAttributes.get(ATTR_OCCUPIEDCOOLINGSETPOINT));
     }
 
     /**
@@ -718,9 +775,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setOccupiedCoolingSetpointReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_OCCUPIEDCOOLINGSETPOINT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_OCCUPIEDCOOLINGSETPOINT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -731,9 +790,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getOccupiedHeatingSetpointAsync() {
-        return read(attributes.get(ATTR_OCCUPIEDHEATINGSETPOINT));
+        return read(serverAttributes.get(ATTR_OCCUPIEDHEATINGSETPOINT));
     }
 
     /**
@@ -752,13 +813,15 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getOccupiedHeatingSetpoint(final long refreshPeriod) {
-        if (attributes.get(ATTR_OCCUPIEDHEATINGSETPOINT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_OCCUPIEDHEATINGSETPOINT).getLastValue();
+        if (serverAttributes.get(ATTR_OCCUPIEDHEATINGSETPOINT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_OCCUPIEDHEATINGSETPOINT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_OCCUPIEDHEATINGSETPOINT));
+        return (Integer) readSync(serverAttributes.get(ATTR_OCCUPIEDHEATINGSETPOINT));
     }
 
     /**
@@ -772,9 +835,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setOccupiedHeatingSetpointReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_OCCUPIEDHEATINGSETPOINT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_OCCUPIEDHEATINGSETPOINT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -785,9 +850,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getUnoccupiedCoolingSetpointAsync() {
-        return read(attributes.get(ATTR_UNOCCUPIEDCOOLINGSETPOINT));
+        return read(serverAttributes.get(ATTR_UNOCCUPIEDCOOLINGSETPOINT));
     }
 
     /**
@@ -806,13 +873,15 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getUnoccupiedCoolingSetpoint(final long refreshPeriod) {
-        if (attributes.get(ATTR_UNOCCUPIEDCOOLINGSETPOINT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_UNOCCUPIEDCOOLINGSETPOINT).getLastValue();
+        if (serverAttributes.get(ATTR_UNOCCUPIEDCOOLINGSETPOINT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_UNOCCUPIEDCOOLINGSETPOINT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_UNOCCUPIEDCOOLINGSETPOINT));
+        return (Integer) readSync(serverAttributes.get(ATTR_UNOCCUPIEDCOOLINGSETPOINT));
     }
 
     /**
@@ -823,9 +892,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getUnoccupiedHeatingSetpointAsync() {
-        return read(attributes.get(ATTR_UNOCCUPIEDHEATINGSETPOINT));
+        return read(serverAttributes.get(ATTR_UNOCCUPIEDHEATINGSETPOINT));
     }
 
     /**
@@ -844,13 +915,15 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getUnoccupiedHeatingSetpoint(final long refreshPeriod) {
-        if (attributes.get(ATTR_UNOCCUPIEDHEATINGSETPOINT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_UNOCCUPIEDHEATINGSETPOINT).getLastValue();
+        if (serverAttributes.get(ATTR_UNOCCUPIEDHEATINGSETPOINT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_UNOCCUPIEDHEATINGSETPOINT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_UNOCCUPIEDHEATINGSETPOINT));
+        return (Integer) readSync(serverAttributes.get(ATTR_UNOCCUPIEDHEATINGSETPOINT));
     }
 
     /**
@@ -861,9 +934,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMinHeatSetpointLimitAsync() {
-        return read(attributes.get(ATTR_MINHEATSETPOINTLIMIT));
+        return read(serverAttributes.get(ATTR_MINHEATSETPOINTLIMIT));
     }
 
     /**
@@ -882,13 +957,15 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMinHeatSetpointLimit(final long refreshPeriod) {
-        if (attributes.get(ATTR_MINHEATSETPOINTLIMIT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MINHEATSETPOINTLIMIT).getLastValue();
+        if (serverAttributes.get(ATTR_MINHEATSETPOINTLIMIT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MINHEATSETPOINTLIMIT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MINHEATSETPOINTLIMIT));
+        return (Integer) readSync(serverAttributes.get(ATTR_MINHEATSETPOINTLIMIT));
     }
 
     /**
@@ -899,9 +976,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMaxHeatSetpointLimitAsync() {
-        return read(attributes.get(ATTR_MAXHEATSETPOINTLIMIT));
+        return read(serverAttributes.get(ATTR_MAXHEATSETPOINTLIMIT));
     }
 
     /**
@@ -920,13 +999,15 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMaxHeatSetpointLimit(final long refreshPeriod) {
-        if (attributes.get(ATTR_MAXHEATSETPOINTLIMIT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MAXHEATSETPOINTLIMIT).getLastValue();
+        if (serverAttributes.get(ATTR_MAXHEATSETPOINTLIMIT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MAXHEATSETPOINTLIMIT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MAXHEATSETPOINTLIMIT));
+        return (Integer) readSync(serverAttributes.get(ATTR_MAXHEATSETPOINTLIMIT));
     }
 
     /**
@@ -937,9 +1018,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMinCoolSetpointLimitAsync() {
-        return read(attributes.get(ATTR_MINCOOLSETPOINTLIMIT));
+        return read(serverAttributes.get(ATTR_MINCOOLSETPOINTLIMIT));
     }
 
     /**
@@ -958,13 +1041,15 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMinCoolSetpointLimit(final long refreshPeriod) {
-        if (attributes.get(ATTR_MINCOOLSETPOINTLIMIT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MINCOOLSETPOINTLIMIT).getLastValue();
+        if (serverAttributes.get(ATTR_MINCOOLSETPOINTLIMIT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MINCOOLSETPOINTLIMIT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MINCOOLSETPOINTLIMIT));
+        return (Integer) readSync(serverAttributes.get(ATTR_MINCOOLSETPOINTLIMIT));
     }
 
     /**
@@ -975,9 +1060,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMaxCoolSetpointLimitAsync() {
-        return read(attributes.get(ATTR_MAXCOOLSETPOINTLIMIT));
+        return read(serverAttributes.get(ATTR_MAXCOOLSETPOINTLIMIT));
     }
 
     /**
@@ -996,13 +1083,15 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMaxCoolSetpointLimit(final long refreshPeriod) {
-        if (attributes.get(ATTR_MAXCOOLSETPOINTLIMIT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MAXCOOLSETPOINTLIMIT).getLastValue();
+        if (serverAttributes.get(ATTR_MAXCOOLSETPOINTLIMIT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MAXCOOLSETPOINTLIMIT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MAXCOOLSETPOINTLIMIT));
+        return (Integer) readSync(serverAttributes.get(ATTR_MAXCOOLSETPOINTLIMIT));
     }
 
     /**
@@ -1013,9 +1102,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMinSetpointDeadBandAsync() {
-        return read(attributes.get(ATTR_MINSETPOINTDEADBAND));
+        return read(serverAttributes.get(ATTR_MINSETPOINTDEADBAND));
     }
 
     /**
@@ -1034,13 +1125,15 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMinSetpointDeadBand(final long refreshPeriod) {
-        if (attributes.get(ATTR_MINSETPOINTDEADBAND).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MINSETPOINTDEADBAND).getLastValue();
+        if (serverAttributes.get(ATTR_MINSETPOINTDEADBAND).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MINSETPOINTDEADBAND).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MINSETPOINTDEADBAND));
+        return (Integer) readSync(serverAttributes.get(ATTR_MINSETPOINTDEADBAND));
     }
 
     /**
@@ -1051,9 +1144,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRemoteSensingAsync() {
-        return read(attributes.get(ATTR_REMOTESENSING));
+        return read(serverAttributes.get(ATTR_REMOTESENSING));
     }
 
     /**
@@ -1072,13 +1167,15 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRemoteSensing(final long refreshPeriod) {
-        if (attributes.get(ATTR_REMOTESENSING).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_REMOTESENSING).getLastValue();
+        if (serverAttributes.get(ATTR_REMOTESENSING).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_REMOTESENSING).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_REMOTESENSING));
+        return (Integer) readSync(serverAttributes.get(ATTR_REMOTESENSING));
     }
 
     /**
@@ -1089,9 +1186,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getControlSequenceOfOperationAsync() {
-        return read(attributes.get(ATTR_CONTROLSEQUENCEOFOPERATION));
+        return read(serverAttributes.get(ATTR_CONTROLSEQUENCEOFOPERATION));
     }
 
     /**
@@ -1110,13 +1209,15 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getControlSequenceOfOperation(final long refreshPeriod) {
-        if (attributes.get(ATTR_CONTROLSEQUENCEOFOPERATION).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CONTROLSEQUENCEOFOPERATION).getLastValue();
+        if (serverAttributes.get(ATTR_CONTROLSEQUENCEOFOPERATION).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CONTROLSEQUENCEOFOPERATION).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CONTROLSEQUENCEOFOPERATION));
+        return (Integer) readSync(serverAttributes.get(ATTR_CONTROLSEQUENCEOFOPERATION));
     }
 
     /**
@@ -1129,9 +1230,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setControlSequenceOfOperationReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_CONTROLSEQUENCEOFOPERATION), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_CONTROLSEQUENCEOFOPERATION), minInterval, maxInterval);
     }
 
     /**
@@ -1142,9 +1245,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getSystemModeAsync() {
-        return read(attributes.get(ATTR_SYSTEMMODE));
+        return read(serverAttributes.get(ATTR_SYSTEMMODE));
     }
 
     /**
@@ -1163,13 +1268,15 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getSystemMode(final long refreshPeriod) {
-        if (attributes.get(ATTR_SYSTEMMODE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_SYSTEMMODE).getLastValue();
+        if (serverAttributes.get(ATTR_SYSTEMMODE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_SYSTEMMODE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_SYSTEMMODE));
+        return (Integer) readSync(serverAttributes.get(ATTR_SYSTEMMODE));
     }
 
     /**
@@ -1182,9 +1289,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setSystemModeReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_SYSTEMMODE), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_SYSTEMMODE), minInterval, maxInterval);
     }
 
     /**
@@ -1195,9 +1304,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAlarmMaskAsync() {
-        return read(attributes.get(ATTR_ALARMMASK));
+        return read(serverAttributes.get(ATTR_ALARMMASK));
     }
 
     /**
@@ -1216,13 +1327,15 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAlarmMask(final long refreshPeriod) {
-        if (attributes.get(ATTR_ALARMMASK).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ALARMMASK).getLastValue();
+        if (serverAttributes.get(ATTR_ALARMMASK).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ALARMMASK).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ALARMMASK));
+        return (Integer) readSync(serverAttributes.get(ATTR_ALARMMASK));
     }
 
     /**
@@ -1233,9 +1346,11 @@ public class ZclThermostatCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getThermostatRunningModeAsync() {
-        return read(attributes.get(ATTR_THERMOSTATRUNNINGMODE));
+        return read(serverAttributes.get(ATTR_THERMOSTATRUNNINGMODE));
     }
 
     /**
@@ -1254,13 +1369,15 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getThermostatRunningMode(final long refreshPeriod) {
-        if (attributes.get(ATTR_THERMOSTATRUNNINGMODE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_THERMOSTATRUNNINGMODE).getLastValue();
+        if (serverAttributes.get(ATTR_THERMOSTATRUNNINGMODE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_THERMOSTATRUNNINGMODE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_THERMOSTATRUNNINGMODE));
+        return (Integer) readSync(serverAttributes.get(ATTR_THERMOSTATRUNNINGMODE));
     }
 
     /**

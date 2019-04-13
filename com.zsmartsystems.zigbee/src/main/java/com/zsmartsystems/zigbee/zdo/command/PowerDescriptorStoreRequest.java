@@ -22,12 +22,12 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
 public class PowerDescriptorStoreRequest extends ZdoRequest {
     /**
-     * The cluster ID to which this command belongs.
+     * The ZDO cluster ID.
      */
-    public static int CLUSTER_ID = 0x0000;
+    public static int CLUSTER_ID = 0x0018;
 
     /**
      * Default constructor.

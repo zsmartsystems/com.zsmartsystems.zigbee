@@ -34,7 +34,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T21:33:25Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
 public class ZclOnOffCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -87,7 +87,14 @@ public class ZclOnOffCluster extends ZclCluster {
     public static final int ATTR_OFFWAITTIME = 0x4002;
 
     @Override
-    protected Map<Integer, ZclAttribute> initializeAttributes() {
+    protected Map<Integer, ZclAttribute> initializeClientAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
+
+        return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(4);
 
         attributeMap.put(ATTR_ONOFF, new ZclAttribute(ZclClusterType.ON_OFF, ATTR_ONOFF, "On Off", ZclDataType.BOOLEAN, true, true, false, true));
@@ -131,9 +138,11 @@ public class ZclOnOffCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getOnOffAsync() {
-        return read(attributes.get(ATTR_ONOFF));
+        return read(serverAttributes.get(ATTR_ONOFF));
     }
 
     /**
@@ -154,13 +163,15 @@ public class ZclOnOffCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Boolean} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Boolean getOnOff(final long refreshPeriod) {
-        if (attributes.get(ATTR_ONOFF).isLastValueCurrent(refreshPeriod)) {
-            return (Boolean) attributes.get(ATTR_ONOFF).getLastValue();
+        if (serverAttributes.get(ATTR_ONOFF).isLastValueCurrent(refreshPeriod)) {
+            return (Boolean) serverAttributes.get(ATTR_ONOFF).getLastValue();
         }
 
-        return (Boolean) readSync(attributes.get(ATTR_ONOFF));
+        return (Boolean) readSync(serverAttributes.get(ATTR_ONOFF));
     }
 
     /**
@@ -175,9 +186,11 @@ public class ZclOnOffCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setOnOffReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_ONOFF), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_ONOFF), minInterval, maxInterval);
     }
 
     /**
@@ -205,9 +218,11 @@ public class ZclOnOffCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getGlobalSceneControlAsync() {
-        return read(attributes.get(ATTR_GLOBALSCENECONTROL));
+        return read(serverAttributes.get(ATTR_GLOBALSCENECONTROL));
     }
 
     /**
@@ -243,13 +258,15 @@ public class ZclOnOffCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Boolean} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Boolean getGlobalSceneControl(final long refreshPeriod) {
-        if (attributes.get(ATTR_GLOBALSCENECONTROL).isLastValueCurrent(refreshPeriod)) {
-            return (Boolean) attributes.get(ATTR_GLOBALSCENECONTROL).getLastValue();
+        if (serverAttributes.get(ATTR_GLOBALSCENECONTROL).isLastValueCurrent(refreshPeriod)) {
+            return (Boolean) serverAttributes.get(ATTR_GLOBALSCENECONTROL).getLastValue();
         }
 
-        return (Boolean) readSync(attributes.get(ATTR_GLOBALSCENECONTROL));
+        return (Boolean) readSync(serverAttributes.get(ATTR_GLOBALSCENECONTROL));
     }
 
     /**
@@ -279,9 +296,11 @@ public class ZclOnOffCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setGlobalSceneControlReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_GLOBALSCENECONTROL), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_GLOBALSCENECONTROL), minInterval, maxInterval);
     }
 
     /**
@@ -298,9 +317,11 @@ public class ZclOnOffCluster extends ZclCluster {
      *
      * @param onTime the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setOnTime(final Integer value) {
-        return write(attributes.get(ATTR_ONTIME), value);
+        return write(serverAttributes.get(ATTR_ONTIME), value);
     }
 
     /**
@@ -316,9 +337,11 @@ public class ZclOnOffCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getOnTimeAsync() {
-        return read(attributes.get(ATTR_ONTIME));
+        return read(serverAttributes.get(ATTR_ONTIME));
     }
 
     /**
@@ -342,13 +365,15 @@ public class ZclOnOffCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getOnTime(final long refreshPeriod) {
-        if (attributes.get(ATTR_ONTIME).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ONTIME).getLastValue();
+        if (serverAttributes.get(ATTR_ONTIME).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ONTIME).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ONTIME));
+        return (Integer) readSync(serverAttributes.get(ATTR_ONTIME));
     }
 
     /**
@@ -367,9 +392,11 @@ public class ZclOnOffCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setOnTimeReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_ONTIME), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_ONTIME), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -387,9 +414,11 @@ public class ZclOnOffCluster extends ZclCluster {
      *
      * @param offWaitTime the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setOffWaitTime(final Integer value) {
-        return write(attributes.get(ATTR_OFFWAITTIME), value);
+        return write(serverAttributes.get(ATTR_OFFWAITTIME), value);
     }
 
     /**
@@ -406,9 +435,11 @@ public class ZclOnOffCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getOffWaitTimeAsync() {
-        return read(attributes.get(ATTR_OFFWAITTIME));
+        return read(serverAttributes.get(ATTR_OFFWAITTIME));
     }
 
     /**
@@ -433,13 +464,15 @@ public class ZclOnOffCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getOffWaitTime(final long refreshPeriod) {
-        if (attributes.get(ATTR_OFFWAITTIME).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_OFFWAITTIME).getLastValue();
+        if (serverAttributes.get(ATTR_OFFWAITTIME).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_OFFWAITTIME).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_OFFWAITTIME));
+        return (Integer) readSync(serverAttributes.get(ATTR_OFFWAITTIME));
     }
 
     /**
@@ -459,9 +492,11 @@ public class ZclOnOffCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setOffWaitTimeReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_OFFWAITTIME), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_OFFWAITTIME), minInterval, maxInterval, reportableChange);
     }
 
     /**

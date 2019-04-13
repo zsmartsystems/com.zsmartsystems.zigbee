@@ -19,7 +19,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Consumer Top Up value object class.
  * <p>
- * Cluster: <b>Prepayment</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>Prepayment</b>. Command ID 0x04 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Prepayment cluster.
  * <p>
  * FIXME: The ConsumerTopUp command is used by the IPD and the ESI as a method of applying credit
@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class ConsumerTopUp extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.

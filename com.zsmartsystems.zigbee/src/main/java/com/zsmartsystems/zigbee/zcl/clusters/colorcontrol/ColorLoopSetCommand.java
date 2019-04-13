@@ -18,12 +18,15 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Color Loop Set Command value object class.
  * <p>
- * Cluster: <b>Color Control</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>Color Control</b>. Command ID 0x44 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Color Control cluster.
+ * <p>
+ * The Color Loop Set command allows a color loop to be activated such that the color lamp cycles
+ * through its range of hues.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class ColorLoopSetCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -33,7 +36,7 @@ public class ColorLoopSetCommand extends ZclCommand {
     /**
      * The command ID.
      */
-    public static int COMMAND_ID = 0x43;
+    public static int COMMAND_ID = 0x44;
 
     /**
      * Update Flags command message field.

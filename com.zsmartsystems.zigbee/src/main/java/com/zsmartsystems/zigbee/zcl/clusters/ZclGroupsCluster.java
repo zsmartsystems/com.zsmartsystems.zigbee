@@ -62,7 +62,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
 public class ZclGroupsCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -83,7 +83,14 @@ public class ZclGroupsCluster extends ZclCluster {
     public static final int ATTR_NAMESUPPORT = 0x0000;
 
     @Override
-    protected Map<Integer, ZclAttribute> initializeAttributes() {
+    protected Map<Integer, ZclAttribute> initializeClientAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
+
+        return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(1);
 
         attributeMap.put(ATTR_NAMESUPPORT, new ZclAttribute(ZclClusterType.GROUPS, ATTR_NAMESUPPORT, "Name Support", ZclDataType.BITMAP_8_BIT, true, true, false, false));
@@ -138,9 +145,11 @@ public class ZclGroupsCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getNameSupportAsync() {
-        return read(attributes.get(ATTR_NAMESUPPORT));
+        return read(serverAttributes.get(ATTR_NAMESUPPORT));
     }
 
     /**
@@ -163,13 +172,15 @@ public class ZclGroupsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getNameSupport(final long refreshPeriod) {
-        if (attributes.get(ATTR_NAMESUPPORT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_NAMESUPPORT).getLastValue();
+        if (serverAttributes.get(ATTR_NAMESUPPORT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_NAMESUPPORT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_NAMESUPPORT));
+        return (Integer) readSync(serverAttributes.get(ATTR_NAMESUPPORT));
     }
 
     /**
@@ -186,9 +197,11 @@ public class ZclGroupsCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setNameSupportReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_NAMESUPPORT), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_NAMESUPPORT), minInterval, maxInterval);
     }
 
     /**

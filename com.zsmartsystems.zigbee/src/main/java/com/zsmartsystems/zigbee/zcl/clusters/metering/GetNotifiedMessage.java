@@ -18,7 +18,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Get Notified Message value object class.
  * <p>
- * Cluster: <b>Metering</b>. Command is sent <b>FROM</b> the server.
+ * Cluster: <b>Metering</b>. Command ID 0x0B is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the Metering cluster.
  * <p>
  * The GetNotifiedMessage command is used only when a BOMD is being mirrored. This command
@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class GetNotifiedMessage extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.

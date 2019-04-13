@@ -18,14 +18,14 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Window Covering Go To Tilt Percentage value object class.
  * <p>
- * Cluster: <b>Window Covering</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>Window Covering</b>. Command ID 0x08 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Window Covering cluster.
  * <p>
  * Goto the specified tilt percentage
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class WindowCoveringGoToTiltPercentage extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.

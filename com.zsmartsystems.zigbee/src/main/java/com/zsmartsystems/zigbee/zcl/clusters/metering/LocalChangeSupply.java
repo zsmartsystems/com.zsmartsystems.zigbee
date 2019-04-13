@@ -18,7 +18,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Local Change Supply value object class.
  * <p>
- * Cluster: <b>Metering</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>Metering</b>. Command ID 0x0C is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Metering cluster.
  * <p>
  * This command is a simplified version of the ChangeSupply command, intended to be sent from an
@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class LocalChangeSupply extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.

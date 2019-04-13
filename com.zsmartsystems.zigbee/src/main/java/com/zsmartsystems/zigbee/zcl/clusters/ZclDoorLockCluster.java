@@ -56,7 +56,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
 public class ZclDoorLockCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -313,7 +313,14 @@ public class ZclDoorLockCluster extends ZclCluster {
     public static final int ATTR_RFIDPROGRAMMINGEVENTMASK = 0x0047;
 
     @Override
-    protected Map<Integer, ZclAttribute> initializeAttributes() {
+    protected Map<Integer, ZclAttribute> initializeClientAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
+
+        return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(43);
 
         attributeMap.put(ATTR_LOCKSTATE, new ZclAttribute(ZclClusterType.DOOR_LOCK, ATTR_LOCKSTATE, "Lock State", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
@@ -406,9 +413,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getLockStateAsync() {
-        return read(attributes.get(ATTR_LOCKSTATE));
+        return read(serverAttributes.get(ATTR_LOCKSTATE));
     }
 
     /**
@@ -429,13 +438,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getLockState(final long refreshPeriod) {
-        if (attributes.get(ATTR_LOCKSTATE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_LOCKSTATE).getLastValue();
+        if (serverAttributes.get(ATTR_LOCKSTATE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_LOCKSTATE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_LOCKSTATE));
+        return (Integer) readSync(serverAttributes.get(ATTR_LOCKSTATE));
     }
 
     /**
@@ -450,9 +461,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setLockStateReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_LOCKSTATE), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_LOCKSTATE), minInterval, maxInterval);
     }
 
     /**
@@ -465,9 +478,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getLockTypeAsync() {
-        return read(attributes.get(ATTR_LOCKTYPE));
+        return read(serverAttributes.get(ATTR_LOCKTYPE));
     }
 
     /**
@@ -488,13 +503,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getLockType(final long refreshPeriod) {
-        if (attributes.get(ATTR_LOCKTYPE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_LOCKTYPE).getLastValue();
+        if (serverAttributes.get(ATTR_LOCKTYPE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_LOCKTYPE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_LOCKTYPE));
+        return (Integer) readSync(serverAttributes.get(ATTR_LOCKTYPE));
     }
 
     /**
@@ -509,9 +526,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setLockTypeReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_LOCKTYPE), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_LOCKTYPE), minInterval, maxInterval);
     }
 
     /**
@@ -524,9 +543,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getActuatorEnabledAsync() {
-        return read(attributes.get(ATTR_ACTUATORENABLED));
+        return read(serverAttributes.get(ATTR_ACTUATORENABLED));
     }
 
     /**
@@ -547,13 +568,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Boolean} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Boolean getActuatorEnabled(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACTUATORENABLED).isLastValueCurrent(refreshPeriod)) {
-            return (Boolean) attributes.get(ATTR_ACTUATORENABLED).getLastValue();
+        if (serverAttributes.get(ATTR_ACTUATORENABLED).isLastValueCurrent(refreshPeriod)) {
+            return (Boolean) serverAttributes.get(ATTR_ACTUATORENABLED).getLastValue();
         }
 
-        return (Boolean) readSync(attributes.get(ATTR_ACTUATORENABLED));
+        return (Boolean) readSync(serverAttributes.get(ATTR_ACTUATORENABLED));
     }
 
     /**
@@ -568,9 +591,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setActuatorEnabledReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_ACTUATORENABLED), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_ACTUATORENABLED), minInterval, maxInterval);
     }
 
     /**
@@ -583,9 +608,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDoorStateAsync() {
-        return read(attributes.get(ATTR_DOORSTATE));
+        return read(serverAttributes.get(ATTR_DOORSTATE));
     }
 
     /**
@@ -606,13 +633,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDoorState(final long refreshPeriod) {
-        if (attributes.get(ATTR_DOORSTATE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DOORSTATE).getLastValue();
+        if (serverAttributes.get(ATTR_DOORSTATE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DOORSTATE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DOORSTATE));
+        return (Integer) readSync(serverAttributes.get(ATTR_DOORSTATE));
     }
 
     /**
@@ -627,9 +656,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setDoorStateReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_DOORSTATE), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_DOORSTATE), minInterval, maxInterval);
     }
 
     /**
@@ -644,9 +675,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param doorOpenEvents the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setDoorOpenEvents(final Integer value) {
-        return write(attributes.get(ATTR_DOOROPENEVENTS), value);
+        return write(serverAttributes.get(ATTR_DOOROPENEVENTS), value);
     }
 
     /**
@@ -660,9 +693,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDoorOpenEventsAsync() {
-        return read(attributes.get(ATTR_DOOROPENEVENTS));
+        return read(serverAttributes.get(ATTR_DOOROPENEVENTS));
     }
 
     /**
@@ -684,13 +719,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDoorOpenEvents(final long refreshPeriod) {
-        if (attributes.get(ATTR_DOOROPENEVENTS).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DOOROPENEVENTS).getLastValue();
+        if (serverAttributes.get(ATTR_DOOROPENEVENTS).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DOOROPENEVENTS).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DOOROPENEVENTS));
+        return (Integer) readSync(serverAttributes.get(ATTR_DOOROPENEVENTS));
     }
 
     /**
@@ -705,9 +742,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param doorClosedEvents the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setDoorClosedEvents(final Integer value) {
-        return write(attributes.get(ATTR_DOORCLOSEDEVENTS), value);
+        return write(serverAttributes.get(ATTR_DOORCLOSEDEVENTS), value);
     }
 
     /**
@@ -721,9 +760,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDoorClosedEventsAsync() {
-        return read(attributes.get(ATTR_DOORCLOSEDEVENTS));
+        return read(serverAttributes.get(ATTR_DOORCLOSEDEVENTS));
     }
 
     /**
@@ -745,13 +786,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDoorClosedEvents(final long refreshPeriod) {
-        if (attributes.get(ATTR_DOORCLOSEDEVENTS).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DOORCLOSEDEVENTS).getLastValue();
+        if (serverAttributes.get(ATTR_DOORCLOSEDEVENTS).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DOORCLOSEDEVENTS).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DOORCLOSEDEVENTS));
+        return (Integer) readSync(serverAttributes.get(ATTR_DOORCLOSEDEVENTS));
     }
 
     /**
@@ -766,9 +809,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param openPeriod the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setOpenPeriod(final Integer value) {
-        return write(attributes.get(ATTR_OPENPERIOD), value);
+        return write(serverAttributes.get(ATTR_OPENPERIOD), value);
     }
 
     /**
@@ -782,9 +827,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getOpenPeriodAsync() {
-        return read(attributes.get(ATTR_OPENPERIOD));
+        return read(serverAttributes.get(ATTR_OPENPERIOD));
     }
 
     /**
@@ -806,13 +853,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getOpenPeriod(final long refreshPeriod) {
-        if (attributes.get(ATTR_OPENPERIOD).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_OPENPERIOD).getLastValue();
+        if (serverAttributes.get(ATTR_OPENPERIOD).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_OPENPERIOD).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_OPENPERIOD));
+        return (Integer) readSync(serverAttributes.get(ATTR_OPENPERIOD));
     }
 
     /**
@@ -825,9 +874,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getNumLockRecordsSupportedAsync() {
-        return read(attributes.get(ATTR_NUMLOCKRECORDSSUPPORTED));
+        return read(serverAttributes.get(ATTR_NUMLOCKRECORDSSUPPORTED));
     }
 
     /**
@@ -848,13 +899,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getNumLockRecordsSupported(final long refreshPeriod) {
-        if (attributes.get(ATTR_NUMLOCKRECORDSSUPPORTED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_NUMLOCKRECORDSSUPPORTED).getLastValue();
+        if (serverAttributes.get(ATTR_NUMLOCKRECORDSSUPPORTED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_NUMLOCKRECORDSSUPPORTED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_NUMLOCKRECORDSSUPPORTED));
+        return (Integer) readSync(serverAttributes.get(ATTR_NUMLOCKRECORDSSUPPORTED));
     }
 
     /**
@@ -870,9 +923,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setNumLockRecordsSupportedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_NUMLOCKRECORDSSUPPORTED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_NUMLOCKRECORDSSUPPORTED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -886,9 +941,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getNumTotalUsersSupportedAsync() {
-        return read(attributes.get(ATTR_NUMTOTALUSERSSUPPORTED));
+        return read(serverAttributes.get(ATTR_NUMTOTALUSERSSUPPORTED));
     }
 
     /**
@@ -910,13 +967,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getNumTotalUsersSupported(final long refreshPeriod) {
-        if (attributes.get(ATTR_NUMTOTALUSERSSUPPORTED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_NUMTOTALUSERSSUPPORTED).getLastValue();
+        if (serverAttributes.get(ATTR_NUMTOTALUSERSSUPPORTED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_NUMTOTALUSERSSUPPORTED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_NUMTOTALUSERSSUPPORTED));
+        return (Integer) readSync(serverAttributes.get(ATTR_NUMTOTALUSERSSUPPORTED));
     }
 
     /**
@@ -933,9 +992,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setNumTotalUsersSupportedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_NUMTOTALUSERSSUPPORTED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_NUMTOTALUSERSSUPPORTED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -948,9 +1009,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getNumPinUsersSupportedAsync() {
-        return read(attributes.get(ATTR_NUMPINUSERSSUPPORTED));
+        return read(serverAttributes.get(ATTR_NUMPINUSERSSUPPORTED));
     }
 
     /**
@@ -971,13 +1034,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getNumPinUsersSupported(final long refreshPeriod) {
-        if (attributes.get(ATTR_NUMPINUSERSSUPPORTED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_NUMPINUSERSSUPPORTED).getLastValue();
+        if (serverAttributes.get(ATTR_NUMPINUSERSSUPPORTED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_NUMPINUSERSSUPPORTED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_NUMPINUSERSSUPPORTED));
+        return (Integer) readSync(serverAttributes.get(ATTR_NUMPINUSERSSUPPORTED));
     }
 
     /**
@@ -993,9 +1058,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setNumPinUsersSupportedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_NUMPINUSERSSUPPORTED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_NUMPINUSERSSUPPORTED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1008,9 +1075,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getNumRfidUsersSupportedAsync() {
-        return read(attributes.get(ATTR_NUMRFIDUSERSSUPPORTED));
+        return read(serverAttributes.get(ATTR_NUMRFIDUSERSSUPPORTED));
     }
 
     /**
@@ -1031,13 +1100,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getNumRfidUsersSupported(final long refreshPeriod) {
-        if (attributes.get(ATTR_NUMRFIDUSERSSUPPORTED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_NUMRFIDUSERSSUPPORTED).getLastValue();
+        if (serverAttributes.get(ATTR_NUMRFIDUSERSSUPPORTED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_NUMRFIDUSERSSUPPORTED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_NUMRFIDUSERSSUPPORTED));
+        return (Integer) readSync(serverAttributes.get(ATTR_NUMRFIDUSERSSUPPORTED));
     }
 
     /**
@@ -1053,9 +1124,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setNumRfidUsersSupportedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_NUMRFIDUSERSSUPPORTED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_NUMRFIDUSERSSUPPORTED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1068,9 +1141,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getNumWeekdaySchedulesSupportedPerUserAsync() {
-        return read(attributes.get(ATTR_NUMWEEKDAYSCHEDULESSUPPORTEDPERUSER));
+        return read(serverAttributes.get(ATTR_NUMWEEKDAYSCHEDULESSUPPORTEDPERUSER));
     }
 
     /**
@@ -1091,13 +1166,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getNumWeekdaySchedulesSupportedPerUser(final long refreshPeriod) {
-        if (attributes.get(ATTR_NUMWEEKDAYSCHEDULESSUPPORTEDPERUSER).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_NUMWEEKDAYSCHEDULESSUPPORTEDPERUSER).getLastValue();
+        if (serverAttributes.get(ATTR_NUMWEEKDAYSCHEDULESSUPPORTEDPERUSER).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_NUMWEEKDAYSCHEDULESSUPPORTEDPERUSER).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_NUMWEEKDAYSCHEDULESSUPPORTEDPERUSER));
+        return (Integer) readSync(serverAttributes.get(ATTR_NUMWEEKDAYSCHEDULESSUPPORTEDPERUSER));
     }
 
     /**
@@ -1113,9 +1190,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setNumWeekdaySchedulesSupportedPerUserReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_NUMWEEKDAYSCHEDULESSUPPORTEDPERUSER), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_NUMWEEKDAYSCHEDULESSUPPORTEDPERUSER), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1128,9 +1207,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getNumYeardaySchedulesSupportedPerUserAsync() {
-        return read(attributes.get(ATTR_NUMYEARDAYSCHEDULESSUPPORTEDPERUSER));
+        return read(serverAttributes.get(ATTR_NUMYEARDAYSCHEDULESSUPPORTEDPERUSER));
     }
 
     /**
@@ -1151,13 +1232,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getNumYeardaySchedulesSupportedPerUser(final long refreshPeriod) {
-        if (attributes.get(ATTR_NUMYEARDAYSCHEDULESSUPPORTEDPERUSER).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_NUMYEARDAYSCHEDULESSUPPORTEDPERUSER).getLastValue();
+        if (serverAttributes.get(ATTR_NUMYEARDAYSCHEDULESSUPPORTEDPERUSER).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_NUMYEARDAYSCHEDULESSUPPORTEDPERUSER).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_NUMYEARDAYSCHEDULESSUPPORTEDPERUSER));
+        return (Integer) readSync(serverAttributes.get(ATTR_NUMYEARDAYSCHEDULESSUPPORTEDPERUSER));
     }
 
     /**
@@ -1173,9 +1256,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setNumYeardaySchedulesSupportedPerUserReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_NUMYEARDAYSCHEDULESSUPPORTEDPERUSER), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_NUMYEARDAYSCHEDULESSUPPORTEDPERUSER), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1188,9 +1273,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getNumHolidaySchedulesSupportedPerUserAsync() {
-        return read(attributes.get(ATTR_NUMHOLIDAYSCHEDULESSUPPORTEDPERUSER));
+        return read(serverAttributes.get(ATTR_NUMHOLIDAYSCHEDULESSUPPORTEDPERUSER));
     }
 
     /**
@@ -1211,13 +1298,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getNumHolidaySchedulesSupportedPerUser(final long refreshPeriod) {
-        if (attributes.get(ATTR_NUMHOLIDAYSCHEDULESSUPPORTEDPERUSER).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_NUMHOLIDAYSCHEDULESSUPPORTEDPERUSER).getLastValue();
+        if (serverAttributes.get(ATTR_NUMHOLIDAYSCHEDULESSUPPORTEDPERUSER).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_NUMHOLIDAYSCHEDULESSUPPORTEDPERUSER).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_NUMHOLIDAYSCHEDULESSUPPORTEDPERUSER));
+        return (Integer) readSync(serverAttributes.get(ATTR_NUMHOLIDAYSCHEDULESSUPPORTEDPERUSER));
     }
 
     /**
@@ -1233,9 +1322,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setNumHolidaySchedulesSupportedPerUserReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_NUMHOLIDAYSCHEDULESSUPPORTEDPERUSER), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_NUMHOLIDAYSCHEDULESSUPPORTEDPERUSER), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1250,9 +1341,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMaxPinLengthAsync() {
-        return read(attributes.get(ATTR_MAXPINLENGTH));
+        return read(serverAttributes.get(ATTR_MAXPINLENGTH));
     }
 
     /**
@@ -1275,13 +1368,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMaxPinLength(final long refreshPeriod) {
-        if (attributes.get(ATTR_MAXPINLENGTH).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MAXPINLENGTH).getLastValue();
+        if (serverAttributes.get(ATTR_MAXPINLENGTH).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MAXPINLENGTH).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MAXPINLENGTH));
+        return (Integer) readSync(serverAttributes.get(ATTR_MAXPINLENGTH));
     }
 
     /**
@@ -1299,9 +1394,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setMaxPinLengthReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_MAXPINLENGTH), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_MAXPINLENGTH), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1316,9 +1413,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMinPinLengthAsync() {
-        return read(attributes.get(ATTR_MINPINLENGTH));
+        return read(serverAttributes.get(ATTR_MINPINLENGTH));
     }
 
     /**
@@ -1341,13 +1440,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMinPinLength(final long refreshPeriod) {
-        if (attributes.get(ATTR_MINPINLENGTH).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MINPINLENGTH).getLastValue();
+        if (serverAttributes.get(ATTR_MINPINLENGTH).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MINPINLENGTH).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MINPINLENGTH));
+        return (Integer) readSync(serverAttributes.get(ATTR_MINPINLENGTH));
     }
 
     /**
@@ -1365,9 +1466,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setMinPinLengthReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_MINPINLENGTH), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_MINPINLENGTH), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1383,9 +1486,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMaxRfidCodeLengthAsync() {
-        return read(attributes.get(ATTR_MAXRFIDCODELENGTH));
+        return read(serverAttributes.get(ATTR_MAXRFIDCODELENGTH));
     }
 
     /**
@@ -1409,13 +1514,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMaxRfidCodeLength(final long refreshPeriod) {
-        if (attributes.get(ATTR_MAXRFIDCODELENGTH).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MAXRFIDCODELENGTH).getLastValue();
+        if (serverAttributes.get(ATTR_MAXRFIDCODELENGTH).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MAXRFIDCODELENGTH).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MAXRFIDCODELENGTH));
+        return (Integer) readSync(serverAttributes.get(ATTR_MAXRFIDCODELENGTH));
     }
 
     /**
@@ -1434,9 +1541,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setMaxRfidCodeLengthReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_MAXRFIDCODELENGTH), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_MAXRFIDCODELENGTH), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1452,9 +1561,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMinRfidCodeLengthAsync() {
-        return read(attributes.get(ATTR_MINRFIDCODELENGTH));
+        return read(serverAttributes.get(ATTR_MINRFIDCODELENGTH));
     }
 
     /**
@@ -1478,13 +1589,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMinRfidCodeLength(final long refreshPeriod) {
-        if (attributes.get(ATTR_MINRFIDCODELENGTH).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MINRFIDCODELENGTH).getLastValue();
+        if (serverAttributes.get(ATTR_MINRFIDCODELENGTH).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MINRFIDCODELENGTH).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MINRFIDCODELENGTH));
+        return (Integer) readSync(serverAttributes.get(ATTR_MINRFIDCODELENGTH));
     }
 
     /**
@@ -1503,9 +1616,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setMinRfidCodeLengthReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_MINRFIDCODELENGTH), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_MINRFIDCODELENGTH), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1523,9 +1638,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param enableLogging the {@link Boolean} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setEnableLogging(final Boolean value) {
-        return write(attributes.get(ATTR_ENABLELOGGING), value);
+        return write(serverAttributes.get(ATTR_ENABLELOGGING), value);
     }
 
     /**
@@ -1542,9 +1659,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getEnableLoggingAsync() {
-        return read(attributes.get(ATTR_ENABLELOGGING));
+        return read(serverAttributes.get(ATTR_ENABLELOGGING));
     }
 
     /**
@@ -1569,13 +1688,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Boolean} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Boolean getEnableLogging(final long refreshPeriod) {
-        if (attributes.get(ATTR_ENABLELOGGING).isLastValueCurrent(refreshPeriod)) {
-            return (Boolean) attributes.get(ATTR_ENABLELOGGING).getLastValue();
+        if (serverAttributes.get(ATTR_ENABLELOGGING).isLastValueCurrent(refreshPeriod)) {
+            return (Boolean) serverAttributes.get(ATTR_ENABLELOGGING).getLastValue();
         }
 
-        return (Boolean) readSync(attributes.get(ATTR_ENABLELOGGING));
+        return (Boolean) readSync(serverAttributes.get(ATTR_ENABLELOGGING));
     }
 
     /**
@@ -1592,9 +1713,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param language the {@link String} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setLanguage(final String value) {
-        return write(attributes.get(ATTR_LANGUAGE), value);
+        return write(serverAttributes.get(ATTR_LANGUAGE), value);
     }
 
     /**
@@ -1610,9 +1733,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getLanguageAsync() {
-        return read(attributes.get(ATTR_LANGUAGE));
+        return read(serverAttributes.get(ATTR_LANGUAGE));
     }
 
     /**
@@ -1636,13 +1761,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link String} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public String getLanguage(final long refreshPeriod) {
-        if (attributes.get(ATTR_LANGUAGE).isLastValueCurrent(refreshPeriod)) {
-            return (String) attributes.get(ATTR_LANGUAGE).getLastValue();
+        if (serverAttributes.get(ATTR_LANGUAGE).isLastValueCurrent(refreshPeriod)) {
+            return (String) serverAttributes.get(ATTR_LANGUAGE).getLastValue();
         }
 
-        return (String) readSync(attributes.get(ATTR_LANGUAGE));
+        return (String) readSync(serverAttributes.get(ATTR_LANGUAGE));
     }
 
     /**
@@ -1656,9 +1783,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param ledSettings the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setLedSettings(final Integer value) {
-        return write(attributes.get(ATTR_LEDSETTINGS), value);
+        return write(serverAttributes.get(ATTR_LEDSETTINGS), value);
     }
 
     /**
@@ -1671,9 +1800,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getLedSettingsAsync() {
-        return read(attributes.get(ATTR_LEDSETTINGS));
+        return read(serverAttributes.get(ATTR_LEDSETTINGS));
     }
 
     /**
@@ -1694,13 +1825,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getLedSettings(final long refreshPeriod) {
-        if (attributes.get(ATTR_LEDSETTINGS).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_LEDSETTINGS).getLastValue();
+        if (serverAttributes.get(ATTR_LEDSETTINGS).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_LEDSETTINGS).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_LEDSETTINGS));
+        return (Integer) readSync(serverAttributes.get(ATTR_LEDSETTINGS));
     }
 
     /**
@@ -1716,9 +1849,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param autoRelockTime the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setAutoRelockTime(final Integer value) {
-        return write(attributes.get(ATTR_AUTORELOCKTIME), value);
+        return write(serverAttributes.get(ATTR_AUTORELOCKTIME), value);
     }
 
     /**
@@ -1733,9 +1868,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAutoRelockTimeAsync() {
-        return read(attributes.get(ATTR_AUTORELOCKTIME));
+        return read(serverAttributes.get(ATTR_AUTORELOCKTIME));
     }
 
     /**
@@ -1758,13 +1895,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAutoRelockTime(final long refreshPeriod) {
-        if (attributes.get(ATTR_AUTORELOCKTIME).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_AUTORELOCKTIME).getLastValue();
+        if (serverAttributes.get(ATTR_AUTORELOCKTIME).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_AUTORELOCKTIME).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_AUTORELOCKTIME));
+        return (Integer) readSync(serverAttributes.get(ATTR_AUTORELOCKTIME));
     }
 
     /**
@@ -1778,9 +1917,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param soundVolume the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setSoundVolume(final Integer value) {
-        return write(attributes.get(ATTR_SOUNDVOLUME), value);
+        return write(serverAttributes.get(ATTR_SOUNDVOLUME), value);
     }
 
     /**
@@ -1793,9 +1934,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getSoundVolumeAsync() {
-        return read(attributes.get(ATTR_SOUNDVOLUME));
+        return read(serverAttributes.get(ATTR_SOUNDVOLUME));
     }
 
     /**
@@ -1816,13 +1959,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getSoundVolume(final long refreshPeriod) {
-        if (attributes.get(ATTR_SOUNDVOLUME).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_SOUNDVOLUME).getLastValue();
+        if (serverAttributes.get(ATTR_SOUNDVOLUME).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_SOUNDVOLUME).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_SOUNDVOLUME));
+        return (Integer) readSync(serverAttributes.get(ATTR_SOUNDVOLUME));
     }
 
     /**
@@ -1836,9 +1981,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param operatingMode the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setOperatingMode(final Integer value) {
-        return write(attributes.get(ATTR_OPERATINGMODE), value);
+        return write(serverAttributes.get(ATTR_OPERATINGMODE), value);
     }
 
     /**
@@ -1851,9 +1998,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getOperatingModeAsync() {
-        return read(attributes.get(ATTR_OPERATINGMODE));
+        return read(serverAttributes.get(ATTR_OPERATINGMODE));
     }
 
     /**
@@ -1874,13 +2023,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getOperatingMode(final long refreshPeriod) {
-        if (attributes.get(ATTR_OPERATINGMODE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_OPERATINGMODE).getLastValue();
+        if (serverAttributes.get(ATTR_OPERATINGMODE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_OPERATINGMODE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_OPERATINGMODE));
+        return (Integer) readSync(serverAttributes.get(ATTR_OPERATINGMODE));
     }
 
     /**
@@ -1895,9 +2046,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getSupportedOperatingModesAsync() {
-        return read(attributes.get(ATTR_SUPPORTEDOPERATINGMODES));
+        return read(serverAttributes.get(ATTR_SUPPORTEDOPERATINGMODES));
     }
 
     /**
@@ -1920,13 +2073,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getSupportedOperatingModes(final long refreshPeriod) {
-        if (attributes.get(ATTR_SUPPORTEDOPERATINGMODES).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_SUPPORTEDOPERATINGMODES).getLastValue();
+        if (serverAttributes.get(ATTR_SUPPORTEDOPERATINGMODES).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_SUPPORTEDOPERATINGMODES).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_SUPPORTEDOPERATINGMODES));
+        return (Integer) readSync(serverAttributes.get(ATTR_SUPPORTEDOPERATINGMODES));
     }
 
     /**
@@ -1943,9 +2098,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setSupportedOperatingModesReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_SUPPORTEDOPERATINGMODES), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_SUPPORTEDOPERATINGMODES), minInterval, maxInterval);
     }
 
     /**
@@ -1966,9 +2123,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDefaultConfigurationRegisterAsync() {
-        return read(attributes.get(ATTR_DEFAULTCONFIGURATIONREGISTER));
+        return read(serverAttributes.get(ATTR_DEFAULTCONFIGURATIONREGISTER));
     }
 
     /**
@@ -1997,13 +2156,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDefaultConfigurationRegister(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEFAULTCONFIGURATIONREGISTER).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DEFAULTCONFIGURATIONREGISTER).getLastValue();
+        if (serverAttributes.get(ATTR_DEFAULTCONFIGURATIONREGISTER).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DEFAULTCONFIGURATIONREGISTER).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DEFAULTCONFIGURATIONREGISTER));
+        return (Integer) readSync(serverAttributes.get(ATTR_DEFAULTCONFIGURATIONREGISTER));
     }
 
     /**
@@ -2026,9 +2187,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setDefaultConfigurationRegisterReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_DEFAULTCONFIGURATIONREGISTER), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_DEFAULTCONFIGURATIONREGISTER), minInterval, maxInterval);
     }
 
     /**
@@ -2047,9 +2210,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param enableLocalProgramming the {@link Boolean} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setEnableLocalProgramming(final Boolean value) {
-        return write(attributes.get(ATTR_ENABLELOCALPROGRAMMING), value);
+        return write(serverAttributes.get(ATTR_ENABLELOCALPROGRAMMING), value);
     }
 
     /**
@@ -2067,9 +2232,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getEnableLocalProgrammingAsync() {
-        return read(attributes.get(ATTR_ENABLELOCALPROGRAMMING));
+        return read(serverAttributes.get(ATTR_ENABLELOCALPROGRAMMING));
     }
 
     /**
@@ -2095,13 +2262,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Boolean} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Boolean getEnableLocalProgramming(final long refreshPeriod) {
-        if (attributes.get(ATTR_ENABLELOCALPROGRAMMING).isLastValueCurrent(refreshPeriod)) {
-            return (Boolean) attributes.get(ATTR_ENABLELOCALPROGRAMMING).getLastValue();
+        if (serverAttributes.get(ATTR_ENABLELOCALPROGRAMMING).isLastValueCurrent(refreshPeriod)) {
+            return (Boolean) serverAttributes.get(ATTR_ENABLELOCALPROGRAMMING).getLastValue();
         }
 
-        return (Boolean) readSync(attributes.get(ATTR_ENABLELOCALPROGRAMMING));
+        return (Boolean) readSync(serverAttributes.get(ATTR_ENABLELOCALPROGRAMMING));
     }
 
     /**
@@ -2115,9 +2284,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param enableOneTouchLocking the {@link Boolean} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setEnableOneTouchLocking(final Boolean value) {
-        return write(attributes.get(ATTR_ENABLEONETOUCHLOCKING), value);
+        return write(serverAttributes.get(ATTR_ENABLEONETOUCHLOCKING), value);
     }
 
     /**
@@ -2130,9 +2301,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getEnableOneTouchLockingAsync() {
-        return read(attributes.get(ATTR_ENABLEONETOUCHLOCKING));
+        return read(serverAttributes.get(ATTR_ENABLEONETOUCHLOCKING));
     }
 
     /**
@@ -2153,13 +2326,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Boolean} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Boolean getEnableOneTouchLocking(final long refreshPeriod) {
-        if (attributes.get(ATTR_ENABLEONETOUCHLOCKING).isLastValueCurrent(refreshPeriod)) {
-            return (Boolean) attributes.get(ATTR_ENABLEONETOUCHLOCKING).getLastValue();
+        if (serverAttributes.get(ATTR_ENABLEONETOUCHLOCKING).isLastValueCurrent(refreshPeriod)) {
+            return (Boolean) serverAttributes.get(ATTR_ENABLEONETOUCHLOCKING).getLastValue();
         }
 
-        return (Boolean) readSync(attributes.get(ATTR_ENABLEONETOUCHLOCKING));
+        return (Boolean) readSync(serverAttributes.get(ATTR_ENABLEONETOUCHLOCKING));
     }
 
     /**
@@ -2173,9 +2348,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param enableInsideStatusLed the {@link Boolean} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setEnableInsideStatusLed(final Boolean value) {
-        return write(attributes.get(ATTR_ENABLEINSIDESTATUSLED), value);
+        return write(serverAttributes.get(ATTR_ENABLEINSIDESTATUSLED), value);
     }
 
     /**
@@ -2188,9 +2365,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getEnableInsideStatusLedAsync() {
-        return read(attributes.get(ATTR_ENABLEINSIDESTATUSLED));
+        return read(serverAttributes.get(ATTR_ENABLEINSIDESTATUSLED));
     }
 
     /**
@@ -2211,13 +2390,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Boolean} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Boolean getEnableInsideStatusLed(final long refreshPeriod) {
-        if (attributes.get(ATTR_ENABLEINSIDESTATUSLED).isLastValueCurrent(refreshPeriod)) {
-            return (Boolean) attributes.get(ATTR_ENABLEINSIDESTATUSLED).getLastValue();
+        if (serverAttributes.get(ATTR_ENABLEINSIDESTATUSLED).isLastValueCurrent(refreshPeriod)) {
+            return (Boolean) serverAttributes.get(ATTR_ENABLEINSIDESTATUSLED).getLastValue();
         }
 
-        return (Boolean) readSync(attributes.get(ATTR_ENABLEINSIDESTATUSLED));
+        return (Boolean) readSync(serverAttributes.get(ATTR_ENABLEINSIDESTATUSLED));
     }
 
     /**
@@ -2232,9 +2413,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param enablePrivacyModeButton the {@link Boolean} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setEnablePrivacyModeButton(final Boolean value) {
-        return write(attributes.get(ATTR_ENABLEPRIVACYMODEBUTTON), value);
+        return write(serverAttributes.get(ATTR_ENABLEPRIVACYMODEBUTTON), value);
     }
 
     /**
@@ -2248,9 +2431,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getEnablePrivacyModeButtonAsync() {
-        return read(attributes.get(ATTR_ENABLEPRIVACYMODEBUTTON));
+        return read(serverAttributes.get(ATTR_ENABLEPRIVACYMODEBUTTON));
     }
 
     /**
@@ -2272,13 +2457,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Boolean} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Boolean getEnablePrivacyModeButton(final long refreshPeriod) {
-        if (attributes.get(ATTR_ENABLEPRIVACYMODEBUTTON).isLastValueCurrent(refreshPeriod)) {
-            return (Boolean) attributes.get(ATTR_ENABLEPRIVACYMODEBUTTON).getLastValue();
+        if (serverAttributes.get(ATTR_ENABLEPRIVACYMODEBUTTON).isLastValueCurrent(refreshPeriod)) {
+            return (Boolean) serverAttributes.get(ATTR_ENABLEPRIVACYMODEBUTTON).getLastValue();
         }
 
-        return (Boolean) readSync(attributes.get(ATTR_ENABLEPRIVACYMODEBUTTON));
+        return (Boolean) readSync(serverAttributes.get(ATTR_ENABLEPRIVACYMODEBUTTON));
     }
 
     /**
@@ -2294,9 +2481,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param wrongCodeEntryLimit the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setWrongCodeEntryLimit(final Integer value) {
-        return write(attributes.get(ATTR_WRONGCODEENTRYLIMIT), value);
+        return write(serverAttributes.get(ATTR_WRONGCODEENTRYLIMIT), value);
     }
 
     /**
@@ -2311,9 +2500,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getWrongCodeEntryLimitAsync() {
-        return read(attributes.get(ATTR_WRONGCODEENTRYLIMIT));
+        return read(serverAttributes.get(ATTR_WRONGCODEENTRYLIMIT));
     }
 
     /**
@@ -2336,13 +2527,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getWrongCodeEntryLimit(final long refreshPeriod) {
-        if (attributes.get(ATTR_WRONGCODEENTRYLIMIT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_WRONGCODEENTRYLIMIT).getLastValue();
+        if (serverAttributes.get(ATTR_WRONGCODEENTRYLIMIT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_WRONGCODEENTRYLIMIT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_WRONGCODEENTRYLIMIT));
+        return (Integer) readSync(serverAttributes.get(ATTR_WRONGCODEENTRYLIMIT));
     }
 
     /**
@@ -2358,9 +2551,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param userCodeTemporaryDisableTime the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setUserCodeTemporaryDisableTime(final Integer value) {
-        return write(attributes.get(ATTR_USERCODETEMPORARYDISABLETIME), value);
+        return write(serverAttributes.get(ATTR_USERCODETEMPORARYDISABLETIME), value);
     }
 
     /**
@@ -2375,9 +2570,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getUserCodeTemporaryDisableTimeAsync() {
-        return read(attributes.get(ATTR_USERCODETEMPORARYDISABLETIME));
+        return read(serverAttributes.get(ATTR_USERCODETEMPORARYDISABLETIME));
     }
 
     /**
@@ -2400,13 +2597,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getUserCodeTemporaryDisableTime(final long refreshPeriod) {
-        if (attributes.get(ATTR_USERCODETEMPORARYDISABLETIME).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_USERCODETEMPORARYDISABLETIME).getLastValue();
+        if (serverAttributes.get(ATTR_USERCODETEMPORARYDISABLETIME).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_USERCODETEMPORARYDISABLETIME).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_USERCODETEMPORARYDISABLETIME));
+        return (Integer) readSync(serverAttributes.get(ATTR_USERCODETEMPORARYDISABLETIME));
     }
 
     /**
@@ -2428,9 +2627,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param sendPinOverTheAir the {@link Boolean} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setSendPinOverTheAir(final Boolean value) {
-        return write(attributes.get(ATTR_SENDPINOVERTHEAIR), value);
+        return write(serverAttributes.get(ATTR_SENDPINOVERTHEAIR), value);
     }
 
     /**
@@ -2451,9 +2652,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getSendPinOverTheAirAsync() {
-        return read(attributes.get(ATTR_SENDPINOVERTHEAIR));
+        return read(serverAttributes.get(ATTR_SENDPINOVERTHEAIR));
     }
 
     /**
@@ -2482,13 +2685,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Boolean} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Boolean getSendPinOverTheAir(final long refreshPeriod) {
-        if (attributes.get(ATTR_SENDPINOVERTHEAIR).isLastValueCurrent(refreshPeriod)) {
-            return (Boolean) attributes.get(ATTR_SENDPINOVERTHEAIR).getLastValue();
+        if (serverAttributes.get(ATTR_SENDPINOVERTHEAIR).isLastValueCurrent(refreshPeriod)) {
+            return (Boolean) serverAttributes.get(ATTR_SENDPINOVERTHEAIR).getLastValue();
         }
 
-        return (Boolean) readSync(attributes.get(ATTR_SENDPINOVERTHEAIR));
+        return (Boolean) readSync(serverAttributes.get(ATTR_SENDPINOVERTHEAIR));
     }
 
     /**
@@ -2504,9 +2709,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param requirePinForRfOperation the {@link Boolean} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setRequirePinForRfOperation(final Boolean value) {
-        return write(attributes.get(ATTR_REQUIREPINFORRFOPERATION), value);
+        return write(serverAttributes.get(ATTR_REQUIREPINFORRFOPERATION), value);
     }
 
     /**
@@ -2521,9 +2728,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRequirePinForRfOperationAsync() {
-        return read(attributes.get(ATTR_REQUIREPINFORRFOPERATION));
+        return read(serverAttributes.get(ATTR_REQUIREPINFORRFOPERATION));
     }
 
     /**
@@ -2546,13 +2755,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Boolean} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Boolean getRequirePinForRfOperation(final long refreshPeriod) {
-        if (attributes.get(ATTR_REQUIREPINFORRFOPERATION).isLastValueCurrent(refreshPeriod)) {
-            return (Boolean) attributes.get(ATTR_REQUIREPINFORRFOPERATION).getLastValue();
+        if (serverAttributes.get(ATTR_REQUIREPINFORRFOPERATION).isLastValueCurrent(refreshPeriod)) {
+            return (Boolean) serverAttributes.get(ATTR_REQUIREPINFORRFOPERATION).getLastValue();
         }
 
-        return (Boolean) readSync(attributes.get(ATTR_REQUIREPINFORRFOPERATION));
+        return (Boolean) readSync(serverAttributes.get(ATTR_REQUIREPINFORRFOPERATION));
     }
 
     /**
@@ -2572,9 +2783,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getZigbeeSecurityLevelAsync() {
-        return read(attributes.get(ATTR_ZIGBEESECURITYLEVEL));
+        return read(serverAttributes.get(ATTR_ZIGBEESECURITYLEVEL));
     }
 
     /**
@@ -2602,13 +2815,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getZigbeeSecurityLevel(final long refreshPeriod) {
-        if (attributes.get(ATTR_ZIGBEESECURITYLEVEL).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ZIGBEESECURITYLEVEL).getLastValue();
+        if (serverAttributes.get(ATTR_ZIGBEESECURITYLEVEL).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ZIGBEESECURITYLEVEL).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ZIGBEESECURITYLEVEL));
+        return (Integer) readSync(serverAttributes.get(ATTR_ZIGBEESECURITYLEVEL));
     }
 
     /**
@@ -2630,9 +2845,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setZigbeeSecurityLevelReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_ZIGBEESECURITYLEVEL), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_ZIGBEESECURITYLEVEL), minInterval, maxInterval);
     }
 
     /**
@@ -2649,9 +2866,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param alarmMask the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setAlarmMask(final Integer value) {
-        return write(attributes.get(ATTR_ALARMMASK), value);
+        return write(serverAttributes.get(ATTR_ALARMMASK), value);
     }
 
     /**
@@ -2667,9 +2886,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAlarmMaskAsync() {
-        return read(attributes.get(ATTR_ALARMMASK));
+        return read(serverAttributes.get(ATTR_ALARMMASK));
     }
 
     /**
@@ -2693,13 +2914,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAlarmMask(final long refreshPeriod) {
-        if (attributes.get(ATTR_ALARMMASK).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ALARMMASK).getLastValue();
+        if (serverAttributes.get(ATTR_ALARMMASK).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ALARMMASK).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ALARMMASK));
+        return (Integer) readSync(serverAttributes.get(ATTR_ALARMMASK));
     }
 
     /**
@@ -2714,9 +2937,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param keypadOperationEventMask the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setKeypadOperationEventMask(final Integer value) {
-        return write(attributes.get(ATTR_KEYPADOPERATIONEVENTMASK), value);
+        return write(serverAttributes.get(ATTR_KEYPADOPERATIONEVENTMASK), value);
     }
 
     /**
@@ -2730,9 +2955,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getKeypadOperationEventMaskAsync() {
-        return read(attributes.get(ATTR_KEYPADOPERATIONEVENTMASK));
+        return read(serverAttributes.get(ATTR_KEYPADOPERATIONEVENTMASK));
     }
 
     /**
@@ -2754,13 +2981,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getKeypadOperationEventMask(final long refreshPeriod) {
-        if (attributes.get(ATTR_KEYPADOPERATIONEVENTMASK).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_KEYPADOPERATIONEVENTMASK).getLastValue();
+        if (serverAttributes.get(ATTR_KEYPADOPERATIONEVENTMASK).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_KEYPADOPERATIONEVENTMASK).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_KEYPADOPERATIONEVENTMASK));
+        return (Integer) readSync(serverAttributes.get(ATTR_KEYPADOPERATIONEVENTMASK));
     }
 
     /**
@@ -2775,9 +3004,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param rfOperationEventMask the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setRfOperationEventMask(final Integer value) {
-        return write(attributes.get(ATTR_RFOPERATIONEVENTMASK), value);
+        return write(serverAttributes.get(ATTR_RFOPERATIONEVENTMASK), value);
     }
 
     /**
@@ -2791,9 +3022,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRfOperationEventMaskAsync() {
-        return read(attributes.get(ATTR_RFOPERATIONEVENTMASK));
+        return read(serverAttributes.get(ATTR_RFOPERATIONEVENTMASK));
     }
 
     /**
@@ -2815,13 +3048,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRfOperationEventMask(final long refreshPeriod) {
-        if (attributes.get(ATTR_RFOPERATIONEVENTMASK).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RFOPERATIONEVENTMASK).getLastValue();
+        if (serverAttributes.get(ATTR_RFOPERATIONEVENTMASK).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RFOPERATIONEVENTMASK).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RFOPERATIONEVENTMASK));
+        return (Integer) readSync(serverAttributes.get(ATTR_RFOPERATIONEVENTMASK));
     }
 
     /**
@@ -2836,9 +3071,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param manualOperationEventMask the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setManualOperationEventMask(final Integer value) {
-        return write(attributes.get(ATTR_MANUALOPERATIONEVENTMASK), value);
+        return write(serverAttributes.get(ATTR_MANUALOPERATIONEVENTMASK), value);
     }
 
     /**
@@ -2852,9 +3089,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getManualOperationEventMaskAsync() {
-        return read(attributes.get(ATTR_MANUALOPERATIONEVENTMASK));
+        return read(serverAttributes.get(ATTR_MANUALOPERATIONEVENTMASK));
     }
 
     /**
@@ -2876,13 +3115,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getManualOperationEventMask(final long refreshPeriod) {
-        if (attributes.get(ATTR_MANUALOPERATIONEVENTMASK).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MANUALOPERATIONEVENTMASK).getLastValue();
+        if (serverAttributes.get(ATTR_MANUALOPERATIONEVENTMASK).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MANUALOPERATIONEVENTMASK).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MANUALOPERATIONEVENTMASK));
+        return (Integer) readSync(serverAttributes.get(ATTR_MANUALOPERATIONEVENTMASK));
     }
 
     /**
@@ -2897,9 +3138,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param rfidOperationEventMask the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setRfidOperationEventMask(final Integer value) {
-        return write(attributes.get(ATTR_RFIDOPERATIONEVENTMASK), value);
+        return write(serverAttributes.get(ATTR_RFIDOPERATIONEVENTMASK), value);
     }
 
     /**
@@ -2913,9 +3156,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRfidOperationEventMaskAsync() {
-        return read(attributes.get(ATTR_RFIDOPERATIONEVENTMASK));
+        return read(serverAttributes.get(ATTR_RFIDOPERATIONEVENTMASK));
     }
 
     /**
@@ -2937,13 +3182,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRfidOperationEventMask(final long refreshPeriod) {
-        if (attributes.get(ATTR_RFIDOPERATIONEVENTMASK).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RFIDOPERATIONEVENTMASK).getLastValue();
+        if (serverAttributes.get(ATTR_RFIDOPERATIONEVENTMASK).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RFIDOPERATIONEVENTMASK).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RFIDOPERATIONEVENTMASK));
+        return (Integer) readSync(serverAttributes.get(ATTR_RFIDOPERATIONEVENTMASK));
     }
 
     /**
@@ -2958,9 +3205,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param keypadProgrammingEventMask the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setKeypadProgrammingEventMask(final Integer value) {
-        return write(attributes.get(ATTR_KEYPADPROGRAMMINGEVENTMASK), value);
+        return write(serverAttributes.get(ATTR_KEYPADPROGRAMMINGEVENTMASK), value);
     }
 
     /**
@@ -2974,9 +3223,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getKeypadProgrammingEventMaskAsync() {
-        return read(attributes.get(ATTR_KEYPADPROGRAMMINGEVENTMASK));
+        return read(serverAttributes.get(ATTR_KEYPADPROGRAMMINGEVENTMASK));
     }
 
     /**
@@ -2998,13 +3249,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getKeypadProgrammingEventMask(final long refreshPeriod) {
-        if (attributes.get(ATTR_KEYPADPROGRAMMINGEVENTMASK).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_KEYPADPROGRAMMINGEVENTMASK).getLastValue();
+        if (serverAttributes.get(ATTR_KEYPADPROGRAMMINGEVENTMASK).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_KEYPADPROGRAMMINGEVENTMASK).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_KEYPADPROGRAMMINGEVENTMASK));
+        return (Integer) readSync(serverAttributes.get(ATTR_KEYPADPROGRAMMINGEVENTMASK));
     }
 
     /**
@@ -3019,9 +3272,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param rfProgrammingEventMask the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setRfProgrammingEventMask(final Integer value) {
-        return write(attributes.get(ATTR_RFPROGRAMMINGEVENTMASK), value);
+        return write(serverAttributes.get(ATTR_RFPROGRAMMINGEVENTMASK), value);
     }
 
     /**
@@ -3035,9 +3290,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRfProgrammingEventMaskAsync() {
-        return read(attributes.get(ATTR_RFPROGRAMMINGEVENTMASK));
+        return read(serverAttributes.get(ATTR_RFPROGRAMMINGEVENTMASK));
     }
 
     /**
@@ -3059,13 +3316,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRfProgrammingEventMask(final long refreshPeriod) {
-        if (attributes.get(ATTR_RFPROGRAMMINGEVENTMASK).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RFPROGRAMMINGEVENTMASK).getLastValue();
+        if (serverAttributes.get(ATTR_RFPROGRAMMINGEVENTMASK).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RFPROGRAMMINGEVENTMASK).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RFPROGRAMMINGEVENTMASK));
+        return (Integer) readSync(serverAttributes.get(ATTR_RFPROGRAMMINGEVENTMASK));
     }
 
     /**
@@ -3080,9 +3339,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param rfidProgrammingEventMask the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setRfidProgrammingEventMask(final Integer value) {
-        return write(attributes.get(ATTR_RFIDPROGRAMMINGEVENTMASK), value);
+        return write(serverAttributes.get(ATTR_RFIDPROGRAMMINGEVENTMASK), value);
     }
 
     /**
@@ -3096,9 +3357,11 @@ public class ZclDoorLockCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRfidProgrammingEventMaskAsync() {
-        return read(attributes.get(ATTR_RFIDPROGRAMMINGEVENTMASK));
+        return read(serverAttributes.get(ATTR_RFIDPROGRAMMINGEVENTMASK));
     }
 
     /**
@@ -3120,13 +3383,15 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRfidProgrammingEventMask(final long refreshPeriod) {
-        if (attributes.get(ATTR_RFIDPROGRAMMINGEVENTMASK).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RFIDPROGRAMMINGEVENTMASK).getLastValue();
+        if (serverAttributes.get(ATTR_RFIDPROGRAMMINGEVENTMASK).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RFIDPROGRAMMINGEVENTMASK).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RFIDPROGRAMMINGEVENTMASK));
+        return (Integer) readSync(serverAttributes.get(ATTR_RFIDPROGRAMMINGEVENTMASK));
     }
 
     /**

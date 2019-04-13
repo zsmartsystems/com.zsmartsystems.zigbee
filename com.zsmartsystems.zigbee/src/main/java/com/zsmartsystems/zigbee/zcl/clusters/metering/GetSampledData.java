@@ -20,7 +20,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Get Sampled Data value object class.
  * <p>
- * Cluster: <b>Metering</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>Metering</b>. Command ID 0x08 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Metering cluster.
  * <p>
  * This command is used to request sampled data from the server. Note that it is the
@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class GetSampledData extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.

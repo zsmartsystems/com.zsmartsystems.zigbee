@@ -19,7 +19,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Query Specific File Command value object class.
  * <p>
- * Cluster: <b>Ota Upgrade</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>Ota Upgrade</b>. Command ID 0x08 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Ota Upgrade cluster.
  * <p>
  * Client devices shall send a Query Specific File Request command to the server to request for a
@@ -32,7 +32,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class QuerySpecificFileCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.

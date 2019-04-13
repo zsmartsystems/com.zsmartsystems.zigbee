@@ -1,7 +1,7 @@
 <cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0000">
     <name>ZDO ZigBee Device Object</name>
-    <command code="0x00" source="client">
+    <command code="0x0000" source="client">
         <name>Network Address Request</name>
         <description>The NWK_addr_req is generated from a Local Device wishing to inquire as to the 16-bit address of the Remote Device based on its known IEEE address. The destination addressing on this command shall be unicast or broadcast to all devices for which macRxOnWhenIdle = TRUE.</description>
         <field type="IEEE_ADDRESS">
@@ -18,7 +18,7 @@
             <matcher commandField="IeeeAddr" responseField="IeeeAddrRemoteDev" />
         </response>
     </command>
-    <command code="0x01" source="client">
+    <command code="0x0001" source="client">
         <name>IEEE Address Request</name>
         <description>The IEEE_addr_req is generated from a Local Device wishing to inquire as to the 64-bit IEEE address of the Remote Device based on their known 16-bit address. The destination addressing on this command shall be unicast.</description>
         <field type="NWK_ADDRESS">
@@ -34,7 +34,7 @@
             <matcher commandField="NwkAddrOfInterest" responseField="NwkAddrRemoteDev" />
         </response>
     </command>
-    <command code="0x02" source="client">
+    <command code="0x0002" source="client">
         <name>Node Descriptor Request</name>
         <description>The Node_Desc_req command is generated from a local device wishing to inquire as to the node descriptor of a remote device. This command shall be unicast either to the remote device itself or to an alternative device that contains the discovery information of the remote device.</description>
         <field type="NWK_ADDRESS">
@@ -44,7 +44,7 @@
             <matcher commandField="NwkAddrOfInterest" responseField="NwkAddrOfInterest" />
         </response>
     </command>
-    <command code="0x03" source="client">
+    <command code="0x0003" source="client">
         <name>Power Descriptor Request</name>
         <description>The Power_Desc_req command is generated from a local device wishing to inquire as to the power descriptor of a remote device. This command shall be unicast either to the remote device itself or to an alternative device that contains the discovery information of the remote device.</description>
         <field type="NWK_ADDRESS">
@@ -54,7 +54,7 @@
             <matcher commandField="NwkAddrOfInterest" responseField="NwkAddrOfInterest" />
         </response>
     </command>
-    <command code="0x04" source="client">
+    <command code="0x0004" source="client">
         <name>Simple Descriptor Request</name>
         <description>The Simple_Desc_req command is generated from a local device wishing to inquire as to the simple descriptor of a remote device on a specified endpoint. This command shall be unicast either to the remote device itself or to an alternative device that contains the discovery information of the remote device.</description>
         <field type="NWK_ADDRESS">
@@ -68,7 +68,7 @@
             <matcher commandField="NwkAddrOfInterest" responseField="NwkAddrOfInterest" />
         </response>
     </command>
-    <command code="0x05" source="client">
+    <command code="0x0005" source="client">
         <name>Active Endpoints Request</name>
         <description>The Active_EP_req command is generated from a local device wishing to acquire the list of endpoints on a remote device with simple descriptors. This command shall be unicast either to the remote device itself or to an alternative device that contains the discovery information of the remote device.</description>
         <field type="NWK_ADDRESS">
@@ -78,7 +78,7 @@
             <matcher commandField="NwkAddrOfInterest" responseField="NwkAddrOfInterest" />
         </response>
     </command>
-    <command code="0x06" source="client">
+    <command code="0x0006" source="client">
         <name>Match Descriptor Request</name>
         <description>The Match_Desc_req command is generated from a local device wishing to find remote devices supporting a specific simple descriptor match criterion. This command shall either be broadcast to all devices for which macRxOnWhenIdle = TRUE, or unicast. If the command is unicast, it shall be directed either to the remote device itself or to an alternative device that contains the discovery information of the remote device.</description>
         <field type="NWK_ADDRESS">
@@ -102,7 +102,7 @@
             <sizer>outClusterCount</sizer>
         </field>
     </command>
-    <command code="0x10" source="client">
+    <command code="0x0010" source="client">
         <name>Complex Descriptor Request</name>
         <description>The Complex_Desc_req command is generated from a local device wishing to inquire as to the complex descriptor of a remote device. This command shall be unicast either to the remote device itself or to an alternative device that contains the discovery information of the remote device.</description>
         <field type="NWK_ADDRESS">
@@ -122,11 +122,11 @@
             <matcher commandField="NwkAddrOfInterest" responseField="NwkAddrOfInterest" />
         </response>
     </command>
-    <command code="0x12" source="client">
+    <command code="0x0012" source="client">
         <name>Discovery Cache Request</name>
         <description>The Discovery_Cache_req is provided to enable devices on the network to locate a Primary Discovery Cache device on the network. The destination addressing on this primitive shall be broadcast to all devices for which macRxOnWhenIdle = TRUE.</description>
     </command>
-    <command code="0x13" source="client">
+    <command code="0x0013" source="client">
         <name>Device Announce</name>
         <description>The Device_annce is provided to enable ZigBee devices on the network to notify other ZigBee devices that the device has joined or re-joined the network, identifying the device&apos;s 64-bit IEEE address and new 16-bit NWK address, and informing the Remote Devices of the capability of the ZigBee device. This command shall be invoked for all ZigBee end devices upon join or rejoin. This command may also be invoked by ZigBee routers upon join or rejoin as part of NWK address conflict resolution. The destination addressing on this primitive is broadcast to all devices for which macRxOnWhenIdle = TRUE.</description>
         <field type="NWK_ADDRESS">
@@ -139,43 +139,43 @@
             <name>Capability</name>
         </field>
     </command>
-    <command code="0x14" source="client">
+    <command code="0x0014" source="client">
         <name>User Descriptor Set Request</name>
         <description>The User_Desc_set command is generated from a local device wishing to configure the user descriptor on a remote device. This command shall be unicast either to the remote device itself or to an alternative device that contains the discovery information of the remote device. &lt;br&gt; The local device shall generate the User_Desc_set command using the format illustrated in Table 2.55. The NWKAddrOfInterest field shall contain the network address of the remote device for which the user descriptor is to be configured and the UserDescription field shall contain the ASCII character string that is to be configured in the user descriptor. Characters with ASCII codes numbered 0x00 through 0x1f are not permitted to be included in this string.</description>
     </command>
-    <command code="0x15" source="client">
+    <command code="0x0015" source="client">
         <name>System Server Discovery Request</name>
         <description>The System_Server_Discovery_req is generated from a Local Device wishing to discover the location of a particular system server or servers as indicated by the ServerMask parameter. The destination addressing on this request is &quot;broadcast to all devices for which macRxOnWhenIdle = TRUE&quot;.</description>
     </command>
-    <command code="0x16" source="client">
+    <command code="0x0016" source="client">
         <name>Discovery Store Request Request</name>
         <description>The Discovery_store_req is provided to enable ZigBee end devices on the network to request storage of their discovery cache information on a Primary Discovery Cache device. Included in the request is the amount of storage space the Local Device requires.</description>
     </command>
-    <command code="0x17" source="client">
+    <command code="0x0017" source="client">
         <name>Node Descriptor Store Request</name>
         <description>The Node_Desc_store_req is provided to enable ZigBee end devices on the network to request storage of their Node Descriptor on a Primary Discovery Cache device which has previously received a SUCCESS status from a Discovery_store_req to the same Primary Discovery Cache device. Included in this request is the Node Descriptor the Local Device wishes to cache.</description>
     </command>
-    <command code="0x18" source="client">
+    <command code="0x0018" source="client">
         <name>Power Descriptor Store Request</name>
         <description>The Power_Desc_store_req is provided to enable ZigBee end devices on the network to request storage of their Power Descriptor on a Primary Discovery Cache device which has previously received a SUCCESS status from a Discovery_store_req to the same Primary Discovery Cache device. Included in this request is the Power Descriptor the Local Device wishes to cache.</description>
     </command>
-    <command code="0x19" source="client">
+    <command code="0x0019" source="client">
         <name>Active Endpoint Store Request</name>
         <description>The Active_EP_store_req is provided to enable ZigBee end devices on the network to request storage of their list of Active Endpoints on a Primary Discovery Cache device which has previously received a SUCCESS status from a Discovery_store_req to the same Primary Discovery Cache device. Included in this request is the count of Active Endpoints the Local Device wishes to cache and the endpoint list itself.</description>
     </command>
-    <command code="0x1A" source="client">
+    <command code="0x001A" source="client">
         <name>Simple Descriptor Store</name>
         <description>The Simple_desc_store_req is provided to enable ZigBee end devices on the network to request storage of their list of Simple Descriptors on a Primary Discovery Cache device which has previously received a SUCCESS status from a Discovery_store_req to the same Primary Discovery Cache device. Note that each Simple Descriptor for every active endpoint on the Local Device must be individually uploaded to the Primary Discovery Cache device via this command to enable cached discovery. Included in this request is the length of the Simple Descriptor the Local Device wishes to cache and the Simple Descriptor itself. The endpoint is a field within the Simple Descriptor and is accessed by the Remote Device to manage the discovery cache information for the Local Device.</description>
     </command>
-    <command code="0x1B" source="client">
+    <command code="0x001B" source="client">
         <name>Remove Node Cache Request</name>
         <description>The Remove_node_cache_req is provided to enable ZigBee devices on the network to request removal of discovery cache information for a specified ZigBee end device from a Primary Discovery Cache device. The effect of a successful Remove_node_cache_req is to undo a previously successful Discovery_store_req and additionally remove any cache information stored on behalf of the specified ZigBee end device on the Primary Discovery Cache device.</description>
     </command>
-    <command code="0x1C" source="client">
+    <command code="0x001C" source="client">
         <name>Find Node Cache Request</name>
         <description>The Find_node_cache_req is provided to enable ZigBee devices on the network to broadcast to all devices for which macRxOnWhenIdle = TRUE a request to find a device on the network that holds discovery information for the device of interest, as specified in the request parameters. The effect of a successful Find_node_cache_req is to have the Primary Discovery Cache device, holding discovery information for the device of interest, unicast a Find_node_cache_rsp back to the Local Device. Note that, like the NWK_addr_req, only the device meeting this criteria shall respond to the request generated by Find_node_cache_req.</description>
     </command>
-    <command code="0x1D" source="client">
+    <command code="0x001D" source="client">
         <name>Extended Simple Descriptor Request</name>
         <description>The Extended_Simple_Desc_req command is generated from a local device wishing to inquire as to the simple descriptor of a remote device on a specified endpoint. This command shall be unicast either to the remote device itself or to an alternative device that contains the discovery information of the remote device. The Extended_Simple_Desc_req is intended for use with devices which employ a larger number of application input or output clusters than can be described by the Simple_Desc_req.</description>
         <field type="NWK_ADDRESS">
@@ -188,11 +188,11 @@
             <name>Start Index</name>
         </field>
     </command>
-    <command code="0x1E" source="client">
+    <command code="0x001E" source="client">
         <name>Extended Active Endpoint Request</name>
         <description>The Extended_Active_EP_req command is generated from a local device wishing to acquire the list of endpoints on a remote device with simple descriptors. This command shall be unicast either to the remote device itself or to an alternative device that contains the discovery information of the remote device. The Extended_Active_EP_req is used for devices which support more active endpoints than can be returned by a single Active_EP_req. &lt;br&gt; The NWKAddrOfInterest field shall contain the network address of the remote device for which the active endpoint list is required. The StartIndex field shall be set in the request to enable retrieval of lists of active endpoints from devices whose list exceeds the size of a single ASDU and where fragmentation is not supported.</description>
     </command>
-    <command code="0x20" source="client">
+    <command code="0x0020" source="client">
         <name>End Device Bind Request</name>
         <description>The End_Device_Bind_req is generated from a Local Device wishing to perform End Device Bind with a Remote Device. The End_Device_Bind_req is generated, typically based on some user action like a button press. The destination addressing on this command shall be unicast, and the destination address shall be that of the ZigBee Coordinator.</description>
         <field type="NWK_ADDRESS">
@@ -222,7 +222,7 @@
             <sizer>outClusterCount</sizer>
         </field>
     </command>
-    <command code="0x21" source="client">
+    <command code="0x0021" source="client">
         <name>Bind Request</name>
         <description>The Bind_req is generated from a Local Device wishing to create a Binding Table entry for the source and destination addresses contained as parameters. The destination addressing on this command shall be unicast only, and the destination address shall be that of a Primary binding table cache or to the SrcAddress itself. The Binding Manager is optionally supported on the source device (unless that device is also the ZigBee Coordinator) so that device shall issue a NOT_SUPPORTED status to the Bind_req if not supported.</description>
         <field type="IEEE_ADDRESS">
@@ -252,7 +252,7 @@
         <response command="BindResponse">
         </response>
     </command>
-    <command code="0x22" source="client">
+    <command code="0x0022" source="client">
         <name>Unbind Request</name>
         <description>The Unbind_req is generated from a Local Device wishing to remove a Binding Table entry for the source and destination addresses contained as parameters. The destination addressing on this command shall be unicast only and the destination address must be that of the a Primary binding table cache or the SrcAddress.</description>
         <field type="IEEE_ADDRESS">
@@ -282,31 +282,31 @@
         <response command="UnbindResponse">
         </response>
     </command>
-    <command code="0x23" source="client">
+    <command code="0x0023" source="client">
         <name>Bind Register</name>
         <description>The Bind_Register_req is generated from a Local Device and sent to a primary binding table cache device to register that the local device wishes to hold its own binding table entries. The destination addressing mode for this request is unicast.</description>
     </command>
-    <command code="0x24" source="client">
+    <command code="0x0024" source="client">
         <name>Replace Device Request</name>
         <description>The Replace_Device_req is intended for use by a special device such as a Commissioning tool and is sent to a primary binding table cache device to change all binding table entries which match OldAddress and OldEndpoint as specified. Note that OldEndpoint = 0 has special meaning and signifies that only the address needs to be matched. The endpoint in the binding table will not be changed in this case and so NewEndpoint is ignored. The processing changes all binding table entries for which the source address is the same as OldAddress and, if OldEndpoint is non-zero, for which the source endpoint is the same as OldEndpoint. It shall also change all binding table entries which have the destination address the same as OldAddress and, if OldEndpoint is non-zero, the destination endpoint the same as OldEndpoint. The destination addressing mode for this request is unicast.</description>
     </command>
-    <command code="0x25" source="client">
+    <command code="0x0025" source="client">
         <name>Store Backup Bind Entry Request</name>
         <description>The Store_Bkup_Bind_Entry_req is generated from a local primary binding table cache and sent to a remote backup binding table cache device to request backup storage of the entry. It will be generated whenever a new binding table entry has been created by the primary binding table cache. The destination addressing mode for this request is unicast.</description>
     </command>
-    <command code="0x26" source="client">
+    <command code="0x0026" source="client">
         <name>Remove Backup Bind Table Request</name>
         <description>The Remove_Bkup_Bind_Entry_req is generated from a local primary binding table cache and sent to a remote backup binding table cache device to request removal of the entry from backup storage. It will be generated whenever a binding table entry has been unbound by the primary binding table cache. The destination addressing mode for this request is unicast.</description>
     </command>
-    <command code="0x27" source="client">
+    <command code="0x0027" source="client">
         <name>Backup Bind Table Request</name>
         <description>The Backup_Bind_Table_req is generated from a local primary binding table cache and sent to the remote backup binding table cache device to request backup storage of its entire binding table. The destination addressing mode for this request is unicast.</description>
     </command>
-    <command code="0x28" source="client">
+    <command code="0x0028" source="client">
         <name>Recover Bind Table Request</name>
         <description>The Recover_Bind_Table_req is generated from a local primary binding table cache and sent to a remote backup binding table cache device when it wants a complete restore of the binding table. The destination addressing mode for this request is unicast.</description>
     </command>
-    <command code="0x29" source="client">
+    <command code="0x0029" source="client">
         <name>Backup Source Bind Request</name>
         <description>The Backup_Source_Bind_req is generated from a local primary binding table cache and sent to a remote backup binding table cache device to request backup storage of its entire source table. The destination addressing mode for this request is unicast.</description>
         <field type="UNSIGNED_16_BIT_INTEGER">
@@ -322,14 +322,14 @@
             <name>Source Table List</name>
         </field>
     </command>
-    <command code="0x2A" source="client">
+    <command code="0x002A" source="client">
         <name>Recover Source Bind Request</name>
         <description>The Recover_Source_Bind_req is generated from a local primary binding table cache and sent to the remote backup binding table cache device when it wants a complete restore of the source binding table. The destination addressing mode for this request is unicast.</description>
         <field type="UNSIGNED_8_BIT_INTEGER">
             <name>Start Index</name>
         </field>
     </command>
-    <command code="0x30" source="client">
+    <command code="0x0030" source="client">
         <name>Management Network Discovery</name>
         <description>The Mgmt_NWK_Disc_req is generated from a Local Device requesting that the Remote Device execute a Scan to report back networks in the vicinity of the Local Device. The destination addressing on this command shall be unicast.</description>
         <field type="BITMAP_32_BIT">
@@ -342,7 +342,7 @@
             <name>Start Index</name>
         </field>
     </command>
-    <command code="0x31" source="client">
+    <command code="0x0031" source="client">
         <name>Management LQI Request</name>
         <description>The Mgmt_Lqi_req is generated from a Local Device wishing to obtain a neighbor list for the Remote Device along with associated LQI values to each neighbor. The destination addressing on this command shall be unicast only and the destination address must be that of a ZigBee Coordinator or ZigBee Router.</description>
         <field type="UNSIGNED_8_BIT_INTEGER">
@@ -352,7 +352,7 @@
             <matcher commandField="DestinationAddress" responseField="SourceAddress" />
         </response>
     </command>
-    <command code="0x32" source="client">
+    <command code="0x0032" source="client">
         <name>Management Routing Request</name>
         <description>The Mgmt_Rtg_req is generated from a Local Device wishing to retrieve the contents of the Routing Table from the Remote Device. The destination addressing on this command shall be unicast only and the destination address must be that of the ZigBee Router or ZigBee Coordinator.</description>
         <field type="UNSIGNED_8_BIT_INTEGER">
@@ -362,7 +362,7 @@
             <matcher commandField="DestinationAddress" responseField="SourceAddress" />
         </response>
     </command>
-    <command code="0x33" source="client">
+    <command code="0x0033" source="client">
         <name>Management Bind Request</name>
         <description>The Mgmt_Bind_req is generated from a Local Device wishing to retrieve the contents of the Binding Table from the Remote Device. The destination addressing on this command shall be unicast only and the destination address must be that of a Primary binding table cache or source device holding its own binding table.</description>
         <field type="UNSIGNED_8_BIT_INTEGER">
@@ -371,7 +371,7 @@
         <response command="ManagementBindResponse">
         </response>
     </command>
-    <command code="0x34" source="client">
+    <command code="0x0034" source="client">
         <name>Management Leave Request</name>
         <description>The Mgmt_Leave_req is generated from a Local Device requesting that a Remote Device leave the network or to request that another device leave the network. The Mgmt_Leave_req is generated by a management application which directs the request to a Remote Device where the NLME-LEAVE.request is to be executed using the parameter supplied by Mgmt_Leave_req.</description>
         <field type="IEEE_ADDRESS">
@@ -384,7 +384,7 @@
             <matcher commandField="DestinationAddress" responseField="SourceAddress" />
         </response>
     </command>
-    <command code="0x35" source="client">
+    <command code="0x0035" source="client">
         <name>Management Direct Join Request</name>
         <description>The Mgmt_Direct_Join_req is generated from a Local Device requesting that a Remote Device permit a device designated by DeviceAddress to join the network directly. The Mgmt_Direct_Join_req is generated by a management application which directs the request to a Remote Device where the NLME-DIRECTJOIN.request is to be executed using the parameter supplied by Mgmt_Direct_Join_req.</description>
         <field type="IEEE_ADDRESS">
@@ -394,7 +394,7 @@
             <name>Capability Information</name>
         </field>
     </command>
-    <command code="0x36" source="client">
+    <command code="0x0036" source="client">
         <name>Management Permit Joining Request</name>
         <description>The Mgmt_Permit_Joining_req is generated from a Local Device requesting that a remote device or devices allow or disallow association. The Mgmt_Permit_Joining_req is generated by a management application or commissioning tool which directs the request to a remote device(s) where the NLME-PERMIT-JOINING.request is executed using the PermitDuration parameter supplied by Mgmt_Permit_Joining_req. Additionally, if the remote device is the Trust Center and TC_Significance is set to 1, the Trust Center authentication policy will be affected. The addressing may be unicast or &quot;broadcast to all routers and coordinator&quot;.</description>
         <field type="UNSIGNED_8_BIT_INTEGER">
@@ -406,11 +406,11 @@
         <response command="ManagementPermitJoiningResponse">
         </response>
     </command>
-    <command code="0x37" source="client">
+    <command code="0x0037" source="client">
         <name>Cache Request</name>
         <description>The Mgmt_Cache_req is provided to enable ZigBee devices on the network to retrieve a list of ZigBee End Devices registered with a Primary Discovery Cache device. The destination addressing on this primitive shall be unicast.</description>
     </command>
-    <command code="0x38" source="client">
+    <command code="0x0038" source="client">
         <name>Network Update Request</name>
         <description>This command is provided to allow updating of network configuration parameters or to request information from devices on network conditions in the local operating environment. The destination addressing on this primitive shall be unicast or broadcast to all devices for which macRxOnWhenIdle = TRUE.</description>
         <field type="BITMAP_32_BIT">

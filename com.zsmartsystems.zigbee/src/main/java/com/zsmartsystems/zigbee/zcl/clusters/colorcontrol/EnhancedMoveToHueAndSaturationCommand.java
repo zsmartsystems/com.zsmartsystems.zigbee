@@ -18,12 +18,16 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Enhanced Move To Hue And Saturation Command value object class.
  * <p>
- * Cluster: <b>Color Control</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>Color Control</b>. Command ID 0x43 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Color Control cluster.
+ * <p>
+ * The Enhanced Move to Hue and Saturation command allows lamps to be moved in a smooth
+ * continuous transition from their current hue to a target hue and from their current
+ * saturation to a target saturation.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class EnhancedMoveToHueAndSaturationCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -33,12 +37,12 @@ public class EnhancedMoveToHueAndSaturationCommand extends ZclCommand {
     /**
      * The command ID.
      */
-    public static int COMMAND_ID = 0x42;
+    public static int COMMAND_ID = 0x43;
 
     /**
-     * Hue command message field.
+     * Enhanced Hue command message field.
      */
-    private Integer hue;
+    private Integer enhancedHue;
 
     /**
      * Saturation command message field.
@@ -61,21 +65,21 @@ public class EnhancedMoveToHueAndSaturationCommand extends ZclCommand {
     }
 
     /**
-     * Gets Hue.
+     * Gets Enhanced Hue.
      *
-     * @return the Hue
+     * @return the Enhanced Hue
      */
-    public Integer getHue() {
-        return hue;
+    public Integer getEnhancedHue() {
+        return enhancedHue;
     }
 
     /**
-     * Sets Hue.
+     * Sets Enhanced Hue.
      *
-     * @param hue the Hue
+     * @param enhancedHue the Enhanced Hue
      */
-    public void setHue(final Integer hue) {
-        this.hue = hue;
+    public void setEnhancedHue(final Integer enhancedHue) {
+        this.enhancedHue = enhancedHue;
     }
 
     /**
@@ -116,25 +120,25 @@ public class EnhancedMoveToHueAndSaturationCommand extends ZclCommand {
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
-        serializer.serialize(hue, ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        serializer.serialize(enhancedHue, ZclDataType.UNSIGNED_16_BIT_INTEGER);
         serializer.serialize(saturation, ZclDataType.ENUMERATION_8_BIT);
         serializer.serialize(transitionTime, ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        hue = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        enhancedHue = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         saturation = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
         transitionTime = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(127);
+        final StringBuilder builder = new StringBuilder(135);
         builder.append("EnhancedMoveToHueAndSaturationCommand [");
         builder.append(super.toString());
-        builder.append(", hue=");
-        builder.append(hue);
+        builder.append(", enhancedHue=");
+        builder.append(enhancedHue);
         builder.append(", saturation=");
         builder.append(saturation);
         builder.append(", transitionTime=");

@@ -72,7 +72,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T12:30:33Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
 public class ZclPriceCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -3680,7 +3680,15 @@ public class ZclPriceCluster extends ZclCluster {
     public static final int ATTR_RECEIVEDLASTBILLINGPERIODCONSOLIDATEDBILL = 0x8704;
 
     @Override
-    protected Map<Integer, ZclAttribute> initializeAttributes() {
+    protected Map<Integer, ZclAttribute> initializeClientAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(3);
+
+
+        return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(135);
 
         attributeMap.put(ATTR_TIER1PRICELABEL, new ZclAttribute(ZclClusterType.PRICE, ATTR_TIER1PRICELABEL, "Tier 1 Price Label", ZclDataType.CHARACTER_STRING, false, true, true, false));
@@ -4771,279 +4779,6 @@ public class ZclPriceCluster extends ZclCluster {
     }
 
     /**
-     * Set the <i>Price Increase Randomize Minutes</i> attribute [attribute ID <b>0x0000</b>].
-     * <p>
-     * The PriceIncreaseRandomizeMinutes attribute represents the maximum amount of time
-     * to be used when randomizing the response to a price increase. Note that although the
-     * granularity of the attribute is in minutes, it is recommended the granularity of the
-     * randomization used within a responding device be in seconds or smaller. If a device
-     * responds to a price increase it must choose a random amount of time, in seconds or
-     * smaller, between 0 and PriceIncreaseRandomizeMinutes minutes. The device must
-     * implement that random amount of time before or after the price change. How and if a device
-     * will respond to a price increase is up to the manufacturer. Whether to respond before or
-     * after the price increase is also up to the manufacturer.
-     * <p>
-     * As an example, a water heater with a PriceIncreaseRandomizeMinutes set to 6 could
-     * choose to lower its set point 315 seconds (but not more than 360 seconds) before the price
-     * increases.
-     * <p>
-     * The valid range for this attribute is 0x00 to 0x3C.
-     * <p>
-     * If PriceIncreaseRandomizeMinutes or PriceDecreaseRandomizeMinutes attributes
-     * are not supported by the CLIENT, then it should use the default values for the attributes
-     * as specified in the Price CLIENT Cluster Attribute table.
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is OPTIONAL
-     *
-     * @param priceIncreaseRandomizeMinutes the {@link Integer} attribute value to be set
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> setPriceIncreaseRandomizeMinutes(final Integer value) {
-        return write(attributes.get(ATTR_PRICEINCREASERANDOMIZEMINUTES), value);
-    }
-
-    /**
-     * Get the <i>Price Increase Randomize Minutes</i> attribute [attribute ID <b>0x0000</b>].
-     * <p>
-     * The PriceIncreaseRandomizeMinutes attribute represents the maximum amount of time
-     * to be used when randomizing the response to a price increase. Note that although the
-     * granularity of the attribute is in minutes, it is recommended the granularity of the
-     * randomization used within a responding device be in seconds or smaller. If a device
-     * responds to a price increase it must choose a random amount of time, in seconds or
-     * smaller, between 0 and PriceIncreaseRandomizeMinutes minutes. The device must
-     * implement that random amount of time before or after the price change. How and if a device
-     * will respond to a price increase is up to the manufacturer. Whether to respond before or
-     * after the price increase is also up to the manufacturer.
-     * <p>
-     * As an example, a water heater with a PriceIncreaseRandomizeMinutes set to 6 could
-     * choose to lower its set point 315 seconds (but not more than 360 seconds) before the price
-     * increases.
-     * <p>
-     * The valid range for this attribute is 0x00 to 0x3C.
-     * <p>
-     * If PriceIncreaseRandomizeMinutes or PriceDecreaseRandomizeMinutes attributes
-     * are not supported by the CLIENT, then it should use the default values for the attributes
-     * as specified in the Price CLIENT Cluster Attribute table.
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is OPTIONAL
-     *
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> getPriceIncreaseRandomizeMinutesAsync() {
-        return read(attributes.get(ATTR_PRICEINCREASERANDOMIZEMINUTES));
-    }
-
-    /**
-     * Synchronously get the <i>Price Increase Randomize Minutes</i> attribute [attribute ID <b>0x0000</b>].
-     * <p>
-     * The PriceIncreaseRandomizeMinutes attribute represents the maximum amount of time
-     * to be used when randomizing the response to a price increase. Note that although the
-     * granularity of the attribute is in minutes, it is recommended the granularity of the
-     * randomization used within a responding device be in seconds or smaller. If a device
-     * responds to a price increase it must choose a random amount of time, in seconds or
-     * smaller, between 0 and PriceIncreaseRandomizeMinutes minutes. The device must
-     * implement that random amount of time before or after the price change. How and if a device
-     * will respond to a price increase is up to the manufacturer. Whether to respond before or
-     * after the price increase is also up to the manufacturer.
-     * <p>
-     * As an example, a water heater with a PriceIncreaseRandomizeMinutes set to 6 could
-     * choose to lower its set point 315 seconds (but not more than 360 seconds) before the price
-     * increases.
-     * <p>
-     * The valid range for this attribute is 0x00 to 0x3C.
-     * <p>
-     * If PriceIncreaseRandomizeMinutes or PriceDecreaseRandomizeMinutes attributes
-     * are not supported by the CLIENT, then it should use the default values for the attributes
-     * as specified in the Price CLIENT Cluster Attribute table.
-     * <p>
-     * This method can return cached data if the attribute has already been received.
-     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
-     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
-     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
-     * <p>
-     * This method will block until the response is received or a timeout occurs unless the current value is returned.
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is OPTIONAL
-     *
-     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Integer} attribute value, or null on error
-     */
-    public Integer getPriceIncreaseRandomizeMinutes(final long refreshPeriod) {
-        if (attributes.get(ATTR_PRICEINCREASERANDOMIZEMINUTES).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PRICEINCREASERANDOMIZEMINUTES).getLastValue();
-        }
-
-        return (Integer) readSync(attributes.get(ATTR_PRICEINCREASERANDOMIZEMINUTES));
-    }
-
-    /**
-     * Set the <i>Price Decrease Randomize Minutes</i> attribute [attribute ID <b>0x0001</b>].
-     * <p>
-     * The PriceDecreaseRandomizeMinutes attribute represents the maximum number of
-     * minutes to be used when randomizing the response to a price decrease. Note that although
-     * the granularity of the attribute is in minutes, it is recommended the granularity of the
-     * randomization used within a responding device be in seconds or smaller. If a device
-     * responds to a price decrease it must choose a random amount of time, in seconds or
-     * smaller, between 0 and PriceDecreaseRandomizeMinutes minutes and implement that
-     * random amount of time before or after the price change. How and if a device will respond to
-     * a price decrease is up to the manufacturer. Whether to respond before or after the price
-     * increase is also up to the manufacturer.
-     * <p>
-     * As an example, a dishwasher with a PriceDecreaseRandomizeMinutes set to 15 could
-     * choose to start its wash cycle 723 seconds (but not more than 900 seconds) after the price
-     * decreases. The valid range for this attribute is 0x00 to 0x3C.
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is OPTIONAL
-     *
-     * @param priceDecreaseRandomizeMinutes the {@link Integer} attribute value to be set
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> setPriceDecreaseRandomizeMinutes(final Integer value) {
-        return write(attributes.get(ATTR_PRICEDECREASERANDOMIZEMINUTES), value);
-    }
-
-    /**
-     * Get the <i>Price Decrease Randomize Minutes</i> attribute [attribute ID <b>0x0001</b>].
-     * <p>
-     * The PriceDecreaseRandomizeMinutes attribute represents the maximum number of
-     * minutes to be used when randomizing the response to a price decrease. Note that although
-     * the granularity of the attribute is in minutes, it is recommended the granularity of the
-     * randomization used within a responding device be in seconds or smaller. If a device
-     * responds to a price decrease it must choose a random amount of time, in seconds or
-     * smaller, between 0 and PriceDecreaseRandomizeMinutes minutes and implement that
-     * random amount of time before or after the price change. How and if a device will respond to
-     * a price decrease is up to the manufacturer. Whether to respond before or after the price
-     * increase is also up to the manufacturer.
-     * <p>
-     * As an example, a dishwasher with a PriceDecreaseRandomizeMinutes set to 15 could
-     * choose to start its wash cycle 723 seconds (but not more than 900 seconds) after the price
-     * decreases. The valid range for this attribute is 0x00 to 0x3C.
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is OPTIONAL
-     *
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> getPriceDecreaseRandomizeMinutesAsync() {
-        return read(attributes.get(ATTR_PRICEDECREASERANDOMIZEMINUTES));
-    }
-
-    /**
-     * Synchronously get the <i>Price Decrease Randomize Minutes</i> attribute [attribute ID <b>0x0001</b>].
-     * <p>
-     * The PriceDecreaseRandomizeMinutes attribute represents the maximum number of
-     * minutes to be used when randomizing the response to a price decrease. Note that although
-     * the granularity of the attribute is in minutes, it is recommended the granularity of the
-     * randomization used within a responding device be in seconds or smaller. If a device
-     * responds to a price decrease it must choose a random amount of time, in seconds or
-     * smaller, between 0 and PriceDecreaseRandomizeMinutes minutes and implement that
-     * random amount of time before or after the price change. How and if a device will respond to
-     * a price decrease is up to the manufacturer. Whether to respond before or after the price
-     * increase is also up to the manufacturer.
-     * <p>
-     * As an example, a dishwasher with a PriceDecreaseRandomizeMinutes set to 15 could
-     * choose to start its wash cycle 723 seconds (but not more than 900 seconds) after the price
-     * decreases. The valid range for this attribute is 0x00 to 0x3C.
-     * <p>
-     * This method can return cached data if the attribute has already been received.
-     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
-     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
-     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
-     * <p>
-     * This method will block until the response is received or a timeout occurs unless the current value is returned.
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is OPTIONAL
-     *
-     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Integer} attribute value, or null on error
-     */
-    public Integer getPriceDecreaseRandomizeMinutes(final long refreshPeriod) {
-        if (attributes.get(ATTR_PRICEDECREASERANDOMIZEMINUTES).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PRICEDECREASERANDOMIZEMINUTES).getLastValue();
-        }
-
-        return (Integer) readSync(attributes.get(ATTR_PRICEDECREASERANDOMIZEMINUTES));
-    }
-
-    /**
-     * Set the <i>Commodity Type Client</i> attribute [attribute ID <b>0x0002</b>].
-     * <p>
-     * CommodityType provides a label for identifying the type of pricing client present. The
-     * attribute is an enumerated value representing the commodity. The defined values are
-     * represented by the non-mirrored values (0-127) in the MeteringDeviceType attribute
-     * enumerations.
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is OPTIONAL
-     *
-     * @param commodityTypeClient the {@link Integer} attribute value to be set
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> setCommodityTypeClient(final Integer value) {
-        return write(attributes.get(ATTR_COMMODITYTYPECLIENT), value);
-    }
-
-    /**
-     * Get the <i>Commodity Type Client</i> attribute [attribute ID <b>0x0002</b>].
-     * <p>
-     * CommodityType provides a label for identifying the type of pricing client present. The
-     * attribute is an enumerated value representing the commodity. The defined values are
-     * represented by the non-mirrored values (0-127) in the MeteringDeviceType attribute
-     * enumerations.
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is OPTIONAL
-     *
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> getCommodityTypeClientAsync() {
-        return read(attributes.get(ATTR_COMMODITYTYPECLIENT));
-    }
-
-    /**
-     * Synchronously get the <i>Commodity Type Client</i> attribute [attribute ID <b>0x0002</b>].
-     * <p>
-     * CommodityType provides a label for identifying the type of pricing client present. The
-     * attribute is an enumerated value representing the commodity. The defined values are
-     * represented by the non-mirrored values (0-127) in the MeteringDeviceType attribute
-     * enumerations.
-     * <p>
-     * This method can return cached data if the attribute has already been received.
-     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
-     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
-     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
-     * <p>
-     * This method will block until the response is received or a timeout occurs unless the current value is returned.
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is OPTIONAL
-     *
-     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Integer} attribute value, or null on error
-     */
-    public Integer getCommodityTypeClient(final long refreshPeriod) {
-        if (attributes.get(ATTR_COMMODITYTYPECLIENT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_COMMODITYTYPECLIENT).getLastValue();
-        }
-
-        return (Integer) readSync(attributes.get(ATTR_COMMODITYTYPECLIENT));
-    }
-
-    /**
      * Set the <i>Tier {{count}} Price Label</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
      * The attribute is of type {@link String}.
@@ -5053,9 +4788,11 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 48)
      * @param tier{{count}}PriceLabel the {@link String} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setTierPriceLabel(final int arrayOffset, final String value) {
-        return write(attributes.get(ATTR_TIER1PRICELABEL + arrayOffset), value);
+        return write(serverAttributes.get(ATTR_TIER1PRICELABEL + arrayOffset), value);
     }
 
     /**
@@ -5067,13 +4804,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 48)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTierPriceLabelAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 48) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER1PRICELABEL + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER1PRICELABEL + arrayOffset));
     }
 
     /**
@@ -5093,13 +4832,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 48)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link String} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public String getTierPriceLabel(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER1PRICELABEL + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (String) attributes.get(ATTR_TIER1PRICELABEL + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER1PRICELABEL + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (String) serverAttributes.get(ATTR_TIER1PRICELABEL + arrayOffset).getLastValue();
         }
 
-        return (String) readSync(attributes.get(ATTR_TIER1PRICELABEL + arrayOffset));
+        return (String) readSync(serverAttributes.get(ATTR_TIER1PRICELABEL + arrayOffset));
     }
 
     /**
@@ -5119,13 +4860,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getBlockThresholdAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 15) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_BLOCK1THRESHOLD + arrayOffset));
+        return read(serverAttributes.get(ATTR_BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -5153,13 +4896,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getBlockThreshold(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_BLOCK1THRESHOLD + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_BLOCK1THRESHOLD + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_BLOCK1THRESHOLD + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -5175,9 +4920,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getBlockThresholdCountAsync() {
-        return read(attributes.get(ATTR_BLOCKTHRESHOLDCOUNT));
+        return read(serverAttributes.get(ATTR_BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -5201,13 +4948,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getBlockThresholdCount(final long refreshPeriod) {
-        if (attributes.get(ATTR_BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_BLOCKTHRESHOLDCOUNT).getLastValue();
+        if (serverAttributes.get(ATTR_BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_BLOCKTHRESHOLDCOUNT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_BLOCKTHRESHOLDCOUNT));
+        return (Integer) readSync(serverAttributes.get(ATTR_BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -5227,13 +4976,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier1BlockThresholdAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 15) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER1BLOCK1THRESHOLD + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER1BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -5261,13 +5012,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier1BlockThreshold(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER1BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER1BLOCK1THRESHOLD + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER1BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER1BLOCK1THRESHOLD + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER1BLOCK1THRESHOLD + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER1BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -5283,9 +5036,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier1BlockThresholdCountAsync() {
-        return read(attributes.get(ATTR_TIER1BLOCKTHRESHOLDCOUNT));
+        return read(serverAttributes.get(ATTR_TIER1BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -5309,13 +5064,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier1BlockThresholdCount(final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER1BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER1BLOCKTHRESHOLDCOUNT).getLastValue();
+        if (serverAttributes.get(ATTR_TIER1BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER1BLOCKTHRESHOLDCOUNT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER1BLOCKTHRESHOLDCOUNT));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER1BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -5335,13 +5092,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier2BlockThresholdAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 15) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER2BLOCK1THRESHOLD + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER2BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -5369,13 +5128,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier2BlockThreshold(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER2BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER2BLOCK1THRESHOLD + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER2BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER2BLOCK1THRESHOLD + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER2BLOCK1THRESHOLD + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER2BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -5391,9 +5152,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier2BlockThresholdCountAsync() {
-        return read(attributes.get(ATTR_TIER2BLOCKTHRESHOLDCOUNT));
+        return read(serverAttributes.get(ATTR_TIER2BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -5417,13 +5180,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier2BlockThresholdCount(final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER2BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER2BLOCKTHRESHOLDCOUNT).getLastValue();
+        if (serverAttributes.get(ATTR_TIER2BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER2BLOCKTHRESHOLDCOUNT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER2BLOCKTHRESHOLDCOUNT));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER2BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -5443,13 +5208,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier3BlockThresholdAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 15) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER3BLOCK1THRESHOLD + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER3BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -5477,13 +5244,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier3BlockThreshold(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER3BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER3BLOCK1THRESHOLD + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER3BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER3BLOCK1THRESHOLD + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER3BLOCK1THRESHOLD + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER3BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -5499,9 +5268,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier3BlockThresholdCountAsync() {
-        return read(attributes.get(ATTR_TIER3BLOCKTHRESHOLDCOUNT));
+        return read(serverAttributes.get(ATTR_TIER3BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -5525,13 +5296,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier3BlockThresholdCount(final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER3BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER3BLOCKTHRESHOLDCOUNT).getLastValue();
+        if (serverAttributes.get(ATTR_TIER3BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER3BLOCKTHRESHOLDCOUNT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER3BLOCKTHRESHOLDCOUNT));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER3BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -5551,13 +5324,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier4BlockThresholdAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 15) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER4BLOCK1THRESHOLD + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER4BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -5585,13 +5360,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier4BlockThreshold(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER4BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER4BLOCK1THRESHOLD + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER4BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER4BLOCK1THRESHOLD + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER4BLOCK1THRESHOLD + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER4BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -5607,9 +5384,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier4BlockThresholdCountAsync() {
-        return read(attributes.get(ATTR_TIER4BLOCKTHRESHOLDCOUNT));
+        return read(serverAttributes.get(ATTR_TIER4BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -5633,13 +5412,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier4BlockThresholdCount(final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER4BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER4BLOCKTHRESHOLDCOUNT).getLastValue();
+        if (serverAttributes.get(ATTR_TIER4BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER4BLOCKTHRESHOLDCOUNT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER4BLOCKTHRESHOLDCOUNT));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER4BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -5659,13 +5440,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier5BlockThresholdAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 15) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER5BLOCK1THRESHOLD + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER5BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -5693,13 +5476,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier5BlockThreshold(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER5BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER5BLOCK1THRESHOLD + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER5BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER5BLOCK1THRESHOLD + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER5BLOCK1THRESHOLD + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER5BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -5715,9 +5500,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier5BlockThresholdCountAsync() {
-        return read(attributes.get(ATTR_TIER5BLOCKTHRESHOLDCOUNT));
+        return read(serverAttributes.get(ATTR_TIER5BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -5741,13 +5528,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier5BlockThresholdCount(final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER5BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER5BLOCKTHRESHOLDCOUNT).getLastValue();
+        if (serverAttributes.get(ATTR_TIER5BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER5BLOCKTHRESHOLDCOUNT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER5BLOCKTHRESHOLDCOUNT));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER5BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -5767,13 +5556,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier6BlockThresholdAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 15) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER6BLOCK1THRESHOLD + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER6BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -5801,13 +5592,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier6BlockThreshold(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER6BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER6BLOCK1THRESHOLD + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER6BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER6BLOCK1THRESHOLD + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER6BLOCK1THRESHOLD + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER6BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -5823,9 +5616,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier6BlockThresholdCountAsync() {
-        return read(attributes.get(ATTR_TIER6BLOCKTHRESHOLDCOUNT));
+        return read(serverAttributes.get(ATTR_TIER6BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -5849,13 +5644,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier6BlockThresholdCount(final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER6BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER6BLOCKTHRESHOLDCOUNT).getLastValue();
+        if (serverAttributes.get(ATTR_TIER6BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER6BLOCKTHRESHOLDCOUNT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER6BLOCKTHRESHOLDCOUNT));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER6BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -5875,13 +5672,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier7BlockThresholdAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 15) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER7BLOCK1THRESHOLD + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER7BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -5909,13 +5708,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier7BlockThreshold(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER7BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER7BLOCK1THRESHOLD + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER7BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER7BLOCK1THRESHOLD + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER7BLOCK1THRESHOLD + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER7BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -5931,9 +5732,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier7BlockThresholdCountAsync() {
-        return read(attributes.get(ATTR_TIER7BLOCKTHRESHOLDCOUNT));
+        return read(serverAttributes.get(ATTR_TIER7BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -5957,13 +5760,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier7BlockThresholdCount(final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER7BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER7BLOCKTHRESHOLDCOUNT).getLastValue();
+        if (serverAttributes.get(ATTR_TIER7BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER7BLOCKTHRESHOLDCOUNT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER7BLOCKTHRESHOLDCOUNT));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER7BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -5983,13 +5788,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier8BlockThresholdAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 15) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER8BLOCK1THRESHOLD + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER8BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -6017,13 +5824,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier8BlockThreshold(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER8BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER8BLOCK1THRESHOLD + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER8BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER8BLOCK1THRESHOLD + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER8BLOCK1THRESHOLD + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER8BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -6039,9 +5848,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier8BlockThresholdCountAsync() {
-        return read(attributes.get(ATTR_TIER8BLOCKTHRESHOLDCOUNT));
+        return read(serverAttributes.get(ATTR_TIER8BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -6065,13 +5876,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier8BlockThresholdCount(final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER8BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER8BLOCKTHRESHOLDCOUNT).getLastValue();
+        if (serverAttributes.get(ATTR_TIER8BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER8BLOCKTHRESHOLDCOUNT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER8BLOCKTHRESHOLDCOUNT));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER8BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -6091,13 +5904,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier9BlockThresholdAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 15) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER9BLOCK1THRESHOLD + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER9BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -6125,13 +5940,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier9BlockThreshold(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER9BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER9BLOCK1THRESHOLD + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER9BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER9BLOCK1THRESHOLD + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER9BLOCK1THRESHOLD + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER9BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -6147,9 +5964,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier9BlockThresholdCountAsync() {
-        return read(attributes.get(ATTR_TIER9BLOCKTHRESHOLDCOUNT));
+        return read(serverAttributes.get(ATTR_TIER9BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -6173,13 +5992,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier9BlockThresholdCount(final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER9BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER9BLOCKTHRESHOLDCOUNT).getLastValue();
+        if (serverAttributes.get(ATTR_TIER9BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER9BLOCKTHRESHOLDCOUNT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER9BLOCKTHRESHOLDCOUNT));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER9BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -6199,13 +6020,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier10BlockThresholdAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 15) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER10BLOCK1THRESHOLD + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER10BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -6233,13 +6056,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier10BlockThreshold(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER10BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER10BLOCK1THRESHOLD + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER10BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER10BLOCK1THRESHOLD + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER10BLOCK1THRESHOLD + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER10BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -6255,9 +6080,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier10BlockThresholdCountAsync() {
-        return read(attributes.get(ATTR_TIER10BLOCKTHRESHOLDCOUNT));
+        return read(serverAttributes.get(ATTR_TIER10BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -6281,13 +6108,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier10BlockThresholdCount(final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER10BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER10BLOCKTHRESHOLDCOUNT).getLastValue();
+        if (serverAttributes.get(ATTR_TIER10BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER10BLOCKTHRESHOLDCOUNT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER10BLOCKTHRESHOLDCOUNT));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER10BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -6307,13 +6136,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier11BlockThresholdAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 15) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER11BLOCK1THRESHOLD + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER11BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -6341,13 +6172,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier11BlockThreshold(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER11BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER11BLOCK1THRESHOLD + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER11BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER11BLOCK1THRESHOLD + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER11BLOCK1THRESHOLD + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER11BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -6363,9 +6196,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier11BlockThresholdCountAsync() {
-        return read(attributes.get(ATTR_TIER11BLOCKTHRESHOLDCOUNT));
+        return read(serverAttributes.get(ATTR_TIER11BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -6389,13 +6224,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier11BlockThresholdCount(final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER11BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER11BLOCKTHRESHOLDCOUNT).getLastValue();
+        if (serverAttributes.get(ATTR_TIER11BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER11BLOCKTHRESHOLDCOUNT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER11BLOCKTHRESHOLDCOUNT));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER11BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -6415,13 +6252,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier12BlockThresholdAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 15) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER12BLOCK1THRESHOLD + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER12BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -6449,13 +6288,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier12BlockThreshold(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER12BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER12BLOCK1THRESHOLD + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER12BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER12BLOCK1THRESHOLD + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER12BLOCK1THRESHOLD + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER12BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -6471,9 +6312,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier12BlockThresholdCountAsync() {
-        return read(attributes.get(ATTR_TIER12BLOCKTHRESHOLDCOUNT));
+        return read(serverAttributes.get(ATTR_TIER12BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -6497,13 +6340,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier12BlockThresholdCount(final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER12BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER12BLOCKTHRESHOLDCOUNT).getLastValue();
+        if (serverAttributes.get(ATTR_TIER12BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER12BLOCKTHRESHOLDCOUNT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER12BLOCKTHRESHOLDCOUNT));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER12BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -6523,13 +6368,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier13BlockThresholdAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 15) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER13BLOCK1THRESHOLD + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER13BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -6557,13 +6404,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier13BlockThreshold(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER13BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER13BLOCK1THRESHOLD + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER13BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER13BLOCK1THRESHOLD + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER13BLOCK1THRESHOLD + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER13BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -6579,9 +6428,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier13BlockThresholdCountAsync() {
-        return read(attributes.get(ATTR_TIER13BLOCKTHRESHOLDCOUNT));
+        return read(serverAttributes.get(ATTR_TIER13BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -6605,13 +6456,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier13BlockThresholdCount(final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER13BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER13BLOCKTHRESHOLDCOUNT).getLastValue();
+        if (serverAttributes.get(ATTR_TIER13BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER13BLOCKTHRESHOLDCOUNT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER13BLOCKTHRESHOLDCOUNT));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER13BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -6631,13 +6484,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier14BlockThresholdAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 15) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER14BLOCK1THRESHOLD + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER14BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -6665,13 +6520,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier14BlockThreshold(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER14BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER14BLOCK1THRESHOLD + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER14BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER14BLOCK1THRESHOLD + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER14BLOCK1THRESHOLD + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER14BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -6687,9 +6544,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier14BlockThresholdCountAsync() {
-        return read(attributes.get(ATTR_TIER14BLOCKTHRESHOLDCOUNT));
+        return read(serverAttributes.get(ATTR_TIER14BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -6713,13 +6572,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier14BlockThresholdCount(final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER14BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER14BLOCKTHRESHOLDCOUNT).getLastValue();
+        if (serverAttributes.get(ATTR_TIER14BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER14BLOCKTHRESHOLDCOUNT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER14BLOCKTHRESHOLDCOUNT));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER14BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -6739,13 +6600,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier15BlockThresholdAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 15) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER15BLOCK1THRESHOLD + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER15BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -6773,13 +6636,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 15)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier15BlockThreshold(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER15BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER15BLOCK1THRESHOLD + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER15BLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER15BLOCK1THRESHOLD + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER15BLOCK1THRESHOLD + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER15BLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -6795,9 +6660,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier15BlockThresholdCountAsync() {
-        return read(attributes.get(ATTR_TIER15BLOCKTHRESHOLDCOUNT));
+        return read(serverAttributes.get(ATTR_TIER15BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -6821,13 +6688,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier15BlockThresholdCount(final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER15BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER15BLOCKTHRESHOLDCOUNT).getLastValue();
+        if (serverAttributes.get(ATTR_TIER15BLOCKTHRESHOLDCOUNT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER15BLOCKTHRESHOLDCOUNT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER15BLOCKTHRESHOLDCOUNT));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER15BLOCKTHRESHOLDCOUNT));
     }
 
     /**
@@ -6841,9 +6710,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getStartOfBlockPeriodAsync() {
-        return read(attributes.get(ATTR_STARTOFBLOCKPERIOD));
+        return read(serverAttributes.get(ATTR_STARTOFBLOCKPERIOD));
     }
 
     /**
@@ -6865,13 +6736,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Calendar getStartOfBlockPeriod(final long refreshPeriod) {
-        if (attributes.get(ATTR_STARTOFBLOCKPERIOD).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) attributes.get(ATTR_STARTOFBLOCKPERIOD).getLastValue();
+        if (serverAttributes.get(ATTR_STARTOFBLOCKPERIOD).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_STARTOFBLOCKPERIOD).getLastValue();
         }
 
-        return (Calendar) readSync(attributes.get(ATTR_STARTOFBLOCKPERIOD));
+        return (Calendar) readSync(serverAttributes.get(ATTR_STARTOFBLOCKPERIOD));
     }
 
     /**
@@ -6887,9 +6760,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getBlockPeriodDurationAsync() {
-        return read(attributes.get(ATTR_BLOCKPERIODDURATION));
+        return read(serverAttributes.get(ATTR_BLOCKPERIODDURATION));
     }
 
     /**
@@ -6913,13 +6788,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getBlockPeriodDuration(final long refreshPeriod) {
-        if (attributes.get(ATTR_BLOCKPERIODDURATION).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_BLOCKPERIODDURATION).getLastValue();
+        if (serverAttributes.get(ATTR_BLOCKPERIODDURATION).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_BLOCKPERIODDURATION).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_BLOCKPERIODDURATION));
+        return (Integer) readSync(serverAttributes.get(ATTR_BLOCKPERIODDURATION));
     }
 
     /**
@@ -6937,9 +6814,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getThresholdMultiplierAsync() {
-        return read(attributes.get(ATTR_THRESHOLDMULTIPLIER));
+        return read(serverAttributes.get(ATTR_THRESHOLDMULTIPLIER));
     }
 
     /**
@@ -6965,13 +6844,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getThresholdMultiplier(final long refreshPeriod) {
-        if (attributes.get(ATTR_THRESHOLDMULTIPLIER).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_THRESHOLDMULTIPLIER).getLastValue();
+        if (serverAttributes.get(ATTR_THRESHOLDMULTIPLIER).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_THRESHOLDMULTIPLIER).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_THRESHOLDMULTIPLIER));
+        return (Integer) readSync(serverAttributes.get(ATTR_THRESHOLDMULTIPLIER));
     }
 
     /**
@@ -6989,9 +6870,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getThresholdDivisorAsync() {
-        return read(attributes.get(ATTR_THRESHOLDDIVISOR));
+        return read(serverAttributes.get(ATTR_THRESHOLDDIVISOR));
     }
 
     /**
@@ -7017,13 +6900,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getThresholdDivisor(final long refreshPeriod) {
-        if (attributes.get(ATTR_THRESHOLDDIVISOR).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_THRESHOLDDIVISOR).getLastValue();
+        if (serverAttributes.get(ATTR_THRESHOLDDIVISOR).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_THRESHOLDDIVISOR).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_THRESHOLDDIVISOR));
+        return (Integer) readSync(serverAttributes.get(ATTR_THRESHOLDDIVISOR));
     }
 
     /**
@@ -7038,9 +6923,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getBlockPeriodDurationTypeAsync() {
-        return read(attributes.get(ATTR_BLOCKPERIODDURATIONTYPE));
+        return read(serverAttributes.get(ATTR_BLOCKPERIODDURATIONTYPE));
     }
 
     /**
@@ -7063,13 +6950,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getBlockPeriodDurationType(final long refreshPeriod) {
-        if (attributes.get(ATTR_BLOCKPERIODDURATIONTYPE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_BLOCKPERIODDURATIONTYPE).getLastValue();
+        if (serverAttributes.get(ATTR_BLOCKPERIODDURATIONTYPE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_BLOCKPERIODDURATIONTYPE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_BLOCKPERIODDURATIONTYPE));
+        return (Integer) readSync(serverAttributes.get(ATTR_BLOCKPERIODDURATIONTYPE));
     }
 
     /**
@@ -7083,9 +6972,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCommodityTypeServerAsync() {
-        return read(attributes.get(ATTR_COMMODITYTYPESERVER));
+        return read(serverAttributes.get(ATTR_COMMODITYTYPESERVER));
     }
 
     /**
@@ -7107,13 +6998,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCommodityTypeServer(final long refreshPeriod) {
-        if (attributes.get(ATTR_COMMODITYTYPESERVER).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_COMMODITYTYPESERVER).getLastValue();
+        if (serverAttributes.get(ATTR_COMMODITYTYPESERVER).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_COMMODITYTYPESERVER).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_COMMODITYTYPESERVER));
+        return (Integer) readSync(serverAttributes.get(ATTR_COMMODITYTYPESERVER));
     }
 
     /**
@@ -7129,9 +7022,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getStandingChargeAsync() {
-        return read(attributes.get(ATTR_STANDINGCHARGE));
+        return read(serverAttributes.get(ATTR_STANDINGCHARGE));
     }
 
     /**
@@ -7155,13 +7050,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getStandingCharge(final long refreshPeriod) {
-        if (attributes.get(ATTR_STANDINGCHARGE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_STANDINGCHARGE).getLastValue();
+        if (serverAttributes.get(ATTR_STANDINGCHARGE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_STANDINGCHARGE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_STANDINGCHARGE));
+        return (Integer) readSync(serverAttributes.get(ATTR_STANDINGCHARGE));
     }
 
     /**
@@ -7172,9 +7069,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getConversionFactorAsync() {
-        return read(attributes.get(ATTR_CONVERSIONFACTOR));
+        return read(serverAttributes.get(ATTR_CONVERSIONFACTOR));
     }
 
     /**
@@ -7193,13 +7092,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getConversionFactor(final long refreshPeriod) {
-        if (attributes.get(ATTR_CONVERSIONFACTOR).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CONVERSIONFACTOR).getLastValue();
+        if (serverAttributes.get(ATTR_CONVERSIONFACTOR).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CONVERSIONFACTOR).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CONVERSIONFACTOR));
+        return (Integer) readSync(serverAttributes.get(ATTR_CONVERSIONFACTOR));
     }
 
     /**
@@ -7210,9 +7111,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getConversionFactorTrailingDigitAsync() {
-        return read(attributes.get(ATTR_CONVERSIONFACTORTRAILINGDIGIT));
+        return read(serverAttributes.get(ATTR_CONVERSIONFACTORTRAILINGDIGIT));
     }
 
     /**
@@ -7231,13 +7134,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getConversionFactorTrailingDigit(final long refreshPeriod) {
-        if (attributes.get(ATTR_CONVERSIONFACTORTRAILINGDIGIT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CONVERSIONFACTORTRAILINGDIGIT).getLastValue();
+        if (serverAttributes.get(ATTR_CONVERSIONFACTORTRAILINGDIGIT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CONVERSIONFACTORTRAILINGDIGIT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CONVERSIONFACTORTRAILINGDIGIT));
+        return (Integer) readSync(serverAttributes.get(ATTR_CONVERSIONFACTORTRAILINGDIGIT));
     }
 
     /**
@@ -7248,9 +7153,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCalorificValueAsync() {
-        return read(attributes.get(ATTR_CALORIFICVALUE));
+        return read(serverAttributes.get(ATTR_CALORIFICVALUE));
     }
 
     /**
@@ -7269,13 +7176,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCalorificValue(final long refreshPeriod) {
-        if (attributes.get(ATTR_CALORIFICVALUE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CALORIFICVALUE).getLastValue();
+        if (serverAttributes.get(ATTR_CALORIFICVALUE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CALORIFICVALUE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CALORIFICVALUE));
+        return (Integer) readSync(serverAttributes.get(ATTR_CALORIFICVALUE));
     }
 
     /**
@@ -7286,9 +7195,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCalorificValueUnitAsync() {
-        return read(attributes.get(ATTR_CALORIFICVALUEUNIT));
+        return read(serverAttributes.get(ATTR_CALORIFICVALUEUNIT));
     }
 
     /**
@@ -7307,13 +7218,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCalorificValueUnit(final long refreshPeriod) {
-        if (attributes.get(ATTR_CALORIFICVALUEUNIT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CALORIFICVALUEUNIT).getLastValue();
+        if (serverAttributes.get(ATTR_CALORIFICVALUEUNIT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CALORIFICVALUEUNIT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CALORIFICVALUEUNIT));
+        return (Integer) readSync(serverAttributes.get(ATTR_CALORIFICVALUEUNIT));
     }
 
     /**
@@ -7324,9 +7237,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCalorificValueTrailingDigitAsync() {
-        return read(attributes.get(ATTR_CALORIFICVALUETRAILINGDIGIT));
+        return read(serverAttributes.get(ATTR_CALORIFICVALUETRAILINGDIGIT));
     }
 
     /**
@@ -7345,13 +7260,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCalorificValueTrailingDigit(final long refreshPeriod) {
-        if (attributes.get(ATTR_CALORIFICVALUETRAILINGDIGIT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CALORIFICVALUETRAILINGDIGIT).getLastValue();
+        if (serverAttributes.get(ATTR_CALORIFICVALUETRAILINGDIGIT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CALORIFICVALUETRAILINGDIGIT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CALORIFICVALUETRAILINGDIGIT));
+        return (Integer) readSync(serverAttributes.get(ATTR_CALORIFICVALUETRAILINGDIGIT));
     }
 
     /**
@@ -7363,13 +7280,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getNoTierBlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_NOTIERBLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_NOTIERBLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -7389,13 +7308,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getNoTierBlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_NOTIERBLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_NOTIERBLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_NOTIERBLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_NOTIERBLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_NOTIERBLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_NOTIERBLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -7407,13 +7328,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier1BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER1BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER1BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -7433,13 +7356,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier1BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER1BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER1BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER1BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER1BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER1BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER1BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -7451,13 +7376,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier2BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER2BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER2BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -7477,13 +7404,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier2BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER2BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER2BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER2BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER2BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER2BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER2BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -7495,13 +7424,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier3BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER3BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER3BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -7521,13 +7452,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier3BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER3BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER3BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER3BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER3BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER3BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER3BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -7539,13 +7472,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier4BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER4BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER4BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -7565,13 +7500,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier4BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER4BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER4BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER4BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER4BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER4BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER4BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -7583,13 +7520,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier5BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER5BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER5BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -7609,13 +7548,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier5BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER5BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER5BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER5BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER5BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER5BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER5BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -7627,13 +7568,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier6BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER6BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER6BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -7653,13 +7596,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier6BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER6BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER6BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER6BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER6BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER6BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER6BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -7671,13 +7616,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier7BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER7BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER7BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -7697,13 +7644,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier7BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER7BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER7BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER7BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER7BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER7BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER7BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -7715,13 +7664,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier8BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER8BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER8BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -7741,13 +7692,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier8BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER8BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER8BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER8BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER8BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER8BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER8BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -7759,13 +7712,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier9BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER9BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER9BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -7785,13 +7740,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier9BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER9BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER9BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER9BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER9BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER9BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER9BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -7803,13 +7760,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier10BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER10BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER10BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -7829,13 +7788,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier10BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER10BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER10BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER10BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER10BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER10BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER10BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -7847,13 +7808,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier11BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER11BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER11BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -7873,13 +7836,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier11BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER11BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER11BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER11BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER11BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER11BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER11BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -7891,13 +7856,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier12BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER12BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER12BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -7917,13 +7884,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier12BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER12BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER12BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER12BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER12BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER12BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER12BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -7935,13 +7904,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier13BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER13BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER13BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -7961,13 +7932,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier13BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER13BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER13BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER13BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER13BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER13BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER13BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -7979,13 +7952,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier14BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER14BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER14BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -8005,13 +7980,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier14BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER14BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER14BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER14BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER14BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER14BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER14BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -8023,13 +8000,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTier15BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_TIER15BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_TIER15BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -8049,13 +8028,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTier15BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_TIER15BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIER15BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_TIER15BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIER15BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIER15BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIER15BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -8071,13 +8052,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (16 < arrayOffset < 47)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPriceTierAsync(final int arrayOffset) {
         if (arrayOffset < 16 || arrayOffset > 47) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_PRICETIER16 + arrayOffset));
+        return read(serverAttributes.get(ATTR_PRICETIER16 + arrayOffset));
     }
 
     /**
@@ -8101,13 +8084,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (16 < arrayOffset < 47)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPriceTier(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_PRICETIER16 + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PRICETIER16 + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_PRICETIER16 + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PRICETIER16 + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PRICETIER16 + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_PRICETIER16 + arrayOffset));
     }
 
     /**
@@ -8122,9 +8107,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCpp1PriceAsync() {
-        return read(attributes.get(ATTR_CPP1PRICE));
+        return read(serverAttributes.get(ATTR_CPP1PRICE));
     }
 
     /**
@@ -8147,13 +8134,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCpp1Price(final long refreshPeriod) {
-        if (attributes.get(ATTR_CPP1PRICE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CPP1PRICE).getLastValue();
+        if (serverAttributes.get(ATTR_CPP1PRICE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CPP1PRICE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CPP1PRICE));
+        return (Integer) readSync(serverAttributes.get(ATTR_CPP1PRICE));
     }
 
     /**
@@ -8168,9 +8157,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCpp2PriceAsync() {
-        return read(attributes.get(ATTR_CPP2PRICE));
+        return read(serverAttributes.get(ATTR_CPP2PRICE));
     }
 
     /**
@@ -8193,13 +8184,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCpp2Price(final long refreshPeriod) {
-        if (attributes.get(ATTR_CPP2PRICE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CPP2PRICE).getLastValue();
+        if (serverAttributes.get(ATTR_CPP2PRICE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CPP2PRICE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CPP2PRICE));
+        return (Integer) readSync(serverAttributes.get(ATTR_CPP2PRICE));
     }
 
     /**
@@ -8210,9 +8203,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTariffLabelAsync() {
-        return read(attributes.get(ATTR_TARIFFLABEL));
+        return read(serverAttributes.get(ATTR_TARIFFLABEL));
     }
 
     /**
@@ -8231,13 +8226,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link String} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public String getTariffLabel(final long refreshPeriod) {
-        if (attributes.get(ATTR_TARIFFLABEL).isLastValueCurrent(refreshPeriod)) {
-            return (String) attributes.get(ATTR_TARIFFLABEL).getLastValue();
+        if (serverAttributes.get(ATTR_TARIFFLABEL).isLastValueCurrent(refreshPeriod)) {
+            return (String) serverAttributes.get(ATTR_TARIFFLABEL).getLastValue();
         }
 
-        return (String) readSync(attributes.get(ATTR_TARIFFLABEL));
+        return (String) readSync(serverAttributes.get(ATTR_TARIFFLABEL));
     }
 
     /**
@@ -8248,9 +8245,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getNumberofPriceTiersInUseAsync() {
-        return read(attributes.get(ATTR_NUMBEROFPRICETIERSINUSE));
+        return read(serverAttributes.get(ATTR_NUMBEROFPRICETIERSINUSE));
     }
 
     /**
@@ -8269,13 +8268,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getNumberofPriceTiersInUse(final long refreshPeriod) {
-        if (attributes.get(ATTR_NUMBEROFPRICETIERSINUSE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_NUMBEROFPRICETIERSINUSE).getLastValue();
+        if (serverAttributes.get(ATTR_NUMBEROFPRICETIERSINUSE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_NUMBEROFPRICETIERSINUSE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_NUMBEROFPRICETIERSINUSE));
+        return (Integer) readSync(serverAttributes.get(ATTR_NUMBEROFPRICETIERSINUSE));
     }
 
     /**
@@ -8286,9 +8287,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getNumberofBlockThresholdsInUseAsync() {
-        return read(attributes.get(ATTR_NUMBEROFBLOCKTHRESHOLDSINUSE));
+        return read(serverAttributes.get(ATTR_NUMBEROFBLOCKTHRESHOLDSINUSE));
     }
 
     /**
@@ -8307,13 +8310,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getNumberofBlockThresholdsInUse(final long refreshPeriod) {
-        if (attributes.get(ATTR_NUMBEROFBLOCKTHRESHOLDSINUSE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_NUMBEROFBLOCKTHRESHOLDSINUSE).getLastValue();
+        if (serverAttributes.get(ATTR_NUMBEROFBLOCKTHRESHOLDSINUSE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_NUMBEROFBLOCKTHRESHOLDSINUSE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_NUMBEROFBLOCKTHRESHOLDSINUSE));
+        return (Integer) readSync(serverAttributes.get(ATTR_NUMBEROFBLOCKTHRESHOLDSINUSE));
     }
 
     /**
@@ -8324,9 +8329,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTierBlockModeAsync() {
-        return read(attributes.get(ATTR_TIERBLOCKMODE));
+        return read(serverAttributes.get(ATTR_TIERBLOCKMODE));
     }
 
     /**
@@ -8345,13 +8352,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTierBlockMode(final long refreshPeriod) {
-        if (attributes.get(ATTR_TIERBLOCKMODE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIERBLOCKMODE).getLastValue();
+        if (serverAttributes.get(ATTR_TIERBLOCKMODE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIERBLOCKMODE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIERBLOCKMODE));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIERBLOCKMODE));
     }
 
     /**
@@ -8362,9 +8371,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getUnitOfMeasureAsync() {
-        return read(attributes.get(ATTR_UNITOFMEASURE));
+        return read(serverAttributes.get(ATTR_UNITOFMEASURE));
     }
 
     /**
@@ -8383,13 +8394,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getUnitOfMeasure(final long refreshPeriod) {
-        if (attributes.get(ATTR_UNITOFMEASURE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_UNITOFMEASURE).getLastValue();
+        if (serverAttributes.get(ATTR_UNITOFMEASURE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_UNITOFMEASURE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_UNITOFMEASURE));
+        return (Integer) readSync(serverAttributes.get(ATTR_UNITOFMEASURE));
     }
 
     /**
@@ -8400,9 +8413,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCurrencyAsync() {
-        return read(attributes.get(ATTR_CURRENCY));
+        return read(serverAttributes.get(ATTR_CURRENCY));
     }
 
     /**
@@ -8421,13 +8436,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCurrency(final long refreshPeriod) {
-        if (attributes.get(ATTR_CURRENCY).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CURRENCY).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENCY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENCY).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CURRENCY));
+        return (Integer) readSync(serverAttributes.get(ATTR_CURRENCY));
     }
 
     /**
@@ -8438,9 +8455,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPriceTrailingDigitAsync() {
-        return read(attributes.get(ATTR_PRICETRAILINGDIGIT));
+        return read(serverAttributes.get(ATTR_PRICETRAILINGDIGIT));
     }
 
     /**
@@ -8459,13 +8478,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPriceTrailingDigit(final long refreshPeriod) {
-        if (attributes.get(ATTR_PRICETRAILINGDIGIT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PRICETRAILINGDIGIT).getLastValue();
+        if (serverAttributes.get(ATTR_PRICETRAILINGDIGIT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PRICETRAILINGDIGIT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PRICETRAILINGDIGIT));
+        return (Integer) readSync(serverAttributes.get(ATTR_PRICETRAILINGDIGIT));
     }
 
     /**
@@ -8478,9 +8499,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTariffResolutionPeriodAsync() {
-        return read(attributes.get(ATTR_TARIFFRESOLUTIONPERIOD));
+        return read(serverAttributes.get(ATTR_TARIFFRESOLUTIONPERIOD));
     }
 
     /**
@@ -8501,13 +8524,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTariffResolutionPeriod(final long refreshPeriod) {
-        if (attributes.get(ATTR_TARIFFRESOLUTIONPERIOD).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TARIFFRESOLUTIONPERIOD).getLastValue();
+        if (serverAttributes.get(ATTR_TARIFFRESOLUTIONPERIOD).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TARIFFRESOLUTIONPERIOD).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TARIFFRESOLUTIONPERIOD));
+        return (Integer) readSync(serverAttributes.get(ATTR_TARIFFRESOLUTIONPERIOD));
     }
 
     /**
@@ -8523,9 +8548,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCo2Async() {
-        return read(attributes.get(ATTR_CO2));
+        return read(serverAttributes.get(ATTR_CO2));
     }
 
     /**
@@ -8549,13 +8576,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCo2(final long refreshPeriod) {
-        if (attributes.get(ATTR_CO2).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CO2).getLastValue();
+        if (serverAttributes.get(ATTR_CO2).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CO2).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CO2));
+        return (Integer) readSync(serverAttributes.get(ATTR_CO2));
     }
 
     /**
@@ -8570,9 +8599,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCo2UnitAsync() {
-        return read(attributes.get(ATTR_CO2UNIT));
+        return read(serverAttributes.get(ATTR_CO2UNIT));
     }
 
     /**
@@ -8595,13 +8626,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCo2Unit(final long refreshPeriod) {
-        if (attributes.get(ATTR_CO2UNIT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CO2UNIT).getLastValue();
+        if (serverAttributes.get(ATTR_CO2UNIT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CO2UNIT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CO2UNIT));
+        return (Integer) readSync(serverAttributes.get(ATTR_CO2UNIT));
     }
 
     /**
@@ -8612,9 +8645,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCo2TrailingDigitAsync() {
-        return read(attributes.get(ATTR_CO2TRAILINGDIGIT));
+        return read(serverAttributes.get(ATTR_CO2TRAILINGDIGIT));
     }
 
     /**
@@ -8633,13 +8668,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCo2TrailingDigit(final long refreshPeriod) {
-        if (attributes.get(ATTR_CO2TRAILINGDIGIT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CO2TRAILINGDIGIT).getLastValue();
+        if (serverAttributes.get(ATTR_CO2TRAILINGDIGIT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CO2TRAILINGDIGIT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CO2TRAILINGDIGIT));
+        return (Integer) readSync(serverAttributes.get(ATTR_CO2TRAILINGDIGIT));
     }
 
     /**
@@ -8653,9 +8690,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCurrentBillingPeriodStartAsync() {
-        return read(attributes.get(ATTR_CURRENTBILLINGPERIODSTART));
+        return read(serverAttributes.get(ATTR_CURRENTBILLINGPERIODSTART));
     }
 
     /**
@@ -8677,13 +8716,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Calendar getCurrentBillingPeriodStart(final long refreshPeriod) {
-        if (attributes.get(ATTR_CURRENTBILLINGPERIODSTART).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) attributes.get(ATTR_CURRENTBILLINGPERIODSTART).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTBILLINGPERIODSTART).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_CURRENTBILLINGPERIODSTART).getLastValue();
         }
 
-        return (Calendar) readSync(attributes.get(ATTR_CURRENTBILLINGPERIODSTART));
+        return (Calendar) readSync(serverAttributes.get(ATTR_CURRENTBILLINGPERIODSTART));
     }
 
     /**
@@ -8697,9 +8738,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCurrentBillingPeriodDurationAsync() {
-        return read(attributes.get(ATTR_CURRENTBILLINGPERIODDURATION));
+        return read(serverAttributes.get(ATTR_CURRENTBILLINGPERIODDURATION));
     }
 
     /**
@@ -8721,13 +8764,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCurrentBillingPeriodDuration(final long refreshPeriod) {
-        if (attributes.get(ATTR_CURRENTBILLINGPERIODDURATION).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CURRENTBILLINGPERIODDURATION).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTBILLINGPERIODDURATION).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTBILLINGPERIODDURATION).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CURRENTBILLINGPERIODDURATION));
+        return (Integer) readSync(serverAttributes.get(ATTR_CURRENTBILLINGPERIODDURATION));
     }
 
     /**
@@ -8741,9 +8786,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getLastBillingPeriodStartAsync() {
-        return read(attributes.get(ATTR_LASTBILLINGPERIODSTART));
+        return read(serverAttributes.get(ATTR_LASTBILLINGPERIODSTART));
     }
 
     /**
@@ -8765,13 +8812,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Calendar getLastBillingPeriodStart(final long refreshPeriod) {
-        if (attributes.get(ATTR_LASTBILLINGPERIODSTART).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) attributes.get(ATTR_LASTBILLINGPERIODSTART).getLastValue();
+        if (serverAttributes.get(ATTR_LASTBILLINGPERIODSTART).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_LASTBILLINGPERIODSTART).getLastValue();
         }
 
-        return (Calendar) readSync(attributes.get(ATTR_LASTBILLINGPERIODSTART));
+        return (Calendar) readSync(serverAttributes.get(ATTR_LASTBILLINGPERIODSTART));
     }
 
     /**
@@ -8785,9 +8834,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getLastBillingPeriodDurationAsync() {
-        return read(attributes.get(ATTR_LASTBILLINGPERIODDURATION));
+        return read(serverAttributes.get(ATTR_LASTBILLINGPERIODDURATION));
     }
 
     /**
@@ -8809,13 +8860,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getLastBillingPeriodDuration(final long refreshPeriod) {
-        if (attributes.get(ATTR_LASTBILLINGPERIODDURATION).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_LASTBILLINGPERIODDURATION).getLastValue();
+        if (serverAttributes.get(ATTR_LASTBILLINGPERIODDURATION).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_LASTBILLINGPERIODDURATION).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_LASTBILLINGPERIODDURATION));
+        return (Integer) readSync(serverAttributes.get(ATTR_LASTBILLINGPERIODDURATION));
     }
 
     /**
@@ -8832,9 +8885,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getLastBillingPeriodConsolidatedBillAsync() {
-        return read(attributes.get(ATTR_LASTBILLINGPERIODCONSOLIDATEDBILL));
+        return read(serverAttributes.get(ATTR_LASTBILLINGPERIODCONSOLIDATEDBILL));
     }
 
     /**
@@ -8859,13 +8914,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getLastBillingPeriodConsolidatedBill(final long refreshPeriod) {
-        if (attributes.get(ATTR_LASTBILLINGPERIODCONSOLIDATEDBILL).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_LASTBILLINGPERIODCONSOLIDATEDBILL).getLastValue();
+        if (serverAttributes.get(ATTR_LASTBILLINGPERIODCONSOLIDATEDBILL).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_LASTBILLINGPERIODCONSOLIDATEDBILL).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_LASTBILLINGPERIODCONSOLIDATEDBILL));
+        return (Integer) readSync(serverAttributes.get(ATTR_LASTBILLINGPERIODCONSOLIDATEDBILL));
     }
 
     /**
@@ -8879,9 +8936,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCreditPaymentDueDateAsync() {
-        return read(attributes.get(ATTR_CREDITPAYMENTDUEDATE));
+        return read(serverAttributes.get(ATTR_CREDITPAYMENTDUEDATE));
     }
 
     /**
@@ -8903,13 +8962,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Calendar getCreditPaymentDueDate(final long refreshPeriod) {
-        if (attributes.get(ATTR_CREDITPAYMENTDUEDATE).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) attributes.get(ATTR_CREDITPAYMENTDUEDATE).getLastValue();
+        if (serverAttributes.get(ATTR_CREDITPAYMENTDUEDATE).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_CREDITPAYMENTDUEDATE).getLastValue();
         }
 
-        return (Calendar) readSync(attributes.get(ATTR_CREDITPAYMENTDUEDATE));
+        return (Calendar) readSync(serverAttributes.get(ATTR_CREDITPAYMENTDUEDATE));
     }
 
     /**
@@ -8922,9 +8983,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCreditPaymentStatusAsync() {
-        return read(attributes.get(ATTR_CREDITPAYMENTSTATUS));
+        return read(serverAttributes.get(ATTR_CREDITPAYMENTSTATUS));
     }
 
     /**
@@ -8945,13 +9008,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCreditPaymentStatus(final long refreshPeriod) {
-        if (attributes.get(ATTR_CREDITPAYMENTSTATUS).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CREDITPAYMENTSTATUS).getLastValue();
+        if (serverAttributes.get(ATTR_CREDITPAYMENTSTATUS).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CREDITPAYMENTSTATUS).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CREDITPAYMENTSTATUS));
+        return (Integer) readSync(serverAttributes.get(ATTR_CREDITPAYMENTSTATUS));
     }
 
     /**
@@ -8964,9 +9029,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCreditPaymentOverDueAmountAsync() {
-        return read(attributes.get(ATTR_CREDITPAYMENTOVERDUEAMOUNT));
+        return read(serverAttributes.get(ATTR_CREDITPAYMENTOVERDUEAMOUNT));
     }
 
     /**
@@ -8987,13 +9054,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCreditPaymentOverDueAmount(final long refreshPeriod) {
-        if (attributes.get(ATTR_CREDITPAYMENTOVERDUEAMOUNT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CREDITPAYMENTOVERDUEAMOUNT).getLastValue();
+        if (serverAttributes.get(ATTR_CREDITPAYMENTOVERDUEAMOUNT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CREDITPAYMENTOVERDUEAMOUNT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CREDITPAYMENTOVERDUEAMOUNT));
+        return (Integer) readSync(serverAttributes.get(ATTR_CREDITPAYMENTOVERDUEAMOUNT));
     }
 
     /**
@@ -9007,9 +9076,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPaymentDiscountAsync() {
-        return read(attributes.get(ATTR_PAYMENTDISCOUNT));
+        return read(serverAttributes.get(ATTR_PAYMENTDISCOUNT));
     }
 
     /**
@@ -9031,13 +9102,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPaymentDiscount(final long refreshPeriod) {
-        if (attributes.get(ATTR_PAYMENTDISCOUNT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PAYMENTDISCOUNT).getLastValue();
+        if (serverAttributes.get(ATTR_PAYMENTDISCOUNT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PAYMENTDISCOUNT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PAYMENTDISCOUNT));
+        return (Integer) readSync(serverAttributes.get(ATTR_PAYMENTDISCOUNT));
     }
 
     /**
@@ -9051,9 +9124,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPaymentDiscountPeriodAsync() {
-        return read(attributes.get(ATTR_PAYMENTDISCOUNTPERIOD));
+        return read(serverAttributes.get(ATTR_PAYMENTDISCOUNTPERIOD));
     }
 
     /**
@@ -9075,13 +9150,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPaymentDiscountPeriod(final long refreshPeriod) {
-        if (attributes.get(ATTR_PAYMENTDISCOUNTPERIOD).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PAYMENTDISCOUNTPERIOD).getLastValue();
+        if (serverAttributes.get(ATTR_PAYMENTDISCOUNTPERIOD).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PAYMENTDISCOUNTPERIOD).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PAYMENTDISCOUNTPERIOD));
+        return (Integer) readSync(serverAttributes.get(ATTR_PAYMENTDISCOUNTPERIOD));
     }
 
     /**
@@ -9092,9 +9169,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCreditCardPayment1Async() {
-        return read(attributes.get(ATTR_CREDITCARDPAYMENT1));
+        return read(serverAttributes.get(ATTR_CREDITCARDPAYMENT1));
     }
 
     /**
@@ -9113,13 +9192,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCreditCardPayment1(final long refreshPeriod) {
-        if (attributes.get(ATTR_CREDITCARDPAYMENT1).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CREDITCARDPAYMENT1).getLastValue();
+        if (serverAttributes.get(ATTR_CREDITCARDPAYMENT1).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CREDITCARDPAYMENT1).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CREDITCARDPAYMENT1));
+        return (Integer) readSync(serverAttributes.get(ATTR_CREDITCARDPAYMENT1));
     }
 
     /**
@@ -9130,9 +9211,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCreditCardPaymentDate1Async() {
-        return read(attributes.get(ATTR_CREDITCARDPAYMENTDATE1));
+        return read(serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE1));
     }
 
     /**
@@ -9151,13 +9234,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Calendar getCreditCardPaymentDate1(final long refreshPeriod) {
-        if (attributes.get(ATTR_CREDITCARDPAYMENTDATE1).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) attributes.get(ATTR_CREDITCARDPAYMENTDATE1).getLastValue();
+        if (serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE1).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE1).getLastValue();
         }
 
-        return (Calendar) readSync(attributes.get(ATTR_CREDITCARDPAYMENTDATE1));
+        return (Calendar) readSync(serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE1));
     }
 
     /**
@@ -9168,9 +9253,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCreditCardPaymentRef1Async() {
-        return read(attributes.get(ATTR_CREDITCARDPAYMENTREF1));
+        return read(serverAttributes.get(ATTR_CREDITCARDPAYMENTREF1));
     }
 
     /**
@@ -9189,13 +9276,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link ByteArray} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public ByteArray getCreditCardPaymentRef1(final long refreshPeriod) {
-        if (attributes.get(ATTR_CREDITCARDPAYMENTREF1).isLastValueCurrent(refreshPeriod)) {
-            return (ByteArray) attributes.get(ATTR_CREDITCARDPAYMENTREF1).getLastValue();
+        if (serverAttributes.get(ATTR_CREDITCARDPAYMENTREF1).isLastValueCurrent(refreshPeriod)) {
+            return (ByteArray) serverAttributes.get(ATTR_CREDITCARDPAYMENTREF1).getLastValue();
         }
 
-        return (ByteArray) readSync(attributes.get(ATTR_CREDITCARDPAYMENTREF1));
+        return (ByteArray) readSync(serverAttributes.get(ATTR_CREDITCARDPAYMENTREF1));
     }
 
     /**
@@ -9206,9 +9295,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCreditCardPayment2Async() {
-        return read(attributes.get(ATTR_CREDITCARDPAYMENT2));
+        return read(serverAttributes.get(ATTR_CREDITCARDPAYMENT2));
     }
 
     /**
@@ -9227,13 +9318,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCreditCardPayment2(final long refreshPeriod) {
-        if (attributes.get(ATTR_CREDITCARDPAYMENT2).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CREDITCARDPAYMENT2).getLastValue();
+        if (serverAttributes.get(ATTR_CREDITCARDPAYMENT2).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CREDITCARDPAYMENT2).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CREDITCARDPAYMENT2));
+        return (Integer) readSync(serverAttributes.get(ATTR_CREDITCARDPAYMENT2));
     }
 
     /**
@@ -9244,9 +9337,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCreditCardPaymentDate2Async() {
-        return read(attributes.get(ATTR_CREDITCARDPAYMENTDATE2));
+        return read(serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE2));
     }
 
     /**
@@ -9265,13 +9360,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Calendar getCreditCardPaymentDate2(final long refreshPeriod) {
-        if (attributes.get(ATTR_CREDITCARDPAYMENTDATE2).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) attributes.get(ATTR_CREDITCARDPAYMENTDATE2).getLastValue();
+        if (serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE2).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE2).getLastValue();
         }
 
-        return (Calendar) readSync(attributes.get(ATTR_CREDITCARDPAYMENTDATE2));
+        return (Calendar) readSync(serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE2));
     }
 
     /**
@@ -9282,9 +9379,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCreditCardPaymentRef2Async() {
-        return read(attributes.get(ATTR_CREDITCARDPAYMENTREF2));
+        return read(serverAttributes.get(ATTR_CREDITCARDPAYMENTREF2));
     }
 
     /**
@@ -9303,13 +9402,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link ByteArray} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public ByteArray getCreditCardPaymentRef2(final long refreshPeriod) {
-        if (attributes.get(ATTR_CREDITCARDPAYMENTREF2).isLastValueCurrent(refreshPeriod)) {
-            return (ByteArray) attributes.get(ATTR_CREDITCARDPAYMENTREF2).getLastValue();
+        if (serverAttributes.get(ATTR_CREDITCARDPAYMENTREF2).isLastValueCurrent(refreshPeriod)) {
+            return (ByteArray) serverAttributes.get(ATTR_CREDITCARDPAYMENTREF2).getLastValue();
         }
 
-        return (ByteArray) readSync(attributes.get(ATTR_CREDITCARDPAYMENTREF2));
+        return (ByteArray) readSync(serverAttributes.get(ATTR_CREDITCARDPAYMENTREF2));
     }
 
     /**
@@ -9320,9 +9421,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCreditCardPayment3Async() {
-        return read(attributes.get(ATTR_CREDITCARDPAYMENT3));
+        return read(serverAttributes.get(ATTR_CREDITCARDPAYMENT3));
     }
 
     /**
@@ -9341,13 +9444,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCreditCardPayment3(final long refreshPeriod) {
-        if (attributes.get(ATTR_CREDITCARDPAYMENT3).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CREDITCARDPAYMENT3).getLastValue();
+        if (serverAttributes.get(ATTR_CREDITCARDPAYMENT3).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CREDITCARDPAYMENT3).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CREDITCARDPAYMENT3));
+        return (Integer) readSync(serverAttributes.get(ATTR_CREDITCARDPAYMENT3));
     }
 
     /**
@@ -9358,9 +9463,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCreditCardPaymentDate3Async() {
-        return read(attributes.get(ATTR_CREDITCARDPAYMENTDATE3));
+        return read(serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE3));
     }
 
     /**
@@ -9379,13 +9486,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Calendar getCreditCardPaymentDate3(final long refreshPeriod) {
-        if (attributes.get(ATTR_CREDITCARDPAYMENTDATE3).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) attributes.get(ATTR_CREDITCARDPAYMENTDATE3).getLastValue();
+        if (serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE3).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE3).getLastValue();
         }
 
-        return (Calendar) readSync(attributes.get(ATTR_CREDITCARDPAYMENTDATE3));
+        return (Calendar) readSync(serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE3));
     }
 
     /**
@@ -9396,9 +9505,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCreditCardPaymentRef3Async() {
-        return read(attributes.get(ATTR_CREDITCARDPAYMENTREF3));
+        return read(serverAttributes.get(ATTR_CREDITCARDPAYMENTREF3));
     }
 
     /**
@@ -9417,13 +9528,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link ByteArray} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public ByteArray getCreditCardPaymentRef3(final long refreshPeriod) {
-        if (attributes.get(ATTR_CREDITCARDPAYMENTREF3).isLastValueCurrent(refreshPeriod)) {
-            return (ByteArray) attributes.get(ATTR_CREDITCARDPAYMENTREF3).getLastValue();
+        if (serverAttributes.get(ATTR_CREDITCARDPAYMENTREF3).isLastValueCurrent(refreshPeriod)) {
+            return (ByteArray) serverAttributes.get(ATTR_CREDITCARDPAYMENTREF3).getLastValue();
         }
 
-        return (ByteArray) readSync(attributes.get(ATTR_CREDITCARDPAYMENTREF3));
+        return (ByteArray) readSync(serverAttributes.get(ATTR_CREDITCARDPAYMENTREF3));
     }
 
     /**
@@ -9434,9 +9547,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCreditCardPayment4Async() {
-        return read(attributes.get(ATTR_CREDITCARDPAYMENT4));
+        return read(serverAttributes.get(ATTR_CREDITCARDPAYMENT4));
     }
 
     /**
@@ -9455,13 +9570,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCreditCardPayment4(final long refreshPeriod) {
-        if (attributes.get(ATTR_CREDITCARDPAYMENT4).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CREDITCARDPAYMENT4).getLastValue();
+        if (serverAttributes.get(ATTR_CREDITCARDPAYMENT4).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CREDITCARDPAYMENT4).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CREDITCARDPAYMENT4));
+        return (Integer) readSync(serverAttributes.get(ATTR_CREDITCARDPAYMENT4));
     }
 
     /**
@@ -9472,9 +9589,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCreditCardPaymentDate4Async() {
-        return read(attributes.get(ATTR_CREDITCARDPAYMENTDATE4));
+        return read(serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE4));
     }
 
     /**
@@ -9493,13 +9612,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Calendar getCreditCardPaymentDate4(final long refreshPeriod) {
-        if (attributes.get(ATTR_CREDITCARDPAYMENTDATE4).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) attributes.get(ATTR_CREDITCARDPAYMENTDATE4).getLastValue();
+        if (serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE4).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE4).getLastValue();
         }
 
-        return (Calendar) readSync(attributes.get(ATTR_CREDITCARDPAYMENTDATE4));
+        return (Calendar) readSync(serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE4));
     }
 
     /**
@@ -9510,9 +9631,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCreditCardPaymentRef4Async() {
-        return read(attributes.get(ATTR_CREDITCARDPAYMENTREF4));
+        return read(serverAttributes.get(ATTR_CREDITCARDPAYMENTREF4));
     }
 
     /**
@@ -9531,13 +9654,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link ByteArray} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public ByteArray getCreditCardPaymentRef4(final long refreshPeriod) {
-        if (attributes.get(ATTR_CREDITCARDPAYMENTREF4).isLastValueCurrent(refreshPeriod)) {
-            return (ByteArray) attributes.get(ATTR_CREDITCARDPAYMENTREF4).getLastValue();
+        if (serverAttributes.get(ATTR_CREDITCARDPAYMENTREF4).isLastValueCurrent(refreshPeriod)) {
+            return (ByteArray) serverAttributes.get(ATTR_CREDITCARDPAYMENTREF4).getLastValue();
         }
 
-        return (ByteArray) readSync(attributes.get(ATTR_CREDITCARDPAYMENTREF4));
+        return (ByteArray) readSync(serverAttributes.get(ATTR_CREDITCARDPAYMENTREF4));
     }
 
     /**
@@ -9548,9 +9673,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCreditCardPayment5Async() {
-        return read(attributes.get(ATTR_CREDITCARDPAYMENT5));
+        return read(serverAttributes.get(ATTR_CREDITCARDPAYMENT5));
     }
 
     /**
@@ -9569,13 +9696,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCreditCardPayment5(final long refreshPeriod) {
-        if (attributes.get(ATTR_CREDITCARDPAYMENT5).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CREDITCARDPAYMENT5).getLastValue();
+        if (serverAttributes.get(ATTR_CREDITCARDPAYMENT5).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CREDITCARDPAYMENT5).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CREDITCARDPAYMENT5));
+        return (Integer) readSync(serverAttributes.get(ATTR_CREDITCARDPAYMENT5));
     }
 
     /**
@@ -9586,9 +9715,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCreditCardPaymentDate5Async() {
-        return read(attributes.get(ATTR_CREDITCARDPAYMENTDATE5));
+        return read(serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE5));
     }
 
     /**
@@ -9607,13 +9738,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Calendar getCreditCardPaymentDate5(final long refreshPeriod) {
-        if (attributes.get(ATTR_CREDITCARDPAYMENTDATE5).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) attributes.get(ATTR_CREDITCARDPAYMENTDATE5).getLastValue();
+        if (serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE5).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE5).getLastValue();
         }
 
-        return (Calendar) readSync(attributes.get(ATTR_CREDITCARDPAYMENTDATE5));
+        return (Calendar) readSync(serverAttributes.get(ATTR_CREDITCARDPAYMENTDATE5));
     }
 
     /**
@@ -9624,9 +9757,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCreditCardPaymentRef5Async() {
-        return read(attributes.get(ATTR_CREDITCARDPAYMENTREF5));
+        return read(serverAttributes.get(ATTR_CREDITCARDPAYMENTREF5));
     }
 
     /**
@@ -9645,13 +9780,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link ByteArray} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public ByteArray getCreditCardPaymentRef5(final long refreshPeriod) {
-        if (attributes.get(ATTR_CREDITCARDPAYMENTREF5).isLastValueCurrent(refreshPeriod)) {
-            return (ByteArray) attributes.get(ATTR_CREDITCARDPAYMENTREF5).getLastValue();
+        if (serverAttributes.get(ATTR_CREDITCARDPAYMENTREF5).isLastValueCurrent(refreshPeriod)) {
+            return (ByteArray) serverAttributes.get(ATTR_CREDITCARDPAYMENTREF5).getLastValue();
         }
 
-        return (ByteArray) readSync(attributes.get(ATTR_CREDITCARDPAYMENTREF5));
+        return (ByteArray) readSync(serverAttributes.get(ATTR_CREDITCARDPAYMENTREF5));
     }
 
     /**
@@ -9664,9 +9801,11 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 48)
      * @param receivedTier{{count}}PriceLabel the {@link ByteArray} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setReceivedTierPriceLabel(final int arrayOffset, final ByteArray value) {
-        return write(attributes.get(ATTR_RECEIVEDTIER1PRICELABEL + arrayOffset), value);
+        return write(serverAttributes.get(ATTR_RECEIVEDTIER1PRICELABEL + arrayOffset), value);
     }
 
     /**
@@ -9678,13 +9817,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 48)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getReceivedTierPriceLabelAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 48) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_RECEIVEDTIER1PRICELABEL + arrayOffset));
+        return read(serverAttributes.get(ATTR_RECEIVEDTIER1PRICELABEL + arrayOffset));
     }
 
     /**
@@ -9704,13 +9845,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 48)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link ByteArray} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public ByteArray getReceivedTierPriceLabel(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_RECEIVEDTIER1PRICELABEL + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (ByteArray) attributes.get(ATTR_RECEIVEDTIER1PRICELABEL + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_RECEIVEDTIER1PRICELABEL + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (ByteArray) serverAttributes.get(ATTR_RECEIVEDTIER1PRICELABEL + arrayOffset).getLastValue();
         }
 
-        return (ByteArray) readSync(attributes.get(ATTR_RECEIVEDTIER1PRICELABEL + arrayOffset));
+        return (ByteArray) readSync(serverAttributes.get(ATTR_RECEIVEDTIER1PRICELABEL + arrayOffset));
     }
 
     /**
@@ -9722,13 +9865,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getReceivedBlockThresholdAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_RECEIVEDBLOCK1THRESHOLD + arrayOffset));
+        return read(serverAttributes.get(ATTR_RECEIVEDBLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -9748,13 +9893,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getReceivedBlockThreshold(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_RECEIVEDBLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RECEIVEDBLOCK1THRESHOLD + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_RECEIVEDBLOCK1THRESHOLD + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RECEIVEDBLOCK1THRESHOLD + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RECEIVEDBLOCK1THRESHOLD + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_RECEIVEDBLOCK1THRESHOLD + arrayOffset));
     }
 
     /**
@@ -9765,9 +9912,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getReceivedStartOfBlockPeriodAsync() {
-        return read(attributes.get(ATTR_RECEIVEDSTARTOFBLOCKPERIOD));
+        return read(serverAttributes.get(ATTR_RECEIVEDSTARTOFBLOCKPERIOD));
     }
 
     /**
@@ -9786,13 +9935,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Calendar getReceivedStartOfBlockPeriod(final long refreshPeriod) {
-        if (attributes.get(ATTR_RECEIVEDSTARTOFBLOCKPERIOD).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) attributes.get(ATTR_RECEIVEDSTARTOFBLOCKPERIOD).getLastValue();
+        if (serverAttributes.get(ATTR_RECEIVEDSTARTOFBLOCKPERIOD).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_RECEIVEDSTARTOFBLOCKPERIOD).getLastValue();
         }
 
-        return (Calendar) readSync(attributes.get(ATTR_RECEIVEDSTARTOFBLOCKPERIOD));
+        return (Calendar) readSync(serverAttributes.get(ATTR_RECEIVEDSTARTOFBLOCKPERIOD));
     }
 
     /**
@@ -9803,9 +9954,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getReceivedBlockPeriodDurationAsync() {
-        return read(attributes.get(ATTR_RECEIVEDBLOCKPERIODDURATION));
+        return read(serverAttributes.get(ATTR_RECEIVEDBLOCKPERIODDURATION));
     }
 
     /**
@@ -9824,13 +9977,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getReceivedBlockPeriodDuration(final long refreshPeriod) {
-        if (attributes.get(ATTR_RECEIVEDBLOCKPERIODDURATION).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RECEIVEDBLOCKPERIODDURATION).getLastValue();
+        if (serverAttributes.get(ATTR_RECEIVEDBLOCKPERIODDURATION).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RECEIVEDBLOCKPERIODDURATION).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RECEIVEDBLOCKPERIODDURATION));
+        return (Integer) readSync(serverAttributes.get(ATTR_RECEIVEDBLOCKPERIODDURATION));
     }
 
     /**
@@ -9841,9 +9996,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getReceivedThresholdMultiplierAsync() {
-        return read(attributes.get(ATTR_RECEIVEDTHRESHOLDMULTIPLIER));
+        return read(serverAttributes.get(ATTR_RECEIVEDTHRESHOLDMULTIPLIER));
     }
 
     /**
@@ -9862,13 +10019,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getReceivedThresholdMultiplier(final long refreshPeriod) {
-        if (attributes.get(ATTR_RECEIVEDTHRESHOLDMULTIPLIER).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RECEIVEDTHRESHOLDMULTIPLIER).getLastValue();
+        if (serverAttributes.get(ATTR_RECEIVEDTHRESHOLDMULTIPLIER).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RECEIVEDTHRESHOLDMULTIPLIER).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RECEIVEDTHRESHOLDMULTIPLIER));
+        return (Integer) readSync(serverAttributes.get(ATTR_RECEIVEDTHRESHOLDMULTIPLIER));
     }
 
     /**
@@ -9879,9 +10038,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getReceivedThresholdDivisorAsync() {
-        return read(attributes.get(ATTR_RECEIVEDTHRESHOLDDIVISOR));
+        return read(serverAttributes.get(ATTR_RECEIVEDTHRESHOLDDIVISOR));
     }
 
     /**
@@ -9900,13 +10061,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getReceivedThresholdDivisor(final long refreshPeriod) {
-        if (attributes.get(ATTR_RECEIVEDTHRESHOLDDIVISOR).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RECEIVEDTHRESHOLDDIVISOR).getLastValue();
+        if (serverAttributes.get(ATTR_RECEIVEDTHRESHOLDDIVISOR).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RECEIVEDTHRESHOLDDIVISOR).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RECEIVEDTHRESHOLDDIVISOR));
+        return (Integer) readSync(serverAttributes.get(ATTR_RECEIVEDTHRESHOLDDIVISOR));
     }
 
     /**
@@ -9918,13 +10081,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRxNoTierBlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_RXNOTIERBLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_RXNOTIERBLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -9944,13 +10109,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRxNoTierBlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_RXNOTIERBLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RXNOTIERBLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_RXNOTIERBLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RXNOTIERBLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RXNOTIERBLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_RXNOTIERBLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -9962,13 +10129,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRxTier1BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_RXTIER1BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_RXTIER1BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -9988,13 +10157,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRxTier1BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_RXTIER1BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RXTIER1BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_RXTIER1BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RXTIER1BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RXTIER1BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_RXTIER1BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -10006,13 +10177,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRxTier2BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_RXTIER2BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_RXTIER2BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -10032,13 +10205,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRxTier2BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_RXTIER2BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RXTIER2BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_RXTIER2BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RXTIER2BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RXTIER2BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_RXTIER2BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -10050,13 +10225,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRxTier3BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_RXTIER3BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_RXTIER3BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -10076,13 +10253,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRxTier3BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_RXTIER3BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RXTIER3BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_RXTIER3BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RXTIER3BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RXTIER3BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_RXTIER3BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -10094,13 +10273,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRxTier4BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_RXTIER4BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_RXTIER4BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -10120,13 +10301,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRxTier4BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_RXTIER4BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RXTIER4BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_RXTIER4BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RXTIER4BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RXTIER4BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_RXTIER4BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -10138,13 +10321,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRxTier5BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_RXTIER5BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_RXTIER5BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -10164,13 +10349,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRxTier5BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_RXTIER5BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RXTIER5BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_RXTIER5BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RXTIER5BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RXTIER5BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_RXTIER5BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -10182,13 +10369,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRxTier6BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_RXTIER6BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_RXTIER6BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -10208,13 +10397,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRxTier6BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_RXTIER6BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RXTIER6BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_RXTIER6BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RXTIER6BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RXTIER6BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_RXTIER6BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -10226,13 +10417,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRxTier7BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_RXTIER7BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_RXTIER7BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -10252,13 +10445,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRxTier7BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_RXTIER7BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RXTIER7BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_RXTIER7BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RXTIER7BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RXTIER7BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_RXTIER7BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -10270,13 +10465,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRxTier8BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_RXTIER8BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_RXTIER8BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -10296,13 +10493,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRxTier8BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_RXTIER8BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RXTIER8BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_RXTIER8BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RXTIER8BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RXTIER8BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_RXTIER8BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -10314,13 +10513,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRxTier9BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_RXTIER9BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_RXTIER9BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -10340,13 +10541,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRxTier9BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_RXTIER9BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RXTIER9BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_RXTIER9BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RXTIER9BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RXTIER9BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_RXTIER9BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -10358,13 +10561,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRxTier10BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_RXTIER10BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_RXTIER10BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -10384,13 +10589,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRxTier10BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_RXTIER10BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RXTIER10BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_RXTIER10BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RXTIER10BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RXTIER10BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_RXTIER10BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -10402,13 +10609,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRxTier11BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_RXTIER11BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_RXTIER11BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -10428,13 +10637,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRxTier11BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_RXTIER11BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RXTIER11BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_RXTIER11BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RXTIER11BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RXTIER11BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_RXTIER11BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -10446,13 +10657,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRxTier12BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_RXTIER12BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_RXTIER12BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -10472,13 +10685,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRxTier12BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_RXTIER12BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RXTIER12BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_RXTIER12BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RXTIER12BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RXTIER12BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_RXTIER12BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -10490,13 +10705,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRxTier13BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_RXTIER13BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_RXTIER13BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -10516,13 +10733,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRxTier13BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_RXTIER13BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RXTIER13BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_RXTIER13BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RXTIER13BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RXTIER13BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_RXTIER13BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -10534,13 +10753,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRxTier14BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_RXTIER14BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_RXTIER14BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -10560,13 +10781,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRxTier14BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_RXTIER14BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RXTIER14BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_RXTIER14BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RXTIER14BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RXTIER14BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_RXTIER14BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -10578,13 +10801,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRxTier15BlockPriceAsync(final int arrayOffset) {
         if (arrayOffset < 1 || arrayOffset > 16) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_RXTIER15BLOCK1PRICE + arrayOffset));
+        return read(serverAttributes.get(ATTR_RXTIER15BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -10604,13 +10829,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (1 < arrayOffset < 16)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRxTier15BlockPrice(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_RXTIER15BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RXTIER15BLOCK1PRICE + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_RXTIER15BLOCK1PRICE + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RXTIER15BLOCK1PRICE + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RXTIER15BLOCK1PRICE + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_RXTIER15BLOCK1PRICE + arrayOffset));
     }
 
     /**
@@ -10622,13 +10849,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param arrayOffset attribute array offset (16 < arrayOffset < 63)
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getReceivedPriceTierAsync(final int arrayOffset) {
         if (arrayOffset < 16 || arrayOffset > 63) {
             throw new IllegalArgumentException("arrayOffset out of bounds");
         }
 
-        return read(attributes.get(ATTR_RECEIVEDPRICETIER16 + arrayOffset));
+        return read(serverAttributes.get(ATTR_RECEIVEDPRICETIER16 + arrayOffset));
     }
 
     /**
@@ -10648,13 +10877,15 @@ public class ZclPriceCluster extends ZclCluster {
      * @param arrayOffset attribute array offset (16 < arrayOffset < 63)
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getReceivedPriceTier(final int arrayOffset, final long refreshPeriod) {
-        if (attributes.get(ATTR_RECEIVEDPRICETIER16 + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RECEIVEDPRICETIER16 + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_RECEIVEDPRICETIER16 + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RECEIVEDPRICETIER16 + arrayOffset).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RECEIVEDPRICETIER16 + arrayOffset));
+        return (Integer) readSync(serverAttributes.get(ATTR_RECEIVEDPRICETIER16 + arrayOffset));
     }
 
     /**
@@ -10665,9 +10896,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getReceivedTariffLabelAsync() {
-        return read(attributes.get(ATTR_RECEIVEDTARIFFLABEL));
+        return read(serverAttributes.get(ATTR_RECEIVEDTARIFFLABEL));
     }
 
     /**
@@ -10686,13 +10919,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link ByteArray} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public ByteArray getReceivedTariffLabel(final long refreshPeriod) {
-        if (attributes.get(ATTR_RECEIVEDTARIFFLABEL).isLastValueCurrent(refreshPeriod)) {
-            return (ByteArray) attributes.get(ATTR_RECEIVEDTARIFFLABEL).getLastValue();
+        if (serverAttributes.get(ATTR_RECEIVEDTARIFFLABEL).isLastValueCurrent(refreshPeriod)) {
+            return (ByteArray) serverAttributes.get(ATTR_RECEIVEDTARIFFLABEL).getLastValue();
         }
 
-        return (ByteArray) readSync(attributes.get(ATTR_RECEIVEDTARIFFLABEL));
+        return (ByteArray) readSync(serverAttributes.get(ATTR_RECEIVEDTARIFFLABEL));
     }
 
     /**
@@ -10703,9 +10938,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getReceivedNumberOfPriceTiersInUseAsync() {
-        return read(attributes.get(ATTR_RECEIVEDNUMBEROFPRICETIERSINUSE));
+        return read(serverAttributes.get(ATTR_RECEIVEDNUMBEROFPRICETIERSINUSE));
     }
 
     /**
@@ -10724,13 +10961,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getReceivedNumberOfPriceTiersInUse(final long refreshPeriod) {
-        if (attributes.get(ATTR_RECEIVEDNUMBEROFPRICETIERSINUSE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RECEIVEDNUMBEROFPRICETIERSINUSE).getLastValue();
+        if (serverAttributes.get(ATTR_RECEIVEDNUMBEROFPRICETIERSINUSE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RECEIVEDNUMBEROFPRICETIERSINUSE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RECEIVEDNUMBEROFPRICETIERSINUSE));
+        return (Integer) readSync(serverAttributes.get(ATTR_RECEIVEDNUMBEROFPRICETIERSINUSE));
     }
 
     /**
@@ -10741,9 +10980,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getReceivedNumberOfBlockThresholdsInUseAsync() {
-        return read(attributes.get(ATTR_RECEIVEDNUMBEROFBLOCKTHRESHOLDSINUSE));
+        return read(serverAttributes.get(ATTR_RECEIVEDNUMBEROFBLOCKTHRESHOLDSINUSE));
     }
 
     /**
@@ -10762,13 +11003,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getReceivedNumberOfBlockThresholdsInUse(final long refreshPeriod) {
-        if (attributes.get(ATTR_RECEIVEDNUMBEROFBLOCKTHRESHOLDSINUSE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RECEIVEDNUMBEROFBLOCKTHRESHOLDSINUSE).getLastValue();
+        if (serverAttributes.get(ATTR_RECEIVEDNUMBEROFBLOCKTHRESHOLDSINUSE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RECEIVEDNUMBEROFBLOCKTHRESHOLDSINUSE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RECEIVEDNUMBEROFBLOCKTHRESHOLDSINUSE));
+        return (Integer) readSync(serverAttributes.get(ATTR_RECEIVEDNUMBEROFBLOCKTHRESHOLDSINUSE));
     }
 
     /**
@@ -10779,9 +11022,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getReceivedTierBlockModeAsync() {
-        return read(attributes.get(ATTR_RECEIVEDTIERBLOCKMODE));
+        return read(serverAttributes.get(ATTR_RECEIVEDTIERBLOCKMODE));
     }
 
     /**
@@ -10800,13 +11045,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getReceivedTierBlockMode(final long refreshPeriod) {
-        if (attributes.get(ATTR_RECEIVEDTIERBLOCKMODE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RECEIVEDTIERBLOCKMODE).getLastValue();
+        if (serverAttributes.get(ATTR_RECEIVEDTIERBLOCKMODE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RECEIVEDTIERBLOCKMODE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RECEIVEDTIERBLOCKMODE));
+        return (Integer) readSync(serverAttributes.get(ATTR_RECEIVEDTIERBLOCKMODE));
     }
 
     /**
@@ -10817,9 +11064,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getReceivedCo2Async() {
-        return read(attributes.get(ATTR_RECEIVEDCO2));
+        return read(serverAttributes.get(ATTR_RECEIVEDCO2));
     }
 
     /**
@@ -10838,13 +11087,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getReceivedCo2(final long refreshPeriod) {
-        if (attributes.get(ATTR_RECEIVEDCO2).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RECEIVEDCO2).getLastValue();
+        if (serverAttributes.get(ATTR_RECEIVEDCO2).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RECEIVEDCO2).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RECEIVEDCO2));
+        return (Integer) readSync(serverAttributes.get(ATTR_RECEIVEDCO2));
     }
 
     /**
@@ -10855,9 +11106,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getReceivedCo2UnitAsync() {
-        return read(attributes.get(ATTR_RECEIVEDCO2UNIT));
+        return read(serverAttributes.get(ATTR_RECEIVEDCO2UNIT));
     }
 
     /**
@@ -10876,13 +11129,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getReceivedCo2Unit(final long refreshPeriod) {
-        if (attributes.get(ATTR_RECEIVEDCO2UNIT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RECEIVEDCO2UNIT).getLastValue();
+        if (serverAttributes.get(ATTR_RECEIVEDCO2UNIT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RECEIVEDCO2UNIT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RECEIVEDCO2UNIT));
+        return (Integer) readSync(serverAttributes.get(ATTR_RECEIVEDCO2UNIT));
     }
 
     /**
@@ -10893,9 +11148,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getReceivedCo2TrailingDigitAsync() {
-        return read(attributes.get(ATTR_RECEIVEDCO2TRAILINGDIGIT));
+        return read(serverAttributes.get(ATTR_RECEIVEDCO2TRAILINGDIGIT));
     }
 
     /**
@@ -10914,13 +11171,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getReceivedCo2TrailingDigit(final long refreshPeriod) {
-        if (attributes.get(ATTR_RECEIVEDCO2TRAILINGDIGIT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RECEIVEDCO2TRAILINGDIGIT).getLastValue();
+        if (serverAttributes.get(ATTR_RECEIVEDCO2TRAILINGDIGIT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RECEIVEDCO2TRAILINGDIGIT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RECEIVEDCO2TRAILINGDIGIT));
+        return (Integer) readSync(serverAttributes.get(ATTR_RECEIVEDCO2TRAILINGDIGIT));
     }
 
     /**
@@ -10931,9 +11190,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getReceivedCurrentBillingPeriodStartAsync() {
-        return read(attributes.get(ATTR_RECEIVEDCURRENTBILLINGPERIODSTART));
+        return read(serverAttributes.get(ATTR_RECEIVEDCURRENTBILLINGPERIODSTART));
     }
 
     /**
@@ -10952,13 +11213,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Calendar getReceivedCurrentBillingPeriodStart(final long refreshPeriod) {
-        if (attributes.get(ATTR_RECEIVEDCURRENTBILLINGPERIODSTART).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) attributes.get(ATTR_RECEIVEDCURRENTBILLINGPERIODSTART).getLastValue();
+        if (serverAttributes.get(ATTR_RECEIVEDCURRENTBILLINGPERIODSTART).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_RECEIVEDCURRENTBILLINGPERIODSTART).getLastValue();
         }
 
-        return (Calendar) readSync(attributes.get(ATTR_RECEIVEDCURRENTBILLINGPERIODSTART));
+        return (Calendar) readSync(serverAttributes.get(ATTR_RECEIVEDCURRENTBILLINGPERIODSTART));
     }
 
     /**
@@ -10969,9 +11232,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getReceivedCurrentBillingPeriodDurationAsync() {
-        return read(attributes.get(ATTR_RECEIVEDCURRENTBILLINGPERIODDURATION));
+        return read(serverAttributes.get(ATTR_RECEIVEDCURRENTBILLINGPERIODDURATION));
     }
 
     /**
@@ -10990,13 +11255,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getReceivedCurrentBillingPeriodDuration(final long refreshPeriod) {
-        if (attributes.get(ATTR_RECEIVEDCURRENTBILLINGPERIODDURATION).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RECEIVEDCURRENTBILLINGPERIODDURATION).getLastValue();
+        if (serverAttributes.get(ATTR_RECEIVEDCURRENTBILLINGPERIODDURATION).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RECEIVEDCURRENTBILLINGPERIODDURATION).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RECEIVEDCURRENTBILLINGPERIODDURATION));
+        return (Integer) readSync(serverAttributes.get(ATTR_RECEIVEDCURRENTBILLINGPERIODDURATION));
     }
 
     /**
@@ -11007,9 +11274,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getReceivedLastBillingPeriodStartAsync() {
-        return read(attributes.get(ATTR_RECEIVEDLASTBILLINGPERIODSTART));
+        return read(serverAttributes.get(ATTR_RECEIVEDLASTBILLINGPERIODSTART));
     }
 
     /**
@@ -11028,13 +11297,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Calendar getReceivedLastBillingPeriodStart(final long refreshPeriod) {
-        if (attributes.get(ATTR_RECEIVEDLASTBILLINGPERIODSTART).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) attributes.get(ATTR_RECEIVEDLASTBILLINGPERIODSTART).getLastValue();
+        if (serverAttributes.get(ATTR_RECEIVEDLASTBILLINGPERIODSTART).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_RECEIVEDLASTBILLINGPERIODSTART).getLastValue();
         }
 
-        return (Calendar) readSync(attributes.get(ATTR_RECEIVEDLASTBILLINGPERIODSTART));
+        return (Calendar) readSync(serverAttributes.get(ATTR_RECEIVEDLASTBILLINGPERIODSTART));
     }
 
     /**
@@ -11045,9 +11316,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getReceivedLastBillingPeriodDurationAsync() {
-        return read(attributes.get(ATTR_RECEIVEDLASTBILLINGPERIODDURATION));
+        return read(serverAttributes.get(ATTR_RECEIVEDLASTBILLINGPERIODDURATION));
     }
 
     /**
@@ -11066,13 +11339,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getReceivedLastBillingPeriodDuration(final long refreshPeriod) {
-        if (attributes.get(ATTR_RECEIVEDLASTBILLINGPERIODDURATION).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RECEIVEDLASTBILLINGPERIODDURATION).getLastValue();
+        if (serverAttributes.get(ATTR_RECEIVEDLASTBILLINGPERIODDURATION).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RECEIVEDLASTBILLINGPERIODDURATION).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RECEIVEDLASTBILLINGPERIODDURATION));
+        return (Integer) readSync(serverAttributes.get(ATTR_RECEIVEDLASTBILLINGPERIODDURATION));
     }
 
     /**
@@ -11083,9 +11358,11 @@ public class ZclPriceCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getReceivedLastBillingPeriodConsolidatedBillAsync() {
-        return read(attributes.get(ATTR_RECEIVEDLASTBILLINGPERIODCONSOLIDATEDBILL));
+        return read(serverAttributes.get(ATTR_RECEIVEDLASTBILLINGPERIODCONSOLIDATEDBILL));
     }
 
     /**
@@ -11104,13 +11381,15 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getReceivedLastBillingPeriodConsolidatedBill(final long refreshPeriod) {
-        if (attributes.get(ATTR_RECEIVEDLASTBILLINGPERIODCONSOLIDATEDBILL).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RECEIVEDLASTBILLINGPERIODCONSOLIDATEDBILL).getLastValue();
+        if (serverAttributes.get(ATTR_RECEIVEDLASTBILLINGPERIODCONSOLIDATEDBILL).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RECEIVEDLASTBILLINGPERIODCONSOLIDATEDBILL).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RECEIVEDLASTBILLINGPERIODCONSOLIDATEDBILL));
+        return (Integer) readSync(serverAttributes.get(ATTR_RECEIVEDLASTBILLINGPERIODCONSOLIDATEDBILL));
     }
 
     /**

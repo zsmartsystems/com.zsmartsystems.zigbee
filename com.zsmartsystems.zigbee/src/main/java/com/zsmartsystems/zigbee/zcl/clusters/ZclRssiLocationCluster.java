@@ -48,7 +48,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
 public class ZclRssiLocationCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -163,7 +163,14 @@ public class ZclRssiLocationCluster extends ZclCluster {
     public static final int ATTR_NUMBERRSSIMEASUREMENTS = 0x0017;
 
     @Override
-    protected Map<Integer, ZclAttribute> initializeAttributes() {
+    protected Map<Integer, ZclAttribute> initializeClientAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
+
+        return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(13);
 
         attributeMap.put(ATTR_LOCATIONTYPE, new ZclAttribute(ZclClusterType.RSSI_LOCATION, ATTR_LOCATIONTYPE, "Location Type", ZclDataType.DATA_8_BIT, true, true, false, false));
@@ -233,9 +240,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getLocationTypeAsync() {
-        return read(attributes.get(ATTR_LOCATIONTYPE));
+        return read(serverAttributes.get(ATTR_LOCATIONTYPE));
     }
 
     /**
@@ -256,13 +265,15 @@ public class ZclRssiLocationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getLocationType(final long refreshPeriod) {
-        if (attributes.get(ATTR_LOCATIONTYPE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_LOCATIONTYPE).getLastValue();
+        if (serverAttributes.get(ATTR_LOCATIONTYPE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_LOCATIONTYPE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_LOCATIONTYPE));
+        return (Integer) readSync(serverAttributes.get(ATTR_LOCATIONTYPE));
     }
 
     /**
@@ -277,9 +288,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setLocationTypeReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_LOCATIONTYPE), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_LOCATIONTYPE), minInterval, maxInterval);
     }
 
     /**
@@ -290,9 +303,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getLocationMethodAsync() {
-        return read(attributes.get(ATTR_LOCATIONMETHOD));
+        return read(serverAttributes.get(ATTR_LOCATIONMETHOD));
     }
 
     /**
@@ -311,13 +326,15 @@ public class ZclRssiLocationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getLocationMethod(final long refreshPeriod) {
-        if (attributes.get(ATTR_LOCATIONMETHOD).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_LOCATIONMETHOD).getLastValue();
+        if (serverAttributes.get(ATTR_LOCATIONMETHOD).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_LOCATIONMETHOD).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_LOCATIONMETHOD));
+        return (Integer) readSync(serverAttributes.get(ATTR_LOCATIONMETHOD));
     }
 
     /**
@@ -330,9 +347,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setLocationMethodReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_LOCATIONMETHOD), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_LOCATIONMETHOD), minInterval, maxInterval);
     }
 
     /**
@@ -347,9 +366,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getLocationAgeAsync() {
-        return read(attributes.get(ATTR_LOCATIONAGE));
+        return read(serverAttributes.get(ATTR_LOCATIONAGE));
     }
 
     /**
@@ -372,13 +393,15 @@ public class ZclRssiLocationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getLocationAge(final long refreshPeriod) {
-        if (attributes.get(ATTR_LOCATIONAGE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_LOCATIONAGE).getLastValue();
+        if (serverAttributes.get(ATTR_LOCATIONAGE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_LOCATIONAGE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_LOCATIONAGE));
+        return (Integer) readSync(serverAttributes.get(ATTR_LOCATIONAGE));
     }
 
     /**
@@ -397,9 +420,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getQualityMeasureAsync() {
-        return read(attributes.get(ATTR_QUALITYMEASURE));
+        return read(serverAttributes.get(ATTR_QUALITYMEASURE));
     }
 
     /**
@@ -426,13 +451,15 @@ public class ZclRssiLocationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getQualityMeasure(final long refreshPeriod) {
-        if (attributes.get(ATTR_QUALITYMEASURE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_QUALITYMEASURE).getLastValue();
+        if (serverAttributes.get(ATTR_QUALITYMEASURE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_QUALITYMEASURE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_QUALITYMEASURE));
+        return (Integer) readSync(serverAttributes.get(ATTR_QUALITYMEASURE));
     }
 
     /**
@@ -447,9 +474,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getNumberOfDevicesAsync() {
-        return read(attributes.get(ATTR_NUMBEROFDEVICES));
+        return read(serverAttributes.get(ATTR_NUMBEROFDEVICES));
     }
 
     /**
@@ -472,13 +501,15 @@ public class ZclRssiLocationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getNumberOfDevices(final long refreshPeriod) {
-        if (attributes.get(ATTR_NUMBEROFDEVICES).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_NUMBEROFDEVICES).getLastValue();
+        if (serverAttributes.get(ATTR_NUMBEROFDEVICES).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_NUMBEROFDEVICES).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_NUMBEROFDEVICES));
+        return (Integer) readSync(serverAttributes.get(ATTR_NUMBEROFDEVICES));
     }
 
     /**
@@ -499,9 +530,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      *
      * @param coordinate1 the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setCoordinate1(final Integer value) {
-        return write(attributes.get(ATTR_COORDINATE1), value);
+        return write(serverAttributes.get(ATTR_COORDINATE1), value);
     }
 
     /**
@@ -521,9 +554,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCoordinate1Async() {
-        return read(attributes.get(ATTR_COORDINATE1));
+        return read(serverAttributes.get(ATTR_COORDINATE1));
     }
 
     /**
@@ -551,13 +586,15 @@ public class ZclRssiLocationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCoordinate1(final long refreshPeriod) {
-        if (attributes.get(ATTR_COORDINATE1).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_COORDINATE1).getLastValue();
+        if (serverAttributes.get(ATTR_COORDINATE1).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_COORDINATE1).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_COORDINATE1));
+        return (Integer) readSync(serverAttributes.get(ATTR_COORDINATE1));
     }
 
     /**
@@ -580,9 +617,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setCoordinate1Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_COORDINATE1), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_COORDINATE1), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -603,9 +642,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      *
      * @param coordinate2 the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setCoordinate2(final Integer value) {
-        return write(attributes.get(ATTR_COORDINATE2), value);
+        return write(serverAttributes.get(ATTR_COORDINATE2), value);
     }
 
     /**
@@ -625,9 +666,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCoordinate2Async() {
-        return read(attributes.get(ATTR_COORDINATE2));
+        return read(serverAttributes.get(ATTR_COORDINATE2));
     }
 
     /**
@@ -655,13 +698,15 @@ public class ZclRssiLocationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCoordinate2(final long refreshPeriod) {
-        if (attributes.get(ATTR_COORDINATE2).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_COORDINATE2).getLastValue();
+        if (serverAttributes.get(ATTR_COORDINATE2).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_COORDINATE2).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_COORDINATE2));
+        return (Integer) readSync(serverAttributes.get(ATTR_COORDINATE2));
     }
 
     /**
@@ -684,9 +729,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setCoordinate2Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_COORDINATE2), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_COORDINATE2), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -707,9 +754,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      *
      * @param coordinate3 the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setCoordinate3(final Integer value) {
-        return write(attributes.get(ATTR_COORDINATE3), value);
+        return write(serverAttributes.get(ATTR_COORDINATE3), value);
     }
 
     /**
@@ -729,9 +778,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCoordinate3Async() {
-        return read(attributes.get(ATTR_COORDINATE3));
+        return read(serverAttributes.get(ATTR_COORDINATE3));
     }
 
     /**
@@ -759,13 +810,15 @@ public class ZclRssiLocationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCoordinate3(final long refreshPeriod) {
-        if (attributes.get(ATTR_COORDINATE3).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_COORDINATE3).getLastValue();
+        if (serverAttributes.get(ATTR_COORDINATE3).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_COORDINATE3).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_COORDINATE3));
+        return (Integer) readSync(serverAttributes.get(ATTR_COORDINATE3));
     }
 
     /**
@@ -784,9 +837,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      *
      * @param power the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setPower(final Integer value) {
-        return write(attributes.get(ATTR_POWER), value);
+        return write(serverAttributes.get(ATTR_POWER), value);
     }
 
     /**
@@ -804,9 +859,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPowerAsync() {
-        return read(attributes.get(ATTR_POWER));
+        return read(serverAttributes.get(ATTR_POWER));
     }
 
     /**
@@ -832,13 +889,15 @@ public class ZclRssiLocationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPower(final long refreshPeriod) {
-        if (attributes.get(ATTR_POWER).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_POWER).getLastValue();
+        if (serverAttributes.get(ATTR_POWER).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_POWER).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_POWER));
+        return (Integer) readSync(serverAttributes.get(ATTR_POWER));
     }
 
     /**
@@ -859,9 +918,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPowerReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_POWER), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_POWER), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -881,9 +942,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      *
      * @param pathLossExponent the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setPathLossExponent(final Integer value) {
-        return write(attributes.get(ATTR_PATHLOSSEXPONENT), value);
+        return write(serverAttributes.get(ATTR_PATHLOSSEXPONENT), value);
     }
 
     /**
@@ -902,9 +965,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPathLossExponentAsync() {
-        return read(attributes.get(ATTR_PATHLOSSEXPONENT));
+        return read(serverAttributes.get(ATTR_PATHLOSSEXPONENT));
     }
 
     /**
@@ -931,13 +996,15 @@ public class ZclRssiLocationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPathLossExponent(final long refreshPeriod) {
-        if (attributes.get(ATTR_PATHLOSSEXPONENT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PATHLOSSEXPONENT).getLastValue();
+        if (serverAttributes.get(ATTR_PATHLOSSEXPONENT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PATHLOSSEXPONENT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PATHLOSSEXPONENT));
+        return (Integer) readSync(serverAttributes.get(ATTR_PATHLOSSEXPONENT));
     }
 
     /**
@@ -959,9 +1026,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPathLossExponentReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PATHLOSSEXPONENT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PATHLOSSEXPONENT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -979,9 +1048,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      *
      * @param reportingPeriod the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setReportingPeriod(final Integer value) {
-        return write(attributes.get(ATTR_REPORTINGPERIOD), value);
+        return write(serverAttributes.get(ATTR_REPORTINGPERIOD), value);
     }
 
     /**
@@ -998,9 +1069,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getReportingPeriodAsync() {
-        return read(attributes.get(ATTR_REPORTINGPERIOD));
+        return read(serverAttributes.get(ATTR_REPORTINGPERIOD));
     }
 
     /**
@@ -1025,13 +1098,15 @@ public class ZclRssiLocationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getReportingPeriod(final long refreshPeriod) {
-        if (attributes.get(ATTR_REPORTINGPERIOD).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_REPORTINGPERIOD).getLastValue();
+        if (serverAttributes.get(ATTR_REPORTINGPERIOD).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_REPORTINGPERIOD).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_REPORTINGPERIOD));
+        return (Integer) readSync(serverAttributes.get(ATTR_REPORTINGPERIOD));
     }
 
     /**
@@ -1048,9 +1123,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      *
      * @param calculationPeriod the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setCalculationPeriod(final Integer value) {
-        return write(attributes.get(ATTR_CALCULATIONPERIOD), value);
+        return write(serverAttributes.get(ATTR_CALCULATIONPERIOD), value);
     }
 
     /**
@@ -1066,9 +1143,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCalculationPeriodAsync() {
-        return read(attributes.get(ATTR_CALCULATIONPERIOD));
+        return read(serverAttributes.get(ATTR_CALCULATIONPERIOD));
     }
 
     /**
@@ -1092,13 +1171,15 @@ public class ZclRssiLocationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCalculationPeriod(final long refreshPeriod) {
-        if (attributes.get(ATTR_CALCULATIONPERIOD).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CALCULATIONPERIOD).getLastValue();
+        if (serverAttributes.get(ATTR_CALCULATIONPERIOD).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CALCULATIONPERIOD).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CALCULATIONPERIOD));
+        return (Integer) readSync(serverAttributes.get(ATTR_CALCULATIONPERIOD));
     }
 
     /**
@@ -1114,9 +1195,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      *
      * @param numberRssiMeasurements the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setNumberRssiMeasurements(final Integer value) {
-        return write(attributes.get(ATTR_NUMBERRSSIMEASUREMENTS), value);
+        return write(serverAttributes.get(ATTR_NUMBERRSSIMEASUREMENTS), value);
     }
 
     /**
@@ -1131,9 +1214,11 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getNumberRssiMeasurementsAsync() {
-        return read(attributes.get(ATTR_NUMBERRSSIMEASUREMENTS));
+        return read(serverAttributes.get(ATTR_NUMBERRSSIMEASUREMENTS));
     }
 
     /**
@@ -1156,13 +1241,15 @@ public class ZclRssiLocationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getNumberRssiMeasurements(final long refreshPeriod) {
-        if (attributes.get(ATTR_NUMBERRSSIMEASUREMENTS).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_NUMBERRSSIMEASUREMENTS).getLastValue();
+        if (serverAttributes.get(ATTR_NUMBERRSSIMEASUREMENTS).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_NUMBERRSSIMEASUREMENTS).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_NUMBERRSSIMEASUREMENTS));
+        return (Integer) readSync(serverAttributes.get(ATTR_NUMBERRSSIMEASUREMENTS));
     }
 
     /**

@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.autocode;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -84,8 +85,8 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
         boolean addAttributeTypes = false;
         boolean readAttributes = false;
         boolean writeAttributes = false;
-        int attributesServer = 0;
-        int attributesClient = 0;
+        List<ZigBeeXmlAttribute> attributesClient = new ArrayList<>();
+        List<ZigBeeXmlAttribute> attributesServer = new ArrayList<>();
         for (final ZigBeeXmlAttribute attribute : cluster.attributes) {
             if (attribute.writable) {
                 addAttributeTypes = true;
@@ -93,10 +94,10 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
             }
             readAttributes = true;
             if (attribute.side.equals("server")) {
-                attributesServer++;
+                attributesServer.add(attribute);
             }
             if (attribute.side.equals("client")) {
-                attributesClient++;
+                attributesClient.add(attribute);
             }
 
             importsAddClass(attribute);
@@ -107,7 +108,7 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
         }
 
         importsAdd(packageRoot + packageZcl + ".ZclCluster");
-        if (attributesServer > 0) {
+        if (attributesServer.size() > 0) {
             importsAdd(packageRoot + packageZclProtocol + ".ZclDataType");
             importsAdd(packageRoot + packageZclProtocol + ".ZclClusterType");
         }
@@ -190,35 +191,13 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
         }
 
         out.println("    @Override");
-        out.println("    protected Map<Integer, ZclAttribute> initializeAttributes() {");
-        out.println(
-                "        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(" + attributesServer + ");");
-
-        if (attributesServer != 0) {
-            out.println();
-            for (final ZigBeeXmlAttribute attribute : cluster.attributes) {
-                if (!attribute.side.equalsIgnoreCase("server")) {
-                    continue;
-                }
-
-                if (attribute.arrayStart != null && attribute.arrayCount != null && attribute.arrayCount > 0) {
-                    int arrayCount = attribute.arrayStart;
-                    int arrayStep = attribute.arrayStep == null ? 1 : attribute.arrayStep;
-                    for (int count = 0; count < attribute.arrayCount; count++) {
-                        String name = attribute.name.replaceAll("\\{\\{count\\}\\}", Integer.toString(arrayCount));
-                        out.println("        attributeMap.put(" + getEnum(name) + ", "
-                                + defineAttribute(attribute, cluster.name, name, 0) + ");");
-                        arrayCount += arrayStep;
-                    }
-                } else {
-                    out.println("        attributeMap.put(" + getEnum(attribute.name) + ", "
-                            + defineAttribute(attribute, cluster.name, attribute.name, 0) + ");");
-                }
-            }
-        }
+        out.println("    protected Map<Integer, ZclAttribute> initializeClientAttributes() {");
+        createInitializeAttributes(out, cluster.name, attributesClient);
         out.println();
-        out.println("        return attributeMap;");
-        out.println("    }");
+
+        out.println("    @Override");
+        out.println("    protected Map<Integer, ZclAttribute> initializeServerAttributes() {");
+        createInitializeAttributes(out, cluster.name, attributesServer);
         out.println();
 
         // TODO: Add client attributes
@@ -271,6 +250,10 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
         out.println("    }");
 
         for (final ZigBeeXmlAttribute attribute : cluster.attributes) {
+            if (attribute.side.equals("client")) {
+                continue;
+            }
+
             DataTypeMap zclDataType = ZclDataType.getDataTypeMapping().get(attribute.type);
             if (zclDataType == null) {
                 throw new IllegalArgumentException(
@@ -281,15 +264,18 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
                 outputAttributeJavaDoc(out, "Set", attribute, zclDataType);
                 if (attribute.arrayStart != null && attribute.arrayCount != null && attribute.arrayCount > 0) {
                     String name = attribute.name.replaceAll("\\{\\{count\\}\\}", "");
+                    out.println("    @Deprecated");
                     out.println("    public Future<CommandResult> set" + stringToUpperCamelCase(name).replace("_", "")
                             + "(final int arrayOffset, final " + getDataTypeClass(attribute) + " value) {");
                     name = attribute.name.replaceAll("\\{\\{count\\}\\}", Integer.toString(attribute.arrayStart));
-                    out.println("        return write(attributes.get(" + getEnum(name) + " + arrayOffset), value);");
+                    out.println(
+                            "        return write(serverAttributes.get(" + getEnum(name) + " + arrayOffset), value);");
                 } else {
+                    out.println("    @Deprecated");
                     out.println("    public Future<CommandResult> set"
                             + stringToUpperCamelCase(attribute.name).replace("_", "") + "(final "
                             + getDataTypeClass(attribute) + " value) {");
-                    out.println("        return write(attributes.get(" + getEnum(attribute.name) + "), value);");
+                    out.println("        return write(serverAttributes.get(" + getEnum(attribute.name) + "), value);");
                 }
                 out.println("    }");
             }
@@ -298,6 +284,7 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
             outputAttributeJavaDoc(out, "Get", attribute, zclDataType);
             if (attribute.arrayStart != null && attribute.arrayCount != null && attribute.arrayCount > 0) {
                 String name = attribute.name.replaceAll("\\{\\{count\\}\\}", "");
+                out.println("    @Deprecated");
                 out.println("    public Future<CommandResult> get" + stringToUpperCamelCase(name).replace("_", "")
                         + "Async(final int arrayOffset) {");
                 out.println("        if (arrayOffset < " + attribute.arrayStart + " || arrayOffset > "
@@ -306,11 +293,12 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
                 out.println("        }");
                 out.println();
                 name = attribute.name.replaceAll("\\{\\{count\\}\\}", Integer.toString(attribute.arrayStart));
-                out.println("        return read(attributes.get(" + getEnum(name) + " + arrayOffset));");
+                out.println("        return read(serverAttributes.get(" + getEnum(name) + " + arrayOffset));");
             } else {
+                out.println("    @Deprecated");
                 out.println("    public Future<CommandResult> get"
                         + stringToUpperCamelCase(attribute.name).replace("_", "") + "Async() {");
-                out.println("        return read(attributes.get(" + getEnum(attribute.name) + "));");
+                out.println("        return read(serverAttributes.get(" + getEnum(attribute.name) + "));");
             }
             out.println("    }");
 
@@ -318,28 +306,30 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
             outputAttributeJavaDoc(out, "Synchronously get", attribute, zclDataType);
             if (attribute.arrayStart != null && attribute.arrayCount != null && attribute.arrayCount > 0) {
                 String name = attribute.name.replaceAll("\\{\\{count\\}\\}", "");
+                out.println("    @Deprecated");
                 out.println("    public " + getDataTypeClass(attribute) + " get"
                         + stringToUpperCamelCase(name).replace("_", "")
                         + "(final int arrayOffset, final long refreshPeriod) {");
                 name = attribute.name.replaceAll("\\{\\{count\\}\\}", Integer.toString(attribute.arrayStart));
-                out.println("        if (attributes.get(" + getEnum(name) + " + arrayOffset"
+                out.println("        if (serverAttributes.get(" + getEnum(name) + " + arrayOffset"
                         + ").isLastValueCurrent(refreshPeriod)) {");
-                out.println("            return (" + getDataTypeClass(attribute) + ") attributes.get(" + getEnum(name)
-                        + " + arrayOffset).getLastValue();");
+                out.println("            return (" + getDataTypeClass(attribute) + ") serverAttributes.get("
+                        + getEnum(name) + " + arrayOffset).getLastValue();");
                 out.println("        }");
                 out.println();
-                out.println("        return (" + getDataTypeClass(attribute) + ") readSync(attributes.get("
+                out.println("        return (" + getDataTypeClass(attribute) + ") readSync(serverAttributes.get("
                         + getEnum(name) + " + arrayOffset));");
             } else {
+                out.println("    @Deprecated");
                 out.println("    public " + getDataTypeClass(attribute) + " get"
                         + stringToUpperCamelCase(attribute.name).replace("_", "") + "(final long refreshPeriod) {");
-                out.println("        if (attributes.get(" + getEnum(attribute.name)
+                out.println("        if (serverAttributes.get(" + getEnum(attribute.name)
                         + ").isLastValueCurrent(refreshPeriod)) {");
-                out.println("            return (" + getDataTypeClass(attribute) + ") attributes.get("
+                out.println("            return (" + getDataTypeClass(attribute) + ") serverAttributes.get("
                         + getEnum(attribute.name) + ").getLastValue();");
                 out.println("        }");
                 out.println();
-                out.println("        return (" + getDataTypeClass(attribute) + ") readSync(attributes.get("
+                out.println("        return (" + getDataTypeClass(attribute) + ") readSync(serverAttributes.get("
                         + getEnum(attribute.name) + "));");
             }
             out.println("    }");
@@ -358,26 +348,30 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
                     }
 
                     if (zclDataType.analogue) {
+                        out.println("    @Deprecated");
                         out.println("    public Future<CommandResult> set" + stringToUpperCamelCase(name)
                                 + "Reporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {");
-                        out.println("        return setReporting(attributes.get(" + getEnum(name) + " + " + offset
+                        out.println("        return setReporting(serverAttributes.get(" + getEnum(name) + " + " + offset
                                 + "), minInterval, maxInterval, reportableChange);");
                     } else {
+                        out.println("    @Deprecated");
                         out.println("    public Future<CommandResult> set" + stringToUpperCamelCase(name)
                                 + "Reporting(final int arrayOffset, final int minInterval, final int maxInterval) {");
-                        out.println("        return setReporting(attributes.get(" + getEnum(name) + " + " + offset
+                        out.println("        return setReporting(serverAttributes.get(" + getEnum(name) + " + " + offset
                                 + "), minInterval, maxInterval);");
                     }
                 } else {
                     if (zclDataType.analogue) {
+                        out.println("    @Deprecated");
                         out.println("    public Future<CommandResult> set" + stringToUpperCamelCase(attribute.name)
                                 + "Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {");
-                        out.println("        return setReporting(attributes.get(" + getEnum(attribute.name)
+                        out.println("        return setReporting(serverAttributes.get(" + getEnum(attribute.name)
                                 + "), minInterval, maxInterval, reportableChange);");
                     } else {
+                        out.println("    @Deprecated");
                         out.println("    public Future<CommandResult> set" + stringToUpperCamelCase(attribute.name)
                                 + "Reporting(final int minInterval, final int maxInterval) {");
-                        out.println("        return setReporting(attributes.get(" + getEnum(attribute.name)
+                        out.println("        return setReporting(serverAttributes.get(" + getEnum(attribute.name)
                                 + "), minInterval, maxInterval);");
                     }
                 }
@@ -437,6 +431,37 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
 
         out.flush();
         out.close();
+    }
+
+    private void createInitializeAttributes(PrintWriter out, String clusterName, List<ZigBeeXmlAttribute> attributes) {
+        out.println("        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(" + attributes.size()
+                + ");");
+
+        if (attributes.size() != 0) {
+            out.println();
+            for (final ZigBeeXmlAttribute attribute : attributes) {
+                if (!attribute.side.equalsIgnoreCase("server")) {
+                    continue;
+                }
+
+                if (attribute.arrayStart != null && attribute.arrayCount != null && attribute.arrayCount > 0) {
+                    int arrayCount = attribute.arrayStart;
+                    int arrayStep = attribute.arrayStep == null ? 1 : attribute.arrayStep;
+                    for (int count = 0; count < attribute.arrayCount; count++) {
+                        String name = attribute.name.replaceAll("\\{\\{count\\}\\}", Integer.toString(arrayCount));
+                        out.println("        attributeMap.put(" + getEnum(name) + ", "
+                                + defineAttribute(attribute, clusterName, name, 0) + ");");
+                        arrayCount += arrayStep;
+                    }
+                } else {
+                    out.println("        attributeMap.put(" + getEnum(attribute.name) + ", "
+                            + defineAttribute(attribute, clusterName, attribute.name, 0) + ");");
+                }
+            }
+        }
+        out.println();
+        out.println("        return attributeMap;");
+        out.println("    }");
     }
 
     private String defineAttribute(ZigBeeXmlAttribute attribute, String clusterName, String attributeName, int count) {

@@ -65,7 +65,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
 public class ZclPrepaymentCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -604,7 +604,14 @@ public class ZclPrepaymentCluster extends ZclCluster {
     public static final int ATTR_HISTORICALFREEZETIME = 0x055C;
 
     @Override
-    protected Map<Integer, ZclAttribute> initializeAttributes() {
+    protected Map<Integer, ZclAttribute> initializeClientAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
+
+        return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(131);
 
         attributeMap.put(ATTR_PAYMENTCONTROLCONFIGURATION, new ZclAttribute(ZclClusterType.PREPAYMENT, ATTR_PAYMENTCONTROLCONFIGURATION, "Payment Control Configuration", ZclDataType.BITMAP_16_BIT, true, true, false, false));
@@ -794,9 +801,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPaymentControlConfigurationAsync() {
-        return read(attributes.get(ATTR_PAYMENTCONTROLCONFIGURATION));
+        return read(serverAttributes.get(ATTR_PAYMENTCONTROLCONFIGURATION));
     }
 
     /**
@@ -817,13 +826,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPaymentControlConfiguration(final long refreshPeriod) {
-        if (attributes.get(ATTR_PAYMENTCONTROLCONFIGURATION).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PAYMENTCONTROLCONFIGURATION).getLastValue();
+        if (serverAttributes.get(ATTR_PAYMENTCONTROLCONFIGURATION).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PAYMENTCONTROLCONFIGURATION).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PAYMENTCONTROLCONFIGURATION));
+        return (Integer) readSync(serverAttributes.get(ATTR_PAYMENTCONTROLCONFIGURATION));
     }
 
     /**
@@ -838,9 +849,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setPaymentControlConfigurationReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_PAYMENTCONTROLCONFIGURATION), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_PAYMENTCONTROLCONFIGURATION), minInterval, maxInterval);
     }
 
     /**
@@ -853,9 +866,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCreditRemainingAsync() {
-        return read(attributes.get(ATTR_CREDITREMAINING));
+        return read(serverAttributes.get(ATTR_CREDITREMAINING));
     }
 
     /**
@@ -876,13 +891,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCreditRemaining(final long refreshPeriod) {
-        if (attributes.get(ATTR_CREDITREMAINING).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CREDITREMAINING).getLastValue();
+        if (serverAttributes.get(ATTR_CREDITREMAINING).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CREDITREMAINING).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CREDITREMAINING));
+        return (Integer) readSync(serverAttributes.get(ATTR_CREDITREMAINING));
     }
 
     /**
@@ -898,9 +915,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setCreditRemainingReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_CREDITREMAINING), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_CREDITREMAINING), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -913,9 +932,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getEmergencyCreditRemainingAsync() {
-        return read(attributes.get(ATTR_EMERGENCYCREDITREMAINING));
+        return read(serverAttributes.get(ATTR_EMERGENCYCREDITREMAINING));
     }
 
     /**
@@ -936,13 +957,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getEmergencyCreditRemaining(final long refreshPeriod) {
-        if (attributes.get(ATTR_EMERGENCYCREDITREMAINING).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_EMERGENCYCREDITREMAINING).getLastValue();
+        if (serverAttributes.get(ATTR_EMERGENCYCREDITREMAINING).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_EMERGENCYCREDITREMAINING).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_EMERGENCYCREDITREMAINING));
+        return (Integer) readSync(serverAttributes.get(ATTR_EMERGENCYCREDITREMAINING));
     }
 
     /**
@@ -958,9 +981,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setEmergencyCreditRemainingReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_EMERGENCYCREDITREMAINING), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_EMERGENCYCREDITREMAINING), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -973,9 +998,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCreditStatusAsync() {
-        return read(attributes.get(ATTR_CREDITSTATUS));
+        return read(serverAttributes.get(ATTR_CREDITSTATUS));
     }
 
     /**
@@ -996,13 +1023,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCreditStatus(final long refreshPeriod) {
-        if (attributes.get(ATTR_CREDITSTATUS).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CREDITSTATUS).getLastValue();
+        if (serverAttributes.get(ATTR_CREDITSTATUS).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CREDITSTATUS).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CREDITSTATUS));
+        return (Integer) readSync(serverAttributes.get(ATTR_CREDITSTATUS));
     }
 
     /**
@@ -1017,9 +1046,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setCreditStatusReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_CREDITSTATUS), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_CREDITSTATUS), minInterval, maxInterval);
     }
 
     /**
@@ -1032,9 +1063,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCreditRemainingTimestampAsync() {
-        return read(attributes.get(ATTR_CREDITREMAININGTIMESTAMP));
+        return read(serverAttributes.get(ATTR_CREDITREMAININGTIMESTAMP));
     }
 
     /**
@@ -1055,13 +1088,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Calendar getCreditRemainingTimestamp(final long refreshPeriod) {
-        if (attributes.get(ATTR_CREDITREMAININGTIMESTAMP).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) attributes.get(ATTR_CREDITREMAININGTIMESTAMP).getLastValue();
+        if (serverAttributes.get(ATTR_CREDITREMAININGTIMESTAMP).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_CREDITREMAININGTIMESTAMP).getLastValue();
         }
 
-        return (Calendar) readSync(attributes.get(ATTR_CREDITREMAININGTIMESTAMP));
+        return (Calendar) readSync(serverAttributes.get(ATTR_CREDITREMAININGTIMESTAMP));
     }
 
     /**
@@ -1077,9 +1112,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setCreditRemainingTimestampReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_CREDITREMAININGTIMESTAMP), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_CREDITREMAININGTIMESTAMP), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1092,9 +1129,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAccumulatedDebtAsync() {
-        return read(attributes.get(ATTR_ACCUMULATEDDEBT));
+        return read(serverAttributes.get(ATTR_ACCUMULATEDDEBT));
     }
 
     /**
@@ -1115,13 +1154,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAccumulatedDebt(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACCUMULATEDDEBT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACCUMULATEDDEBT).getLastValue();
+        if (serverAttributes.get(ATTR_ACCUMULATEDDEBT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACCUMULATEDDEBT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ACCUMULATEDDEBT));
+        return (Integer) readSync(serverAttributes.get(ATTR_ACCUMULATEDDEBT));
     }
 
     /**
@@ -1137,9 +1178,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setAccumulatedDebtReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_ACCUMULATEDDEBT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_ACCUMULATEDDEBT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1152,9 +1195,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getOverallDebtCapAsync() {
-        return read(attributes.get(ATTR_OVERALLDEBTCAP));
+        return read(serverAttributes.get(ATTR_OVERALLDEBTCAP));
     }
 
     /**
@@ -1175,13 +1220,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getOverallDebtCap(final long refreshPeriod) {
-        if (attributes.get(ATTR_OVERALLDEBTCAP).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_OVERALLDEBTCAP).getLastValue();
+        if (serverAttributes.get(ATTR_OVERALLDEBTCAP).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_OVERALLDEBTCAP).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_OVERALLDEBTCAP));
+        return (Integer) readSync(serverAttributes.get(ATTR_OVERALLDEBTCAP));
     }
 
     /**
@@ -1197,9 +1244,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setOverallDebtCapReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_OVERALLDEBTCAP), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_OVERALLDEBTCAP), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1212,9 +1261,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getEmergencyCreditLimitAllowanceAsync() {
-        return read(attributes.get(ATTR_EMERGENCYCREDITLIMITALLOWANCE));
+        return read(serverAttributes.get(ATTR_EMERGENCYCREDITLIMITALLOWANCE));
     }
 
     /**
@@ -1235,13 +1286,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getEmergencyCreditLimitAllowance(final long refreshPeriod) {
-        if (attributes.get(ATTR_EMERGENCYCREDITLIMITALLOWANCE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_EMERGENCYCREDITLIMITALLOWANCE).getLastValue();
+        if (serverAttributes.get(ATTR_EMERGENCYCREDITLIMITALLOWANCE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_EMERGENCYCREDITLIMITALLOWANCE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_EMERGENCYCREDITLIMITALLOWANCE));
+        return (Integer) readSync(serverAttributes.get(ATTR_EMERGENCYCREDITLIMITALLOWANCE));
     }
 
     /**
@@ -1257,9 +1310,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setEmergencyCreditLimitAllowanceReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_EMERGENCYCREDITLIMITALLOWANCE), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_EMERGENCYCREDITLIMITALLOWANCE), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1272,9 +1327,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getEmergencyCreditThresholdAsync() {
-        return read(attributes.get(ATTR_EMERGENCYCREDITTHRESHOLD));
+        return read(serverAttributes.get(ATTR_EMERGENCYCREDITTHRESHOLD));
     }
 
     /**
@@ -1295,13 +1352,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getEmergencyCreditThreshold(final long refreshPeriod) {
-        if (attributes.get(ATTR_EMERGENCYCREDITTHRESHOLD).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_EMERGENCYCREDITTHRESHOLD).getLastValue();
+        if (serverAttributes.get(ATTR_EMERGENCYCREDITTHRESHOLD).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_EMERGENCYCREDITTHRESHOLD).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_EMERGENCYCREDITTHRESHOLD));
+        return (Integer) readSync(serverAttributes.get(ATTR_EMERGENCYCREDITTHRESHOLD));
     }
 
     /**
@@ -1317,9 +1376,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setEmergencyCreditThresholdReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_EMERGENCYCREDITTHRESHOLD), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_EMERGENCYCREDITTHRESHOLD), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1332,9 +1393,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTotalCreditAddedAsync() {
-        return read(attributes.get(ATTR_TOTALCREDITADDED));
+        return read(serverAttributes.get(ATTR_TOTALCREDITADDED));
     }
 
     /**
@@ -1355,13 +1418,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTotalCreditAdded(final long refreshPeriod) {
-        if (attributes.get(ATTR_TOTALCREDITADDED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TOTALCREDITADDED).getLastValue();
+        if (serverAttributes.get(ATTR_TOTALCREDITADDED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TOTALCREDITADDED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TOTALCREDITADDED));
+        return (Integer) readSync(serverAttributes.get(ATTR_TOTALCREDITADDED));
     }
 
     /**
@@ -1377,9 +1442,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setTotalCreditAddedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_TOTALCREDITADDED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_TOTALCREDITADDED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1392,9 +1459,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMaxCreditLimitAsync() {
-        return read(attributes.get(ATTR_MAXCREDITLIMIT));
+        return read(serverAttributes.get(ATTR_MAXCREDITLIMIT));
     }
 
     /**
@@ -1415,13 +1484,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMaxCreditLimit(final long refreshPeriod) {
-        if (attributes.get(ATTR_MAXCREDITLIMIT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MAXCREDITLIMIT).getLastValue();
+        if (serverAttributes.get(ATTR_MAXCREDITLIMIT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MAXCREDITLIMIT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MAXCREDITLIMIT));
+        return (Integer) readSync(serverAttributes.get(ATTR_MAXCREDITLIMIT));
     }
 
     /**
@@ -1437,9 +1508,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setMaxCreditLimitReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_MAXCREDITLIMIT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_MAXCREDITLIMIT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1452,9 +1525,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMaxCreditPerTopUpAsync() {
-        return read(attributes.get(ATTR_MAXCREDITPERTOPUP));
+        return read(serverAttributes.get(ATTR_MAXCREDITPERTOPUP));
     }
 
     /**
@@ -1475,13 +1550,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMaxCreditPerTopUp(final long refreshPeriod) {
-        if (attributes.get(ATTR_MAXCREDITPERTOPUP).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MAXCREDITPERTOPUP).getLastValue();
+        if (serverAttributes.get(ATTR_MAXCREDITPERTOPUP).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MAXCREDITPERTOPUP).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MAXCREDITPERTOPUP));
+        return (Integer) readSync(serverAttributes.get(ATTR_MAXCREDITPERTOPUP));
     }
 
     /**
@@ -1497,9 +1574,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setMaxCreditPerTopUpReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_MAXCREDITPERTOPUP), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_MAXCREDITPERTOPUP), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1512,9 +1591,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getFriendlyCreditWarningAsync() {
-        return read(attributes.get(ATTR_FRIENDLYCREDITWARNING));
+        return read(serverAttributes.get(ATTR_FRIENDLYCREDITWARNING));
     }
 
     /**
@@ -1535,13 +1616,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getFriendlyCreditWarning(final long refreshPeriod) {
-        if (attributes.get(ATTR_FRIENDLYCREDITWARNING).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_FRIENDLYCREDITWARNING).getLastValue();
+        if (serverAttributes.get(ATTR_FRIENDLYCREDITWARNING).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_FRIENDLYCREDITWARNING).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_FRIENDLYCREDITWARNING));
+        return (Integer) readSync(serverAttributes.get(ATTR_FRIENDLYCREDITWARNING));
     }
 
     /**
@@ -1557,9 +1640,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setFriendlyCreditWarningReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_FRIENDLYCREDITWARNING), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_FRIENDLYCREDITWARNING), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1572,9 +1657,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getLowCreditWarningLevelAsync() {
-        return read(attributes.get(ATTR_LOWCREDITWARNINGLEVEL));
+        return read(serverAttributes.get(ATTR_LOWCREDITWARNINGLEVEL));
     }
 
     /**
@@ -1595,13 +1682,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getLowCreditWarningLevel(final long refreshPeriod) {
-        if (attributes.get(ATTR_LOWCREDITWARNINGLEVEL).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_LOWCREDITWARNINGLEVEL).getLastValue();
+        if (serverAttributes.get(ATTR_LOWCREDITWARNINGLEVEL).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_LOWCREDITWARNINGLEVEL).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_LOWCREDITWARNINGLEVEL));
+        return (Integer) readSync(serverAttributes.get(ATTR_LOWCREDITWARNINGLEVEL));
     }
 
     /**
@@ -1617,9 +1706,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setLowCreditWarningLevelReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_LOWCREDITWARNINGLEVEL), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_LOWCREDITWARNINGLEVEL), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1633,9 +1724,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param ihdLowCreditWarningLevel the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setIhdLowCreditWarningLevel(final Integer value) {
-        return write(attributes.get(ATTR_IHDLOWCREDITWARNINGLEVEL), value);
+        return write(serverAttributes.get(ATTR_IHDLOWCREDITWARNINGLEVEL), value);
     }
 
     /**
@@ -1648,9 +1741,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getIhdLowCreditWarningLevelAsync() {
-        return read(attributes.get(ATTR_IHDLOWCREDITWARNINGLEVEL));
+        return read(serverAttributes.get(ATTR_IHDLOWCREDITWARNINGLEVEL));
     }
 
     /**
@@ -1671,13 +1766,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getIhdLowCreditWarningLevel(final long refreshPeriod) {
-        if (attributes.get(ATTR_IHDLOWCREDITWARNINGLEVEL).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_IHDLOWCREDITWARNINGLEVEL).getLastValue();
+        if (serverAttributes.get(ATTR_IHDLOWCREDITWARNINGLEVEL).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_IHDLOWCREDITWARNINGLEVEL).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_IHDLOWCREDITWARNINGLEVEL));
+        return (Integer) readSync(serverAttributes.get(ATTR_IHDLOWCREDITWARNINGLEVEL));
     }
 
     /**
@@ -1690,9 +1787,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getInterruptSuspendTimeAsync() {
-        return read(attributes.get(ATTR_INTERRUPTSUSPENDTIME));
+        return read(serverAttributes.get(ATTR_INTERRUPTSUSPENDTIME));
     }
 
     /**
@@ -1713,13 +1812,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getInterruptSuspendTime(final long refreshPeriod) {
-        if (attributes.get(ATTR_INTERRUPTSUSPENDTIME).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_INTERRUPTSUSPENDTIME).getLastValue();
+        if (serverAttributes.get(ATTR_INTERRUPTSUSPENDTIME).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_INTERRUPTSUSPENDTIME).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_INTERRUPTSUSPENDTIME));
+        return (Integer) readSync(serverAttributes.get(ATTR_INTERRUPTSUSPENDTIME));
     }
 
     /**
@@ -1735,9 +1836,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setInterruptSuspendTimeReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_INTERRUPTSUSPENDTIME), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_INTERRUPTSUSPENDTIME), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1750,9 +1853,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRemainingFriendlyCreditTimeAsync() {
-        return read(attributes.get(ATTR_REMAININGFRIENDLYCREDITTIME));
+        return read(serverAttributes.get(ATTR_REMAININGFRIENDLYCREDITTIME));
     }
 
     /**
@@ -1773,13 +1878,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRemainingFriendlyCreditTime(final long refreshPeriod) {
-        if (attributes.get(ATTR_REMAININGFRIENDLYCREDITTIME).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_REMAININGFRIENDLYCREDITTIME).getLastValue();
+        if (serverAttributes.get(ATTR_REMAININGFRIENDLYCREDITTIME).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_REMAININGFRIENDLYCREDITTIME).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_REMAININGFRIENDLYCREDITTIME));
+        return (Integer) readSync(serverAttributes.get(ATTR_REMAININGFRIENDLYCREDITTIME));
     }
 
     /**
@@ -1795,9 +1902,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRemainingFriendlyCreditTimeReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_REMAININGFRIENDLYCREDITTIME), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_REMAININGFRIENDLYCREDITTIME), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1810,9 +1919,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getNextFriendlyCreditPeriodAsync() {
-        return read(attributes.get(ATTR_NEXTFRIENDLYCREDITPERIOD));
+        return read(serverAttributes.get(ATTR_NEXTFRIENDLYCREDITPERIOD));
     }
 
     /**
@@ -1833,13 +1944,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Calendar getNextFriendlyCreditPeriod(final long refreshPeriod) {
-        if (attributes.get(ATTR_NEXTFRIENDLYCREDITPERIOD).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) attributes.get(ATTR_NEXTFRIENDLYCREDITPERIOD).getLastValue();
+        if (serverAttributes.get(ATTR_NEXTFRIENDLYCREDITPERIOD).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_NEXTFRIENDLYCREDITPERIOD).getLastValue();
         }
 
-        return (Calendar) readSync(attributes.get(ATTR_NEXTFRIENDLYCREDITPERIOD));
+        return (Calendar) readSync(serverAttributes.get(ATTR_NEXTFRIENDLYCREDITPERIOD));
     }
 
     /**
@@ -1855,9 +1968,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setNextFriendlyCreditPeriodReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_NEXTFRIENDLYCREDITPERIOD), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_NEXTFRIENDLYCREDITPERIOD), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1870,9 +1985,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCutOffValueAsync() {
-        return read(attributes.get(ATTR_CUTOFFVALUE));
+        return read(serverAttributes.get(ATTR_CUTOFFVALUE));
     }
 
     /**
@@ -1893,13 +2010,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCutOffValue(final long refreshPeriod) {
-        if (attributes.get(ATTR_CUTOFFVALUE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CUTOFFVALUE).getLastValue();
+        if (serverAttributes.get(ATTR_CUTOFFVALUE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CUTOFFVALUE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CUTOFFVALUE));
+        return (Integer) readSync(serverAttributes.get(ATTR_CUTOFFVALUE));
     }
 
     /**
@@ -1915,9 +2034,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setCutOffValueReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_CUTOFFVALUE), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_CUTOFFVALUE), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1931,9 +2052,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param tokenCarrierId the {@link ByteArray} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setTokenCarrierId(final ByteArray value) {
-        return write(attributes.get(ATTR_TOKENCARRIERID), value);
+        return write(serverAttributes.get(ATTR_TOKENCARRIERID), value);
     }
 
     /**
@@ -1946,9 +2069,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTokenCarrierIdAsync() {
-        return read(attributes.get(ATTR_TOKENCARRIERID));
+        return read(serverAttributes.get(ATTR_TOKENCARRIERID));
     }
 
     /**
@@ -1969,13 +2094,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link ByteArray} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public ByteArray getTokenCarrierId(final long refreshPeriod) {
-        if (attributes.get(ATTR_TOKENCARRIERID).isLastValueCurrent(refreshPeriod)) {
-            return (ByteArray) attributes.get(ATTR_TOKENCARRIERID).getLastValue();
+        if (serverAttributes.get(ATTR_TOKENCARRIERID).isLastValueCurrent(refreshPeriod)) {
+            return (ByteArray) serverAttributes.get(ATTR_TOKENCARRIERID).getLastValue();
         }
 
-        return (ByteArray) readSync(attributes.get(ATTR_TOKENCARRIERID));
+        return (ByteArray) readSync(serverAttributes.get(ATTR_TOKENCARRIERID));
     }
 
     /**
@@ -1988,9 +2115,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTopUpDateTime1Async() {
-        return read(attributes.get(ATTR_TOPUPDATETIME1));
+        return read(serverAttributes.get(ATTR_TOPUPDATETIME1));
     }
 
     /**
@@ -2011,13 +2140,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Calendar getTopUpDateTime1(final long refreshPeriod) {
-        if (attributes.get(ATTR_TOPUPDATETIME1).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) attributes.get(ATTR_TOPUPDATETIME1).getLastValue();
+        if (serverAttributes.get(ATTR_TOPUPDATETIME1).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_TOPUPDATETIME1).getLastValue();
         }
 
-        return (Calendar) readSync(attributes.get(ATTR_TOPUPDATETIME1));
+        return (Calendar) readSync(serverAttributes.get(ATTR_TOPUPDATETIME1));
     }
 
     /**
@@ -2033,9 +2164,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setTopUpDateTime1Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_TOPUPDATETIME1), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_TOPUPDATETIME1), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -2048,9 +2181,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTopUpAmount1Async() {
-        return read(attributes.get(ATTR_TOPUPAMOUNT1));
+        return read(serverAttributes.get(ATTR_TOPUPAMOUNT1));
     }
 
     /**
@@ -2071,13 +2206,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTopUpAmount1(final long refreshPeriod) {
-        if (attributes.get(ATTR_TOPUPAMOUNT1).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TOPUPAMOUNT1).getLastValue();
+        if (serverAttributes.get(ATTR_TOPUPAMOUNT1).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TOPUPAMOUNT1).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TOPUPAMOUNT1));
+        return (Integer) readSync(serverAttributes.get(ATTR_TOPUPAMOUNT1));
     }
 
     /**
@@ -2093,9 +2230,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setTopUpAmount1Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_TOPUPAMOUNT1), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_TOPUPAMOUNT1), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -2108,9 +2247,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTopUpOriginatingDevice1Async() {
-        return read(attributes.get(ATTR_TOPUPORIGINATINGDEVICE1));
+        return read(serverAttributes.get(ATTR_TOPUPORIGINATINGDEVICE1));
     }
 
     /**
@@ -2131,13 +2272,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTopUpOriginatingDevice1(final long refreshPeriod) {
-        if (attributes.get(ATTR_TOPUPORIGINATINGDEVICE1).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TOPUPORIGINATINGDEVICE1).getLastValue();
+        if (serverAttributes.get(ATTR_TOPUPORIGINATINGDEVICE1).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TOPUPORIGINATINGDEVICE1).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TOPUPORIGINATINGDEVICE1));
+        return (Integer) readSync(serverAttributes.get(ATTR_TOPUPORIGINATINGDEVICE1));
     }
 
     /**
@@ -2152,9 +2295,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setTopUpOriginatingDevice1Reporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_TOPUPORIGINATINGDEVICE1), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_TOPUPORIGINATINGDEVICE1), minInterval, maxInterval);
     }
 
     /**
@@ -2167,9 +2312,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTopUpCode1Async() {
-        return read(attributes.get(ATTR_TOPUPCODE1));
+        return read(serverAttributes.get(ATTR_TOPUPCODE1));
     }
 
     /**
@@ -2190,13 +2337,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link ByteArray} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public ByteArray getTopUpCode1(final long refreshPeriod) {
-        if (attributes.get(ATTR_TOPUPCODE1).isLastValueCurrent(refreshPeriod)) {
-            return (ByteArray) attributes.get(ATTR_TOPUPCODE1).getLastValue();
+        if (serverAttributes.get(ATTR_TOPUPCODE1).isLastValueCurrent(refreshPeriod)) {
+            return (ByteArray) serverAttributes.get(ATTR_TOPUPCODE1).getLastValue();
         }
 
-        return (ByteArray) readSync(attributes.get(ATTR_TOPUPCODE1));
+        return (ByteArray) readSync(serverAttributes.get(ATTR_TOPUPCODE1));
     }
 
     /**
@@ -2211,9 +2360,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setTopUpCode1Reporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_TOPUPCODE1), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_TOPUPCODE1), minInterval, maxInterval);
     }
 
     /**
@@ -2226,9 +2377,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTopUpDateTime2Async() {
-        return read(attributes.get(ATTR_TOPUPDATETIME2));
+        return read(serverAttributes.get(ATTR_TOPUPDATETIME2));
     }
 
     /**
@@ -2249,13 +2402,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Calendar getTopUpDateTime2(final long refreshPeriod) {
-        if (attributes.get(ATTR_TOPUPDATETIME2).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) attributes.get(ATTR_TOPUPDATETIME2).getLastValue();
+        if (serverAttributes.get(ATTR_TOPUPDATETIME2).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_TOPUPDATETIME2).getLastValue();
         }
 
-        return (Calendar) readSync(attributes.get(ATTR_TOPUPDATETIME2));
+        return (Calendar) readSync(serverAttributes.get(ATTR_TOPUPDATETIME2));
     }
 
     /**
@@ -2271,9 +2426,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setTopUpDateTime2Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_TOPUPDATETIME2), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_TOPUPDATETIME2), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -2286,9 +2443,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTopUpAmount2Async() {
-        return read(attributes.get(ATTR_TOPUPAMOUNT2));
+        return read(serverAttributes.get(ATTR_TOPUPAMOUNT2));
     }
 
     /**
@@ -2309,13 +2468,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTopUpAmount2(final long refreshPeriod) {
-        if (attributes.get(ATTR_TOPUPAMOUNT2).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TOPUPAMOUNT2).getLastValue();
+        if (serverAttributes.get(ATTR_TOPUPAMOUNT2).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TOPUPAMOUNT2).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TOPUPAMOUNT2));
+        return (Integer) readSync(serverAttributes.get(ATTR_TOPUPAMOUNT2));
     }
 
     /**
@@ -2331,9 +2492,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setTopUpAmount2Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_TOPUPAMOUNT2), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_TOPUPAMOUNT2), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -2346,9 +2509,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTopUpOriginatingDevice2Async() {
-        return read(attributes.get(ATTR_TOPUPORIGINATINGDEVICE2));
+        return read(serverAttributes.get(ATTR_TOPUPORIGINATINGDEVICE2));
     }
 
     /**
@@ -2369,13 +2534,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTopUpOriginatingDevice2(final long refreshPeriod) {
-        if (attributes.get(ATTR_TOPUPORIGINATINGDEVICE2).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TOPUPORIGINATINGDEVICE2).getLastValue();
+        if (serverAttributes.get(ATTR_TOPUPORIGINATINGDEVICE2).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TOPUPORIGINATINGDEVICE2).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TOPUPORIGINATINGDEVICE2));
+        return (Integer) readSync(serverAttributes.get(ATTR_TOPUPORIGINATINGDEVICE2));
     }
 
     /**
@@ -2390,9 +2557,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setTopUpOriginatingDevice2Reporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_TOPUPORIGINATINGDEVICE2), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_TOPUPORIGINATINGDEVICE2), minInterval, maxInterval);
     }
 
     /**
@@ -2405,9 +2574,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTopUpCode2Async() {
-        return read(attributes.get(ATTR_TOPUPCODE2));
+        return read(serverAttributes.get(ATTR_TOPUPCODE2));
     }
 
     /**
@@ -2428,13 +2599,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link ByteArray} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public ByteArray getTopUpCode2(final long refreshPeriod) {
-        if (attributes.get(ATTR_TOPUPCODE2).isLastValueCurrent(refreshPeriod)) {
-            return (ByteArray) attributes.get(ATTR_TOPUPCODE2).getLastValue();
+        if (serverAttributes.get(ATTR_TOPUPCODE2).isLastValueCurrent(refreshPeriod)) {
+            return (ByteArray) serverAttributes.get(ATTR_TOPUPCODE2).getLastValue();
         }
 
-        return (ByteArray) readSync(attributes.get(ATTR_TOPUPCODE2));
+        return (ByteArray) readSync(serverAttributes.get(ATTR_TOPUPCODE2));
     }
 
     /**
@@ -2449,9 +2622,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setTopUpCode2Reporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_TOPUPCODE2), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_TOPUPCODE2), minInterval, maxInterval);
     }
 
     /**
@@ -2464,9 +2639,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTopUpDateTime3Async() {
-        return read(attributes.get(ATTR_TOPUPDATETIME3));
+        return read(serverAttributes.get(ATTR_TOPUPDATETIME3));
     }
 
     /**
@@ -2487,13 +2664,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Calendar getTopUpDateTime3(final long refreshPeriod) {
-        if (attributes.get(ATTR_TOPUPDATETIME3).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) attributes.get(ATTR_TOPUPDATETIME3).getLastValue();
+        if (serverAttributes.get(ATTR_TOPUPDATETIME3).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_TOPUPDATETIME3).getLastValue();
         }
 
-        return (Calendar) readSync(attributes.get(ATTR_TOPUPDATETIME3));
+        return (Calendar) readSync(serverAttributes.get(ATTR_TOPUPDATETIME3));
     }
 
     /**
@@ -2509,9 +2688,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setTopUpDateTime3Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_TOPUPDATETIME3), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_TOPUPDATETIME3), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -2524,9 +2705,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTopUpAmount3Async() {
-        return read(attributes.get(ATTR_TOPUPAMOUNT3));
+        return read(serverAttributes.get(ATTR_TOPUPAMOUNT3));
     }
 
     /**
@@ -2547,13 +2730,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTopUpAmount3(final long refreshPeriod) {
-        if (attributes.get(ATTR_TOPUPAMOUNT3).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TOPUPAMOUNT3).getLastValue();
+        if (serverAttributes.get(ATTR_TOPUPAMOUNT3).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TOPUPAMOUNT3).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TOPUPAMOUNT3));
+        return (Integer) readSync(serverAttributes.get(ATTR_TOPUPAMOUNT3));
     }
 
     /**
@@ -2569,9 +2754,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setTopUpAmount3Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_TOPUPAMOUNT3), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_TOPUPAMOUNT3), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -2584,9 +2771,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTopUpOriginatingDevice3Async() {
-        return read(attributes.get(ATTR_TOPUPORIGINATINGDEVICE3));
+        return read(serverAttributes.get(ATTR_TOPUPORIGINATINGDEVICE3));
     }
 
     /**
@@ -2607,13 +2796,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTopUpOriginatingDevice3(final long refreshPeriod) {
-        if (attributes.get(ATTR_TOPUPORIGINATINGDEVICE3).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TOPUPORIGINATINGDEVICE3).getLastValue();
+        if (serverAttributes.get(ATTR_TOPUPORIGINATINGDEVICE3).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TOPUPORIGINATINGDEVICE3).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TOPUPORIGINATINGDEVICE3));
+        return (Integer) readSync(serverAttributes.get(ATTR_TOPUPORIGINATINGDEVICE3));
     }
 
     /**
@@ -2628,9 +2819,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setTopUpOriginatingDevice3Reporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_TOPUPORIGINATINGDEVICE3), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_TOPUPORIGINATINGDEVICE3), minInterval, maxInterval);
     }
 
     /**
@@ -2643,9 +2836,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTopUpCode3Async() {
-        return read(attributes.get(ATTR_TOPUPCODE3));
+        return read(serverAttributes.get(ATTR_TOPUPCODE3));
     }
 
     /**
@@ -2666,13 +2861,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link ByteArray} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public ByteArray getTopUpCode3(final long refreshPeriod) {
-        if (attributes.get(ATTR_TOPUPCODE3).isLastValueCurrent(refreshPeriod)) {
-            return (ByteArray) attributes.get(ATTR_TOPUPCODE3).getLastValue();
+        if (serverAttributes.get(ATTR_TOPUPCODE3).isLastValueCurrent(refreshPeriod)) {
+            return (ByteArray) serverAttributes.get(ATTR_TOPUPCODE3).getLastValue();
         }
 
-        return (ByteArray) readSync(attributes.get(ATTR_TOPUPCODE3));
+        return (ByteArray) readSync(serverAttributes.get(ATTR_TOPUPCODE3));
     }
 
     /**
@@ -2687,9 +2884,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setTopUpCode3Reporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_TOPUPCODE3), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_TOPUPCODE3), minInterval, maxInterval);
     }
 
     /**
@@ -2702,9 +2901,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTopUpDateTime4Async() {
-        return read(attributes.get(ATTR_TOPUPDATETIME4));
+        return read(serverAttributes.get(ATTR_TOPUPDATETIME4));
     }
 
     /**
@@ -2725,13 +2926,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Calendar getTopUpDateTime4(final long refreshPeriod) {
-        if (attributes.get(ATTR_TOPUPDATETIME4).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) attributes.get(ATTR_TOPUPDATETIME4).getLastValue();
+        if (serverAttributes.get(ATTR_TOPUPDATETIME4).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_TOPUPDATETIME4).getLastValue();
         }
 
-        return (Calendar) readSync(attributes.get(ATTR_TOPUPDATETIME4));
+        return (Calendar) readSync(serverAttributes.get(ATTR_TOPUPDATETIME4));
     }
 
     /**
@@ -2747,9 +2950,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setTopUpDateTime4Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_TOPUPDATETIME4), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_TOPUPDATETIME4), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -2762,9 +2967,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTopUpAmount4Async() {
-        return read(attributes.get(ATTR_TOPUPAMOUNT4));
+        return read(serverAttributes.get(ATTR_TOPUPAMOUNT4));
     }
 
     /**
@@ -2785,13 +2992,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTopUpAmount4(final long refreshPeriod) {
-        if (attributes.get(ATTR_TOPUPAMOUNT4).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TOPUPAMOUNT4).getLastValue();
+        if (serverAttributes.get(ATTR_TOPUPAMOUNT4).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TOPUPAMOUNT4).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TOPUPAMOUNT4));
+        return (Integer) readSync(serverAttributes.get(ATTR_TOPUPAMOUNT4));
     }
 
     /**
@@ -2807,9 +3016,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setTopUpAmount4Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_TOPUPAMOUNT4), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_TOPUPAMOUNT4), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -2822,9 +3033,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTopUpOriginatingDevice4Async() {
-        return read(attributes.get(ATTR_TOPUPORIGINATINGDEVICE4));
+        return read(serverAttributes.get(ATTR_TOPUPORIGINATINGDEVICE4));
     }
 
     /**
@@ -2845,13 +3058,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTopUpOriginatingDevice4(final long refreshPeriod) {
-        if (attributes.get(ATTR_TOPUPORIGINATINGDEVICE4).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TOPUPORIGINATINGDEVICE4).getLastValue();
+        if (serverAttributes.get(ATTR_TOPUPORIGINATINGDEVICE4).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TOPUPORIGINATINGDEVICE4).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TOPUPORIGINATINGDEVICE4));
+        return (Integer) readSync(serverAttributes.get(ATTR_TOPUPORIGINATINGDEVICE4));
     }
 
     /**
@@ -2866,9 +3081,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setTopUpOriginatingDevice4Reporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_TOPUPORIGINATINGDEVICE4), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_TOPUPORIGINATINGDEVICE4), minInterval, maxInterval);
     }
 
     /**
@@ -2881,9 +3098,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTopUpCode4Async() {
-        return read(attributes.get(ATTR_TOPUPCODE4));
+        return read(serverAttributes.get(ATTR_TOPUPCODE4));
     }
 
     /**
@@ -2904,13 +3123,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link ByteArray} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public ByteArray getTopUpCode4(final long refreshPeriod) {
-        if (attributes.get(ATTR_TOPUPCODE4).isLastValueCurrent(refreshPeriod)) {
-            return (ByteArray) attributes.get(ATTR_TOPUPCODE4).getLastValue();
+        if (serverAttributes.get(ATTR_TOPUPCODE4).isLastValueCurrent(refreshPeriod)) {
+            return (ByteArray) serverAttributes.get(ATTR_TOPUPCODE4).getLastValue();
         }
 
-        return (ByteArray) readSync(attributes.get(ATTR_TOPUPCODE4));
+        return (ByteArray) readSync(serverAttributes.get(ATTR_TOPUPCODE4));
     }
 
     /**
@@ -2925,9 +3146,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setTopUpCode4Reporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_TOPUPCODE4), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_TOPUPCODE4), minInterval, maxInterval);
     }
 
     /**
@@ -2940,9 +3163,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTopUpDateTime5Async() {
-        return read(attributes.get(ATTR_TOPUPDATETIME5));
+        return read(serverAttributes.get(ATTR_TOPUPDATETIME5));
     }
 
     /**
@@ -2963,13 +3188,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Calendar getTopUpDateTime5(final long refreshPeriod) {
-        if (attributes.get(ATTR_TOPUPDATETIME5).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) attributes.get(ATTR_TOPUPDATETIME5).getLastValue();
+        if (serverAttributes.get(ATTR_TOPUPDATETIME5).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_TOPUPDATETIME5).getLastValue();
         }
 
-        return (Calendar) readSync(attributes.get(ATTR_TOPUPDATETIME5));
+        return (Calendar) readSync(serverAttributes.get(ATTR_TOPUPDATETIME5));
     }
 
     /**
@@ -2985,9 +3212,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setTopUpDateTime5Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_TOPUPDATETIME5), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_TOPUPDATETIME5), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -3000,9 +3229,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTopUpAmount5Async() {
-        return read(attributes.get(ATTR_TOPUPAMOUNT5));
+        return read(serverAttributes.get(ATTR_TOPUPAMOUNT5));
     }
 
     /**
@@ -3023,13 +3254,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTopUpAmount5(final long refreshPeriod) {
-        if (attributes.get(ATTR_TOPUPAMOUNT5).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TOPUPAMOUNT5).getLastValue();
+        if (serverAttributes.get(ATTR_TOPUPAMOUNT5).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TOPUPAMOUNT5).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TOPUPAMOUNT5));
+        return (Integer) readSync(serverAttributes.get(ATTR_TOPUPAMOUNT5));
     }
 
     /**
@@ -3045,9 +3278,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setTopUpAmount5Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_TOPUPAMOUNT5), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_TOPUPAMOUNT5), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -3060,9 +3295,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTopUpOriginatingDevice5Async() {
-        return read(attributes.get(ATTR_TOPUPORIGINATINGDEVICE5));
+        return read(serverAttributes.get(ATTR_TOPUPORIGINATINGDEVICE5));
     }
 
     /**
@@ -3083,13 +3320,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTopUpOriginatingDevice5(final long refreshPeriod) {
-        if (attributes.get(ATTR_TOPUPORIGINATINGDEVICE5).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TOPUPORIGINATINGDEVICE5).getLastValue();
+        if (serverAttributes.get(ATTR_TOPUPORIGINATINGDEVICE5).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TOPUPORIGINATINGDEVICE5).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TOPUPORIGINATINGDEVICE5));
+        return (Integer) readSync(serverAttributes.get(ATTR_TOPUPORIGINATINGDEVICE5));
     }
 
     /**
@@ -3104,9 +3343,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setTopUpOriginatingDevice5Reporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_TOPUPORIGINATINGDEVICE5), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_TOPUPORIGINATINGDEVICE5), minInterval, maxInterval);
     }
 
     /**
@@ -3119,9 +3360,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTopUpCode5Async() {
-        return read(attributes.get(ATTR_TOPUPCODE5));
+        return read(serverAttributes.get(ATTR_TOPUPCODE5));
     }
 
     /**
@@ -3142,13 +3385,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link ByteArray} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public ByteArray getTopUpCode5(final long refreshPeriod) {
-        if (attributes.get(ATTR_TOPUPCODE5).isLastValueCurrent(refreshPeriod)) {
-            return (ByteArray) attributes.get(ATTR_TOPUPCODE5).getLastValue();
+        if (serverAttributes.get(ATTR_TOPUPCODE5).isLastValueCurrent(refreshPeriod)) {
+            return (ByteArray) serverAttributes.get(ATTR_TOPUPCODE5).getLastValue();
         }
 
-        return (ByteArray) readSync(attributes.get(ATTR_TOPUPCODE5));
+        return (ByteArray) readSync(serverAttributes.get(ATTR_TOPUPCODE5));
     }
 
     /**
@@ -3163,9 +3408,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setTopUpCode5Reporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_TOPUPCODE5), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_TOPUPCODE5), minInterval, maxInterval);
     }
 
     /**
@@ -3178,9 +3425,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDebtLabel1Async() {
-        return read(attributes.get(ATTR_DEBTLABEL1));
+        return read(serverAttributes.get(ATTR_DEBTLABEL1));
     }
 
     /**
@@ -3201,13 +3450,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link ByteArray} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public ByteArray getDebtLabel1(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEBTLABEL1).isLastValueCurrent(refreshPeriod)) {
-            return (ByteArray) attributes.get(ATTR_DEBTLABEL1).getLastValue();
+        if (serverAttributes.get(ATTR_DEBTLABEL1).isLastValueCurrent(refreshPeriod)) {
+            return (ByteArray) serverAttributes.get(ATTR_DEBTLABEL1).getLastValue();
         }
 
-        return (ByteArray) readSync(attributes.get(ATTR_DEBTLABEL1));
+        return (ByteArray) readSync(serverAttributes.get(ATTR_DEBTLABEL1));
     }
 
     /**
@@ -3222,9 +3473,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setDebtLabel1Reporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_DEBTLABEL1), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_DEBTLABEL1), minInterval, maxInterval);
     }
 
     /**
@@ -3237,9 +3490,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDebtAmount1Async() {
-        return read(attributes.get(ATTR_DEBTAMOUNT1));
+        return read(serverAttributes.get(ATTR_DEBTAMOUNT1));
     }
 
     /**
@@ -3260,13 +3515,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDebtAmount1(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEBTAMOUNT1).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DEBTAMOUNT1).getLastValue();
+        if (serverAttributes.get(ATTR_DEBTAMOUNT1).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DEBTAMOUNT1).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DEBTAMOUNT1));
+        return (Integer) readSync(serverAttributes.get(ATTR_DEBTAMOUNT1));
     }
 
     /**
@@ -3282,9 +3539,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDebtAmount1Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DEBTAMOUNT1), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DEBTAMOUNT1), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -3297,9 +3556,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDebtRecoveryMethod1Async() {
-        return read(attributes.get(ATTR_DEBTRECOVERYMETHOD1));
+        return read(serverAttributes.get(ATTR_DEBTRECOVERYMETHOD1));
     }
 
     /**
@@ -3320,13 +3581,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDebtRecoveryMethod1(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEBTRECOVERYMETHOD1).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DEBTRECOVERYMETHOD1).getLastValue();
+        if (serverAttributes.get(ATTR_DEBTRECOVERYMETHOD1).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DEBTRECOVERYMETHOD1).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DEBTRECOVERYMETHOD1));
+        return (Integer) readSync(serverAttributes.get(ATTR_DEBTRECOVERYMETHOD1));
     }
 
     /**
@@ -3341,9 +3604,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setDebtRecoveryMethod1Reporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_DEBTRECOVERYMETHOD1), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_DEBTRECOVERYMETHOD1), minInterval, maxInterval);
     }
 
     /**
@@ -3356,9 +3621,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDebtRecoveryStartTime1Async() {
-        return read(attributes.get(ATTR_DEBTRECOVERYSTARTTIME1));
+        return read(serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME1));
     }
 
     /**
@@ -3379,13 +3646,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Calendar getDebtRecoveryStartTime1(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEBTRECOVERYSTARTTIME1).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) attributes.get(ATTR_DEBTRECOVERYSTARTTIME1).getLastValue();
+        if (serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME1).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME1).getLastValue();
         }
 
-        return (Calendar) readSync(attributes.get(ATTR_DEBTRECOVERYSTARTTIME1));
+        return (Calendar) readSync(serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME1));
     }
 
     /**
@@ -3401,9 +3670,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDebtRecoveryStartTime1Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DEBTRECOVERYSTARTTIME1), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME1), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -3416,9 +3687,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDebtRecoveryCollectionTime1Async() {
-        return read(attributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME1));
+        return read(serverAttributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME1));
     }
 
     /**
@@ -3439,13 +3712,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDebtRecoveryCollectionTime1(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME1).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME1).getLastValue();
+        if (serverAttributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME1).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME1).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME1));
+        return (Integer) readSync(serverAttributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME1));
     }
 
     /**
@@ -3461,9 +3736,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDebtRecoveryCollectionTime1Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME1), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME1), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -3476,9 +3753,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDebtRecoveryFrequency1Async() {
-        return read(attributes.get(ATTR_DEBTRECOVERYFREQUENCY1));
+        return read(serverAttributes.get(ATTR_DEBTRECOVERYFREQUENCY1));
     }
 
     /**
@@ -3499,13 +3778,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDebtRecoveryFrequency1(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEBTRECOVERYFREQUENCY1).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DEBTRECOVERYFREQUENCY1).getLastValue();
+        if (serverAttributes.get(ATTR_DEBTRECOVERYFREQUENCY1).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DEBTRECOVERYFREQUENCY1).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DEBTRECOVERYFREQUENCY1));
+        return (Integer) readSync(serverAttributes.get(ATTR_DEBTRECOVERYFREQUENCY1));
     }
 
     /**
@@ -3520,9 +3801,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setDebtRecoveryFrequency1Reporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_DEBTRECOVERYFREQUENCY1), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_DEBTRECOVERYFREQUENCY1), minInterval, maxInterval);
     }
 
     /**
@@ -3535,9 +3818,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDebtRecoveryAmount1Async() {
-        return read(attributes.get(ATTR_DEBTRECOVERYAMOUNT1));
+        return read(serverAttributes.get(ATTR_DEBTRECOVERYAMOUNT1));
     }
 
     /**
@@ -3558,13 +3843,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDebtRecoveryAmount1(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEBTRECOVERYAMOUNT1).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DEBTRECOVERYAMOUNT1).getLastValue();
+        if (serverAttributes.get(ATTR_DEBTRECOVERYAMOUNT1).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DEBTRECOVERYAMOUNT1).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DEBTRECOVERYAMOUNT1));
+        return (Integer) readSync(serverAttributes.get(ATTR_DEBTRECOVERYAMOUNT1));
     }
 
     /**
@@ -3580,9 +3867,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDebtRecoveryAmount1Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DEBTRECOVERYAMOUNT1), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DEBTRECOVERYAMOUNT1), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -3595,9 +3884,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDebtRecoveryTopUpPercentage1Async() {
-        return read(attributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE1));
+        return read(serverAttributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE1));
     }
 
     /**
@@ -3618,13 +3909,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDebtRecoveryTopUpPercentage1(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE1).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE1).getLastValue();
+        if (serverAttributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE1).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE1).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE1));
+        return (Integer) readSync(serverAttributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE1));
     }
 
     /**
@@ -3640,9 +3933,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDebtRecoveryTopUpPercentage1Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE1), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE1), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -3655,9 +3950,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDebtLabel2Async() {
-        return read(attributes.get(ATTR_DEBTLABEL2));
+        return read(serverAttributes.get(ATTR_DEBTLABEL2));
     }
 
     /**
@@ -3678,13 +3975,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link ByteArray} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public ByteArray getDebtLabel2(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEBTLABEL2).isLastValueCurrent(refreshPeriod)) {
-            return (ByteArray) attributes.get(ATTR_DEBTLABEL2).getLastValue();
+        if (serverAttributes.get(ATTR_DEBTLABEL2).isLastValueCurrent(refreshPeriod)) {
+            return (ByteArray) serverAttributes.get(ATTR_DEBTLABEL2).getLastValue();
         }
 
-        return (ByteArray) readSync(attributes.get(ATTR_DEBTLABEL2));
+        return (ByteArray) readSync(serverAttributes.get(ATTR_DEBTLABEL2));
     }
 
     /**
@@ -3699,9 +3998,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setDebtLabel2Reporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_DEBTLABEL2), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_DEBTLABEL2), minInterval, maxInterval);
     }
 
     /**
@@ -3714,9 +4015,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDebtAmount2Async() {
-        return read(attributes.get(ATTR_DEBTAMOUNT2));
+        return read(serverAttributes.get(ATTR_DEBTAMOUNT2));
     }
 
     /**
@@ -3737,13 +4040,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDebtAmount2(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEBTAMOUNT2).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DEBTAMOUNT2).getLastValue();
+        if (serverAttributes.get(ATTR_DEBTAMOUNT2).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DEBTAMOUNT2).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DEBTAMOUNT2));
+        return (Integer) readSync(serverAttributes.get(ATTR_DEBTAMOUNT2));
     }
 
     /**
@@ -3759,9 +4064,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDebtAmount2Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DEBTAMOUNT2), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DEBTAMOUNT2), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -3774,9 +4081,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDebtRecoveryMethod2Async() {
-        return read(attributes.get(ATTR_DEBTRECOVERYMETHOD2));
+        return read(serverAttributes.get(ATTR_DEBTRECOVERYMETHOD2));
     }
 
     /**
@@ -3797,13 +4106,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDebtRecoveryMethod2(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEBTRECOVERYMETHOD2).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DEBTRECOVERYMETHOD2).getLastValue();
+        if (serverAttributes.get(ATTR_DEBTRECOVERYMETHOD2).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DEBTRECOVERYMETHOD2).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DEBTRECOVERYMETHOD2));
+        return (Integer) readSync(serverAttributes.get(ATTR_DEBTRECOVERYMETHOD2));
     }
 
     /**
@@ -3818,9 +4129,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setDebtRecoveryMethod2Reporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_DEBTRECOVERYMETHOD2), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_DEBTRECOVERYMETHOD2), minInterval, maxInterval);
     }
 
     /**
@@ -3833,9 +4146,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDebtRecoveryStartTime2Async() {
-        return read(attributes.get(ATTR_DEBTRECOVERYSTARTTIME2));
+        return read(serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME2));
     }
 
     /**
@@ -3856,13 +4171,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Calendar getDebtRecoveryStartTime2(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEBTRECOVERYSTARTTIME2).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) attributes.get(ATTR_DEBTRECOVERYSTARTTIME2).getLastValue();
+        if (serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME2).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME2).getLastValue();
         }
 
-        return (Calendar) readSync(attributes.get(ATTR_DEBTRECOVERYSTARTTIME2));
+        return (Calendar) readSync(serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME2));
     }
 
     /**
@@ -3878,9 +4195,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDebtRecoveryStartTime2Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DEBTRECOVERYSTARTTIME2), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME2), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -3893,9 +4212,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDebtRecoveryCollectionTime2Async() {
-        return read(attributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME2));
+        return read(serverAttributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME2));
     }
 
     /**
@@ -3916,13 +4237,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDebtRecoveryCollectionTime2(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME2).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME2).getLastValue();
+        if (serverAttributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME2).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME2).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME2));
+        return (Integer) readSync(serverAttributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME2));
     }
 
     /**
@@ -3938,9 +4261,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDebtRecoveryCollectionTime2Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME2), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME2), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -3953,9 +4278,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDebtRecoveryFrequency2Async() {
-        return read(attributes.get(ATTR_DEBTRECOVERYFREQUENCY2));
+        return read(serverAttributes.get(ATTR_DEBTRECOVERYFREQUENCY2));
     }
 
     /**
@@ -3976,13 +4303,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDebtRecoveryFrequency2(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEBTRECOVERYFREQUENCY2).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DEBTRECOVERYFREQUENCY2).getLastValue();
+        if (serverAttributes.get(ATTR_DEBTRECOVERYFREQUENCY2).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DEBTRECOVERYFREQUENCY2).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DEBTRECOVERYFREQUENCY2));
+        return (Integer) readSync(serverAttributes.get(ATTR_DEBTRECOVERYFREQUENCY2));
     }
 
     /**
@@ -3997,9 +4326,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setDebtRecoveryFrequency2Reporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_DEBTRECOVERYFREQUENCY2), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_DEBTRECOVERYFREQUENCY2), minInterval, maxInterval);
     }
 
     /**
@@ -4012,9 +4343,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDebtRecoveryAmount2Async() {
-        return read(attributes.get(ATTR_DEBTRECOVERYAMOUNT2));
+        return read(serverAttributes.get(ATTR_DEBTRECOVERYAMOUNT2));
     }
 
     /**
@@ -4035,13 +4368,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDebtRecoveryAmount2(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEBTRECOVERYAMOUNT2).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DEBTRECOVERYAMOUNT2).getLastValue();
+        if (serverAttributes.get(ATTR_DEBTRECOVERYAMOUNT2).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DEBTRECOVERYAMOUNT2).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DEBTRECOVERYAMOUNT2));
+        return (Integer) readSync(serverAttributes.get(ATTR_DEBTRECOVERYAMOUNT2));
     }
 
     /**
@@ -4057,9 +4392,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDebtRecoveryAmount2Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DEBTRECOVERYAMOUNT2), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DEBTRECOVERYAMOUNT2), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -4072,9 +4409,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDebtRecoveryTopUpPercentage2Async() {
-        return read(attributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE2));
+        return read(serverAttributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE2));
     }
 
     /**
@@ -4095,13 +4434,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDebtRecoveryTopUpPercentage2(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE2).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE2).getLastValue();
+        if (serverAttributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE2).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE2).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE2));
+        return (Integer) readSync(serverAttributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE2));
     }
 
     /**
@@ -4117,9 +4458,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDebtRecoveryTopUpPercentage2Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE2), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE2), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -4132,9 +4475,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDebtLabel3Async() {
-        return read(attributes.get(ATTR_DEBTLABEL3));
+        return read(serverAttributes.get(ATTR_DEBTLABEL3));
     }
 
     /**
@@ -4155,13 +4500,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link ByteArray} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public ByteArray getDebtLabel3(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEBTLABEL3).isLastValueCurrent(refreshPeriod)) {
-            return (ByteArray) attributes.get(ATTR_DEBTLABEL3).getLastValue();
+        if (serverAttributes.get(ATTR_DEBTLABEL3).isLastValueCurrent(refreshPeriod)) {
+            return (ByteArray) serverAttributes.get(ATTR_DEBTLABEL3).getLastValue();
         }
 
-        return (ByteArray) readSync(attributes.get(ATTR_DEBTLABEL3));
+        return (ByteArray) readSync(serverAttributes.get(ATTR_DEBTLABEL3));
     }
 
     /**
@@ -4176,9 +4523,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setDebtLabel3Reporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_DEBTLABEL3), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_DEBTLABEL3), minInterval, maxInterval);
     }
 
     /**
@@ -4191,9 +4540,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDebtAmount3Async() {
-        return read(attributes.get(ATTR_DEBTAMOUNT3));
+        return read(serverAttributes.get(ATTR_DEBTAMOUNT3));
     }
 
     /**
@@ -4214,13 +4565,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDebtAmount3(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEBTAMOUNT3).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DEBTAMOUNT3).getLastValue();
+        if (serverAttributes.get(ATTR_DEBTAMOUNT3).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DEBTAMOUNT3).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DEBTAMOUNT3));
+        return (Integer) readSync(serverAttributes.get(ATTR_DEBTAMOUNT3));
     }
 
     /**
@@ -4236,9 +4589,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDebtAmount3Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DEBTAMOUNT3), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DEBTAMOUNT3), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -4251,9 +4606,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDebtRecoveryMethod3Async() {
-        return read(attributes.get(ATTR_DEBTRECOVERYMETHOD3));
+        return read(serverAttributes.get(ATTR_DEBTRECOVERYMETHOD3));
     }
 
     /**
@@ -4274,13 +4631,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDebtRecoveryMethod3(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEBTRECOVERYMETHOD3).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DEBTRECOVERYMETHOD3).getLastValue();
+        if (serverAttributes.get(ATTR_DEBTRECOVERYMETHOD3).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DEBTRECOVERYMETHOD3).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DEBTRECOVERYMETHOD3));
+        return (Integer) readSync(serverAttributes.get(ATTR_DEBTRECOVERYMETHOD3));
     }
 
     /**
@@ -4295,9 +4654,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setDebtRecoveryMethod3Reporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_DEBTRECOVERYMETHOD3), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_DEBTRECOVERYMETHOD3), minInterval, maxInterval);
     }
 
     /**
@@ -4310,9 +4671,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDebtRecoveryStartTime3Async() {
-        return read(attributes.get(ATTR_DEBTRECOVERYSTARTTIME3));
+        return read(serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME3));
     }
 
     /**
@@ -4333,13 +4696,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Calendar getDebtRecoveryStartTime3(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEBTRECOVERYSTARTTIME3).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) attributes.get(ATTR_DEBTRECOVERYSTARTTIME3).getLastValue();
+        if (serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME3).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME3).getLastValue();
         }
 
-        return (Calendar) readSync(attributes.get(ATTR_DEBTRECOVERYSTARTTIME3));
+        return (Calendar) readSync(serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME3));
     }
 
     /**
@@ -4355,9 +4720,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDebtRecoveryStartTime3Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DEBTRECOVERYSTARTTIME3), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DEBTRECOVERYSTARTTIME3), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -4370,9 +4737,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDebtRecoveryCollectionTime3Async() {
-        return read(attributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME3));
+        return read(serverAttributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME3));
     }
 
     /**
@@ -4393,13 +4762,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDebtRecoveryCollectionTime3(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME3).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME3).getLastValue();
+        if (serverAttributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME3).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME3).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME3));
+        return (Integer) readSync(serverAttributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME3));
     }
 
     /**
@@ -4415,9 +4786,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDebtRecoveryCollectionTime3Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME3), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DEBTRECOVERYCOLLECTIONTIME3), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -4430,9 +4803,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDebtRecoveryFrequency3Async() {
-        return read(attributes.get(ATTR_DEBTRECOVERYFREQUENCY3));
+        return read(serverAttributes.get(ATTR_DEBTRECOVERYFREQUENCY3));
     }
 
     /**
@@ -4453,13 +4828,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDebtRecoveryFrequency3(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEBTRECOVERYFREQUENCY3).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DEBTRECOVERYFREQUENCY3).getLastValue();
+        if (serverAttributes.get(ATTR_DEBTRECOVERYFREQUENCY3).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DEBTRECOVERYFREQUENCY3).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DEBTRECOVERYFREQUENCY3));
+        return (Integer) readSync(serverAttributes.get(ATTR_DEBTRECOVERYFREQUENCY3));
     }
 
     /**
@@ -4474,9 +4851,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setDebtRecoveryFrequency3Reporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_DEBTRECOVERYFREQUENCY3), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_DEBTRECOVERYFREQUENCY3), minInterval, maxInterval);
     }
 
     /**
@@ -4489,9 +4868,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDebtRecoveryAmount3Async() {
-        return read(attributes.get(ATTR_DEBTRECOVERYAMOUNT3));
+        return read(serverAttributes.get(ATTR_DEBTRECOVERYAMOUNT3));
     }
 
     /**
@@ -4512,13 +4893,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDebtRecoveryAmount3(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEBTRECOVERYAMOUNT3).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DEBTRECOVERYAMOUNT3).getLastValue();
+        if (serverAttributes.get(ATTR_DEBTRECOVERYAMOUNT3).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DEBTRECOVERYAMOUNT3).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DEBTRECOVERYAMOUNT3));
+        return (Integer) readSync(serverAttributes.get(ATTR_DEBTRECOVERYAMOUNT3));
     }
 
     /**
@@ -4534,9 +4917,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDebtRecoveryAmount3Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DEBTRECOVERYAMOUNT3), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DEBTRECOVERYAMOUNT3), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -4549,9 +4934,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDebtRecoveryTopUpPercentage3Async() {
-        return read(attributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE3));
+        return read(serverAttributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE3));
     }
 
     /**
@@ -4572,13 +4959,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDebtRecoveryTopUpPercentage3(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE3).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE3).getLastValue();
+        if (serverAttributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE3).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE3).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE3));
+        return (Integer) readSync(serverAttributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE3));
     }
 
     /**
@@ -4594,9 +4983,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDebtRecoveryTopUpPercentage3Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE3), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DEBTRECOVERYTOPUPPERCENTAGE3), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -4610,9 +5001,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param prepaymentAlarmStatus the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setPrepaymentAlarmStatus(final Integer value) {
-        return write(attributes.get(ATTR_PREPAYMENTALARMSTATUS), value);
+        return write(serverAttributes.get(ATTR_PREPAYMENTALARMSTATUS), value);
     }
 
     /**
@@ -4625,9 +5018,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPrepaymentAlarmStatusAsync() {
-        return read(attributes.get(ATTR_PREPAYMENTALARMSTATUS));
+        return read(serverAttributes.get(ATTR_PREPAYMENTALARMSTATUS));
     }
 
     /**
@@ -4648,13 +5043,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPrepaymentAlarmStatus(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREPAYMENTALARMSTATUS).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREPAYMENTALARMSTATUS).getLastValue();
+        if (serverAttributes.get(ATTR_PREPAYMENTALARMSTATUS).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREPAYMENTALARMSTATUS).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREPAYMENTALARMSTATUS));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREPAYMENTALARMSTATUS));
     }
 
     /**
@@ -4668,9 +5065,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param prepayGenericAlarmMask the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setPrepayGenericAlarmMask(final Integer value) {
-        return write(attributes.get(ATTR_PREPAYGENERICALARMMASK), value);
+        return write(serverAttributes.get(ATTR_PREPAYGENERICALARMMASK), value);
     }
 
     /**
@@ -4683,9 +5082,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPrepayGenericAlarmMaskAsync() {
-        return read(attributes.get(ATTR_PREPAYGENERICALARMMASK));
+        return read(serverAttributes.get(ATTR_PREPAYGENERICALARMMASK));
     }
 
     /**
@@ -4706,13 +5107,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPrepayGenericAlarmMask(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREPAYGENERICALARMMASK).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREPAYGENERICALARMMASK).getLastValue();
+        if (serverAttributes.get(ATTR_PREPAYGENERICALARMMASK).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREPAYGENERICALARMMASK).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREPAYGENERICALARMMASK));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREPAYGENERICALARMMASK));
     }
 
     /**
@@ -4726,9 +5129,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param prepaySwitchAlarmMask the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setPrepaySwitchAlarmMask(final Integer value) {
-        return write(attributes.get(ATTR_PREPAYSWITCHALARMMASK), value);
+        return write(serverAttributes.get(ATTR_PREPAYSWITCHALARMMASK), value);
     }
 
     /**
@@ -4741,9 +5146,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPrepaySwitchAlarmMaskAsync() {
-        return read(attributes.get(ATTR_PREPAYSWITCHALARMMASK));
+        return read(serverAttributes.get(ATTR_PREPAYSWITCHALARMMASK));
     }
 
     /**
@@ -4764,13 +5171,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPrepaySwitchAlarmMask(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREPAYSWITCHALARMMASK).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREPAYSWITCHALARMMASK).getLastValue();
+        if (serverAttributes.get(ATTR_PREPAYSWITCHALARMMASK).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREPAYSWITCHALARMMASK).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREPAYSWITCHALARMMASK));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREPAYSWITCHALARMMASK));
     }
 
     /**
@@ -4784,9 +5193,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param prepayEventAlarmMask the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setPrepayEventAlarmMask(final Integer value) {
-        return write(attributes.get(ATTR_PREPAYEVENTALARMMASK), value);
+        return write(serverAttributes.get(ATTR_PREPAYEVENTALARMMASK), value);
     }
 
     /**
@@ -4799,9 +5210,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPrepayEventAlarmMaskAsync() {
-        return read(attributes.get(ATTR_PREPAYEVENTALARMMASK));
+        return read(serverAttributes.get(ATTR_PREPAYEVENTALARMMASK));
     }
 
     /**
@@ -4822,13 +5235,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPrepayEventAlarmMask(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREPAYEVENTALARMMASK).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREPAYEVENTALARMMASK).getLastValue();
+        if (serverAttributes.get(ATTR_PREPAYEVENTALARMMASK).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREPAYEVENTALARMMASK).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREPAYEVENTALARMMASK));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREPAYEVENTALARMMASK));
     }
 
     /**
@@ -4841,9 +5256,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getHistoricalCostConsumptionFormattingAsync() {
-        return read(attributes.get(ATTR_HISTORICALCOSTCONSUMPTIONFORMATTING));
+        return read(serverAttributes.get(ATTR_HISTORICALCOSTCONSUMPTIONFORMATTING));
     }
 
     /**
@@ -4864,13 +5281,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getHistoricalCostConsumptionFormatting(final long refreshPeriod) {
-        if (attributes.get(ATTR_HISTORICALCOSTCONSUMPTIONFORMATTING).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_HISTORICALCOSTCONSUMPTIONFORMATTING).getLastValue();
+        if (serverAttributes.get(ATTR_HISTORICALCOSTCONSUMPTIONFORMATTING).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_HISTORICALCOSTCONSUMPTIONFORMATTING).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_HISTORICALCOSTCONSUMPTIONFORMATTING));
+        return (Integer) readSync(serverAttributes.get(ATTR_HISTORICALCOSTCONSUMPTIONFORMATTING));
     }
 
     /**
@@ -4885,9 +5304,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setHistoricalCostConsumptionFormattingReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_HISTORICALCOSTCONSUMPTIONFORMATTING), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_HISTORICALCOSTCONSUMPTIONFORMATTING), minInterval, maxInterval);
     }
 
     /**
@@ -4900,9 +5321,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getConsumptionUnitOfMeasurementAsync() {
-        return read(attributes.get(ATTR_CONSUMPTIONUNITOFMEASUREMENT));
+        return read(serverAttributes.get(ATTR_CONSUMPTIONUNITOFMEASUREMENT));
     }
 
     /**
@@ -4923,13 +5346,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getConsumptionUnitOfMeasurement(final long refreshPeriod) {
-        if (attributes.get(ATTR_CONSUMPTIONUNITOFMEASUREMENT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CONSUMPTIONUNITOFMEASUREMENT).getLastValue();
+        if (serverAttributes.get(ATTR_CONSUMPTIONUNITOFMEASUREMENT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CONSUMPTIONUNITOFMEASUREMENT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CONSUMPTIONUNITOFMEASUREMENT));
+        return (Integer) readSync(serverAttributes.get(ATTR_CONSUMPTIONUNITOFMEASUREMENT));
     }
 
     /**
@@ -4944,9 +5369,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setConsumptionUnitOfMeasurementReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_CONSUMPTIONUNITOFMEASUREMENT), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_CONSUMPTIONUNITOFMEASUREMENT), minInterval, maxInterval);
     }
 
     /**
@@ -4959,9 +5386,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCurrencyScalingFactorAsync() {
-        return read(attributes.get(ATTR_CURRENCYSCALINGFACTOR));
+        return read(serverAttributes.get(ATTR_CURRENCYSCALINGFACTOR));
     }
 
     /**
@@ -4982,13 +5411,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCurrencyScalingFactor(final long refreshPeriod) {
-        if (attributes.get(ATTR_CURRENCYSCALINGFACTOR).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CURRENCYSCALINGFACTOR).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENCYSCALINGFACTOR).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENCYSCALINGFACTOR).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CURRENCYSCALINGFACTOR));
+        return (Integer) readSync(serverAttributes.get(ATTR_CURRENCYSCALINGFACTOR));
     }
 
     /**
@@ -5003,9 +5434,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setCurrencyScalingFactorReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_CURRENCYSCALINGFACTOR), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_CURRENCYSCALINGFACTOR), minInterval, maxInterval);
     }
 
     /**
@@ -5018,9 +5451,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCurrencyAsync() {
-        return read(attributes.get(ATTR_CURRENCY));
+        return read(serverAttributes.get(ATTR_CURRENCY));
     }
 
     /**
@@ -5041,13 +5476,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCurrency(final long refreshPeriod) {
-        if (attributes.get(ATTR_CURRENCY).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CURRENCY).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENCY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENCY).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CURRENCY));
+        return (Integer) readSync(serverAttributes.get(ATTR_CURRENCY));
     }
 
     /**
@@ -5063,9 +5500,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setCurrencyReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_CURRENCY), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_CURRENCY), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5078,9 +5517,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCurrentDayCostConsumptionDeliveredAsync() {
-        return read(attributes.get(ATTR_CURRENTDAYCOSTCONSUMPTIONDELIVERED));
+        return read(serverAttributes.get(ATTR_CURRENTDAYCOSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -5101,13 +5542,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCurrentDayCostConsumptionDelivered(final long refreshPeriod) {
-        if (attributes.get(ATTR_CURRENTDAYCOSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CURRENTDAYCOSTCONSUMPTIONDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTDAYCOSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTDAYCOSTCONSUMPTIONDELIVERED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CURRENTDAYCOSTCONSUMPTIONDELIVERED));
+        return (Integer) readSync(serverAttributes.get(ATTR_CURRENTDAYCOSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -5123,9 +5566,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setCurrentDayCostConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_CURRENTDAYCOSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_CURRENTDAYCOSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5138,9 +5583,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCurrentDayCostConsumptionReceivedAsync() {
-        return read(attributes.get(ATTR_CURRENTDAYCOSTCONSUMPTIONRECEIVED));
+        return read(serverAttributes.get(ATTR_CURRENTDAYCOSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -5161,13 +5608,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCurrentDayCostConsumptionReceived(final long refreshPeriod) {
-        if (attributes.get(ATTR_CURRENTDAYCOSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CURRENTDAYCOSTCONSUMPTIONRECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTDAYCOSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTDAYCOSTCONSUMPTIONRECEIVED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CURRENTDAYCOSTCONSUMPTIONRECEIVED));
+        return (Integer) readSync(serverAttributes.get(ATTR_CURRENTDAYCOSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -5183,9 +5632,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setCurrentDayCostConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_CURRENTDAYCOSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_CURRENTDAYCOSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5198,9 +5649,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousDayCostConsumptionDeliveredAsync() {
-        return read(attributes.get(ATTR_PREVIOUSDAYCOSTCONSUMPTIONDELIVERED));
+        return read(serverAttributes.get(ATTR_PREVIOUSDAYCOSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -5221,13 +5674,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousDayCostConsumptionDelivered(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSDAYCOSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSDAYCOSTCONSUMPTIONDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSDAYCOSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSDAYCOSTCONSUMPTIONDELIVERED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSDAYCOSTCONSUMPTIONDELIVERED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSDAYCOSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -5243,9 +5698,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousDayCostConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSDAYCOSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAYCOSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5258,9 +5715,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousDayCostConsumptionReceivedAsync() {
-        return read(attributes.get(ATTR_PREVIOUSDAYCOSTCONSUMPTIONRECEIVED));
+        return read(serverAttributes.get(ATTR_PREVIOUSDAYCOSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -5281,13 +5740,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousDayCostConsumptionReceived(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSDAYCOSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSDAYCOSTCONSUMPTIONRECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSDAYCOSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSDAYCOSTCONSUMPTIONRECEIVED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSDAYCOSTCONSUMPTIONRECEIVED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSDAYCOSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -5303,9 +5764,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousDayCostConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSDAYCOSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAYCOSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5318,9 +5781,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousDay2CostConsumptionDeliveredAsync() {
-        return read(attributes.get(ATTR_PREVIOUSDAY2COSTCONSUMPTIONDELIVERED));
+        return read(serverAttributes.get(ATTR_PREVIOUSDAY2COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -5341,13 +5806,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousDay2CostConsumptionDelivered(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSDAY2COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSDAY2COSTCONSUMPTIONDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSDAY2COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSDAY2COSTCONSUMPTIONDELIVERED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSDAY2COSTCONSUMPTIONDELIVERED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSDAY2COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -5363,9 +5830,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousDay2CostConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSDAY2COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAY2COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5378,9 +5847,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousDay2CostConsumptionReceivedAsync() {
-        return read(attributes.get(ATTR_PREVIOUSDAY2COSTCONSUMPTIONRECEIVED));
+        return read(serverAttributes.get(ATTR_PREVIOUSDAY2COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -5401,13 +5872,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousDay2CostConsumptionReceived(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSDAY2COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSDAY2COSTCONSUMPTIONRECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSDAY2COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSDAY2COSTCONSUMPTIONRECEIVED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSDAY2COSTCONSUMPTIONRECEIVED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSDAY2COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -5423,9 +5896,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousDay2CostConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSDAY2COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAY2COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5438,9 +5913,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousDay3CostConsumptionDeliveredAsync() {
-        return read(attributes.get(ATTR_PREVIOUSDAY3COSTCONSUMPTIONDELIVERED));
+        return read(serverAttributes.get(ATTR_PREVIOUSDAY3COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -5461,13 +5938,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousDay3CostConsumptionDelivered(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSDAY3COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSDAY3COSTCONSUMPTIONDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSDAY3COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSDAY3COSTCONSUMPTIONDELIVERED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSDAY3COSTCONSUMPTIONDELIVERED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSDAY3COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -5483,9 +5962,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousDay3CostConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSDAY3COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAY3COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5498,9 +5979,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousDay3CostConsumptionReceivedAsync() {
-        return read(attributes.get(ATTR_PREVIOUSDAY3COSTCONSUMPTIONRECEIVED));
+        return read(serverAttributes.get(ATTR_PREVIOUSDAY3COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -5521,13 +6004,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousDay3CostConsumptionReceived(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSDAY3COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSDAY3COSTCONSUMPTIONRECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSDAY3COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSDAY3COSTCONSUMPTIONRECEIVED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSDAY3COSTCONSUMPTIONRECEIVED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSDAY3COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -5543,9 +6028,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousDay3CostConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSDAY3COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAY3COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5558,9 +6045,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousDay4CostConsumptionDeliveredAsync() {
-        return read(attributes.get(ATTR_PREVIOUSDAY4COSTCONSUMPTIONDELIVERED));
+        return read(serverAttributes.get(ATTR_PREVIOUSDAY4COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -5581,13 +6070,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousDay4CostConsumptionDelivered(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSDAY4COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSDAY4COSTCONSUMPTIONDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSDAY4COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSDAY4COSTCONSUMPTIONDELIVERED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSDAY4COSTCONSUMPTIONDELIVERED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSDAY4COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -5603,9 +6094,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousDay4CostConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSDAY4COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAY4COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5618,9 +6111,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousDay4CostConsumptionReceivedAsync() {
-        return read(attributes.get(ATTR_PREVIOUSDAY4COSTCONSUMPTIONRECEIVED));
+        return read(serverAttributes.get(ATTR_PREVIOUSDAY4COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -5641,13 +6136,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousDay4CostConsumptionReceived(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSDAY4COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSDAY4COSTCONSUMPTIONRECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSDAY4COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSDAY4COSTCONSUMPTIONRECEIVED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSDAY4COSTCONSUMPTIONRECEIVED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSDAY4COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -5663,9 +6160,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousDay4CostConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSDAY4COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAY4COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5678,9 +6177,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousDay5CostConsumptionDeliveredAsync() {
-        return read(attributes.get(ATTR_PREVIOUSDAY5COSTCONSUMPTIONDELIVERED));
+        return read(serverAttributes.get(ATTR_PREVIOUSDAY5COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -5701,13 +6202,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousDay5CostConsumptionDelivered(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSDAY5COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSDAY5COSTCONSUMPTIONDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSDAY5COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSDAY5COSTCONSUMPTIONDELIVERED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSDAY5COSTCONSUMPTIONDELIVERED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSDAY5COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -5723,9 +6226,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousDay5CostConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSDAY5COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAY5COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5738,9 +6243,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousDay5CostConsumptionReceivedAsync() {
-        return read(attributes.get(ATTR_PREVIOUSDAY5COSTCONSUMPTIONRECEIVED));
+        return read(serverAttributes.get(ATTR_PREVIOUSDAY5COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -5761,13 +6268,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousDay5CostConsumptionReceived(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSDAY5COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSDAY5COSTCONSUMPTIONRECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSDAY5COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSDAY5COSTCONSUMPTIONRECEIVED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSDAY5COSTCONSUMPTIONRECEIVED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSDAY5COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -5783,9 +6292,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousDay5CostConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSDAY5COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAY5COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5798,9 +6309,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousDay6CostConsumptionDeliveredAsync() {
-        return read(attributes.get(ATTR_PREVIOUSDAY6COSTCONSUMPTIONDELIVERED));
+        return read(serverAttributes.get(ATTR_PREVIOUSDAY6COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -5821,13 +6334,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousDay6CostConsumptionDelivered(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSDAY6COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSDAY6COSTCONSUMPTIONDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSDAY6COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSDAY6COSTCONSUMPTIONDELIVERED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSDAY6COSTCONSUMPTIONDELIVERED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSDAY6COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -5843,9 +6358,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousDay6CostConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSDAY6COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAY6COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5858,9 +6375,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousDay6CostConsumptionReceivedAsync() {
-        return read(attributes.get(ATTR_PREVIOUSDAY6COSTCONSUMPTIONRECEIVED));
+        return read(serverAttributes.get(ATTR_PREVIOUSDAY6COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -5881,13 +6400,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousDay6CostConsumptionReceived(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSDAY6COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSDAY6COSTCONSUMPTIONRECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSDAY6COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSDAY6COSTCONSUMPTIONRECEIVED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSDAY6COSTCONSUMPTIONRECEIVED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSDAY6COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -5903,9 +6424,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousDay6CostConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSDAY6COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAY6COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5918,9 +6441,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousDay7CostConsumptionDeliveredAsync() {
-        return read(attributes.get(ATTR_PREVIOUSDAY7COSTCONSUMPTIONDELIVERED));
+        return read(serverAttributes.get(ATTR_PREVIOUSDAY7COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -5941,13 +6466,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousDay7CostConsumptionDelivered(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSDAY7COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSDAY7COSTCONSUMPTIONDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSDAY7COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSDAY7COSTCONSUMPTIONDELIVERED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSDAY7COSTCONSUMPTIONDELIVERED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSDAY7COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -5963,9 +6490,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousDay7CostConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSDAY7COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAY7COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5978,9 +6507,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousDay7CostConsumptionReceivedAsync() {
-        return read(attributes.get(ATTR_PREVIOUSDAY7COSTCONSUMPTIONRECEIVED));
+        return read(serverAttributes.get(ATTR_PREVIOUSDAY7COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -6001,13 +6532,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousDay7CostConsumptionReceived(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSDAY7COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSDAY7COSTCONSUMPTIONRECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSDAY7COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSDAY7COSTCONSUMPTIONRECEIVED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSDAY7COSTCONSUMPTIONRECEIVED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSDAY7COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -6023,9 +6556,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousDay7CostConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSDAY7COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAY7COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6038,9 +6573,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousDay8CostConsumptionDeliveredAsync() {
-        return read(attributes.get(ATTR_PREVIOUSDAY8COSTCONSUMPTIONDELIVERED));
+        return read(serverAttributes.get(ATTR_PREVIOUSDAY8COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -6061,13 +6598,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousDay8CostConsumptionDelivered(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSDAY8COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSDAY8COSTCONSUMPTIONDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSDAY8COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSDAY8COSTCONSUMPTIONDELIVERED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSDAY8COSTCONSUMPTIONDELIVERED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSDAY8COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -6083,9 +6622,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousDay8CostConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSDAY8COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAY8COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6098,9 +6639,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousDay8CostConsumptionReceivedAsync() {
-        return read(attributes.get(ATTR_PREVIOUSDAY8COSTCONSUMPTIONRECEIVED));
+        return read(serverAttributes.get(ATTR_PREVIOUSDAY8COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -6121,13 +6664,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousDay8CostConsumptionReceived(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSDAY8COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSDAY8COSTCONSUMPTIONRECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSDAY8COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSDAY8COSTCONSUMPTIONRECEIVED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSDAY8COSTCONSUMPTIONRECEIVED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSDAY8COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -6143,9 +6688,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousDay8CostConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSDAY8COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAY8COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6158,9 +6705,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCurrentWeekCostConsumptionDeliveredAsync() {
-        return read(attributes.get(ATTR_CURRENTWEEKCOSTCONSUMPTIONDELIVERED));
+        return read(serverAttributes.get(ATTR_CURRENTWEEKCOSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -6181,13 +6730,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCurrentWeekCostConsumptionDelivered(final long refreshPeriod) {
-        if (attributes.get(ATTR_CURRENTWEEKCOSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CURRENTWEEKCOSTCONSUMPTIONDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTWEEKCOSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTWEEKCOSTCONSUMPTIONDELIVERED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CURRENTWEEKCOSTCONSUMPTIONDELIVERED));
+        return (Integer) readSync(serverAttributes.get(ATTR_CURRENTWEEKCOSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -6203,9 +6754,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setCurrentWeekCostConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_CURRENTWEEKCOSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_CURRENTWEEKCOSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6218,9 +6771,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCurrentWeekCostConsumptionReceivedAsync() {
-        return read(attributes.get(ATTR_CURRENTWEEKCOSTCONSUMPTIONRECEIVED));
+        return read(serverAttributes.get(ATTR_CURRENTWEEKCOSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -6241,13 +6796,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCurrentWeekCostConsumptionReceived(final long refreshPeriod) {
-        if (attributes.get(ATTR_CURRENTWEEKCOSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CURRENTWEEKCOSTCONSUMPTIONRECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTWEEKCOSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTWEEKCOSTCONSUMPTIONRECEIVED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CURRENTWEEKCOSTCONSUMPTIONRECEIVED));
+        return (Integer) readSync(serverAttributes.get(ATTR_CURRENTWEEKCOSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -6263,9 +6820,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setCurrentWeekCostConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_CURRENTWEEKCOSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_CURRENTWEEKCOSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6278,9 +6837,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousWeekCostConsumptionDeliveredAsync() {
-        return read(attributes.get(ATTR_PREVIOUSWEEKCOSTCONSUMPTIONDELIVERED));
+        return read(serverAttributes.get(ATTR_PREVIOUSWEEKCOSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -6301,13 +6862,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousWeekCostConsumptionDelivered(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSWEEKCOSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSWEEKCOSTCONSUMPTIONDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSWEEKCOSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSWEEKCOSTCONSUMPTIONDELIVERED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSWEEKCOSTCONSUMPTIONDELIVERED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSWEEKCOSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -6323,9 +6886,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousWeekCostConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSWEEKCOSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSWEEKCOSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6338,9 +6903,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousWeekCostConsumptionReceivedAsync() {
-        return read(attributes.get(ATTR_PREVIOUSWEEKCOSTCONSUMPTIONRECEIVED));
+        return read(serverAttributes.get(ATTR_PREVIOUSWEEKCOSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -6361,13 +6928,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousWeekCostConsumptionReceived(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSWEEKCOSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSWEEKCOSTCONSUMPTIONRECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSWEEKCOSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSWEEKCOSTCONSUMPTIONRECEIVED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSWEEKCOSTCONSUMPTIONRECEIVED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSWEEKCOSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -6383,9 +6952,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousWeekCostConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSWEEKCOSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSWEEKCOSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6398,9 +6969,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousWeek2CostConsumptionDeliveredAsync() {
-        return read(attributes.get(ATTR_PREVIOUSWEEK2COSTCONSUMPTIONDELIVERED));
+        return read(serverAttributes.get(ATTR_PREVIOUSWEEK2COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -6421,13 +6994,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousWeek2CostConsumptionDelivered(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSWEEK2COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSWEEK2COSTCONSUMPTIONDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSWEEK2COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSWEEK2COSTCONSUMPTIONDELIVERED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSWEEK2COSTCONSUMPTIONDELIVERED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSWEEK2COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -6443,9 +7018,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousWeek2CostConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSWEEK2COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSWEEK2COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6458,9 +7035,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousWeek2CostConsumptionReceivedAsync() {
-        return read(attributes.get(ATTR_PREVIOUSWEEK2COSTCONSUMPTIONRECEIVED));
+        return read(serverAttributes.get(ATTR_PREVIOUSWEEK2COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -6481,13 +7060,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousWeek2CostConsumptionReceived(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSWEEK2COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSWEEK2COSTCONSUMPTIONRECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSWEEK2COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSWEEK2COSTCONSUMPTIONRECEIVED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSWEEK2COSTCONSUMPTIONRECEIVED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSWEEK2COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -6503,9 +7084,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousWeek2CostConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSWEEK2COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSWEEK2COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6518,9 +7101,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousWeek3CostConsumptionDeliveredAsync() {
-        return read(attributes.get(ATTR_PREVIOUSWEEK3COSTCONSUMPTIONDELIVERED));
+        return read(serverAttributes.get(ATTR_PREVIOUSWEEK3COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -6541,13 +7126,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousWeek3CostConsumptionDelivered(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSWEEK3COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSWEEK3COSTCONSUMPTIONDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSWEEK3COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSWEEK3COSTCONSUMPTIONDELIVERED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSWEEK3COSTCONSUMPTIONDELIVERED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSWEEK3COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -6563,9 +7150,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousWeek3CostConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSWEEK3COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSWEEK3COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6578,9 +7167,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousWeek3CostConsumptionReceivedAsync() {
-        return read(attributes.get(ATTR_PREVIOUSWEEK3COSTCONSUMPTIONRECEIVED));
+        return read(serverAttributes.get(ATTR_PREVIOUSWEEK3COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -6601,13 +7192,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousWeek3CostConsumptionReceived(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSWEEK3COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSWEEK3COSTCONSUMPTIONRECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSWEEK3COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSWEEK3COSTCONSUMPTIONRECEIVED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSWEEK3COSTCONSUMPTIONRECEIVED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSWEEK3COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -6623,9 +7216,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousWeek3CostConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSWEEK3COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSWEEK3COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6638,9 +7233,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousWeek4CostConsumptionDeliveredAsync() {
-        return read(attributes.get(ATTR_PREVIOUSWEEK4COSTCONSUMPTIONDELIVERED));
+        return read(serverAttributes.get(ATTR_PREVIOUSWEEK4COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -6661,13 +7258,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousWeek4CostConsumptionDelivered(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSWEEK4COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSWEEK4COSTCONSUMPTIONDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSWEEK4COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSWEEK4COSTCONSUMPTIONDELIVERED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSWEEK4COSTCONSUMPTIONDELIVERED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSWEEK4COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -6683,9 +7282,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousWeek4CostConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSWEEK4COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSWEEK4COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6698,9 +7299,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousWeek4CostConsumptionReceivedAsync() {
-        return read(attributes.get(ATTR_PREVIOUSWEEK4COSTCONSUMPTIONRECEIVED));
+        return read(serverAttributes.get(ATTR_PREVIOUSWEEK4COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -6721,13 +7324,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousWeek4CostConsumptionReceived(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSWEEK4COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSWEEK4COSTCONSUMPTIONRECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSWEEK4COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSWEEK4COSTCONSUMPTIONRECEIVED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSWEEK4COSTCONSUMPTIONRECEIVED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSWEEK4COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -6743,9 +7348,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousWeek4CostConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSWEEK4COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSWEEK4COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6758,9 +7365,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousWeek5CostConsumptionDeliveredAsync() {
-        return read(attributes.get(ATTR_PREVIOUSWEEK5COSTCONSUMPTIONDELIVERED));
+        return read(serverAttributes.get(ATTR_PREVIOUSWEEK5COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -6781,13 +7390,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousWeek5CostConsumptionDelivered(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSWEEK5COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSWEEK5COSTCONSUMPTIONDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSWEEK5COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSWEEK5COSTCONSUMPTIONDELIVERED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSWEEK5COSTCONSUMPTIONDELIVERED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSWEEK5COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -6803,9 +7414,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousWeek5CostConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSWEEK5COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSWEEK5COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6818,9 +7431,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousWeek5CostConsumptionReceivedAsync() {
-        return read(attributes.get(ATTR_PREVIOUSWEEK5COSTCONSUMPTIONRECEIVED));
+        return read(serverAttributes.get(ATTR_PREVIOUSWEEK5COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -6841,13 +7456,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousWeek5CostConsumptionReceived(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSWEEK5COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSWEEK5COSTCONSUMPTIONRECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSWEEK5COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSWEEK5COSTCONSUMPTIONRECEIVED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSWEEK5COSTCONSUMPTIONRECEIVED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSWEEK5COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -6863,9 +7480,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousWeek5CostConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSWEEK5COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSWEEK5COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6878,9 +7497,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCurrentMonthCostConsumptionDeliveredAsync() {
-        return read(attributes.get(ATTR_CURRENTMONTHCOSTCONSUMPTIONDELIVERED));
+        return read(serverAttributes.get(ATTR_CURRENTMONTHCOSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -6901,13 +7522,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCurrentMonthCostConsumptionDelivered(final long refreshPeriod) {
-        if (attributes.get(ATTR_CURRENTMONTHCOSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CURRENTMONTHCOSTCONSUMPTIONDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTMONTHCOSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTMONTHCOSTCONSUMPTIONDELIVERED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CURRENTMONTHCOSTCONSUMPTIONDELIVERED));
+        return (Integer) readSync(serverAttributes.get(ATTR_CURRENTMONTHCOSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -6923,9 +7546,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setCurrentMonthCostConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_CURRENTMONTHCOSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_CURRENTMONTHCOSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6938,9 +7563,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCurrentMonthCostConsumptionReceivedAsync() {
-        return read(attributes.get(ATTR_CURRENTMONTHCOSTCONSUMPTIONRECEIVED));
+        return read(serverAttributes.get(ATTR_CURRENTMONTHCOSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -6961,13 +7588,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCurrentMonthCostConsumptionReceived(final long refreshPeriod) {
-        if (attributes.get(ATTR_CURRENTMONTHCOSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CURRENTMONTHCOSTCONSUMPTIONRECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTMONTHCOSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTMONTHCOSTCONSUMPTIONRECEIVED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CURRENTMONTHCOSTCONSUMPTIONRECEIVED));
+        return (Integer) readSync(serverAttributes.get(ATTR_CURRENTMONTHCOSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -6983,9 +7612,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setCurrentMonthCostConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_CURRENTMONTHCOSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_CURRENTMONTHCOSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6998,9 +7629,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousMonthCostConsumptionDeliveredAsync() {
-        return read(attributes.get(ATTR_PREVIOUSMONTHCOSTCONSUMPTIONDELIVERED));
+        return read(serverAttributes.get(ATTR_PREVIOUSMONTHCOSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -7021,13 +7654,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousMonthCostConsumptionDelivered(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSMONTHCOSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSMONTHCOSTCONSUMPTIONDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSMONTHCOSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTHCOSTCONSUMPTIONDELIVERED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSMONTHCOSTCONSUMPTIONDELIVERED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSMONTHCOSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -7043,9 +7678,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousMonthCostConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSMONTHCOSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTHCOSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -7058,9 +7695,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousMonthCostConsumptionReceivedAsync() {
-        return read(attributes.get(ATTR_PREVIOUSMONTHCOSTCONSUMPTIONRECEIVED));
+        return read(serverAttributes.get(ATTR_PREVIOUSMONTHCOSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -7081,13 +7720,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousMonthCostConsumptionReceived(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSMONTHCOSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSMONTHCOSTCONSUMPTIONRECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSMONTHCOSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTHCOSTCONSUMPTIONRECEIVED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSMONTHCOSTCONSUMPTIONRECEIVED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSMONTHCOSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -7103,9 +7744,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousMonthCostConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSMONTHCOSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTHCOSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -7118,9 +7761,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousMonth2CostConsumptionDeliveredAsync() {
-        return read(attributes.get(ATTR_PREVIOUSMONTH2COSTCONSUMPTIONDELIVERED));
+        return read(serverAttributes.get(ATTR_PREVIOUSMONTH2COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -7141,13 +7786,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousMonth2CostConsumptionDelivered(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSMONTH2COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSMONTH2COSTCONSUMPTIONDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSMONTH2COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH2COSTCONSUMPTIONDELIVERED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSMONTH2COSTCONSUMPTIONDELIVERED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSMONTH2COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -7163,9 +7810,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousMonth2CostConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSMONTH2COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH2COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -7178,9 +7827,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousMonth2CostConsumptionReceivedAsync() {
-        return read(attributes.get(ATTR_PREVIOUSMONTH2COSTCONSUMPTIONRECEIVED));
+        return read(serverAttributes.get(ATTR_PREVIOUSMONTH2COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -7201,13 +7852,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousMonth2CostConsumptionReceived(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSMONTH2COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSMONTH2COSTCONSUMPTIONRECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSMONTH2COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH2COSTCONSUMPTIONRECEIVED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSMONTH2COSTCONSUMPTIONRECEIVED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSMONTH2COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -7223,9 +7876,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousMonth2CostConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSMONTH2COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH2COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -7238,9 +7893,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousMonth3CostConsumptionDeliveredAsync() {
-        return read(attributes.get(ATTR_PREVIOUSMONTH3COSTCONSUMPTIONDELIVERED));
+        return read(serverAttributes.get(ATTR_PREVIOUSMONTH3COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -7261,13 +7918,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousMonth3CostConsumptionDelivered(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSMONTH3COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSMONTH3COSTCONSUMPTIONDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSMONTH3COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH3COSTCONSUMPTIONDELIVERED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSMONTH3COSTCONSUMPTIONDELIVERED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSMONTH3COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -7283,9 +7942,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousMonth3CostConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSMONTH3COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH3COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -7298,9 +7959,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousMonth3CostConsumptionReceivedAsync() {
-        return read(attributes.get(ATTR_PREVIOUSMONTH3COSTCONSUMPTIONRECEIVED));
+        return read(serverAttributes.get(ATTR_PREVIOUSMONTH3COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -7321,13 +7984,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousMonth3CostConsumptionReceived(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSMONTH3COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSMONTH3COSTCONSUMPTIONRECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSMONTH3COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH3COSTCONSUMPTIONRECEIVED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSMONTH3COSTCONSUMPTIONRECEIVED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSMONTH3COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -7343,9 +8008,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousMonth3CostConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSMONTH3COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH3COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -7358,9 +8025,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousMonth4CostConsumptionDeliveredAsync() {
-        return read(attributes.get(ATTR_PREVIOUSMONTH4COSTCONSUMPTIONDELIVERED));
+        return read(serverAttributes.get(ATTR_PREVIOUSMONTH4COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -7381,13 +8050,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousMonth4CostConsumptionDelivered(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSMONTH4COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSMONTH4COSTCONSUMPTIONDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSMONTH4COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH4COSTCONSUMPTIONDELIVERED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSMONTH4COSTCONSUMPTIONDELIVERED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSMONTH4COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -7403,9 +8074,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousMonth4CostConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSMONTH4COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH4COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -7418,9 +8091,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousMonth4CostConsumptionReceivedAsync() {
-        return read(attributes.get(ATTR_PREVIOUSMONTH4COSTCONSUMPTIONRECEIVED));
+        return read(serverAttributes.get(ATTR_PREVIOUSMONTH4COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -7441,13 +8116,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousMonth4CostConsumptionReceived(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSMONTH4COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSMONTH4COSTCONSUMPTIONRECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSMONTH4COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH4COSTCONSUMPTIONRECEIVED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSMONTH4COSTCONSUMPTIONRECEIVED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSMONTH4COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -7463,9 +8140,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousMonth4CostConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSMONTH4COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH4COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -7478,9 +8157,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousMonth5CostConsumptionDeliveredAsync() {
-        return read(attributes.get(ATTR_PREVIOUSMONTH5COSTCONSUMPTIONDELIVERED));
+        return read(serverAttributes.get(ATTR_PREVIOUSMONTH5COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -7501,13 +8182,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousMonth5CostConsumptionDelivered(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSMONTH5COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSMONTH5COSTCONSUMPTIONDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSMONTH5COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH5COSTCONSUMPTIONDELIVERED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSMONTH5COSTCONSUMPTIONDELIVERED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSMONTH5COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -7523,9 +8206,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousMonth5CostConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSMONTH5COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH5COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -7538,9 +8223,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousMonth5CostConsumptionReceivedAsync() {
-        return read(attributes.get(ATTR_PREVIOUSMONTH5COSTCONSUMPTIONRECEIVED));
+        return read(serverAttributes.get(ATTR_PREVIOUSMONTH5COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -7561,13 +8248,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousMonth5CostConsumptionReceived(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSMONTH5COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSMONTH5COSTCONSUMPTIONRECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSMONTH5COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH5COSTCONSUMPTIONRECEIVED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSMONTH5COSTCONSUMPTIONRECEIVED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSMONTH5COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -7583,9 +8272,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousMonth5CostConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSMONTH5COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH5COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -7598,9 +8289,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousMonth6CostConsumptionDeliveredAsync() {
-        return read(attributes.get(ATTR_PREVIOUSMONTH6COSTCONSUMPTIONDELIVERED));
+        return read(serverAttributes.get(ATTR_PREVIOUSMONTH6COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -7621,13 +8314,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousMonth6CostConsumptionDelivered(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSMONTH6COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSMONTH6COSTCONSUMPTIONDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSMONTH6COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH6COSTCONSUMPTIONDELIVERED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSMONTH6COSTCONSUMPTIONDELIVERED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSMONTH6COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -7643,9 +8338,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousMonth6CostConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSMONTH6COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH6COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -7658,9 +8355,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousMonth6CostConsumptionReceivedAsync() {
-        return read(attributes.get(ATTR_PREVIOUSMONTH6COSTCONSUMPTIONRECEIVED));
+        return read(serverAttributes.get(ATTR_PREVIOUSMONTH6COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -7681,13 +8380,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousMonth6CostConsumptionReceived(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSMONTH6COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSMONTH6COSTCONSUMPTIONRECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSMONTH6COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH6COSTCONSUMPTIONRECEIVED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSMONTH6COSTCONSUMPTIONRECEIVED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSMONTH6COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -7703,9 +8404,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousMonth6CostConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSMONTH6COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH6COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -7718,9 +8421,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousMonth7CostConsumptionDeliveredAsync() {
-        return read(attributes.get(ATTR_PREVIOUSMONTH7COSTCONSUMPTIONDELIVERED));
+        return read(serverAttributes.get(ATTR_PREVIOUSMONTH7COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -7741,13 +8446,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousMonth7CostConsumptionDelivered(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSMONTH7COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSMONTH7COSTCONSUMPTIONDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSMONTH7COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH7COSTCONSUMPTIONDELIVERED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSMONTH7COSTCONSUMPTIONDELIVERED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSMONTH7COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -7763,9 +8470,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousMonth7CostConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSMONTH7COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH7COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -7778,9 +8487,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousMonth7CostConsumptionReceivedAsync() {
-        return read(attributes.get(ATTR_PREVIOUSMONTH7COSTCONSUMPTIONRECEIVED));
+        return read(serverAttributes.get(ATTR_PREVIOUSMONTH7COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -7801,13 +8512,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousMonth7CostConsumptionReceived(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSMONTH7COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSMONTH7COSTCONSUMPTIONRECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSMONTH7COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH7COSTCONSUMPTIONRECEIVED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSMONTH7COSTCONSUMPTIONRECEIVED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSMONTH7COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -7823,9 +8536,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousMonth7CostConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSMONTH7COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH7COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -7838,9 +8553,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousMonth8CostConsumptionDeliveredAsync() {
-        return read(attributes.get(ATTR_PREVIOUSMONTH8COSTCONSUMPTIONDELIVERED));
+        return read(serverAttributes.get(ATTR_PREVIOUSMONTH8COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -7861,13 +8578,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousMonth8CostConsumptionDelivered(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSMONTH8COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSMONTH8COSTCONSUMPTIONDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSMONTH8COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH8COSTCONSUMPTIONDELIVERED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSMONTH8COSTCONSUMPTIONDELIVERED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSMONTH8COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -7883,9 +8602,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousMonth8CostConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSMONTH8COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH8COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -7898,9 +8619,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousMonth8CostConsumptionReceivedAsync() {
-        return read(attributes.get(ATTR_PREVIOUSMONTH8COSTCONSUMPTIONRECEIVED));
+        return read(serverAttributes.get(ATTR_PREVIOUSMONTH8COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -7921,13 +8644,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousMonth8CostConsumptionReceived(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSMONTH8COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSMONTH8COSTCONSUMPTIONRECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSMONTH8COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH8COSTCONSUMPTIONRECEIVED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSMONTH8COSTCONSUMPTIONRECEIVED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSMONTH8COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -7943,9 +8668,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousMonth8CostConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSMONTH8COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH8COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -7958,9 +8685,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousMonth9CostConsumptionDeliveredAsync() {
-        return read(attributes.get(ATTR_PREVIOUSMONTH9COSTCONSUMPTIONDELIVERED));
+        return read(serverAttributes.get(ATTR_PREVIOUSMONTH9COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -7981,13 +8710,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousMonth9CostConsumptionDelivered(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSMONTH9COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSMONTH9COSTCONSUMPTIONDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSMONTH9COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH9COSTCONSUMPTIONDELIVERED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSMONTH9COSTCONSUMPTIONDELIVERED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSMONTH9COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -8003,9 +8734,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousMonth9CostConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSMONTH9COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH9COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -8018,9 +8751,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousMonth9CostConsumptionReceivedAsync() {
-        return read(attributes.get(ATTR_PREVIOUSMONTH9COSTCONSUMPTIONRECEIVED));
+        return read(serverAttributes.get(ATTR_PREVIOUSMONTH9COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -8041,13 +8776,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousMonth9CostConsumptionReceived(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSMONTH9COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSMONTH9COSTCONSUMPTIONRECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSMONTH9COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH9COSTCONSUMPTIONRECEIVED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSMONTH9COSTCONSUMPTIONRECEIVED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSMONTH9COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -8063,9 +8800,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousMonth9CostConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSMONTH9COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH9COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -8078,9 +8817,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousMonth10CostConsumptionDeliveredAsync() {
-        return read(attributes.get(ATTR_PREVIOUSMONTH10COSTCONSUMPTIONDELIVERED));
+        return read(serverAttributes.get(ATTR_PREVIOUSMONTH10COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -8101,13 +8842,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousMonth10CostConsumptionDelivered(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSMONTH10COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSMONTH10COSTCONSUMPTIONDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSMONTH10COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH10COSTCONSUMPTIONDELIVERED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSMONTH10COSTCONSUMPTIONDELIVERED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSMONTH10COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -8123,9 +8866,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousMonth10CostConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSMONTH10COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH10COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -8138,9 +8883,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousMonth10CostConsumptionReceivedAsync() {
-        return read(attributes.get(ATTR_PREVIOUSMONTH10COSTCONSUMPTIONRECEIVED));
+        return read(serverAttributes.get(ATTR_PREVIOUSMONTH10COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -8161,13 +8908,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousMonth10CostConsumptionReceived(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSMONTH10COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSMONTH10COSTCONSUMPTIONRECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSMONTH10COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH10COSTCONSUMPTIONRECEIVED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSMONTH10COSTCONSUMPTIONRECEIVED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSMONTH10COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -8183,9 +8932,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousMonth10CostConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSMONTH10COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH10COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -8198,9 +8949,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousMonth11CostConsumptionDeliveredAsync() {
-        return read(attributes.get(ATTR_PREVIOUSMONTH11COSTCONSUMPTIONDELIVERED));
+        return read(serverAttributes.get(ATTR_PREVIOUSMONTH11COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -8221,13 +8974,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousMonth11CostConsumptionDelivered(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSMONTH11COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSMONTH11COSTCONSUMPTIONDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSMONTH11COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH11COSTCONSUMPTIONDELIVERED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSMONTH11COSTCONSUMPTIONDELIVERED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSMONTH11COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -8243,9 +8998,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousMonth11CostConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSMONTH11COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH11COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -8258,9 +9015,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousMonth11CostConsumptionReceivedAsync() {
-        return read(attributes.get(ATTR_PREVIOUSMONTH11COSTCONSUMPTIONRECEIVED));
+        return read(serverAttributes.get(ATTR_PREVIOUSMONTH11COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -8281,13 +9040,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousMonth11CostConsumptionReceived(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSMONTH11COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSMONTH11COSTCONSUMPTIONRECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSMONTH11COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH11COSTCONSUMPTIONRECEIVED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSMONTH11COSTCONSUMPTIONRECEIVED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSMONTH11COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -8303,9 +9064,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousMonth11CostConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSMONTH11COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH11COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -8318,9 +9081,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousMonth12CostConsumptionDeliveredAsync() {
-        return read(attributes.get(ATTR_PREVIOUSMONTH12COSTCONSUMPTIONDELIVERED));
+        return read(serverAttributes.get(ATTR_PREVIOUSMONTH12COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -8341,13 +9106,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousMonth12CostConsumptionDelivered(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSMONTH12COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSMONTH12COSTCONSUMPTIONDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSMONTH12COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH12COSTCONSUMPTIONDELIVERED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSMONTH12COSTCONSUMPTIONDELIVERED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSMONTH12COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -8363,9 +9130,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousMonth12CostConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSMONTH12COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH12COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -8378,9 +9147,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousMonth12CostConsumptionReceivedAsync() {
-        return read(attributes.get(ATTR_PREVIOUSMONTH12COSTCONSUMPTIONRECEIVED));
+        return read(serverAttributes.get(ATTR_PREVIOUSMONTH12COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -8401,13 +9172,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousMonth12CostConsumptionReceived(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSMONTH12COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSMONTH12COSTCONSUMPTIONRECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSMONTH12COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH12COSTCONSUMPTIONRECEIVED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSMONTH12COSTCONSUMPTIONRECEIVED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSMONTH12COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -8423,9 +9196,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousMonth12CostConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSMONTH12COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH12COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -8438,9 +9213,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousMonth13CostConsumptionDeliveredAsync() {
-        return read(attributes.get(ATTR_PREVIOUSMONTH13COSTCONSUMPTIONDELIVERED));
+        return read(serverAttributes.get(ATTR_PREVIOUSMONTH13COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -8461,13 +9238,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousMonth13CostConsumptionDelivered(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSMONTH13COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSMONTH13COSTCONSUMPTIONDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSMONTH13COSTCONSUMPTIONDELIVERED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH13COSTCONSUMPTIONDELIVERED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSMONTH13COSTCONSUMPTIONDELIVERED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSMONTH13COSTCONSUMPTIONDELIVERED));
     }
 
     /**
@@ -8483,9 +9262,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousMonth13CostConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSMONTH13COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH13COSTCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -8498,9 +9279,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPreviousMonth13CostConsumptionReceivedAsync() {
-        return read(attributes.get(ATTR_PREVIOUSMONTH13COSTCONSUMPTIONRECEIVED));
+        return read(serverAttributes.get(ATTR_PREVIOUSMONTH13COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -8521,13 +9304,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPreviousMonth13CostConsumptionReceived(final long refreshPeriod) {
-        if (attributes.get(ATTR_PREVIOUSMONTH13COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PREVIOUSMONTH13COSTCONSUMPTIONRECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSMONTH13COSTCONSUMPTIONRECEIVED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH13COSTCONSUMPTIONRECEIVED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PREVIOUSMONTH13COSTCONSUMPTIONRECEIVED));
+        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSMONTH13COSTCONSUMPTIONRECEIVED));
     }
 
     /**
@@ -8543,9 +9328,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPreviousMonth13CostConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PREVIOUSMONTH13COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH13COSTCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -8558,9 +9345,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getHistoricalFreezeTimeAsync() {
-        return read(attributes.get(ATTR_HISTORICALFREEZETIME));
+        return read(serverAttributes.get(ATTR_HISTORICALFREEZETIME));
     }
 
     /**
@@ -8581,13 +9370,15 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getHistoricalFreezeTime(final long refreshPeriod) {
-        if (attributes.get(ATTR_HISTORICALFREEZETIME).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_HISTORICALFREEZETIME).getLastValue();
+        if (serverAttributes.get(ATTR_HISTORICALFREEZETIME).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_HISTORICALFREEZETIME).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_HISTORICALFREEZETIME));
+        return (Integer) readSync(serverAttributes.get(ATTR_HISTORICALFREEZETIME));
     }
 
     /**
@@ -8603,9 +9394,11 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setHistoricalFreezeTimeReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_HISTORICALFREEZETIME), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_HISTORICALFREEZETIME), minInterval, maxInterval, reportableChange);
     }
 
     /**

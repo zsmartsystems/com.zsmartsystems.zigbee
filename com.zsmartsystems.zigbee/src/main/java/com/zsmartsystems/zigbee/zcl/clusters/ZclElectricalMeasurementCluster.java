@@ -42,7 +42,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
 public class ZclElectricalMeasurementCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -243,7 +243,14 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
     public static final int ATTR_RMSVOLTAGESWELLPERIODPHASEC = 0x0A17;
 
     @Override
-    protected Map<Integer, ZclAttribute> initializeAttributes() {
+    protected Map<Integer, ZclAttribute> initializeClientAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
+
+        return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(128);
 
         attributeMap.put(ATTR_MEASUREMENTTYPE, new ZclAttribute(ZclClusterType.ELECTRICAL_MEASUREMENT, ATTR_MEASUREMENTTYPE, "Measurement Type", ZclDataType.BITMAP_32_BIT, true, true, false, false));
@@ -418,9 +425,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMeasurementTypeAsync() {
-        return read(attributes.get(ATTR_MEASUREMENTTYPE));
+        return read(serverAttributes.get(ATTR_MEASUREMENTTYPE));
     }
 
     /**
@@ -442,13 +451,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMeasurementType(final long refreshPeriod) {
-        if (attributes.get(ATTR_MEASUREMENTTYPE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MEASUREMENTTYPE).getLastValue();
+        if (serverAttributes.get(ATTR_MEASUREMENTTYPE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MEASUREMENTTYPE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MEASUREMENTTYPE));
+        return (Integer) readSync(serverAttributes.get(ATTR_MEASUREMENTTYPE));
     }
 
     /**
@@ -464,9 +475,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setMeasurementTypeReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_MEASUREMENTTYPE), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_MEASUREMENTTYPE), minInterval, maxInterval);
     }
 
     /**
@@ -477,9 +490,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDcVoltageAsync() {
-        return read(attributes.get(ATTR_DCVOLTAGE));
+        return read(serverAttributes.get(ATTR_DCVOLTAGE));
     }
 
     /**
@@ -498,13 +513,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDcVoltage(final long refreshPeriod) {
-        if (attributes.get(ATTR_DCVOLTAGE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DCVOLTAGE).getLastValue();
+        if (serverAttributes.get(ATTR_DCVOLTAGE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DCVOLTAGE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DCVOLTAGE));
+        return (Integer) readSync(serverAttributes.get(ATTR_DCVOLTAGE));
     }
 
     /**
@@ -518,9 +535,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDcVoltageReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DCVOLTAGE), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DCVOLTAGE), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -531,9 +550,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDcVoltageMinAsync() {
-        return read(attributes.get(ATTR_DCVOLTAGEMIN));
+        return read(serverAttributes.get(ATTR_DCVOLTAGEMIN));
     }
 
     /**
@@ -552,13 +573,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDcVoltageMin(final long refreshPeriod) {
-        if (attributes.get(ATTR_DCVOLTAGEMIN).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DCVOLTAGEMIN).getLastValue();
+        if (serverAttributes.get(ATTR_DCVOLTAGEMIN).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DCVOLTAGEMIN).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DCVOLTAGEMIN));
+        return (Integer) readSync(serverAttributes.get(ATTR_DCVOLTAGEMIN));
     }
 
     /**
@@ -572,9 +595,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDcVoltageMinReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DCVOLTAGEMIN), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DCVOLTAGEMIN), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -585,9 +610,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDcVoltageMaxAsync() {
-        return read(attributes.get(ATTR_DCVOLTAGEMAX));
+        return read(serverAttributes.get(ATTR_DCVOLTAGEMAX));
     }
 
     /**
@@ -606,13 +633,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDcVoltageMax(final long refreshPeriod) {
-        if (attributes.get(ATTR_DCVOLTAGEMAX).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DCVOLTAGEMAX).getLastValue();
+        if (serverAttributes.get(ATTR_DCVOLTAGEMAX).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DCVOLTAGEMAX).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DCVOLTAGEMAX));
+        return (Integer) readSync(serverAttributes.get(ATTR_DCVOLTAGEMAX));
     }
 
     /**
@@ -626,9 +655,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDcVoltageMaxReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DCVOLTAGEMAX), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DCVOLTAGEMAX), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -639,9 +670,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDcCurrentAsync() {
-        return read(attributes.get(ATTR_DCCURRENT));
+        return read(serverAttributes.get(ATTR_DCCURRENT));
     }
 
     /**
@@ -660,13 +693,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDcCurrent(final long refreshPeriod) {
-        if (attributes.get(ATTR_DCCURRENT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DCCURRENT).getLastValue();
+        if (serverAttributes.get(ATTR_DCCURRENT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DCCURRENT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DCCURRENT));
+        return (Integer) readSync(serverAttributes.get(ATTR_DCCURRENT));
     }
 
     /**
@@ -680,9 +715,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDcCurrentReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DCCURRENT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DCCURRENT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -693,9 +730,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDcCurrentMinAsync() {
-        return read(attributes.get(ATTR_DCCURRENTMIN));
+        return read(serverAttributes.get(ATTR_DCCURRENTMIN));
     }
 
     /**
@@ -714,13 +753,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDcCurrentMin(final long refreshPeriod) {
-        if (attributes.get(ATTR_DCCURRENTMIN).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DCCURRENTMIN).getLastValue();
+        if (serverAttributes.get(ATTR_DCCURRENTMIN).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DCCURRENTMIN).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DCCURRENTMIN));
+        return (Integer) readSync(serverAttributes.get(ATTR_DCCURRENTMIN));
     }
 
     /**
@@ -734,9 +775,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDcCurrentMinReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DCCURRENTMIN), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DCCURRENTMIN), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -747,9 +790,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDcCurrentMaxAsync() {
-        return read(attributes.get(ATTR_DCCURRENTMAX));
+        return read(serverAttributes.get(ATTR_DCCURRENTMAX));
     }
 
     /**
@@ -768,13 +813,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDcCurrentMax(final long refreshPeriod) {
-        if (attributes.get(ATTR_DCCURRENTMAX).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DCCURRENTMAX).getLastValue();
+        if (serverAttributes.get(ATTR_DCCURRENTMAX).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DCCURRENTMAX).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DCCURRENTMAX));
+        return (Integer) readSync(serverAttributes.get(ATTR_DCCURRENTMAX));
     }
 
     /**
@@ -788,9 +835,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDcCurrentMaxReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DCCURRENTMAX), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DCCURRENTMAX), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -801,9 +850,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDcPowerAsync() {
-        return read(attributes.get(ATTR_DCPOWER));
+        return read(serverAttributes.get(ATTR_DCPOWER));
     }
 
     /**
@@ -822,13 +873,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDcPower(final long refreshPeriod) {
-        if (attributes.get(ATTR_DCPOWER).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DCPOWER).getLastValue();
+        if (serverAttributes.get(ATTR_DCPOWER).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DCPOWER).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DCPOWER));
+        return (Integer) readSync(serverAttributes.get(ATTR_DCPOWER));
     }
 
     /**
@@ -842,9 +895,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDcPowerReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DCPOWER), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DCPOWER), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -855,9 +910,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDcPowerMinAsync() {
-        return read(attributes.get(ATTR_DCPOWERMIN));
+        return read(serverAttributes.get(ATTR_DCPOWERMIN));
     }
 
     /**
@@ -876,13 +933,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDcPowerMin(final long refreshPeriod) {
-        if (attributes.get(ATTR_DCPOWERMIN).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DCPOWERMIN).getLastValue();
+        if (serverAttributes.get(ATTR_DCPOWERMIN).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DCPOWERMIN).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DCPOWERMIN));
+        return (Integer) readSync(serverAttributes.get(ATTR_DCPOWERMIN));
     }
 
     /**
@@ -896,9 +955,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDcPowerMinReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DCPOWERMIN), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DCPOWERMIN), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -909,9 +970,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDcPowerMaxAsync() {
-        return read(attributes.get(ATTR_DCPOWERMAX));
+        return read(serverAttributes.get(ATTR_DCPOWERMAX));
     }
 
     /**
@@ -930,13 +993,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDcPowerMax(final long refreshPeriod) {
-        if (attributes.get(ATTR_DCPOWERMAX).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DCPOWERMAX).getLastValue();
+        if (serverAttributes.get(ATTR_DCPOWERMAX).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DCPOWERMAX).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DCPOWERMAX));
+        return (Integer) readSync(serverAttributes.get(ATTR_DCPOWERMAX));
     }
 
     /**
@@ -950,9 +1015,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDcPowerMaxReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DCPOWERMAX), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DCPOWERMAX), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -963,9 +1030,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDcVoltageMultiplierAsync() {
-        return read(attributes.get(ATTR_DCVOLTAGEMULTIPLIER));
+        return read(serverAttributes.get(ATTR_DCVOLTAGEMULTIPLIER));
     }
 
     /**
@@ -984,13 +1053,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDcVoltageMultiplier(final long refreshPeriod) {
-        if (attributes.get(ATTR_DCVOLTAGEMULTIPLIER).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DCVOLTAGEMULTIPLIER).getLastValue();
+        if (serverAttributes.get(ATTR_DCVOLTAGEMULTIPLIER).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DCVOLTAGEMULTIPLIER).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DCVOLTAGEMULTIPLIER));
+        return (Integer) readSync(serverAttributes.get(ATTR_DCVOLTAGEMULTIPLIER));
     }
 
     /**
@@ -1004,9 +1075,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDcVoltageMultiplierReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DCVOLTAGEMULTIPLIER), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DCVOLTAGEMULTIPLIER), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1017,9 +1090,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDcVoltageDivisorAsync() {
-        return read(attributes.get(ATTR_DCVOLTAGEDIVISOR));
+        return read(serverAttributes.get(ATTR_DCVOLTAGEDIVISOR));
     }
 
     /**
@@ -1038,13 +1113,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDcVoltageDivisor(final long refreshPeriod) {
-        if (attributes.get(ATTR_DCVOLTAGEDIVISOR).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DCVOLTAGEDIVISOR).getLastValue();
+        if (serverAttributes.get(ATTR_DCVOLTAGEDIVISOR).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DCVOLTAGEDIVISOR).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DCVOLTAGEDIVISOR));
+        return (Integer) readSync(serverAttributes.get(ATTR_DCVOLTAGEDIVISOR));
     }
 
     /**
@@ -1058,9 +1135,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDcVoltageDivisorReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DCVOLTAGEDIVISOR), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DCVOLTAGEDIVISOR), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1071,9 +1150,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDcCurrentMultiplierAsync() {
-        return read(attributes.get(ATTR_DCCURRENTMULTIPLIER));
+        return read(serverAttributes.get(ATTR_DCCURRENTMULTIPLIER));
     }
 
     /**
@@ -1092,13 +1173,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDcCurrentMultiplier(final long refreshPeriod) {
-        if (attributes.get(ATTR_DCCURRENTMULTIPLIER).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DCCURRENTMULTIPLIER).getLastValue();
+        if (serverAttributes.get(ATTR_DCCURRENTMULTIPLIER).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DCCURRENTMULTIPLIER).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DCCURRENTMULTIPLIER));
+        return (Integer) readSync(serverAttributes.get(ATTR_DCCURRENTMULTIPLIER));
     }
 
     /**
@@ -1112,9 +1195,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDcCurrentMultiplierReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DCCURRENTMULTIPLIER), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DCCURRENTMULTIPLIER), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1125,9 +1210,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDcCurrentDivisorAsync() {
-        return read(attributes.get(ATTR_DCCURRENTDIVISOR));
+        return read(serverAttributes.get(ATTR_DCCURRENTDIVISOR));
     }
 
     /**
@@ -1146,13 +1233,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDcCurrentDivisor(final long refreshPeriod) {
-        if (attributes.get(ATTR_DCCURRENTDIVISOR).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DCCURRENTDIVISOR).getLastValue();
+        if (serverAttributes.get(ATTR_DCCURRENTDIVISOR).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DCCURRENTDIVISOR).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DCCURRENTDIVISOR));
+        return (Integer) readSync(serverAttributes.get(ATTR_DCCURRENTDIVISOR));
     }
 
     /**
@@ -1166,9 +1255,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDcCurrentDivisorReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DCCURRENTDIVISOR), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DCCURRENTDIVISOR), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1179,9 +1270,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDcPowerMultiplierAsync() {
-        return read(attributes.get(ATTR_DCPOWERMULTIPLIER));
+        return read(serverAttributes.get(ATTR_DCPOWERMULTIPLIER));
     }
 
     /**
@@ -1200,13 +1293,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDcPowerMultiplier(final long refreshPeriod) {
-        if (attributes.get(ATTR_DCPOWERMULTIPLIER).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DCPOWERMULTIPLIER).getLastValue();
+        if (serverAttributes.get(ATTR_DCPOWERMULTIPLIER).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DCPOWERMULTIPLIER).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DCPOWERMULTIPLIER));
+        return (Integer) readSync(serverAttributes.get(ATTR_DCPOWERMULTIPLIER));
     }
 
     /**
@@ -1220,9 +1315,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDcPowerMultiplierReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DCPOWERMULTIPLIER), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DCPOWERMULTIPLIER), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1233,9 +1330,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDcPowerDivisorAsync() {
-        return read(attributes.get(ATTR_DCPOWERDIVISOR));
+        return read(serverAttributes.get(ATTR_DCPOWERDIVISOR));
     }
 
     /**
@@ -1254,13 +1353,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDcPowerDivisor(final long refreshPeriod) {
-        if (attributes.get(ATTR_DCPOWERDIVISOR).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DCPOWERDIVISOR).getLastValue();
+        if (serverAttributes.get(ATTR_DCPOWERDIVISOR).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DCPOWERDIVISOR).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DCPOWERDIVISOR));
+        return (Integer) readSync(serverAttributes.get(ATTR_DCPOWERDIVISOR));
     }
 
     /**
@@ -1274,9 +1375,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDcPowerDivisorReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DCPOWERDIVISOR), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DCPOWERDIVISOR), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1290,9 +1393,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAcFrequencyAsync() {
-        return read(attributes.get(ATTR_ACFREQUENCY));
+        return read(serverAttributes.get(ATTR_ACFREQUENCY));
     }
 
     /**
@@ -1314,13 +1419,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAcFrequency(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACFREQUENCY).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACFREQUENCY).getLastValue();
+        if (serverAttributes.get(ATTR_ACFREQUENCY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACFREQUENCY).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ACFREQUENCY));
+        return (Integer) readSync(serverAttributes.get(ATTR_ACFREQUENCY));
     }
 
     /**
@@ -1331,9 +1438,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAcFrequencyMinAsync() {
-        return read(attributes.get(ATTR_ACFREQUENCYMIN));
+        return read(serverAttributes.get(ATTR_ACFREQUENCYMIN));
     }
 
     /**
@@ -1352,13 +1461,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAcFrequencyMin(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACFREQUENCYMIN).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACFREQUENCYMIN).getLastValue();
+        if (serverAttributes.get(ATTR_ACFREQUENCYMIN).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACFREQUENCYMIN).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ACFREQUENCYMIN));
+        return (Integer) readSync(serverAttributes.get(ATTR_ACFREQUENCYMIN));
     }
 
     /**
@@ -1372,9 +1483,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setAcFrequencyMinReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_ACFREQUENCYMIN), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_ACFREQUENCYMIN), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1385,9 +1498,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAcFrequencyMaxAsync() {
-        return read(attributes.get(ATTR_ACFREQUENCYMAX));
+        return read(serverAttributes.get(ATTR_ACFREQUENCYMAX));
     }
 
     /**
@@ -1406,13 +1521,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAcFrequencyMax(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACFREQUENCYMAX).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACFREQUENCYMAX).getLastValue();
+        if (serverAttributes.get(ATTR_ACFREQUENCYMAX).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACFREQUENCYMAX).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ACFREQUENCYMAX));
+        return (Integer) readSync(serverAttributes.get(ATTR_ACFREQUENCYMAX));
     }
 
     /**
@@ -1426,9 +1543,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setAcFrequencyMaxReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_ACFREQUENCYMAX), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_ACFREQUENCYMAX), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1439,9 +1558,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getNeutralCurrentAsync() {
-        return read(attributes.get(ATTR_NEUTRALCURRENT));
+        return read(serverAttributes.get(ATTR_NEUTRALCURRENT));
     }
 
     /**
@@ -1460,13 +1581,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getNeutralCurrent(final long refreshPeriod) {
-        if (attributes.get(ATTR_NEUTRALCURRENT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_NEUTRALCURRENT).getLastValue();
+        if (serverAttributes.get(ATTR_NEUTRALCURRENT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_NEUTRALCURRENT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_NEUTRALCURRENT));
+        return (Integer) readSync(serverAttributes.get(ATTR_NEUTRALCURRENT));
     }
 
     /**
@@ -1480,9 +1603,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setNeutralCurrentReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_NEUTRALCURRENT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_NEUTRALCURRENT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1498,9 +1623,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTotalActivePowerAsync() {
-        return read(attributes.get(ATTR_TOTALACTIVEPOWER));
+        return read(serverAttributes.get(ATTR_TOTALACTIVEPOWER));
     }
 
     /**
@@ -1524,13 +1651,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTotalActivePower(final long refreshPeriod) {
-        if (attributes.get(ATTR_TOTALACTIVEPOWER).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TOTALACTIVEPOWER).getLastValue();
+        if (serverAttributes.get(ATTR_TOTALACTIVEPOWER).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TOTALACTIVEPOWER).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TOTALACTIVEPOWER));
+        return (Integer) readSync(serverAttributes.get(ATTR_TOTALACTIVEPOWER));
     }
 
     /**
@@ -1547,9 +1676,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTotalReactivePowerAsync() {
-        return read(attributes.get(ATTR_TOTALREACTIVEPOWER));
+        return read(serverAttributes.get(ATTR_TOTALREACTIVEPOWER));
     }
 
     /**
@@ -1574,13 +1705,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTotalReactivePower(final long refreshPeriod) {
-        if (attributes.get(ATTR_TOTALREACTIVEPOWER).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TOTALREACTIVEPOWER).getLastValue();
+        if (serverAttributes.get(ATTR_TOTALREACTIVEPOWER).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TOTALREACTIVEPOWER).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TOTALREACTIVEPOWER));
+        return (Integer) readSync(serverAttributes.get(ATTR_TOTALREACTIVEPOWER));
     }
 
     /**
@@ -1594,9 +1727,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTotalApparentPowerAsync() {
-        return read(attributes.get(ATTR_TOTALAPPARENTPOWER));
+        return read(serverAttributes.get(ATTR_TOTALAPPARENTPOWER));
     }
 
     /**
@@ -1618,13 +1753,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTotalApparentPower(final long refreshPeriod) {
-        if (attributes.get(ATTR_TOTALAPPARENTPOWER).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TOTALAPPARENTPOWER).getLastValue();
+        if (serverAttributes.get(ATTR_TOTALAPPARENTPOWER).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TOTALAPPARENTPOWER).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TOTALAPPARENTPOWER));
+        return (Integer) readSync(serverAttributes.get(ATTR_TOTALAPPARENTPOWER));
     }
 
     /**
@@ -1635,9 +1772,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMeasured1stHarmonicCurrentAsync() {
-        return read(attributes.get(ATTR_MEASURED1STHARMONICCURRENT));
+        return read(serverAttributes.get(ATTR_MEASURED1STHARMONICCURRENT));
     }
 
     /**
@@ -1656,13 +1795,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMeasured1stHarmonicCurrent(final long refreshPeriod) {
-        if (attributes.get(ATTR_MEASURED1STHARMONICCURRENT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MEASURED1STHARMONICCURRENT).getLastValue();
+        if (serverAttributes.get(ATTR_MEASURED1STHARMONICCURRENT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MEASURED1STHARMONICCURRENT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MEASURED1STHARMONICCURRENT));
+        return (Integer) readSync(serverAttributes.get(ATTR_MEASURED1STHARMONICCURRENT));
     }
 
     /**
@@ -1676,9 +1817,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setMeasured1stHarmonicCurrentReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_MEASURED1STHARMONICCURRENT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_MEASURED1STHARMONICCURRENT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1689,9 +1832,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMeasured3rdHarmonicCurrentAsync() {
-        return read(attributes.get(ATTR_MEASURED3RDHARMONICCURRENT));
+        return read(serverAttributes.get(ATTR_MEASURED3RDHARMONICCURRENT));
     }
 
     /**
@@ -1710,13 +1855,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMeasured3rdHarmonicCurrent(final long refreshPeriod) {
-        if (attributes.get(ATTR_MEASURED3RDHARMONICCURRENT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MEASURED3RDHARMONICCURRENT).getLastValue();
+        if (serverAttributes.get(ATTR_MEASURED3RDHARMONICCURRENT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MEASURED3RDHARMONICCURRENT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MEASURED3RDHARMONICCURRENT));
+        return (Integer) readSync(serverAttributes.get(ATTR_MEASURED3RDHARMONICCURRENT));
     }
 
     /**
@@ -1730,9 +1877,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setMeasured3rdHarmonicCurrentReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_MEASURED3RDHARMONICCURRENT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_MEASURED3RDHARMONICCURRENT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1743,9 +1892,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMeasured5thHarmonicCurrentAsync() {
-        return read(attributes.get(ATTR_MEASURED5THHARMONICCURRENT));
+        return read(serverAttributes.get(ATTR_MEASURED5THHARMONICCURRENT));
     }
 
     /**
@@ -1764,13 +1915,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMeasured5thHarmonicCurrent(final long refreshPeriod) {
-        if (attributes.get(ATTR_MEASURED5THHARMONICCURRENT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MEASURED5THHARMONICCURRENT).getLastValue();
+        if (serverAttributes.get(ATTR_MEASURED5THHARMONICCURRENT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MEASURED5THHARMONICCURRENT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MEASURED5THHARMONICCURRENT));
+        return (Integer) readSync(serverAttributes.get(ATTR_MEASURED5THHARMONICCURRENT));
     }
 
     /**
@@ -1784,9 +1937,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setMeasured5thHarmonicCurrentReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_MEASURED5THHARMONICCURRENT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_MEASURED5THHARMONICCURRENT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1797,9 +1952,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMeasured7thHarmonicCurrentAsync() {
-        return read(attributes.get(ATTR_MEASURED7THHARMONICCURRENT));
+        return read(serverAttributes.get(ATTR_MEASURED7THHARMONICCURRENT));
     }
 
     /**
@@ -1818,13 +1975,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMeasured7thHarmonicCurrent(final long refreshPeriod) {
-        if (attributes.get(ATTR_MEASURED7THHARMONICCURRENT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MEASURED7THHARMONICCURRENT).getLastValue();
+        if (serverAttributes.get(ATTR_MEASURED7THHARMONICCURRENT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MEASURED7THHARMONICCURRENT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MEASURED7THHARMONICCURRENT));
+        return (Integer) readSync(serverAttributes.get(ATTR_MEASURED7THHARMONICCURRENT));
     }
 
     /**
@@ -1838,9 +1997,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setMeasured7thHarmonicCurrentReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_MEASURED7THHARMONICCURRENT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_MEASURED7THHARMONICCURRENT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1851,9 +2012,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMeasured9thHarmonicCurrentAsync() {
-        return read(attributes.get(ATTR_MEASURED9THHARMONICCURRENT));
+        return read(serverAttributes.get(ATTR_MEASURED9THHARMONICCURRENT));
     }
 
     /**
@@ -1872,13 +2035,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMeasured9thHarmonicCurrent(final long refreshPeriod) {
-        if (attributes.get(ATTR_MEASURED9THHARMONICCURRENT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MEASURED9THHARMONICCURRENT).getLastValue();
+        if (serverAttributes.get(ATTR_MEASURED9THHARMONICCURRENT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MEASURED9THHARMONICCURRENT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MEASURED9THHARMONICCURRENT));
+        return (Integer) readSync(serverAttributes.get(ATTR_MEASURED9THHARMONICCURRENT));
     }
 
     /**
@@ -1892,9 +2057,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setMeasured9thHarmonicCurrentReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_MEASURED9THHARMONICCURRENT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_MEASURED9THHARMONICCURRENT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1905,9 +2072,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMeasured11thHarmonicCurrentAsync() {
-        return read(attributes.get(ATTR_MEASURED11THHARMONICCURRENT));
+        return read(serverAttributes.get(ATTR_MEASURED11THHARMONICCURRENT));
     }
 
     /**
@@ -1926,13 +2095,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMeasured11thHarmonicCurrent(final long refreshPeriod) {
-        if (attributes.get(ATTR_MEASURED11THHARMONICCURRENT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MEASURED11THHARMONICCURRENT).getLastValue();
+        if (serverAttributes.get(ATTR_MEASURED11THHARMONICCURRENT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MEASURED11THHARMONICCURRENT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MEASURED11THHARMONICCURRENT));
+        return (Integer) readSync(serverAttributes.get(ATTR_MEASURED11THHARMONICCURRENT));
     }
 
     /**
@@ -1946,9 +2117,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setMeasured11thHarmonicCurrentReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_MEASURED11THHARMONICCURRENT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_MEASURED11THHARMONICCURRENT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -1959,9 +2132,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMeasuredPhase1stHarmonicCurrentAsync() {
-        return read(attributes.get(ATTR_MEASUREDPHASE1STHARMONICCURRENT));
+        return read(serverAttributes.get(ATTR_MEASUREDPHASE1STHARMONICCURRENT));
     }
 
     /**
@@ -1980,13 +2155,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMeasuredPhase1stHarmonicCurrent(final long refreshPeriod) {
-        if (attributes.get(ATTR_MEASUREDPHASE1STHARMONICCURRENT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MEASUREDPHASE1STHARMONICCURRENT).getLastValue();
+        if (serverAttributes.get(ATTR_MEASUREDPHASE1STHARMONICCURRENT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MEASUREDPHASE1STHARMONICCURRENT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MEASUREDPHASE1STHARMONICCURRENT));
+        return (Integer) readSync(serverAttributes.get(ATTR_MEASUREDPHASE1STHARMONICCURRENT));
     }
 
     /**
@@ -2000,9 +2177,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setMeasuredPhase1stHarmonicCurrentReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_MEASUREDPHASE1STHARMONICCURRENT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_MEASUREDPHASE1STHARMONICCURRENT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -2013,9 +2192,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMeasuredPhase3rdHarmonicCurrentAsync() {
-        return read(attributes.get(ATTR_MEASUREDPHASE3RDHARMONICCURRENT));
+        return read(serverAttributes.get(ATTR_MEASUREDPHASE3RDHARMONICCURRENT));
     }
 
     /**
@@ -2034,13 +2215,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMeasuredPhase3rdHarmonicCurrent(final long refreshPeriod) {
-        if (attributes.get(ATTR_MEASUREDPHASE3RDHARMONICCURRENT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MEASUREDPHASE3RDHARMONICCURRENT).getLastValue();
+        if (serverAttributes.get(ATTR_MEASUREDPHASE3RDHARMONICCURRENT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MEASUREDPHASE3RDHARMONICCURRENT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MEASUREDPHASE3RDHARMONICCURRENT));
+        return (Integer) readSync(serverAttributes.get(ATTR_MEASUREDPHASE3RDHARMONICCURRENT));
     }
 
     /**
@@ -2054,9 +2237,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setMeasuredPhase3rdHarmonicCurrentReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_MEASUREDPHASE3RDHARMONICCURRENT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_MEASUREDPHASE3RDHARMONICCURRENT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -2067,9 +2252,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMeasuredPhase5thHarmonicCurrentAsync() {
-        return read(attributes.get(ATTR_MEASUREDPHASE5THHARMONICCURRENT));
+        return read(serverAttributes.get(ATTR_MEASUREDPHASE5THHARMONICCURRENT));
     }
 
     /**
@@ -2088,13 +2275,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMeasuredPhase5thHarmonicCurrent(final long refreshPeriod) {
-        if (attributes.get(ATTR_MEASUREDPHASE5THHARMONICCURRENT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MEASUREDPHASE5THHARMONICCURRENT).getLastValue();
+        if (serverAttributes.get(ATTR_MEASUREDPHASE5THHARMONICCURRENT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MEASUREDPHASE5THHARMONICCURRENT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MEASUREDPHASE5THHARMONICCURRENT));
+        return (Integer) readSync(serverAttributes.get(ATTR_MEASUREDPHASE5THHARMONICCURRENT));
     }
 
     /**
@@ -2108,9 +2297,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setMeasuredPhase5thHarmonicCurrentReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_MEASUREDPHASE5THHARMONICCURRENT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_MEASUREDPHASE5THHARMONICCURRENT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -2121,9 +2312,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMeasuredPhase7thHarmonicCurrentAsync() {
-        return read(attributes.get(ATTR_MEASUREDPHASE7THHARMONICCURRENT));
+        return read(serverAttributes.get(ATTR_MEASUREDPHASE7THHARMONICCURRENT));
     }
 
     /**
@@ -2142,13 +2335,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMeasuredPhase7thHarmonicCurrent(final long refreshPeriod) {
-        if (attributes.get(ATTR_MEASUREDPHASE7THHARMONICCURRENT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MEASUREDPHASE7THHARMONICCURRENT).getLastValue();
+        if (serverAttributes.get(ATTR_MEASUREDPHASE7THHARMONICCURRENT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MEASUREDPHASE7THHARMONICCURRENT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MEASUREDPHASE7THHARMONICCURRENT));
+        return (Integer) readSync(serverAttributes.get(ATTR_MEASUREDPHASE7THHARMONICCURRENT));
     }
 
     /**
@@ -2162,9 +2357,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setMeasuredPhase7thHarmonicCurrentReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_MEASUREDPHASE7THHARMONICCURRENT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_MEASUREDPHASE7THHARMONICCURRENT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -2175,9 +2372,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMeasuredPhase9thHarmonicCurrentAsync() {
-        return read(attributes.get(ATTR_MEASUREDPHASE9THHARMONICCURRENT));
+        return read(serverAttributes.get(ATTR_MEASUREDPHASE9THHARMONICCURRENT));
     }
 
     /**
@@ -2196,13 +2395,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMeasuredPhase9thHarmonicCurrent(final long refreshPeriod) {
-        if (attributes.get(ATTR_MEASUREDPHASE9THHARMONICCURRENT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MEASUREDPHASE9THHARMONICCURRENT).getLastValue();
+        if (serverAttributes.get(ATTR_MEASUREDPHASE9THHARMONICCURRENT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MEASUREDPHASE9THHARMONICCURRENT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MEASUREDPHASE9THHARMONICCURRENT));
+        return (Integer) readSync(serverAttributes.get(ATTR_MEASUREDPHASE9THHARMONICCURRENT));
     }
 
     /**
@@ -2216,9 +2417,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setMeasuredPhase9thHarmonicCurrentReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_MEASUREDPHASE9THHARMONICCURRENT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_MEASUREDPHASE9THHARMONICCURRENT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -2229,9 +2432,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMeasuredPhase11thHarmonicCurrentAsync() {
-        return read(attributes.get(ATTR_MEASUREDPHASE11THHARMONICCURRENT));
+        return read(serverAttributes.get(ATTR_MEASUREDPHASE11THHARMONICCURRENT));
     }
 
     /**
@@ -2250,13 +2455,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMeasuredPhase11thHarmonicCurrent(final long refreshPeriod) {
-        if (attributes.get(ATTR_MEASUREDPHASE11THHARMONICCURRENT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MEASUREDPHASE11THHARMONICCURRENT).getLastValue();
+        if (serverAttributes.get(ATTR_MEASUREDPHASE11THHARMONICCURRENT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MEASUREDPHASE11THHARMONICCURRENT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MEASUREDPHASE11THHARMONICCURRENT));
+        return (Integer) readSync(serverAttributes.get(ATTR_MEASUREDPHASE11THHARMONICCURRENT));
     }
 
     /**
@@ -2270,9 +2477,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setMeasuredPhase11thHarmonicCurrentReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_MEASUREDPHASE11THHARMONICCURRENT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_MEASUREDPHASE11THHARMONICCURRENT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -2283,9 +2492,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAcFrequencyMultiplierAsync() {
-        return read(attributes.get(ATTR_ACFREQUENCYMULTIPLIER));
+        return read(serverAttributes.get(ATTR_ACFREQUENCYMULTIPLIER));
     }
 
     /**
@@ -2304,13 +2515,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAcFrequencyMultiplier(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACFREQUENCYMULTIPLIER).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACFREQUENCYMULTIPLIER).getLastValue();
+        if (serverAttributes.get(ATTR_ACFREQUENCYMULTIPLIER).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACFREQUENCYMULTIPLIER).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ACFREQUENCYMULTIPLIER));
+        return (Integer) readSync(serverAttributes.get(ATTR_ACFREQUENCYMULTIPLIER));
     }
 
     /**
@@ -2324,9 +2537,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setAcFrequencyMultiplierReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_ACFREQUENCYMULTIPLIER), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_ACFREQUENCYMULTIPLIER), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -2337,9 +2552,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAcFrequencyDivisorAsync() {
-        return read(attributes.get(ATTR_ACFREQUENCYDIVISOR));
+        return read(serverAttributes.get(ATTR_ACFREQUENCYDIVISOR));
     }
 
     /**
@@ -2358,13 +2575,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAcFrequencyDivisor(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACFREQUENCYDIVISOR).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACFREQUENCYDIVISOR).getLastValue();
+        if (serverAttributes.get(ATTR_ACFREQUENCYDIVISOR).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACFREQUENCYDIVISOR).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ACFREQUENCYDIVISOR));
+        return (Integer) readSync(serverAttributes.get(ATTR_ACFREQUENCYDIVISOR));
     }
 
     /**
@@ -2378,9 +2597,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setAcFrequencyDivisorReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_ACFREQUENCYDIVISOR), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_ACFREQUENCYDIVISOR), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -2391,9 +2612,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPowerMultiplierAsync() {
-        return read(attributes.get(ATTR_POWERMULTIPLIER));
+        return read(serverAttributes.get(ATTR_POWERMULTIPLIER));
     }
 
     /**
@@ -2412,13 +2635,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPowerMultiplier(final long refreshPeriod) {
-        if (attributes.get(ATTR_POWERMULTIPLIER).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_POWERMULTIPLIER).getLastValue();
+        if (serverAttributes.get(ATTR_POWERMULTIPLIER).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_POWERMULTIPLIER).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_POWERMULTIPLIER));
+        return (Integer) readSync(serverAttributes.get(ATTR_POWERMULTIPLIER));
     }
 
     /**
@@ -2432,9 +2657,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPowerMultiplierReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_POWERMULTIPLIER), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_POWERMULTIPLIER), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -2445,9 +2672,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPowerDivisorAsync() {
-        return read(attributes.get(ATTR_POWERDIVISOR));
+        return read(serverAttributes.get(ATTR_POWERDIVISOR));
     }
 
     /**
@@ -2466,13 +2695,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPowerDivisor(final long refreshPeriod) {
-        if (attributes.get(ATTR_POWERDIVISOR).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_POWERDIVISOR).getLastValue();
+        if (serverAttributes.get(ATTR_POWERDIVISOR).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_POWERDIVISOR).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_POWERDIVISOR));
+        return (Integer) readSync(serverAttributes.get(ATTR_POWERDIVISOR));
     }
 
     /**
@@ -2486,9 +2717,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPowerDivisorReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_POWERDIVISOR), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_POWERDIVISOR), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -2499,9 +2732,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getHarmonicCurrentMultiplierAsync() {
-        return read(attributes.get(ATTR_HARMONICCURRENTMULTIPLIER));
+        return read(serverAttributes.get(ATTR_HARMONICCURRENTMULTIPLIER));
     }
 
     /**
@@ -2520,13 +2755,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getHarmonicCurrentMultiplier(final long refreshPeriod) {
-        if (attributes.get(ATTR_HARMONICCURRENTMULTIPLIER).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_HARMONICCURRENTMULTIPLIER).getLastValue();
+        if (serverAttributes.get(ATTR_HARMONICCURRENTMULTIPLIER).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_HARMONICCURRENTMULTIPLIER).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_HARMONICCURRENTMULTIPLIER));
+        return (Integer) readSync(serverAttributes.get(ATTR_HARMONICCURRENTMULTIPLIER));
     }
 
     /**
@@ -2540,9 +2777,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setHarmonicCurrentMultiplierReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_HARMONICCURRENTMULTIPLIER), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_HARMONICCURRENTMULTIPLIER), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -2553,9 +2792,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPhaseHarmonicCurrentMultiplierAsync() {
-        return read(attributes.get(ATTR_PHASEHARMONICCURRENTMULTIPLIER));
+        return read(serverAttributes.get(ATTR_PHASEHARMONICCURRENTMULTIPLIER));
     }
 
     /**
@@ -2574,13 +2815,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPhaseHarmonicCurrentMultiplier(final long refreshPeriod) {
-        if (attributes.get(ATTR_PHASEHARMONICCURRENTMULTIPLIER).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_PHASEHARMONICCURRENTMULTIPLIER).getLastValue();
+        if (serverAttributes.get(ATTR_PHASEHARMONICCURRENTMULTIPLIER).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PHASEHARMONICCURRENTMULTIPLIER).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_PHASEHARMONICCURRENTMULTIPLIER));
+        return (Integer) readSync(serverAttributes.get(ATTR_PHASEHARMONICCURRENTMULTIPLIER));
     }
 
     /**
@@ -2594,9 +2837,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPhaseHarmonicCurrentMultiplierReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_PHASEHARMONICCURRENTMULTIPLIER), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_PHASEHARMONICCURRENTMULTIPLIER), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -2607,9 +2852,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getInstantaneousVoltageAsync() {
-        return read(attributes.get(ATTR_INSTANTANEOUSVOLTAGE));
+        return read(serverAttributes.get(ATTR_INSTANTANEOUSVOLTAGE));
     }
 
     /**
@@ -2628,13 +2875,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getInstantaneousVoltage(final long refreshPeriod) {
-        if (attributes.get(ATTR_INSTANTANEOUSVOLTAGE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_INSTANTANEOUSVOLTAGE).getLastValue();
+        if (serverAttributes.get(ATTR_INSTANTANEOUSVOLTAGE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_INSTANTANEOUSVOLTAGE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_INSTANTANEOUSVOLTAGE));
+        return (Integer) readSync(serverAttributes.get(ATTR_INSTANTANEOUSVOLTAGE));
     }
 
     /**
@@ -2648,9 +2897,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setInstantaneousVoltageReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_INSTANTANEOUSVOLTAGE), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_INSTANTANEOUSVOLTAGE), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -2661,9 +2912,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getInstantaneousLineCurrentAsync() {
-        return read(attributes.get(ATTR_INSTANTANEOUSLINECURRENT));
+        return read(serverAttributes.get(ATTR_INSTANTANEOUSLINECURRENT));
     }
 
     /**
@@ -2682,13 +2935,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getInstantaneousLineCurrent(final long refreshPeriod) {
-        if (attributes.get(ATTR_INSTANTANEOUSLINECURRENT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_INSTANTANEOUSLINECURRENT).getLastValue();
+        if (serverAttributes.get(ATTR_INSTANTANEOUSLINECURRENT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_INSTANTANEOUSLINECURRENT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_INSTANTANEOUSLINECURRENT));
+        return (Integer) readSync(serverAttributes.get(ATTR_INSTANTANEOUSLINECURRENT));
     }
 
     /**
@@ -2702,9 +2957,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setInstantaneousLineCurrentReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_INSTANTANEOUSLINECURRENT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_INSTANTANEOUSLINECURRENT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -2715,9 +2972,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getInstantaneousActiveCurrentAsync() {
-        return read(attributes.get(ATTR_INSTANTANEOUSACTIVECURRENT));
+        return read(serverAttributes.get(ATTR_INSTANTANEOUSACTIVECURRENT));
     }
 
     /**
@@ -2736,13 +2995,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getInstantaneousActiveCurrent(final long refreshPeriod) {
-        if (attributes.get(ATTR_INSTANTANEOUSACTIVECURRENT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_INSTANTANEOUSACTIVECURRENT).getLastValue();
+        if (serverAttributes.get(ATTR_INSTANTANEOUSACTIVECURRENT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_INSTANTANEOUSACTIVECURRENT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_INSTANTANEOUSACTIVECURRENT));
+        return (Integer) readSync(serverAttributes.get(ATTR_INSTANTANEOUSACTIVECURRENT));
     }
 
     /**
@@ -2756,9 +3017,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setInstantaneousActiveCurrentReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_INSTANTANEOUSACTIVECURRENT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_INSTANTANEOUSACTIVECURRENT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -2769,9 +3032,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getInstantaneousReactiveCurrentAsync() {
-        return read(attributes.get(ATTR_INSTANTANEOUSREACTIVECURRENT));
+        return read(serverAttributes.get(ATTR_INSTANTANEOUSREACTIVECURRENT));
     }
 
     /**
@@ -2790,13 +3055,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getInstantaneousReactiveCurrent(final long refreshPeriod) {
-        if (attributes.get(ATTR_INSTANTANEOUSREACTIVECURRENT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_INSTANTANEOUSREACTIVECURRENT).getLastValue();
+        if (serverAttributes.get(ATTR_INSTANTANEOUSREACTIVECURRENT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_INSTANTANEOUSREACTIVECURRENT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_INSTANTANEOUSREACTIVECURRENT));
+        return (Integer) readSync(serverAttributes.get(ATTR_INSTANTANEOUSREACTIVECURRENT));
     }
 
     /**
@@ -2810,9 +3077,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setInstantaneousReactiveCurrentReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_INSTANTANEOUSREACTIVECURRENT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_INSTANTANEOUSREACTIVECURRENT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -2823,9 +3092,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getInstantaneousPowerAsync() {
-        return read(attributes.get(ATTR_INSTANTANEOUSPOWER));
+        return read(serverAttributes.get(ATTR_INSTANTANEOUSPOWER));
     }
 
     /**
@@ -2844,13 +3115,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getInstantaneousPower(final long refreshPeriod) {
-        if (attributes.get(ATTR_INSTANTANEOUSPOWER).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_INSTANTANEOUSPOWER).getLastValue();
+        if (serverAttributes.get(ATTR_INSTANTANEOUSPOWER).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_INSTANTANEOUSPOWER).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_INSTANTANEOUSPOWER));
+        return (Integer) readSync(serverAttributes.get(ATTR_INSTANTANEOUSPOWER));
     }
 
     /**
@@ -2864,9 +3137,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setInstantaneousPowerReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_INSTANTANEOUSPOWER), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_INSTANTANEOUSPOWER), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -2880,9 +3155,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsVoltageAsync() {
-        return read(attributes.get(ATTR_RMSVOLTAGE));
+        return read(serverAttributes.get(ATTR_RMSVOLTAGE));
     }
 
     /**
@@ -2904,13 +3181,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsVoltage(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSVOLTAGE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSVOLTAGE).getLastValue();
+        if (serverAttributes.get(ATTR_RMSVOLTAGE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSVOLTAGE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSVOLTAGE));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSVOLTAGE));
     }
 
     /**
@@ -2921,9 +3200,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsVoltageMinAsync() {
-        return read(attributes.get(ATTR_RMSVOLTAGEMIN));
+        return read(serverAttributes.get(ATTR_RMSVOLTAGEMIN));
     }
 
     /**
@@ -2942,13 +3223,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsVoltageMin(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSVOLTAGEMIN).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSVOLTAGEMIN).getLastValue();
+        if (serverAttributes.get(ATTR_RMSVOLTAGEMIN).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSVOLTAGEMIN).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSVOLTAGEMIN));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSVOLTAGEMIN));
     }
 
     /**
@@ -2962,9 +3245,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsVoltageMinReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_RMSVOLTAGEMIN), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_RMSVOLTAGEMIN), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -2975,9 +3260,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsVoltageMaxAsync() {
-        return read(attributes.get(ATTR_RMSVOLTAGEMAX));
+        return read(serverAttributes.get(ATTR_RMSVOLTAGEMAX));
     }
 
     /**
@@ -2996,13 +3283,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsVoltageMax(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSVOLTAGEMAX).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSVOLTAGEMAX).getLastValue();
+        if (serverAttributes.get(ATTR_RMSVOLTAGEMAX).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSVOLTAGEMAX).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSVOLTAGEMAX));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSVOLTAGEMAX));
     }
 
     /**
@@ -3016,9 +3305,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsVoltageMaxReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_RMSVOLTAGEMAX), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_RMSVOLTAGEMAX), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -3032,9 +3323,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsCurrentAsync() {
-        return read(attributes.get(ATTR_RMSCURRENT));
+        return read(serverAttributes.get(ATTR_RMSCURRENT));
     }
 
     /**
@@ -3056,13 +3349,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsCurrent(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSCURRENT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSCURRENT).getLastValue();
+        if (serverAttributes.get(ATTR_RMSCURRENT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSCURRENT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSCURRENT));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSCURRENT));
     }
 
     /**
@@ -3073,9 +3368,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsCurrentMinAsync() {
-        return read(attributes.get(ATTR_RMSCURRENTMIN));
+        return read(serverAttributes.get(ATTR_RMSCURRENTMIN));
     }
 
     /**
@@ -3094,13 +3391,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsCurrentMin(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSCURRENTMIN).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSCURRENTMIN).getLastValue();
+        if (serverAttributes.get(ATTR_RMSCURRENTMIN).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSCURRENTMIN).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSCURRENTMIN));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSCURRENTMIN));
     }
 
     /**
@@ -3114,9 +3413,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsCurrentMinReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_RMSCURRENTMIN), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_RMSCURRENTMIN), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -3127,9 +3428,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsCurrentMaxAsync() {
-        return read(attributes.get(ATTR_RMSCURRENTMAX));
+        return read(serverAttributes.get(ATTR_RMSCURRENTMAX));
     }
 
     /**
@@ -3148,13 +3451,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsCurrentMax(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSCURRENTMAX).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSCURRENTMAX).getLastValue();
+        if (serverAttributes.get(ATTR_RMSCURRENTMAX).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSCURRENTMAX).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSCURRENTMAX));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSCURRENTMAX));
     }
 
     /**
@@ -3168,9 +3473,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsCurrentMaxReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_RMSCURRENTMAX), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_RMSCURRENTMAX), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -3185,9 +3492,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getActivePowerAsync() {
-        return read(attributes.get(ATTR_ACTIVEPOWER));
+        return read(serverAttributes.get(ATTR_ACTIVEPOWER));
     }
 
     /**
@@ -3210,13 +3519,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getActivePower(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACTIVEPOWER).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACTIVEPOWER).getLastValue();
+        if (serverAttributes.get(ATTR_ACTIVEPOWER).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACTIVEPOWER).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ACTIVEPOWER));
+        return (Integer) readSync(serverAttributes.get(ATTR_ACTIVEPOWER));
     }
 
     /**
@@ -3227,9 +3538,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getActivePowerMinAsync() {
-        return read(attributes.get(ATTR_ACTIVEPOWERMIN));
+        return read(serverAttributes.get(ATTR_ACTIVEPOWERMIN));
     }
 
     /**
@@ -3248,13 +3561,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getActivePowerMin(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACTIVEPOWERMIN).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACTIVEPOWERMIN).getLastValue();
+        if (serverAttributes.get(ATTR_ACTIVEPOWERMIN).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACTIVEPOWERMIN).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ACTIVEPOWERMIN));
+        return (Integer) readSync(serverAttributes.get(ATTR_ACTIVEPOWERMIN));
     }
 
     /**
@@ -3268,9 +3583,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setActivePowerMinReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_ACTIVEPOWERMIN), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_ACTIVEPOWERMIN), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -3281,9 +3598,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getActivePowerMaxAsync() {
-        return read(attributes.get(ATTR_ACTIVEPOWERMAX));
+        return read(serverAttributes.get(ATTR_ACTIVEPOWERMAX));
     }
 
     /**
@@ -3302,13 +3621,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getActivePowerMax(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACTIVEPOWERMAX).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACTIVEPOWERMAX).getLastValue();
+        if (serverAttributes.get(ATTR_ACTIVEPOWERMAX).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACTIVEPOWERMAX).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ACTIVEPOWERMAX));
+        return (Integer) readSync(serverAttributes.get(ATTR_ACTIVEPOWERMAX));
     }
 
     /**
@@ -3322,9 +3643,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setActivePowerMaxReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_ACTIVEPOWERMAX), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_ACTIVEPOWERMAX), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -3335,9 +3658,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getReactivePowerAsync() {
-        return read(attributes.get(ATTR_REACTIVEPOWER));
+        return read(serverAttributes.get(ATTR_REACTIVEPOWER));
     }
 
     /**
@@ -3356,13 +3681,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getReactivePower(final long refreshPeriod) {
-        if (attributes.get(ATTR_REACTIVEPOWER).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_REACTIVEPOWER).getLastValue();
+        if (serverAttributes.get(ATTR_REACTIVEPOWER).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_REACTIVEPOWER).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_REACTIVEPOWER));
+        return (Integer) readSync(serverAttributes.get(ATTR_REACTIVEPOWER));
     }
 
     /**
@@ -3376,9 +3703,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setReactivePowerReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_REACTIVEPOWER), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_REACTIVEPOWER), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -3389,9 +3718,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getApparentPowerAsync() {
-        return read(attributes.get(ATTR_APPARENTPOWER));
+        return read(serverAttributes.get(ATTR_APPARENTPOWER));
     }
 
     /**
@@ -3410,13 +3741,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getApparentPower(final long refreshPeriod) {
-        if (attributes.get(ATTR_APPARENTPOWER).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_APPARENTPOWER).getLastValue();
+        if (serverAttributes.get(ATTR_APPARENTPOWER).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_APPARENTPOWER).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_APPARENTPOWER));
+        return (Integer) readSync(serverAttributes.get(ATTR_APPARENTPOWER));
     }
 
     /**
@@ -3430,9 +3763,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setApparentPowerReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_APPARENTPOWER), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_APPARENTPOWER), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -3443,9 +3778,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPowerFactorAsync() {
-        return read(attributes.get(ATTR_POWERFACTOR));
+        return read(serverAttributes.get(ATTR_POWERFACTOR));
     }
 
     /**
@@ -3464,13 +3801,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPowerFactor(final long refreshPeriod) {
-        if (attributes.get(ATTR_POWERFACTOR).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_POWERFACTOR).getLastValue();
+        if (serverAttributes.get(ATTR_POWERFACTOR).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_POWERFACTOR).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_POWERFACTOR));
+        return (Integer) readSync(serverAttributes.get(ATTR_POWERFACTOR));
     }
 
     /**
@@ -3484,9 +3823,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPowerFactorReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_POWERFACTOR), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_POWERFACTOR), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -3498,9 +3839,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param averageRmsVoltageMeasurementPeriod the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setAverageRmsVoltageMeasurementPeriod(final Integer value) {
-        return write(attributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIOD), value);
+        return write(serverAttributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIOD), value);
     }
 
     /**
@@ -3511,9 +3854,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAverageRmsVoltageMeasurementPeriodAsync() {
-        return read(attributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIOD));
+        return read(serverAttributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIOD));
     }
 
     /**
@@ -3532,13 +3877,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAverageRmsVoltageMeasurementPeriod(final long refreshPeriod) {
-        if (attributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIOD).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIOD).getLastValue();
+        if (serverAttributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIOD).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIOD).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIOD));
+        return (Integer) readSync(serverAttributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIOD));
     }
 
     /**
@@ -3550,9 +3897,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param averageRmsUnderVoltageCounter the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setAverageRmsUnderVoltageCounter(final Integer value) {
-        return write(attributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTER), value);
+        return write(serverAttributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTER), value);
     }
 
     /**
@@ -3563,9 +3912,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAverageRmsUnderVoltageCounterAsync() {
-        return read(attributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTER));
+        return read(serverAttributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTER));
     }
 
     /**
@@ -3584,13 +3935,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAverageRmsUnderVoltageCounter(final long refreshPeriod) {
-        if (attributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTER).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTER).getLastValue();
+        if (serverAttributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTER).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTER).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTER));
+        return (Integer) readSync(serverAttributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTER));
     }
 
     /**
@@ -3602,9 +3955,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param rmsExtremeOverVoltagePeriod the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsExtremeOverVoltagePeriod(final Integer value) {
-        return write(attributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIOD), value);
+        return write(serverAttributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIOD), value);
     }
 
     /**
@@ -3615,9 +3970,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsExtremeOverVoltagePeriodAsync() {
-        return read(attributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIOD));
+        return read(serverAttributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIOD));
     }
 
     /**
@@ -3636,13 +3993,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsExtremeOverVoltagePeriod(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIOD).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIOD).getLastValue();
+        if (serverAttributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIOD).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIOD).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIOD));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIOD));
     }
 
     /**
@@ -3654,9 +4013,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param rmsExtremeUnderVoltagePeriod the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsExtremeUnderVoltagePeriod(final Integer value) {
-        return write(attributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIOD), value);
+        return write(serverAttributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIOD), value);
     }
 
     /**
@@ -3667,9 +4028,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsExtremeUnderVoltagePeriodAsync() {
-        return read(attributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIOD));
+        return read(serverAttributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIOD));
     }
 
     /**
@@ -3688,13 +4051,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsExtremeUnderVoltagePeriod(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIOD).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIOD).getLastValue();
+        if (serverAttributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIOD).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIOD).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIOD));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIOD));
     }
 
     /**
@@ -3706,9 +4071,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param rmsVoltageSagPeriod the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsVoltageSagPeriod(final Integer value) {
-        return write(attributes.get(ATTR_RMSVOLTAGESAGPERIOD), value);
+        return write(serverAttributes.get(ATTR_RMSVOLTAGESAGPERIOD), value);
     }
 
     /**
@@ -3719,9 +4086,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsVoltageSagPeriodAsync() {
-        return read(attributes.get(ATTR_RMSVOLTAGESAGPERIOD));
+        return read(serverAttributes.get(ATTR_RMSVOLTAGESAGPERIOD));
     }
 
     /**
@@ -3740,13 +4109,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsVoltageSagPeriod(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSVOLTAGESAGPERIOD).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSVOLTAGESAGPERIOD).getLastValue();
+        if (serverAttributes.get(ATTR_RMSVOLTAGESAGPERIOD).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSVOLTAGESAGPERIOD).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSVOLTAGESAGPERIOD));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSVOLTAGESAGPERIOD));
     }
 
     /**
@@ -3758,9 +4129,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param rmsVoltageSwellPeriod the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsVoltageSwellPeriod(final Integer value) {
-        return write(attributes.get(ATTR_RMSVOLTAGESWELLPERIOD), value);
+        return write(serverAttributes.get(ATTR_RMSVOLTAGESWELLPERIOD), value);
     }
 
     /**
@@ -3771,9 +4144,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsVoltageSwellPeriodAsync() {
-        return read(attributes.get(ATTR_RMSVOLTAGESWELLPERIOD));
+        return read(serverAttributes.get(ATTR_RMSVOLTAGESWELLPERIOD));
     }
 
     /**
@@ -3792,13 +4167,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsVoltageSwellPeriod(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSVOLTAGESWELLPERIOD).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSVOLTAGESWELLPERIOD).getLastValue();
+        if (serverAttributes.get(ATTR_RMSVOLTAGESWELLPERIOD).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSVOLTAGESWELLPERIOD).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSVOLTAGESWELLPERIOD));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSVOLTAGESWELLPERIOD));
     }
 
     /**
@@ -3809,9 +4186,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAcVoltageMultiplierAsync() {
-        return read(attributes.get(ATTR_ACVOLTAGEMULTIPLIER));
+        return read(serverAttributes.get(ATTR_ACVOLTAGEMULTIPLIER));
     }
 
     /**
@@ -3830,13 +4209,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAcVoltageMultiplier(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACVOLTAGEMULTIPLIER).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACVOLTAGEMULTIPLIER).getLastValue();
+        if (serverAttributes.get(ATTR_ACVOLTAGEMULTIPLIER).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACVOLTAGEMULTIPLIER).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ACVOLTAGEMULTIPLIER));
+        return (Integer) readSync(serverAttributes.get(ATTR_ACVOLTAGEMULTIPLIER));
     }
 
     /**
@@ -3847,9 +4228,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAcVoltageDivisorAsync() {
-        return read(attributes.get(ATTR_ACVOLTAGEDIVISOR));
+        return read(serverAttributes.get(ATTR_ACVOLTAGEDIVISOR));
     }
 
     /**
@@ -3868,13 +4251,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAcVoltageDivisor(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACVOLTAGEDIVISOR).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACVOLTAGEDIVISOR).getLastValue();
+        if (serverAttributes.get(ATTR_ACVOLTAGEDIVISOR).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACVOLTAGEDIVISOR).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ACVOLTAGEDIVISOR));
+        return (Integer) readSync(serverAttributes.get(ATTR_ACVOLTAGEDIVISOR));
     }
 
     /**
@@ -3889,9 +4274,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAcCurrentMultiplierAsync() {
-        return read(attributes.get(ATTR_ACCURRENTMULTIPLIER));
+        return read(serverAttributes.get(ATTR_ACCURRENTMULTIPLIER));
     }
 
     /**
@@ -3914,13 +4301,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAcCurrentMultiplier(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACCURRENTMULTIPLIER).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACCURRENTMULTIPLIER).getLastValue();
+        if (serverAttributes.get(ATTR_ACCURRENTMULTIPLIER).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACCURRENTMULTIPLIER).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ACCURRENTMULTIPLIER));
+        return (Integer) readSync(serverAttributes.get(ATTR_ACCURRENTMULTIPLIER));
     }
 
     /**
@@ -3935,9 +4324,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAcCurrentDivisorAsync() {
-        return read(attributes.get(ATTR_ACCURRENTDIVISOR));
+        return read(serverAttributes.get(ATTR_ACCURRENTDIVISOR));
     }
 
     /**
@@ -3960,13 +4351,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAcCurrentDivisor(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACCURRENTDIVISOR).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACCURRENTDIVISOR).getLastValue();
+        if (serverAttributes.get(ATTR_ACCURRENTDIVISOR).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACCURRENTDIVISOR).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ACCURRENTDIVISOR));
+        return (Integer) readSync(serverAttributes.get(ATTR_ACCURRENTDIVISOR));
     }
 
     /**
@@ -3981,9 +4374,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAcPowerMultiplierAsync() {
-        return read(attributes.get(ATTR_ACPOWERMULTIPLIER));
+        return read(serverAttributes.get(ATTR_ACPOWERMULTIPLIER));
     }
 
     /**
@@ -4006,13 +4401,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAcPowerMultiplier(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACPOWERMULTIPLIER).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACPOWERMULTIPLIER).getLastValue();
+        if (serverAttributes.get(ATTR_ACPOWERMULTIPLIER).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACPOWERMULTIPLIER).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ACPOWERMULTIPLIER));
+        return (Integer) readSync(serverAttributes.get(ATTR_ACPOWERMULTIPLIER));
     }
 
     /**
@@ -4027,9 +4424,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAcPowerDivisorAsync() {
-        return read(attributes.get(ATTR_ACPOWERDIVISOR));
+        return read(serverAttributes.get(ATTR_ACPOWERDIVISOR));
     }
 
     /**
@@ -4052,13 +4451,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAcPowerDivisor(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACPOWERDIVISOR).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACPOWERDIVISOR).getLastValue();
+        if (serverAttributes.get(ATTR_ACPOWERDIVISOR).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACPOWERDIVISOR).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ACPOWERDIVISOR));
+        return (Integer) readSync(serverAttributes.get(ATTR_ACPOWERDIVISOR));
     }
 
     /**
@@ -4070,9 +4471,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param overloadAlarmsMask the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setOverloadAlarmsMask(final Integer value) {
-        return write(attributes.get(ATTR_OVERLOADALARMSMASK), value);
+        return write(serverAttributes.get(ATTR_OVERLOADALARMSMASK), value);
     }
 
     /**
@@ -4083,9 +4486,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getOverloadAlarmsMaskAsync() {
-        return read(attributes.get(ATTR_OVERLOADALARMSMASK));
+        return read(serverAttributes.get(ATTR_OVERLOADALARMSMASK));
     }
 
     /**
@@ -4104,13 +4509,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getOverloadAlarmsMask(final long refreshPeriod) {
-        if (attributes.get(ATTR_OVERLOADALARMSMASK).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_OVERLOADALARMSMASK).getLastValue();
+        if (serverAttributes.get(ATTR_OVERLOADALARMSMASK).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_OVERLOADALARMSMASK).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_OVERLOADALARMSMASK));
+        return (Integer) readSync(serverAttributes.get(ATTR_OVERLOADALARMSMASK));
     }
 
     /**
@@ -4121,9 +4528,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getVoltageOverloadAsync() {
-        return read(attributes.get(ATTR_VOLTAGEOVERLOAD));
+        return read(serverAttributes.get(ATTR_VOLTAGEOVERLOAD));
     }
 
     /**
@@ -4142,13 +4551,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getVoltageOverload(final long refreshPeriod) {
-        if (attributes.get(ATTR_VOLTAGEOVERLOAD).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_VOLTAGEOVERLOAD).getLastValue();
+        if (serverAttributes.get(ATTR_VOLTAGEOVERLOAD).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_VOLTAGEOVERLOAD).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_VOLTAGEOVERLOAD));
+        return (Integer) readSync(serverAttributes.get(ATTR_VOLTAGEOVERLOAD));
     }
 
     /**
@@ -4162,9 +4573,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setVoltageOverloadReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_VOLTAGEOVERLOAD), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_VOLTAGEOVERLOAD), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -4175,9 +4588,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCurrentOverloadAsync() {
-        return read(attributes.get(ATTR_CURRENTOVERLOAD));
+        return read(serverAttributes.get(ATTR_CURRENTOVERLOAD));
     }
 
     /**
@@ -4196,13 +4611,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCurrentOverload(final long refreshPeriod) {
-        if (attributes.get(ATTR_CURRENTOVERLOAD).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CURRENTOVERLOAD).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTOVERLOAD).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTOVERLOAD).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CURRENTOVERLOAD));
+        return (Integer) readSync(serverAttributes.get(ATTR_CURRENTOVERLOAD));
     }
 
     /**
@@ -4216,9 +4633,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setCurrentOverloadReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_CURRENTOVERLOAD), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_CURRENTOVERLOAD), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -4230,9 +4649,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param acOverloadAlarmsMask the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setAcOverloadAlarmsMask(final Integer value) {
-        return write(attributes.get(ATTR_ACOVERLOADALARMSMASK), value);
+        return write(serverAttributes.get(ATTR_ACOVERLOADALARMSMASK), value);
     }
 
     /**
@@ -4243,9 +4664,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAcOverloadAlarmsMaskAsync() {
-        return read(attributes.get(ATTR_ACOVERLOADALARMSMASK));
+        return read(serverAttributes.get(ATTR_ACOVERLOADALARMSMASK));
     }
 
     /**
@@ -4264,13 +4687,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAcOverloadAlarmsMask(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACOVERLOADALARMSMASK).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACOVERLOADALARMSMASK).getLastValue();
+        if (serverAttributes.get(ATTR_ACOVERLOADALARMSMASK).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACOVERLOADALARMSMASK).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ACOVERLOADALARMSMASK));
+        return (Integer) readSync(serverAttributes.get(ATTR_ACOVERLOADALARMSMASK));
     }
 
     /**
@@ -4281,9 +4706,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAcVoltageOverloadAsync() {
-        return read(attributes.get(ATTR_ACVOLTAGEOVERLOAD));
+        return read(serverAttributes.get(ATTR_ACVOLTAGEOVERLOAD));
     }
 
     /**
@@ -4302,13 +4729,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAcVoltageOverload(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACVOLTAGEOVERLOAD).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACVOLTAGEOVERLOAD).getLastValue();
+        if (serverAttributes.get(ATTR_ACVOLTAGEOVERLOAD).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACVOLTAGEOVERLOAD).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ACVOLTAGEOVERLOAD));
+        return (Integer) readSync(serverAttributes.get(ATTR_ACVOLTAGEOVERLOAD));
     }
 
     /**
@@ -4322,9 +4751,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setAcVoltageOverloadReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_ACVOLTAGEOVERLOAD), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_ACVOLTAGEOVERLOAD), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -4335,9 +4766,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAcCurrentOverloadAsync() {
-        return read(attributes.get(ATTR_ACCURRENTOVERLOAD));
+        return read(serverAttributes.get(ATTR_ACCURRENTOVERLOAD));
     }
 
     /**
@@ -4356,13 +4789,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAcCurrentOverload(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACCURRENTOVERLOAD).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACCURRENTOVERLOAD).getLastValue();
+        if (serverAttributes.get(ATTR_ACCURRENTOVERLOAD).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACCURRENTOVERLOAD).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ACCURRENTOVERLOAD));
+        return (Integer) readSync(serverAttributes.get(ATTR_ACCURRENTOVERLOAD));
     }
 
     /**
@@ -4376,9 +4811,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setAcCurrentOverloadReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_ACCURRENTOVERLOAD), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_ACCURRENTOVERLOAD), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -4389,9 +4826,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAcActivePowerOverloadAsync() {
-        return read(attributes.get(ATTR_ACACTIVEPOWEROVERLOAD));
+        return read(serverAttributes.get(ATTR_ACACTIVEPOWEROVERLOAD));
     }
 
     /**
@@ -4410,13 +4849,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAcActivePowerOverload(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACACTIVEPOWEROVERLOAD).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACACTIVEPOWEROVERLOAD).getLastValue();
+        if (serverAttributes.get(ATTR_ACACTIVEPOWEROVERLOAD).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACACTIVEPOWEROVERLOAD).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ACACTIVEPOWEROVERLOAD));
+        return (Integer) readSync(serverAttributes.get(ATTR_ACACTIVEPOWEROVERLOAD));
     }
 
     /**
@@ -4430,9 +4871,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setAcActivePowerOverloadReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_ACACTIVEPOWEROVERLOAD), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_ACACTIVEPOWEROVERLOAD), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -4443,9 +4886,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAcReactivePowerOverloadAsync() {
-        return read(attributes.get(ATTR_ACREACTIVEPOWEROVERLOAD));
+        return read(serverAttributes.get(ATTR_ACREACTIVEPOWEROVERLOAD));
     }
 
     /**
@@ -4464,13 +4909,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAcReactivePowerOverload(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACREACTIVEPOWEROVERLOAD).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACREACTIVEPOWEROVERLOAD).getLastValue();
+        if (serverAttributes.get(ATTR_ACREACTIVEPOWEROVERLOAD).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACREACTIVEPOWEROVERLOAD).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ACREACTIVEPOWEROVERLOAD));
+        return (Integer) readSync(serverAttributes.get(ATTR_ACREACTIVEPOWEROVERLOAD));
     }
 
     /**
@@ -4484,9 +4931,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setAcReactivePowerOverloadReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_ACREACTIVEPOWEROVERLOAD), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_ACREACTIVEPOWEROVERLOAD), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -4497,9 +4946,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAverageRmsOverVoltageAsync() {
-        return read(attributes.get(ATTR_AVERAGERMSOVERVOLTAGE));
+        return read(serverAttributes.get(ATTR_AVERAGERMSOVERVOLTAGE));
     }
 
     /**
@@ -4518,13 +4969,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAverageRmsOverVoltage(final long refreshPeriod) {
-        if (attributes.get(ATTR_AVERAGERMSOVERVOLTAGE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_AVERAGERMSOVERVOLTAGE).getLastValue();
+        if (serverAttributes.get(ATTR_AVERAGERMSOVERVOLTAGE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_AVERAGERMSOVERVOLTAGE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_AVERAGERMSOVERVOLTAGE));
+        return (Integer) readSync(serverAttributes.get(ATTR_AVERAGERMSOVERVOLTAGE));
     }
 
     /**
@@ -4538,9 +4991,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setAverageRmsOverVoltageReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_AVERAGERMSOVERVOLTAGE), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_AVERAGERMSOVERVOLTAGE), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -4551,9 +5006,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAverageRmsUnderVoltageAsync() {
-        return read(attributes.get(ATTR_AVERAGERMSUNDERVOLTAGE));
+        return read(serverAttributes.get(ATTR_AVERAGERMSUNDERVOLTAGE));
     }
 
     /**
@@ -4572,13 +5029,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAverageRmsUnderVoltage(final long refreshPeriod) {
-        if (attributes.get(ATTR_AVERAGERMSUNDERVOLTAGE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_AVERAGERMSUNDERVOLTAGE).getLastValue();
+        if (serverAttributes.get(ATTR_AVERAGERMSUNDERVOLTAGE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_AVERAGERMSUNDERVOLTAGE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_AVERAGERMSUNDERVOLTAGE));
+        return (Integer) readSync(serverAttributes.get(ATTR_AVERAGERMSUNDERVOLTAGE));
     }
 
     /**
@@ -4592,9 +5051,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setAverageRmsUnderVoltageReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_AVERAGERMSUNDERVOLTAGE), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_AVERAGERMSUNDERVOLTAGE), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -4605,9 +5066,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsExtremeOverVoltageAsync() {
-        return read(attributes.get(ATTR_RMSEXTREMEOVERVOLTAGE));
+        return read(serverAttributes.get(ATTR_RMSEXTREMEOVERVOLTAGE));
     }
 
     /**
@@ -4626,13 +5089,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsExtremeOverVoltage(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSEXTREMEOVERVOLTAGE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSEXTREMEOVERVOLTAGE).getLastValue();
+        if (serverAttributes.get(ATTR_RMSEXTREMEOVERVOLTAGE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSEXTREMEOVERVOLTAGE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSEXTREMEOVERVOLTAGE));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSEXTREMEOVERVOLTAGE));
     }
 
     /**
@@ -4646,9 +5111,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsExtremeOverVoltageReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_RMSEXTREMEOVERVOLTAGE), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_RMSEXTREMEOVERVOLTAGE), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -4659,9 +5126,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsExtremeUnderVoltageAsync() {
-        return read(attributes.get(ATTR_RMSEXTREMEUNDERVOLTAGE));
+        return read(serverAttributes.get(ATTR_RMSEXTREMEUNDERVOLTAGE));
     }
 
     /**
@@ -4680,13 +5149,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsExtremeUnderVoltage(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSEXTREMEUNDERVOLTAGE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSEXTREMEUNDERVOLTAGE).getLastValue();
+        if (serverAttributes.get(ATTR_RMSEXTREMEUNDERVOLTAGE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSEXTREMEUNDERVOLTAGE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSEXTREMEUNDERVOLTAGE));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSEXTREMEUNDERVOLTAGE));
     }
 
     /**
@@ -4700,9 +5171,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsExtremeUnderVoltageReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_RMSEXTREMEUNDERVOLTAGE), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_RMSEXTREMEUNDERVOLTAGE), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -4713,9 +5186,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsVoltageSagAsync() {
-        return read(attributes.get(ATTR_RMSVOLTAGESAG));
+        return read(serverAttributes.get(ATTR_RMSVOLTAGESAG));
     }
 
     /**
@@ -4734,13 +5209,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsVoltageSag(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSVOLTAGESAG).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSVOLTAGESAG).getLastValue();
+        if (serverAttributes.get(ATTR_RMSVOLTAGESAG).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSVOLTAGESAG).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSVOLTAGESAG));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSVOLTAGESAG));
     }
 
     /**
@@ -4754,9 +5231,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsVoltageSagReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_RMSVOLTAGESAG), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_RMSVOLTAGESAG), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -4767,9 +5246,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsVoltageSwellAsync() {
-        return read(attributes.get(ATTR_RMSVOLTAGESWELL));
+        return read(serverAttributes.get(ATTR_RMSVOLTAGESWELL));
     }
 
     /**
@@ -4788,13 +5269,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsVoltageSwell(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSVOLTAGESWELL).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSVOLTAGESWELL).getLastValue();
+        if (serverAttributes.get(ATTR_RMSVOLTAGESWELL).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSVOLTAGESWELL).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSVOLTAGESWELL));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSVOLTAGESWELL));
     }
 
     /**
@@ -4808,9 +5291,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsVoltageSwellReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_RMSVOLTAGESWELL), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_RMSVOLTAGESWELL), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -4821,9 +5306,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getLineCurrentPhaseBAsync() {
-        return read(attributes.get(ATTR_LINECURRENTPHASEB));
+        return read(serverAttributes.get(ATTR_LINECURRENTPHASEB));
     }
 
     /**
@@ -4842,13 +5329,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getLineCurrentPhaseB(final long refreshPeriod) {
-        if (attributes.get(ATTR_LINECURRENTPHASEB).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_LINECURRENTPHASEB).getLastValue();
+        if (serverAttributes.get(ATTR_LINECURRENTPHASEB).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_LINECURRENTPHASEB).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_LINECURRENTPHASEB));
+        return (Integer) readSync(serverAttributes.get(ATTR_LINECURRENTPHASEB));
     }
 
     /**
@@ -4862,9 +5351,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setLineCurrentPhaseBReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_LINECURRENTPHASEB), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_LINECURRENTPHASEB), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -4875,9 +5366,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getActiveCurrentPhaseBAsync() {
-        return read(attributes.get(ATTR_ACTIVECURRENTPHASEB));
+        return read(serverAttributes.get(ATTR_ACTIVECURRENTPHASEB));
     }
 
     /**
@@ -4896,13 +5389,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getActiveCurrentPhaseB(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACTIVECURRENTPHASEB).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACTIVECURRENTPHASEB).getLastValue();
+        if (serverAttributes.get(ATTR_ACTIVECURRENTPHASEB).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACTIVECURRENTPHASEB).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ACTIVECURRENTPHASEB));
+        return (Integer) readSync(serverAttributes.get(ATTR_ACTIVECURRENTPHASEB));
     }
 
     /**
@@ -4916,9 +5411,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setActiveCurrentPhaseBReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_ACTIVECURRENTPHASEB), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_ACTIVECURRENTPHASEB), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -4929,9 +5426,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getReactiveCurrentPhaseBAsync() {
-        return read(attributes.get(ATTR_REACTIVECURRENTPHASEB));
+        return read(serverAttributes.get(ATTR_REACTIVECURRENTPHASEB));
     }
 
     /**
@@ -4950,13 +5449,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getReactiveCurrentPhaseB(final long refreshPeriod) {
-        if (attributes.get(ATTR_REACTIVECURRENTPHASEB).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_REACTIVECURRENTPHASEB).getLastValue();
+        if (serverAttributes.get(ATTR_REACTIVECURRENTPHASEB).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_REACTIVECURRENTPHASEB).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_REACTIVECURRENTPHASEB));
+        return (Integer) readSync(serverAttributes.get(ATTR_REACTIVECURRENTPHASEB));
     }
 
     /**
@@ -4970,9 +5471,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setReactiveCurrentPhaseBReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_REACTIVECURRENTPHASEB), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_REACTIVECURRENTPHASEB), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -4983,9 +5486,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsVoltagePhaseBAsync() {
-        return read(attributes.get(ATTR_RMSVOLTAGEPHASEB));
+        return read(serverAttributes.get(ATTR_RMSVOLTAGEPHASEB));
     }
 
     /**
@@ -5004,13 +5509,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsVoltagePhaseB(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSVOLTAGEPHASEB).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSVOLTAGEPHASEB).getLastValue();
+        if (serverAttributes.get(ATTR_RMSVOLTAGEPHASEB).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSVOLTAGEPHASEB).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSVOLTAGEPHASEB));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSVOLTAGEPHASEB));
     }
 
     /**
@@ -5024,9 +5531,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsVoltagePhaseBReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_RMSVOLTAGEPHASEB), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_RMSVOLTAGEPHASEB), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5037,9 +5546,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsVoltageMinPhaseBAsync() {
-        return read(attributes.get(ATTR_RMSVOLTAGEMINPHASEB));
+        return read(serverAttributes.get(ATTR_RMSVOLTAGEMINPHASEB));
     }
 
     /**
@@ -5058,13 +5569,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsVoltageMinPhaseB(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSVOLTAGEMINPHASEB).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSVOLTAGEMINPHASEB).getLastValue();
+        if (serverAttributes.get(ATTR_RMSVOLTAGEMINPHASEB).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSVOLTAGEMINPHASEB).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSVOLTAGEMINPHASEB));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSVOLTAGEMINPHASEB));
     }
 
     /**
@@ -5078,9 +5591,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsVoltageMinPhaseBReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_RMSVOLTAGEMINPHASEB), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_RMSVOLTAGEMINPHASEB), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5091,9 +5606,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsVoltageMaxPhaseBAsync() {
-        return read(attributes.get(ATTR_RMSVOLTAGEMAXPHASEB));
+        return read(serverAttributes.get(ATTR_RMSVOLTAGEMAXPHASEB));
     }
 
     /**
@@ -5112,13 +5629,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsVoltageMaxPhaseB(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSVOLTAGEMAXPHASEB).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSVOLTAGEMAXPHASEB).getLastValue();
+        if (serverAttributes.get(ATTR_RMSVOLTAGEMAXPHASEB).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSVOLTAGEMAXPHASEB).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSVOLTAGEMAXPHASEB));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSVOLTAGEMAXPHASEB));
     }
 
     /**
@@ -5132,9 +5651,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsVoltageMaxPhaseBReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_RMSVOLTAGEMAXPHASEB), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_RMSVOLTAGEMAXPHASEB), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5145,9 +5666,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsCurrentPhaseBAsync() {
-        return read(attributes.get(ATTR_RMSCURRENTPHASEB));
+        return read(serverAttributes.get(ATTR_RMSCURRENTPHASEB));
     }
 
     /**
@@ -5166,13 +5689,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsCurrentPhaseB(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSCURRENTPHASEB).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSCURRENTPHASEB).getLastValue();
+        if (serverAttributes.get(ATTR_RMSCURRENTPHASEB).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSCURRENTPHASEB).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSCURRENTPHASEB));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSCURRENTPHASEB));
     }
 
     /**
@@ -5186,9 +5711,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsCurrentPhaseBReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_RMSCURRENTPHASEB), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_RMSCURRENTPHASEB), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5199,9 +5726,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsCurrentMinPhaseBAsync() {
-        return read(attributes.get(ATTR_RMSCURRENTMINPHASEB));
+        return read(serverAttributes.get(ATTR_RMSCURRENTMINPHASEB));
     }
 
     /**
@@ -5220,13 +5749,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsCurrentMinPhaseB(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSCURRENTMINPHASEB).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSCURRENTMINPHASEB).getLastValue();
+        if (serverAttributes.get(ATTR_RMSCURRENTMINPHASEB).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSCURRENTMINPHASEB).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSCURRENTMINPHASEB));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSCURRENTMINPHASEB));
     }
 
     /**
@@ -5240,9 +5771,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsCurrentMinPhaseBReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_RMSCURRENTMINPHASEB), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_RMSCURRENTMINPHASEB), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5253,9 +5786,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsCurrentMaxPhaseBAsync() {
-        return read(attributes.get(ATTR_RMSCURRENTMAXPHASEB));
+        return read(serverAttributes.get(ATTR_RMSCURRENTMAXPHASEB));
     }
 
     /**
@@ -5274,13 +5809,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsCurrentMaxPhaseB(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSCURRENTMAXPHASEB).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSCURRENTMAXPHASEB).getLastValue();
+        if (serverAttributes.get(ATTR_RMSCURRENTMAXPHASEB).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSCURRENTMAXPHASEB).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSCURRENTMAXPHASEB));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSCURRENTMAXPHASEB));
     }
 
     /**
@@ -5294,9 +5831,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsCurrentMaxPhaseBReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_RMSCURRENTMAXPHASEB), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_RMSCURRENTMAXPHASEB), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5307,9 +5846,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getActivePowerPhaseBAsync() {
-        return read(attributes.get(ATTR_ACTIVEPOWERPHASEB));
+        return read(serverAttributes.get(ATTR_ACTIVEPOWERPHASEB));
     }
 
     /**
@@ -5328,13 +5869,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getActivePowerPhaseB(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACTIVEPOWERPHASEB).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACTIVEPOWERPHASEB).getLastValue();
+        if (serverAttributes.get(ATTR_ACTIVEPOWERPHASEB).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACTIVEPOWERPHASEB).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ACTIVEPOWERPHASEB));
+        return (Integer) readSync(serverAttributes.get(ATTR_ACTIVEPOWERPHASEB));
     }
 
     /**
@@ -5348,9 +5891,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setActivePowerPhaseBReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_ACTIVEPOWERPHASEB), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_ACTIVEPOWERPHASEB), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5361,9 +5906,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getActivePowerMinPhaseBAsync() {
-        return read(attributes.get(ATTR_ACTIVEPOWERMINPHASEB));
+        return read(serverAttributes.get(ATTR_ACTIVEPOWERMINPHASEB));
     }
 
     /**
@@ -5382,13 +5929,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getActivePowerMinPhaseB(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACTIVEPOWERMINPHASEB).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACTIVEPOWERMINPHASEB).getLastValue();
+        if (serverAttributes.get(ATTR_ACTIVEPOWERMINPHASEB).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACTIVEPOWERMINPHASEB).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ACTIVEPOWERMINPHASEB));
+        return (Integer) readSync(serverAttributes.get(ATTR_ACTIVEPOWERMINPHASEB));
     }
 
     /**
@@ -5402,9 +5951,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setActivePowerMinPhaseBReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_ACTIVEPOWERMINPHASEB), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_ACTIVEPOWERMINPHASEB), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5415,9 +5966,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getActivePowerMaxPhaseBAsync() {
-        return read(attributes.get(ATTR_ACTIVEPOWERMAXPHASEB));
+        return read(serverAttributes.get(ATTR_ACTIVEPOWERMAXPHASEB));
     }
 
     /**
@@ -5436,13 +5989,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getActivePowerMaxPhaseB(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACTIVEPOWERMAXPHASEB).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACTIVEPOWERMAXPHASEB).getLastValue();
+        if (serverAttributes.get(ATTR_ACTIVEPOWERMAXPHASEB).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACTIVEPOWERMAXPHASEB).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ACTIVEPOWERMAXPHASEB));
+        return (Integer) readSync(serverAttributes.get(ATTR_ACTIVEPOWERMAXPHASEB));
     }
 
     /**
@@ -5456,9 +6011,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setActivePowerMaxPhaseBReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_ACTIVEPOWERMAXPHASEB), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_ACTIVEPOWERMAXPHASEB), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5469,9 +6026,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getReactivePowerPhaseBAsync() {
-        return read(attributes.get(ATTR_REACTIVEPOWERPHASEB));
+        return read(serverAttributes.get(ATTR_REACTIVEPOWERPHASEB));
     }
 
     /**
@@ -5490,13 +6049,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getReactivePowerPhaseB(final long refreshPeriod) {
-        if (attributes.get(ATTR_REACTIVEPOWERPHASEB).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_REACTIVEPOWERPHASEB).getLastValue();
+        if (serverAttributes.get(ATTR_REACTIVEPOWERPHASEB).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_REACTIVEPOWERPHASEB).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_REACTIVEPOWERPHASEB));
+        return (Integer) readSync(serverAttributes.get(ATTR_REACTIVEPOWERPHASEB));
     }
 
     /**
@@ -5510,9 +6071,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setReactivePowerPhaseBReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_REACTIVEPOWERPHASEB), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_REACTIVEPOWERPHASEB), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5523,9 +6086,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getApparentPowerPhaseBAsync() {
-        return read(attributes.get(ATTR_APPARENTPOWERPHASEB));
+        return read(serverAttributes.get(ATTR_APPARENTPOWERPHASEB));
     }
 
     /**
@@ -5544,13 +6109,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getApparentPowerPhaseB(final long refreshPeriod) {
-        if (attributes.get(ATTR_APPARENTPOWERPHASEB).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_APPARENTPOWERPHASEB).getLastValue();
+        if (serverAttributes.get(ATTR_APPARENTPOWERPHASEB).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_APPARENTPOWERPHASEB).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_APPARENTPOWERPHASEB));
+        return (Integer) readSync(serverAttributes.get(ATTR_APPARENTPOWERPHASEB));
     }
 
     /**
@@ -5564,9 +6131,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setApparentPowerPhaseBReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_APPARENTPOWERPHASEB), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_APPARENTPOWERPHASEB), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5577,9 +6146,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPowerFactorPhaseBAsync() {
-        return read(attributes.get(ATTR_POWERFACTORPHASEB));
+        return read(serverAttributes.get(ATTR_POWERFACTORPHASEB));
     }
 
     /**
@@ -5598,13 +6169,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPowerFactorPhaseB(final long refreshPeriod) {
-        if (attributes.get(ATTR_POWERFACTORPHASEB).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_POWERFACTORPHASEB).getLastValue();
+        if (serverAttributes.get(ATTR_POWERFACTORPHASEB).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_POWERFACTORPHASEB).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_POWERFACTORPHASEB));
+        return (Integer) readSync(serverAttributes.get(ATTR_POWERFACTORPHASEB));
     }
 
     /**
@@ -5618,9 +6191,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPowerFactorPhaseBReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_POWERFACTORPHASEB), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_POWERFACTORPHASEB), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5631,9 +6206,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAverageRmsVoltageMeasurementPeriodPhaseBAsync() {
-        return read(attributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIODPHASEB));
+        return read(serverAttributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIODPHASEB));
     }
 
     /**
@@ -5652,13 +6229,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAverageRmsVoltageMeasurementPeriodPhaseB(final long refreshPeriod) {
-        if (attributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIODPHASEB).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIODPHASEB).getLastValue();
+        if (serverAttributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIODPHASEB).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIODPHASEB).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIODPHASEB));
+        return (Integer) readSync(serverAttributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIODPHASEB));
     }
 
     /**
@@ -5672,9 +6251,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setAverageRmsVoltageMeasurementPeriodPhaseBReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIODPHASEB), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIODPHASEB), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5685,9 +6266,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAverageRmsOverVoltageCounterPhaseBAsync() {
-        return read(attributes.get(ATTR_AVERAGERMSOVERVOLTAGECOUNTERPHASEB));
+        return read(serverAttributes.get(ATTR_AVERAGERMSOVERVOLTAGECOUNTERPHASEB));
     }
 
     /**
@@ -5706,13 +6289,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAverageRmsOverVoltageCounterPhaseB(final long refreshPeriod) {
-        if (attributes.get(ATTR_AVERAGERMSOVERVOLTAGECOUNTERPHASEB).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_AVERAGERMSOVERVOLTAGECOUNTERPHASEB).getLastValue();
+        if (serverAttributes.get(ATTR_AVERAGERMSOVERVOLTAGECOUNTERPHASEB).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_AVERAGERMSOVERVOLTAGECOUNTERPHASEB).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_AVERAGERMSOVERVOLTAGECOUNTERPHASEB));
+        return (Integer) readSync(serverAttributes.get(ATTR_AVERAGERMSOVERVOLTAGECOUNTERPHASEB));
     }
 
     /**
@@ -5726,9 +6311,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setAverageRmsOverVoltageCounterPhaseBReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_AVERAGERMSOVERVOLTAGECOUNTERPHASEB), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_AVERAGERMSOVERVOLTAGECOUNTERPHASEB), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5739,9 +6326,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAverageRmsUnderVoltageCounterPhaseBAsync() {
-        return read(attributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTERPHASEB));
+        return read(serverAttributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTERPHASEB));
     }
 
     /**
@@ -5760,13 +6349,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAverageRmsUnderVoltageCounterPhaseB(final long refreshPeriod) {
-        if (attributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTERPHASEB).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTERPHASEB).getLastValue();
+        if (serverAttributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTERPHASEB).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTERPHASEB).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTERPHASEB));
+        return (Integer) readSync(serverAttributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTERPHASEB));
     }
 
     /**
@@ -5780,9 +6371,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setAverageRmsUnderVoltageCounterPhaseBReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTERPHASEB), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTERPHASEB), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5793,9 +6386,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsExtremeOverVoltagePeriodPhaseBAsync() {
-        return read(attributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIODPHASEB));
+        return read(serverAttributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIODPHASEB));
     }
 
     /**
@@ -5814,13 +6409,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsExtremeOverVoltagePeriodPhaseB(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIODPHASEB).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIODPHASEB).getLastValue();
+        if (serverAttributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIODPHASEB).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIODPHASEB).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIODPHASEB));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIODPHASEB));
     }
 
     /**
@@ -5834,9 +6431,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsExtremeOverVoltagePeriodPhaseBReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIODPHASEB), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIODPHASEB), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5847,9 +6446,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsExtremeUnderVoltagePeriodPhaseBAsync() {
-        return read(attributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIODPHASEB));
+        return read(serverAttributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIODPHASEB));
     }
 
     /**
@@ -5868,13 +6469,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsExtremeUnderVoltagePeriodPhaseB(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIODPHASEB).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIODPHASEB).getLastValue();
+        if (serverAttributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIODPHASEB).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIODPHASEB).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIODPHASEB));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIODPHASEB));
     }
 
     /**
@@ -5888,9 +6491,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsExtremeUnderVoltagePeriodPhaseBReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIODPHASEB), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIODPHASEB), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5901,9 +6506,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsVoltageSagPeriodPhaseBAsync() {
-        return read(attributes.get(ATTR_RMSVOLTAGESAGPERIODPHASEB));
+        return read(serverAttributes.get(ATTR_RMSVOLTAGESAGPERIODPHASEB));
     }
 
     /**
@@ -5922,13 +6529,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsVoltageSagPeriodPhaseB(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSVOLTAGESAGPERIODPHASEB).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSVOLTAGESAGPERIODPHASEB).getLastValue();
+        if (serverAttributes.get(ATTR_RMSVOLTAGESAGPERIODPHASEB).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSVOLTAGESAGPERIODPHASEB).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSVOLTAGESAGPERIODPHASEB));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSVOLTAGESAGPERIODPHASEB));
     }
 
     /**
@@ -5942,9 +6551,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsVoltageSagPeriodPhaseBReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_RMSVOLTAGESAGPERIODPHASEB), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_RMSVOLTAGESAGPERIODPHASEB), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5955,9 +6566,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsVoltageSwellPeriodPhaseBAsync() {
-        return read(attributes.get(ATTR_RMSVOLTAGESWELLPERIODPHASEB));
+        return read(serverAttributes.get(ATTR_RMSVOLTAGESWELLPERIODPHASEB));
     }
 
     /**
@@ -5976,13 +6589,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsVoltageSwellPeriodPhaseB(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSVOLTAGESWELLPERIODPHASEB).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSVOLTAGESWELLPERIODPHASEB).getLastValue();
+        if (serverAttributes.get(ATTR_RMSVOLTAGESWELLPERIODPHASEB).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSVOLTAGESWELLPERIODPHASEB).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSVOLTAGESWELLPERIODPHASEB));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSVOLTAGESWELLPERIODPHASEB));
     }
 
     /**
@@ -5996,9 +6611,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsVoltageSwellPeriodPhaseBReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_RMSVOLTAGESWELLPERIODPHASEB), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_RMSVOLTAGESWELLPERIODPHASEB), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6009,9 +6626,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getLineCurrentPhaseCAsync() {
-        return read(attributes.get(ATTR_LINECURRENTPHASEC));
+        return read(serverAttributes.get(ATTR_LINECURRENTPHASEC));
     }
 
     /**
@@ -6030,13 +6649,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getLineCurrentPhaseC(final long refreshPeriod) {
-        if (attributes.get(ATTR_LINECURRENTPHASEC).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_LINECURRENTPHASEC).getLastValue();
+        if (serverAttributes.get(ATTR_LINECURRENTPHASEC).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_LINECURRENTPHASEC).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_LINECURRENTPHASEC));
+        return (Integer) readSync(serverAttributes.get(ATTR_LINECURRENTPHASEC));
     }
 
     /**
@@ -6050,9 +6671,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setLineCurrentPhaseCReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_LINECURRENTPHASEC), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_LINECURRENTPHASEC), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6063,9 +6686,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getActiveCurrentPhaseCAsync() {
-        return read(attributes.get(ATTR_ACTIVECURRENTPHASEC));
+        return read(serverAttributes.get(ATTR_ACTIVECURRENTPHASEC));
     }
 
     /**
@@ -6084,13 +6709,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getActiveCurrentPhaseC(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACTIVECURRENTPHASEC).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACTIVECURRENTPHASEC).getLastValue();
+        if (serverAttributes.get(ATTR_ACTIVECURRENTPHASEC).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACTIVECURRENTPHASEC).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ACTIVECURRENTPHASEC));
+        return (Integer) readSync(serverAttributes.get(ATTR_ACTIVECURRENTPHASEC));
     }
 
     /**
@@ -6104,9 +6731,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setActiveCurrentPhaseCReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_ACTIVECURRENTPHASEC), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_ACTIVECURRENTPHASEC), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6117,9 +6746,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getReactiveCurrentPhaseCAsync() {
-        return read(attributes.get(ATTR_REACTIVECURRENTPHASEC));
+        return read(serverAttributes.get(ATTR_REACTIVECURRENTPHASEC));
     }
 
     /**
@@ -6138,13 +6769,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getReactiveCurrentPhaseC(final long refreshPeriod) {
-        if (attributes.get(ATTR_REACTIVECURRENTPHASEC).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_REACTIVECURRENTPHASEC).getLastValue();
+        if (serverAttributes.get(ATTR_REACTIVECURRENTPHASEC).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_REACTIVECURRENTPHASEC).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_REACTIVECURRENTPHASEC));
+        return (Integer) readSync(serverAttributes.get(ATTR_REACTIVECURRENTPHASEC));
     }
 
     /**
@@ -6158,9 +6791,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setReactiveCurrentPhaseCReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_REACTIVECURRENTPHASEC), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_REACTIVECURRENTPHASEC), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6171,9 +6806,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsVoltagePhaseCAsync() {
-        return read(attributes.get(ATTR_RMSVOLTAGEPHASEC));
+        return read(serverAttributes.get(ATTR_RMSVOLTAGEPHASEC));
     }
 
     /**
@@ -6192,13 +6829,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsVoltagePhaseC(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSVOLTAGEPHASEC).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSVOLTAGEPHASEC).getLastValue();
+        if (serverAttributes.get(ATTR_RMSVOLTAGEPHASEC).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSVOLTAGEPHASEC).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSVOLTAGEPHASEC));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSVOLTAGEPHASEC));
     }
 
     /**
@@ -6212,9 +6851,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsVoltagePhaseCReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_RMSVOLTAGEPHASEC), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_RMSVOLTAGEPHASEC), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6225,9 +6866,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsVoltageMinPhaseCAsync() {
-        return read(attributes.get(ATTR_RMSVOLTAGEMINPHASEC));
+        return read(serverAttributes.get(ATTR_RMSVOLTAGEMINPHASEC));
     }
 
     /**
@@ -6246,13 +6889,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsVoltageMinPhaseC(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSVOLTAGEMINPHASEC).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSVOLTAGEMINPHASEC).getLastValue();
+        if (serverAttributes.get(ATTR_RMSVOLTAGEMINPHASEC).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSVOLTAGEMINPHASEC).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSVOLTAGEMINPHASEC));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSVOLTAGEMINPHASEC));
     }
 
     /**
@@ -6266,9 +6911,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsVoltageMinPhaseCReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_RMSVOLTAGEMINPHASEC), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_RMSVOLTAGEMINPHASEC), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6279,9 +6926,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsVoltageMaxPhaseCAsync() {
-        return read(attributes.get(ATTR_RMSVOLTAGEMAXPHASEC));
+        return read(serverAttributes.get(ATTR_RMSVOLTAGEMAXPHASEC));
     }
 
     /**
@@ -6300,13 +6949,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsVoltageMaxPhaseC(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSVOLTAGEMAXPHASEC).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSVOLTAGEMAXPHASEC).getLastValue();
+        if (serverAttributes.get(ATTR_RMSVOLTAGEMAXPHASEC).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSVOLTAGEMAXPHASEC).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSVOLTAGEMAXPHASEC));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSVOLTAGEMAXPHASEC));
     }
 
     /**
@@ -6320,9 +6971,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsVoltageMaxPhaseCReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_RMSVOLTAGEMAXPHASEC), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_RMSVOLTAGEMAXPHASEC), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6333,9 +6986,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsCurrentPhaseCAsync() {
-        return read(attributes.get(ATTR_RMSCURRENTPHASEC));
+        return read(serverAttributes.get(ATTR_RMSCURRENTPHASEC));
     }
 
     /**
@@ -6354,13 +7009,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsCurrentPhaseC(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSCURRENTPHASEC).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSCURRENTPHASEC).getLastValue();
+        if (serverAttributes.get(ATTR_RMSCURRENTPHASEC).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSCURRENTPHASEC).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSCURRENTPHASEC));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSCURRENTPHASEC));
     }
 
     /**
@@ -6374,9 +7031,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsCurrentPhaseCReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_RMSCURRENTPHASEC), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_RMSCURRENTPHASEC), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6387,9 +7046,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsCurrentMinPhaseCAsync() {
-        return read(attributes.get(ATTR_RMSCURRENTMINPHASEC));
+        return read(serverAttributes.get(ATTR_RMSCURRENTMINPHASEC));
     }
 
     /**
@@ -6408,13 +7069,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsCurrentMinPhaseC(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSCURRENTMINPHASEC).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSCURRENTMINPHASEC).getLastValue();
+        if (serverAttributes.get(ATTR_RMSCURRENTMINPHASEC).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSCURRENTMINPHASEC).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSCURRENTMINPHASEC));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSCURRENTMINPHASEC));
     }
 
     /**
@@ -6428,9 +7091,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsCurrentMinPhaseCReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_RMSCURRENTMINPHASEC), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_RMSCURRENTMINPHASEC), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6441,9 +7106,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsCurrentMaxPhaseCAsync() {
-        return read(attributes.get(ATTR_RMSCURRENTMAXPHASEC));
+        return read(serverAttributes.get(ATTR_RMSCURRENTMAXPHASEC));
     }
 
     /**
@@ -6462,13 +7129,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsCurrentMaxPhaseC(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSCURRENTMAXPHASEC).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSCURRENTMAXPHASEC).getLastValue();
+        if (serverAttributes.get(ATTR_RMSCURRENTMAXPHASEC).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSCURRENTMAXPHASEC).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSCURRENTMAXPHASEC));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSCURRENTMAXPHASEC));
     }
 
     /**
@@ -6482,9 +7151,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsCurrentMaxPhaseCReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_RMSCURRENTMAXPHASEC), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_RMSCURRENTMAXPHASEC), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6495,9 +7166,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getActivePowerPhaseCAsync() {
-        return read(attributes.get(ATTR_ACTIVEPOWERPHASEC));
+        return read(serverAttributes.get(ATTR_ACTIVEPOWERPHASEC));
     }
 
     /**
@@ -6516,13 +7189,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getActivePowerPhaseC(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACTIVEPOWERPHASEC).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACTIVEPOWERPHASEC).getLastValue();
+        if (serverAttributes.get(ATTR_ACTIVEPOWERPHASEC).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACTIVEPOWERPHASEC).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ACTIVEPOWERPHASEC));
+        return (Integer) readSync(serverAttributes.get(ATTR_ACTIVEPOWERPHASEC));
     }
 
     /**
@@ -6536,9 +7211,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setActivePowerPhaseCReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_ACTIVEPOWERPHASEC), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_ACTIVEPOWERPHASEC), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6549,9 +7226,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getActivePowerMinPhaseCAsync() {
-        return read(attributes.get(ATTR_ACTIVEPOWERMINPHASEC));
+        return read(serverAttributes.get(ATTR_ACTIVEPOWERMINPHASEC));
     }
 
     /**
@@ -6570,13 +7249,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getActivePowerMinPhaseC(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACTIVEPOWERMINPHASEC).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACTIVEPOWERMINPHASEC).getLastValue();
+        if (serverAttributes.get(ATTR_ACTIVEPOWERMINPHASEC).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACTIVEPOWERMINPHASEC).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ACTIVEPOWERMINPHASEC));
+        return (Integer) readSync(serverAttributes.get(ATTR_ACTIVEPOWERMINPHASEC));
     }
 
     /**
@@ -6590,9 +7271,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setActivePowerMinPhaseCReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_ACTIVEPOWERMINPHASEC), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_ACTIVEPOWERMINPHASEC), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6603,9 +7286,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getActivePowerMaxPhaseCAsync() {
-        return read(attributes.get(ATTR_ACTIVEPOWERMAXPHASEC));
+        return read(serverAttributes.get(ATTR_ACTIVEPOWERMAXPHASEC));
     }
 
     /**
@@ -6624,13 +7309,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getActivePowerMaxPhaseC(final long refreshPeriod) {
-        if (attributes.get(ATTR_ACTIVEPOWERMAXPHASEC).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ACTIVEPOWERMAXPHASEC).getLastValue();
+        if (serverAttributes.get(ATTR_ACTIVEPOWERMAXPHASEC).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACTIVEPOWERMAXPHASEC).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ACTIVEPOWERMAXPHASEC));
+        return (Integer) readSync(serverAttributes.get(ATTR_ACTIVEPOWERMAXPHASEC));
     }
 
     /**
@@ -6644,9 +7331,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setActivePowerMaxPhaseCReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_ACTIVEPOWERMAXPHASEC), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_ACTIVEPOWERMAXPHASEC), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6657,9 +7346,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getReactivePowerPhaseCAsync() {
-        return read(attributes.get(ATTR_REACTIVEPOWERPHASEC));
+        return read(serverAttributes.get(ATTR_REACTIVEPOWERPHASEC));
     }
 
     /**
@@ -6678,13 +7369,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getReactivePowerPhaseC(final long refreshPeriod) {
-        if (attributes.get(ATTR_REACTIVEPOWERPHASEC).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_REACTIVEPOWERPHASEC).getLastValue();
+        if (serverAttributes.get(ATTR_REACTIVEPOWERPHASEC).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_REACTIVEPOWERPHASEC).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_REACTIVEPOWERPHASEC));
+        return (Integer) readSync(serverAttributes.get(ATTR_REACTIVEPOWERPHASEC));
     }
 
     /**
@@ -6698,9 +7391,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setReactivePowerPhaseCReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_REACTIVEPOWERPHASEC), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_REACTIVEPOWERPHASEC), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6711,9 +7406,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getApparentPowerPhaseCAsync() {
-        return read(attributes.get(ATTR_APPARENTPOWERPHASEC));
+        return read(serverAttributes.get(ATTR_APPARENTPOWERPHASEC));
     }
 
     /**
@@ -6732,13 +7429,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getApparentPowerPhaseC(final long refreshPeriod) {
-        if (attributes.get(ATTR_APPARENTPOWERPHASEC).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_APPARENTPOWERPHASEC).getLastValue();
+        if (serverAttributes.get(ATTR_APPARENTPOWERPHASEC).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_APPARENTPOWERPHASEC).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_APPARENTPOWERPHASEC));
+        return (Integer) readSync(serverAttributes.get(ATTR_APPARENTPOWERPHASEC));
     }
 
     /**
@@ -6752,9 +7451,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setApparentPowerPhaseCReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_APPARENTPOWERPHASEC), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_APPARENTPOWERPHASEC), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6765,9 +7466,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getPowerFactorPhaseCAsync() {
-        return read(attributes.get(ATTR_POWERFACTORPHASEC));
+        return read(serverAttributes.get(ATTR_POWERFACTORPHASEC));
     }
 
     /**
@@ -6786,13 +7489,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getPowerFactorPhaseC(final long refreshPeriod) {
-        if (attributes.get(ATTR_POWERFACTORPHASEC).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_POWERFACTORPHASEC).getLastValue();
+        if (serverAttributes.get(ATTR_POWERFACTORPHASEC).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_POWERFACTORPHASEC).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_POWERFACTORPHASEC));
+        return (Integer) readSync(serverAttributes.get(ATTR_POWERFACTORPHASEC));
     }
 
     /**
@@ -6806,9 +7511,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setPowerFactorPhaseCReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_POWERFACTORPHASEC), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_POWERFACTORPHASEC), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6819,9 +7526,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAverageRmsVoltageMeasurementPeriodPhaseCAsync() {
-        return read(attributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIODPHASEC));
+        return read(serverAttributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIODPHASEC));
     }
 
     /**
@@ -6840,13 +7549,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAverageRmsVoltageMeasurementPeriodPhaseC(final long refreshPeriod) {
-        if (attributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIODPHASEC).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIODPHASEC).getLastValue();
+        if (serverAttributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIODPHASEC).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIODPHASEC).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIODPHASEC));
+        return (Integer) readSync(serverAttributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIODPHASEC));
     }
 
     /**
@@ -6860,9 +7571,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setAverageRmsVoltageMeasurementPeriodPhaseCReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIODPHASEC), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_AVERAGERMSVOLTAGEMEASUREMENTPERIODPHASEC), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6873,9 +7586,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAverageRmsOverVoltageCounterPhaseCAsync() {
-        return read(attributes.get(ATTR_AVERAGERMSOVERVOLTAGECOUNTERPHASEC));
+        return read(serverAttributes.get(ATTR_AVERAGERMSOVERVOLTAGECOUNTERPHASEC));
     }
 
     /**
@@ -6894,13 +7609,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAverageRmsOverVoltageCounterPhaseC(final long refreshPeriod) {
-        if (attributes.get(ATTR_AVERAGERMSOVERVOLTAGECOUNTERPHASEC).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_AVERAGERMSOVERVOLTAGECOUNTERPHASEC).getLastValue();
+        if (serverAttributes.get(ATTR_AVERAGERMSOVERVOLTAGECOUNTERPHASEC).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_AVERAGERMSOVERVOLTAGECOUNTERPHASEC).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_AVERAGERMSOVERVOLTAGECOUNTERPHASEC));
+        return (Integer) readSync(serverAttributes.get(ATTR_AVERAGERMSOVERVOLTAGECOUNTERPHASEC));
     }
 
     /**
@@ -6914,9 +7631,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setAverageRmsOverVoltageCounterPhaseCReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_AVERAGERMSOVERVOLTAGECOUNTERPHASEC), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_AVERAGERMSOVERVOLTAGECOUNTERPHASEC), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6927,9 +7646,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getAverageRmsUnderVoltageCounterPhaseCAsync() {
-        return read(attributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTERPHASEC));
+        return read(serverAttributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTERPHASEC));
     }
 
     /**
@@ -6948,13 +7669,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getAverageRmsUnderVoltageCounterPhaseC(final long refreshPeriod) {
-        if (attributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTERPHASEC).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTERPHASEC).getLastValue();
+        if (serverAttributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTERPHASEC).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTERPHASEC).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTERPHASEC));
+        return (Integer) readSync(serverAttributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTERPHASEC));
     }
 
     /**
@@ -6968,9 +7691,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setAverageRmsUnderVoltageCounterPhaseCReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTERPHASEC), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_AVERAGERMSUNDERVOLTAGECOUNTERPHASEC), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -6981,9 +7706,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsExtremeOverVoltagePeriodPhaseCAsync() {
-        return read(attributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIODPHASEC));
+        return read(serverAttributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIODPHASEC));
     }
 
     /**
@@ -7002,13 +7729,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsExtremeOverVoltagePeriodPhaseC(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIODPHASEC).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIODPHASEC).getLastValue();
+        if (serverAttributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIODPHASEC).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIODPHASEC).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIODPHASEC));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIODPHASEC));
     }
 
     /**
@@ -7022,9 +7751,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsExtremeOverVoltagePeriodPhaseCReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIODPHASEC), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_RMSEXTREMEOVERVOLTAGEPERIODPHASEC), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -7035,9 +7766,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsExtremeUnderVoltagePeriodPhaseCAsync() {
-        return read(attributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIODPHASEC));
+        return read(serverAttributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIODPHASEC));
     }
 
     /**
@@ -7056,13 +7789,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsExtremeUnderVoltagePeriodPhaseC(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIODPHASEC).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIODPHASEC).getLastValue();
+        if (serverAttributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIODPHASEC).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIODPHASEC).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIODPHASEC));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIODPHASEC));
     }
 
     /**
@@ -7076,9 +7811,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsExtremeUnderVoltagePeriodPhaseCReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIODPHASEC), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_RMSEXTREMEUNDERVOLTAGEPERIODPHASEC), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -7089,9 +7826,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsVoltageSagPeriodPhaseCAsync() {
-        return read(attributes.get(ATTR_RMSVOLTAGESAGPERIODPHASEC));
+        return read(serverAttributes.get(ATTR_RMSVOLTAGESAGPERIODPHASEC));
     }
 
     /**
@@ -7110,13 +7849,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsVoltageSagPeriodPhaseC(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSVOLTAGESAGPERIODPHASEC).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSVOLTAGESAGPERIODPHASEC).getLastValue();
+        if (serverAttributes.get(ATTR_RMSVOLTAGESAGPERIODPHASEC).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSVOLTAGESAGPERIODPHASEC).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSVOLTAGESAGPERIODPHASEC));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSVOLTAGESAGPERIODPHASEC));
     }
 
     /**
@@ -7130,9 +7871,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsVoltageSagPeriodPhaseCReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_RMSVOLTAGESAGPERIODPHASEC), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_RMSVOLTAGESAGPERIODPHASEC), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -7143,9 +7886,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRmsVoltageSwellPeriodPhaseCAsync() {
-        return read(attributes.get(ATTR_RMSVOLTAGESWELLPERIODPHASEC));
+        return read(serverAttributes.get(ATTR_RMSVOLTAGESWELLPERIODPHASEC));
     }
 
     /**
@@ -7164,13 +7909,15 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRmsVoltageSwellPeriodPhaseC(final long refreshPeriod) {
-        if (attributes.get(ATTR_RMSVOLTAGESWELLPERIODPHASEC).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RMSVOLTAGESWELLPERIODPHASEC).getLastValue();
+        if (serverAttributes.get(ATTR_RMSVOLTAGESWELLPERIODPHASEC).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RMSVOLTAGESWELLPERIODPHASEC).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RMSVOLTAGESWELLPERIODPHASEC));
+        return (Integer) readSync(serverAttributes.get(ATTR_RMSVOLTAGESWELLPERIODPHASEC));
     }
 
     /**
@@ -7184,9 +7931,11 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRmsVoltageSwellPeriodPhaseCReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_RMSVOLTAGESWELLPERIODPHASEC), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_RMSVOLTAGESWELLPERIODPHASEC), minInterval, maxInterval, reportableChange);
     }
 
     /**

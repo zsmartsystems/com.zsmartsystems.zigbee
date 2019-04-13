@@ -18,7 +18,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Zone Status Change Notification Command value object class.
  * <p>
- * Cluster: <b>IAS Zone</b>. Command is sent <b>FROM</b> the server.
+ * Cluster: <b>IAS Zone</b>. Command ID 0x00 is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the IAS Zone cluster.
  * <p>
  * The Zone Status Change Notification command is generated when a change takes place in one or
@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class ZoneStatusChangeNotificationCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.

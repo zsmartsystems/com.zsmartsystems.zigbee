@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T21:33:25Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
 public class ZclFanControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -52,7 +52,14 @@ public class ZclFanControlCluster extends ZclCluster {
     public static final int ATTR_FANMODESEQUENCE = 0x0001;
 
     @Override
-    protected Map<Integer, ZclAttribute> initializeAttributes() {
+    protected Map<Integer, ZclAttribute> initializeClientAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
+
+        return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(2);
 
         attributeMap.put(ATTR_FANMODE, new ZclAttribute(ZclClusterType.FAN_CONTROL, ATTR_FANMODE, "Fan Mode", ZclDataType.ENUMERATION_8_BIT, false, true, true, true));
@@ -81,9 +88,11 @@ public class ZclFanControlCluster extends ZclCluster {
      *
      * @param fanMode the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setFanMode(final Integer value) {
-        return write(attributes.get(ATTR_FANMODE), value);
+        return write(serverAttributes.get(ATTR_FANMODE), value);
     }
 
     /**
@@ -96,9 +105,11 @@ public class ZclFanControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getFanModeAsync() {
-        return read(attributes.get(ATTR_FANMODE));
+        return read(serverAttributes.get(ATTR_FANMODE));
     }
 
     /**
@@ -119,13 +130,15 @@ public class ZclFanControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getFanMode(final long refreshPeriod) {
-        if (attributes.get(ATTR_FANMODE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_FANMODE).getLastValue();
+        if (serverAttributes.get(ATTR_FANMODE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_FANMODE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_FANMODE));
+        return (Integer) readSync(serverAttributes.get(ATTR_FANMODE));
     }
 
     /**
@@ -140,9 +153,11 @@ public class ZclFanControlCluster extends ZclCluster {
      *
      * @param fanModeSequence the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setFanModeSequence(final Integer value) {
-        return write(attributes.get(ATTR_FANMODESEQUENCE), value);
+        return write(serverAttributes.get(ATTR_FANMODESEQUENCE), value);
     }
 
     /**
@@ -156,9 +171,11 @@ public class ZclFanControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getFanModeSequenceAsync() {
-        return read(attributes.get(ATTR_FANMODESEQUENCE));
+        return read(serverAttributes.get(ATTR_FANMODESEQUENCE));
     }
 
     /**
@@ -180,12 +197,14 @@ public class ZclFanControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getFanModeSequence(final long refreshPeriod) {
-        if (attributes.get(ATTR_FANMODESEQUENCE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_FANMODESEQUENCE).getLastValue();
+        if (serverAttributes.get(ATTR_FANMODESEQUENCE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_FANMODESEQUENCE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_FANMODESEQUENCE));
+        return (Integer) readSync(serverAttributes.get(ATTR_FANMODESEQUENCE));
     }
 }

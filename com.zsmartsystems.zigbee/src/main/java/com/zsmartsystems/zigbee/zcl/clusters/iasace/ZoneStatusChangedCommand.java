@@ -18,7 +18,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Zone Status Changed Command value object class.
  * <p>
- * Cluster: <b>IAS ACE</b>. Command is sent <b>FROM</b> the server.
+ * Cluster: <b>IAS ACE</b>. Command ID 0x03 is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the IAS ACE cluster.
  * <p>
  * This command updates ACE clients in the system of changes to zone status recorded by the ACE
@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class ZoneStatusChangedCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.

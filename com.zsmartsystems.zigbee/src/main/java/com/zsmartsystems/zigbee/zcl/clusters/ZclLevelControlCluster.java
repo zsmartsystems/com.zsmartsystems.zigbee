@@ -52,7 +52,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T21:33:25Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
 public class ZclLevelControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -114,7 +114,14 @@ public class ZclLevelControlCluster extends ZclCluster {
     public static final int ATTR_DEFAULTMOVERATE = 0x0014;
 
     @Override
-    protected Map<Integer, ZclAttribute> initializeAttributes() {
+    protected Map<Integer, ZclAttribute> initializeClientAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
+
+        return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(7);
 
         attributeMap.put(ATTR_CURRENTLEVEL, new ZclAttribute(ZclClusterType.LEVEL_CONTROL, ATTR_CURRENTLEVEL, "Current Level", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, true));
@@ -164,9 +171,11 @@ public class ZclLevelControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCurrentLevelAsync() {
-        return read(attributes.get(ATTR_CURRENTLEVEL));
+        return read(serverAttributes.get(ATTR_CURRENTLEVEL));
     }
 
     /**
@@ -188,13 +197,15 @@ public class ZclLevelControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCurrentLevel(final long refreshPeriod) {
-        if (attributes.get(ATTR_CURRENTLEVEL).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CURRENTLEVEL).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTLEVEL).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTLEVEL).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CURRENTLEVEL));
+        return (Integer) readSync(serverAttributes.get(ATTR_CURRENTLEVEL));
     }
 
     /**
@@ -211,9 +222,11 @@ public class ZclLevelControlCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setCurrentLevelReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_CURRENTLEVEL), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_CURRENTLEVEL), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -227,9 +240,11 @@ public class ZclLevelControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRemainingTimeAsync() {
-        return read(attributes.get(ATTR_REMAININGTIME));
+        return read(serverAttributes.get(ATTR_REMAININGTIME));
     }
 
     /**
@@ -251,13 +266,15 @@ public class ZclLevelControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRemainingTime(final long refreshPeriod) {
-        if (attributes.get(ATTR_REMAININGTIME).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_REMAININGTIME).getLastValue();
+        if (serverAttributes.get(ATTR_REMAININGTIME).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_REMAININGTIME).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_REMAININGTIME));
+        return (Integer) readSync(serverAttributes.get(ATTR_REMAININGTIME));
     }
 
     /**
@@ -277,9 +294,11 @@ public class ZclLevelControlCluster extends ZclCluster {
      *
      * @param onOffTransitionTime the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setOnOffTransitionTime(final Integer value) {
-        return write(attributes.get(ATTR_ONOFFTRANSITIONTIME), value);
+        return write(serverAttributes.get(ATTR_ONOFFTRANSITIONTIME), value);
     }
 
     /**
@@ -298,9 +317,11 @@ public class ZclLevelControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getOnOffTransitionTimeAsync() {
-        return read(attributes.get(ATTR_ONOFFTRANSITIONTIME));
+        return read(serverAttributes.get(ATTR_ONOFFTRANSITIONTIME));
     }
 
     /**
@@ -327,13 +348,15 @@ public class ZclLevelControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getOnOffTransitionTime(final long refreshPeriod) {
-        if (attributes.get(ATTR_ONOFFTRANSITIONTIME).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ONOFFTRANSITIONTIME).getLastValue();
+        if (serverAttributes.get(ATTR_ONOFFTRANSITIONTIME).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ONOFFTRANSITIONTIME).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ONOFFTRANSITIONTIME));
+        return (Integer) readSync(serverAttributes.get(ATTR_ONOFFTRANSITIONTIME));
     }
 
     /**
@@ -349,9 +372,11 @@ public class ZclLevelControlCluster extends ZclCluster {
      *
      * @param onLevel the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setOnLevel(final Integer value) {
-        return write(attributes.get(ATTR_ONLEVEL), value);
+        return write(serverAttributes.get(ATTR_ONLEVEL), value);
     }
 
     /**
@@ -366,9 +391,11 @@ public class ZclLevelControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getOnLevelAsync() {
-        return read(attributes.get(ATTR_ONLEVEL));
+        return read(serverAttributes.get(ATTR_ONLEVEL));
     }
 
     /**
@@ -391,13 +418,15 @@ public class ZclLevelControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getOnLevel(final long refreshPeriod) {
-        if (attributes.get(ATTR_ONLEVEL).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ONLEVEL).getLastValue();
+        if (serverAttributes.get(ATTR_ONLEVEL).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ONLEVEL).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ONLEVEL));
+        return (Integer) readSync(serverAttributes.get(ATTR_ONLEVEL));
     }
 
     /**
@@ -415,9 +444,11 @@ public class ZclLevelControlCluster extends ZclCluster {
      *
      * @param onTransitionTime the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setOnTransitionTime(final Integer value) {
-        return write(attributes.get(ATTR_ONTRANSITIONTIME), value);
+        return write(serverAttributes.get(ATTR_ONTRANSITIONTIME), value);
     }
 
     /**
@@ -434,9 +465,11 @@ public class ZclLevelControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getOnTransitionTimeAsync() {
-        return read(attributes.get(ATTR_ONTRANSITIONTIME));
+        return read(serverAttributes.get(ATTR_ONTRANSITIONTIME));
     }
 
     /**
@@ -461,13 +494,15 @@ public class ZclLevelControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getOnTransitionTime(final long refreshPeriod) {
-        if (attributes.get(ATTR_ONTRANSITIONTIME).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ONTRANSITIONTIME).getLastValue();
+        if (serverAttributes.get(ATTR_ONTRANSITIONTIME).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ONTRANSITIONTIME).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ONTRANSITIONTIME));
+        return (Integer) readSync(serverAttributes.get(ATTR_ONTRANSITIONTIME));
     }
 
     /**
@@ -485,9 +520,11 @@ public class ZclLevelControlCluster extends ZclCluster {
      *
      * @param offTransitionTime the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setOffTransitionTime(final Integer value) {
-        return write(attributes.get(ATTR_OFFTRANSITIONTIME), value);
+        return write(serverAttributes.get(ATTR_OFFTRANSITIONTIME), value);
     }
 
     /**
@@ -504,9 +541,11 @@ public class ZclLevelControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getOffTransitionTimeAsync() {
-        return read(attributes.get(ATTR_OFFTRANSITIONTIME));
+        return read(serverAttributes.get(ATTR_OFFTRANSITIONTIME));
     }
 
     /**
@@ -531,13 +570,15 @@ public class ZclLevelControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getOffTransitionTime(final long refreshPeriod) {
-        if (attributes.get(ATTR_OFFTRANSITIONTIME).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_OFFTRANSITIONTIME).getLastValue();
+        if (serverAttributes.get(ATTR_OFFTRANSITIONTIME).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_OFFTRANSITIONTIME).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_OFFTRANSITIONTIME));
+        return (Integer) readSync(serverAttributes.get(ATTR_OFFTRANSITIONTIME));
     }
 
     /**
@@ -552,9 +593,11 @@ public class ZclLevelControlCluster extends ZclCluster {
      *
      * @param defaultMoveRate the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setDefaultMoveRate(final Integer value) {
-        return write(attributes.get(ATTR_DEFAULTMOVERATE), value);
+        return write(serverAttributes.get(ATTR_DEFAULTMOVERATE), value);
     }
 
     /**
@@ -568,9 +611,11 @@ public class ZclLevelControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDefaultMoveRateAsync() {
-        return read(attributes.get(ATTR_DEFAULTMOVERATE));
+        return read(serverAttributes.get(ATTR_DEFAULTMOVERATE));
     }
 
     /**
@@ -592,13 +637,15 @@ public class ZclLevelControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDefaultMoveRate(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEFAULTMOVERATE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DEFAULTMOVERATE).getLastValue();
+        if (serverAttributes.get(ATTR_DEFAULTMOVERATE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DEFAULTMOVERATE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DEFAULTMOVERATE));
+        return (Integer) readSync(serverAttributes.get(ATTR_DEFAULTMOVERATE));
     }
 
     /**

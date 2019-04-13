@@ -110,7 +110,8 @@ public class ZigBeeZclCommandGenerator extends ZigBeeBaseFieldGenerator {
 
             out.println(" * <p>");
             if (packageRoot.contains(".zcl.")) {
-                out.println(" * Cluster: <b>" + cluster.name + "</b>. Command is sent <b>"
+                out.println(" * Cluster: <b>" + cluster.name + "</b>. Command ID 0x"
+                        + String.format("%02X", command.code) + " is sent <b>"
                         + (command.source.equals("client") ? "TO" : "FROM") + "</b> the server.");
                 out.println(" * This command is " + ((cluster.name.equalsIgnoreCase("GENERAL"))
                         ? "a <b>generic</b> command used across the profile."
@@ -124,7 +125,6 @@ public class ZigBeeZclCommandGenerator extends ZigBeeBaseFieldGenerator {
 
             out.println(" * <p>");
             out.println(" * Code is auto-generated. Modifications may be overwritten!");
-
             out.println(" */");
             outputClassGenerated(out);
             out.print("public class " + className + " extends " + commandExtends);
@@ -133,18 +133,24 @@ public class ZigBeeZclCommandGenerator extends ZigBeeBaseFieldGenerator {
             }
             out.println(" {");
 
-            if (!cluster.name.equalsIgnoreCase("GENERAL")) {
-                out.println("    /**");
-                out.println("     * The cluster ID to which this command belongs.");
-                out.println("     */");
-                out.println("    public static int CLUSTER_ID = 0x" + String.format("%04X", cluster.code) + ";");
-                out.println();
-            }
             if (commandExtends.equals("ZclCommand")) {
+                if (!cluster.name.equalsIgnoreCase("GENERAL")) {
+                    out.println("    /**");
+                    out.println("     * The cluster ID to which this command belongs.");
+                    out.println("     */");
+                    out.println("    public static int CLUSTER_ID = 0x" + String.format("%04X", cluster.code) + ";");
+                    out.println();
+                }
                 out.println("    /**");
                 out.println("     * The command ID.");
                 out.println("     */");
                 out.println("    public static int COMMAND_ID = 0x" + String.format("%02X", command.code) + ";");
+                out.println();
+            } else {
+                out.println("    /**");
+                out.println("     * The ZDO cluster ID.");
+                out.println("     */");
+                out.println("    public static int CLUSTER_ID = 0x" + String.format("%04X", command.code) + ";");
                 out.println();
             }
 

@@ -51,7 +51,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
 public class ZclScenesCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -104,7 +104,14 @@ public class ZclScenesCluster extends ZclCluster {
     public static final int ATTR_LASTCONFIGUREDBY = 0x0005;
 
     @Override
-    protected Map<Integer, ZclAttribute> initializeAttributes() {
+    protected Map<Integer, ZclAttribute> initializeClientAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
+
+        return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(6);
 
         attributeMap.put(ATTR_SCENECOUNT, new ZclAttribute(ZclClusterType.SCENES, ATTR_SCENECOUNT, "Scene Count", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
@@ -166,9 +173,11 @@ public class ZclScenesCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getSceneCountAsync() {
-        return read(attributes.get(ATTR_SCENECOUNT));
+        return read(serverAttributes.get(ATTR_SCENECOUNT));
     }
 
     /**
@@ -190,13 +199,15 @@ public class ZclScenesCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getSceneCount(final long refreshPeriod) {
-        if (attributes.get(ATTR_SCENECOUNT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_SCENECOUNT).getLastValue();
+        if (serverAttributes.get(ATTR_SCENECOUNT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_SCENECOUNT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_SCENECOUNT));
+        return (Integer) readSync(serverAttributes.get(ATTR_SCENECOUNT));
     }
 
     /**
@@ -213,9 +224,11 @@ public class ZclScenesCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setSceneCountReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_SCENECOUNT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_SCENECOUNT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -228,9 +241,11 @@ public class ZclScenesCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCurrentSceneAsync() {
-        return read(attributes.get(ATTR_CURRENTSCENE));
+        return read(serverAttributes.get(ATTR_CURRENTSCENE));
     }
 
     /**
@@ -251,13 +266,15 @@ public class ZclScenesCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCurrentScene(final long refreshPeriod) {
-        if (attributes.get(ATTR_CURRENTSCENE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CURRENTSCENE).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTSCENE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTSCENE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CURRENTSCENE));
+        return (Integer) readSync(serverAttributes.get(ATTR_CURRENTSCENE));
     }
 
     /**
@@ -273,9 +290,11 @@ public class ZclScenesCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setCurrentSceneReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_CURRENTSCENE), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_CURRENTSCENE), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -289,9 +308,11 @@ public class ZclScenesCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCurrentGroupAsync() {
-        return read(attributes.get(ATTR_CURRENTGROUP));
+        return read(serverAttributes.get(ATTR_CURRENTGROUP));
     }
 
     /**
@@ -313,13 +334,15 @@ public class ZclScenesCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCurrentGroup(final long refreshPeriod) {
-        if (attributes.get(ATTR_CURRENTGROUP).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CURRENTGROUP).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTGROUP).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTGROUP).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CURRENTGROUP));
+        return (Integer) readSync(serverAttributes.get(ATTR_CURRENTGROUP));
     }
 
     /**
@@ -336,9 +359,11 @@ public class ZclScenesCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setCurrentGroupReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_CURRENTGROUP), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_CURRENTGROUP), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -357,9 +382,11 @@ public class ZclScenesCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getSceneValidAsync() {
-        return read(attributes.get(ATTR_SCENEVALID));
+        return read(serverAttributes.get(ATTR_SCENEVALID));
     }
 
     /**
@@ -386,13 +413,15 @@ public class ZclScenesCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Boolean} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Boolean getSceneValid(final long refreshPeriod) {
-        if (attributes.get(ATTR_SCENEVALID).isLastValueCurrent(refreshPeriod)) {
-            return (Boolean) attributes.get(ATTR_SCENEVALID).getLastValue();
+        if (serverAttributes.get(ATTR_SCENEVALID).isLastValueCurrent(refreshPeriod)) {
+            return (Boolean) serverAttributes.get(ATTR_SCENEVALID).getLastValue();
         }
 
-        return (Boolean) readSync(attributes.get(ATTR_SCENEVALID));
+        return (Boolean) readSync(serverAttributes.get(ATTR_SCENEVALID));
     }
 
     /**
@@ -413,9 +442,11 @@ public class ZclScenesCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setSceneValidReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_SCENEVALID), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_SCENEVALID), minInterval, maxInterval);
     }
 
     /**
@@ -430,9 +461,11 @@ public class ZclScenesCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getNameSupportAsync() {
-        return read(attributes.get(ATTR_NAMESUPPORT));
+        return read(serverAttributes.get(ATTR_NAMESUPPORT));
     }
 
     /**
@@ -455,13 +488,15 @@ public class ZclScenesCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getNameSupport(final long refreshPeriod) {
-        if (attributes.get(ATTR_NAMESUPPORT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_NAMESUPPORT).getLastValue();
+        if (serverAttributes.get(ATTR_NAMESUPPORT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_NAMESUPPORT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_NAMESUPPORT));
+        return (Integer) readSync(serverAttributes.get(ATTR_NAMESUPPORT));
     }
 
     /**
@@ -478,9 +513,11 @@ public class ZclScenesCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setNameSupportReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_NAMESUPPORT), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_NAMESUPPORT), minInterval, maxInterval);
     }
 
     /**
@@ -497,9 +534,11 @@ public class ZclScenesCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getLastConfiguredByAsync() {
-        return read(attributes.get(ATTR_LASTCONFIGUREDBY));
+        return read(serverAttributes.get(ATTR_LASTCONFIGUREDBY));
     }
 
     /**
@@ -524,13 +563,15 @@ public class ZclScenesCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link IeeeAddress} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public IeeeAddress getLastConfiguredBy(final long refreshPeriod) {
-        if (attributes.get(ATTR_LASTCONFIGUREDBY).isLastValueCurrent(refreshPeriod)) {
-            return (IeeeAddress) attributes.get(ATTR_LASTCONFIGUREDBY).getLastValue();
+        if (serverAttributes.get(ATTR_LASTCONFIGUREDBY).isLastValueCurrent(refreshPeriod)) {
+            return (IeeeAddress) serverAttributes.get(ATTR_LASTCONFIGUREDBY).getLastValue();
         }
 
-        return (IeeeAddress) readSync(attributes.get(ATTR_LASTCONFIGUREDBY));
+        return (IeeeAddress) readSync(serverAttributes.get(ATTR_LASTCONFIGUREDBY));
     }
 
     /**

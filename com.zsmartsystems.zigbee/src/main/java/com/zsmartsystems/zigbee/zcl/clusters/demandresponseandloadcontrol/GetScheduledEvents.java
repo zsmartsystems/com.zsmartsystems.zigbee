@@ -20,7 +20,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Get Scheduled Events value object class.
  * <p>
- * Cluster: <b>Demand Response And Load Control</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>Demand Response And Load Control</b>. Command ID 0x01 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Demand Response And Load Control cluster.
  * <p>
  * This command is used to request that all scheduled Load Control Events, starting at or after
@@ -30,7 +30,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class GetScheduledEvents extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.

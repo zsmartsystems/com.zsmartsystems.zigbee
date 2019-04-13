@@ -18,7 +18,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Configure Mirror value object class.
  * <p>
- * Cluster: <b>Metering</b>. Command is sent <b>FROM</b> the server.
+ * Cluster: <b>Metering</b>. Command ID 0x08 is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the Metering cluster.
  * <p>
  * FIXME: ConfigureMirror is sent to the mirror once the mirror has been created. The command
@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class ConfigureMirror extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.

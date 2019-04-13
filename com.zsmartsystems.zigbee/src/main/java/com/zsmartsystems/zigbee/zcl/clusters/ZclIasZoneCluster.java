@@ -36,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
 public class ZclIasZoneCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -112,7 +112,14 @@ public class ZclIasZoneCluster extends ZclCluster {
     public static final int ATTR_CURRENTZONESENSITIVITYLEVEL = 0x0013;
 
     @Override
-    protected Map<Integer, ZclAttribute> initializeAttributes() {
+    protected Map<Integer, ZclAttribute> initializeClientAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
+
+        return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(7);
 
         attributeMap.put(ATTR_ZONESTATE, new ZclAttribute(ZclClusterType.IAS_ZONE, ATTR_ZONESTATE, "Zone State", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
@@ -166,9 +173,11 @@ public class ZclIasZoneCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getZoneStateAsync() {
-        return read(attributes.get(ATTR_ZONESTATE));
+        return read(serverAttributes.get(ATTR_ZONESTATE));
     }
 
     /**
@@ -189,13 +198,15 @@ public class ZclIasZoneCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getZoneState(final long refreshPeriod) {
-        if (attributes.get(ATTR_ZONESTATE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ZONESTATE).getLastValue();
+        if (serverAttributes.get(ATTR_ZONESTATE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ZONESTATE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ZONESTATE));
+        return (Integer) readSync(serverAttributes.get(ATTR_ZONESTATE));
     }
 
     /**
@@ -210,9 +221,11 @@ public class ZclIasZoneCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setZoneStateReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_ZONESTATE), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_ZONESTATE), minInterval, maxInterval);
     }
 
     /**
@@ -225,9 +238,11 @@ public class ZclIasZoneCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getZoneTypeAsync() {
-        return read(attributes.get(ATTR_ZONETYPE));
+        return read(serverAttributes.get(ATTR_ZONETYPE));
     }
 
     /**
@@ -248,13 +263,15 @@ public class ZclIasZoneCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getZoneType(final long refreshPeriod) {
-        if (attributes.get(ATTR_ZONETYPE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ZONETYPE).getLastValue();
+        if (serverAttributes.get(ATTR_ZONETYPE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ZONETYPE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ZONETYPE));
+        return (Integer) readSync(serverAttributes.get(ATTR_ZONETYPE));
     }
 
     /**
@@ -269,9 +286,11 @@ public class ZclIasZoneCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setZoneTypeReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_ZONETYPE), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_ZONETYPE), minInterval, maxInterval);
     }
 
     /**
@@ -284,9 +303,11 @@ public class ZclIasZoneCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getZoneStatusAsync() {
-        return read(attributes.get(ATTR_ZONESTATUS));
+        return read(serverAttributes.get(ATTR_ZONESTATUS));
     }
 
     /**
@@ -307,13 +328,15 @@ public class ZclIasZoneCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getZoneStatus(final long refreshPeriod) {
-        if (attributes.get(ATTR_ZONESTATUS).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ZONESTATUS).getLastValue();
+        if (serverAttributes.get(ATTR_ZONESTATUS).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ZONESTATUS).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ZONESTATUS));
+        return (Integer) readSync(serverAttributes.get(ATTR_ZONESTATUS));
     }
 
     /**
@@ -328,9 +351,11 @@ public class ZclIasZoneCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setZoneStatusReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_ZONESTATUS), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_ZONESTATUS), minInterval, maxInterval);
     }
 
     /**
@@ -352,9 +377,11 @@ public class ZclIasZoneCluster extends ZclCluster {
      *
      * @param iasCieAddress the {@link IeeeAddress} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setIasCieAddress(final IeeeAddress value) {
-        return write(attributes.get(ATTR_IASCIEADDRESS), value);
+        return write(serverAttributes.get(ATTR_IASCIEADDRESS), value);
     }
 
     /**
@@ -375,9 +402,11 @@ public class ZclIasZoneCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getIasCieAddressAsync() {
-        return read(attributes.get(ATTR_IASCIEADDRESS));
+        return read(serverAttributes.get(ATTR_IASCIEADDRESS));
     }
 
     /**
@@ -406,13 +435,15 @@ public class ZclIasZoneCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link IeeeAddress} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public IeeeAddress getIasCieAddress(final long refreshPeriod) {
-        if (attributes.get(ATTR_IASCIEADDRESS).isLastValueCurrent(refreshPeriod)) {
-            return (IeeeAddress) attributes.get(ATTR_IASCIEADDRESS).getLastValue();
+        if (serverAttributes.get(ATTR_IASCIEADDRESS).isLastValueCurrent(refreshPeriod)) {
+            return (IeeeAddress) serverAttributes.get(ATTR_IASCIEADDRESS).getLastValue();
         }
 
-        return (IeeeAddress) readSync(attributes.get(ATTR_IASCIEADDRESS));
+        return (IeeeAddress) readSync(serverAttributes.get(ATTR_IASCIEADDRESS));
     }
 
     /**
@@ -435,9 +466,11 @@ public class ZclIasZoneCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setIasCieAddressReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_IASCIEADDRESS), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_IASCIEADDRESS), minInterval, maxInterval);
     }
 
     /**
@@ -454,9 +487,11 @@ public class ZclIasZoneCluster extends ZclCluster {
      *
      * @param zoneId the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setZoneId(final Integer value) {
-        return write(attributes.get(ATTR_ZONEID), value);
+        return write(serverAttributes.get(ATTR_ZONEID), value);
     }
 
     /**
@@ -472,9 +507,11 @@ public class ZclIasZoneCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getZoneIdAsync() {
-        return read(attributes.get(ATTR_ZONEID));
+        return read(serverAttributes.get(ATTR_ZONEID));
     }
 
     /**
@@ -498,13 +535,15 @@ public class ZclIasZoneCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getZoneId(final long refreshPeriod) {
-        if (attributes.get(ATTR_ZONEID).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ZONEID).getLastValue();
+        if (serverAttributes.get(ATTR_ZONEID).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ZONEID).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ZONEID));
+        return (Integer) readSync(serverAttributes.get(ATTR_ZONEID));
     }
 
     /**
@@ -523,9 +562,11 @@ public class ZclIasZoneCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setZoneIdReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_ZONEID), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_ZONEID), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -552,9 +593,11 @@ public class ZclIasZoneCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getNumberOfZoneSensitivityLevelsSupportedAsync() {
-        return read(attributes.get(ATTR_NUMBEROFZONESENSITIVITYLEVELSSUPPORTED));
+        return read(serverAttributes.get(ATTR_NUMBEROFZONESENSITIVITYLEVELSSUPPORTED));
     }
 
     /**
@@ -589,13 +632,15 @@ public class ZclIasZoneCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getNumberOfZoneSensitivityLevelsSupported(final long refreshPeriod) {
-        if (attributes.get(ATTR_NUMBEROFZONESENSITIVITYLEVELSSUPPORTED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_NUMBEROFZONESENSITIVITYLEVELSSUPPORTED).getLastValue();
+        if (serverAttributes.get(ATTR_NUMBEROFZONESENSITIVITYLEVELSSUPPORTED).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_NUMBEROFZONESENSITIVITYLEVELSSUPPORTED).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_NUMBEROFZONESENSITIVITYLEVELSSUPPORTED));
+        return (Integer) readSync(serverAttributes.get(ATTR_NUMBEROFZONESENSITIVITYLEVELSSUPPORTED));
     }
 
     /**
@@ -617,9 +662,11 @@ public class ZclIasZoneCluster extends ZclCluster {
      *
      * @param currentZoneSensitivityLevel the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setCurrentZoneSensitivityLevel(final Integer value) {
-        return write(attributes.get(ATTR_CURRENTZONESENSITIVITYLEVEL), value);
+        return write(serverAttributes.get(ATTR_CURRENTZONESENSITIVITYLEVEL), value);
     }
 
     /**
@@ -640,9 +687,11 @@ public class ZclIasZoneCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCurrentZoneSensitivityLevelAsync() {
-        return read(attributes.get(ATTR_CURRENTZONESENSITIVITYLEVEL));
+        return read(serverAttributes.get(ATTR_CURRENTZONESENSITIVITYLEVEL));
     }
 
     /**
@@ -671,13 +720,15 @@ public class ZclIasZoneCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCurrentZoneSensitivityLevel(final long refreshPeriod) {
-        if (attributes.get(ATTR_CURRENTZONESENSITIVITYLEVEL).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CURRENTZONESENSITIVITYLEVEL).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTZONESENSITIVITYLEVEL).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTZONESENSITIVITYLEVEL).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CURRENTZONESENSITIVITYLEVEL));
+        return (Integer) readSync(serverAttributes.get(ATTR_CURRENTZONESENSITIVITYLEVEL));
     }
 
     /**

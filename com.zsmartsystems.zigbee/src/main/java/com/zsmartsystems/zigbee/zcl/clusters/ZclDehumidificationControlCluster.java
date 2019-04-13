@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T21:33:25Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
 public class ZclDehumidificationControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -85,7 +85,14 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
     public static final int ATTR_RELATIVEHUMIDITYDISPLAY = 0x0015;
 
     @Override
-    protected Map<Integer, ZclAttribute> initializeAttributes() {
+    protected Map<Integer, ZclAttribute> initializeClientAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
+
+        return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(8);
 
         attributeMap.put(ATTR_RELATIVEHUMIDITY, new ZclAttribute(ZclClusterType.DEHUMIDIFICATION_CONTROL, ATTR_RELATIVEHUMIDITY, "Relative Humidity", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
@@ -121,9 +128,11 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRelativeHumidityAsync() {
-        return read(attributes.get(ATTR_RELATIVEHUMIDITY));
+        return read(serverAttributes.get(ATTR_RELATIVEHUMIDITY));
     }
 
     /**
@@ -146,13 +155,15 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRelativeHumidity(final long refreshPeriod) {
-        if (attributes.get(ATTR_RELATIVEHUMIDITY).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RELATIVEHUMIDITY).getLastValue();
+        if (serverAttributes.get(ATTR_RELATIVEHUMIDITY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RELATIVEHUMIDITY).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RELATIVEHUMIDITY));
+        return (Integer) readSync(serverAttributes.get(ATTR_RELATIVEHUMIDITY));
     }
 
     /**
@@ -170,9 +181,11 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setRelativeHumidityReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_RELATIVEHUMIDITY), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_RELATIVEHUMIDITY), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -187,9 +200,11 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDehumidificationCoolingAsync() {
-        return read(attributes.get(ATTR_DEHUMIDIFICATIONCOOLING));
+        return read(serverAttributes.get(ATTR_DEHUMIDIFICATIONCOOLING));
     }
 
     /**
@@ -212,13 +227,15 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDehumidificationCooling(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEHUMIDIFICATIONCOOLING).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DEHUMIDIFICATIONCOOLING).getLastValue();
+        if (serverAttributes.get(ATTR_DEHUMIDIFICATIONCOOLING).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DEHUMIDIFICATIONCOOLING).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DEHUMIDIFICATIONCOOLING));
+        return (Integer) readSync(serverAttributes.get(ATTR_DEHUMIDIFICATIONCOOLING));
     }
 
     /**
@@ -236,9 +253,11 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setDehumidificationCoolingReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_DEHUMIDIFICATIONCOOLING), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_DEHUMIDIFICATIONCOOLING), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -254,9 +273,11 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      *
      * @param rhDehumidificationSetpoint the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setRhDehumidificationSetpoint(final Integer value) {
-        return write(attributes.get(ATTR_RHDEHUMIDIFICATIONSETPOINT), value);
+        return write(serverAttributes.get(ATTR_RHDEHUMIDIFICATIONSETPOINT), value);
     }
 
     /**
@@ -271,9 +292,11 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRhDehumidificationSetpointAsync() {
-        return read(attributes.get(ATTR_RHDEHUMIDIFICATIONSETPOINT));
+        return read(serverAttributes.get(ATTR_RHDEHUMIDIFICATIONSETPOINT));
     }
 
     /**
@@ -296,13 +319,15 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRhDehumidificationSetpoint(final long refreshPeriod) {
-        if (attributes.get(ATTR_RHDEHUMIDIFICATIONSETPOINT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RHDEHUMIDIFICATIONSETPOINT).getLastValue();
+        if (serverAttributes.get(ATTR_RHDEHUMIDIFICATIONSETPOINT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RHDEHUMIDIFICATIONSETPOINT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RHDEHUMIDIFICATIONSETPOINT));
+        return (Integer) readSync(serverAttributes.get(ATTR_RHDEHUMIDIFICATIONSETPOINT));
     }
 
     /**
@@ -317,9 +342,11 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      *
      * @param relativeHumidityMode the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setRelativeHumidityMode(final Integer value) {
-        return write(attributes.get(ATTR_RELATIVEHUMIDITYMODE), value);
+        return write(serverAttributes.get(ATTR_RELATIVEHUMIDITYMODE), value);
     }
 
     /**
@@ -333,9 +360,11 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRelativeHumidityModeAsync() {
-        return read(attributes.get(ATTR_RELATIVEHUMIDITYMODE));
+        return read(serverAttributes.get(ATTR_RELATIVEHUMIDITYMODE));
     }
 
     /**
@@ -357,13 +386,15 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRelativeHumidityMode(final long refreshPeriod) {
-        if (attributes.get(ATTR_RELATIVEHUMIDITYMODE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RELATIVEHUMIDITYMODE).getLastValue();
+        if (serverAttributes.get(ATTR_RELATIVEHUMIDITYMODE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RELATIVEHUMIDITYMODE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RELATIVEHUMIDITYMODE));
+        return (Integer) readSync(serverAttributes.get(ATTR_RELATIVEHUMIDITYMODE));
     }
 
     /**
@@ -378,9 +409,11 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      *
      * @param dehumidificationLockout the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setDehumidificationLockout(final Integer value) {
-        return write(attributes.get(ATTR_DEHUMIDIFICATIONLOCKOUT), value);
+        return write(serverAttributes.get(ATTR_DEHUMIDIFICATIONLOCKOUT), value);
     }
 
     /**
@@ -394,9 +427,11 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDehumidificationLockoutAsync() {
-        return read(attributes.get(ATTR_DEHUMIDIFICATIONLOCKOUT));
+        return read(serverAttributes.get(ATTR_DEHUMIDIFICATIONLOCKOUT));
     }
 
     /**
@@ -418,13 +453,15 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDehumidificationLockout(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEHUMIDIFICATIONLOCKOUT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DEHUMIDIFICATIONLOCKOUT).getLastValue();
+        if (serverAttributes.get(ATTR_DEHUMIDIFICATIONLOCKOUT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DEHUMIDIFICATIONLOCKOUT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DEHUMIDIFICATIONLOCKOUT));
+        return (Integer) readSync(serverAttributes.get(ATTR_DEHUMIDIFICATIONLOCKOUT));
     }
 
     /**
@@ -439,9 +476,11 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      *
      * @param dehumidificationHysteresis the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setDehumidificationHysteresis(final Integer value) {
-        return write(attributes.get(ATTR_DEHUMIDIFICATIONHYSTERESIS), value);
+        return write(serverAttributes.get(ATTR_DEHUMIDIFICATIONHYSTERESIS), value);
     }
 
     /**
@@ -455,9 +494,11 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDehumidificationHysteresisAsync() {
-        return read(attributes.get(ATTR_DEHUMIDIFICATIONHYSTERESIS));
+        return read(serverAttributes.get(ATTR_DEHUMIDIFICATIONHYSTERESIS));
     }
 
     /**
@@ -479,13 +520,15 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDehumidificationHysteresis(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEHUMIDIFICATIONHYSTERESIS).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DEHUMIDIFICATIONHYSTERESIS).getLastValue();
+        if (serverAttributes.get(ATTR_DEHUMIDIFICATIONHYSTERESIS).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DEHUMIDIFICATIONHYSTERESIS).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DEHUMIDIFICATIONHYSTERESIS));
+        return (Integer) readSync(serverAttributes.get(ATTR_DEHUMIDIFICATIONHYSTERESIS));
     }
 
     /**
@@ -500,9 +543,11 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      *
      * @param dehumidificationMaxCool the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setDehumidificationMaxCool(final Integer value) {
-        return write(attributes.get(ATTR_DEHUMIDIFICATIONMAXCOOL), value);
+        return write(serverAttributes.get(ATTR_DEHUMIDIFICATIONMAXCOOL), value);
     }
 
     /**
@@ -516,9 +561,11 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDehumidificationMaxCoolAsync() {
-        return read(attributes.get(ATTR_DEHUMIDIFICATIONMAXCOOL));
+        return read(serverAttributes.get(ATTR_DEHUMIDIFICATIONMAXCOOL));
     }
 
     /**
@@ -540,13 +587,15 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDehumidificationMaxCool(final long refreshPeriod) {
-        if (attributes.get(ATTR_DEHUMIDIFICATIONMAXCOOL).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DEHUMIDIFICATIONMAXCOOL).getLastValue();
+        if (serverAttributes.get(ATTR_DEHUMIDIFICATIONMAXCOOL).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DEHUMIDIFICATIONMAXCOOL).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DEHUMIDIFICATIONMAXCOOL));
+        return (Integer) readSync(serverAttributes.get(ATTR_DEHUMIDIFICATIONMAXCOOL));
     }
 
     /**
@@ -561,9 +610,11 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      *
      * @param relativeHumidityDisplay the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setRelativeHumidityDisplay(final Integer value) {
-        return write(attributes.get(ATTR_RELATIVEHUMIDITYDISPLAY), value);
+        return write(serverAttributes.get(ATTR_RELATIVEHUMIDITYDISPLAY), value);
     }
 
     /**
@@ -577,9 +628,11 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getRelativeHumidityDisplayAsync() {
-        return read(attributes.get(ATTR_RELATIVEHUMIDITYDISPLAY));
+        return read(serverAttributes.get(ATTR_RELATIVEHUMIDITYDISPLAY));
     }
 
     /**
@@ -601,12 +654,14 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getRelativeHumidityDisplay(final long refreshPeriod) {
-        if (attributes.get(ATTR_RELATIVEHUMIDITYDISPLAY).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_RELATIVEHUMIDITYDISPLAY).getLastValue();
+        if (serverAttributes.get(ATTR_RELATIVEHUMIDITYDISPLAY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_RELATIVEHUMIDITYDISPLAY).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_RELATIVEHUMIDITYDISPLAY));
+        return (Integer) readSync(serverAttributes.get(ATTR_RELATIVEHUMIDITYDISPLAY));
     }
 }

@@ -19,7 +19,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Confirm Key Response value object class.
  * <p>
- * Cluster: <b>Key Establishment</b>. Command is sent <b>FROM</b> the server.
+ * Cluster: <b>Key Establishment</b>. Command ID 0x02 is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the Key Establishment cluster.
  * <p>
  * The Confirm Key Response command allows the responder to verify the initiator has derived
@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class ConfirmKeyResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.

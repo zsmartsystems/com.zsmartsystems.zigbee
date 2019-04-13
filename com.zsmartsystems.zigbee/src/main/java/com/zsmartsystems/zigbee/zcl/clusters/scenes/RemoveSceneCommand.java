@@ -18,14 +18,14 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Remove Scene Command value object class.
  * <p>
- * Cluster: <b>Scenes</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>Scenes</b>. Command ID 0x02 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Scenes cluster.
  * <p>
  * The Remove All Scenes may be addressed to a single device or to a group.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class RemoveSceneCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.

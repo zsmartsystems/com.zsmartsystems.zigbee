@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T21:33:25Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
 public class ZclThermostatUserInterfaceConfigurationCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -65,7 +65,14 @@ public class ZclThermostatUserInterfaceConfigurationCluster extends ZclCluster {
     public static final int ATTR_SCHEDULEPROGRAMMINGVISIBILITY = 0x0002;
 
     @Override
-    protected Map<Integer, ZclAttribute> initializeAttributes() {
+    protected Map<Integer, ZclAttribute> initializeClientAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
+
+        return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(3);
 
         attributeMap.put(ATTR_TEMPERATUREDISPLAYMODE, new ZclAttribute(ZclClusterType.THERMOSTAT_USER_INTERFACE_CONFIGURATION, ATTR_TEMPERATUREDISPLAYMODE, "Temperature Display Mode", ZclDataType.ENUMERATION_8_BIT, false, true, true, true));
@@ -96,9 +103,11 @@ public class ZclThermostatUserInterfaceConfigurationCluster extends ZclCluster {
      *
      * @param temperatureDisplayMode the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setTemperatureDisplayMode(final Integer value) {
-        return write(attributes.get(ATTR_TEMPERATUREDISPLAYMODE), value);
+        return write(serverAttributes.get(ATTR_TEMPERATUREDISPLAYMODE), value);
     }
 
     /**
@@ -112,9 +121,11 @@ public class ZclThermostatUserInterfaceConfigurationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTemperatureDisplayModeAsync() {
-        return read(attributes.get(ATTR_TEMPERATUREDISPLAYMODE));
+        return read(serverAttributes.get(ATTR_TEMPERATUREDISPLAYMODE));
     }
 
     /**
@@ -136,13 +147,15 @@ public class ZclThermostatUserInterfaceConfigurationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTemperatureDisplayMode(final long refreshPeriod) {
-        if (attributes.get(ATTR_TEMPERATUREDISPLAYMODE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TEMPERATUREDISPLAYMODE).getLastValue();
+        if (serverAttributes.get(ATTR_TEMPERATUREDISPLAYMODE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TEMPERATUREDISPLAYMODE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TEMPERATUREDISPLAYMODE));
+        return (Integer) readSync(serverAttributes.get(ATTR_TEMPERATUREDISPLAYMODE));
     }
 
     /**
@@ -157,9 +170,11 @@ public class ZclThermostatUserInterfaceConfigurationCluster extends ZclCluster {
      *
      * @param keypadLockout the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setKeypadLockout(final Integer value) {
-        return write(attributes.get(ATTR_KEYPADLOCKOUT), value);
+        return write(serverAttributes.get(ATTR_KEYPADLOCKOUT), value);
     }
 
     /**
@@ -173,9 +188,11 @@ public class ZclThermostatUserInterfaceConfigurationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getKeypadLockoutAsync() {
-        return read(attributes.get(ATTR_KEYPADLOCKOUT));
+        return read(serverAttributes.get(ATTR_KEYPADLOCKOUT));
     }
 
     /**
@@ -197,13 +214,15 @@ public class ZclThermostatUserInterfaceConfigurationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getKeypadLockout(final long refreshPeriod) {
-        if (attributes.get(ATTR_KEYPADLOCKOUT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_KEYPADLOCKOUT).getLastValue();
+        if (serverAttributes.get(ATTR_KEYPADLOCKOUT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_KEYPADLOCKOUT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_KEYPADLOCKOUT));
+        return (Integer) readSync(serverAttributes.get(ATTR_KEYPADLOCKOUT));
     }
 
     /**
@@ -225,9 +244,11 @@ public class ZclThermostatUserInterfaceConfigurationCluster extends ZclCluster {
      *
      * @param scheduleProgrammingVisibility the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setScheduleProgrammingVisibility(final Integer value) {
-        return write(attributes.get(ATTR_SCHEDULEPROGRAMMINGVISIBILITY), value);
+        return write(serverAttributes.get(ATTR_SCHEDULEPROGRAMMINGVISIBILITY), value);
     }
 
     /**
@@ -248,9 +269,11 @@ public class ZclThermostatUserInterfaceConfigurationCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getScheduleProgrammingVisibilityAsync() {
-        return read(attributes.get(ATTR_SCHEDULEPROGRAMMINGVISIBILITY));
+        return read(serverAttributes.get(ATTR_SCHEDULEPROGRAMMINGVISIBILITY));
     }
 
     /**
@@ -279,12 +302,14 @@ public class ZclThermostatUserInterfaceConfigurationCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getScheduleProgrammingVisibility(final long refreshPeriod) {
-        if (attributes.get(ATTR_SCHEDULEPROGRAMMINGVISIBILITY).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_SCHEDULEPROGRAMMINGVISIBILITY).getLastValue();
+        if (serverAttributes.get(ATTR_SCHEDULEPROGRAMMINGVISIBILITY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_SCHEDULEPROGRAMMINGVISIBILITY).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_SCHEDULEPROGRAMMINGVISIBILITY));
+        return (Integer) readSync(serverAttributes.get(ATTR_SCHEDULEPROGRAMMINGVISIBILITY));
     }
 }

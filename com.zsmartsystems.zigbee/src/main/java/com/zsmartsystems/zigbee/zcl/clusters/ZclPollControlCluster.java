@@ -45,7 +45,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
 public class ZclPollControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -133,7 +133,14 @@ public class ZclPollControlCluster extends ZclCluster {
     public static final int ATTR_FASTPOLLTIMEOUTMIN = 0x0006;
 
     @Override
-    protected Map<Integer, ZclAttribute> initializeAttributes() {
+    protected Map<Integer, ZclAttribute> initializeClientAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
+
+        return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(7);
 
         attributeMap.put(ATTR_CHECKININTERVAL, new ZclAttribute(ZclClusterType.POLL_CONTROL, ATTR_CHECKININTERVAL, "Checkin Interval", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, true, true));
@@ -203,9 +210,11 @@ public class ZclPollControlCluster extends ZclCluster {
      *
      * @param checkinInterval the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setCheckinInterval(final Integer value) {
-        return write(attributes.get(ATTR_CHECKININTERVAL), value);
+        return write(serverAttributes.get(ATTR_CHECKININTERVAL), value);
     }
 
     /**
@@ -233,9 +242,11 @@ public class ZclPollControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCheckinIntervalAsync() {
-        return read(attributes.get(ATTR_CHECKININTERVAL));
+        return read(serverAttributes.get(ATTR_CHECKININTERVAL));
     }
 
     /**
@@ -271,13 +282,15 @@ public class ZclPollControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCheckinInterval(final long refreshPeriod) {
-        if (attributes.get(ATTR_CHECKININTERVAL).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CHECKININTERVAL).getLastValue();
+        if (serverAttributes.get(ATTR_CHECKININTERVAL).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CHECKININTERVAL).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CHECKININTERVAL));
+        return (Integer) readSync(serverAttributes.get(ATTR_CHECKININTERVAL));
     }
 
     /**
@@ -308,9 +321,11 @@ public class ZclPollControlCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setCheckinIntervalReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_CHECKININTERVAL), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_CHECKININTERVAL), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -331,9 +346,11 @@ public class ZclPollControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getLongPollIntervalAsync() {
-        return read(attributes.get(ATTR_LONGPOLLINTERVAL));
+        return read(serverAttributes.get(ATTR_LONGPOLLINTERVAL));
     }
 
     /**
@@ -362,13 +379,15 @@ public class ZclPollControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getLongPollInterval(final long refreshPeriod) {
-        if (attributes.get(ATTR_LONGPOLLINTERVAL).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_LONGPOLLINTERVAL).getLastValue();
+        if (serverAttributes.get(ATTR_LONGPOLLINTERVAL).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_LONGPOLLINTERVAL).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_LONGPOLLINTERVAL));
+        return (Integer) readSync(serverAttributes.get(ATTR_LONGPOLLINTERVAL));
     }
 
     /**
@@ -392,9 +411,11 @@ public class ZclPollControlCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setLongPollIntervalReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_LONGPOLLINTERVAL), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_LONGPOLLINTERVAL), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -410,9 +431,11 @@ public class ZclPollControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getShortPollIntervalAsync() {
-        return read(attributes.get(ATTR_SHORTPOLLINTERVAL));
+        return read(serverAttributes.get(ATTR_SHORTPOLLINTERVAL));
     }
 
     /**
@@ -436,13 +459,15 @@ public class ZclPollControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getShortPollInterval(final long refreshPeriod) {
-        if (attributes.get(ATTR_SHORTPOLLINTERVAL).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_SHORTPOLLINTERVAL).getLastValue();
+        if (serverAttributes.get(ATTR_SHORTPOLLINTERVAL).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_SHORTPOLLINTERVAL).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_SHORTPOLLINTERVAL));
+        return (Integer) readSync(serverAttributes.get(ATTR_SHORTPOLLINTERVAL));
     }
 
     /**
@@ -461,9 +486,11 @@ public class ZclPollControlCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setShortPollIntervalReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_SHORTPOLLINTERVAL), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_SHORTPOLLINTERVAL), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -489,9 +516,11 @@ public class ZclPollControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getFastPollTimeoutAsync() {
-        return read(attributes.get(ATTR_FASTPOLLTIMEOUT));
+        return read(serverAttributes.get(ATTR_FASTPOLLTIMEOUT));
     }
 
     /**
@@ -525,13 +554,15 @@ public class ZclPollControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getFastPollTimeout(final long refreshPeriod) {
-        if (attributes.get(ATTR_FASTPOLLTIMEOUT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_FASTPOLLTIMEOUT).getLastValue();
+        if (serverAttributes.get(ATTR_FASTPOLLTIMEOUT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_FASTPOLLTIMEOUT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_FASTPOLLTIMEOUT));
+        return (Integer) readSync(serverAttributes.get(ATTR_FASTPOLLTIMEOUT));
     }
 
     /**
@@ -560,9 +591,11 @@ public class ZclPollControlCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setFastPollTimeoutReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_FASTPOLLTIMEOUT), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_FASTPOLLTIMEOUT), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -577,9 +610,11 @@ public class ZclPollControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getCheckinIntervalMinAsync() {
-        return read(attributes.get(ATTR_CHECKININTERVALMIN));
+        return read(serverAttributes.get(ATTR_CHECKININTERVALMIN));
     }
 
     /**
@@ -602,13 +637,15 @@ public class ZclPollControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getCheckinIntervalMin(final long refreshPeriod) {
-        if (attributes.get(ATTR_CHECKININTERVALMIN).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_CHECKININTERVALMIN).getLastValue();
+        if (serverAttributes.get(ATTR_CHECKININTERVALMIN).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CHECKININTERVALMIN).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_CHECKININTERVALMIN));
+        return (Integer) readSync(serverAttributes.get(ATTR_CHECKININTERVALMIN));
     }
 
     /**
@@ -626,9 +663,11 @@ public class ZclPollControlCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setCheckinIntervalMinReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_CHECKININTERVALMIN), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_CHECKININTERVALMIN), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -643,9 +682,11 @@ public class ZclPollControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getLongPollIntervalMinAsync() {
-        return read(attributes.get(ATTR_LONGPOLLINTERVALMIN));
+        return read(serverAttributes.get(ATTR_LONGPOLLINTERVALMIN));
     }
 
     /**
@@ -668,13 +709,15 @@ public class ZclPollControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getLongPollIntervalMin(final long refreshPeriod) {
-        if (attributes.get(ATTR_LONGPOLLINTERVALMIN).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_LONGPOLLINTERVALMIN).getLastValue();
+        if (serverAttributes.get(ATTR_LONGPOLLINTERVALMIN).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_LONGPOLLINTERVALMIN).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_LONGPOLLINTERVALMIN));
+        return (Integer) readSync(serverAttributes.get(ATTR_LONGPOLLINTERVALMIN));
     }
 
     /**
@@ -692,9 +735,11 @@ public class ZclPollControlCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setLongPollIntervalMinReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_LONGPOLLINTERVALMIN), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_LONGPOLLINTERVALMIN), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -709,9 +754,11 @@ public class ZclPollControlCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getFastPollTimeoutMinAsync() {
-        return read(attributes.get(ATTR_FASTPOLLTIMEOUTMIN));
+        return read(serverAttributes.get(ATTR_FASTPOLLTIMEOUTMIN));
     }
 
     /**
@@ -734,13 +781,15 @@ public class ZclPollControlCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getFastPollTimeoutMin(final long refreshPeriod) {
-        if (attributes.get(ATTR_FASTPOLLTIMEOUTMIN).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_FASTPOLLTIMEOUTMIN).getLastValue();
+        if (serverAttributes.get(ATTR_FASTPOLLTIMEOUTMIN).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_FASTPOLLTIMEOUTMIN).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_FASTPOLLTIMEOUTMIN));
+        return (Integer) readSync(serverAttributes.get(ATTR_FASTPOLLTIMEOUTMIN));
     }
 
     /**
@@ -758,9 +807,11 @@ public class ZclPollControlCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setFastPollTimeoutMinReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_FASTPOLLTIMEOUTMIN), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_FASTPOLLTIMEOUTMIN), minInterval, maxInterval, reportableChange);
     }
 
     /**

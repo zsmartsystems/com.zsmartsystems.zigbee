@@ -15,7 +15,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 /**
  * Stop Command value object class.
  * <p>
- * Cluster: <b>Level Control</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>Level Control</b>. Command ID 0x03 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Level Control cluster.
  * <p>
  * Upon receipt of this command, any Move to Level, Move or Step command (and their 'with On/Off'
@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class StopCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.

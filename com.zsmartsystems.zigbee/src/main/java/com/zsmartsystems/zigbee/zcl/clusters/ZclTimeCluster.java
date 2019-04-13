@@ -31,7 +31,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T21:33:25Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
 public class ZclTimeCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -124,7 +124,14 @@ public class ZclTimeCluster extends ZclCluster {
     public static final int ATTR_VALIDUNTILTIME = 0x0009;
 
     @Override
-    protected Map<Integer, ZclAttribute> initializeAttributes() {
+    protected Map<Integer, ZclAttribute> initializeClientAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
+
+        return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(10);
 
         attributeMap.put(ATTR_TIME, new ZclAttribute(ZclClusterType.TIME, ATTR_TIME, "Time", ZclDataType.UTCTIME, true, true, true, false));
@@ -167,9 +174,11 @@ public class ZclTimeCluster extends ZclCluster {
      *
      * @param time the {@link Calendar} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setTime(final Calendar value) {
-        return write(attributes.get(ATTR_TIME), value);
+        return write(serverAttributes.get(ATTR_TIME), value);
     }
 
     /**
@@ -188,9 +197,11 @@ public class ZclTimeCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTimeAsync() {
-        return read(attributes.get(ATTR_TIME));
+        return read(serverAttributes.get(ATTR_TIME));
     }
 
     /**
@@ -217,13 +228,15 @@ public class ZclTimeCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Calendar getTime(final long refreshPeriod) {
-        if (attributes.get(ATTR_TIME).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) attributes.get(ATTR_TIME).getLastValue();
+        if (serverAttributes.get(ATTR_TIME).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_TIME).getLastValue();
         }
 
-        return (Calendar) readSync(attributes.get(ATTR_TIME));
+        return (Calendar) readSync(serverAttributes.get(ATTR_TIME));
     }
 
     /**
@@ -245,9 +258,11 @@ public class ZclTimeCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setTimeReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_TIME), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_TIME), minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -261,9 +276,11 @@ public class ZclTimeCluster extends ZclCluster {
      *
      * @param timeStatus the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setTimeStatus(final Integer value) {
-        return write(attributes.get(ATTR_TIMESTATUS), value);
+        return write(serverAttributes.get(ATTR_TIMESTATUS), value);
     }
 
     /**
@@ -276,9 +293,11 @@ public class ZclTimeCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTimeStatusAsync() {
-        return read(attributes.get(ATTR_TIMESTATUS));
+        return read(serverAttributes.get(ATTR_TIMESTATUS));
     }
 
     /**
@@ -299,13 +318,15 @@ public class ZclTimeCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTimeStatus(final long refreshPeriod) {
-        if (attributes.get(ATTR_TIMESTATUS).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIMESTATUS).getLastValue();
+        if (serverAttributes.get(ATTR_TIMESTATUS).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIMESTATUS).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIMESTATUS));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIMESTATUS));
     }
 
     /**
@@ -320,9 +341,11 @@ public class ZclTimeCluster extends ZclCluster {
      *
      * @param timeZone the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setTimeZone(final Integer value) {
-        return write(attributes.get(ATTR_TIMEZONE), value);
+        return write(serverAttributes.get(ATTR_TIMEZONE), value);
     }
 
     /**
@@ -336,9 +359,11 @@ public class ZclTimeCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getTimeZoneAsync() {
-        return read(attributes.get(ATTR_TIMEZONE));
+        return read(serverAttributes.get(ATTR_TIMEZONE));
     }
 
     /**
@@ -360,13 +385,15 @@ public class ZclTimeCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getTimeZone(final long refreshPeriod) {
-        if (attributes.get(ATTR_TIMEZONE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TIMEZONE).getLastValue();
+        if (serverAttributes.get(ATTR_TIMEZONE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TIMEZONE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_TIMEZONE));
+        return (Integer) readSync(serverAttributes.get(ATTR_TIMEZONE));
     }
 
     /**
@@ -381,9 +408,11 @@ public class ZclTimeCluster extends ZclCluster {
      *
      * @param dstStart the {@link Calendar} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setDstStart(final Calendar value) {
-        return write(attributes.get(ATTR_DSTSTART), value);
+        return write(serverAttributes.get(ATTR_DSTSTART), value);
     }
 
     /**
@@ -397,9 +426,11 @@ public class ZclTimeCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDstStartAsync() {
-        return read(attributes.get(ATTR_DSTSTART));
+        return read(serverAttributes.get(ATTR_DSTSTART));
     }
 
     /**
@@ -421,13 +452,15 @@ public class ZclTimeCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Calendar getDstStart(final long refreshPeriod) {
-        if (attributes.get(ATTR_DSTSTART).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) attributes.get(ATTR_DSTSTART).getLastValue();
+        if (serverAttributes.get(ATTR_DSTSTART).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_DSTSTART).getLastValue();
         }
 
-        return (Calendar) readSync(attributes.get(ATTR_DSTSTART));
+        return (Calendar) readSync(serverAttributes.get(ATTR_DSTSTART));
     }
 
     /**
@@ -453,9 +486,11 @@ public class ZclTimeCluster extends ZclCluster {
      *
      * @param dstEnd the {@link Calendar} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setDstEnd(final Calendar value) {
-        return write(attributes.get(ATTR_DSTEND), value);
+        return write(serverAttributes.get(ATTR_DSTEND), value);
     }
 
     /**
@@ -480,9 +515,11 @@ public class ZclTimeCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDstEndAsync() {
-        return read(attributes.get(ATTR_DSTEND));
+        return read(serverAttributes.get(ATTR_DSTEND));
     }
 
     /**
@@ -515,13 +552,15 @@ public class ZclTimeCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Calendar getDstEnd(final long refreshPeriod) {
-        if (attributes.get(ATTR_DSTEND).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) attributes.get(ATTR_DSTEND).getLastValue();
+        if (serverAttributes.get(ATTR_DSTEND).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_DSTEND).getLastValue();
         }
 
-        return (Calendar) readSync(attributes.get(ATTR_DSTEND));
+        return (Calendar) readSync(serverAttributes.get(ATTR_DSTEND));
     }
 
     /**
@@ -541,9 +580,11 @@ public class ZclTimeCluster extends ZclCluster {
      *
      * @param dstShift the {@link Integer} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setDstShift(final Integer value) {
-        return write(attributes.get(ATTR_DSTSHIFT), value);
+        return write(serverAttributes.get(ATTR_DSTSHIFT), value);
     }
 
     /**
@@ -562,9 +603,11 @@ public class ZclTimeCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getDstShiftAsync() {
-        return read(attributes.get(ATTR_DSTSHIFT));
+        return read(serverAttributes.get(ATTR_DSTSHIFT));
     }
 
     /**
@@ -591,13 +634,15 @@ public class ZclTimeCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getDstShift(final long refreshPeriod) {
-        if (attributes.get(ATTR_DSTSHIFT).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_DSTSHIFT).getLastValue();
+        if (serverAttributes.get(ATTR_DSTSHIFT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_DSTSHIFT).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_DSTSHIFT));
+        return (Integer) readSync(serverAttributes.get(ATTR_DSTSHIFT));
     }
 
     /**
@@ -612,9 +657,11 @@ public class ZclTimeCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getStandardTimeAsync() {
-        return read(attributes.get(ATTR_STANDARDTIME));
+        return read(serverAttributes.get(ATTR_STANDARDTIME));
     }
 
     /**
@@ -637,13 +684,15 @@ public class ZclTimeCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Calendar getStandardTime(final long refreshPeriod) {
-        if (attributes.get(ATTR_STANDARDTIME).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) attributes.get(ATTR_STANDARDTIME).getLastValue();
+        if (serverAttributes.get(ATTR_STANDARDTIME).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_STANDARDTIME).getLastValue();
         }
 
-        return (Calendar) readSync(attributes.get(ATTR_STANDARDTIME));
+        return (Calendar) readSync(serverAttributes.get(ATTR_STANDARDTIME));
     }
 
     /**
@@ -659,9 +708,11 @@ public class ZclTimeCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getLocalTimeAsync() {
-        return read(attributes.get(ATTR_LOCALTIME));
+        return read(serverAttributes.get(ATTR_LOCALTIME));
     }
 
     /**
@@ -685,13 +736,15 @@ public class ZclTimeCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Calendar getLocalTime(final long refreshPeriod) {
-        if (attributes.get(ATTR_LOCALTIME).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) attributes.get(ATTR_LOCALTIME).getLastValue();
+        if (serverAttributes.get(ATTR_LOCALTIME).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_LOCALTIME).getLastValue();
         }
 
-        return (Calendar) readSync(attributes.get(ATTR_LOCALTIME));
+        return (Calendar) readSync(serverAttributes.get(ATTR_LOCALTIME));
     }
 
     /**
@@ -707,9 +760,11 @@ public class ZclTimeCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getLastSetTimeAsync() {
-        return read(attributes.get(ATTR_LASTSETTIME));
+        return read(serverAttributes.get(ATTR_LASTSETTIME));
     }
 
     /**
@@ -733,13 +788,15 @@ public class ZclTimeCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Calendar getLastSetTime(final long refreshPeriod) {
-        if (attributes.get(ATTR_LASTSETTIME).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) attributes.get(ATTR_LASTSETTIME).getLastValue();
+        if (serverAttributes.get(ATTR_LASTSETTIME).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_LASTSETTIME).getLastValue();
         }
 
-        return (Calendar) readSync(attributes.get(ATTR_LASTSETTIME));
+        return (Calendar) readSync(serverAttributes.get(ATTR_LASTSETTIME));
     }
 
     /**
@@ -757,9 +814,11 @@ public class ZclTimeCluster extends ZclCluster {
      *
      * @param validUntilTime the {@link Calendar} attribute value to be set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
      */
+    @Deprecated
     public Future<CommandResult> setValidUntilTime(final Calendar value) {
-        return write(attributes.get(ATTR_VALIDUNTILTIME), value);
+        return write(serverAttributes.get(ATTR_VALIDUNTILTIME), value);
     }
 
     /**
@@ -776,9 +835,11 @@ public class ZclTimeCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getValidUntilTimeAsync() {
-        return read(attributes.get(ATTR_VALIDUNTILTIME));
+        return read(serverAttributes.get(ATTR_VALIDUNTILTIME));
     }
 
     /**
@@ -803,12 +864,14 @@ public class ZclTimeCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Calendar getValidUntilTime(final long refreshPeriod) {
-        if (attributes.get(ATTR_VALIDUNTILTIME).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) attributes.get(ATTR_VALIDUNTILTIME).getLastValue();
+        if (serverAttributes.get(ATTR_VALIDUNTILTIME).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_VALIDUNTILTIME).getLastValue();
         }
 
-        return (Calendar) readSync(attributes.get(ATTR_VALIDUNTILTIME));
+        return (Calendar) readSync(serverAttributes.get(ATTR_VALIDUNTILTIME));
     }
 }

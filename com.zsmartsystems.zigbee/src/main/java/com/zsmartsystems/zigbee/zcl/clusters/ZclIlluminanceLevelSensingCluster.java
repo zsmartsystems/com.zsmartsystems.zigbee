@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T21:33:25Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
 public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -71,7 +71,14 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
     public static final int ATTR_ILLUMINANCETARGETLEVEL = 0x0010;
 
     @Override
-    protected Map<Integer, ZclAttribute> initializeAttributes() {
+    protected Map<Integer, ZclAttribute> initializeClientAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
+
+        return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(3);
 
         attributeMap.put(ATTR_LEVELSTATUS, new ZclAttribute(ZclClusterType.ILLUMINANCE_LEVEL_SENSING, ATTR_LEVELSTATUS, "Level Status", ZclDataType.ENUMERATION_8_BIT, true, true, false, true));
@@ -101,9 +108,11 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getLevelStatusAsync() {
-        return read(attributes.get(ATTR_LEVELSTATUS));
+        return read(serverAttributes.get(ATTR_LEVELSTATUS));
     }
 
     /**
@@ -125,13 +134,15 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getLevelStatus(final long refreshPeriod) {
-        if (attributes.get(ATTR_LEVELSTATUS).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_LEVELSTATUS).getLastValue();
+        if (serverAttributes.get(ATTR_LEVELSTATUS).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_LEVELSTATUS).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_LEVELSTATUS));
+        return (Integer) readSync(serverAttributes.get(ATTR_LEVELSTATUS));
     }
 
     /**
@@ -147,9 +158,11 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
+    @Deprecated
     public Future<CommandResult> setLevelStatusReporting(final int minInterval, final int maxInterval) {
-        return setReporting(attributes.get(ATTR_LEVELSTATUS), minInterval, maxInterval);
+        return setReporting(serverAttributes.get(ATTR_LEVELSTATUS), minInterval, maxInterval);
     }
 
     /**
@@ -162,9 +175,11 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getLightSensorTypeAsync() {
-        return read(attributes.get(ATTR_LIGHTSENSORTYPE));
+        return read(serverAttributes.get(ATTR_LIGHTSENSORTYPE));
     }
 
     /**
@@ -185,13 +200,15 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getLightSensorType(final long refreshPeriod) {
-        if (attributes.get(ATTR_LIGHTSENSORTYPE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_LIGHTSENSORTYPE).getLastValue();
+        if (serverAttributes.get(ATTR_LIGHTSENSORTYPE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_LIGHTSENSORTYPE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_LIGHTSENSORTYPE));
+        return (Integer) readSync(serverAttributes.get(ATTR_LIGHTSENSORTYPE));
     }
 
     /**
@@ -218,9 +235,11 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getIlluminanceTargetLevelAsync() {
-        return read(attributes.get(ATTR_ILLUMINANCETARGETLEVEL));
+        return read(serverAttributes.get(ATTR_ILLUMINANCETARGETLEVEL));
     }
 
     /**
@@ -255,12 +274,14 @@ public class ZclIlluminanceLevelSensingCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
      */
+    @Deprecated
     public Integer getIlluminanceTargetLevel(final long refreshPeriod) {
-        if (attributes.get(ATTR_ILLUMINANCETARGETLEVEL).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_ILLUMINANCETARGETLEVEL).getLastValue();
+        if (serverAttributes.get(ATTR_ILLUMINANCETARGETLEVEL).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ILLUMINANCETARGETLEVEL).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_ILLUMINANCETARGETLEVEL));
+        return (Integer) readSync(serverAttributes.get(ATTR_ILLUMINANCETARGETLEVEL));
     }
 }

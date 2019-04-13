@@ -18,7 +18,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Get Measurement Profile Response Command value object class.
  * <p>
- * Cluster: <b>Electrical Measurement</b>. Command is sent <b>FROM</b> the server.
+ * Cluster: <b>Electrical Measurement</b>. Command ID 0x01 is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the Electrical Measurement cluster.
  * <p>
  * Returns the electricity measurement profile. The electricity measurement profile
@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class GetMeasurementProfileResponseCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.

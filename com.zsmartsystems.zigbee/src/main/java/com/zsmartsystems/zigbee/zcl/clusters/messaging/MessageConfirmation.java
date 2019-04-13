@@ -21,7 +21,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Message Confirmation value object class.
  * <p>
- * Cluster: <b>Messaging</b>. Command is sent <b>FROM</b> the server.
+ * Cluster: <b>Messaging</b>. Command ID 0x01 is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the Messaging cluster.
  * <p>
  * The Message Confirmation command provides an indication that a Utility Customer has
@@ -31,7 +31,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class MessageConfirmation extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.

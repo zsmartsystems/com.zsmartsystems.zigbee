@@ -9,6 +9,7 @@ package com.zsmartsystems.zigbee.zcl;
 
 import java.util.Calendar;
 
+import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -135,6 +136,14 @@ public class ZclAttribute {
         this.reportable = reportable;
     }
 
+    public Object readValue(long refreshPeriod) {
+        // if()
+        ZclCluster cluster = new ZclOnOffCluster(null);
+
+        // TODO!!!!!!!!!!!
+        return cluster.readAttribute(id);
+    }
+
     /**
      * Gets the {@link ZclClusterType} to which this attribute belongs
      *
@@ -155,7 +164,8 @@ public class ZclAttribute {
 
     /**
      * Returns true if the implementation of this attribute in the cluster is
-     * mandatory as required by the ZigBee standard. <br>
+     * mandatory as required by the ZigBee standard.
+     * <p>
      * Note that this does not necessarily mean that the attribute is actually
      * implemented in any device if it does not conform to the standard.
      *
@@ -239,7 +249,8 @@ public class ZclAttribute {
     }
 
     /**
-     * Gets the reportable change field. <br>
+     * Gets the reportable change field.
+     * <p>
      * The reportable change field shall contain the minimum change to the
      * attribute that will result in a report being issued. For attributes with
      * 'analog' data type the field has the same data type as the attribute. If
@@ -253,7 +264,8 @@ public class ZclAttribute {
     }
 
     /**
-     * Gets the reporting timeout in seconds. <br>
+     * Gets the reporting timeout in seconds.
+     * <p>
      * The timeout period field is 16-bits in length and shall contain the
      * maximum expected time, in seconds, between received reports for the
      * attribute specified in the attribute identifier field. If the timeout
@@ -317,8 +329,7 @@ public class ZclAttribute {
     /**
      * Updates the attribute value This will also record the time of the last update
      *
-     * @param attributeValue
-     *            the attribute value to be updated {@link Object}
+     * @param attributeValue the attribute value to be updated {@link Object}
      */
     public void updateValue(Object attributeValue) {
         lastValue = attributeValue;
