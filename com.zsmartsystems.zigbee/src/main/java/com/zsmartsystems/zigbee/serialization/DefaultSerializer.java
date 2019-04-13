@@ -160,6 +160,7 @@ public class DefaultSerializer implements ZigBeeSerializer {
                 buffer[length++] = (uint24Value >> 8) & 0xFF;
                 buffer[length++] = (uint24Value >> 16) & 0xFF;
                 break;
+            case ENUMERATION_32_BIT:
             case SIGNED_32_BIT_INTEGER:
                 final int intValue = (Integer) data;
                 buffer[length++] = intValue & 0xFF;
