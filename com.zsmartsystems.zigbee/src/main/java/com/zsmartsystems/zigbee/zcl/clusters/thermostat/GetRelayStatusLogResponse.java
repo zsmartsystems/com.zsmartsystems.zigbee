@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T12:06:54Z")
 public class GetRelayStatusLogResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -187,7 +187,7 @@ public class GetRelayStatusLogResponse extends ZclCommand {
     public void serialize(final ZclFieldSerializer serializer) {
         serializer.serialize(timeOfDay, ZclDataType.UNSIGNED_16_BIT_INTEGER);
         serializer.serialize(relayStatus, ZclDataType.BITMAP_8_BIT);
-        serializer.serialize(localTemperature, ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        serializer.serialize(localTemperature, ZclDataType.SIGNED_16_BIT_INTEGER);
         serializer.serialize(humidity, ZclDataType.UNSIGNED_8_BIT_INTEGER);
         serializer.serialize(setpoint, ZclDataType.SIGNED_16_BIT_INTEGER);
         serializer.serialize(unreadEntries, ZclDataType.UNSIGNED_16_BIT_INTEGER);
@@ -197,7 +197,7 @@ public class GetRelayStatusLogResponse extends ZclCommand {
     public void deserialize(final ZclFieldDeserializer deserializer) {
         timeOfDay = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         relayStatus = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        localTemperature = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        localTemperature = (Integer) deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
         humidity = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         setpoint = (Integer) deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
         unreadEntries = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);

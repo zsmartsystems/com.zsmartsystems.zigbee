@@ -33,7 +33,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T12:06:54Z")
 public class SetWeeklySchedule extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -199,8 +199,8 @@ public class SetWeeklySchedule extends ZclCommand {
         serializer.serialize(dayOfWeek, ZclDataType.ENUMERATION_8_BIT);
         serializer.serialize(mode, ZclDataType.ENUMERATION_8_BIT);
         serializer.serialize(transition, ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        serializer.serialize(heatSet, ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        serializer.serialize(coolSet, ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        serializer.serialize(heatSet, ZclDataType.SIGNED_16_BIT_INTEGER);
+        serializer.serialize(coolSet, ZclDataType.SIGNED_16_BIT_INTEGER);
     }
 
     @Override
@@ -209,8 +209,8 @@ public class SetWeeklySchedule extends ZclCommand {
         dayOfWeek = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
         mode = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
         transition = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        heatSet = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        coolSet = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        heatSet = (Integer) deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
+        coolSet = (Integer) deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
     }
 
     @Override
