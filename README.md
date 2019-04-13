@@ -133,6 +133,7 @@ Currently implemented extensions include -:
 * Network Mesh Monitor Extension (```ZigBeeDiscoveryExtension```)
 * IAS CIE client (```ZigBeeIasCieExtension```)
 * OTA Upgrade Server (```ZigBeeOtaUpgradeExtension```)
+* Basic Cluster Server (```ZigBeeBasicServerExtension```)
 
 These provide basic functionality and can be extended as required to meet the application needs.
 

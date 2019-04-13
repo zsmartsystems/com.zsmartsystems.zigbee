@@ -37,6 +37,7 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.app.basic.ZigBeeBasicServerExtension;
 import com.zsmartsystems.zigbee.app.discovery.ZigBeeDiscoveryExtension;
 import com.zsmartsystems.zigbee.app.iasclient.ZigBeeIasCieExtension;
 import com.zsmartsystems.zigbee.app.otaserver.ZclOtaUpgradeServer;
@@ -140,6 +141,7 @@ public final class ZigBeeConsole {
         // Add the extensions to the network
         networkManager.addExtension(new ZigBeeIasCieExtension());
         networkManager.addExtension(new ZigBeeOtaUpgradeExtension());
+        networkManager.addExtension(new ZigBeeBasicServerExtension());
 
         ZigBeeDiscoveryExtension discoveryExtension = new ZigBeeDiscoveryExtension();
         discoveryExtension.setUpdatePeriod(60);
