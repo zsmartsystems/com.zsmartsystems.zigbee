@@ -8,7 +8,9 @@
 package com.zsmartsystems.zigbee;
 
 /**
- * An enumeration of possible network states
+ * An enumeration of possible network states.
+ * <p>
+ * <img src="./doc-files/ZigBeeNetworkStateTransitions.png" width="50%">
  *
  * @author Chris Jackson
  *
@@ -29,5 +31,9 @@ public enum ZigBeeNetworkState {
     /**
      * Network is offline and not able to be used
      */
-    OFFLINE
+    OFFLINE,
+    /**
+     * The network has been closed and may not be restarted
+     */
+    SHUTDOWN
 }
