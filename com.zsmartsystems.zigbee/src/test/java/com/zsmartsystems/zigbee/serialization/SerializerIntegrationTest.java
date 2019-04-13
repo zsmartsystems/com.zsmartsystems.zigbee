@@ -120,6 +120,12 @@ public class SerializerIntegrationTest {
     }
 
     @Test
+    public void testDeserialize_ENUMERATION_32_BIT() {
+        int valIn = 0x12345678;
+        testSerializer(valIn, ZclDataType.ENUMERATION_32_BIT);
+    }
+
+    @Test
     public void testDeserialize_ENUMERATION_16_BIT() {
         int valIn = 0x9119;
         testSerializer(valIn, ZclDataType.ENUMERATION_16_BIT);
