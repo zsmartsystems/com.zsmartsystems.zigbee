@@ -83,17 +83,28 @@ import com.zsmartsystems.zigbee.zdo.command.NetworkAddressRequest;
  * <h2>Lifecycle</h2>
  * The ZigBeeNetworkManager lifecycle is as follows -:
  * <ul>
- * <li>Instantiate a {@link ZigBeeTransportTransmit} class
+ * <li>Instantiate a {@link ZigBeeTransportTransmit} class. The network state will be initialised to
+ * {@link ZigBeeNetworkState#UNINITIALISED}.
  * <li>Instantiate a {@link ZigBeeNetworkManager} class passing the previously created {@link ZigBeeTransportTransmit}
- * class
- * <li>Optionally set the {@link ZigBeeSerializer} and {@link ZigBeeDeserializer} using the {@link #setSerializer}
- * method
- * <li>Call the {@link #initialize} method to perform the initial initialization of the ZigBee network
+ * class.
+ * <li>Set the {@link ZigBeeSerializer} and {@link ZigBeeDeserializer} using the {@link #} method.
+ * <li>Optionally call the {@link #setNetworkDataStore(ZigBeeNetworkDataStore)} method to set the
+ * {@link ZigBeeNetworkDataStore} that will be called to serialise network data to a persistent store.
+ * <li>Call the {@link #initialize()} method to perform the initial initialization of the ZigBee network. The network
+ * state will be set to {@link ZigBeeNetworkState#INITIALISING}.
  * <li>Set the network configuration (see below).
- * <li>Call the {@link #startup} method to start using the configured ZigBee network. Configuration methods may not be
- * used.
- * <li>Call the {@link shutdown} method to close the network
+ * <li>Call the {@link #startup(boolean)} method to start using the configured ZigBee network. Configuration methods may
+ * not be used following this call. The network state will be updated to {@link ZigBeeNetworkState#ONLINE} on success,
+ * or {@link ZigBeeNetworkState#OFFLINE} on failure.
+ * <li>Call the {@link #reinitialize()} method to reinitialise the network. This will take the transport
+ * {@link ZigBeeTransportState#OFFLINE} and place the network state in {@link ZigBeeNetworkState#INITIALISING}.
+ * <li>Call the {@link shutdown()} method to close the network and free all resources. The network will be placed in
+ * {@link ZigBeeNetworkState#SHUTDOWN} and may not be restarted.
  * </ul>
+ * <p>
+ * See the {@link ZigBeeNetworkState} transition diagram below -:
+ * <p>
+ * <img src="./doc-files/ZigBeeNetworkStateTransitions.png" width="50%">
  * <p>
  * Following a call to {@link #initialize} configuration calls can be made to configure the transport layer. This
  * includes -:
@@ -110,7 +121,11 @@ import com.zsmartsystems.zigbee.zdo.command.NetworkAddressRequest;
  * <li>{@link #setZigBeeLinkKey(ZigBeeKey)}
  * </ul>
  * <p>
- * Once all transport initialization is complete, {@link #startup} must be called.
+ * Once all transport initialization is complete, {@link #startup()} must be called to bring the network
+ * {@link ZigBeeNetworkState#ONLINE}.
+ * <p>
+ * To shutdown the network and free all resources, call {@link #shutdown()}. The network may not be restarted and a new
+ * {@link ZigBeeNetworkManager} must be instantiated. The network state will be {@link ZigBeeNetworkState#SHUTDOWN}.
  *
  * @author Chris Jackson
  */
@@ -477,7 +492,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Starts up ZigBee manager components.
+     * Starts up ZigBee manager components, and starts the transport layer to bring the network ONLINE.
      *
      * @param reinitialize true if the provider is to reinitialise the network with the parameters configured since the
      *            {@link #initialize} method was called.
@@ -498,9 +513,31 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
+     * Reinitialises the network. This may take the transport layer OFFLINE, and will return the
+     * {@link ZigBeeNetworkState} to {@link ZigBeeNetworkState#INITIALISING}. Following this call, the system should be
+     * in the same state as if the {@link #initialize()} method had first been called. {@link #startup(boolean)} must be
+     * called to place the network back ONLINE.
+     * <p>
+     * Note that while this method will take the {@link ZigBeeTransportState} to {@link ZigBeeTransportState#OFFLINE}
+     * the {@link ZigBeeNetworkState} will be {@link ZigBeeNetworkState#INITIALISING} - the
+     * {@link ZigBeeTransportState#OFFLINE} will not be reflected through the the application.
+     *
+     * @return
+     */
+    public ZigBeeStatus reinitialize() {
+        // Set the state to INITIALISING before reconfiguring the transport layer
+        // to ensure we don't pass the OFFLINE state to the application
+        setNetworkState(ZigBeeNetworkState.INITIALISING);
+
+        return ZigBeeStatus.SUCCESS;
+    }
+
+    /**
      * Shuts down ZigBee manager components.
      */
     public void shutdown() {
+        networkState = ZigBeeNetworkState.SHUTDOWN;
+
         executorService.shutdownNow();
 
         synchronized (this) {

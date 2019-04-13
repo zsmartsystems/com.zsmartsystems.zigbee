@@ -640,8 +640,11 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         TestUtilities.setField(ZigBeeNetworkManager.class, manager, "networkState", ZigBeeNetworkState.INITIALISING);
         assertEquals(ZigBeeStatus.INVALID_STATE, manager.initialize());
 
+        assertEquals(ZigBeeNetworkState.INITIALISING, manager.getNetworkState());
+
         manager.shutdown();
         Mockito.verify(mockedTransport, Mockito.timeout(TIMEOUT).times(1)).shutdown();
+        assertEquals(ZigBeeNetworkState.SHUTDOWN, manager.getNetworkState());
     }
 
     @Test
@@ -673,6 +676,12 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         manager.setTransportState(ZigBeeTransportState.OFFLINE);
         Awaitility.await().until(() -> stateListenerUpdated());
         assertEquals(ZigBeeNetworkState.OFFLINE, manager.getNetworkState());
+
+        TestUtilities.setField(ZigBeeNetworkManager.class, manager, "networkState", ZigBeeNetworkState.ONLINE);
+        assertEquals(ZigBeeNetworkState.ONLINE, manager.getNetworkState());
+        assertEquals(ZigBeeStatus.SUCCESS, manager.reinitialize());
+        Awaitility.await().until(() -> stateListenerUpdated());
+        assertEquals(ZigBeeNetworkState.INITIALISING, manager.getNetworkState());
     }
 
     @Test
@@ -684,7 +693,6 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         Mockito.when(mockedTransport.getVersionString()).thenReturn("Version!");
 
         assertEquals("Version!", manager.getTransportVersionString());
-
     }
 
     @Test
