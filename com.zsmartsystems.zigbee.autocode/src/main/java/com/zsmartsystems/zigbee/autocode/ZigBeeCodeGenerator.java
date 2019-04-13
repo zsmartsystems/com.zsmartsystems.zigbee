@@ -57,6 +57,7 @@ public class ZigBeeCodeGenerator {
         zclParser.addFile("src/main/resources/0009_Alarms.xml");
         zclParser.addFile("src/main/resources/000A_Time.xml");
         zclParser.addFile("src/main/resources/000B_RssiLocation.xml");
+        zclParser.addFile("src/main/resources/000C_AnalogInputBasic.xml");
         zclParser.addFile("src/main/resources/000F_BinaryInputBasic.xml");
         zclParser.addFile("src/main/resources/0012_MultistateInputBasic.xml");
         zclParser.addFile("src/main/resources/0013_MultistateOutputBasic.xml");

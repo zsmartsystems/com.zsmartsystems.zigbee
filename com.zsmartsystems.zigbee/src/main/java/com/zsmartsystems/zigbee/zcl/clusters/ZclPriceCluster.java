@@ -72,7 +72,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T12:30:33Z")
 public class ZclPriceCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -4324,7 +4324,7 @@ public class ZclPriceCluster extends ZclCluster {
         attributeMap.put(ATTR_CREDITCARDPAYMENTREF4, new ZclAttribute(ZclClusterType.PRICE, ATTR_CREDITCARDPAYMENTREF4, "Credit Card Payment Ref 4", ZclDataType.OCTET_STRING, false, true, false, false));
         attributeMap.put(ATTR_CREDITCARDPAYMENT5, new ZclAttribute(ZclClusterType.PRICE, ATTR_CREDITCARDPAYMENT5, "Credit Card Payment 5", ZclDataType.UNSIGNED_32_BIT_INTEGER, false, true, false, false));
         attributeMap.put(ATTR_CREDITCARDPAYMENTDATE5, new ZclAttribute(ZclClusterType.PRICE, ATTR_CREDITCARDPAYMENTDATE5, "Credit Card Payment Date 5", ZclDataType.UTCTIME, false, true, false, false));
-        attributeMap.put(ATTR_CREDITCARDPAYMENTREF5, new ZclAttribute(ZclClusterType.PRICE, ATTR_CREDITCARDPAYMENTREF5, "Credit Card Payment Ref 5", ZclDataType.OCTET_STRING, false, true, true, false));
+        attributeMap.put(ATTR_CREDITCARDPAYMENTREF5, new ZclAttribute(ZclClusterType.PRICE, ATTR_CREDITCARDPAYMENTREF5, "Credit Card Payment Ref 5", ZclDataType.OCTET_STRING, false, true, false, false));
         attributeMap.put(ATTR_RECEIVEDTIER1PRICELABEL, new ZclAttribute(ZclClusterType.PRICE, ATTR_RECEIVEDTIER1PRICELABEL, "Received Tier 1 Price Label", ZclDataType.OCTET_STRING, false, true, true, false));
         attributeMap.put(ATTR_RECEIVEDTIER2PRICELABEL, new ZclAttribute(ZclClusterType.PRICE, ATTR_RECEIVEDTIER2PRICELABEL, "Received Tier 2 Price Label", ZclDataType.OCTET_STRING, false, true, true, false));
         attributeMap.put(ATTR_RECEIVEDTIER3PRICELABEL, new ZclAttribute(ZclClusterType.PRICE, ATTR_RECEIVEDTIER3PRICELABEL, "Received Tier 3 Price Label", ZclDataType.OCTET_STRING, false, true, true, false));
@@ -9614,20 +9614,6 @@ public class ZclPriceCluster extends ZclCluster {
         }
 
         return (Calendar) readSync(attributes.get(ATTR_CREDITCARDPAYMENTDATE5));
-    }
-
-    /**
-     * Set the <i>Credit Card Payment Ref 5</i> attribute [attribute ID <b>0x0852</b>].
-     * <p>
-     * The attribute is of type {@link ByteArray}.
-     * <p>
-     * The implementation of this attribute by a device is OPTIONAL
-     *
-     * @param creditCardPaymentRef5 the {@link ByteArray} attribute value to be set
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> setCreditCardPaymentRef5(final ByteArray value) {
-        return write(attributes.get(ATTR_CREDITCARDPAYMENTREF5), value);
     }
 
     /**

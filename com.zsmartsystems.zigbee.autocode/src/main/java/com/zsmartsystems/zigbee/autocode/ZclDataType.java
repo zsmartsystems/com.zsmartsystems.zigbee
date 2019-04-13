@@ -99,8 +99,10 @@ public class ZclDataType {
         dataTypeMapping.put("BITMAP_48_BIT", new DataTypeMap("Integer", 0x1d, 6, false));
         dataTypeMapping.put("BITMAP_56_BIT", new DataTypeMap("Integer", 0x1e, 7, false));
         dataTypeMapping.put("BITMAP_64_BIT", new DataTypeMap("Integer", 0x1f, 8, false));
-        dataTypeMapping.put("ENUMERATION_16_BIT", new DataTypeMap("Integer", 0x31, 2, false, 0xffff));
         dataTypeMapping.put("ENUMERATION_8_BIT", new DataTypeMap("Integer", 0x30, 1, false, 0xff));
+        dataTypeMapping.put("ENUMERATION_16_BIT", new DataTypeMap("Integer", 0x31, 2, false, 0xffff));
+        dataTypeMapping.put("ENUMERATION_32_BIT", new DataTypeMap("Integer", 0x33, 4, false, 0xffffffff));
+        dataTypeMapping.put("FLOAT_32_BIT", new DataTypeMap("Double", 0x39, 4, true));
         dataTypeMapping.put("DATA_8_BIT", new DataTypeMap("Integer", 0x08, 1, false));
         dataTypeMapping.put("OCTET_STRING", new DataTypeMap("ByteArray", 0x41, -1, false));
         dataTypeMapping.put("UTCTIME", new DataTypeMap("Calendar", 0xe2, 4, true, 0xffffffff));

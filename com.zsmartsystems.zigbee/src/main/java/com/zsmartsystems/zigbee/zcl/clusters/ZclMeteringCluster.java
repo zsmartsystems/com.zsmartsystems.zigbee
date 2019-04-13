@@ -67,7 +67,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:57:36Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T12:30:33Z")
 public class ZclMeteringCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -2659,9 +2659,9 @@ public class ZclMeteringCluster extends ZclCluster {
         attributeMap.put(ATTR_DFTSUMMATION, new ZclAttribute(ZclClusterType.METERING, ATTR_DFTSUMMATION, "Dft Summation", ZclDataType.UNSIGNED_48_BIT_INTEGER, false, true, false, false));
         attributeMap.put(ATTR_DAILYFREEZETIME, new ZclAttribute(ZclClusterType.METERING, ATTR_DAILYFREEZETIME, "Daily Freeze Time", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
         attributeMap.put(ATTR_POWERFACTOR, new ZclAttribute(ZclClusterType.METERING, ATTR_POWERFACTOR, "Power Factor", ZclDataType.SIGNED_8_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_READINGSNAPSHOTTIME, new ZclAttribute(ZclClusterType.METERING, ATTR_READINGSNAPSHOTTIME, "Reading Snapshot Time", ZclDataType.UTCTIME, true, true, true, false));
-        attributeMap.put(ATTR_CURRENTMAXDEMANDDELIVEREDTIME, new ZclAttribute(ZclClusterType.METERING, ATTR_CURRENTMAXDEMANDDELIVEREDTIME, "Current Max Demand Delivered Time", ZclDataType.UTCTIME, true, true, true, false));
-        attributeMap.put(ATTR_CURRENTMAXDEMANDRECEIVEDTIME, new ZclAttribute(ZclClusterType.METERING, ATTR_CURRENTMAXDEMANDRECEIVEDTIME, "Current Max Demand Received Time", ZclDataType.UTCTIME, true, true, true, false));
+        attributeMap.put(ATTR_READINGSNAPSHOTTIME, new ZclAttribute(ZclClusterType.METERING, ATTR_READINGSNAPSHOTTIME, "Reading Snapshot Time", ZclDataType.UTCTIME, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTMAXDEMANDDELIVEREDTIME, new ZclAttribute(ZclClusterType.METERING, ATTR_CURRENTMAXDEMANDDELIVEREDTIME, "Current Max Demand Delivered Time", ZclDataType.UTCTIME, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTMAXDEMANDRECEIVEDTIME, new ZclAttribute(ZclClusterType.METERING, ATTR_CURRENTMAXDEMANDRECEIVEDTIME, "Current Max Demand Received Time", ZclDataType.UTCTIME, true, true, false, false));
         attributeMap.put(ATTR_DEFAULTUPDATEPERIOD, new ZclAttribute(ZclClusterType.METERING, ATTR_DEFAULTUPDATEPERIOD, "Default Update Period", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
         attributeMap.put(ATTR_FASTPOLLUPDATEPERIOD, new ZclAttribute(ZclClusterType.METERING, ATTR_FASTPOLLUPDATEPERIOD, "Fast Poll Update Period", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
         attributeMap.put(ATTR_CURRENTBLOCKPERIODCONSUMPTIONDELIVERED, new ZclAttribute(ZclClusterType.METERING, ATTR_CURRENTBLOCKPERIODCONSUMPTIONDELIVERED, "Current Block Period Consumption Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, false, true, false, false));
@@ -4068,25 +4068,6 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set the <i>Reading Snapshot Time</i> attribute [attribute ID <b>0x0007</b>].
-     * <p>
-     * The ReadingSnapshotTime attribute represents the last time all of the
-     * CurrentSummationDelivered, CurrentSummationReceived,
-     * CurrentMaxDemandDelivered, and CurrentMaxDemandReceived attributes that are
-     * supported by the device were updated.
-     * <p>
-     * The attribute is of type {@link Calendar}.
-     * <p>
-     * The implementation of this attribute by a device is MANDATORY
-     *
-     * @param readingSnapshotTime the {@link Calendar} attribute value to be set
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> setReadingSnapshotTime(final Calendar value) {
-        return write(attributes.get(ATTR_READINGSNAPSHOTTIME), value);
-    }
-
-    /**
      * Get the <i>Reading Snapshot Time</i> attribute [attribute ID <b>0x0007</b>].
      * <p>
      * The ReadingSnapshotTime attribute represents the last time all of the
@@ -4156,23 +4137,6 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set the <i>Current Max Demand Delivered Time</i> attribute [attribute ID <b>0x0008</b>].
-     * <p>
-     * The CurrentMaxDemandDeliveredTime attribute represents the time when
-     * CurrentMaxDemandDelivered reading was captured.
-     * <p>
-     * The attribute is of type {@link Calendar}.
-     * <p>
-     * The implementation of this attribute by a device is MANDATORY
-     *
-     * @param currentMaxDemandDeliveredTime the {@link Calendar} attribute value to be set
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> setCurrentMaxDemandDeliveredTime(final Calendar value) {
-        return write(attributes.get(ATTR_CURRENTMAXDEMANDDELIVEREDTIME), value);
-    }
-
-    /**
      * Get the <i>Current Max Demand Delivered Time</i> attribute [attribute ID <b>0x0008</b>].
      * <p>
      * The CurrentMaxDemandDeliveredTime attribute represents the time when
@@ -4233,23 +4197,6 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     public Future<CommandResult> setCurrentMaxDemandDeliveredTimeReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
         return setReporting(attributes.get(ATTR_CURRENTMAXDEMANDDELIVEREDTIME), minInterval, maxInterval, reportableChange);
-    }
-
-    /**
-     * Set the <i>Current Max Demand Received Time</i> attribute [attribute ID <b>0x0009</b>].
-     * <p>
-     * The CurrentMaxDemandReceivedTime attribute represents the time when
-     * CurrentMaxDemandReceived reading was captured.
-     * <p>
-     * The attribute is of type {@link Calendar}.
-     * <p>
-     * The implementation of this attribute by a device is MANDATORY
-     *
-     * @param currentMaxDemandReceivedTime the {@link Calendar} attribute value to be set
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> setCurrentMaxDemandReceivedTime(final Calendar value) {
-        return write(attributes.get(ATTR_CURRENTMAXDEMANDRECEIVEDTIME), value);
     }
 
     /**

@@ -14,6 +14,7 @@ import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclAlarmsCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclAnalogInputBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBinaryInputBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclColorControlCluster;
@@ -65,7 +66,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclWindowCoveringCluster;
  * @author Chris Jackson
 
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T19:25:17Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T12:30:33Z")
 public enum ZclClusterType {
     BASIC(0x0000, ZclBasicCluster.class, "Basic"),
     POWER_CONFIGURATION(0x0001, ZclPowerConfigurationCluster.class, "Power Configuration"),
@@ -78,6 +79,7 @@ public enum ZclClusterType {
     ALARMS(0x0009, ZclAlarmsCluster.class, "Alarms"),
     TIME(0x000A, ZclTimeCluster.class, "Time"),
     RSSI_LOCATION(0x000B, ZclRssiLocationCluster.class, "RSSI Location"),
+    ANALOG_INPUT_BASIC(0x000C, ZclAnalogInputBasicCluster.class, "Analog Input (Basic)"),
     BINARY_INPUT_BASIC(0x000F, ZclBinaryInputBasicCluster.class, "Binary Input (Basic)"),
     MULTISTATE_INPUT_BASIC(0x0012, ZclMultistateInputBasicCluster.class, "Multistate Input (Basic)"),
     MULTISTATE_OUTPUT_BASIC(0x0013, ZclMultistateOutputBasicCluster.class, "Multistate Output (Basic)"),
