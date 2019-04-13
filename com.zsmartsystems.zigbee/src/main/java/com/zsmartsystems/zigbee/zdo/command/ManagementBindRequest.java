@@ -28,8 +28,13 @@ import com.zsmartsystems.zigbee.zdo.command.ManagementBindResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:28:39Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
 public class ManagementBindRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0000;
+
     /**
      * Start Index command message field.
      */
@@ -39,7 +44,7 @@ public class ManagementBindRequest extends ZdoRequest implements ZigBeeTransacti
      * Default constructor.
      */
     public ManagementBindRequest() {
-        clusterId = 0x0033;
+        clusterId = CLUSTER_ID;
     }
 
     /**

@@ -23,8 +23,18 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-15T23:41:21Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
 public class GetWeeklyScheduleResponse extends ZclCommand {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0201;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x00;
+
     /**
      * Number Of Transitions command message field.
      */
@@ -59,9 +69,9 @@ public class GetWeeklyScheduleResponse extends ZclCommand {
      * Default constructor.
      */
     public GetWeeklyScheduleResponse() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 0x0201;
-        commandId = 0;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
 

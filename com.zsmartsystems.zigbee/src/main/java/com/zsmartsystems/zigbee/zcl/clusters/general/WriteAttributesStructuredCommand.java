@@ -29,8 +29,13 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
 public class WriteAttributesStructuredCommand extends ZclCommand {
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x0F;
+
     /**
      * Status command message field.
      * <p>
@@ -55,8 +60,8 @@ public class WriteAttributesStructuredCommand extends ZclCommand {
      * Default constructor.
      */
     public WriteAttributesStructuredCommand() {
+        commandId = COMMAND_ID;
         genericCommand = true;
-        commandId = 15;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 

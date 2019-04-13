@@ -26,12 +26,22 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * automatically. This timeout parameter is only temporary for this message transition only
  * and overrides the default relock time as specified in the [Auto Relock Time attribute]
  * attribute. If the door lock device is not capable of or does not want to support temporary
- * Relock Timeout, it SHOULD not support this optional command.
+ * Relock Timeout, it should not support this optional command.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-08-13T17:13:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
 public class UnlockWithTimeout extends ZclCommand {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0101;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x03;
+
     /**
      * Timeout In Seconds command message field.
      */
@@ -46,9 +56,9 @@ public class UnlockWithTimeout extends ZclCommand {
      * Default constructor.
      */
     public UnlockWithTimeout() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 0x0101;
-        commandId = 3;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 

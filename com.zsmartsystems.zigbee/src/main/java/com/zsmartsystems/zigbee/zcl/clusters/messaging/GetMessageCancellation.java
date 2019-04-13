@@ -29,8 +29,18 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
 public class GetMessageCancellation extends ZclCommand {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0703;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x02;
+
     /**
      * Earliest Implementation Time command message field.
      * <p>
@@ -43,9 +53,9 @@ public class GetMessageCancellation extends ZclCommand {
      * Default constructor.
      */
     public GetMessageCancellation() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 0x0703;
-        commandId = 2;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
 

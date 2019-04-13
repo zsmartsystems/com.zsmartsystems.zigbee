@@ -133,6 +133,21 @@ public class ZigBeeZclCommandGenerator extends ZigBeeBaseFieldGenerator {
             }
             out.println(" {");
 
+            if (!cluster.name.equalsIgnoreCase("GENERAL")) {
+                out.println("    /**");
+                out.println("     * The cluster ID to which this command belongs.");
+                out.println("     */");
+                out.println("    public static int CLUSTER_ID = 0x" + String.format("%04X", cluster.code) + ";");
+                out.println();
+            }
+            if (commandExtends.equals("ZclCommand")) {
+                out.println("    /**");
+                out.println("     * The command ID.");
+                out.println("     */");
+                out.println("    public static int COMMAND_ID = 0x" + String.format("%02X", command.code) + ";");
+                out.println();
+            }
+
             for (final ZigBeeXmlField field : command.fields) {
                 if (reservedFields.contains(stringToLowerCamelCase(field.name))) {
                     continue;
@@ -156,19 +171,15 @@ public class ZigBeeZclCommandGenerator extends ZigBeeBaseFieldGenerator {
             out.println("     * Default constructor.");
             out.println("     */");
             out.println("    public " + className + "() {");
+            if (!cluster.name.equalsIgnoreCase("GENERAL")) {
+                out.println("        clusterId = CLUSTER_ID;");
+            }
             if (commandExtends.equals("ZclCommand")) {
+                out.println("        commandId = COMMAND_ID;");
                 out.println("        genericCommand = "
                         + ((cluster.name.equalsIgnoreCase("GENERAL")) ? "true" : "false") + ";");
-
-                if (!cluster.name.equalsIgnoreCase("GENERAL")) {
-                    out.println("        clusterId = 0x" + String.format("%04X", cluster.code) + ";");
-                }
-
-                out.println("        commandId = " + command.code + ";");
                 out.println("        commandDirection = ZclCommandDirection."
                         + (command.source.equals("client") ? "CLIENT_TO_SERVER" : "SERVER_TO_CLIENT") + ";");
-            } else {
-                out.println("        clusterId = 0x" + String.format("%04X", command.code) + ";");
             }
             out.println("    }");
 

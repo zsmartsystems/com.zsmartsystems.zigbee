@@ -31,8 +31,13 @@ import com.zsmartsystems.zigbee.zdo.command.BindResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-26T20:28:39Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
 public class BindRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0000;
+
     /**
      * Src Address command message field.
      * <p>
@@ -83,7 +88,7 @@ public class BindRequest extends ZdoRequest implements ZigBeeTransactionMatcher 
      * Default constructor.
      */
     public BindRequest() {
-        clusterId = 0x0021;
+        clusterId = CLUSTER_ID;
     }
 
     /**

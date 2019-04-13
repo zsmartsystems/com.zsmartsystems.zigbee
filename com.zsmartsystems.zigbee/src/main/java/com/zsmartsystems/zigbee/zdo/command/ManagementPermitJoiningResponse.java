@@ -30,13 +30,18 @@ import com.zsmartsystems.zigbee.zdo.ZdoStatus;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T17:07:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
 public class ManagementPermitJoiningResponse extends ZdoResponse {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0000;
+
     /**
      * Default constructor.
      */
     public ManagementPermitJoiningResponse() {
-        clusterId = 0x8036;
+        clusterId = CLUSTER_ID;
     }
 
     @Override

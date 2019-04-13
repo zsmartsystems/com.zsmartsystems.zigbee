@@ -32,8 +32,18 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
 public class QuerySpecificFileCommand extends ZclCommand {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0019;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x08;
+
     /**
      * Request Node Address command message field.
      */
@@ -63,9 +73,9 @@ public class QuerySpecificFileCommand extends ZclCommand {
      * Default constructor.
      */
     public QuerySpecificFileCommand() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 0x0019;
-        commandId = 8;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 

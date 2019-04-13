@@ -28,8 +28,13 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T19:19:25Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
 public class DiscoverCommandsReceivedResponse extends ZclCommand {
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x12;
+
     /**
      * Discovery Complete command message field.
      */
@@ -44,8 +49,8 @@ public class DiscoverCommandsReceivedResponse extends ZclCommand {
      * Default constructor.
      */
     public DiscoverCommandsReceivedResponse() {
+        commandId = COMMAND_ID;
         genericCommand = true;
-        commandId = 18;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 

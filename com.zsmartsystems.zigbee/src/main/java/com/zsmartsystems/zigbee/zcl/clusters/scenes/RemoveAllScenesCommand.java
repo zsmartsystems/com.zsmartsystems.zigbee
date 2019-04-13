@@ -25,8 +25,18 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
 public class RemoveAllScenesCommand extends ZclCommand {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0005;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x03;
+
     /**
      * Group ID command message field.
      */
@@ -36,9 +46,9 @@ public class RemoveAllScenesCommand extends ZclCommand {
      * Default constructor.
      */
     public RemoveAllScenesCommand() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 0x0005;
-        commandId = 3;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 

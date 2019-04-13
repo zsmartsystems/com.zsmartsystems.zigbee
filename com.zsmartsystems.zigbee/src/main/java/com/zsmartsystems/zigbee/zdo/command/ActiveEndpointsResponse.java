@@ -28,8 +28,13 @@ import com.zsmartsystems.zigbee.zdo.ZdoStatus;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T17:07:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
 public class ActiveEndpointsResponse extends ZdoResponse {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0000;
+
     /**
      * NWK Addr Of Interest command message field.
      */
@@ -44,7 +49,7 @@ public class ActiveEndpointsResponse extends ZdoResponse {
      * Default constructor.
      */
     public ActiveEndpointsResponse() {
-        clusterId = 0x8005;
+        clusterId = CLUSTER_ID;
     }
 
     /**

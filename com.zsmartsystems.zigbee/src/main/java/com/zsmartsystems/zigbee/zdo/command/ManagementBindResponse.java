@@ -30,8 +30,13 @@ import com.zsmartsystems.zigbee.zdo.field.BindingTable;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T17:07:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
 public class ManagementBindResponse extends ZdoResponse {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0000;
+
     /**
      * Binding Table Entries command message field.
      */
@@ -51,7 +56,7 @@ public class ManagementBindResponse extends ZdoResponse {
      * Default constructor.
      */
     public ManagementBindResponse() {
-        clusterId = 0x8033;
+        clusterId = CLUSTER_ID;
     }
 
     /**

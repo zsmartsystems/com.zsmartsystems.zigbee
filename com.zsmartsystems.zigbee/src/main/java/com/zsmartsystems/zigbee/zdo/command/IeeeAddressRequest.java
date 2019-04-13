@@ -27,8 +27,13 @@ import com.zsmartsystems.zigbee.zdo.command.IeeeAddressResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
 public class IeeeAddressRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0000;
+
     /**
      * NWK Addr Of Interest command message field.
      */
@@ -48,7 +53,7 @@ public class IeeeAddressRequest extends ZdoRequest implements ZigBeeTransactionM
      * Default constructor.
      */
     public IeeeAddressRequest() {
-        clusterId = 0x0001;
+        clusterId = CLUSTER_ID;
     }
 
     /**

@@ -26,8 +26,13 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T19:19:25Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
 public class BackupSourceBindRequest extends ZdoRequest {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0000;
+
     /**
      * Source Table Entries command message field.
      */
@@ -52,7 +57,7 @@ public class BackupSourceBindRequest extends ZdoRequest {
      * Default constructor.
      */
     public BackupSourceBindRequest() {
-        clusterId = 0x0029;
+        clusterId = CLUSTER_ID;
     }
 
     /**

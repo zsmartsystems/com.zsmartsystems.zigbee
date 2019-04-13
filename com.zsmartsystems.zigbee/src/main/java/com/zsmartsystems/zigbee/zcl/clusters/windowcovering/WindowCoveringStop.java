@@ -22,15 +22,25 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T17:03:43Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T11:59:37Z")
 public class WindowCoveringStop extends ZclCommand {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0102;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x02;
+
     /**
      * Default constructor.
      */
     public WindowCoveringStop() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 0x0102;
-        commandId = 2;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
