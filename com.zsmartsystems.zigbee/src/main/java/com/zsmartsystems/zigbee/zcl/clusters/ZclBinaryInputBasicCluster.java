@@ -17,7 +17,6 @@ import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -29,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-18T19:39:16Z")
 public class ZclBinaryInputBasicCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -176,15 +175,15 @@ public class ZclBinaryInputBasicCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(9);
 
-        attributeMap.put(ATTR_ACTIVETEXT, new ZclAttribute(ZclClusterType.BINARY_INPUT_BASIC, ATTR_ACTIVETEXT, "Active Text", ZclDataType.CHARACTER_STRING, false, true, true, false));
-        attributeMap.put(ATTR_DESCRIPTION, new ZclAttribute(ZclClusterType.BINARY_INPUT_BASIC, ATTR_DESCRIPTION, "Description", ZclDataType.CHARACTER_STRING, false, true, true, false));
-        attributeMap.put(ATTR_INACTIVETEXT, new ZclAttribute(ZclClusterType.BINARY_INPUT_BASIC, ATTR_INACTIVETEXT, "Inactive Text", ZclDataType.CHARACTER_STRING, false, true, true, false));
-        attributeMap.put(ATTR_OUTOFSERVICE, new ZclAttribute(ZclClusterType.BINARY_INPUT_BASIC, ATTR_OUTOFSERVICE, "Out Of Service", ZclDataType.BOOLEAN, true, true, true, false));
-        attributeMap.put(ATTR_POLARITY, new ZclAttribute(ZclClusterType.BINARY_INPUT_BASIC, ATTR_POLARITY, "Polarity", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
-        attributeMap.put(ATTR_PRESENTVALUE, new ZclAttribute(ZclClusterType.BINARY_INPUT_BASIC, ATTR_PRESENTVALUE, "Present Value", ZclDataType.BOOLEAN, true, true, true, true));
-        attributeMap.put(ATTR_RELIABILITY, new ZclAttribute(ZclClusterType.BINARY_INPUT_BASIC, ATTR_RELIABILITY, "Reliability", ZclDataType.ENUMERATION_8_BIT, false, true, true, false));
-        attributeMap.put(ATTR_STATUSFLAGS, new ZclAttribute(ZclClusterType.BINARY_INPUT_BASIC, ATTR_STATUSFLAGS, "Status Flags", ZclDataType.BITMAP_8_BIT, true, true, false, true));
-        attributeMap.put(ATTR_APPLICATIONTYPE, new ZclAttribute(ZclClusterType.BINARY_INPUT_BASIC, ATTR_APPLICATIONTYPE, "Application Type", ZclDataType.SIGNED_32_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_ACTIVETEXT, new ZclAttribute(this, ATTR_ACTIVETEXT, "Active Text", ZclDataType.CHARACTER_STRING, false, true, true, false));
+        attributeMap.put(ATTR_DESCRIPTION, new ZclAttribute(this, ATTR_DESCRIPTION, "Description", ZclDataType.CHARACTER_STRING, false, true, true, false));
+        attributeMap.put(ATTR_INACTIVETEXT, new ZclAttribute(this, ATTR_INACTIVETEXT, "Inactive Text", ZclDataType.CHARACTER_STRING, false, true, true, false));
+        attributeMap.put(ATTR_OUTOFSERVICE, new ZclAttribute(this, ATTR_OUTOFSERVICE, "Out Of Service", ZclDataType.BOOLEAN, true, true, true, false));
+        attributeMap.put(ATTR_POLARITY, new ZclAttribute(this, ATTR_POLARITY, "Polarity", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
+        attributeMap.put(ATTR_PRESENTVALUE, new ZclAttribute(this, ATTR_PRESENTVALUE, "Present Value", ZclDataType.BOOLEAN, true, true, true, true));
+        attributeMap.put(ATTR_RELIABILITY, new ZclAttribute(this, ATTR_RELIABILITY, "Reliability", ZclDataType.ENUMERATION_8_BIT, false, true, true, false));
+        attributeMap.put(ATTR_STATUSFLAGS, new ZclAttribute(this, ATTR_STATUSFLAGS, "Status Flags", ZclDataType.BITMAP_8_BIT, true, true, false, true));
+        attributeMap.put(ATTR_APPLICATIONTYPE, new ZclAttribute(this, ATTR_APPLICATIONTYPE, "Application Type", ZclDataType.SIGNED_32_BIT_INTEGER, false, true, false, false));
 
         return attributeMap;
     }

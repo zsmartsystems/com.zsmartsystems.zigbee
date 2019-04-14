@@ -7,6 +7,9 @@
  */
 package com.zsmartsystems.zigbee.zcl.cluster;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -19,6 +22,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OffCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.ToggleCommand;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  *
@@ -35,5 +39,17 @@ public class ZclOnOffClusterTest {
         assertTrue(cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND, 2) instanceof ToggleCommand);
 
         assertTrue(cluster.getCommandFromId(ZclFrameType.ENTIRE_PROFILE_COMMAND, 0) instanceof ReadAttributesCommand);
+    }
+
+    @Test
+    public void get() {
+        ZclOnOffCluster cluster = new ZclOnOffCluster(Mockito.mock(ZigBeeEndpoint.class));
+
+        cluster.setClient();
+        assertNull(cluster.getAttribute(0));
+
+        cluster.setServer();
+        assertNotNull(cluster.getAttribute(0));
+        assertEquals(ZclDataType.BOOLEAN, cluster.getAttribute(0).getDataType());
     }
 }

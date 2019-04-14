@@ -17,7 +17,6 @@ import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -28,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-18T19:39:16Z")
 public class ZclPowerConfigurationCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -212,29 +211,29 @@ public class ZclPowerConfigurationCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(23);
 
-        attributeMap.put(ATTR_MAINSVOLTAGE, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_MAINSVOLTAGE, "Mains Voltage", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_MAINSFREQUENCY, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_MAINSFREQUENCY, "Mains Frequency", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_MAINSALARMMASK, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_MAINSALARMMASK, "Mains Alarm Mask", ZclDataType.BITMAP_8_BIT, false, true, true, false));
-        attributeMap.put(ATTR_MAINSVOLTAGEMINTHRESHOLD, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_MAINSVOLTAGEMINTHRESHOLD, "Mains Voltage Min Threshold", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
-        attributeMap.put(ATTR_MAINSVOLTAGEMAXTHRESHOLD, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_MAINSVOLTAGEMAXTHRESHOLD, "Mains Voltage Max Threshold", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
-        attributeMap.put(ATTR_MAINSVOLTAGEDWELLTRIPPOINT, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_MAINSVOLTAGEDWELLTRIPPOINT, "Mains Voltage Dwell Trip Point", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
-        attributeMap.put(ATTR_BATTERYVOLTAGE, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYVOLTAGE, "Battery Voltage", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_BATTERYPERCENTAGEREMAINING, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYPERCENTAGEREMAINING, "Battery Percentage Remaining", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, true));
-        attributeMap.put(ATTR_BATTERYMANUFACTURER, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYMANUFACTURER, "Battery Manufacturer", ZclDataType.CHARACTER_STRING, false, true, true, false));
-        attributeMap.put(ATTR_BATTERYSIZE, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYSIZE, "Battery Size", ZclDataType.ENUMERATION_8_BIT, false, true, true, false));
-        attributeMap.put(ATTR_BATTERYAHRRATING, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYAHRRATING, "Battery A Hr Rating", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
-        attributeMap.put(ATTR_BATTERYQUANTITY, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYQUANTITY, "Battery Quantity", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
-        attributeMap.put(ATTR_BATTERYRATEDVOLTAGE, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYRATEDVOLTAGE, "Battery Rated Voltage", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
-        attributeMap.put(ATTR_BATTERYALARMMASK, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYALARMMASK, "Battery Alarm Mask", ZclDataType.BITMAP_8_BIT, false, true, true, false));
-        attributeMap.put(ATTR_BATTERYVOLTAGEMINTHRESHOLD, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYVOLTAGEMINTHRESHOLD, "Battery Voltage Min Threshold", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
-        attributeMap.put(ATTR_BATTERYVOLTAGETHRESHOLD1, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYVOLTAGETHRESHOLD1, "Battery Voltage Threshold 1", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
-        attributeMap.put(ATTR_BATTERYVOLTAGETHRESHOLD2, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYVOLTAGETHRESHOLD2, "Battery Voltage Threshold 2", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
-        attributeMap.put(ATTR_BATTERYVOLTAGETHRESHOLD3, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYVOLTAGETHRESHOLD3, "Battery Voltage Threshold 3", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
-        attributeMap.put(ATTR_BATTERYPERCENTAGEMINTHRESHOLD, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYPERCENTAGEMINTHRESHOLD, "Battery Percentage Min Threshold", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
-        attributeMap.put(ATTR_BATTERYPERCENTAGETHRESHOLD1, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYPERCENTAGETHRESHOLD1, "Battery Percentage Threshold 1", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
-        attributeMap.put(ATTR_BATTERYPERCENTAGETHRESHOLD2, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYPERCENTAGETHRESHOLD2, "Battery Percentage Threshold 2", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
-        attributeMap.put(ATTR_BATTERYPERCENTAGETHRESHOLD3, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYPERCENTAGETHRESHOLD3, "Battery Percentage Threshold 3", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
-        attributeMap.put(ATTR_BATTERYALARMSTATE, new ZclAttribute(ZclClusterType.POWER_CONFIGURATION, ATTR_BATTERYALARMSTATE, "Battery Alarm State", ZclDataType.BITMAP_32_BIT, false, true, false, false));
+        attributeMap.put(ATTR_MAINSVOLTAGE, new ZclAttribute(this, ATTR_MAINSVOLTAGE, "Mains Voltage", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_MAINSFREQUENCY, new ZclAttribute(this, ATTR_MAINSFREQUENCY, "Mains Frequency", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_MAINSALARMMASK, new ZclAttribute(this, ATTR_MAINSALARMMASK, "Mains Alarm Mask", ZclDataType.BITMAP_8_BIT, false, true, true, false));
+        attributeMap.put(ATTR_MAINSVOLTAGEMINTHRESHOLD, new ZclAttribute(this, ATTR_MAINSVOLTAGEMINTHRESHOLD, "Mains Voltage Min Threshold", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_MAINSVOLTAGEMAXTHRESHOLD, new ZclAttribute(this, ATTR_MAINSVOLTAGEMAXTHRESHOLD, "Mains Voltage Max Threshold", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_MAINSVOLTAGEDWELLTRIPPOINT, new ZclAttribute(this, ATTR_MAINSVOLTAGEDWELLTRIPPOINT, "Mains Voltage Dwell Trip Point", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_BATTERYVOLTAGE, new ZclAttribute(this, ATTR_BATTERYVOLTAGE, "Battery Voltage", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_BATTERYPERCENTAGEREMAINING, new ZclAttribute(this, ATTR_BATTERYPERCENTAGEREMAINING, "Battery Percentage Remaining", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, true));
+        attributeMap.put(ATTR_BATTERYMANUFACTURER, new ZclAttribute(this, ATTR_BATTERYMANUFACTURER, "Battery Manufacturer", ZclDataType.CHARACTER_STRING, false, true, true, false));
+        attributeMap.put(ATTR_BATTERYSIZE, new ZclAttribute(this, ATTR_BATTERYSIZE, "Battery Size", ZclDataType.ENUMERATION_8_BIT, false, true, true, false));
+        attributeMap.put(ATTR_BATTERYAHRRATING, new ZclAttribute(this, ATTR_BATTERYAHRRATING, "Battery A Hr Rating", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_BATTERYQUANTITY, new ZclAttribute(this, ATTR_BATTERYQUANTITY, "Battery Quantity", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_BATTERYRATEDVOLTAGE, new ZclAttribute(this, ATTR_BATTERYRATEDVOLTAGE, "Battery Rated Voltage", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_BATTERYALARMMASK, new ZclAttribute(this, ATTR_BATTERYALARMMASK, "Battery Alarm Mask", ZclDataType.BITMAP_8_BIT, false, true, true, false));
+        attributeMap.put(ATTR_BATTERYVOLTAGEMINTHRESHOLD, new ZclAttribute(this, ATTR_BATTERYVOLTAGEMINTHRESHOLD, "Battery Voltage Min Threshold", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_BATTERYVOLTAGETHRESHOLD1, new ZclAttribute(this, ATTR_BATTERYVOLTAGETHRESHOLD1, "Battery Voltage Threshold 1", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_BATTERYVOLTAGETHRESHOLD2, new ZclAttribute(this, ATTR_BATTERYVOLTAGETHRESHOLD2, "Battery Voltage Threshold 2", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_BATTERYVOLTAGETHRESHOLD3, new ZclAttribute(this, ATTR_BATTERYVOLTAGETHRESHOLD3, "Battery Voltage Threshold 3", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_BATTERYPERCENTAGEMINTHRESHOLD, new ZclAttribute(this, ATTR_BATTERYPERCENTAGEMINTHRESHOLD, "Battery Percentage Min Threshold", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_BATTERYPERCENTAGETHRESHOLD1, new ZclAttribute(this, ATTR_BATTERYPERCENTAGETHRESHOLD1, "Battery Percentage Threshold 1", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_BATTERYPERCENTAGETHRESHOLD2, new ZclAttribute(this, ATTR_BATTERYPERCENTAGETHRESHOLD2, "Battery Percentage Threshold 2", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_BATTERYPERCENTAGETHRESHOLD3, new ZclAttribute(this, ATTR_BATTERYPERCENTAGETHRESHOLD3, "Battery Percentage Threshold 3", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_BATTERYALARMSTATE, new ZclAttribute(this, ATTR_BATTERYALARMSTATE, "Battery Alarm State", ZclDataType.BITMAP_32_BIT, false, true, false, false));
 
         return attributeMap;
     }

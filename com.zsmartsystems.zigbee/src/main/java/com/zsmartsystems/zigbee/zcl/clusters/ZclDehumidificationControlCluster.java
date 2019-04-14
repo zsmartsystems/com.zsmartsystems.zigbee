@@ -17,7 +17,6 @@ import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -27,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-18T19:39:16Z")
 public class ZclDehumidificationControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -95,14 +94,14 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(8);
 
-        attributeMap.put(ATTR_RELATIVEHUMIDITY, new ZclAttribute(ZclClusterType.DEHUMIDIFICATION_CONTROL, ATTR_RELATIVEHUMIDITY, "Relative Humidity", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_DEHUMIDIFICATIONCOOLING, new ZclAttribute(ZclClusterType.DEHUMIDIFICATION_CONTROL, ATTR_DEHUMIDIFICATIONCOOLING, "Dehumidification Cooling", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_RHDEHUMIDIFICATIONSETPOINT, new ZclAttribute(ZclClusterType.DEHUMIDIFICATION_CONTROL, ATTR_RHDEHUMIDIFICATIONSETPOINT, "Rh Dehumidification Setpoint", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, true));
-        attributeMap.put(ATTR_RELATIVEHUMIDITYMODE, new ZclAttribute(ZclClusterType.DEHUMIDIFICATION_CONTROL, ATTR_RELATIVEHUMIDITYMODE, "Relative Humidity Mode", ZclDataType.ENUMERATION_8_BIT, false, true, true, true));
-        attributeMap.put(ATTR_DEHUMIDIFICATIONLOCKOUT, new ZclAttribute(ZclClusterType.DEHUMIDIFICATION_CONTROL, ATTR_DEHUMIDIFICATIONLOCKOUT, "Dehumidification Lockout", ZclDataType.ENUMERATION_8_BIT, false, true, true, true));
-        attributeMap.put(ATTR_DEHUMIDIFICATIONHYSTERESIS, new ZclAttribute(ZclClusterType.DEHUMIDIFICATION_CONTROL, ATTR_DEHUMIDIFICATIONHYSTERESIS, "Dehumidification Hysteresis", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, true));
-        attributeMap.put(ATTR_DEHUMIDIFICATIONMAXCOOL, new ZclAttribute(ZclClusterType.DEHUMIDIFICATION_CONTROL, ATTR_DEHUMIDIFICATIONMAXCOOL, "Dehumidification Max Cool", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, true));
-        attributeMap.put(ATTR_RELATIVEHUMIDITYDISPLAY, new ZclAttribute(ZclClusterType.DEHUMIDIFICATION_CONTROL, ATTR_RELATIVEHUMIDITYDISPLAY, "Relative Humidity Display", ZclDataType.ENUMERATION_8_BIT, false, true, true, true));
+        attributeMap.put(ATTR_RELATIVEHUMIDITY, new ZclAttribute(this, ATTR_RELATIVEHUMIDITY, "Relative Humidity", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_DEHUMIDIFICATIONCOOLING, new ZclAttribute(this, ATTR_DEHUMIDIFICATIONCOOLING, "Dehumidification Cooling", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_RHDEHUMIDIFICATIONSETPOINT, new ZclAttribute(this, ATTR_RHDEHUMIDIFICATIONSETPOINT, "Rh Dehumidification Setpoint", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, true));
+        attributeMap.put(ATTR_RELATIVEHUMIDITYMODE, new ZclAttribute(this, ATTR_RELATIVEHUMIDITYMODE, "Relative Humidity Mode", ZclDataType.ENUMERATION_8_BIT, false, true, true, true));
+        attributeMap.put(ATTR_DEHUMIDIFICATIONLOCKOUT, new ZclAttribute(this, ATTR_DEHUMIDIFICATIONLOCKOUT, "Dehumidification Lockout", ZclDataType.ENUMERATION_8_BIT, false, true, true, true));
+        attributeMap.put(ATTR_DEHUMIDIFICATIONHYSTERESIS, new ZclAttribute(this, ATTR_DEHUMIDIFICATIONHYSTERESIS, "Dehumidification Hysteresis", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, true));
+        attributeMap.put(ATTR_DEHUMIDIFICATIONMAXCOOL, new ZclAttribute(this, ATTR_DEHUMIDIFICATIONMAXCOOL, "Dehumidification Max Cool", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, true));
+        attributeMap.put(ATTR_RELATIVEHUMIDITYDISPLAY, new ZclAttribute(this, ATTR_RELATIVEHUMIDITYDISPLAY, "Relative Humidity Display", ZclDataType.ENUMERATION_8_BIT, false, true, true, true));
 
         return attributeMap;
     }

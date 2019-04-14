@@ -17,7 +17,6 @@ import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -28,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-18T19:39:16Z")
 public class ZclThermostatUserInterfaceConfigurationCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -75,9 +74,9 @@ public class ZclThermostatUserInterfaceConfigurationCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(3);
 
-        attributeMap.put(ATTR_TEMPERATUREDISPLAYMODE, new ZclAttribute(ZclClusterType.THERMOSTAT_USER_INTERFACE_CONFIGURATION, ATTR_TEMPERATUREDISPLAYMODE, "Temperature Display Mode", ZclDataType.ENUMERATION_8_BIT, false, true, true, true));
-        attributeMap.put(ATTR_KEYPADLOCKOUT, new ZclAttribute(ZclClusterType.THERMOSTAT_USER_INTERFACE_CONFIGURATION, ATTR_KEYPADLOCKOUT, "Keypad Lockout", ZclDataType.ENUMERATION_8_BIT, false, true, true, true));
-        attributeMap.put(ATTR_SCHEDULEPROGRAMMINGVISIBILITY, new ZclAttribute(ZclClusterType.THERMOSTAT_USER_INTERFACE_CONFIGURATION, ATTR_SCHEDULEPROGRAMMINGVISIBILITY, "Schedule Programming Visibility", ZclDataType.ENUMERATION_8_BIT, false, true, true, true));
+        attributeMap.put(ATTR_TEMPERATUREDISPLAYMODE, new ZclAttribute(this, ATTR_TEMPERATUREDISPLAYMODE, "Temperature Display Mode", ZclDataType.ENUMERATION_8_BIT, false, true, true, true));
+        attributeMap.put(ATTR_KEYPADLOCKOUT, new ZclAttribute(this, ATTR_KEYPADLOCKOUT, "Keypad Lockout", ZclDataType.ENUMERATION_8_BIT, false, true, true, true));
+        attributeMap.put(ATTR_SCHEDULEPROGRAMMINGVISIBILITY, new ZclAttribute(this, ATTR_SCHEDULEPROGRAMMINGVISIBILITY, "Schedule Programming Visibility", ZclDataType.ENUMERATION_8_BIT, false, true, true, true));
 
         return attributeMap;
     }

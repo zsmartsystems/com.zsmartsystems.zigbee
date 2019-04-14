@@ -8,8 +8,10 @@
 package com.zsmartsystems.zigbee.zcl;
 
 import java.util.Calendar;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
-import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
+import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -23,7 +25,7 @@ public class ZclAttribute {
     /**
      *
      */
-    private final ZclClusterType cluster;
+    private final ZclCluster cluster;
 
     /**
      * The attribute identifier field is 16-bits in length and shall contain the
@@ -116,15 +118,15 @@ public class ZclAttribute {
     /**
      * Constructor used to set the static information
      *
-     * @param cluster
-     * @param id
-     * @param dataType
-     * @param mandatory
-     * @param readable
-     * @param writeable
-     * @param reportable
+     * @param cluster the {@link ZclCluster} to which the attribute belongs
+     * @param id the attribute ID
+     * @param dataType the {@link ZclDataType} for this attribute
+     * @param mandatory true if this is defined as mandatory in the ZCL specification
+     * @param readable true if this is defined as readable in the ZCL specification
+     * @param writeable true if this is defined as writable in the ZCL specification
+     * @param reportable true if this is defined as reportable in the ZCL specification
      */
-    public ZclAttribute(final ZclClusterType cluster, final int id, final String name, final ZclDataType dataType,
+    public ZclAttribute(final ZclCluster cluster, final int id, final String name, final ZclDataType dataType,
             final boolean mandatory, final boolean readable, final boolean writeable, final boolean reportable) {
         this.cluster = cluster;
         this.id = id;
@@ -136,12 +138,24 @@ public class ZclAttribute {
         this.reportable = reportable;
     }
 
+    /**
+     * Returns the value of the attribute. If the current value is newer than refreshPeriod (in milliseconds) then the
+     * current value will be returned, otherwise the value will be requested from the remote device.
+     *
+     * @param refreshPeriod the number of milliseconds to consider the value current
+     * @return an Object with the attribute value, or null on error
+     */
     public Object readValue(long refreshPeriod) {
-        // if()
-        ZclCluster cluster = new ZclOnOffCluster(null);
+        if (isLastValueCurrent(refreshPeriod)) {
+            return getLastValue();
+        }
 
-        // TODO!!!!!!!!!!!
-        return cluster.readAttribute(id);
+        try {
+            return cluster.readAttribute(id).get();
+        } catch (InterruptedException | ExecutionException e) {
+            // Eat me!
+        }
+        return null;
     }
 
     /**
@@ -150,7 +164,7 @@ public class ZclAttribute {
      * @return the {@link ZclClusterType} for this attribute
      */
     public ZclClusterType getCluster() {
-        return cluster;
+        return ZclClusterType.getValueById(cluster.getClusterId());
     }
 
     /**
@@ -295,6 +309,64 @@ public class ZclAttribute {
      */
     public Calendar getLastReportTime() {
         return lastReportTime;
+    }
+
+    /**
+     * Configures the reporting for the specified attribute ID for analog attributes.
+     * <p>
+     * <b>minInterval</b>:
+     * The minimum reporting interval field is 16 bits in length and shall contain the
+     * minimum interval, in seconds, between issuing reports of the specified attribute.
+     * If minInterval is set to 0x0000, then there is no minimum limit, unless one is
+     * imposed by the specification of the cluster using this reporting mechanism or by
+     * the applicable profile.
+     * <p>
+     * <b>maxInterval</b>:
+     * The maximum reporting interval field is 16 bits in length and shall contain the
+     * maximum interval, in seconds, between issuing reports of the specified attribute.
+     * If maxInterval is set to 0xffff, then the device shall not issue reports for the specified
+     * attribute, and the configuration information for that attribute need not be
+     * maintained.
+     * <p>
+     * <b>reportableChange</b>:
+     * The reportable change field shall contain the minimum change to the attribute that
+     * will result in a report being issued. This field is of variable length. For attributes
+     * with 'analog' data type the field has the same data type as the attribute. The sign (if any) of the reportable
+     * change field is ignored.
+     *
+     * @param minInterval the minimum reporting interval
+     * @param maxInterval the maximum reporting interval
+     * @param reportableChange the minimum change required to report an update
+     * @return command future {@link CommandResult}
+     */
+    public Future<CommandResult> setReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return cluster.setReporting(id, minInterval, maxInterval, reportableChange);
+    }
+
+    /**
+     * Configures the reporting for the specified attribute ID for discrete attributes.
+     * <p>
+     * <b>minInterval</b>:
+     * The minimum reporting interval field is 16 bits in length and shall contain the
+     * minimum interval, in seconds, between issuing reports of the specified attribute.
+     * If minInterval is set to 0x0000, then there is no minimum limit, unless one is
+     * imposed by the specification of the cluster using this reporting mechanism or by
+     * the applicable profile.
+     * <p>
+     * <b>maxInterval</b>:
+     * The maximum reporting interval field is 16 bits in length and shall contain the
+     * maximum interval, in seconds, between issuing reports of the specified attribute.
+     * If maxInterval is set to 0xffff, then the device shall not issue reports for the specified
+     * attribute, and the configuration information for that attribute need not be
+     * maintained.
+     *
+     * @param minInterval the minimum reporting interval
+     * @param maxInterval the maximum reporting interval
+     * @return command future {@link CommandResult}
+     */
+    public Future<CommandResult> setReporting(final int minInterval, final int maxInterval) {
+        return cluster.setReporting(id, minInterval, maxInterval);
     }
 
     /**

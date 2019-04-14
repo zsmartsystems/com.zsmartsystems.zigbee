@@ -14,7 +14,9 @@ import static org.junit.Assert.assertTrue;
 import java.util.Calendar;
 
 import org.junit.Test;
+import org.mockito.Mockito;
 
+import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -26,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 public class ZclAttributeTest {
     @Test
     public void testConstructor() {
-        ZclAttribute attribute = new ZclAttribute(ZclClusterType.ON_OFF, 0, "Test Name",
+        ZclAttribute attribute = new ZclAttribute(new ZclOnOffCluster(null), 0, "Test Name",
                 ZclDataType.UNSIGNED_8_BIT_INTEGER, false, false, false, false);
 
         assertEquals(ZclClusterType.ON_OFF, attribute.getCluster());
@@ -39,8 +41,8 @@ public class ZclAttributeTest {
         assertEquals(false, attribute.isReportable());
         System.out.println(attribute.toString());
 
-        attribute = new ZclAttribute(ZclClusterType.ON_OFF, 0, "Test Name", ZclDataType.UNSIGNED_8_BIT_INTEGER, true,
-                true, true, true);
+        attribute = new ZclAttribute(new ZclOnOffCluster(null), 0, "Test Name", ZclDataType.UNSIGNED_8_BIT_INTEGER,
+                true, true, true, true);
 
         assertEquals(true, attribute.isMandatory());
         assertEquals(true, attribute.isWritable());
@@ -50,8 +52,8 @@ public class ZclAttributeTest {
     }
 
     @Test
-    public void getLastReportTime() {
-        ZclAttribute attribute = new ZclAttribute(ZclClusterType.ON_OFF, 0, "Test Name",
+    public void getLastReportTime() throws InterruptedException {
+        ZclAttribute attribute = new ZclAttribute(new ZclOnOffCluster(null), 0, "Test Name",
                 ZclDataType.UNSIGNED_8_BIT_INTEGER, false, false, false, false);
 
         // No value has been set, so should always be false
@@ -65,13 +67,22 @@ public class ZclAttributeTest {
         assertTrue(attribute.getLastReportTime().compareTo(start) >= 0);
         assertTrue(attribute.getLastReportTime().compareTo(stop) <= 0);
 
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        Thread.sleep(100);
         assertFalse(attribute.isLastValueCurrent(50));
         assertTrue(attribute.isLastValueCurrent(Long.MAX_VALUE));
+    }
+
+    @Test
+    public void setReporting() {
+        ZclCluster cluster = Mockito.mock(ZclCluster.class);
+        ZclAttribute attribute = new ZclAttribute(cluster, 123, "Test Name", ZclDataType.UNSIGNED_8_BIT_INTEGER, false,
+                false, false, false);
+
+        attribute.setReporting(1, 2);
+        Mockito.verify(cluster, Mockito.times(1)).setReporting(123, 1, 2);
+
+        attribute.setReporting(1, 2, 3);
+        Mockito.verify(cluster, Mockito.times(1)).setReporting(123, 1, 2, 3);
+
     }
 }

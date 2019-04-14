@@ -280,7 +280,7 @@ public abstract class ZigBeeBaseClassGenerator {
                 len += word.length();
             }
 
-            if (len != 0) {
+            if (len != 2 + indent.length()) {
                 out.println();
             }
         }

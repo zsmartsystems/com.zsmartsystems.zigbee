@@ -17,7 +17,6 @@ import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -29,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-18T19:39:16Z")
 public class ZclDiagnosticsCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -107,38 +106,38 @@ public class ZclDiagnosticsCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(32);
 
-        attributeMap.put(ATTR_NUMBEROFRESETS, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_NUMBEROFRESETS, "Number Of Resets", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PERSISTENTMEMORYWRITES, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_PERSISTENTMEMORYWRITES, "Persistent Memory Writes", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_MACRXBCAST, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_MACRXBCAST, "MAC Rx Bcast", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_MACTXBCAST, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_MACTXBCAST, "MAC Tx Bcast", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_MACRXUCAST, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_MACRXUCAST, "MAC Rx Ucast", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_MACTXUCAST, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_MACTXUCAST, "MAC Tx Ucast", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_MACTXUCASTRETRY, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_MACTXUCASTRETRY, "MAC Tx Ucast Retry", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_MACTXUCASTFAIL, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_MACTXUCASTFAIL, "MAC Tx Ucast Fail", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_APSRXBCAST, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_APSRXBCAST, "APS Rx Bcast", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_APSTXBCAST, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_APSTXBCAST, "APS Tx Bcast", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_APSRXUCAST, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_APSRXUCAST, "APS Rx Ucast", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_APSTXUCASTSUCCESS, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_APSTXUCASTSUCCESS, "APS Tx Ucast Success", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_APSTXUCASTRETRY, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_APSTXUCASTRETRY, "APS Tx Ucast Retry", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_APSTXUCASTFAIL, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_APSTXUCASTFAIL, "APS Tx Ucast Fail", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_ROUTEDISCINITIATED, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_ROUTEDISCINITIATED, "Route Disc Initiated", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_NEIGHBORADDED, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_NEIGHBORADDED, "Neighbor Added", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_NEIGHBORREMOVED, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_NEIGHBORREMOVED, "Neighbor Removed", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_NEIGHBORSTALE, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_NEIGHBORSTALE, "Neighbor Stale", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_JOININDICATION, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_JOININDICATION, "Join Indication", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CHILDMOVED, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_CHILDMOVED, "Child Moved", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_NWKFCFAILURE, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_NWKFCFAILURE, "NWK FC Failure", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_APSFCFAILURE, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_APSFCFAILURE, "APS FC Failure", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_APSUNAUTHORIZEDKEY, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_APSUNAUTHORIZEDKEY, "APS Unauthorized Key", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_NWKDECRYPTFAILURES, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_NWKDECRYPTFAILURES, "NWK Decrypt Failures", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_APSDECRYPTFAILURES, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_APSDECRYPTFAILURES, "APS Decrypt Failures", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PACKETBUFFERALLOCATEFAILURES, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_PACKETBUFFERALLOCATEFAILURES, "Packet Buffer Allocate Failures", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_RELAYEDUCAST, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_RELAYEDUCAST, "Relayed Ucast", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PHYTOMACQUEUELIMITREACHED, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_PHYTOMACQUEUELIMITREACHED, "Phy To MAC Queue Limit Reached", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PACKETVALIDATEDROPCOUNT, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_PACKETVALIDATEDROPCOUNT, "Packet Validate Drop Count", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_AVERAGEMACRETRYPERAPSMESSAGESENT, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_AVERAGEMACRETRYPERAPSMESSAGESENT, "Average MAC Retry Per APS Message Sent", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_LASTMESSAGELQI, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_LASTMESSAGELQI, "Last Message LQI", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_LASTMESSAGERSSI, new ZclAttribute(ZclClusterType.DIAGNOSTICS, ATTR_LASTMESSAGERSSI, "Last Message RSSI", ZclDataType.SIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_NUMBEROFRESETS, new ZclAttribute(this, ATTR_NUMBEROFRESETS, "Number Of Resets", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PERSISTENTMEMORYWRITES, new ZclAttribute(this, ATTR_PERSISTENTMEMORYWRITES, "Persistent Memory Writes", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_MACRXBCAST, new ZclAttribute(this, ATTR_MACRXBCAST, "MAC Rx Bcast", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_MACTXBCAST, new ZclAttribute(this, ATTR_MACTXBCAST, "MAC Tx Bcast", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_MACRXUCAST, new ZclAttribute(this, ATTR_MACRXUCAST, "MAC Rx Ucast", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_MACTXUCAST, new ZclAttribute(this, ATTR_MACTXUCAST, "MAC Tx Ucast", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_MACTXUCASTRETRY, new ZclAttribute(this, ATTR_MACTXUCASTRETRY, "MAC Tx Ucast Retry", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_MACTXUCASTFAIL, new ZclAttribute(this, ATTR_MACTXUCASTFAIL, "MAC Tx Ucast Fail", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_APSRXBCAST, new ZclAttribute(this, ATTR_APSRXBCAST, "APS Rx Bcast", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_APSTXBCAST, new ZclAttribute(this, ATTR_APSTXBCAST, "APS Tx Bcast", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_APSRXUCAST, new ZclAttribute(this, ATTR_APSRXUCAST, "APS Rx Ucast", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_APSTXUCASTSUCCESS, new ZclAttribute(this, ATTR_APSTXUCASTSUCCESS, "APS Tx Ucast Success", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_APSTXUCASTRETRY, new ZclAttribute(this, ATTR_APSTXUCASTRETRY, "APS Tx Ucast Retry", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_APSTXUCASTFAIL, new ZclAttribute(this, ATTR_APSTXUCASTFAIL, "APS Tx Ucast Fail", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_ROUTEDISCINITIATED, new ZclAttribute(this, ATTR_ROUTEDISCINITIATED, "Route Disc Initiated", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_NEIGHBORADDED, new ZclAttribute(this, ATTR_NEIGHBORADDED, "Neighbor Added", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_NEIGHBORREMOVED, new ZclAttribute(this, ATTR_NEIGHBORREMOVED, "Neighbor Removed", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_NEIGHBORSTALE, new ZclAttribute(this, ATTR_NEIGHBORSTALE, "Neighbor Stale", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_JOININDICATION, new ZclAttribute(this, ATTR_JOININDICATION, "Join Indication", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CHILDMOVED, new ZclAttribute(this, ATTR_CHILDMOVED, "Child Moved", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_NWKFCFAILURE, new ZclAttribute(this, ATTR_NWKFCFAILURE, "NWK FC Failure", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_APSFCFAILURE, new ZclAttribute(this, ATTR_APSFCFAILURE, "APS FC Failure", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_APSUNAUTHORIZEDKEY, new ZclAttribute(this, ATTR_APSUNAUTHORIZEDKEY, "APS Unauthorized Key", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_NWKDECRYPTFAILURES, new ZclAttribute(this, ATTR_NWKDECRYPTFAILURES, "NWK Decrypt Failures", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_APSDECRYPTFAILURES, new ZclAttribute(this, ATTR_APSDECRYPTFAILURES, "APS Decrypt Failures", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PACKETBUFFERALLOCATEFAILURES, new ZclAttribute(this, ATTR_PACKETBUFFERALLOCATEFAILURES, "Packet Buffer Allocate Failures", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_RELAYEDUCAST, new ZclAttribute(this, ATTR_RELAYEDUCAST, "Relayed Ucast", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PHYTOMACQUEUELIMITREACHED, new ZclAttribute(this, ATTR_PHYTOMACQUEUELIMITREACHED, "Phy To MAC Queue Limit Reached", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PACKETVALIDATEDROPCOUNT, new ZclAttribute(this, ATTR_PACKETVALIDATEDROPCOUNT, "Packet Validate Drop Count", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_AVERAGEMACRETRYPERAPSMESSAGESENT, new ZclAttribute(this, ATTR_AVERAGEMACRETRYPERAPSMESSAGESENT, "Average MAC Retry Per APS Message Sent", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_LASTMESSAGELQI, new ZclAttribute(this, ATTR_LASTMESSAGELQI, "Last Message LQI", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_LASTMESSAGERSSI, new ZclAttribute(this, ATTR_LASTMESSAGERSSI, "Last Message RSSI", ZclDataType.SIGNED_8_BIT_INTEGER, true, true, false, false));
 
         return attributeMap;
     }

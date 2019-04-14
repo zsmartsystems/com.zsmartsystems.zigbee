@@ -110,7 +110,7 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
         importsAdd(packageRoot + packageZcl + ".ZclCluster");
         if (attributesServer.size() > 0) {
             importsAdd(packageRoot + packageZclProtocol + ".ZclDataType");
-            importsAdd(packageRoot + packageZclProtocol + ".ZclClusterType");
+            // importsAdd(packageRoot + packageZclProtocol + ".ZclClusterType");
         }
 
         if (!cluster.commands.isEmpty()) {
@@ -465,9 +465,9 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
     }
 
     private String defineAttribute(ZigBeeXmlAttribute attribute, String clusterName, String attributeName, int count) {
-        return "new ZclAttribute(ZclClusterType." + stringToConstant(clusterName) + ", " + getEnum(attributeName)
-                + ", \"" + attributeName + "\", " + "ZclDataType." + attribute.type + ", " + !attribute.optional + ", "
-                + true + ", " + attribute.writable + ", " + attribute.reportable + ")";
+        return "new ZclAttribute(this, " + getEnum(attributeName) + ", \"" + attributeName + "\", " + "ZclDataType."
+                + attribute.type + ", " + !attribute.optional + ", " + true + ", " + attribute.writable + ", "
+                + attribute.reportable + ")";
     }
 
     private String getEnum(String name) {

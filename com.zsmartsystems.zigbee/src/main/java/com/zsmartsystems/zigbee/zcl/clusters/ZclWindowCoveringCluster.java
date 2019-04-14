@@ -26,7 +26,6 @@ import com.zsmartsystems.zigbee.zcl.clusters.windowcovering.WindowCoveringGoToTi
 import com.zsmartsystems.zigbee.zcl.clusters.windowcovering.WindowCoveringStop;
 import com.zsmartsystems.zigbee.zcl.clusters.windowcovering.WindowCoveringUpOpen;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -36,7 +35,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-18T19:39:16Z")
 public class ZclWindowCoveringCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -186,26 +185,26 @@ public class ZclWindowCoveringCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(20);
 
-        attributeMap.put(ATTR_WINDOWCOVERINGTYPE, new ZclAttribute(ZclClusterType.WINDOW_COVERING, ATTR_WINDOWCOVERINGTYPE, "Window Covering Type", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_PHYSICALCLOSEDLIMITLIFT, new ZclAttribute(ZclClusterType.WINDOW_COVERING, ATTR_PHYSICALCLOSEDLIMITLIFT, "Physical Closed Limit - Lift", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PHYSICALCLOSEDLIMITTILT, new ZclAttribute(ZclClusterType.WINDOW_COVERING, ATTR_PHYSICALCLOSEDLIMITTILT, "Physical Closed Limit - Tilt", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTPOSITIONLIFT, new ZclAttribute(ZclClusterType.WINDOW_COVERING, ATTR_CURRENTPOSITIONLIFT, "Current Position - Lift", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTPOSITIONTILT, new ZclAttribute(ZclClusterType.WINDOW_COVERING, ATTR_CURRENTPOSITIONTILT, "Current Position - Tilt", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_NUMBEROFACTUATIONSLIFT, new ZclAttribute(ZclClusterType.WINDOW_COVERING, ATTR_NUMBEROFACTUATIONSLIFT, "Number Of Actuations - Lift", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_NUMBEROFACTUATIONSTILT, new ZclAttribute(ZclClusterType.WINDOW_COVERING, ATTR_NUMBEROFACTUATIONSTILT, "Number Of Actuations - Tilt", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CONFIGSTATUS, new ZclAttribute(ZclClusterType.WINDOW_COVERING, ATTR_CONFIGSTATUS, "Config Status", ZclDataType.BITMAP_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTPOSITIONLIFTPERCENTAGE, new ZclAttribute(ZclClusterType.WINDOW_COVERING, ATTR_CURRENTPOSITIONLIFTPERCENTAGE, "Current Position Lift Percentage", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTPOSITIONTILTPERCENTAGE, new ZclAttribute(ZclClusterType.WINDOW_COVERING, ATTR_CURRENTPOSITIONTILTPERCENTAGE, "Current Position Tilt Percentage", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_INSTALLEDOPENLIMITLIFT, new ZclAttribute(ZclClusterType.WINDOW_COVERING, ATTR_INSTALLEDOPENLIMITLIFT, "Installed Open Limit - Lift", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_INSTALLEDCLOSEDLIMITLIFT, new ZclAttribute(ZclClusterType.WINDOW_COVERING, ATTR_INSTALLEDCLOSEDLIMITLIFT, "Installed Closed Limit - Lift", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_INSTALLEDOPENLIMITTILT, new ZclAttribute(ZclClusterType.WINDOW_COVERING, ATTR_INSTALLEDOPENLIMITTILT, "Installed Open Limit - Tilt", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_INSTALLEDCLOSEDLIMITTILT, new ZclAttribute(ZclClusterType.WINDOW_COVERING, ATTR_INSTALLEDCLOSEDLIMITTILT, "Installed Closed Limit - Tilt", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_VELOCITYLIFT, new ZclAttribute(ZclClusterType.WINDOW_COVERING, ATTR_VELOCITYLIFT, "Velocity - Lift", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, true));
-        attributeMap.put(ATTR_ACCELERATIONTIMELIFT, new ZclAttribute(ZclClusterType.WINDOW_COVERING, ATTR_ACCELERATIONTIMELIFT, "Acceleration Time - Lift", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, true));
-        attributeMap.put(ATTR_DECELERATIONTIMELIFT, new ZclAttribute(ZclClusterType.WINDOW_COVERING, ATTR_DECELERATIONTIMELIFT, "Deceleration Time - Lift", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, true));
-        attributeMap.put(ATTR_MODE, new ZclAttribute(ZclClusterType.WINDOW_COVERING, ATTR_MODE, "Mode", ZclDataType.BITMAP_8_BIT, false, true, true, true));
-        attributeMap.put(ATTR_INTERMEDIATESETPOINTSLIFT, new ZclAttribute(ZclClusterType.WINDOW_COVERING, ATTR_INTERMEDIATESETPOINTSLIFT, "Intermediate Setpoints - Lift", ZclDataType.OCTET_STRING, false, true, true, true));
-        attributeMap.put(ATTR_INTERMEDIATESETPOINTSTILT, new ZclAttribute(ZclClusterType.WINDOW_COVERING, ATTR_INTERMEDIATESETPOINTSTILT, "Intermediate Setpoints - Tilt", ZclDataType.OCTET_STRING, false, true, true, true));
+        attributeMap.put(ATTR_WINDOWCOVERINGTYPE, new ZclAttribute(this, ATTR_WINDOWCOVERINGTYPE, "Window Covering Type", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_PHYSICALCLOSEDLIMITLIFT, new ZclAttribute(this, ATTR_PHYSICALCLOSEDLIMITLIFT, "Physical Closed Limit - Lift", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PHYSICALCLOSEDLIMITTILT, new ZclAttribute(this, ATTR_PHYSICALCLOSEDLIMITTILT, "Physical Closed Limit - Tilt", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTPOSITIONLIFT, new ZclAttribute(this, ATTR_CURRENTPOSITIONLIFT, "Current Position - Lift", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTPOSITIONTILT, new ZclAttribute(this, ATTR_CURRENTPOSITIONTILT, "Current Position - Tilt", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_NUMBEROFACTUATIONSLIFT, new ZclAttribute(this, ATTR_NUMBEROFACTUATIONSLIFT, "Number Of Actuations - Lift", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_NUMBEROFACTUATIONSTILT, new ZclAttribute(this, ATTR_NUMBEROFACTUATIONSTILT, "Number Of Actuations - Tilt", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CONFIGSTATUS, new ZclAttribute(this, ATTR_CONFIGSTATUS, "Config Status", ZclDataType.BITMAP_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTPOSITIONLIFTPERCENTAGE, new ZclAttribute(this, ATTR_CURRENTPOSITIONLIFTPERCENTAGE, "Current Position Lift Percentage", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTPOSITIONTILTPERCENTAGE, new ZclAttribute(this, ATTR_CURRENTPOSITIONTILTPERCENTAGE, "Current Position Tilt Percentage", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_INSTALLEDOPENLIMITLIFT, new ZclAttribute(this, ATTR_INSTALLEDOPENLIMITLIFT, "Installed Open Limit - Lift", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_INSTALLEDCLOSEDLIMITLIFT, new ZclAttribute(this, ATTR_INSTALLEDCLOSEDLIMITLIFT, "Installed Closed Limit - Lift", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_INSTALLEDOPENLIMITTILT, new ZclAttribute(this, ATTR_INSTALLEDOPENLIMITTILT, "Installed Open Limit - Tilt", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_INSTALLEDCLOSEDLIMITTILT, new ZclAttribute(this, ATTR_INSTALLEDCLOSEDLIMITTILT, "Installed Closed Limit - Tilt", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_VELOCITYLIFT, new ZclAttribute(this, ATTR_VELOCITYLIFT, "Velocity - Lift", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, true));
+        attributeMap.put(ATTR_ACCELERATIONTIMELIFT, new ZclAttribute(this, ATTR_ACCELERATIONTIMELIFT, "Acceleration Time - Lift", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, true));
+        attributeMap.put(ATTR_DECELERATIONTIMELIFT, new ZclAttribute(this, ATTR_DECELERATIONTIMELIFT, "Deceleration Time - Lift", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, true));
+        attributeMap.put(ATTR_MODE, new ZclAttribute(this, ATTR_MODE, "Mode", ZclDataType.BITMAP_8_BIT, false, true, true, true));
+        attributeMap.put(ATTR_INTERMEDIATESETPOINTSLIFT, new ZclAttribute(this, ATTR_INTERMEDIATESETPOINTSLIFT, "Intermediate Setpoints - Lift", ZclDataType.OCTET_STRING, false, true, true, true));
+        attributeMap.put(ATTR_INTERMEDIATESETPOINTSTILT, new ZclAttribute(this, ATTR_INTERMEDIATESETPOINTSTILT, "Intermediate Setpoints - Tilt", ZclDataType.OCTET_STRING, false, true, true, true));
 
         return attributeMap;
     }

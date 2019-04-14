@@ -29,7 +29,6 @@ import com.zsmartsystems.zigbee.zcl.clusters.groups.RemoveGroupCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.RemoveGroupResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.ViewGroupCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.ViewGroupResponse;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -62,7 +61,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-18T19:39:16Z")
 public class ZclGroupsCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -93,7 +92,7 @@ public class ZclGroupsCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(1);
 
-        attributeMap.put(ATTR_NAMESUPPORT, new ZclAttribute(ZclClusterType.GROUPS, ATTR_NAMESUPPORT, "Name Support", ZclDataType.BITMAP_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_NAMESUPPORT, new ZclAttribute(this, ATTR_NAMESUPPORT, "Name Support", ZclDataType.BITMAP_8_BIT, true, true, false, false));
 
         return attributeMap;
     }

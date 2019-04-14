@@ -197,7 +197,7 @@ public class ZigBeeBaseFieldGenerator extends ZigBeeBaseClassGenerator {
                             + ") deserializer.deserialize(" + "ZclDataType." + field.type + ");");
                     out.println("        }");
                 } else {
-                    if (field.type != null && !field.type.isEmpty()) {
+                    if (!field.type.isEmpty()) {
                         out.println("        " + stringToLowerCamelCase(field.name) + " = (" + getDataTypeClass(field)
                                 + ") deserializer.deserialize(" + "ZclDataType." + field.type + ");");
                     } else {

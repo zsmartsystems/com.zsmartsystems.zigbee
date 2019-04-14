@@ -17,7 +17,6 @@ import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -29,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-18T19:39:16Z")
 public class ZclAnalogInputBasicCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -168,16 +167,16 @@ public class ZclAnalogInputBasicCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(10);
 
-        attributeMap.put(ATTR_DESCRIPTION, new ZclAttribute(ZclClusterType.ANALOG_INPUT_BASIC, ATTR_DESCRIPTION, "Description", ZclDataType.CHARACTER_STRING, false, true, true, false));
-        attributeMap.put(ATTR_MAXPRESENTVALUE, new ZclAttribute(ZclClusterType.ANALOG_INPUT_BASIC, ATTR_MAXPRESENTVALUE, "Max Present Value", ZclDataType.FLOAT_32_BIT, false, true, true, false));
-        attributeMap.put(ATTR_MINPRESENTVALUE, new ZclAttribute(ZclClusterType.ANALOG_INPUT_BASIC, ATTR_MINPRESENTVALUE, "Min Present Value", ZclDataType.FLOAT_32_BIT, false, true, true, false));
-        attributeMap.put(ATTR_OUTOFSERVICE, new ZclAttribute(ZclClusterType.ANALOG_INPUT_BASIC, ATTR_OUTOFSERVICE, "Out Of Service", ZclDataType.BOOLEAN, false, true, true, false));
-        attributeMap.put(ATTR_PRESENTVALUE, new ZclAttribute(ZclClusterType.ANALOG_INPUT_BASIC, ATTR_PRESENTVALUE, "Present Value", ZclDataType.FLOAT_32_BIT, false, true, true, false));
-        attributeMap.put(ATTR_RELIABILITY, new ZclAttribute(ZclClusterType.ANALOG_INPUT_BASIC, ATTR_RELIABILITY, "Reliability", ZclDataType.ENUMERATION_8_BIT, false, true, true, false));
-        attributeMap.put(ATTR_RESOLUTION, new ZclAttribute(ZclClusterType.ANALOG_INPUT_BASIC, ATTR_RESOLUTION, "Resolution", ZclDataType.FLOAT_32_BIT, false, true, true, false));
-        attributeMap.put(ATTR_STATUSFLAGS, new ZclAttribute(ZclClusterType.ANALOG_INPUT_BASIC, ATTR_STATUSFLAGS, "Status Flags", ZclDataType.BITMAP_8_BIT, false, true, true, false));
-        attributeMap.put(ATTR_ENGINEERINGUNITS, new ZclAttribute(ZclClusterType.ANALOG_INPUT_BASIC, ATTR_ENGINEERINGUNITS, "Engineering Units", ZclDataType.ENUMERATION_32_BIT, false, true, true, false));
-        attributeMap.put(ATTR_APPLICATIONTYPE, new ZclAttribute(ZclClusterType.ANALOG_INPUT_BASIC, ATTR_APPLICATIONTYPE, "Application Type", ZclDataType.SIGNED_32_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_DESCRIPTION, new ZclAttribute(this, ATTR_DESCRIPTION, "Description", ZclDataType.CHARACTER_STRING, false, true, true, false));
+        attributeMap.put(ATTR_MAXPRESENTVALUE, new ZclAttribute(this, ATTR_MAXPRESENTVALUE, "Max Present Value", ZclDataType.FLOAT_32_BIT, false, true, true, false));
+        attributeMap.put(ATTR_MINPRESENTVALUE, new ZclAttribute(this, ATTR_MINPRESENTVALUE, "Min Present Value", ZclDataType.FLOAT_32_BIT, false, true, true, false));
+        attributeMap.put(ATTR_OUTOFSERVICE, new ZclAttribute(this, ATTR_OUTOFSERVICE, "Out Of Service", ZclDataType.BOOLEAN, false, true, true, false));
+        attributeMap.put(ATTR_PRESENTVALUE, new ZclAttribute(this, ATTR_PRESENTVALUE, "Present Value", ZclDataType.FLOAT_32_BIT, false, true, true, false));
+        attributeMap.put(ATTR_RELIABILITY, new ZclAttribute(this, ATTR_RELIABILITY, "Reliability", ZclDataType.ENUMERATION_8_BIT, false, true, true, false));
+        attributeMap.put(ATTR_RESOLUTION, new ZclAttribute(this, ATTR_RESOLUTION, "Resolution", ZclDataType.FLOAT_32_BIT, false, true, true, false));
+        attributeMap.put(ATTR_STATUSFLAGS, new ZclAttribute(this, ATTR_STATUSFLAGS, "Status Flags", ZclDataType.BITMAP_8_BIT, false, true, true, false));
+        attributeMap.put(ATTR_ENGINEERINGUNITS, new ZclAttribute(this, ATTR_ENGINEERINGUNITS, "Engineering Units", ZclDataType.ENUMERATION_32_BIT, false, true, true, false));
+        attributeMap.put(ATTR_APPLICATIONTYPE, new ZclAttribute(this, ATTR_APPLICATIONTYPE, "Application Type", ZclDataType.SIGNED_32_BIT_INTEGER, false, true, true, false));
 
         return attributeMap;
     }

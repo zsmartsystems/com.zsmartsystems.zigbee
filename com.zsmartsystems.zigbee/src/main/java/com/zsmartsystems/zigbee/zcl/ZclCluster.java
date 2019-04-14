@@ -7,14 +7,12 @@
  */
 package com.zsmartsystems.zigbee.zcl;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.Callable;
@@ -293,22 +291,10 @@ public abstract class ZclCluster {
     /**
      * Writes a number of attributes in a single command
      *
-     * @param attributes a Map of {@link ZclAttribute}s and their values
+     * @param attributes a List of {@link WriteAttributeRecord}s with the attribute ID, type and value
      * @return command future {@link CommandResult}
      */
-    public Future<CommandResult> writeAttributes(final Map<ZclAttribute, Object> attributes) {
-        List<WriteAttributeRecord> attributeRecords = new ArrayList<>();
-        for (Entry<ZclAttribute, Object> attribute : attributes.entrySet()) {
-            final WriteAttributeRecord attributeIdentifier = new WriteAttributeRecord();
-            attributeIdentifier.setAttributeIdentifier(attribute.getKey().getId());
-            attributeIdentifier.setAttributeDataType(attribute.getKey().getDataType());
-            attributeIdentifier.setAttributeValue(attribute.getValue());
-        }
-
-        return writeAttributes(attributeRecords);
-    }
-
-    private Future<CommandResult> writeAttributes(List<WriteAttributeRecord> attributes) {
+    public Future<CommandResult> writeAttributes(List<WriteAttributeRecord> attributes) {
         final WriteAttributesCommand command = new WriteAttributesCommand();
         command.setClusterId(clusterId);
         command.setRecords(attributes);
@@ -958,9 +944,9 @@ public abstract class ZclCluster {
     public void handleAttributeStatus(List<ReadAttributeStatusRecord> records) {
         for (ReadAttributeStatusRecord record : records) {
             if (record.getStatus() != ZclStatus.SUCCESS) {
-                logger.debug("{}: Error reading attribute {} in cluster {} - {}", zigbeeEndpoint.getEndpointAddress(),
-                        (isClient ? "Client" : "Server"), record.getAttributeIdentifier(), clusterId,
-                        record.getStatus());
+                logger.debug("{}: Error reading attribute {} in {} cluster {} - {}",
+                        zigbeeEndpoint.getEndpointAddress(), (isClient ? "Client" : "Server"),
+                        record.getAttributeIdentifier(), clusterId, record.getStatus());
                 continue;
             }
 
@@ -1164,7 +1150,7 @@ public abstract class ZclCluster {
      *
      * @param attribute the {@link ZclAttribute} to read
      * @return command future
-     * @deprecated from 1.2.0 use {@link #read(ZclAttribute)}. Method will be removed in 1.3.0.
+     * @deprecated from 1.2.0 use {@link #readAttribute(ZclAttribute)}. Method will be removed in 1.3.0.
      */
     @Deprecated
     public Future<CommandResult> read(final ZclAttribute attribute) {
@@ -1212,7 +1198,8 @@ public abstract class ZclCluster {
      * @param maxInterval the maximum reporting interval
      * @param reportableChange the minimum change required to report an update
      * @return command future {@link CommandResult}
-     * @deprecated from 1.2.0 use {@link ZclAttribute.setReporting} methods. This will be removed in 1.3.0
+     * @deprecated from 1.2.0 use {@link ZclCluster#setReporting(int, int, int, Object)} or
+     *             {@link ZclAttribute.setReporting} methods. This will be removed in 1.3.0
      */
     @Deprecated
     public Future<CommandResult> setReporting(final ZclAttribute attribute, final int minInterval,
@@ -1255,7 +1242,8 @@ public abstract class ZclCluster {
      * @param minInterval the minimum reporting interval
      * @param maxInterval the maximum reporting interval
      * @return command future {@link CommandResult}
-     * @deprecated from 1.2.0 use {@link ZclAttribute.setReporting} methods. This will be removed in 1.3.0
+     * @deprecated from 1.2.0 use {@link ZclCluster#setReporting(int, int, int)} or {@link ZclAttribute.setReporting}
+     *             methods. This will be removed in 1.3.0
      */
     @Deprecated
     public Future<CommandResult> setReporting(final ZclAttribute attribute, final int minInterval,
@@ -1268,7 +1256,7 @@ public abstract class ZclCluster {
      *
      * @param attribute the {@link ZclAttribute} on which to get the reporting configuration
      * @return command future {@link CommandResult}
-     * @deprecated from 1.2.0 use {@link ZclAttribute.getReporting} method. This will be removed in 1.3.0
+     * @deprecated from 1.2.0 use {@link ZclAttribute.getReporting} methods. This will be removed in 1.3.0
      */
     @Deprecated
     public Future<CommandResult> getReporting(final ZclAttribute attribute) {

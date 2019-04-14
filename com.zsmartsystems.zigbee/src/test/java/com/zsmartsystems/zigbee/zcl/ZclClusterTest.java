@@ -39,10 +39,12 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadReportingConfigurationCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnCommand;
 import com.zsmartsystems.zigbee.zcl.field.AttributeRecord;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReport;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReportingConfigurationRecord;
+import com.zsmartsystems.zigbee.zcl.field.WriteAttributeRecord;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.command.BindRequest;
@@ -309,7 +311,7 @@ public class ZclClusterTest {
 
         ZclOnOffCluster cluster = new ZclOnOffCluster(endpoint);
 
-        cluster.read(1);
+        cluster.readAttribute(1);
         assertEquals(1, commandCapture.getAllValues().size());
         assertTrue(commandCapture.getValue() instanceof ReadAttributesCommand);
         ReadAttributesCommand command = (ReadAttributesCommand) commandCapture.getValue();
@@ -329,7 +331,7 @@ public class ZclClusterTest {
         attributeIds.add(4);
         attributeIds.add(5);
         attributeIds.add(6);
-        cluster.read(attributeIds);
+        cluster.readAttributes(attributeIds);
         assertTrue(commandCapture.getValue() instanceof ReadAttributesCommand);
         command = (ReadAttributesCommand) commandCapture.getValue();
         System.out.println(command);
@@ -375,4 +377,62 @@ public class ZclClusterTest {
         assertEquals(0, cluster.getSupportedAttributes().size());
     }
 
+    @Test
+    public void writeAttribute() {
+        createEndpoint();
+        Future future = Mockito.mock(Future.class);
+
+        ZclOnOffCluster cluster = new ZclOnOffCluster(endpoint);
+
+        cluster.writeAttribute(1, ZclDataType.SIGNED_16_BIT_INTEGER, Integer.valueOf(12345));
+        Mockito.when(endpoint.sendTransaction(commandCapture.capture(), matcherCapture.capture())).thenReturn(future);
+
+        WriteAttributesCommand command = (WriteAttributesCommand) commandCapture.getAllValues().get(0);
+        System.out.println(command);
+        List<WriteAttributeRecord> records = command.getRecords();
+        assertEquals(1, records.size());
+        WriteAttributeRecord record = records.get(0);
+        assertEquals(1, record.getAttributeIdentifier());
+        assertEquals(ZclDataType.SIGNED_16_BIT_INTEGER, record.getAttributeDataType());
+        assertEquals(12345, record.getAttributeValue());
+    }
+
+    @Test
+    public void writeAttributes() {
+        createEndpoint();
+        Future future = Mockito.mock(Future.class);
+
+        ZclOnOffCluster cluster = new ZclOnOffCluster(endpoint);
+
+        List<WriteAttributeRecord> attributes = new ArrayList<>();
+
+        WriteAttributeRecord attribute = new WriteAttributeRecord();
+        attribute.setAttributeIdentifier(1);
+        attribute.setAttributeDataType(ZclDataType.BOOLEAN);
+        attribute.setAttributeValue(Boolean.TRUE);
+        attributes.add(attribute);
+
+        attribute = new WriteAttributeRecord();
+        attribute.setAttributeIdentifier(2);
+        attribute.setAttributeDataType(ZclDataType.SIGNED_16_BIT_INTEGER);
+        attribute.setAttributeValue(Integer.valueOf(123));
+        attributes.add(attribute);
+
+        cluster.writeAttributes(attributes);
+        Mockito.when(endpoint.sendTransaction(commandCapture.capture(), matcherCapture.capture())).thenReturn(future);
+
+        WriteAttributesCommand command = (WriteAttributesCommand) commandCapture.getAllValues().get(0);
+        System.out.println(command);
+        List<WriteAttributeRecord> records = command.getRecords();
+        assertEquals(2, records.size());
+        WriteAttributeRecord record = records.get(0);
+        assertEquals(1, record.getAttributeIdentifier());
+        assertEquals(ZclDataType.BOOLEAN, record.getAttributeDataType());
+        assertEquals(true, record.getAttributeValue());
+
+        record = records.get(1);
+        assertEquals(2, record.getAttributeIdentifier());
+        assertEquals(ZclDataType.SIGNED_16_BIT_INTEGER, record.getAttributeDataType());
+        assertEquals(Integer.valueOf(123), record.getAttributeValue());
+    }
 }

@@ -34,7 +34,6 @@ import com.zsmartsystems.zigbee.zcl.clusters.smartenergytunneling.TransferDataEr
 import com.zsmartsystems.zigbee.zcl.clusters.smartenergytunneling.TransferDataServerToClient;
 import com.zsmartsystems.zigbee.zcl.clusters.smartenergytunneling.TunnelClosureNotification;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -66,7 +65,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T09:37:44Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-18T19:39:16Z")
 public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -98,7 +97,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(1);
 
-        attributeMap.put(ATTR_CLOSETUNNELTIMEOUT, new ZclAttribute(ZclClusterType.SMART_ENERGY_TUNNELING, ATTR_CLOSETUNNELTIMEOUT, "Close Tunnel Timeout", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CLOSETUNNELTIMEOUT, new ZclAttribute(this, ATTR_CLOSETUNNELTIMEOUT, "Close Tunnel Timeout", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
 
         return attributeMap;
     }
