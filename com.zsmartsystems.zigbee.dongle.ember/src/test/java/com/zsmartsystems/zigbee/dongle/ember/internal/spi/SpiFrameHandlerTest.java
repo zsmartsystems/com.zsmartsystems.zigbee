@@ -199,6 +199,12 @@ public class SpiFrameHandlerTest {
     }
 
     @Test
+    public void testReceiveInvalidEzsp() {
+        processSpiCommand(new int[] { 0xFE }, new int[] { 0xFE, 0x04, 0x02, 0x80, 0xFF, 0x00 });
+        assertTrue(responseCaptor.getAllValues().size() == 0);
+    }
+
+    @Test
     public void testReceiveErrors() {
         SpiFrameHandler handler;
 
