@@ -149,6 +149,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      */
     private final List<ZigBeeTransactionQueue> outstandingQueues = new ArrayList<>();
 
+    private final ZigBeeTransactionQueue defaultQueue;
     private final ZigBeeTransactionQueue broadcastQueue;
     private final ZigBeeTransactionQueue multicastQueue;
 
@@ -165,6 +166,10 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
 
         defaultProfile = new ZigBeeTransactionProfile(NODE_RETRIES, NODE_TRANSACTIONS, NODE_DELAY);
         defaultSleepyProfile = new ZigBeeTransactionProfile(SLEEPY_RETRIES, SLEEPY_TRANSACTIONS, SLEEPY_DELAY);
+
+        defaultQueue = new ZigBeeTransactionQueue("Default");
+        defaultQueue.setProfile(defaultProfile);
+        defaultQueue.setSleepy(false);
 
         broadcastQueue = new ZigBeeTransactionQueue("Broadcast");
         broadcastQueue.setProfile(new ZigBeeTransactionProfile(BCAST_RETRIES, BCAST_TRANSACTIONS, BCAST_DELAY));
@@ -383,7 +388,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
             ZigBeeNode node = networkManager.getNode(address.getAddress());
             if (node == null) {
                 logger.debug("Attempt to send command with unknown destination: {}", transaction);
-                return null;
+                return defaultQueue;
             }
             // Add the transaction to the device queue - if it doesn't currently exist, create it
             ZigBeeTransactionQueue queue = nodeQueue.get(node.getIeeeAddress());
