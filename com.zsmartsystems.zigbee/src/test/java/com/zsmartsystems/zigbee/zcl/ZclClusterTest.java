@@ -10,9 +10,9 @@ package com.zsmartsystems.zigbee.zcl;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -26,6 +26,7 @@ import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.TestUtilities;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
@@ -198,7 +199,8 @@ public class ZclClusterTest {
         ZclAttribute attribute = cluster.getAttribute(0);
         assertTrue(attribute.getLastValue() instanceof Boolean);
 
-        Mockito.verify(listenerMock, Mockito.timeout(1000).times(2)).attributeUpdated(attributeCapture.capture(), valueCaptor.capture());
+        Mockito.verify(listenerMock, Mockito.timeout(1000).times(2)).attributeUpdated(attributeCapture.capture(),
+                valueCaptor.capture());
 
         List<ZclAttribute> updatedAttributes = attributeCapture.getAllValues();
         assertEquals(2, updatedAttributes.size());
@@ -238,31 +240,24 @@ public class ZclClusterTest {
         cluster.removeCommandListener(listenerMock);
     }
 
-    private void setSupportedClusters(ZclCluster cluster, Set<Integer> supportedAttributes) {
-        try {
-            Field f = ZclCluster.class.getDeclaredField("supportedAttributes");
-            f.setAccessible(true);
-            f.set(cluster, supportedAttributes);
-        } catch (NoSuchFieldException x) {
-            x.printStackTrace();
-        } catch (IllegalArgumentException x) {
-            x.printStackTrace();
-        } catch (IllegalAccessException x) {
-            x.printStackTrace();
-        }
-    }
-
     @Test
-    public void isAttributeSupported() {
+    public void isAttributeSupported() throws Exception {
         createEndpoint();
 
         ZclCluster cluster = new ZclOnOffCluster(endpoint);
-        Set<Integer> set = new HashSet<Integer>();
-        set.add(1);
-        set.add(4);
-        set.add(2);
-        setSupportedClusters(cluster, set);
+        assertEquals(4, cluster.getSupportedAttributes().size());
 
+        Set<Integer> supportedAttributes = new HashSet<Integer>();
+        supportedAttributes.add(1);
+        supportedAttributes.add(4);
+        supportedAttributes.add(2);
+        TestUtilities.setField(ZclCluster.class, cluster, "supportedAttributes", supportedAttributes);
+
+        assertNull(cluster.getDao().getSupportedAttributes());
+
+        assertEquals(4, cluster.getSupportedAttributes().size());
+
+        TestUtilities.setField(ZclCluster.class, cluster, "supportedAttributesKnown", true);
         assertEquals(3, cluster.getSupportedAttributes().size());
 
         assertTrue(cluster.isAttributeSupported(1));
@@ -348,17 +343,27 @@ public class ZclClusterTest {
         Mockito.when(future.get()).thenReturn(result);
         Mockito.when(endpoint.sendTransaction(commandCapture.capture(), matcherCapture.capture())).thenReturn(future);
 
+        // Cluster initialisation - returns default
         ZclOnOffCluster cluster = new ZclOnOffCluster(endpoint);
         assertFalse(cluster.getSupportedAttributes().isEmpty());
         assertEquals(4, cluster.getSupportedAttributes().size());
 
-        ZclClusterDao clusterDao = cluster.getDao();
-        assertEquals(0, cluster.getDao().getSupportedAttributes().size());
-        cluster.discoverAttributes(false).get();
-        assertFalse(cluster.getSupportedAttributes().isEmpty());
+        // DAO returns null as the real list of supported attributes is unknown
+        ZclClusterDao clusterDaoNull = cluster.getDao();
+        assertNull(cluster.getDao().getSupportedAttributes());
 
-        cluster.setDao(clusterDao);
+        // Discover attributes with an empty list of supported attributes
+        cluster.discoverAttributes(false).get();
+        assertTrue(cluster.getSupportedAttributes().isEmpty());
+
+        ZclClusterDao clusterDaoEmpty = cluster.getDao();
+
+        // Setting the DAO with a null should also return the default
+        cluster.setDao(clusterDaoNull);
         assertEquals(4, cluster.getSupportedAttributes().size());
+
+        cluster.setDao(clusterDaoEmpty);
+        assertEquals(0, cluster.getSupportedAttributes().size());
     }
 
 }
