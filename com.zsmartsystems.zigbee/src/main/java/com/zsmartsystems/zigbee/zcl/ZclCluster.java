@@ -94,6 +94,12 @@ public abstract class ZclCluster {
     private final Set<Integer> supportedAttributes = new TreeSet<>();
 
     /**
+     * A boolean used to record if the list of supported attributes has been recovered from the remote device. This is
+     * used to record the validity of {@link #supportedAttributes}
+     */
+    private boolean supportedAttributesKnown = false;
+
+    /**
      * The list of supported commands that the remote device can generate
      */
     private final Set<Integer> supportedCommandsReceived = new HashSet<>();
@@ -539,15 +545,15 @@ public abstract class ZclCluster {
 
     /**
      * Gets the list of attributes supported by this device.
-     * After initialisation, the list will contain all known standard attributes, so is not customised to the specific
-     * device. Once a successful call to {@link #discoverAttributes()} has been made, the list will reflect the
+     * After initialisation, the list will contain all standard attributes defined by ZCL, so is not customised to the
+     * specific device. Once a successful call to {@link #discoverAttributes()} has been made, the list will reflect the
      * attributes supported by the remote device.
      *
      * @return {@link Set} of {@link Integer} containing the list of supported attributes
      */
     public Set<Integer> getSupportedAttributes() {
         synchronized (supportedAttributes) {
-            if (supportedAttributes.size() == 0) {
+            if (!supportedAttributesKnown) {
                 return attributes.keySet();
             }
 
@@ -589,7 +595,7 @@ public abstract class ZclCluster {
                 // cluster which would cause errors consolidating the responses
                 synchronized (supportedAttributes) {
                     // If we don't want to rediscover, and we already have the list of attributes, then return
-                    if (!rediscover && !supportedAttributes.isEmpty()) {
+                    if (!rediscover && supportedAttributesKnown) {
                         return true;
                     }
 
@@ -623,6 +629,7 @@ public abstract class ZclCluster {
                         supportedAttributes.add(attribute.getIdentifier());
                     }
                 }
+                supportedAttributesKnown = true;
                 return true;
             }
         });
@@ -952,12 +959,20 @@ public abstract class ZclCluster {
         return null;
     }
 
+    /**
+     * Returns a Data Acquisition Object for this cluster. This is a clean class recording the state of the primary
+     * fields of the cluster for persistence purposes.
+     *
+     * @return the {@link ZclClusterDao}
+     */
     public ZclClusterDao getDao() {
         ZclClusterDao dao = new ZclClusterDao();
 
         dao.setClusterId(clusterId);
         dao.setClient(isClient);
-        dao.setSupportedAttributes(Collections.unmodifiableSet(new TreeSet<>(supportedAttributes)));
+        if (supportedAttributesKnown) {
+            dao.setSupportedAttributes(Collections.unmodifiableSet(new TreeSet<>(supportedAttributes)));
+        }
         dao.setSupportedCommandsGenerated(Collections.unmodifiableSet(new TreeSet<>(supportedCommandsGenerated)));
         dao.setSupportedCommandsReceived(Collections.unmodifiableSet(new TreeSet<>(supportedCommandsReceived)));
         dao.setAttributes(attributes);
@@ -965,10 +980,18 @@ public abstract class ZclCluster {
         return dao;
     }
 
+    /**
+     * Sets the state of the cluster from a {@link ZclClusterDao} which has been restored from a persisted state.
+     *
+     * @param dao the {@link ZclClusterDao} to restore
+     */
     public void setDao(ZclClusterDao dao) {
         clusterId = dao.getClusterId();
         isClient = dao.getClient();
-        supportedAttributes.addAll(dao.getSupportedAttributes());
+        supportedAttributesKnown = dao.getSupportedAttributes() != null;
+        if (supportedAttributesKnown) {
+            supportedAttributes.addAll(dao.getSupportedAttributes());
+        }
         supportedCommandsGenerated.addAll(dao.getSupportedCommandsGenerated());
         supportedCommandsReceived.addAll(dao.getSupportedCommandsReceived());
         attributes = dao.getAttributes();
