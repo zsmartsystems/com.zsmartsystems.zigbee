@@ -75,6 +75,12 @@ public class ZclClusterDao {
         return isClient;
     }
 
+    /**
+     * Gets the list of supported attributes.
+     *
+     * @return the list of supported attributes if known, and empty list if the attributes are known, but there are non
+     *         supported by the cluster, or null if the list of supported attributes is unknown
+     */
     public Set<Integer> getSupportedAttributes() {
         return supportedAttributes;
     }
