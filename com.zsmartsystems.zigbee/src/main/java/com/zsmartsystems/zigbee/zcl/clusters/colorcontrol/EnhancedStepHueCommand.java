@@ -10,21 +10,34 @@ package com.zsmartsystems.zigbee.zcl.clusters.colorcontrol;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Enhanced Step Hue Command value object class.
  * <p>
- * Cluster: <b>Color Control</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>Color Control</b>. Command ID 0x42 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Color Control cluster.
+ * <p>
+ * The Enhanced Step Hue command allows lamps to be moved in a stepped transition from their
+ * current hue to a target hue, resulting in a linear transition through XY space.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class EnhancedStepHueCommand extends ZclCommand {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0300;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x42;
+
     /**
      * Step Mode command message field.
      */
@@ -36,7 +49,7 @@ public class EnhancedStepHueCommand extends ZclCommand {
     private Integer stepSize;
 
     /**
-     * Transition time command message field.
+     * Transition Time command message field.
      */
     private Integer transitionTime;
 
@@ -44,9 +57,9 @@ public class EnhancedStepHueCommand extends ZclCommand {
      * Default constructor.
      */
     public EnhancedStepHueCommand() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 768;
-        commandId = 65;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
@@ -87,18 +100,18 @@ public class EnhancedStepHueCommand extends ZclCommand {
     }
 
     /**
-     * Gets Transition time.
+     * Gets Transition Time.
      *
-     * @return the Transition time
+     * @return the Transition Time
      */
     public Integer getTransitionTime() {
         return transitionTime;
     }
 
     /**
-     * Sets Transition time.
+     * Sets Transition Time.
      *
-     * @param transitionTime the Transition time
+     * @param transitionTime the Transition Time
      */
     public void setTransitionTime(final Integer transitionTime) {
         this.transitionTime = transitionTime;

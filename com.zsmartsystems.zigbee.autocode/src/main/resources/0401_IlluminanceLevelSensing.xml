@@ -1,0 +1,22 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0401">
+    <name>Illuminance Level Sensing</name>
+    <description>The cluster provides an interface to illuminance level sensing functionality, including configuration and provision of notifications of whether the illuminance is within, above or below a target band.</description>
+    <attribute code="0x0000" type="ENUMERATION_8_BIT" side="server" optional="false" writable="false" reportable="true">
+        <name>Level Status</name>
+        <description>The LevelStatus attribute indicates whether the measured illuminance is above, below, or within a band around IlluminanceTargetLevel .</description>
+    </attribute>
+    <attribute code="0x0001" type="ENUMERATION_8_BIT" side="server" optional="true" writable="false" reportable="false">
+        <name>Light Sensor Type</name>
+        <description>The LightSensorType attribute specifies the electronic type of the light sensor.</description>
+    </attribute>
+    <attribute code="0x0010" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFE">
+        <name>Illuminance Target Level</name>
+        <description>The IlluminanceTargetLevel attribute specifies the target illuminance level. This target level is taken as the centre of a &apos;dead band&apos;, which must be sufficient in width, with hysteresis bands at both top and bottom, to provide reliable notifications without &apos;chatter&apos;. Such a dead band and hysteresis bands must be provided by any implementation of this cluster. (N.B. Manufacturer specific attributes may be provided to configure these).</description>
+        <description>IlluminanceTargetLevel represents illuminance in Lux (symbol lx) as follows:</description>
+        <description>IlluminanceTargetLevel = 10,000 x log10 Illuminance</description>
+        <description>Where 1 lx &lt;= Illuminance &lt;=3.576 Mlx, corresponding to a MeasuredValue in the range 0 to 0xfffe.</description>
+        <description>A value of 0xffff indicates that this attribute is not valid.</description>
+    </attribute>
+
+</cluster>

@@ -9,7 +9,8 @@ package com.zsmartsystems.zigbee.app.otaupgrade;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -40,6 +41,7 @@ import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaFile;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaServerStatus;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaStatusCallback;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
+import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageNotifyCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QueryNextImageCommand;
@@ -138,8 +140,10 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
 
     @Test
     public void getCurrentFileVersion() {
+        ZclAttribute attribute = Mockito.mock(ZclAttribute.class);
+        Mockito.when(attribute.readValue(ArgumentMatchers.anyLong())).thenReturn(1234);
         ZclOtaUpgradeCluster cluster = Mockito.mock(ZclOtaUpgradeCluster.class);
-        Mockito.when(cluster.getCurrentFileVersion(ArgumentMatchers.anyLong())).thenReturn(1234);
+        Mockito.when(cluster.getAttribute(ZclOtaUpgradeCluster.ATTR_CURRENTFILEVERSION)).thenReturn(attribute);
 
         ZclOtaUpgradeServer server = new ZclOtaUpgradeServer();
         server.appStartup(cluster);

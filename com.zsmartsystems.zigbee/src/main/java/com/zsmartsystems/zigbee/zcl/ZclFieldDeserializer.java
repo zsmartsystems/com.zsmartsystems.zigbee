@@ -68,7 +68,7 @@ public class ZclFieldDeserializer {
                     try {
                         item = (ZclListItemField) dataTypeClass.newInstance();
                     } catch (final Exception e) {
-                        throw new IllegalArgumentException("Error deserializing field: " + dataType.getLabel(), e);
+                        throw new IllegalArgumentException("Error deserializing field: " + dataType.toString(), e);
                     }
                     item.deserialize(this.deserializer);
                     list.add(item);

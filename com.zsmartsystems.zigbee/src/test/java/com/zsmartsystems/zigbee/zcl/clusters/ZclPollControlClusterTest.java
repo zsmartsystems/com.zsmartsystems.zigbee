@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
+import com.zsmartsystems.zigbee.zcl.ZclFrameType;
 import com.zsmartsystems.zigbee.zcl.clusters.pollcontrol.CheckInCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.pollcontrol.CheckInResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.pollcontrol.FastPollStopCommand;
@@ -29,11 +30,13 @@ public class ZclPollControlClusterTest {
     public void test() {
         ZclPollControlCluster cluster = new ZclPollControlCluster(Mockito.mock(ZigBeeEndpoint.class));
 
-        assertTrue(cluster.getCommandFromId(0) instanceof CheckInResponse);
-        assertTrue(cluster.getCommandFromId(1) instanceof FastPollStopCommand);
-        assertTrue(cluster.getCommandFromId(2) instanceof SetLongPollIntervalCommand);
-        assertTrue(cluster.getCommandFromId(3) instanceof SetShortPollIntervalCommand);
+        assertTrue(cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND, 0) instanceof CheckInResponse);
+        assertTrue(cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND, 1) instanceof FastPollStopCommand);
+        assertTrue(cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND,
+                2) instanceof SetLongPollIntervalCommand);
+        assertTrue(cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND,
+                3) instanceof SetShortPollIntervalCommand);
 
-        assertTrue(cluster.getResponseFromId(0) instanceof CheckInCommand);
+        assertTrue(cluster.getResponseFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND, 0) instanceof CheckInCommand);
     }
 }

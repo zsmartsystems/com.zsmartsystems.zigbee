@@ -1,0 +1,32 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0007">
+    <name>On / Off Switch Configuration</name>
+    <description>Attributes and commands for configuring On/Off switching devices</description>
+    <attribute code="0x0000" type="ENUMERATION_8_BIT" side="server" class="SwitchTypeEnum" optional="false" writable="false" reportable="false">
+        <name>Switch Type</name>
+        <description>The SwitchType attribute specifies the basic functionality of the On/Off switching device.</description>
+    </attribute>
+    <attribute code="0x0010" type="ENUMERATION_8_BIT" side="server" class="SwitchActionsEnum" optional="false" writable="true" reportable="false">
+        <name>Switch Actions</name>
+        <description>The SwitchActions attribute is 8 bits in length and specifies the commands of the On/Off cluster to be generated when the switch moves between its two states</description>
+    </attribute>
+
+    <constant class="SwitchTypeEnum">
+        <name>Switch Type</name>
+        <value code="0x00" name="Toggle">
+        </value>
+        <value code="0x01" name="Momentary">
+        </value>
+        <value code="0x02" name="Multifunction">
+        </value>
+    </constant>
+    <constant class="SwitchActionsEnum">
+        <name>Switch Actions</name>
+        <value code="0x00" name="On">
+        </value>
+        <value code="0x01" name="Off">
+        </value>
+        <value code="0x02" name="Toggle">
+        </value>
+    </constant>
+</cluster>

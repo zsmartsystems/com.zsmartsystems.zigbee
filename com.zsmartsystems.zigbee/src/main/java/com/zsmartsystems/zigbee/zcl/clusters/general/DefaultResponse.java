@@ -10,34 +10,38 @@ package com.zsmartsystems.zigbee.zcl.clusters.general;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Default Response value object class.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>General</b>. Command ID 0x0B is sent <b>TO</b> the server.
  * This command is a <b>generic</b> command used across the profile.
  * <p>
- * The default response command is generated when a device receives a unicast
- * command, there is no other relevant response specified for the command, and
- * either an error results or the Disable default response bit of its Frame control field
- * is set to 0.
+ * The default response command is generated when a device receives a unicast command, there is
+ * no other relevant response specified for the command, and either an error results or the
+ * Disable default response bit of its Frame control field is set to 0.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class DefaultResponse extends ZclCommand {
     /**
-     * Command identifier command message field.
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x0B;
+
+    /**
+     * Command Identifier command message field.
      */
     private Integer commandIdentifier;
 
     /**
-     * Status code command message field.
+     * Status Code command message field.
      */
     private ZclStatus statusCode;
 
@@ -45,8 +49,8 @@ public class DefaultResponse extends ZclCommand {
      * Default constructor.
      */
     public DefaultResponse() {
+        commandId = COMMAND_ID;
         genericCommand = true;
-        commandId = 11;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
@@ -64,36 +68,36 @@ public class DefaultResponse extends ZclCommand {
     }
 
     /**
-     * Gets Command identifier.
+     * Gets Command Identifier.
      *
-     * @return the Command identifier
+     * @return the Command Identifier
      */
     public Integer getCommandIdentifier() {
         return commandIdentifier;
     }
 
     /**
-     * Sets Command identifier.
+     * Sets Command Identifier.
      *
-     * @param commandIdentifier the Command identifier
+     * @param commandIdentifier the Command Identifier
      */
     public void setCommandIdentifier(final Integer commandIdentifier) {
         this.commandIdentifier = commandIdentifier;
     }
 
     /**
-     * Gets Status code.
+     * Gets Status Code.
      *
-     * @return the Status code
+     * @return the Status Code
      */
     public ZclStatus getStatusCode() {
         return statusCode;
     }
 
     /**
-     * Sets Status code.
+     * Sets Status Code.
      *
-     * @param statusCode the Status code
+     * @param statusCode the Status Code
      */
     public void setStatusCode(final ZclStatus statusCode) {
         this.statusCode = statusCode;

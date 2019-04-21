@@ -13,15 +13,21 @@ import java.util.Map;
 import javax.annotation.Generated;
 
 /**
- * Enumeration of IAS Zone attribute ZoneState options.
+ * Zone State value enumeration.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
- *
- * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-31T12:00:43Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
 public enum ZoneStateEnum {
+
+    /**
+     * Not Enrolled
+     */
     NOT_ENROLLED(0x0000),
+
+    /**
+     * Enrolled
+     */
     ENROLLED(0x0001);
 
     /**
@@ -38,7 +44,7 @@ public enum ZoneStateEnum {
 
     private final int key;
 
-    ZoneStateEnum(final int key) {
+    private ZoneStateEnum(final int key) {
         this.key = key;
     }
 

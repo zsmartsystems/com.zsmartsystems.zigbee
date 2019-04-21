@@ -10,33 +10,43 @@ package com.zsmartsystems.zigbee.zcl.clusters.levelcontrol;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Step Command value object class.
  * <p>
- * Cluster: <b>Level Control</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>Level Control</b>. Command ID 0x02 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Level Control cluster.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class StepCommand extends ZclCommand {
     /**
-     * Step mode command message field.
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0008;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x02;
+
+    /**
+     * Step Mode command message field.
      */
     private Integer stepMode;
 
     /**
-     * Step size command message field.
+     * Step Size command message field.
      */
     private Integer stepSize;
 
     /**
-     * Transition time command message field.
+     * Transition Time command message field.
      */
     private Integer transitionTime;
 
@@ -44,61 +54,61 @@ public class StepCommand extends ZclCommand {
      * Default constructor.
      */
     public StepCommand() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 8;
-        commandId = 2;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     /**
-     * Gets Step mode.
+     * Gets Step Mode.
      *
-     * @return the Step mode
+     * @return the Step Mode
      */
     public Integer getStepMode() {
         return stepMode;
     }
 
     /**
-     * Sets Step mode.
+     * Sets Step Mode.
      *
-     * @param stepMode the Step mode
+     * @param stepMode the Step Mode
      */
     public void setStepMode(final Integer stepMode) {
         this.stepMode = stepMode;
     }
 
     /**
-     * Gets Step size.
+     * Gets Step Size.
      *
-     * @return the Step size
+     * @return the Step Size
      */
     public Integer getStepSize() {
         return stepSize;
     }
 
     /**
-     * Sets Step size.
+     * Sets Step Size.
      *
-     * @param stepSize the Step size
+     * @param stepSize the Step Size
      */
     public void setStepSize(final Integer stepSize) {
         this.stepSize = stepSize;
     }
 
     /**
-     * Gets Transition time.
+     * Gets Transition Time.
      *
-     * @return the Transition time
+     * @return the Transition Time
      */
     public Integer getTransitionTime() {
         return transitionTime;
     }
 
     /**
-     * Sets Transition time.
+     * Sets Transition Time.
      *
-     * @param transitionTime the Transition time
+     * @param transitionTime the Transition Time
      */
     public void setTransitionTime(final Integer transitionTime) {
         this.transitionTime = transitionTime;

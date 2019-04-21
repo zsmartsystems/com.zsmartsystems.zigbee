@@ -1,0 +1,29 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0402">
+    <name>Temperature Measurement</name>
+    <description>The server cluster provides an interface to temperature measurement functionality, including configuration and provision of notifications of temperature measurements.</description>
+    <attribute code="0x0000" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="true" default="0x0000">
+        <name>Measured Value</name>
+        <description>MeasuredValue represents the temperature in degrees Celsius as follows:- MeasuredValue = 100 x temperature in degrees Celsius.</description>
+        <description>Where -273.15&#176;C &lt;= temperature &lt;= 327.67 &#186;C, corresponding to a</description>
+        <description>MeasuredValue in the range 0x954d to 0x7fff. The maximum resolution this format allows is 0.01 &#186;C.</description>
+        <description>A MeasuredValue of 0x8000 indicates that the temperature measurement is invalid.</description>
+        <description>MeasuredValue is updated continuously as new measurements are made.</description>
+    </attribute>
+    <attribute code="0x0001" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x954D" maximum="0x7FFE">
+        <name>Min Measured Value</name>
+        <description>The MinMeasuredValue attribute indicates the minimum value of MeasuredValue that is capable of being measured. A MinMeasuredValue of 0x8000 indicates that the minimum value is unknown.</description>
+    </attribute>
+    <attribute code="0x0002" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x954E" maximum="0x7FFF">
+        <name>Max Measured Value</name>
+        <description>The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue that is capable of being measured.</description>
+        <description>MaxMeasuredValue shall be greater than MinMeasuredValue.</description>
+        <description>MinMeasuredValue and MaxMeasuredValue define the range of the sensor.</description>
+        <description>A MaxMeasuredValue of 0x8000 indicates that the maximum value is unknown.</description>
+    </attribute>
+    <attribute code="0x0003" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="true" minimum="0x0000" maximum="0x0800">
+        <name>Tolerance</name>
+        <description>The Tolerance attribute indicates the magnitude of the possible error that is associated with MeasuredValue . The true value is located in the range (MeasuredValue &#8211; Tolerance) to (MeasuredValue + Tolerance).</description>
+    </attribute>
+
+</cluster>

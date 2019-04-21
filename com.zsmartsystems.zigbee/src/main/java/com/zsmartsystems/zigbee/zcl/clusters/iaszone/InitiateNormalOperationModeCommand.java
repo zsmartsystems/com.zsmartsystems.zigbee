@@ -15,29 +15,37 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 /**
  * Initiate Normal Operation Mode Command value object class.
  * <p>
- * Cluster: <b>IAS Zone</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>IAS Zone</b>. Command ID 0x01 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the IAS Zone cluster.
  * <p>
- * Used to tell the IAS Zone server to commence normal operation mode.
- * <br>
- * Upon receipt, the IAS Zone server SHALL commence normal operational mode.
- * <br>
- * Any configurations and changes made (e.g., CurrentZoneSensitivityLevel attribute) to the IAS Zone server SHALL be retained.
- * <br>
- * Upon commencing normal operation mode, the IAS Zone server SHALL send a Zone Status Change Notification command updating the ZoneStatus
- * attribute Test bit to zero (i.e., “operation mode”).
+ * Used to tell the IAS Zone server to commence normal operation mode. <br> Upon receipt, the IAS
+ * Zone server shall commence normal operational mode. <br> Any configurations and changes
+ * made (e.g., CurrentZoneSensitivityLevel attribute) to the IAS Zone server shall be
+ * retained. <br> Upon commencing normal operation mode, the IAS Zone server shall send a Zone
+ * Status Change Notification command updating the ZoneStatus attribute Test bit to zero
+ * (i.e., “operation mode”).
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-05-06T20:48:39Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class InitiateNormalOperationModeCommand extends ZclCommand {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0500;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x01;
+
     /**
      * Default constructor.
      */
     public InitiateNormalOperationModeCommand() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 1280;
-        commandId = 1;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 

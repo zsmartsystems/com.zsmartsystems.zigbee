@@ -10,32 +10,38 @@ package com.zsmartsystems.zigbee.zcl.clusters.general;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Discover Attributes Extended value object class.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>General</b>. Command ID 0x15 is sent <b>TO</b> the server.
  * This command is a <b>generic</b> command used across the profile.
  * <p>
- * The Discover Attributes Extended command is generated when a remote device wishes to discover the
- * identifiers and types of the attributes on a device which are supported within the cluster to which this
- * command is directed, including whether the attribute is readable, writeable or reportable.
+ * The Discover Attributes Extended command is generated when a remote device wishes to
+ * discover the identifiers and types of the attributes on a device which are supported within
+ * the cluster to which this command is directed, including whether the attribute is readable,
+ * writeable or reportable.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class DiscoverAttributesExtended extends ZclCommand {
     /**
-     * Start attribute identifier command message field.
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x15;
+
+    /**
+     * Start Attribute Identifier command message field.
      */
     private Integer startAttributeIdentifier;
 
     /**
-     * Maximum attribute identifiers command message field.
+     * Maximum Attribute Identifiers command message field.
      */
     private Integer maximumAttributeIdentifiers;
 
@@ -43,8 +49,8 @@ public class DiscoverAttributesExtended extends ZclCommand {
      * Default constructor.
      */
     public DiscoverAttributesExtended() {
+        commandId = COMMAND_ID;
         genericCommand = true;
-        commandId = 21;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
@@ -62,36 +68,36 @@ public class DiscoverAttributesExtended extends ZclCommand {
     }
 
     /**
-     * Gets Start attribute identifier.
+     * Gets Start Attribute Identifier.
      *
-     * @return the Start attribute identifier
+     * @return the Start Attribute Identifier
      */
     public Integer getStartAttributeIdentifier() {
         return startAttributeIdentifier;
     }
 
     /**
-     * Sets Start attribute identifier.
+     * Sets Start Attribute Identifier.
      *
-     * @param startAttributeIdentifier the Start attribute identifier
+     * @param startAttributeIdentifier the Start Attribute Identifier
      */
     public void setStartAttributeIdentifier(final Integer startAttributeIdentifier) {
         this.startAttributeIdentifier = startAttributeIdentifier;
     }
 
     /**
-     * Gets Maximum attribute identifiers.
+     * Gets Maximum Attribute Identifiers.
      *
-     * @return the Maximum attribute identifiers
+     * @return the Maximum Attribute Identifiers
      */
     public Integer getMaximumAttributeIdentifiers() {
         return maximumAttributeIdentifiers;
     }
 
     /**
-     * Sets Maximum attribute identifiers.
+     * Sets Maximum Attribute Identifiers.
      *
-     * @param maximumAttributeIdentifiers the Maximum attribute identifiers
+     * @param maximumAttributeIdentifiers the Maximum Attribute Identifiers
      */
     public void setMaximumAttributeIdentifiers(final Integer maximumAttributeIdentifiers) {
         this.maximumAttributeIdentifiers = maximumAttributeIdentifiers;

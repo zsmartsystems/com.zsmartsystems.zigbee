@@ -18,19 +18,29 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Unlock With Timeout Response value object class.
  * <p>
- * Cluster: <b>Door Lock</b>. Command is sent <b>FROM</b> the server.
+ * Cluster: <b>Door Lock</b>. Command ID 0x03 is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the Door Lock cluster.
  * <p>
  * This command is sent in response to an Unlock with Timeout command with one status byte
- * payload. The Status field SHALL be set to SUCCESS or FAILURE.
+ * payload. The Status field shall be set to SUCCESS or FAILURE.
  * <p>
  * The status byte only indicates if the message has received successfully. To determine
- * status, the client SHOULD query to [Lock State attribute] and [Door State attribute].
+ * status, the client should query to [Lock State attribute] and [Door State attribute].
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-08-13T17:13:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class UnlockWithTimeoutResponse extends ZclCommand {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0101;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x03;
+
     /**
      * Status command message field.
      */
@@ -40,9 +50,9 @@ public class UnlockWithTimeoutResponse extends ZclCommand {
      * Default constructor.
      */
     public UnlockWithTimeoutResponse() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 0x0101;
-        commandId = 3;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
 

@@ -15,24 +15,35 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 /**
  * Get Bypassed Zone List Command value object class.
  * <p>
- * Cluster: <b>IAS ACE</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>IAS ACE</b>. Command ID 0x08 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the IAS ACE cluster.
  * <p>
- * Provides IAS ACE clients with a way to retrieve the list of zones to be bypassed. This provides them with the ability
- * to provide greater local functionality (i.e., at the IAS ACE client) for users to modify the Bypassed Zone List and reduce
- * communications to the IAS ACE server when trying to arm the CIE security system.
+ * Provides IAS ACE clients with a way to retrieve the list of zones to be bypassed. This provides
+ * them with the ability to provide greater local functionality (i.e., at the IAS ACE client)
+ * for users to modify the Bypassed Zone List and reduce communications to the IAS ACE server
+ * when trying to arm the CIE security system.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class GetBypassedZoneListCommand extends ZclCommand {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0501;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x08;
+
     /**
      * Default constructor.
      */
     public GetBypassedZoneListCommand() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 1281;
-        commandId = 8;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 

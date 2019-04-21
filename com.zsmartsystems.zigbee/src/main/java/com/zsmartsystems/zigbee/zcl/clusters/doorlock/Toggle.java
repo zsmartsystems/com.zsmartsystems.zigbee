@@ -18,17 +18,27 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Toggle value object class.
  * <p>
- * Cluster: <b>Door Lock</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>Door Lock</b>. Command ID 0x02 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Door Lock cluster.
  * <p>
  * Request the status of the lock. As of HA 1.2, this command includes an optional code for the
- * lock. The door lock MAY require a code depending on the value of the [Require PIN for RF
+ * lock. The door lock may require a code depending on the value of the [Require PIN for RF
  * Operation attribute]
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-08-13T17:13:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class Toggle extends ZclCommand {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0101;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x02;
+
     /**
      * PIN command message field.
      */
@@ -38,9 +48,9 @@ public class Toggle extends ZclCommand {
      * Default constructor.
      */
     public Toggle() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 0x0101;
-        commandId = 2;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 

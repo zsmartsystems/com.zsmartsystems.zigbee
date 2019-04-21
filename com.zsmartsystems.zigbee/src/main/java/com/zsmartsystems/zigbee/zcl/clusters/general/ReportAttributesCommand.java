@@ -7,32 +7,36 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.general;
 
+import java.util.List;
+
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
-
-import java.util.List;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReport;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Report Attributes Command value object class.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>General</b>. Command ID 0x0A is sent <b>TO</b> the server.
  * This command is a <b>generic</b> command used across the profile.
  * <p>
- * The report attributes command is used by a device to report the values of one or
- * more of its attributes to another device, bound a priori. Individual clusters, defined
- * elsewhere in the ZCL, define which attributes are to be reported and at what
- * interval.
+ * The report attributes command is used by a device to report the values of one or more of its
+ * attributes to another device, bound a priori. Individual clusters, defined elsewhere in
+ * the ZCL, define which attributes are to be reported and at what interval.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class ReportAttributesCommand extends ZclCommand {
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x0A;
+
     /**
      * Reports command message field.
      */
@@ -42,8 +46,8 @@ public class ReportAttributesCommand extends ZclCommand {
      * Default constructor.
      */
     public ReportAttributesCommand() {
+        commandId = COMMAND_ID;
         genericCommand = true;
-        commandId = 10;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
