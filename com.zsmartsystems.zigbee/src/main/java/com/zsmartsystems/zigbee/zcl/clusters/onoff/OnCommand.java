@@ -15,20 +15,35 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 /**
  * On Command value object class.
  * <p>
- * Cluster: <b>On/Off</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>On/Off</b>. Command ID 0x01 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the On/Off cluster.
+ * <p>
+ * On receipt of this command, a device shall enter its ‘On’ state. This state is device
+ * dependent, but it is recommended that it is used for power on or similar functions. On receipt
+ * of the On command, if the value of the OnTime attribute is equal to 0x0000, the device shall set
+ * the OffWaitTime attribute to 0x0000.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class OnCommand extends ZclCommand {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0006;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x01;
+
     /**
      * Default constructor.
      */
     public OnCommand() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 6;
-        commandId = 1;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 

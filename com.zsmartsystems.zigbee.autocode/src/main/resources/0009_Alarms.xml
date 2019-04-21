@@ -1,0 +1,63 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0009">
+    <name>Alarms</name>
+    <description>Attributes and commands for sending alarm notifications and configuring alarm functionality.</description>
+    <description>Alarm conditions and their respective alarm codes are described in individual clusters, along with an alarm mask field. Where not masked, alarm notifications are reported to subscribed targets using binding.</description>
+    <description>Where an alarm table is implemented, all alarms, masked or otherwise, are recorded and may be retrieved on demand.</description>
+    <description>Alarms may either reset automatically when the conditions that cause are no longer active, or may need to be explicitly reset.</description>
+    <command code="0x00" source="client">
+        <name>Reset Alarm Command</name>
+        <description>This command resets a specific alarm. This is needed for some alarms that do not reset automatically. If the alarm condition being reset was in fact still active then a new notification will be generated and, where implemented, a new record added to the alarm log.</description>
+        <field type="ENUMERATION_8_BIT">
+            <name>Alarm Code</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Cluster Identifier</name>
+        </field>
+    </command>
+    <command code="0x01" source="client">
+        <name>Reset All Alarms Command</name>
+        <description>This command resets all alarms. Any alarm conditions that were in fact still active will cause a new notification to be generated and, where implemented, a new record added to the alarm log.</description>
+    </command>
+    <command code="0x02" source="client">
+        <name>Get Alarm Command</name>
+        <description>This command causes the alarm with the earliest generated alarm entry in the alarm table to be reported in a get alarm response command. This command enables the reading of logged alarm conditions from the alarm table. Once an alarm condition has been reported the corresponding entry in the table is removed.</description>
+    </command>
+    <command code="0x03" source="client">
+        <name>Reset Alarm Log Command</name>
+        <description>This command causes the alarm table to be cleared.</description>
+    </command>
+    <command code="0x00" source="server">
+        <name>Alarm Command</name>
+        <description>The alarm command signals an alarm situation on the sending device. &lt;br&gt; An alarm command is generated when a  cluster  which has alarm functionality detects an alarm condition, e.g., an attribute has taken on a value that is outside a &#8216;safe&#8217; range. The details are given by individual cluster specifications.</description>
+        <field type="ENUMERATION_8_BIT">
+            <name>Alarm Code</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Cluster Identifier</name>
+        </field>
+    </command>
+    <command code="0x01" source="server">
+        <name>Get Alarm Response</name>
+        <description>If there is at least one alarm record in the alarm table then the status field is set to SUCCESS. The alarm code, cluster identifier and time stamp fields SHALL all be present and SHALL take their values from the item in the alarm table that they are reporting.If there  are  no more  alarms logged in the  alarm table  then the  status field is set  to NOT_FOUND  and the alarm code, cluster identifier and time stamp fields SHALL be omitted.</description>
+        <field type="ENUMERATION_8_BIT">
+            <name>Status</name>
+        </field>
+        <field type="ENUMERATION_8_BIT">
+            <name>Alarm Code</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Cluster Identifier</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Timestamp</name>
+        </field>
+    </command>
+
+    <attribute code="0x0000" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false">
+        <name>Alarm Count</name>
+        <description>The AlarmCount attribute is 16-bits in length and specifies the number of entries currently in the alarm table. This attribute shall be specified in the range 0x00 to the maximum defined in the profile using this cluster.</description>
+        <description>If alarm logging is not implemented this attribute shall always take the value 0x00.</description>
+    </attribute>
+
+</cluster>

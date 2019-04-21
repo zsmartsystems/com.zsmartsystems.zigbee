@@ -13,20 +13,42 @@ import java.util.Map;
 import javax.annotation.Generated;
 
 /**
- * Enumeration of Basic attribute PhysicalEnvironment options.
+ * Physical Environment value enumeration.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
- *
- * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-31T12:00:43Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
 public enum PhysicalEnvironmentEnum {
+
+    /**
+     * Unknown
+     */
     UNKNOWN(0x0000),
+
+    /**
+     * Atrium
+     */
     ATRIUM(0x0001),
+
+    /**
+     * Bar
+     */
     BAR(0x0002),
+
+    /**
+     * Courtyard
+     */
     COURTYARD(0x0003),
+
+    /**
+     * Bathroom
+     */
     BATHROOM(0x0004),
-    EDROOM(0x0005);
+
+    /**
+     * Bedroom
+     */
+    BEDROOM(0x0005);
 
     /**
      * A mapping between the integer code and its corresponding PhysicalEnvironmentEnum type to facilitate lookup by value.
@@ -42,7 +64,7 @@ public enum PhysicalEnvironmentEnum {
 
     private final int key;
 
-    PhysicalEnvironmentEnum(final int key) {
+    private PhysicalEnvironmentEnum(final int key) {
         this.key = key;
     }
 

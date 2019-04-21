@@ -1,0 +1,63 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x000A">
+    <name>Time</name>
+    <description>This cluster provides a basic interface to a real-time clock. The clock time MAY be read and also written, in order to synchronize the clock (as close as practical) to a time standard. This time standard is the number of seconds since 0 hrs 0 mins 0 sec on 1st January 2000 UTC (Universal Coordinated Time).</description>
+    <attribute code="0x0000" type="UTCTIME" side="server" optional="false" writable="true" reportable="false">
+        <name>Time</name>
+        <description>The Time attribute is 32-bits in length and holds the time value of a real time clock. This attribute has data type UTCTime, but note that it may not actually be synchronised to UTC - see discussion of the TimeStatus attribute below.</description>
+        <description>If the Master bit of the TimeStatus attribute has a value of 0, writing to this attribute shall set the real time clock to the written value, otherwise it cannot be written. The value 0xffffffff indicates an invalid time.</description>
+    </attribute>
+    <attribute code="0x0001" type="BITMAP_8_BIT" class="TimeStatusBitmap" side="server" optional="true" writable="true" reportable="false">
+        <name>Time Status</name>
+        <description>The TimeStatus attribute holds a number of bit fields.</description>
+    </attribute>
+    <attribute code="0x0002" type="SIGNED_32_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false">
+        <name>Time Zone</name>
+        <description>The TimeZone attribute indicates the local time zone, as a signed offset in seconds from the Time attribute value. The value 0xffffffff indicates an invalid time zone.</description>
+    </attribute>
+    <attribute code="0x0003" type="UTCTIME" side="server" optional="true" writable="true" reportable="false">
+        <name>DST Start</name>
+        <description>The DstStart attribute indicates the DST start time in seconds. The value 0xffffffff indicates an invalid DST start time.</description>
+    </attribute>
+    <attribute code="0x0004" type="UTCTIME" side="server" optional="true" writable="true" reportable="false">
+        <name>DST End</name>
+        <description>The DstEnd attribute indicates the DST end time in seconds. The value 0xffffffff indicates an invalid DST end time.</description>
+        <description>Note that the three attributes DstStart, DstEnd and DstShift are optional, but if any one of them is implemented the other two must also be implemented. Note that this attribute should be set to a new value once every year.</description>
+        <description>Note that this attribute should be set to a new value once every year, and should be written synchronously with the DstStart attribute. The DstEnd attribute indicates the DST end time in seconds. The value 0xffffffff indicates an invalid DST end time.</description>
+        <description>Note that this attribute should be set to a new value once every year, and should be written synchronously with the DstStart attribute</description>
+    </attribute>
+    <attribute code="0x0005" type="SIGNED_32_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false">
+        <name>DST Shift</name>
+        <description>The DstShift attribute represents a signed offset in seconds from the standard time, to be applied between the times DstStart and DstEnd to calculate the Local Time. The value 0xffffffff indicates an invalid DST shift.</description>
+        <description>The range of this attribute is +/- one day. Note that the actual range of DST values employed by countries is much smaller than this, so the manufacturer has the option to impose a smaller range.</description>
+    </attribute>
+    <attribute code="0x0006" type="UTCTIME" side="server" optional="true" writable="false" reportable="false">
+        <name>Standard Time</name>
+        <description>A device may derive the time by reading the Time and TimeZone attributes and adding them together. If implemented however, the optional StandardTime attribute indicates this time directly. The value 0xffffffff indicates an invalid Standard Time.</description>
+    </attribute>
+    <attribute code="0x0007" type="UTCTIME" side="server" optional="true" writable="false" reportable="false">
+        <name>Local Time</name>
+        <description>A device may derive the time by reading the Time, TimeZone, DstStart, DstEnd and DstShift attributes and performing the calculation. If implemented however, the optional LocalTime attribute indicates this time directly. The value 0xffffffff indicates an invalid Local Time.</description>
+    </attribute>
+    <attribute code="0x0008" type="UTCTIME" side="server" optional="true" writable="false" reportable="false">
+        <name>Last Set Time</name>
+        <description>The LastSetTime attribute indicates the most recent time that the Time attribute was set, either internally or over the ZigBee network (thus it holds a copy of the last value that Time was set to). This attribute is set automatically, so is Read Only. The value 0xffffffff indicates an invalid LastSetTime.</description>
+    </attribute>
+    <attribute code="0x0009" type="UTCTIME" side="server" optional="true" writable="true" reportable="false">
+        <name>Valid Until Time</name>
+        <description>The ValidUntilTime attribute indicates a time, later than LastSetTime, up to which the Time attribute MAY be trusted. ‘Trusted’ means that the difference between the Time attribute and the true UTC time is less than an acceptable error. The acceptable error is not defined by this cluster specification, but MAY be defined by the application profile in which devices that use this cluster are specified.</description>
+    </attribute>
+
+    <constant type="BITMAP_8_BIT" class="TimeStatusBitmap">
+        <name>Time Status</name>
+        <value code="0x01" name="Master">
+        </value>
+        <value code="0x02" name="Synchronized">
+        </value>
+        <value code="0x04" name="Master Zone DST">
+        </value>
+        <value code="0x08" name="Superseding">
+        </value>
+	</constant>
+	
+</cluster>

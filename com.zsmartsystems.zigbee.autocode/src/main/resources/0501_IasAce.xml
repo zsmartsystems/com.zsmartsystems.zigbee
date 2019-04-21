@@ -1,0 +1,340 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0501">
+    <name>IAS ACE</name>
+    <description>The IAS ACE cluster defines an interface to the functionality of any Ancillary Control Equipment of the IAS system. Using this cluster, a ZigBee enabled ACE device can access a IAS CIE device and manipulate the IAS system, on behalf of a level-2 user.</description>
+    <command code="0x00" source="client">
+        <name>Arm Command</name>
+        <description>On receipt of this command, the receiving device sets its arm mode according to the value of the Arm Mode field. It is not guaranteed that an Arm command will succeed. Based on the current state of the IAS CIE, and its related devices, the command can be rejected. The device SHALL generate an Arm Response command to indicate the resulting armed state</description>
+        <field type="ENUMERATION_8_BIT" class="IasAceArmModeEnum">
+            <name>Arm Mode</name>
+        </field>
+        <field type="CHARACTER_STRING">
+            <name>Arm/Disarm Code</name>
+            <description>The Arm/DisarmCode SHALL be a code entered into the ACE client (e.g., security keypad) or system by the user upon arming/disarming. The server MAY validate the Arm/Disarm Code received from the IAS ACE client in Arm command payload before arming or disarming the system. If the client does not have the capability to input an Arm/Disarm Code (e.g., keyfob),or the system does not require one, the client SHALL a transmit a string with a length of zero.</description>
+            <description>There is no minimum or maximum length to the Arm/Disarm Code; however, the Arm/Disarm Code SHOULD be between four and eight alphanumeric characters in length.</description>
+            <description>The string encoding SHALL be UTF-8.</description>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Zone ID</name>
+            <description>Zone ID is the index of the Zone in the CIE&apos;s zone table. If none is programmed, the Zone ID default value SHALL be indicated in this field.</description>
+        </field>
+    </command>
+    <command code="0x01" source="client">
+        <name>Bypass Command</name>
+        <description>Provides IAS ACE clients with a method to send zone bypass requests to the IAS ACE server. Bypassed zones MAY be faulted or in alarm but will not trigger the security system to go into alarm. For example, a user MAYwish to allow certain windows in his premises protected by an IAS Zone server to be left open while the user leaves the premises. The user could bypass the IAS Zone server protecting the window on his IAS ACE client (e.g., security keypad), and if the IAS ACE server indicates that zone is successfully by-passed, arm his security system while he is away.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Number Of Zones</name>
+        </field>
+        <field type="N_X_UNSIGNED_8_BIT_INTEGER">
+            <name>Zone IDs</name>
+        </field>
+        <field type="CHARACTER_STRING">
+            <name>Arm/Disarm Code</name>
+            <description>The Arm/DisarmCode SHALL be a code entered into the ACE client (e.g., security keypad) or system by the user upon arming/disarming. The server MAY validate the Arm/Disarm Code received from the IAS ACE client in Arm command payload before arming or disarming the system. If the client does not have the capability to input an Arm/Disarm Code (e.g., keyfob),or the system does not require one, the client SHALL a transmit a string with a length of zero.</description>
+        </field>
+    </command>
+    <command code="0x02" source="client">
+        <name>Emergency Command</name>
+    </command>
+    <command code="0x03" source="client">
+        <name>Fire Command</name>
+    </command>
+    <command code="0x04" source="client">
+        <name>Panic Command</name>
+    </command>
+    <command code="0x05" source="client">
+        <name>Get Zone ID Map Command</name>
+    </command>
+    <command code="0x06" source="client">
+        <name>Get Zone Information Command</name>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Zone ID</name>
+        </field>
+    </command>
+    <command code="0x07" source="client">
+        <name>Get Panel Status Command</name>
+        <description>This command is used by ACE clients to request an update to the status (e.g., security system arm state) of the ACE server (i.e., the IAS CIE). In particular, this command is useful for battery-powered ACE clients with polling rates longer than the ZigBee standard check-in rate. &lt;br&gt; On receipt of this command, the ACE server responds with the status of the security system. The IAS ACE server SHALL generate a Get Panel Status Response command.</description>
+    </command>
+    <command code="0x08" source="client">
+        <name>Get Bypassed Zone List Command</name>
+        <description>Provides IAS ACE clients with a way to retrieve the list of zones to be bypassed. This provides them with the ability to provide greater local functionality (i.e., at the IAS ACE client) for users to modify the Bypassed Zone List and reduce communications to the IAS ACE server when trying to arm the CIE security system.</description>
+    </command>
+    <command code="0x09" source="client">
+        <name>Get Zone Status Command</name>
+        <description>This command is used by ACE clients to request an update of the status of the IAS Zone devices managed by the ACE server (i.e., the IAS CIE). In particular, this command is useful for battery-powered ACE clients with polling rates longer than the ZigBee standard check-in rate. The command is similar to the Get Attributes Supported command in that it specifies a starting Zone ID and a number of Zone IDs for which information is requested. Depending on the number of IAS Zone devices managed by the IAS ACE server, sending the Zone Status of all zones MAY not fit into a single Get ZoneStatus Response command. IAS ACE clients MAY need to send multiple Get Zone Status commands in order to get the information they seek.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Starting Zone ID</name>
+            <description>Specifies the starting Zone ID at which the IAS Client would like to obtain zone status information.</description>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Max Zone I Ds</name>
+            <description>Specifies the maximum number of Zone IDs and corresponding Zone Statuses that are to be returned by the IAS ACE server when it responds with a Get Zone Status Response command</description>
+        </field>
+        <field type="BOOLEAN">
+            <name>Zone Status Mask Flag</name>
+            <description>Functions as a query operand with the Zone Status Mask field. If set to zero (i.e., FALSE), the IAS ACE server SHALL include all Zone IDs and their status, regardless of their Zone Status when it responds with a Get Zone Status Response command. If set to one (i.e., TRUE), the IAS ACE server SHALL include only those Zone IDs whose Zone Status attribute is equal to one or more of the Zone Statuses requested in the Zone Status Mask field of the Get Zone Status command.</description>
+            <description>Use of Zone Status Mask Flag and Zone Status Mask fields allow a client to obtain updated information for the subset of Zone IDs they&#8217;re interested in, which is beneficial when the number of IAS Zone devices in a system is large.</description>
+        </field>
+        <field type="BITMAP_16_BIT">
+            <name>Zone Status Mask</name>
+            <description>Coupled with the Zone Status Mask Flag field, functions as a mask to enable IAS ACE clients to get information about the Zone IDs whose ZoneStatus attribute is equal to any of the bits indicated by the IAS ACE client in the Zone Status Mask field. The format of this field is the same as the ZoneStatus attribute in the IAS Zone cluster. Per the Zone Status Mask Flag field, IAS ACE servers SHALL respond with only the Zone IDs whose ZoneStatus attributes are equal to at least one of the Zone Status bits set in the Zone Status Mask field requested by the IAS ACE client.For example, if the Zone Status Mask field set to &#8220;0x0003&#8221; would match IAS Zones whose ZoneStatus attributes are 0x0001, 0x0002, and 0x0003.</description>
+            <description>In other words, if a logical &apos;AND&apos; between the Zone Status Mask field and the IAS Zone&#8217;s ZoneStatus attribute yields a non-zero result, the IAS ACE server SHALL include that IAS Zone in the Get Zone Status Response command.</description>
+        </field>
+    </command>
+    <command code="0x00" source="server">
+        <name>Arm Response</name>
+        <field type="ENUMERATION_8_BIT" class="IasAceArmNotificationEnum">
+            <name>Arm Notification</name>
+        </field>
+    </command>
+    <command code="0x01" source="server">
+        <name>Get Zone ID Map Response</name>
+        <description>The 16 fields of the payload indicate whether each of the Zone IDs from 0x00 to 0xff is allocated or not. If bit n of Zone ID Map section N is set to 1, then Zone ID (16 x N + n ) is allocated, else it is not allocated.</description>
+        <field type="BITMAP_16_BIT">
+            <name>Zone ID Map Section 0</name>
+        </field>
+        <field type="BITMAP_16_BIT">
+            <name>Zone ID Map Section 1</name>
+        </field>
+        <field type="BITMAP_16_BIT">
+            <name>Zone ID Map Section 2</name>
+        </field>
+        <field type="BITMAP_16_BIT">
+            <name>Zone ID Map Section 3</name>
+        </field>
+        <field type="BITMAP_16_BIT">
+            <name>Zone ID Map Section 4</name>
+        </field>
+        <field type="BITMAP_16_BIT">
+            <name>Zone ID Map Section 5</name>
+        </field>
+        <field type="BITMAP_16_BIT">
+            <name>Zone ID Map Section 6</name>
+        </field>
+        <field type="BITMAP_16_BIT">
+            <name>Zone ID Map Section 7</name>
+        </field>
+        <field type="BITMAP_16_BIT">
+            <name>Zone ID Map Section 8</name>
+        </field>
+        <field type="BITMAP_16_BIT">
+            <name>Zone ID Map Section 9</name>
+        </field>
+        <field type="BITMAP_16_BIT">
+            <name>Zone ID Map Section 10</name>
+        </field>
+        <field type="BITMAP_16_BIT">
+            <name>Zone ID Map Section 11</name>
+        </field>
+        <field type="BITMAP_16_BIT">
+            <name>Zone ID Map Section 12</name>
+        </field>
+        <field type="BITMAP_16_BIT">
+            <name>Zone ID Map Section 13</name>
+        </field>
+        <field type="BITMAP_16_BIT">
+            <name>Zone ID Map Section 14</name>
+        </field>
+        <field type="BITMAP_16_BIT">
+            <name>Zone ID Map Section 15</name>
+        </field>
+    </command>
+    <command code="0x02" source="server">
+        <name>Get Zone Information Response</name>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Zone ID</name>
+        </field>
+        <field type="ENUMERATION_16_BIT" class="IasZoneTypeEnum">
+            <name>Zone Type</name>
+        </field>
+        <field type="IEEE_ADDRESS">
+            <name>IEEE Address</name>
+        </field>
+        <field type="CHARACTER_STRING">
+            <name>Zone Label</name>
+            <description>Provides the ZoneLabel stored in the IAS CIE. If none is programmed, the IAS ACE server SHALL transmit a string with a length of zero.There is no minimum or maximum length to the Zone Label field; however, the Zone Label SHOULD be between 16 to 24 alphanumeric characters in length.</description>
+            <description>The string encoding SHALL be UTF-8.</description>
+        </field>
+    </command>
+    <command code="0x03" source="server">
+        <name>Zone Status Changed Command</name>
+        <description>This command updates ACE clients in the system of changes to zone status recorded by the ACE server (e.g., IAS CIE device). An IAS ACE server SHOULD send a Zone Status Changed command upon a change to an IAS Zone device&#8217;s ZoneStatus that it manages (i.e., IAS ACE server SHOULD send a Zone Status Changed command upon receipt of a Zone Status Change Notification command).</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Zone ID</name>
+            <description>The index of the Zone in the CIE&#8217;s zone table. If none  is programmed, the  ZoneID  attribute default value SHALL be indicated in this field.</description>
+        </field>
+        <field type="ENUMERATION_16_BIT">
+            <name>Zone Status</name>
+        </field>
+        <field type="ENUMERATION_8_BIT" class="IasAceAudibleNotificationEnum">
+            <name>Audible Notification</name>
+        </field>
+        <field type="CHARACTER_STRING">
+            <name>Zone Label</name>
+            <description>Provides the ZoneLabel stored in the IAS CIE. If none is programmed, the IAS ACE server SHALL transmit a string with a length of zero. There is no minimum or maximum length to the Zone Label field; however, the Zone Label SHOULD be between 16 to 24 alphanumeric characters in length.</description>
+        </field>
+    </command>
+    <command code="0x04" source="server">
+        <name>Panel Status Changed Command</name>
+        <description>This command updates ACE clients in the system of changes to panel status recorded by the ACE server (e.g., IAS CIE device).Sending the Panel Status Changed command (vs.the Get Panel Status and Get Panel Status Response method) is generally useful only when there are IAS ACE clients that data poll within the retry timeout of the network (e.g., less than 7.68 seconds). &lt;br&gt; An IAS ACE server SHALL send a Panel Status Changed command upon a change to the IAS CIE&#8217;s panel status (e.g., Disarmed to Arming Away/Stay/Night, Arming Away/Stay/Night to Armed, Armed to Disarmed) as defined in the Panel Status field. &lt;br&gt; When Panel Status is Arming Away/Stay/Night, an IAS ACE server SHOULD send Panel Status Changed commands every second in order to update the Seconds Remaining. In some markets (e.g., North America), the final 10 seconds of the Arming Away/Stay/Night sequence requires a separate audible notification (e.g., a double tone).</description>
+        <field type="ENUMERATION_8_BIT" class="IasAcePanelStatusEnum">
+            <name>Panel Status</name>
+            <description>Indicates the number of seconds remaining for  the server to be in the state indicated in the PanelStatus parameter. The SecondsRemaining parameter SHALL be provided if the PanelStatus parameter has a value of 0x04 (Exit delay) or 0x05 (Entry delay).</description>
+            <description>The default value SHALL be 0x00.</description>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Seconds Remaining</name>
+        </field>
+        <field type="ENUMERATION_8_BIT" class="IasAceAudibleNotificationEnum">
+            <name>Audible Notification</name>
+        </field>
+        <field type="ENUMERATION_8_BIT" class="IasAceAlarmStatusEnum">
+            <name>Alarm Status</name>
+        </field>
+    </command>
+    <command code="0x05" source="server">
+        <name>Get Panel Status Response</name>
+        <description>This command updates requesting IAS ACE clients in the system of changes to the security panel status recorded by the ACE server (e.g., IAS CIE device).</description>
+        <field type="ENUMERATION_8_BIT" class="IasAcePanelStatusEnum">
+            <name>Panel Status</name>
+            <description>Defines the current status of the alarm panel.</description>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Seconds Remaining</name>
+            <description>Indicates the number of seconds remaining for  the server to be in the state indicated in the PanelStatus parameter. The SecondsRemaining parameter SHALL be provided if the PanelStatus parameter has a value of 0x04 (Exit delay) or 0x05 (Entry delay).</description>
+            <description>The default value SHALL be 0x00.</description>
+        </field>
+        <field type="ENUMERATION_8_BIT" class="IasAceAudibleNotificationEnum">
+            <name>Audible Notification</name>
+            <description>Provide the ACE client with information on which type of audible notification it SHOULD make for the zone status change. This field is useful for telling the ACE client to play a standard chime or other audio indication or to mute and not sound an audible notification at all. This field also allows manufacturers to create additional audible alert types (e.g., dog barking, windchimes, conga drums) to enable users to customise their system.</description>
+        </field>
+        <field type="ENUMERATION_8_BIT" class="IasAceAlarmStatusEnum">
+            <name>Alarm Status</name>
+            <description>Provides the ACE client with information on the type of alarm the panel is in if its Panel Status field indicates it is &#8220;in alarm.&#8221; This field MAY be useful for ACE clients to display or otherwise initiate notification for users.</description>
+        </field>
+    </command>
+    <command code="0x06" source="server">
+        <name>Set Bypassed Zone List Command</name>
+        <description>Sets the list of bypassed zones on the IAS ACE client. This command can be sent either as a response to the GetBypassedZoneList command or unsolicited when the list of bypassed zones changes on the ACE server.</description>
+        <field type="N_X_UNSIGNED_8_BIT_INTEGER">
+            <name>Zone ID</name>
+            <description>Zone ID is the index of the Zone in the CIE&apos;s zone table and is an array of Zone IDs for each zone that is bypassed where X is equal to the value of the Number of Zones field. There is no order imposed by the numbering of the Zone ID field in this command payload. IAS ACE servers SHOULD provide the array of Zone IDs in ascending order.</description>
+        </field>
+    </command>
+    <command code="0x07" source="server">
+        <name>Bypass Response</name>
+        <description>Provides the response of the security panel to the request from the IAS ACE client to bypass zones via a Bypass command.</description>
+        <field type="N_X_UNSIGNED_8_BIT_INTEGER">
+            <name>Bypass Result</name>
+            <description>An array of Zone IDs for each zone requested to be bypassed via the Bypass command where X is equal to the value of the Number of Zones field. The order of results for Zone IDs SHALL be the same as the order of Zone IDs sent in the Bypass command by the IAS ACE client.</description>
+        </field>
+    </command>
+    <command code="0x08" source="server">
+        <name>Get Zone Status Response</name>
+        <description>This command updates requesting IAS ACE clients in the system of changes to the IAS Zone server statuses recorded by the ACE server (e.g., IAS CIE device).</description>
+        <field type="BOOLEAN">
+            <name>Zone Status Complete</name>
+            <description>Indicates whether there are additional Zone IDs managed by the IAS ACE Server with Zone Status information to be obtained. A value of zero (i.e. FALSE) indicates there are additional Zone IDs for which Zone Status information is available and that the IAS ACE client SHOULD send another Get Zone Status command.A value of one (i.e. TRUE) indicates there are no more Zone IDs for the IAS ACE client to query and the IAS ACE client has received all the Zone Status information for all IAS Zones managed by the IAS ACE server.</description>
+            <description>The IAS ACE client SHOULD NOT typically send another Get Zone Status command.</description>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Number Of Zones</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER" class="IasAceZoneStatusResultEnum">
+            <name>IAS ACE Zone Status</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Zone ID</name>
+        </field>
+        <field type="BITMAP_16_BIT">
+            <name>Zone Status</name>
+        </field>
+    </command>
+
+    <constant type="ENUMERATION_8_BIT" class="IasAceAlarmStatusEnum">
+        <name>IAS ACE Alarm Status</name>
+        <value code="0x00" name="No Alarm">
+        </value>
+        <value code="0x01" name="Burglar">
+        </value>
+        <value code="0x02" name="Fire">
+        </value>
+        <value code="0x03" name="Emergency">
+        </value>
+        <value code="0x04" name="Police Panic">
+        </value>
+        <value code="0x05" name="Fire Panic">
+        </value>
+        <value code="0x06" name="Emergency Panic">
+        </value>
+    </constant>
+    <constant type="ENUMERATION_8_BIT" class="IasAceArmModeEnum">
+        <name>IAS ACE Arm Mode</name>
+        <value code="0x00" name="Disarm">
+        </value>
+        <value code="0x01" name="Arm Day Home Zones Only">
+        </value>
+        <value code="0x02" name="Arm Night Sleep Zones Only">
+        </value>
+        <value code="0x03" name="Arm All Zones">
+        </value>
+    </constant>
+    <constant type="ENUMERATION_8_BIT" class="IasAceArmNotificationEnum">
+        <name>IAS ACE Arm Notification</name>
+        <value code="0x00" name="All Zones Disarmed">
+        </value>
+        <value code="0x01" name="Only Day Home Zones Armed">
+        </value>
+        <value code="0x02" name="Only Night Sleep Zones Armed">
+        </value>
+        <value code="0x03" name="All Zones Armed">
+        </value>
+        <value code="0x04" name="Invalid Arm Disarm Code">
+        </value>
+        <value code="0x05" name="Not Ready To Arm">
+        </value>
+        <value code="0x06" name="Already Disarmed">
+        </value>
+    </constant>
+    <constant type="ENUMERATION_8_BIT" class="IasAceAudibleNotificationEnum">
+        <name>IAS ACE Audible Notification</name>
+        <value code="0x00" name="Mute">
+        </value>
+        <value code="0x01" name="Default Sound">
+        </value>
+    </constant>
+    <constant type="ENUMERATION_8_BIT" class="IasAcePanelStatusEnum">
+        <name>IAS ACE Panel Status</name>
+        <value code="0x00" name="Panel Disarmed">
+        </value>
+        <value code="0x01" name="Armed Stay">
+        </value>
+        <value code="0x02" name="Armed Night">
+        </value>
+        <value code="0x03" name="Armed Away">
+        </value>
+        <value code="0x04" name="Exit Delay">
+        </value>
+        <value code="0x05" name="Entry Delay">
+        </value>
+        <value code="0x06" name="Not Ready To Arm">
+        </value>
+        <value code="0x07" name="In Alarm">
+        </value>
+        <value code="0x08" name="Arming Stay">
+        </value>
+        <value code="0x09" name="Arming Night">
+        </value>
+        <value code="0x0A" name="Arming Away">
+        </value>
+    </constant>
+    <struct class="IasAceZoneStatusResult">
+        <name>IAS ACE Zone Status Result</name>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Zone ID</name>
+        </field>
+        <field type="BITMAP_16_BIT">
+            <name>Zone Status</name>
+        </field>
+    </struct>
+</cluster>

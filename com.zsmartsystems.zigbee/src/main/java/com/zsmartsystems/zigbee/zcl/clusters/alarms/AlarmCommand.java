@@ -10,34 +10,43 @@ package com.zsmartsystems.zigbee.zcl.clusters.alarms;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Alarm Command value object class.
  * <p>
- * Cluster: <b>Alarms</b>. Command is sent <b>FROM</b> the server.
+ * Cluster: <b>Alarms</b>. Command ID 0x00 is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the Alarms cluster.
  * <p>
- * The alarm command signals an alarm situation on the sending device.
- * <br>
- * An alarm command is generated when a  cluster  which has alarm functionality detects an alarm
- * condition, e.g., an attribute has taken on a value that is outside a ‘safe’ range. The details
- * are given by individual cluster specifications.
+ * The alarm command signals an alarm situation on the sending device. <br> An alarm command is
+ * generated when a cluster which has alarm functionality detects an alarm condition, e.g., an
+ * attribute has taken on a value that is outside a ‘safe’ range. The details are given by
+ * individual cluster specifications.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class AlarmCommand extends ZclCommand {
     /**
-     * Alarm code command message field.
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0009;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x00;
+
+    /**
+     * Alarm Code command message field.
      */
     private Integer alarmCode;
 
     /**
-     * Cluster identifier command message field.
+     * Cluster Identifier command message field.
      */
     private Integer clusterIdentifier;
 
@@ -45,43 +54,43 @@ public class AlarmCommand extends ZclCommand {
      * Default constructor.
      */
     public AlarmCommand() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 9;
-        commandId = 0;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
 
     /**
-     * Gets Alarm code.
+     * Gets Alarm Code.
      *
-     * @return the Alarm code
+     * @return the Alarm Code
      */
     public Integer getAlarmCode() {
         return alarmCode;
     }
 
     /**
-     * Sets Alarm code.
+     * Sets Alarm Code.
      *
-     * @param alarmCode the Alarm code
+     * @param alarmCode the Alarm Code
      */
     public void setAlarmCode(final Integer alarmCode) {
         this.alarmCode = alarmCode;
     }
 
     /**
-     * Gets Cluster identifier.
+     * Gets Cluster Identifier.
      *
-     * @return the Cluster identifier
+     * @return the Cluster Identifier
      */
     public Integer getClusterIdentifier() {
         return clusterIdentifier;
     }
 
     /**
-     * Sets Cluster identifier.
+     * Sets Cluster Identifier.
      *
-     * @param clusterIdentifier the Cluster identifier
+     * @param clusterIdentifier the Cluster Identifier
      */
     public void setClusterIdentifier(final Integer clusterIdentifier) {
         this.clusterIdentifier = clusterIdentifier;

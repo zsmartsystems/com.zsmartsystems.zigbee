@@ -13,20 +13,46 @@ import java.util.Map;
 import javax.annotation.Generated;
 
 /**
- * Enumeration of Basic attribute PowerSource options.
+ * Power Source value enumeration.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
- *
- * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-31T12:00:43Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
 public enum PowerSourceEnum {
+
+    /**
+     * Unknown
+     */
     UNKNOWN(0x0000),
+
+    /**
+     * Mains Single Phase
+     */
     MAINS_SINGLE_PHASE(0x0001),
+
+    /**
+     * Mains Three Phase
+     */
     MAINS_THREE_PHASE(0x0002),
+
+    /**
+     * Battery
+     */
     BATTERY(0x0003),
+
+    /**
+     * DC Source
+     */
     DC_SOURCE(0x0004),
+
+    /**
+     * Emergency Mains Constant
+     */
     EMERGENCY_MAINS_CONSTANT(0x0005),
+
+    /**
+     * Emergency Mains Changeover
+     */
     EMERGENCY_MAINS_CHANGEOVER(0x0006);
 
     /**
@@ -43,7 +69,7 @@ public enum PowerSourceEnum {
 
     private final int key;
 
-    PowerSourceEnum(final int key) {
+    private PowerSourceEnum(final int key) {
         this.key = key;
     }
 

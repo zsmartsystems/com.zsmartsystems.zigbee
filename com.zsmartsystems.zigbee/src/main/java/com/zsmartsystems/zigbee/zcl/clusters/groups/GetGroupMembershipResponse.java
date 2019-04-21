@@ -7,38 +7,51 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.groups;
 
+import java.util.List;
+
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
-
-import java.util.List;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Get Group Membership Response value object class.
  * <p>
- * Cluster: <b>Groups</b>. Command is sent <b>FROM</b> the server.
+ * Cluster: <b>Groups</b>. Command ID 0x02 is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the Groups cluster.
+ * <p>
+ * The get group membership response command is sent by the groups cluster server in response to
+ * a get group membership command.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class GetGroupMembershipResponse extends ZclCommand {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0004;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x02;
+
     /**
      * Capacity command message field.
      */
     private Integer capacity;
 
     /**
-     * Group count command message field.
+     * Group Count command message field.
      */
     private Integer groupCount;
 
     /**
-     * Group list command message field.
+     * Group List command message field.
      */
     private List<Integer> groupList;
 
@@ -46,9 +59,9 @@ public class GetGroupMembershipResponse extends ZclCommand {
      * Default constructor.
      */
     public GetGroupMembershipResponse() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 4;
-        commandId = 2;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
 
@@ -71,36 +84,36 @@ public class GetGroupMembershipResponse extends ZclCommand {
     }
 
     /**
-     * Gets Group count.
+     * Gets Group Count.
      *
-     * @return the Group count
+     * @return the Group Count
      */
     public Integer getGroupCount() {
         return groupCount;
     }
 
     /**
-     * Sets Group count.
+     * Sets Group Count.
      *
-     * @param groupCount the Group count
+     * @param groupCount the Group Count
      */
     public void setGroupCount(final Integer groupCount) {
         this.groupCount = groupCount;
     }
 
     /**
-     * Gets Group list.
+     * Gets Group List.
      *
-     * @return the Group list
+     * @return the Group List
      */
     public List<Integer> getGroupList() {
         return groupList;
     }
 
     /**
-     * Sets Group list.
+     * Sets Group List.
      *
-     * @param groupList the Group list
+     * @param groupList the Group List
      */
     public void setGroupList(final List<Integer> groupList) {
         this.groupList = groupList;

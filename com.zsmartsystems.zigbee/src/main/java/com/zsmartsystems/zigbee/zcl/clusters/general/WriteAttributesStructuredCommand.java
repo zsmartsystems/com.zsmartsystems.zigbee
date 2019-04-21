@@ -10,44 +10,49 @@ package com.zsmartsystems.zigbee.zcl.clusters.general;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Write Attributes Structured Command value object class.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>General</b>. Command ID 0x0F is sent <b>TO</b> the server.
  * This command is a <b>generic</b> command used across the profile.
  * <p>
- * The write attributes structured command is generated when a device wishes to
- * change the values of one or more attributes located on another device. Each write
- * attribute record shall contain the identifier and the actual value of the attribute, or
- * element thereof, to be written.
+ * The write attributes structured command is generated when a device wishes to change the
+ * values of one or more attributes located on another device. Each write attribute record
+ * shall contain the identifier and the actual value of the attribute, or element thereof, to be
+ * written.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class WriteAttributesStructuredCommand extends ZclCommand {
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x0F;
+
     /**
      * Status command message field.
      * <p>
-     * Status is only provided if the command was successful, and the
-     * attribute selector records are not included for successfully
-     * written attributes, in order to save bandwidth.
+     * Status is only provided if the command was successful, and the attribute selector
+     * records are not included for successfully written attributes, in order to save
+     * bandwidth.
      */
     private ZclStatus status;
 
     /**
-     * Attribute selectors command message field.
+     * Attribute Selectors command message field.
      * <p>
-     * Note that write attribute status records are not included for successfully
-     * written attributes, in order to save bandwidth. In the case of successful
-     * writing of all attributes, only a single  write attribute status record
-     * SHALL be included in the command, with the status field set to SUCCESS and the
-     * attribute identifier and selector fields omitted.
+     * Note that write attribute status records are not included for successfully written
+     * attributes, in order to save bandwidth. In the case of successful writing of all
+     * attributes, only a single write attribute status record shall be included in the
+     * command, with the status field set to SUCCESS and the attribute identifier and selector
+     * fields omitted.
      */
     private Object attributeSelectors;
 
@@ -55,8 +60,8 @@ public class WriteAttributesStructuredCommand extends ZclCommand {
      * Default constructor.
      */
     public WriteAttributesStructuredCommand() {
+        commandId = COMMAND_ID;
         genericCommand = true;
-        commandId = 15;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
@@ -75,10 +80,10 @@ public class WriteAttributesStructuredCommand extends ZclCommand {
 
     /**
      * Gets Status.
-     *
-     * Status is only provided if the command was successful, and the
-     * attribute selector records are not included for successfully
-     * written attributes, in order to save bandwidth.
+     * <p>
+     * Status is only provided if the command was successful, and the attribute selector
+     * records are not included for successfully written attributes, in order to save
+     * bandwidth.
      *
      * @return the Status
      */
@@ -88,10 +93,10 @@ public class WriteAttributesStructuredCommand extends ZclCommand {
 
     /**
      * Sets Status.
-     *
-     * Status is only provided if the command was successful, and the
-     * attribute selector records are not included for successfully
-     * written attributes, in order to save bandwidth.
+     * <p>
+     * Status is only provided if the command was successful, and the attribute selector
+     * records are not included for successfully written attributes, in order to save
+     * bandwidth.
      *
      * @param status the Status
      */
@@ -100,30 +105,30 @@ public class WriteAttributesStructuredCommand extends ZclCommand {
     }
 
     /**
-     * Gets Attribute selectors.
+     * Gets Attribute Selectors.
+     * <p>
+     * Note that write attribute status records are not included for successfully written
+     * attributes, in order to save bandwidth. In the case of successful writing of all
+     * attributes, only a single write attribute status record shall be included in the
+     * command, with the status field set to SUCCESS and the attribute identifier and selector
+     * fields omitted.
      *
-     * Note that write attribute status records are not included for successfully
-     * written attributes, in order to save bandwidth. In the case of successful
-     * writing of all attributes, only a single  write attribute status record
-     * SHALL be included in the command, with the status field set to SUCCESS and the
-     * attribute identifier and selector fields omitted.
-     *
-     * @return the Attribute selectors
+     * @return the Attribute Selectors
      */
     public Object getAttributeSelectors() {
         return attributeSelectors;
     }
 
     /**
-     * Sets Attribute selectors.
+     * Sets Attribute Selectors.
+     * <p>
+     * Note that write attribute status records are not included for successfully written
+     * attributes, in order to save bandwidth. In the case of successful writing of all
+     * attributes, only a single write attribute status record shall be included in the
+     * command, with the status field set to SUCCESS and the attribute identifier and selector
+     * fields omitted.
      *
-     * Note that write attribute status records are not included for successfully
-     * written attributes, in order to save bandwidth. In the case of successful
-     * writing of all attributes, only a single  write attribute status record
-     * SHALL be included in the command, with the status field set to SUCCESS and the
-     * attribute identifier and selector fields omitted.
-     *
-     * @param attributeSelectors the Attribute selectors
+     * @param attributeSelectors the Attribute Selectors
      */
     public void setAttributeSelectors(final Object attributeSelectors) {
         this.attributeSelectors = attributeSelectors;

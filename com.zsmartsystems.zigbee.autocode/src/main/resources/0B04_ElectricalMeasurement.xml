@@ -1,0 +1,479 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0B04">
+    <name>Electrical Measurement</name>
+    <description>This cluster provides a mechanism for querying data about the electrical properties as measured by the device. This cluster may be implemented on any device type and be implemented on a per-endpoint basis. For example, a power  strip device could represent each outlet on a  different endpoint and report electrical  information for each individual outlet. The only caveat is that if you implement an attribute that has an associated multiplier and divisor, then you must implement the associated multiplier and divisor attributes. For example if you implement DCVoltage, you must also implement DCVoltageMultiplier and DCVoltageDivisor.</description>
+    <description>If you are interested in reading information about the power supply or battery level on the device, please see the Power Configuration cluster.</description>
+    <command code="0x00" source="client">
+        <name>Get Profile Info Command</name>
+        <description>Retrieves the power profiling information from the electrical measurement server.</description>
+    </command>
+    <command code="0x01" source="client">
+        <name>Get Measurement Profile Command</name>
+        <description>Retrieves an electricity measurement profile from the electricity measurement server for a specific attribute Id requested.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Attribute ID</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Start Time</name>
+        </field>
+        <field type="ENUMERATION_8_BIT">
+            <name>Number Of Intervals</name>
+        </field>
+    </command>
+    <command code="0x00" source="server">
+        <name>Get Profile Info Response Command</name>
+        <description>Returns the power profiling information requested in the GetProfileInfo command. The power profiling information consists of a list of attributes which are profiled along with the period used to profile them.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Profile Count</name>
+        </field>
+        <field type="ENUMERATION_8_BIT">
+            <name>Profile Interval Period</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Max Number Of Intervals</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>List Of Attributes</name>
+        </field>
+    </command>
+    <command code="0x01" source="server">
+        <name>Get Measurement Profile Response Command</name>
+        <description>Returns the electricity measurement profile. The electricity measurement profile includes information regarding the amount of time used to capture data related to the flow of electricity as well as the intervals thes</description>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Start Time</name>
+        </field>
+        <field type="ENUMERATION_8_BIT">
+            <name>Status</name>
+        </field>
+        <field type="ENUMERATION_8_BIT">
+            <name>Profile Interval Period</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Number Of Intervals Delivered</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Attribute ID</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Intervals</name>
+        </field>
+    </command>
+    <attribute code="0x0000" type="BITMAP_32_BIT" side="server" class="MeasurementTypeBitmap" optional="false" writable="false" reportable="false" default="0x00000000">
+        <name>Measurement Type</name>
+        <description>This attribute indicates a device&#8217;s measurement capabilities. This will be indicated by setting the desire measurement bits to 1.</description>
+    </attribute>
+    <attribute code="0x0100" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0x8000">
+        <name>DC Voltage</name>
+    </attribute>
+    <attribute code="0x0101" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0x8000">
+        <name>DC Voltage Min</name>
+    </attribute>
+    <attribute code="0x0102" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0x8000">
+        <name>DC Voltage Max</name>
+    </attribute>
+    <attribute code="0x0103" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0x8000">
+        <name>DC Current</name>
+    </attribute>
+    <attribute code="0x0104" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0x8000">
+        <name>DC Current Min</name>
+    </attribute>
+    <attribute code="0x0105" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0x8000">
+        <name>DC Current Max</name>
+    </attribute>
+    <attribute code="0x0106" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0x8000">
+        <name>DC Power</name>
+    </attribute>
+    <attribute code="0x0107" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0x8000">
+        <name>DC Power Min</name>
+    </attribute>
+    <attribute code="0x0108" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0x8000">
+        <name>DC Power Max</name>
+    </attribute>
+    <attribute code="0x0200" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0001" maximum="0xFFFF" default="0x0001">
+        <name>DC Voltage Multiplier</name>
+    </attribute>
+    <attribute code="0x0201" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0001" maximum="0xFFFF" default="0x0001">
+        <name>DC Voltage Divisor</name>
+    </attribute>
+    <attribute code="0x0202" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0001" maximum="0xFFFF" default="0x0001">
+        <name>DC Current Multiplier</name>
+    </attribute>
+    <attribute code="0x0203" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0001" maximum="0xFFFF" default="0x0001">
+        <name>DC Current Divisor</name>
+    </attribute>
+    <attribute code="0x0204" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0001" maximum="0xFFFF" default="0x0001">
+        <name>DC Power Multiplier</name>
+    </attribute>
+    <attribute code="0x0205" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0001" maximum="0xFFFF" default="0x0001">
+        <name>DC Power Divisor</name>
+    </attribute>
+    <attribute code="0x0300" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0xFFFF">
+        <name>AC Frequency</name>
+        <description>The ACFrequency attribute represents the most recent AC Frequency reading in Hertz (Hz). If the frequency cannot be measured, a value of 0xFFFF is returned.</description>
+    </attribute>
+    <attribute code="0x0301" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0xFFFF">
+        <name>AC Frequency Min</name>
+    </attribute>
+    <attribute code="0x0302" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0xFFFF">
+        <name>AC Frequency Max</name>
+    </attribute>
+    <attribute code="0x0303" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Neutral Current</name>
+    </attribute>
+    <attribute code="0x0304" type="SIGNED_32_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x00800001" maximum="0x007FFFFF" default="0x00000000">
+        <name>Total Active Power</name>
+        <description>Active power represents the current demand of active power delivered or received at the premises, in kW. Positive values indicate power delivered to the premises where negative values indicate power received from the premises. In case if device is capable of measuring multi elements or phases then this will be net active power value.</description>
+    </attribute>
+    <attribute code="0x0305" type="SIGNED_32_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x00800001" maximum="0x007FFFFF" default="0x00000000">
+        <name>Total Reactive Power</name>
+        <description>Reactive power represents the  current demand of reactive power delivered or received at the premises, in kVAr. Positive values indicate power delivered to the premises where negative values indicate power received from the premises. In case if device is capable of measuring multi elements or phases then this will be net reactive power value.</description>
+    </attribute>
+    <attribute code="0x0306" type="UNSIGNED_32_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x00000000" maximum="0x00FFFFFF" default="0x00000001">
+        <name>Total Apparent Power</name>
+        <description>Represents the current demand of apparent power, in kVA. In case if device is capable of measuring multi elements or phases then this will be net apparent power value.</description>
+    </attribute>
+    <attribute code="0x0307" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x4F0B7" default="0x8000">
+        <name>Measured 1st Harmonic Current</name>
+    </attribute>
+    <attribute code="0x0308" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x4F0B7" default="0x8000">
+        <name>Measured 3rd Harmonic Current</name>
+    </attribute>
+    <attribute code="0x0309" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x4F0B7" default="0x8000">
+        <name>Measured 5th Harmonic Current</name>
+    </attribute>
+    <attribute code="0x030A" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x4F0B7" default="0x8000">
+        <name>Measured 7th Harmonic Current</name>
+    </attribute>
+    <attribute code="0x030B" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x4F0B7" default="0x8000">
+        <name>Measured 9th Harmonic Current</name>
+    </attribute>
+    <attribute code="0x030C" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x4F0B7" default="0x8000">
+        <name>Measured 11th Harmonic Current</name>
+    </attribute>
+    <attribute code="0x030D" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x4F0B7" default="0x8000">
+        <name>Measured Phase 1st Harmonic Current</name>
+    </attribute>
+    <attribute code="0x030E" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x4F0B7" default="0x8000">
+        <name>Measured Phase 3rd Harmonic Current</name>
+    </attribute>
+    <attribute code="0x030F" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x4F0B7" default="0x8000">
+        <name>Measured Phase 5th Harmonic Current</name>
+    </attribute>
+    <attribute code="0x0310" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x4F0B7" default="0x8000">
+        <name>Measured Phase 7th Harmonic Current</name>
+    </attribute>
+    <attribute code="0x0311" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x4F0B7" default="0x8000">
+        <name>Measured Phase 9th Harmonic Current</name>
+    </attribute>
+    <attribute code="0x0312" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x4F0B7" default="0x8000">
+        <name>Measured Phase 11th Harmonic Current</name>
+    </attribute>
+    <attribute code="0x0400" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0001" maximum="0xFFFF" default="0x0001">
+        <name>AC Frequency Multiplier</name>
+    </attribute>
+    <attribute code="0x0401" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0001" maximum="0xFFFF" default="0x0001">
+        <name>AC Frequency Divisor</name>
+    </attribute>
+    <attribute code="0x0402" type="UNSIGNED_32_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x00000000" maximum="0x00FFFFFF" default="0x00000001">
+        <name>Power Multiplier</name>
+    </attribute>
+    <attribute code="0x0403" type="UNSIGNED_32_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x00000000" maximum="0x00FFFFFF" default="0x00000001">
+        <name>Power Divisor</name>
+    </attribute>
+    <attribute code="0x0404" type="SIGNED_8_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-7F" maximum="0x7F" default="0x00">
+        <name>Harmonic Current Multiplier</name>
+    </attribute>
+    <attribute code="0x0405" type="SIGNED_8_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-7F" maximum="0x7F" default="0x00">
+        <name>Phase Harmonic Current Multiplier</name>
+    </attribute>
+    <attribute code="0x0500" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>Instantaneous Voltage</name>
+    </attribute>
+    <attribute code="0x0501" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0xFFFF">
+        <name>Instantaneous Line Current</name>
+    </attribute>
+    <attribute code="0x0502" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>Instantaneous Active Current</name>
+    </attribute>
+    <attribute code="0x0503" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>Instantaneous Reactive Current</name>
+    </attribute>
+    <attribute code="0x0504" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>Instantaneous Power</name>
+    </attribute>
+    <attribute code="0x0505" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0xFFFF">
+        <name>RMS Voltage</name>
+        <description>Represents the  most recent RMS voltage reading in Volts (V). If the RMS voltage cannot be measured, a value of 0xFFFF is returned.</description>
+    </attribute>
+    <attribute code="0x0506" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x8000">
+        <name>RMS Voltage Min</name>
+    </attribute>
+    <attribute code="0x0507" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x8000">
+        <name>RMS Voltage Max</name>
+    </attribute>
+    <attribute code="0x0508" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0xFFFF">
+        <name>RMS Current</name>
+        <description>Represents the most recent RMS current reading in Amps (A). If the power cannot be measured, a value of 0xFFFF is returned.</description>
+    </attribute>
+    <attribute code="0x0509" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0xFFFF">
+        <name>RMS Current Min</name>
+    </attribute>
+    <attribute code="0x050A" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0xFFFF">
+        <name>RMS Current Max</name>
+    </attribute>
+    <attribute code="0x050B" type="SIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>Active Power</name>
+        <description>Represents the single phase or Phase A, current demand of active power delivered or received at the premises, in Watts (W). Positive values indicate power delivered to the premises where negative values indicate power received from the premises.</description>
+    </attribute>
+    <attribute code="0x050C" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>Active Power Min</name>
+    </attribute>
+    <attribute code="0x050D" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>Active Power Max</name>
+    </attribute>
+    <attribute code="0x050E" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>Reactive Power</name>
+    </attribute>
+    <attribute code="0x050F" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0xFFFF">
+        <name>Apparent Power</name>
+    </attribute>
+    <attribute code="0x0510" type="SIGNED_8_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-64" maximum="0x64" default="0x00">
+        <name>Power Factor</name>
+    </attribute>
+    <attribute code="0x0511" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="true" reportable="true" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Average RMS Voltage Measurement Period</name>
+    </attribute>
+    <attribute code="0x0513" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="true" reportable="true" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Average RMS Under Voltage Counter</name>
+    </attribute>
+    <attribute code="0x0514" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="true" reportable="true" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>RMS Extreme Over Voltage Period</name>
+    </attribute>
+    <attribute code="0x0515" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="true" reportable="true" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>RMS Extreme Under Voltage Period</name>
+    </attribute>
+    <attribute code="0x0516" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="true" reportable="true" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>RMS Voltage Sag Period</name>
+    </attribute>
+    <attribute code="0x0517" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="true" reportable="true" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>RMS Voltage Swell Period</name>
+    </attribute>
+    <attribute code="0x0600" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x0001" maximum="0xFFFF" default="0x0001">
+        <name>AC Voltage Multiplier</name>
+    </attribute>
+    <attribute code="0x0601" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x0001" maximum="0xFFFF" default="0x0001">
+        <name>AC Voltage Divisor</name>
+    </attribute>
+    <attribute code="0x0602" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x0001" maximum="0xFFFF" default="0x0001">
+        <name>AC Current Multiplier</name>
+        <description>Provides a value to be multiplied against the InstantaneousCurrent and RMSCurrentattributes. his attribute must be used in conjunction with the ACCurrentDivisorattribute. 0x0000 is an invalid value for this attribute.</description>
+    </attribute>
+    <attribute code="0x0603" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x0001" maximum="0xFFFF" default="0x0001">
+        <name>AC Current Divisor</name>
+        <description>Provides  a  value  to  be  divided  against the ACCurrent, InstantaneousCurrent and RMSCurrentattributes. This attribute must be used in conjunction with the ACCurrentMultiplierattribute 0x0000 is an invalid value for this attribute.</description>
+    </attribute>
+    <attribute code="0x0604" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x0001" maximum="0xFFFF" default="0x0001">
+        <name>AC Power Multiplier</name>
+        <description>Provides a value to be multiplied against the InstantaneousPower and ActivePowerattributes. This attribute must be used in conjunction with the ACPowerDivisorattribute. 0x0000 is an invalid value for this attribute</description>
+    </attribute>
+    <attribute code="0x0605" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x0001" maximum="0xFFFF" default="0x0001">
+        <name>AC Power Divisor</name>
+        <description>Provides a value to be divided against the InstantaneousPower and ActivePowerattributes. This  attribute must be used in conjunction with the ACPowerMultiplierattribute. 0x0000 is an invalid value for this attribute.</description>
+    </attribute>
+    <attribute code="0x0700" type="BITMAP_8_BIT" side="server" optional="true" writable="true" reportable="true" default="0x00">
+        <name>Overload Alarms Mask</name>
+    </attribute>
+    <attribute code="0x0701" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>Voltage Overload</name>
+    </attribute>
+    <attribute code="0x0702" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>Current Overload</name>
+    </attribute>
+    <attribute code="0x0800" type="BITMAP_16_BIT" side="server" optional="true" writable="true" reportable="true" default="0x0000">
+        <name>AC Overload Alarms Mask</name>
+    </attribute>
+    <attribute code="0x0801" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>AC Voltage Overload</name>
+    </attribute>
+    <attribute code="0x0802" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>AC Current Overload</name>
+    </attribute>
+    <attribute code="0x0803" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>AC Active Power Overload</name>
+    </attribute>
+    <attribute code="0x0804" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>AC Reactive Power Overload</name>
+    </attribute>
+    <attribute code="0x0805" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>Average RMS Over Voltage</name>
+    </attribute>
+    <attribute code="0x0806" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>Average RMS Under Voltage</name>
+    </attribute>
+    <attribute code="0x0807" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>RMS Extreme Over Voltage</name>
+    </attribute>
+    <attribute code="0x0808" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>RMS Extreme Under Voltage</name>
+    </attribute>
+    <attribute code="0x0809" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>RMS Voltage Sag</name>
+    </attribute>
+    <attribute code="0x080A" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>RMS Voltage Swell</name>
+    </attribute>
+    <attribute code="0x0901" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0xFFFF">
+        <name>Line Current Phase B</name>
+    </attribute>
+    <attribute code="0x0902" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>Active Current Phase B</name>
+    </attribute>
+    <attribute code="0x0903" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>Reactive Current Phase B</name>
+    </attribute>
+    <attribute code="0x0905" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0xFFFF">
+        <name>RMS Voltage Phase B</name>
+    </attribute>
+    <attribute code="0x0906" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0xFFFF">
+        <name>RMS Voltage Min Phase B</name>
+    </attribute>
+    <attribute code="0x0907" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0xFFFF">
+        <name>RMS Voltage Max Phase B</name>
+    </attribute>
+    <attribute code="0x0908" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0xFFFF">
+        <name>RMS Current Phase B</name>
+    </attribute>
+    <attribute code="0x0909" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0xFFFF">
+        <name>RMS Current Min Phase B</name>
+    </attribute>
+    <attribute code="0x090A" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0xFFFF">
+        <name>RMS Current Max Phase B</name>
+    </attribute>
+    <attribute code="0x090B" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>Active Power Phase B</name>
+    </attribute>
+    <attribute code="0x090C" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>Active Power Min Phase B</name>
+    </attribute>
+    <attribute code="0x090D" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>Active Power Max Phase B</name>
+    </attribute>
+    <attribute code="0x090E" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>Reactive Power Phase B</name>
+    </attribute>
+    <attribute code="0x090F" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0xFFFF">
+        <name>Apparent Power Phase B</name>
+    </attribute>
+    <attribute code="0x0910" type="SIGNED_8_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-64" maximum="0x64" default="0x00">
+        <name>Power Factor Phase B</name>
+    </attribute>
+    <attribute code="0x0911" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Average RMS Voltage Measurement Period Phase B</name>
+    </attribute>
+    <attribute code="0x0912" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Average RMS Over Voltage Counter Phase B</name>
+    </attribute>
+    <attribute code="0x0913" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Average RMS Under Voltage Counter Phase B</name>
+    </attribute>
+    <attribute code="0x0914" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>RMS Extreme Over Voltage Period Phase B</name>
+    </attribute>
+    <attribute code="0x0915" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>RMS Extreme Under Voltage Period Phase B</name>
+    </attribute>
+    <attribute code="0x0916" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>RMS Voltage Sag Period Phase B</name>
+    </attribute>
+    <attribute code="0x0917" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>RMS Voltage Swell Period Phase B</name>
+    </attribute>
+    <attribute code="0x0A01" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0xFFFF">
+        <name>Line Current Phase C</name>
+    </attribute>
+    <attribute code="0x0A02" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>Active Current Phase C</name>
+    </attribute>
+    <attribute code="0x0A03" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>Reactive Current Phase C</name>
+    </attribute>
+    <attribute code="0x0A05" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0xFFFF">
+        <name>RMS Voltage Phase C</name>
+    </attribute>
+    <attribute code="0x0A06" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0xFFFF">
+        <name>RMS Voltage Min Phase C</name>
+    </attribute>
+    <attribute code="0x0A07" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0xFFFF">
+        <name>RMS Voltage Max Phase C</name>
+    </attribute>
+    <attribute code="0x0A08" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0xFFFF">
+        <name>RMS Current Phase C</name>
+    </attribute>
+    <attribute code="0x0A09" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0xFFFF">
+        <name>RMS Current Min Phase C</name>
+    </attribute>
+    <attribute code="0x0A0A" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0xFFFF">
+        <name>RMS Current Max Phase C</name>
+    </attribute>
+    <attribute code="0x0A0B" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>Active Power Phase C</name>
+    </attribute>
+    <attribute code="0x0A0C" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>Active Power Min Phase C</name>
+    </attribute>
+    <attribute code="0x0A0D" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>Active Power Max Phase C</name>
+    </attribute>
+    <attribute code="0x0A0E" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-8000" maximum="0x7FFF" default="0xFFFF">
+        <name>Reactive Power Phase C</name>
+    </attribute>
+    <attribute code="0x0A0F" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0xFFFF">
+        <name>Apparent Power Phase C</name>
+    </attribute>
+    <attribute code="0x0A10" type="SIGNED_8_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x-64" maximum="0x64" default="0x00">
+        <name>Power Factor Phase C</name>
+    </attribute>
+    <attribute code="0x0A11" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Average RMS Voltage Measurement Period Phase C</name>
+    </attribute>
+    <attribute code="0x0A12" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Average RMS Over Voltage Counter Phase C</name>
+    </attribute>
+    <attribute code="0x0A13" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Average RMS Under Voltage Counter Phase C</name>
+    </attribute>
+    <attribute code="0x0A14" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>RMS Extreme Over Voltage Period Phase C</name>
+    </attribute>
+    <attribute code="0x0A15" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>RMS Extreme Under Voltage Period Phase C</name>
+    </attribute>
+    <attribute code="0x0A16" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>RMS Voltage Sag Period Phase C</name>
+    </attribute>
+    <attribute code="0x0A17" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>RMS Voltage Swell Period Phase C</name>
+    </attribute>
+
+    <constant class="MeasurementTypeEnum">
+        <name>Measurement Type</name>
+        <value code="0x00000000" name="AC Active Measurement">
+        </value>
+        <value code="0x00000001" name="AC Reactive Measurement">
+        </value>
+        <value code="0x00000002" name="AC Apparent Measurement">
+        </value>
+        <value code="0x00000004" name="Phase A Measurement">
+        </value>
+        <value code="0x00000008" name="Phase B Measurement">
+        </value>
+        <value code="0x00000010" name="Phase C Measurement">
+        </value>
+        <value code="0x00000020" name="DC Measurement">
+        </value>
+        <value code="0x00000040" name="Harmonics Measurement">
+        </value>
+        <value code="0x00000080" name="Power Quality Measurement">
+        </value>
+    </constant>
+</cluster>

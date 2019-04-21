@@ -7,13 +7,16 @@
  */
 package com.zsmartsystems.zigbee.zcl;
 
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -27,11 +30,15 @@ import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
+import com.zsmartsystems.zigbee.database.ZclAttributeDao;
 import com.zsmartsystems.zigbee.database.ZclClusterDao;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesExtended;
+import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesExtendedResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverCommandsGenerated;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverCommandsGeneratedResponse;
@@ -39,8 +46,16 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverCommandsReceived;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverCommandsReceivedResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesStructuredCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadReportingConfigurationCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.general.ReadReportingConfigurationResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesNoResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesStructuredCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesStructuredResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesUndividedCommand;
 import com.zsmartsystems.zigbee.zcl.field.AttributeInformation;
 import com.zsmartsystems.zigbee.zcl.field.AttributeRecord;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReport;
@@ -120,11 +135,35 @@ public abstract class ZclCluster {
     private final Set<ZclCommandListener> commandListeners = new CopyOnWriteArraySet<>();
 
     /**
-     * Map of attributes supported by the cluster. This contains all attributes, even if they are not supported by the
-     * remote device. To check what attributes are supported by the remove device, us the {@link #discoverAttributes()}
-     * method followed by the {@link #getSupportedAttributes()} method.
+     * Map of client attributes supported by the cluster. This contains all attributes, even if they are not supported
+     * by the remote device. To check what attributes are supported by the remove device, us the
+     * {@link #discoverAttributes()} method followed by the {@link #getSupportedAttributes()} method.
      */
-    protected Map<Integer, ZclAttribute> attributes = initializeAttributes();
+    protected Map<Integer, ZclAttribute> clientAttributes = initializeClientAttributes();
+
+    /**
+     * Map of server attributes supported by the cluster. This contains all attributes, even if they are not supported
+     * by the remote device. To check what attributes are supported by the remove device, us the
+     * {@link #discoverAttributes()} method followed by the {@link #getSupportedAttributes()} method.
+     */
+    protected Map<Integer, ZclAttribute> serverAttributes = initializeServerAttributes();
+
+    /**
+     * Map of server side commands supported by the cluster. This contains all server commands, even if they are not
+     * supported by the remote device.
+     */
+    protected Map<Integer, Class<? extends ZclCommand>> serverCommands = initializeServerCommands();
+
+    /**
+     * Map of client side commands supported by the cluster. This contains all client commands, even if they are not
+     * supported by the remote device.
+     */
+    protected Map<Integer, Class<? extends ZclCommand>> clientCommands = initializeClientCommands();
+
+    /**
+     * Map of the generic commands as implemented by all clusters
+     */
+    protected static Map<Integer, Class<? extends ZclCommand>> genericCommands = new HashMap<>();
 
     /**
      * The {@link ZclAttributeNormalizer} is used to normalize attribute data types to ensure that data types are
@@ -139,13 +178,67 @@ public abstract class ZclCluster {
      */
     private boolean apsSecurityRequired = false;
 
+    static {
+        genericCommands.put(0x0000, ReadAttributesCommand.class);
+        genericCommands.put(0x0001, ReadAttributesResponse.class);
+        genericCommands.put(0x0002, WriteAttributesCommand.class);
+        genericCommands.put(0x0003, WriteAttributesUndividedCommand.class);
+        genericCommands.put(0x0004, WriteAttributesResponse.class);
+        genericCommands.put(0x0005, WriteAttributesNoResponse.class);
+        genericCommands.put(0x0006, ConfigureReportingCommand.class);
+        genericCommands.put(0x0007, ConfigureReportingResponse.class);
+        genericCommands.put(0x0008, ReadReportingConfigurationCommand.class);
+        genericCommands.put(0x0009, ReadReportingConfigurationResponse.class);
+        genericCommands.put(0x000A, ReportAttributesCommand.class);
+        genericCommands.put(0x000B, DefaultResponse.class);
+        genericCommands.put(0x000C, DiscoverAttributesCommand.class);
+        genericCommands.put(0x000D, DiscoverAttributesResponse.class);
+        genericCommands.put(0x000E, ReadAttributesStructuredCommand.class);
+        genericCommands.put(0x000F, WriteAttributesStructuredCommand.class);
+        genericCommands.put(0x0010, WriteAttributesStructuredResponse.class);
+        genericCommands.put(0x0011, DiscoverCommandsReceived.class);
+        genericCommands.put(0x0012, DiscoverCommandsReceivedResponse.class);
+        genericCommands.put(0x0013, DiscoverCommandsGenerated.class);
+        genericCommands.put(0x0014, DiscoverCommandsGeneratedResponse.class);
+        genericCommands.put(0x0015, DiscoverAttributesExtended.class);
+        genericCommands.put(0x0016, DiscoverAttributesExtendedResponse.class);
+    }
+
     /**
-     * Abstract method called when the cluster starts to initialise the list of attributes defined in this cluster by
-     * the cluster library
+     * Abstract method called when the cluster starts to initialise the list of client attributes defined in this
+     * cluster by the cluster library
      *
      * @return a {@link Map} of all attributes this cluster is known to support
      */
-    protected abstract Map<Integer, ZclAttribute> initializeAttributes();
+    protected abstract Map<Integer, ZclAttribute> initializeClientAttributes();
+
+    /**
+     * Abstract method called when the cluster starts to initialise the list of server attributes defined in this
+     * cluster by the cluster library
+     *
+     * @return a {@link Map} of all attributes this cluster is known to support
+     */
+    protected abstract Map<Integer, ZclAttribute> initializeServerAttributes();
+
+    /**
+     * Abstract method called when the cluster starts to initialise the list of server side commands defined in this
+     * cluster by the cluster library
+     *
+     * @return a {@link Map} of all server side commands this cluster is known to support
+     */
+    protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {
+        return new ConcurrentHashMap<>(0);
+    }
+
+    /**
+     * Abstract method called when the cluster starts to initialise the list of client side commands defined in this
+     * cluster by the cluster library
+     *
+     * @return a {@link Map} of all client side commands this cluster is known to support
+     */
+    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
+        return new ConcurrentHashMap<>(0);
+    }
 
     /**
      * Creates a cluster
@@ -178,23 +271,47 @@ public abstract class ZclCluster {
     }
 
     /**
+     * Write an attribute
+     *
+     * @param attribute the attribute ID to write
+     * @param dataType the {@link ZclDataType} of the object
+     * @param value the value to set (as {@link Object})
+     * @return command future {@link CommandResult}
+     */
+    public Future<CommandResult> writeAttribute(final int attribute, final ZclDataType dataType, final Object value) {
+        logger.debug("{}: Writing {} cluster {}, attribute {}, value {}, as dataType {}",
+                zigbeeEndpoint.getIeeeAddress(), (isClient ? "Client" : "Server"), clusterId, attribute, value,
+                dataType);
+        final WriteAttributeRecord attributeIdentifier = new WriteAttributeRecord();
+        attributeIdentifier.setAttributeIdentifier(attribute);
+        attributeIdentifier.setAttributeDataType(dataType);
+        attributeIdentifier.setAttributeValue(value);
+        return writeAttributes(Collections.singletonList(attributeIdentifier));
+    }
+
+    /**
+     * Writes a number of attributes in a single command
+     *
+     * @param attributes a List of {@link WriteAttributeRecord}s with the attribute ID, type and value
+     * @return command future {@link CommandResult}
+     */
+    public Future<CommandResult> writeAttributes(List<WriteAttributeRecord> attributes) {
+        final WriteAttributesCommand command = new WriteAttributesCommand();
+        command.setClusterId(clusterId);
+        command.setRecords(attributes);
+        command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
+
+        return send(command);
+    }
+
+    /**
      * Read an attribute given the attribute ID
      *
      * @param attribute the integer attribute ID to read
      * @return command future
      */
-    public Future<CommandResult> read(final int attribute) {
-        return read(Collections.singletonList(attribute));
-    }
-
-    /**
-     * Read an attribute
-     *
-     * @param attribute the {@link ZclAttribute} to read
-     * @return command future
-     */
-    public Future<CommandResult> read(final ZclAttribute attribute) {
-        return read(attribute.getId());
+    public Future<CommandResult> readAttribute(final int attribute) {
+        return readAttributes(Collections.singletonList(attribute));
     }
 
     /**
@@ -204,128 +321,11 @@ public abstract class ZclCluster {
      * @param attributes List of attribute identifiers to read
      * @return command future
      */
-    public Future<CommandResult> read(final List<Integer> attributes) {
+    public Future<CommandResult> readAttributes(final List<Integer> attributes) {
         final ReadAttributesCommand command = new ReadAttributesCommand();
 
         command.setClusterId(clusterId);
         command.setIdentifiers(attributes);
-        command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
-
-        return send(command);
-    }
-
-    /**
-     * Write an attribute
-     *
-     * @param attribute the attribute ID to write
-     * @param dataType the {@link ZclDataType} of the object
-     * @param value the value to set (as {@link Object})
-     * @return command future {@link CommandResult}
-     */
-    public Future<CommandResult> write(final int attribute, final ZclDataType dataType, final Object value) {
-        logger.debug("{}: Writing cluster {}, attribute {}, value {}, as dataType {}", zigbeeEndpoint.getIeeeAddress(),
-                clusterId, attribute, value, dataType);
-
-        final WriteAttributesCommand command = new WriteAttributesCommand();
-
-        command.setClusterId(clusterId);
-        final WriteAttributeRecord attributeIdentifier = new WriteAttributeRecord();
-        attributeIdentifier.setAttributeIdentifier(attribute);
-        attributeIdentifier.setAttributeDataType(dataType);
-        attributeIdentifier.setAttributeValue(value);
-        command.setRecords(Collections.singletonList(attributeIdentifier));
-        command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
-
-        return send(command);
-    }
-
-    /**
-     * Write an attribute
-     *
-     * @param attribute the {@link ZclAttribute} to write
-     * @param value the value to set (as {@link Object})
-     * @return command future {@link CommandResult}
-     */
-    public Future<CommandResult> write(final ZclAttribute attribute, final Object value) {
-        return write(attribute.getId(), attribute.getDataType(), value);
-    }
-
-    /**
-     * Read an attribute
-     *
-     * @param attribute the {@link ZclAttribute} to read
-     * @return
-     */
-    protected Object readSync(final ZclAttribute attribute) {
-        logger.debug("readSync request: {}", attribute);
-        CommandResult result;
-        try {
-            result = read(attribute).get();
-        } catch (InterruptedException e) {
-            logger.debug("readSync interrupted");
-            return null;
-        } catch (ExecutionException e) {
-            logger.debug("readSync exception ", e);
-            return null;
-        }
-
-        if (!result.isSuccess()) {
-            return null;
-        }
-
-        ReadAttributesResponse response = result.getResponse();
-        if (response.getRecords().get(0).getStatus() == ZclStatus.SUCCESS) {
-            ReadAttributeStatusRecord attributeRecord = response.getRecords().get(0);
-            return normalizer.normalizeZclData(attribute.getDataType(), attributeRecord.getAttributeValue());
-        }
-
-        return null;
-    }
-
-    /**
-     * Configures the reporting for the specified attribute ID for analog attributes.
-     * <p>
-     * <b>minInterval</b>:
-     * The minimum reporting interval field is 16 bits in length and shall contain the
-     * minimum interval, in seconds, between issuing reports of the specified attribute.
-     * If minInterval is set to 0x0000, then there is no minimum limit, unless one is
-     * imposed by the specification of the cluster using this reporting mechanism or by
-     * the applicable profile.
-     * <p>
-     * <b>maxInterval</b>:
-     * The maximum reporting interval field is 16 bits in length and shall contain the
-     * maximum interval, in seconds, between issuing reports of the specified attribute.
-     * If maxInterval is set to 0xffff, then the device shall not issue reports for the specified
-     * attribute, and the configuration information for that attribute need not be
-     * maintained.
-     * <p>
-     * <b>reportableChange</b>:
-     * The reportable change field shall contain the minimum change to the attribute that
-     * will result in a report being issued. This field is of variable length. For attributes
-     * with 'analog' data type the field has the same data type as the attribute. The sign (if any) of the reportable
-     * change field is ignored.
-     *
-     * @param attribute the {@link ZclAttribute} to configure reporting
-     * @param minInterval the minimum reporting interval
-     * @param maxInterval the maximum reporting interval
-     * @param reportableChange the minimum change required to report an update
-     * @return command future {@link CommandResult}
-     */
-    public Future<CommandResult> setReporting(final ZclAttribute attribute, final int minInterval,
-            final int maxInterval, final Object reportableChange) {
-
-        final ConfigureReportingCommand command = new ConfigureReportingCommand();
-        command.setClusterId(clusterId);
-
-        final AttributeReportingConfigurationRecord record = new AttributeReportingConfigurationRecord();
-        record.setDirection(0);
-        record.setAttributeIdentifier(attribute.getId());
-        record.setAttributeDataType(attribute.getDataType());
-        record.setMinimumReportingInterval(minInterval);
-        record.setMaximumReportingInterval(maxInterval);
-        record.setReportableChange(reportableChange);
-        record.setTimeoutPeriod(0);
-        command.setRecords(Collections.singletonList(record));
         command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
 
         return send(command);
@@ -348,27 +348,60 @@ public abstract class ZclCluster {
      * attribute, and the configuration information for that attribute need not be
      * maintained.
      *
-     * @param attribute the {@link ZclAttribute} to configure reporting
+     * <b>reportableChange</b>:
+     * The reportable change field shall contain the minimum change to the attribute that
+     * will result in a report being issued. This field is of variable length. For attributes
+     * with 'analog' data type the field has the same data type as the attribute. The sign (if any) of the reportable
+     * change field is ignored.
+     *
+     * @param attributeId the attribute ID to configure reporting
+     * @param minInterval the minimum reporting interval
+     * @param maxInterval the maximum reporting interval
+     * @param reportableChange the minimum change required to report an update
+     * @return command future {@link CommandResult}
+     */
+    public Future<CommandResult> setReporting(final int attributeId, final int minInterval, final int maxInterval,
+            Object reportableChange) {
+        return setReporting(getAttribute(attributeId), minInterval, maxInterval, reportableChange);
+    }
+
+    /**
+     * Configures the reporting for the specified attribute ID for discrete attributes.
+     * <p>
+     * <b>minInterval</b>:
+     * The minimum reporting interval field is 16 bits in length and shall contain the
+     * minimum interval, in seconds, between issuing reports of the specified attribute.
+     * If minInterval is set to 0x0000, then there is no minimum limit, unless one is
+     * imposed by the specification of the cluster using this reporting mechanism or by
+     * the applicable profile.
+     * <p>
+     * <b>maxInterval</b>:
+     * The maximum reporting interval field is 16 bits in length and shall contain the
+     * maximum interval, in seconds, between issuing reports of the specified attribute.
+     * If maxInterval is set to 0xffff, then the device shall not issue reports for the specified
+     * attribute, and the configuration information for that attribute need not be
+     * maintained.
+     *
+     * @param attributeId the attribute ID to configure reporting
      * @param minInterval the minimum reporting interval
      * @param maxInterval the maximum reporting interval
      * @return command future {@link CommandResult}
      */
-    public Future<CommandResult> setReporting(final ZclAttribute attribute, final int minInterval,
-            final int maxInterval) {
-        return setReporting(attribute, minInterval, maxInterval, null);
+    public Future<CommandResult> setReporting(final int attributeId, final int minInterval, final int maxInterval) {
+        return setReporting(getAttribute(attributeId), minInterval, maxInterval, null);
     }
 
     /**
      * Gets the reporting configuration for an attribute
      *
-     * @param attribute the {@link ZclAttribute} on which to enable reporting
+     * @param attributeId the attribute on which to get the reporting configuration
      * @return command future {@link CommandResult}
      */
-    public Future<CommandResult> getReporting(final ZclAttribute attribute) {
+    public Future<CommandResult> getReporting(final int attributeId) {
         final ReadReportingConfigurationCommand command = new ReadReportingConfigurationCommand();
         command.setClusterId(clusterId);
         AttributeRecord record = new AttributeRecord();
-        record.setAttributeIdentifier(attribute.getId());
+        record.setAttributeIdentifier(attributeId);
         record.setDirection(0);
         command.setRecords(Collections.singletonList(record));
         command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
@@ -377,16 +410,19 @@ public abstract class ZclCluster {
     }
 
     /**
-     * Gets all the attributes supported by this cluster This will return all
-     * attributes, even if they are not actually supported by the device. The
-     * user should check to see if this is implemented.
+     * Gets all the attributes supported by this cluster This will return all attributes, even if they are not actually
+     * supported by the device. The user should check to see if this is implemented.
+     * <p>
+     * This will return either the list of client or server attributes, depending on the cluster.
      *
      * @return {@link Set} containing all {@link ZclAttributes} available in this cluster
      */
-    public Set<ZclAttribute> getAttributes() {
-        Set<ZclAttribute> attr = new HashSet<ZclAttribute>();
-        attr.addAll(attributes.values());
-        return attr;
+    public Collection<ZclAttribute> getAttributes() {
+        if (isClient) {
+            return Collections.unmodifiableCollection(clientAttributes.values());
+        } else {
+            return Collections.unmodifiableCollection(serverAttributes.values());
+        }
     }
 
     /**
@@ -397,7 +433,11 @@ public abstract class ZclCluster {
      * @return the {@link ZclAttribute}
      */
     public ZclAttribute getAttribute(int id) {
-        return attributes.get(id);
+        if (isClient) {
+            return clientAttributes.get(id);
+        } else {
+            return serverAttributes.get(id);
+        }
     }
 
     /**
@@ -428,8 +468,7 @@ public abstract class ZclCluster {
     }
 
     /**
-     * Sets the server flag for this cluster. This means the cluster is listed
-     * in the devices input cluster list
+     * Sets the server flag for this cluster. This means the cluster is listed in the devices input cluster list
      *
      */
     public void setServer() {
@@ -437,8 +476,7 @@ public abstract class ZclCluster {
     }
 
     /**
-     * Gets the state of the server flag. If the cluster is a server this will
-     * return true
+     * Gets the state of the server flag. If the cluster is a server this will return true
      *
      * @return true if the cluster can act as a server
      */
@@ -447,8 +485,7 @@ public abstract class ZclCluster {
     }
 
     /**
-     * Sets the client flag for this cluster. This means the cluster is listed
-     * in the devices output cluster list
+     * Sets the client flag for this cluster. This means the cluster is listed in the devices output cluster list
      *
      */
     public void setClient() {
@@ -456,8 +493,7 @@ public abstract class ZclCluster {
     }
 
     /**
-     * Gets the state of the client flag. If the cluster is a client this will
-     * return true
+     * Gets the state of the client flag. If the cluster is a client this will return true
      *
      * @return true if the cluster can act as a client
      */
@@ -476,8 +512,8 @@ public abstract class ZclCluster {
     }
 
     /**
-     * If APS security is required, all outgoing frames will
-     * be APS secured, and any incoming frames without APS security will be ignored.
+     * If APS security is required, all outgoing frames will be APS secured, and any incoming frames without APS
+     * security will be ignored.
      *
      * @return true if APS security is required for this cluster
      */
@@ -554,7 +590,11 @@ public abstract class ZclCluster {
     public Set<Integer> getSupportedAttributes() {
         synchronized (supportedAttributes) {
             if (!supportedAttributesKnown) {
-                return attributes.keySet();
+                if (isClient) {
+                    return clientAttributes.keySet();
+                } else {
+                    return serverAttributes.keySet();
+                }
             }
 
             return supportedAttributes;
@@ -905,7 +945,8 @@ public abstract class ZclCluster {
     public void handleAttributeStatus(List<ReadAttributeStatusRecord> records) {
         for (ReadAttributeStatusRecord record : records) {
             if (record.getStatus() != ZclStatus.SUCCESS) {
-                logger.debug("{}: Error reading attribute {} in cluster {} - {}", zigbeeEndpoint.getEndpointAddress(),
+                logger.debug("{}: Error reading attribute {} in {} cluster {} - {}",
+                        zigbeeEndpoint.getEndpointAddress(), (isClient ? "Client" : "Server"),
                         record.getAttributeIdentifier(), clusterId, record.getStatus());
                 continue;
             }
@@ -915,10 +956,10 @@ public abstract class ZclCluster {
     }
 
     private void updateAttribute(int attributeId, Object attributeValue) {
-        ZclAttribute attribute = attributes.get(attributeId);
+        ZclAttribute attribute = getAttribute(attributeId);
         if (attribute == null) {
-            logger.debug("{}: Unknown attribute {} in cluster {}", zigbeeEndpoint.getEndpointAddress(), attributeId,
-                    clusterId);
+            logger.debug("{}: Unknown {} attribute in {} cluster {}", zigbeeEndpoint.getEndpointAddress(),
+                    (isClient ? "Client" : "Server"), attributeId, clusterId);
         } else {
             Object value = normalizer.normalizeZclData(attribute.getDataType(), attributeValue);
             attribute.updateValue(value);
@@ -941,21 +982,44 @@ public abstract class ZclCluster {
      * Gets a command from the command ID (ie a command from client to server). If no command with the requested id is
      * found, null is returned.
      *
+     * @param zclFrameType the {@link ZclFrameType} of the command
      * @param commandId the command ID
-     * @return the {@link ZclCommand} or null if no command found.
+     * @return the {@link ZclCommand} or null if no command was found.
      */
-    public ZclCommand getCommandFromId(int commandId) {
-        return null;
+    public ZclCommand getCommandFromId(ZclFrameType zclFrameType, int commandId) {
+        if (zclFrameType == ZclFrameType.CLUSTER_SPECIFIC_COMMAND) {
+            return getCommand(commandId, clientCommands);
+        } else {
+            return getCommand(commandId, genericCommands);
+        }
     }
 
     /**
      * Gets a response from the command ID (ie a command from server to client). If no command with the requested id is
      * found, null is returned.
      *
+     * @param zclFrameType the {@link ZclFrameType} of the command
      * @param commandId the command ID
-     * @return the {@link ZclCommand} or null if no command found.
+     * @return the {@link ZclCommand} or null if no command was found.
      */
-    public ZclCommand getResponseFromId(int commandId) {
+    public ZclCommand getResponseFromId(ZclFrameType zclFrameType, int commandId) {
+        if (zclFrameType == ZclFrameType.CLUSTER_SPECIFIC_COMMAND) {
+            return getCommand(commandId, serverCommands);
+        } else {
+            return getCommand(commandId, genericCommands);
+        }
+    }
+
+    private ZclCommand getCommand(int commandId, Map<Integer, Class<? extends ZclCommand>> commands) {
+        if (!commands.containsKey(commandId)) {
+            return null;
+        }
+
+        try {
+            return commands.get(commandId).getConstructor().newInstance();
+        } catch (Exception e) {
+            logger.debug("Error instantiating cluster command {}, id={}", clusterName, commandId);
+        }
         return null;
     }
 
@@ -975,8 +1039,18 @@ public abstract class ZclCluster {
         }
         dao.setSupportedCommandsGenerated(Collections.unmodifiableSet(new TreeSet<>(supportedCommandsGenerated)));
         dao.setSupportedCommandsReceived(Collections.unmodifiableSet(new TreeSet<>(supportedCommandsReceived)));
-        dao.setAttributes(attributes);
+        Collection<ZclAttribute> daoZclAttributes;
+        if (isClient) {
+            daoZclAttributes = clientAttributes.values();
+        } else {
+            daoZclAttributes = serverAttributes.values();
+        }
 
+        Map<Integer, ZclAttributeDao> daoAttributes = new HashMap<>();
+        for (ZclAttribute attribute : daoZclAttributes) {
+            daoAttributes.put(attribute.getId(), attribute.getDao());
+        }
+        dao.setAttributes(daoAttributes);
         return dao;
     }
 
@@ -994,6 +1068,222 @@ public abstract class ZclCluster {
         }
         supportedCommandsGenerated.addAll(dao.getSupportedCommandsGenerated());
         supportedCommandsReceived.addAll(dao.getSupportedCommandsReceived());
-        attributes = dao.getAttributes();
+
+        Map<Integer, ZclAttribute> daoZclAttributes = new HashMap<>();
+        for (ZclAttributeDao daoAttribute : dao.getAttributes().values()) {
+            ZclAttribute attribute = new ZclAttribute();
+            attribute.setDao(this, daoAttribute);
+            daoZclAttributes.put(daoAttribute.getId(), attribute);
+        }
+
+        if (isClient) {
+            clientAttributes = daoZclAttributes;
+        } else {
+            serverAttributes = daoZclAttributes;
+        }
     }
+
+    //
+    // DEPRECATED METHODS TO BE REMOVED in version 1.3.0
+    //
+
+    /**
+     * Read an {@link ZclAttribute}
+     *
+     * @param attribute the {@link ZclAttribute} to read
+     * @return the returned attribute object or null on error
+     * @deprecated from 1.2.0 use {@link #readAttributeValue(ZclAttribute, Long)}. Method will be removed in 1.3.0.
+     */
+    @Deprecated
+    protected Object readSync(final ZclAttribute attribute) {
+        logger.debug("readSync request: {}", attribute);
+        CommandResult result;
+        try {
+            result = read(attribute).get();
+        } catch (InterruptedException e) {
+            logger.debug("readSync interrupted");
+            return null;
+        } catch (ExecutionException e) {
+            logger.debug("readSync exception ", e);
+            return null;
+        }
+
+        if (!result.isSuccess()) {
+            return null;
+        }
+
+        ReadAttributesResponse response = result.getResponse();
+        if (response.getRecords().get(0).getStatus() == ZclStatus.SUCCESS) {
+            ReadAttributeStatusRecord attributeRecord = response.getRecords().get(0);
+            return normalizer.normalizeZclData(attribute.getDataType(), attributeRecord.getAttributeValue());
+        }
+
+        return null;
+    }
+
+    /**
+     * Write an attribute
+     *
+     * @param attribute the attribute ID to write
+     * @param dataType the {@link ZclDataType} of the object
+     * @param value the value to set (as {@link Object})
+     * @return command future {@link CommandResult}
+     * @deprecated from 1.2.0 use {@link #writeAttribute}. Method will be removed in 1.3.0.
+     */
+    @Deprecated
+    public Future<CommandResult> write(final int attribute, final ZclDataType dataType, final Object value) {
+        return writeAttribute(attribute, dataType, value);
+    }
+
+    /**
+     * Write an attribute
+     *
+     * @param attribute the {@link ZclAttribute} to write
+     * @param value the value to set (as {@link Object})
+     * @return command future {@link CommandResult}
+     * @deprecated from 1.2.0 use {@link #writeAttribute}. Method will be removed in 1.3.0.
+     */
+    @Deprecated
+    public Future<CommandResult> write(final ZclAttribute attribute, final Object value) {
+        return writeAttribute(attribute.getId(), attribute.getDataType(), value);
+    }
+
+    /**
+     * Read an attribute given the attribute ID
+     *
+     * @param attribute the integer attribute ID to read
+     * @return command future
+     * @deprecated from 1.2.0 use {@link #readAttribute(int)}. Method will be removed in 1.3.0.
+     */
+    @Deprecated
+    public Future<CommandResult> read(final int attribute) {
+        return read(Collections.singletonList(attribute));
+    }
+
+    /**
+     * Read an attribute
+     *
+     * @param attribute the {@link ZclAttribute} to read
+     * @return command future
+     * @deprecated from 1.2.0 use {@link #readAttribute(ZclAttribute)}. Method will be removed in 1.3.0.
+     */
+    @Deprecated
+    public Future<CommandResult> read(final ZclAttribute attribute) {
+        return read(attribute.getId());
+    }
+
+    /**
+     * Read a number of attributes given a list of attribute IDs. Care must be taken not to request too many attributes
+     * so as to exceed the allowable frame length
+     *
+     * @param attributes List of attribute identifiers to read
+     * @return command future
+     * @deprecated from 1.2.0 use {@link #readAttributes(List)}. Method will be removed in 1.3.0.
+     */
+    @Deprecated
+    public Future<CommandResult> read(final List<Integer> attributes) {
+        return readAttributes(attributes);
+    }
+
+    /**
+     * Configures the reporting for the specified attribute ID for analog attributes.
+     * <p>
+     * <b>minInterval</b>:
+     * The minimum reporting interval field is 16 bits in length and shall contain the
+     * minimum interval, in seconds, between issuing reports of the specified attribute.
+     * If minInterval is set to 0x0000, then there is no minimum limit, unless one is
+     * imposed by the specification of the cluster using this reporting mechanism or by
+     * the applicable profile.
+     * <p>
+     * <b>maxInterval</b>:
+     * The maximum reporting interval field is 16 bits in length and shall contain the
+     * maximum interval, in seconds, between issuing reports of the specified attribute.
+     * If maxInterval is set to 0xffff, then the device shall not issue reports for the specified
+     * attribute, and the configuration information for that attribute need not be
+     * maintained.
+     * <p>
+     * <b>reportableChange</b>:
+     * The reportable change field shall contain the minimum change to the attribute that
+     * will result in a report being issued. This field is of variable length. For attributes
+     * with 'analog' data type the field has the same data type as the attribute. The sign (if any) of the reportable
+     * change field is ignored.
+     *
+     * @param attribute the {@link ZclAttribute} to configure reporting
+     * @param minInterval the minimum reporting interval
+     * @param maxInterval the maximum reporting interval
+     * @param reportableChange the minimum change required to report an update
+     * @return command future {@link CommandResult}
+     * @deprecated from 1.2.0 use {@link ZclCluster#setReporting(int, int, int, Object)} or
+     *             {@link ZclAttribute.setReporting} methods. This will be removed in 1.3.0
+     */
+    @Deprecated
+    public Future<CommandResult> setReporting(final ZclAttribute attribute, final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        final ConfigureReportingCommand command = new ConfigureReportingCommand();
+        command.setClusterId(clusterId);
+
+        final AttributeReportingConfigurationRecord record = new AttributeReportingConfigurationRecord();
+        record.setDirection(0);
+        record.setAttributeIdentifier(attribute.getId());
+        record.setAttributeDataType(attribute.getDataType());
+        record.setMinimumReportingInterval(minInterval);
+        record.setMaximumReportingInterval(maxInterval);
+        record.setReportableChange(reportableChange);
+        record.setTimeoutPeriod(0);
+        command.setRecords(Collections.singletonList(record));
+        command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
+
+        return send(command);
+    }
+
+    /**
+     * Configures the reporting for the specified attribute ID for discrete attributes.
+     * <p>
+     * <b>minInterval</b>:
+     * The minimum reporting interval field is 16 bits in length and shall contain the
+     * minimum interval, in seconds, between issuing reports of the specified attribute.
+     * If minInterval is set to 0x0000, then there is no minimum limit, unless one is
+     * imposed by the specification of the cluster using this reporting mechanism or by
+     * the applicable profile.
+     * <p>
+     * <b>maxInterval</b>:
+     * The maximum reporting interval field is 16 bits in length and shall contain the
+     * maximum interval, in seconds, between issuing reports of the specified attribute.
+     * If maxInterval is set to 0xffff, then the device shall not issue reports for the specified
+     * attribute, and the configuration information for that attribute need not be
+     * maintained.
+     *
+     * @param attribute the {@link ZclAttribute} to configure reporting
+     * @param minInterval the minimum reporting interval
+     * @param maxInterval the maximum reporting interval
+     * @return command future {@link CommandResult}
+     * @deprecated from 1.2.0 use {@link ZclCluster#setReporting(int, int, int)} or {@link ZclAttribute.setReporting}
+     *             methods. This will be removed in 1.3.0
+     */
+    @Deprecated
+    public Future<CommandResult> setReporting(final ZclAttribute attribute, final int minInterval,
+            final int maxInterval) {
+        return setReporting(attribute, minInterval, maxInterval, null);
+    }
+
+    /**
+     * Gets the reporting configuration for an attribute
+     *
+     * @param attribute the {@link ZclAttribute} on which to get the reporting configuration
+     * @return command future {@link CommandResult}
+     * @deprecated from 1.2.0 use {@link ZclAttribute.getReporting} methods. This will be removed in 1.3.0
+     */
+    @Deprecated
+    public Future<CommandResult> getReporting(final ZclAttribute attribute) {
+        final ReadReportingConfigurationCommand command = new ReadReportingConfigurationCommand();
+        command.setClusterId(clusterId);
+        AttributeRecord record = new AttributeRecord();
+        record.setAttributeIdentifier(attribute.getId());
+        record.setDirection(0);
+        command.setRecords(Collections.singletonList(record));
+        command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
+
+        return send(command);
+    }
+
 }

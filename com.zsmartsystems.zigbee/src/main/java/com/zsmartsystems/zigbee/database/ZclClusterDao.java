@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.Set;
 
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
-import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 
 /**
  * This class provides a clean class to hold a data object for serialisation of a {@link ZigBeeEndpoint}
@@ -27,7 +26,7 @@ public class ZclClusterDao {
 
     private boolean isClient;
 
-    private Map<Integer, ZclAttribute> attributes;
+    private Map<Integer, ZclAttributeDao> attributes;
 
     private Set<Integer> supportedCommandsReceived;
 
@@ -43,8 +42,8 @@ public class ZclClusterDao {
         this.label = label;
     }
 
-    public void setAttributes(Map<Integer, ZclAttribute> attributes) {
-        this.attributes = new HashMap<Integer, ZclAttribute>(attributes);
+    public void setAttributes(Map<Integer, ZclAttributeDao> attributes) {
+        this.attributes = new HashMap<>(attributes);
     }
 
     public void setSupportedCommandsReceived(Set<Integer> supportedCommandsReceived) {
@@ -85,7 +84,7 @@ public class ZclClusterDao {
         return supportedAttributes;
     }
 
-    public Map<Integer, ZclAttribute> getAttributes() {
+    public Map<Integer, ZclAttributeDao> getAttributes() {
         return attributes;
     }
 

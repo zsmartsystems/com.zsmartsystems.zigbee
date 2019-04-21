@@ -1,0 +1,364 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0300">
+    <name>Color Control</name>
+    <description>This cluster provides an interface for changing the color of a light. Color is specified according to the Commission Internationale de l&apos;&#201;clairage (CIE) specification CIE 1931 Color Space. Color control is carried out in terms of x,y values, as defined by this specification.</description>
+    <description>Additionally, color MAY optionally be controlled in terms of color temperature, or as hue and saturation values based on optionally variable RGB and W color points. It is recommended that the hue and saturation are interpreted according to the HSV (aka HSB) color model.</description>
+    <description>Control over luminance is not included, as this is provided by means of the Level Control cluster of the General library. It is recommended that the level provided by this cluster be interpreted as representing a proportion of the maximum intensity achievable at the current color.</description>
+    <command code="0x00" source="client">
+        <name>Move To Hue Command</name>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Hue</name>
+        </field>
+        <field type="ENUMERATION_8_BIT" class="HueDirectionEnum">
+            <name>Direction</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Transition Time</name>
+        </field>
+    </command>
+    <command code="0x01" source="client">
+        <name>Move Hue Command</name>
+        <field type="ENUMERATION_8_BIT" class="HueMoveModeEnum">
+            <name>Move Mode</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Rate</name>
+        </field>
+    </command>
+    <command code="0x02" source="client">
+        <name>Step Hue Command</name>
+        <field type="ENUMERATION_8_BIT" class="StepModeEnum">
+            <name>Step Mode</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Step Size</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Transition Time</name>
+        </field>
+    </command>
+    <command code="0x03" source="client">
+        <name>Move To Saturation Command</name>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Saturation</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Transition Time</name>
+        </field>
+    </command>
+    <command code="0x04" source="client">
+        <name>Move Saturation Command</name>
+        <field type="ENUMERATION_8_BIT" class="SaturationMoveModeEnum">
+            <name>Move Mode</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Rate</name>
+        </field>
+    </command>
+    <command code="0x05" source="client">
+        <name>Step Saturation Command</name>
+        <field type="ENUMERATION_8_BIT" class="StepModeEnum">
+            <name>Step Mode</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Step Size</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Transition Time</name>
+        </field>
+    </command>
+    <command code="0x06" source="client">
+        <name>Move To Hue And Saturation Command</name>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Hue</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Saturation</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Transition Time</name>
+        </field>
+    </command>
+    <command code="0x07" source="client">
+        <name>Move To Color Command</name>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Color X</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Color Y</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Transition Time</name>
+        </field>
+    </command>
+    <command code="0x08" source="client">
+        <name>Move Color Command</name>
+        <field type="SIGNED_16_BIT_INTEGER">
+            <name>Rate X</name>
+        </field>
+        <field type="SIGNED_16_BIT_INTEGER">
+            <name>Rate Y</name>
+        </field>
+    </command>
+    <command code="0x09" source="client">
+        <name>Step Color Command</name>
+        <field type="SIGNED_16_BIT_INTEGER">
+            <name>Step X</name>
+        </field>
+        <field type="SIGNED_16_BIT_INTEGER">
+            <name>Step Y</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Transition Time</name>
+        </field>
+    </command>
+    <command code="0x0A" source="client">
+        <name>Move To Color Temperature Command</name>
+        <description>On receipt of this command, a device SHALL set the value of the ColorMode attribute, where implemented, to 0x02, and SHALL then move from its current color to the color given by the Color Temperature Mireds field.</description>
+        <description>The movement SHALL be continuous, i.e., not a step function, and the time taken to move to the new color SHALL be equal to the Transition Time field, in 1/10ths of a second.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Color Temperature</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Transition Time</name>
+        </field>
+    </command>
+    <command code="0x40" source="client">
+        <name>Enhanced Move To Hue Command</name>
+        <description>The Enhanced Move to Hue command allows lamps to be moved in a smooth continuous transition from their current hue to a target hue.</description>
+        <description>On receipt of this command, a device SHALL set the ColorMode attribute to 0x00 and set the EnhancedColorMode attribute to the value 0x03. The device SHALL then move from its current enhanced hue to the value given in the Enhanced Hue field.</description>
+        <description>The movement SHALL be continuous, i.e., not a step function, and the time taken to move to the new en- hanced hue SHALL be equal to the Transition Time field.</description>
+        <description></description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Enhanced Hue</name>
+        </field>
+        <field type="ENUMERATION_8_BIT">
+            <name>Direction</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Transition Time</name>
+        </field>
+    </command>
+    <command code="0x41" source="client">
+        <name>Enhanced Move Hue Command</name>
+        <description>The Enhanced Move to Hue command allows lamps to be moved in a smooth continuous transition from their current hue to a target hue.</description>
+        <description>On receipt of this command, a device SHALL set the ColorMode attribute to 0x00 and set the EnhancedColorMode attribute to the value 0x03. The device SHALL then move from its current enhanced hue in an up or down direction in a continuous fashion.</description>
+        <field type="ENUMERATION_8_BIT">
+            <name>Move Mode</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Rate</name>
+        </field>
+    </command>
+    <command code="0x42" source="client">
+        <name>Enhanced Step Hue Command</name>
+        <description>The Enhanced Step Hue command allows lamps to be moved in a stepped transition from their current hue to a target hue, resulting in a linear transition through XY space.</description>
+        <field type="ENUMERATION_8_BIT" class="StepModeEnum">
+            <name>Step Mode</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Step Size</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Transition Time</name>
+        </field>
+    </command>
+    <command code="0x43" source="client">
+        <name>Enhanced Move To Hue And Saturation Command</name>
+        <description>The Enhanced Move to Hue and Saturation command allows lamps to be moved in a smooth continuous transition from their current hue to a target hue and from their current saturation to a target saturation.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Enhanced Hue</name>
+        </field>
+        <field type="ENUMERATION_8_BIT">
+            <name>Saturation</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Transition Time</name>
+        </field>
+    </command>
+    <command code="0x44" source="client">
+        <name>Color Loop Set Command</name>
+        <description>The Color Loop Set command allows a color loop to be activated such that the color lamp cycles through its range of hues.</description>
+        <field type="BITMAP_8_BIT">
+            <name>Update Flags</name>
+        </field>
+        <field type="ENUMERATION_8_BIT">
+            <name>Action</name>
+        </field>
+        <field type="ENUMERATION_8_BIT">
+            <name>Direction</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Transition Time</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Start Hue</name>
+        </field>
+    </command>
+    <command code="0x47" source="client">
+        <name>Stop Move Step Command</name>
+        <description>The Stop Move Step command is provided to allow Move to and Step commands to be stopped. (Note this automatically provides symmetry to the Level Control cluster.)</description>
+        <description>Upon receipt of this command, any Move to, Move or Step command currently in process SHALL be ter- minated. The values of the CurrentHue, EnhancedCurrentHue and CurrentSaturation attributes SHALL be left at their present value upon receipt of the Stop Move Step command, and the RemainingTime attribute SHALL be set to zero.</description>
+    </command>
+    <command code="0x4B" source="client">
+        <name>Move Color Temperature Command</name>
+        <description>The Move Color Temperature command allows the color temperature of a lamp to be moved at a specified rate.</description>
+        <field type="BITMAP_8_BIT">
+            <name>Move Mode</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Rate</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Color Temperature Minimum</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Color Temperature Maximum</name>
+        </field>
+    </command>
+    <command code="0x4C" source="client">
+        <name>Step Color Temperature Command</name>
+        <description>The Step Color Temperature command allows the color temperature of a lamp to be stepped with a specified step size.</description>
+        <field type="ENUMERATION_8_BIT" class="StepModeEnum">
+            <name>Step Mode</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Step Size</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Transition Time</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Color Temperature Minimum </name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Color Temperature Maximum</name>
+        </field>
+    </command>
+
+    <attribute code="0x0000" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false" reportable="true" minimum="0x00" maximum="0xFE" default="0x00">
+        <name>Current Hue</name>
+        <description>The CurrentHue attribute contains the current hue value of the light. It is updated as fast as practical during commands that change the hue.</description>
+        <description>The hue in degrees shall be related to the CurrentHue attribute by the relationship Hue = CurrentHue x 360 / 254 (CurrentHue in the range 0 - 254 inclusive)</description>
+        <description>If this attribute is implemented then the CurrentSaturation and ColorMode attributes shall also be implemented.</description>
+    </attribute>
+    <attribute code="0x0001" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false" reportable="true" minimum="0x00" maximum="0xFE" default="0x00">
+        <name>Current Saturation</name>
+        <description>The CurrentSaturation attribute holds the current saturation value of the light. It is updated as fast as practical during commands that change the saturation. The saturation shall be related to the CurrentSaturation attribute by the relationship Saturation = CurrentSaturation/254 (CurrentSaturation in the range 0 - 254 inclusive) If this attribute is implemented then the CurrentHue and ColorMode attributes shall also be implemented.</description>
+    </attribute>
+    <attribute code="0x0002" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFE" default="0x0000">
+        <name>Remaining Time</name>
+        <description>The RemainingTime attribute holds the time remaining, in 1/10ths of a second, until the currently active command will be complete.</description>
+    </attribute>
+    <attribute code="0x0003" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="true" minimum="0x0000" maximum="0xFEFF" default="0x616B">
+        <name>Current X</name>
+        <description>The CurrentX attribute contains the current value of the normalized chromaticity value x, as defined in the CIE xyY Color Space. It is updated as fast as practical during commands that change the color.</description>
+        <description>The value of x shall be related to the CurrentX attribute by the relationship</description>
+        <description>x = CurrentX / 65535 (CurrentX in the range 0 to 65279 inclusive)</description>
+    </attribute>
+    <attribute code="0x0004" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="true" minimum="0x0000" maximum="0xFEFF" default="0x607D">
+        <name>Current Y</name>
+        <description>The CurrentY attribute contains the current value of the normalized chromaticity value y, as defined in the CIE xyY Color Space. It is updated as fast as practical during commands that change the color.</description>
+        <description>The value of y shall be related to the CurrentY attribute by the relationship</description>
+        <description>y = CurrentY / 65535 (CurrentY in the range 0 to 65279 inclusive)</description>
+    </attribute>
+    <attribute code="0x0005" type="ENUMERATION_8_BIT" side="server" optional="true" writable="false" reportable="false">
+        <name>Drift Compensation</name>
+        <description>The DriftCompensation attribute indicates what mechanism, if any, is in use for compensation for color/intensity drift over time.</description>
+    </attribute>
+    <attribute code="0x0006" type="CHARACTER_STRING" side="server" optional="true" writable="false" reportable="false">
+        <name>Compensation Text</name>
+        <description>The CompensationText attribute holds a textual indication of what mechanism, if any, is in use to compensate for color/intensity drift over time.</description>
+    </attribute>
+    <attribute code="0x0007" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="true" minimum="0x0000" maximum="0xFEFF" default="0x00FA">
+        <name>Color Temperature</name>
+        <description>The ColorTemperature attribute contains a scaled inverse of the current value of the color temperature. It is updated as fast as practical during commands that change the color.</description>
+        <description>The color temperature value in Kelvins shall be related to the ColorTemperature attribute by the relationship</description>
+        <description>Color temperature = 1,000,000 / ColorTemperature (ColorTemperature in the range 1 to 65279 inclusive, giving a color temperature range from 1,000,000 Kelvins to 15.32 Kelvins).</description>
+        <description>The value ColorTemperature = 0 indicates an undefined value. The value ColorTemperature = 65535 indicates an invalid value.</description>
+    </attribute>
+    <attribute code="0x0008" type="ENUMERATION_8_BIT" side="server" class="ColorModeEnum" optional="true" writable="false" reportable="false" default="0x01">
+        <name>Color Mode</name>
+        <description>The ColorMode attribute indicates which attributes are currently determining the color of the device. If either the CurrentHue or CurrentSaturation attribute is implemented, this attribute SHALL also be implemented, otherwise it is optional. The value of the ColorMode attribute cannot be written directly - it is set upon reception of another command in to the appropriate mode for that command.</description>
+    </attribute>
+    <attribute code="0x4000" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="true">
+        <name>Enhanced Current Hue</name>
+        <description>The EnhancedCurrentHueattribute represents non-equidistant steps along the CIE 1931 color triangle, and it provides 16-bits precision. The upper 8 bits of this attribute SHALL be used as an index in the implementation specific XY lookup table to provide the non-equidistance steps (see the ZLL test specification for an example).  The lower 8 bits SHALL be used to interpolate between these steps in a linear way in order to provide color zoom for the user.</description>
+    </attribute>
+    <attribute code="0x4001" type="ENUMERATION_8_BIT" side="server" class="EnhancedColorModeEnum" optional="true" writable="false" reportable="false">
+        <name>Enhanced Color Mode</name>
+        <description>The EnhancedColorModeattribute specifies which attributes are currently determining the color of the device. To provide compatibility with standard ZCL, the original ColorModeattribute SHALLindicate &#8216;CurrentHueand CurrentSaturation&#8217; when the light uses the EnhancedCurrentHueattribute.</description>
+    </attribute>
+    <attribute code="0x4002" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false">
+        <name>Color Loop Active</name>
+        <description>The ColorLoopActive attribute specifies the current active status of the color loop. If this attribute has the value 0x00, the color loop SHALLnot be active. If this attribute has the value 0x01, the color loop SHALL be active. All other values (0x02 &#8211; 0xff) are reserved.</description>
+    </attribute>
+    <attribute code="0x4003" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false">
+        <name>Color Loop Direction</name>
+        <description>The ColorLoopDirection attribute specifies the current direction of the color loop. If this attribute has the value 0x00, the EnhancedCurrentHue attribute SHALL be decremented. If this attribute has the value 0x01, the EnhancedCurrentHue attribute SHALL be incremented. All other values (0x02 &#8211; 0xff) are reserved.</description>
+    </attribute>
+    <attribute code="0x4004" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false">
+        <name>Color Loop Time</name>
+        <description>The ColorLoopTime attribute specifies the number of seconds it SHALL take to perform a full color loop, i.e.,to cycle all values of the EnhancedCurrentHue attribute (between 0x0000 and 0xffff).</description>
+    </attribute>
+    <attribute code="0x4005" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false">
+        <name>Color Loop Start Hue</name>
+        <description>The ColorLoopStartEnhancedHueattribute specifies the value of the EnhancedCurrentHue attribute from which the color loop SHALL be started.</description>
+    </attribute>
+    <attribute code="0x4006" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false">
+        <name>Color Loop Stored Hue</name>
+        <description>The ColorLoopStoredEnhancedHue attribute specifies the value of the EnhancedCurrentHue attribute before the color loop was started. Once the color loop is complete, the EnhancedCurrentHue attribute SHALL be restored to this value.</description>
+    </attribute>
+    <attribute code="0x400A" type="BITMAP_16_BIT" side="server" class="ColorCapabilitiesBitmap" optional="true" writable="false" reportable="false">
+        <name>Color Capabilities</name>
+        <description>The ColorCapabilitiesattribute specifies the color capabilities of the device supporting the color control cluster.</description>
+        <description>Note:The support of the CurrentXand CurrentYattributes is mandatory regardless of color capabilities.</description>
+    </attribute>
+    <attribute code="0x400B" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false">
+        <name>Color Temperature Min</name>
+        <description>The ColorTempPhysicalMinMiredsattribute indicates the minimum mired value supported by the hardware. ColorTempPhysicalMinMiredscorresponds to the maximum color temperature in kelvins supported by the hardware. ColorTempPhysicalMinMireds &#8804; ColorTemperatureMireds</description>
+    </attribute>
+    <attribute code="0x400C" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false">
+        <name>Color Temperature Max</name>
+        <description>The ColorTempPhysicalMaxMiredsattribute indicates the maximum mired value supported by the hard-ware. ColorTempPhysicalMaxMiredscorresponds to the minimum color temperature in kelvins supported by the hardware. ColorTemperatureMireds &#8804; ColorTempPhysicalMaxMireds.</description>
+    </attribute>
+
+    <constant class="ColorModeEnum">
+        <name>Color Mode</name>
+        <value code="0x00" name="Current Hue And Current Saturation">
+        </value>
+        <value code="0x01" name="Current X And Current Y">
+        </value>
+        <value code="0x02" name="Color Temperature">
+        </value>
+    </constant>
+    <constant class="EnhancedColorModeEnum">
+        <name>Enhanced Color Mode</name>
+        <value code="0x00" name="Current Hue And Current Saturation">
+        </value>
+        <value code="0x01" name="Current X And Current Y">
+        </value>
+        <value code="0x02" name="Enhanced Current Hue And Current Saturation">
+        </value>
+    </constant>
+    <constant class="ColorCapabilitiesEnum">
+        <name>Color Capabilities</name>
+        <value code="0x0001" name="Hue And Saturation">
+        </value>
+        <value code="0x0002" name="Enhanced Hue">
+        </value>
+        <value code="0x0004" name="Color Loop">
+        </value>
+        <value code="0x0008" name="XY Attribute">
+        </value>
+        <value code="0x0010" name="Color Temperature">
+        </value>
+    </constant>
+    <constant class="StepModeEnum">
+        <name>Step Mode</name>
+        <value code="0x01" name="Up">
+        </value>
+        <value code="0x03" name="Down">
+        </value>
+    </constant>
+</cluster>

@@ -7,37 +7,42 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import javax.annotation.Generated;
+
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoResponse;
-import javax.annotation.Generated;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 
 /**
  * Replace Device Response value object class.
  * <p>
- * The Replace_Device_rsp is generated from a primary binding table cache device
- * in response to a Replace_Device_req and contains the status of the request. This
- * command shall be unicast to the requesting device. If the device receiving the
- * Replace_Device_req is not a primary binding table cache, a Status of
- * NOT_SUPPORTED is returned. The primary binding table cache shall search its
- * binding table for entries whose source address and source endpoint, or whose
- * destination address and destination endpoint match OldAddress and OldEndpoint,
- * as described in the text for Replace_Device_req. It shall change these entries to
- * have NewAddress and possibly NewEndpoint. It shall then return a response of
+ * <p>
+ * The Replace_Device_rsp is generated from a primary binding table cache device in response
+ * to a Replace_Device_req and contains the status of the request. This command shall be
+ * unicast to the requesting device. If the device receiving the Replace_Device_req is not a
+ * primary binding table cache, a Status of NOT_SUPPORTED is returned. The primary binding
+ * table cache shall search its binding table for entries whose source address and source
+ * endpoint, or whose destination address and destination endpoint match OldAddress and
+ * OldEndpoint, as described in the text for Replace_Device_req. It shall change these
+ * entries to have NewAddress and possibly NewEndpoint. It shall then return a response of
  * SUCCESS.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
 public class ReplaceDeviceResponse extends ZdoResponse {
+    /**
+     * The ZDO cluster ID.
+     */
+    public static int CLUSTER_ID = 0x8024;
+
     /**
      * Default constructor.
      */
     public ReplaceDeviceResponse() {
-        clusterId = 0x8024;
+        clusterId = CLUSTER_ID;
     }
 
     @Override

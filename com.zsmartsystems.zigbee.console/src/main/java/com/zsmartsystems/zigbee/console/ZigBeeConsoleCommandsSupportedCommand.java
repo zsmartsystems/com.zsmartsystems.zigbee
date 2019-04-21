@@ -15,6 +15,7 @@ import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.ZclFrameType;
 
 /**
  * Console command that prints the commands that are supported by a given cluster.
@@ -81,7 +82,7 @@ public class ZigBeeConsoleCommandsSupportedCommand extends ZigBeeConsoleAbstract
     private void printCommands(PrintStream out, ZclCluster cluster, Set<Integer> commandIds) {
         out.println("CommandId  Command");
         for (Integer commandId : commandIds) {
-            ZclCommand command = cluster.getCommandFromId(commandId);
+            ZclCommand command = cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND, commandId);
             String commandName = (command != null) ? command.getClass().getSimpleName() : "unknown";
             out.println(String.format("%8d  %s", commandId, commandName));
         }

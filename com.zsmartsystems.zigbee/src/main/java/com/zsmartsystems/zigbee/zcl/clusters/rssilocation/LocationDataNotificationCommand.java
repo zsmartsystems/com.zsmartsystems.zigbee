@@ -10,21 +10,31 @@ package com.zsmartsystems.zigbee.zcl.clusters.rssilocation;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Location Data Notification Command value object class.
  * <p>
- * Cluster: <b>RSSI Location</b>. Command is sent <b>FROM</b> the server.
+ * Cluster: <b>RSSI Location</b>. Command ID 0x02 is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the RSSI Location cluster.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class LocationDataNotificationCommand extends ZclCommand {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x000B;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x02;
+
     /**
      * Location Type command message field.
      */
@@ -74,9 +84,9 @@ public class LocationDataNotificationCommand extends ZclCommand {
      * Default constructor.
      */
     public LocationDataNotificationCommand() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 11;
-        commandId = 2;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
 
