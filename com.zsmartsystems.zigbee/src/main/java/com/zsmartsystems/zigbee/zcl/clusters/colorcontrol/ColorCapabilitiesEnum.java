@@ -13,18 +13,36 @@ import java.util.Map;
 import javax.annotation.Generated;
 
 /**
- * Enumeration of Color control attribute ColorCapabilities options.
+ * Color Capabilities value enumeration.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
- *
- * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-31T12:00:43Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
 public enum ColorCapabilitiesEnum {
+
+    /**
+     * Hue And Saturation
+     */
     HUE_AND_SATURATION(0x0001),
+
+    /**
+     * Enhanced Hue
+     */
     ENHANCED_HUE(0x0002),
+
+    /**
+     * Color Loop
+     */
     COLOR_LOOP(0x0004),
+
+    /**
+     * XY Attribute
+     */
     XY_ATTRIBUTE(0x0008),
+
+    /**
+     * Color Temperature
+     */
     COLOR_TEMPERATURE(0x0010);
 
     /**
@@ -41,7 +59,7 @@ public enum ColorCapabilitiesEnum {
 
     private final int key;
 
-    ColorCapabilitiesEnum(final int key) {
+    private ColorCapabilitiesEnum(final int key) {
         this.key = key;
     }
 

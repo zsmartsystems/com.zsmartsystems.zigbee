@@ -208,12 +208,12 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
     /**
      * The amount of retries to get the current firmware version
      */
-    private static final int AMOUNT_OF_RETRIES_TO_REQUEST_CURRENT_FW_VERSION = 10;
+    private static final int CURRENT_FW_VERSION_REQUEST_RETRIES = 10;
 
     /**
      * The sleep time before trying to request the current firmware version
      */
-    private static final long SLEEP_TIME_BEFORE_REQUESTING_CURRENT_FW_VERSION = 10000;
+    private static final long CURRENT_FW_VERSION_REQUEST_DELAY = 10000;
 
     /**
      * Field control value of 0x01 (bit 0 set) means that the client’s IEEE address is included in the payload. This
@@ -407,7 +407,8 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
             @Override
             public void run() {
                 try {
-                    Integer statusValue = cluster.getImageUpgradeStatus(0);
+                    Integer statusValue = (Integer) cluster.getAttribute(ZclOtaUpgradeCluster.ATTR_IMAGEUPGRADESTATUS)
+                            .readValue(0);
                     if (statusValue == null) {
                         // Failed to get the client status
                         updateStatus(ZigBeeOtaServerStatus.OTA_UPGRADE_FAILED);
@@ -446,9 +447,10 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
 
                     // Attempt to get the current firmware version. As the device will be restarting, which could take
                     // some time to complete, we retry this a few times.
-                    for (int cnt = 0; cnt < AMOUNT_OF_RETRIES_TO_REQUEST_CURRENT_FW_VERSION; cnt++) {
-                        Thread.sleep(SLEEP_TIME_BEFORE_REQUESTING_CURRENT_FW_VERSION);
-                        Integer fileVersion = cluster.getCurrentFileVersion(0);
+                    for (int cnt = 0; cnt < CURRENT_FW_VERSION_REQUEST_RETRIES; cnt++) {
+                        Thread.sleep(CURRENT_FW_VERSION_REQUEST_DELAY);
+                        Integer fileVersion = (Integer) cluster
+                                .getAttribute(ZclOtaUpgradeCluster.ATTR_CURRENTFILEVERSION).readValue(0);
                         if (fileVersion == null) {
                             continue;
                         }
@@ -480,7 +482,7 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
      * @return the current firmware version on the remote device
      */
     public Integer getCurrentFileVersion() {
-        return cluster.getCurrentFileVersion(Long.MAX_VALUE);
+        return (Integer) cluster.getAttribute(ZclOtaUpgradeCluster.ATTR_CURRENTFILEVERSION).readValue(Long.MAX_VALUE);
     }
 
     /**

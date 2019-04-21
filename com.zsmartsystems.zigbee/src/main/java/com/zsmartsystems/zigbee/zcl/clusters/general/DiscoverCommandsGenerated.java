@@ -10,31 +10,37 @@ package com.zsmartsystems.zigbee.zcl.clusters.general;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Discover Commands Generated value object class.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>General</b>. Command ID 0x13 is sent <b>TO</b> the server.
  * This command is a <b>generic</b> command used across the profile.
  * <p>
- * The Discover Commands Generated command is generated when a remote device wishes to discover the
- * commands that a cluster may generate on the device to which this command is directed.
+ * The Discover Commands Generated command is generated when a remote device wishes to
+ * discover the commands that a cluster may generate on the device to which this command is
+ * directed.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class DiscoverCommandsGenerated extends ZclCommand {
     /**
-     * Start command identifier command message field.
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x13;
+
+    /**
+     * Start Command Identifier command message field.
      */
     private Integer startCommandIdentifier;
 
     /**
-     * Maximum command identifiers command message field.
+     * Maximum Command Identifiers command message field.
      */
     private Integer maximumCommandIdentifiers;
 
@@ -42,8 +48,8 @@ public class DiscoverCommandsGenerated extends ZclCommand {
      * Default constructor.
      */
     public DiscoverCommandsGenerated() {
+        commandId = COMMAND_ID;
         genericCommand = true;
-        commandId = 19;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
@@ -61,36 +67,36 @@ public class DiscoverCommandsGenerated extends ZclCommand {
     }
 
     /**
-     * Gets Start command identifier.
+     * Gets Start Command Identifier.
      *
-     * @return the Start command identifier
+     * @return the Start Command Identifier
      */
     public Integer getStartCommandIdentifier() {
         return startCommandIdentifier;
     }
 
     /**
-     * Sets Start command identifier.
+     * Sets Start Command Identifier.
      *
-     * @param startCommandIdentifier the Start command identifier
+     * @param startCommandIdentifier the Start Command Identifier
      */
     public void setStartCommandIdentifier(final Integer startCommandIdentifier) {
         this.startCommandIdentifier = startCommandIdentifier;
     }
 
     /**
-     * Gets Maximum command identifiers.
+     * Gets Maximum Command Identifiers.
      *
-     * @return the Maximum command identifiers
+     * @return the Maximum Command Identifiers
      */
     public Integer getMaximumCommandIdentifiers() {
         return maximumCommandIdentifiers;
     }
 
     /**
-     * Sets Maximum command identifiers.
+     * Sets Maximum Command Identifiers.
      *
-     * @param maximumCommandIdentifiers the Maximum command identifiers
+     * @param maximumCommandIdentifiers the Maximum Command Identifiers
      */
     public void setMaximumCommandIdentifiers(final Integer maximumCommandIdentifiers) {
         this.maximumCommandIdentifiers = maximumCommandIdentifiers;

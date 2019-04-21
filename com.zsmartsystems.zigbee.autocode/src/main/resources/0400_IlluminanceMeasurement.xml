@@ -1,0 +1,31 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0400">
+    <name>Illuminance Measurement</name>
+    <description>The cluster provides an interface to illuminance measurement functionality, including configuration and provision of notifications of illuminance measurements.</description>
+    <attribute code="0x0000" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="true" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Measured Value</name>
+        <description>MeasuredValue represents the Illuminance in Lux (symbol lx) as follows:-</description>
+        <description>MeasuredValue = 10,000 x log10 Illuminance + 1</description>
+        <description>Where 1 lx &lt;= Illuminance &lt;=3.576 Mlx, corresponding to a MeasuredValue in the range 1 to 0xfffe.</description>
+        <description>The following special values of MeasuredValue apply. &lt;li&gt;0x0000 indicates a value of Illuminance that is too low to be measured.&lt;/li&gt; &lt;li&gt;0xffff indicates that the Illuminance measurement is invalid.&lt;/li&gt;</description>
+    </attribute>
+    <attribute code="0x0001" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0001" maximum="0xFFFD">
+        <name>Min Measured Value</name>
+        <description>The MinMeasuredValue attribute indicates the minimum value of MeasuredValue that can be measured. A value of 0xffff indicates that this attribute is not defined.</description>
+    </attribute>
+    <attribute code="0x0002" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0001" maximum="0xFFFE">
+        <name>Max Measured Value</name>
+        <description>The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue that can be measured. A value of 0xffff indicates that this attribute is not defined.</description>
+        <description>MaxMeasuredValue shall be greater than MinMeasuredValue.</description>
+        <description>MinMeasuredValue and MaxMeasuredValue define the range of the sensor.</description>
+    </attribute>
+    <attribute code="0x0003" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="true" minimum="0x0000" maximum="0x0800">
+        <name>Tolerance</name>
+        <description>The Tolerance attribute indicates the magnitude of the possible error that is associated with MeasuredValue . The true value is located in the range (MeasuredValue &#8211; Tolerance) to (MeasuredValue + Tolerance).</description>
+    </attribute>
+    <attribute code="0x0004" type="ENUMERATION_8_BIT" side="server" optional="true" writable="false" reportable="false" default="0xFF">
+        <name>Light Sensor Type</name>
+        <description>The LightSensorType attribute specifies the electronic type of the light sensor.</description>
+    </attribute>
+
+</cluster>

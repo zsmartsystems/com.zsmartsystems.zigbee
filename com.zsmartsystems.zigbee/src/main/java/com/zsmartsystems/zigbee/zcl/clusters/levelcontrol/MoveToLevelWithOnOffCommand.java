@@ -10,28 +10,48 @@ package com.zsmartsystems.zigbee.zcl.clusters.levelcontrol;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
- * Move to Level (with On/Off) Command value object class.
+ * Move To Level (with On/Off) Command value object class.
  * <p>
- * Cluster: <b>Level Control</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>Level Control</b>. Command ID 0x04 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Level Control cluster.
+ * <p>
+ * On receipt of this command, a device shall move from its current level to the value given in the
+ * Level field. The meaning of ‘level’ is device dependent –e.g., for a light it may mean
+ * brightness level.The movement shall be as continuous as technically practical, i.e., not a
+ * step function, and the time taken to move to the new level shall be equal to the value of the
+ * Transition time field, in tenths of a second, or as close to this as the device is able.If the
+ * Transition time field takes the value 0xffff then the time taken to move to the new level shall
+ * instead be determined by the OnOffTransitionTimeattribute. If OnOffTransitionTime,
+ * which is an optional attribute, is not present, the device shall move to its new level as fast
+ * as it is able.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class MoveToLevelWithOnOffCommand extends ZclCommand {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0008;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x04;
+
     /**
      * Level command message field.
      */
     private Integer level;
 
     /**
-     * Transition time command message field.
+     * Transition Time command message field.
      */
     private Integer transitionTime;
 
@@ -39,9 +59,9 @@ public class MoveToLevelWithOnOffCommand extends ZclCommand {
      * Default constructor.
      */
     public MoveToLevelWithOnOffCommand() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 8;
-        commandId = 4;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
@@ -64,18 +84,18 @@ public class MoveToLevelWithOnOffCommand extends ZclCommand {
     }
 
     /**
-     * Gets Transition time.
+     * Gets Transition Time.
      *
-     * @return the Transition time
+     * @return the Transition Time
      */
     public Integer getTransitionTime() {
         return transitionTime;
     }
 
     /**
-     * Sets Transition time.
+     * Sets Transition Time.
      *
-     * @param transitionTime the Transition time
+     * @param transitionTime the Transition Time
      */
     public void setTransitionTime(final Integer transitionTime) {
         this.transitionTime = transitionTime;

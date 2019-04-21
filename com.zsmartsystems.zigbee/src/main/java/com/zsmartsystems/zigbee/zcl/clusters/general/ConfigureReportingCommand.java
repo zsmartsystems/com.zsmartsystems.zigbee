@@ -7,34 +7,37 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.general;
 
+import java.util.List;
+
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
-
-import java.util.List;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReportingConfigurationRecord;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Configure Reporting Command value object class.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>General</b>. Command ID 0x06 is sent <b>TO</b> the server.
  * This command is a <b>generic</b> command used across the profile.
  * <p>
- * The Configure Reporting command is used to configure the reporting mechanism
- * for one or more of the attributes of a cluster.
- * <br>
- * The individual cluster definitions specify which attributes shall be available to this
- * reporting mechanism, however specific implementations of a cluster may make
- * additional attributes available.
+ * The Configure Reporting command is used to configure the reporting mechanism for one or more
+ * of the attributes of a cluster. <br> The individual cluster definitions specify which
+ * attributes shall be available to this reporting mechanism, however specific
+ * implementations of a cluster may make additional attributes available.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class ConfigureReportingCommand extends ZclCommand {
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x06;
+
     /**
      * Records command message field.
      */
@@ -44,8 +47,8 @@ public class ConfigureReportingCommand extends ZclCommand {
      * Default constructor.
      */
     public ConfigureReportingCommand() {
+        commandId = COMMAND_ID;
         genericCommand = true;
-        commandId = 6;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 

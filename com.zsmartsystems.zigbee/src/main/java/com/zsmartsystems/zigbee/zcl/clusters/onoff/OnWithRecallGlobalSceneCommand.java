@@ -15,22 +15,33 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 /**
  * On With Recall Global Scene Command value object class.
  * <p>
- * Cluster: <b>On/Off</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>On/Off</b>. Command ID 0x41 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the On/Off cluster.
  * <p>
- * The On With Recall Global Scene command allows the recall of the settings when the device was turned off.
+ * The On With Recall Global Scene command allows the recall of the settings when the device was
+ * turned off.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class OnWithRecallGlobalSceneCommand extends ZclCommand {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0006;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x41;
+
     /**
      * Default constructor.
      */
     public OnWithRecallGlobalSceneCommand() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 6;
-        commandId = 65;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 

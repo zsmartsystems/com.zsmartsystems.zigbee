@@ -1,0 +1,153 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0703">
+    <name>Messaging</name>
+    <description>This cluster provides an interface for passing text messages between ZigBee devices. Messages are expected to be delivered via the ESI and then unicast to all individually registered devices implementing the Messaging Cluster on the ZigBee network, or just made available to all devices for later pickup. Nested and overlapping messages are not allowed. The current active message will be replaced if a new message is received by the ESI.</description>
+    <command code="0x00" source="client">
+        <name>Display Message Command</name>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Message ID</name>
+            <description>A unique unsigned 32-bit number identifier for this message. It&#8217;s expected the value contained in this field is a unique number managed by upstream systems or a UTC based time stamp (UTCTime data type) identifying when the message was issued.</description>
+        </field>
+        <field type="BITMAP_8_BIT">
+            <name>Message Control</name>
+            <description>An 8-bit BitMap field indicating control information related to the message.</description>
+        </field>
+        <field type="UTCTIME">
+            <name>Start Time</name>
+            <description>A UTCTime field to denote the time at which the message becomes valid. A Start Time of 0x00000000 is a special time denoting &#8220;now.&#8221; If the device would send an event with a Start Time of now, adjust the Duration In Minutes field to correspond to the remainder of the event.</description>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Duration In Minutes</name>
+            <description>An unsigned 16-bit field is used to denote the amount of time in minutes after the Start Time during which the message is displayed. A Maximum value of 0xFFFF means &#8220;until changed&#8221;.</description>
+        </field>
+        <field type="CHARACTER_STRING">
+            <name>Message</name>
+            <description>A ZCL String containing the message to be delivered. The String shall be encoded in the UTF-8 format. Devices will have the ability to choose the methods for managing messages that are larger than can be displayed (truncation, scrolling, etc.). For supporting larger messages sent over the network, both devices must agree upon a common Fragmentation ASDU Maximum Incoming Transfer Size. Any message that needs truncation shall truncate on a UTF-8 character boundary. The SE secure payload is 59 bytes for the Message field in a non- fragmented, non-source routed Display Message packet (11 bytes for other Display Message fields). Devices using fragmentation can send a message larger than this. Reserving bytes for source route will reduce this.</description>
+        </field>
+        <field type="BITMAP_8_BIT">
+            <name>Extended Message Control</name>
+            <description>An 8-bit BitMap field indicating additional control and status information for a given message.</description>
+        </field>
+    </command>
+    <command code="0x01" source="client">
+        <name>Cancel Message Command</name>
+        <description>The Cancel Message command provides the ability to cancel the sending or acceptance of previously sent messages. When this message is received the recipient device has the option of clearing any display or user interfaces it supports, or has the option of logging the message for future reference.</description>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Message ID</name>
+            <description>A unique unsigned 32-bit number identifier for the message being cancelled. It&#8217;s expected the value contained in this field is a unique number managed by upstream systems or a UTC based time stamp (UTCTime data type) identifying when the message was originally issued.</description>
+        </field>
+        <field type="BITMAP_8_BIT">
+            <name>Message Control</name>
+            <description>This field is deprecated and should be set to 0x00.</description>
+        </field>
+    </command>
+    <command code="0x02" source="client">
+        <name>Display Protected Message Command</name>
+        <description>The Display Protected Message command is for use with messages that are protected by a password or PIN</description>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Message ID</name>
+            <description>A unique unsigned 32-bit number identifier for this message. It&#8217;s expected the value contained in this field is a unique number managed by upstream systems or a UTC based time stamp (UTCTime data type) identifying when the message was issued.</description>
+        </field>
+        <field type="BITMAP_8_BIT">
+            <name>Message Control</name>
+            <description>An 8-bit BitMap field indicating control information related to the message.</description>
+        </field>
+        <field type="UTCTIME">
+            <name>Start Time</name>
+            <description>A UTCTime field to denote the time at which the message becomes valid. A Start Time of 0x00000000 is a special time denoting &#8220;now.&#8221; If the device would send an event with a Start Time of now, adjust the Duration In Minutes field to correspond to the remainder of the event.</description>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Duration In Minutes</name>
+            <description>An unsigned 16-bit field is used to denote the amount of time in minutes after the Start Time during which the message is displayed. A Maximum value of 0xFFFF means &#8220;until changed&#8221;.</description>
+        </field>
+        <field type="CHARACTER_STRING">
+            <name>Message</name>
+            <description>A ZCL String containing the message to be delivered. The String shall be encoded in the UTF-8 format. Devices will have the ability to choose the methods for managing messages that are larger than can be displayed (truncation, scrolling, etc.). For supporting larger messages sent over the network, both devices must agree upon a common Fragmentation ASDU Maximum Incoming Transfer Size. Any message that needs truncation shall truncate on a UTF-8 character boundary. The SE secure payload is 59 bytes for the Message field in a non- fragmented, non-source routed Display Message packet (11 bytes for other Display Message fields). Devices using fragmentation can send a message larger than this. Reserving bytes for source route will reduce this.</description>
+        </field>
+        <field type="BITMAP_8_BIT">
+            <name>Extended Message Control</name>
+            <description>An 8-bit BitMap field indicating additional control and status information for a given message. A UTC Time field to indicate the date/time at which all existing display messages should be cleared.</description>
+        </field>
+    </command>
+    <command code="0x03" source="client">
+        <name>Cancel All Messages Command</name>
+        <description>The Cancel All Messages command indicates to a CLIENT  | device that it should cancel all display messages currently held by it.</description>
+        <field type="UTCTIME">
+            <name>Implementation Time</name>
+        </field>
+    </command>
+    <command code="0x00" source="server">
+        <name>Get Last Message</name>
+        <description>On receipt of this command, the device shall send a Display Message or Display Protected Message command as appropriate. A ZCL Default Response with status NOT_FOUND shall be returned if no message is available.</description>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Message ID</name>
+        </field>
+        <field type="BITMAP_8_BIT" class="MessagingControlMaskBitmap">
+            <name>Message Control</name>
+        </field>
+        <field type="UTCTIME">
+            <name>Start Time</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Duration In Minutes</name>
+        </field>
+        <field type="CHARACTER_STRING">
+            <name>Message</name>
+        </field>
+        <field type="BITMAP_8_BIT" class="MessagingExtendedControlMaskBitmap">
+            <name>Optional Extended Message Control</name>
+        </field>
+    </command>
+    <command code="0x01" source="server">
+        <name>Message Confirmation</name>
+        <description>The Message Confirmation command provides an indication that a Utility Customer has acknowledged and/or accepted the contents of a previously sent message. Enhanced Message Confirmation commands shall contain an answer of &#8216;NO&#8217;, &#8216;YES&#8217; and/or a message confirmation string.</description>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Message ID</name>
+            <description>A unique unsigned 32-bit number identifier for the message being confirmed.</description>
+        </field>
+        <field type="UTCTIME" class="MessagingControlMaskEnum">
+            <name>Confirmation Time</name>
+            <description>UTCTime of user confirmation of message.</description>
+        </field>
+        <field type="BITMAP_8_BIT">
+            <name>Message Confirmation Control</name>
+            <description>An 8-bit BitMap field indicating the simple confirmation that is contained within the response.</description>
+        </field>
+        <field type="OCTET_STRING">
+            <name>Message Confirmation Response</name>
+            <description>A ZCL Octet String containing the message to be returned. The first Octet indicates length. The string shall be encoded in the UTF-8 format. If this optional field is not available, a default value of 0x00 shall be used.</description>
+        </field>
+    </command>
+    <command code="0x02" source="server">
+        <name>Get Message Cancellation</name>
+        <description>This command initiates the return of the first (and maybe only) Cancel All Messages command held on the associated server, and which has an implementation time equal to or later than the value indicated in the payload.</description>
+        <field type="UTCTIME">
+            <name>Earliest Implementation Time</name>
+            <description>UTC Timestamp indicating the earliest implementation time of a Cancel All Messages command to be returned.</description>
+        </field>
+    </command>
+    <command code="0x03" source="server">
+        <name>Cancel All Messages</name>
+        <description>The CancelAllMessages command indicates to a client device that it should cancel all display messages currently held by it.</description>
+        <field type="UTCTIME">
+            <name>Implementation Date Time</name>
+            <description>A UTC Time field to indicate the date/time at which all existing display messages should be cleared.</description>
+        </field>
+    </command>
+    <constant type="BITMAP_8_BIT" class="MessagingControlMaskBitmap">
+        <name>Messaging Control Mask</name>
+        <value code="0x03" name="Trans Mechanism">
+        </value>
+        <value code="0x0C" name="Message Urgency">
+        </value>
+        <value code="0x20" name="Enhanced Confirmation Request">
+        </value>
+        <value code="0x80" name="Message Confirmation">
+        </value>
+    </constant>
+    <constant type="BITMAP_8_BIT" class="MessagingExtendedControlMaskBitmap">
+        <name>Messaging Extended Control Mask</name>
+        <value code="0x01" name="Message Confirmation Status">
+        </value>
+    </constant>
+</cluster>

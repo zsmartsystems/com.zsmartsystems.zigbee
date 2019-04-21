@@ -10,24 +10,34 @@ package com.zsmartsystems.zigbee.zcl.clusters.identify;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Identify Query Response value object class.
  * <p>
- * Cluster: <b>Identify</b>. Command is sent <b>FROM</b> the server.
+ * Cluster: <b>Identify</b>. Command ID 0x00 is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the Identify cluster.
  * <p>
- * The identify query response command is generated in response to receiving an
- * Identify Query command in the case that the device is currently identifying itself.
+ * The identify query response command is generated in response to receiving an Identify Query
+ * command in the case that the device is currently identifying itself.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class IdentifyQueryResponse extends ZclCommand {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0003;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x00;
+
     /**
      * Identify Time command message field.
      */
@@ -37,9 +47,9 @@ public class IdentifyQueryResponse extends ZclCommand {
      * Default constructor.
      */
     public IdentifyQueryResponse() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 3;
-        commandId = 0;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
 

@@ -7,27 +7,32 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 import javax.annotation.Generated;
+
+import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
  * Discovery Store Request Request value object class.
  * <p>
- * The Discovery_store_req is provided to enable ZigBee end devices on the
- * network to request storage of their discovery cache information on a Primary
- * Discovery Cache device. Included in the request is the amount of storage space
- * the Local Device requires.
+ * <p>
+ * The Discovery_store_req is provided to enable ZigBee end devices on the network to request
+ * storage of their discovery cache information on a Primary Discovery Cache device. Included
+ * in the request is the amount of storage space the Local Device requires.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
 public class DiscoveryStoreRequestRequest extends ZdoRequest {
+    /**
+     * The ZDO cluster ID.
+     */
+    public static int CLUSTER_ID = 0x0016;
+
     /**
      * Default constructor.
      */
     public DiscoveryStoreRequestRequest() {
-        clusterId = 0x0016;
+        clusterId = CLUSTER_ID;
     }
 
     @Override

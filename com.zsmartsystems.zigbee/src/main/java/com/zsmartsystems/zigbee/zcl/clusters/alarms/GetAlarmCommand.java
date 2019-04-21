@@ -15,20 +15,35 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 /**
  * Get Alarm Command value object class.
  * <p>
- * Cluster: <b>Alarms</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>Alarms</b>. Command ID 0x02 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Alarms cluster.
+ * <p>
+ * This command causes the alarm with the earliest generated alarm entry in the alarm table to be
+ * reported in a get alarm response command. This command enables the reading of logged alarm
+ * conditions from the alarm table. Once an alarm condition has been reported the
+ * corresponding entry in the table is removed.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class GetAlarmCommand extends ZclCommand {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0009;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x02;
+
     /**
      * Default constructor.
      */
     public GetAlarmCommand() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 9;
-        commandId = 2;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 

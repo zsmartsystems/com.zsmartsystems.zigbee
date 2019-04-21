@@ -10,21 +10,34 @@ package com.zsmartsystems.zigbee.zcl.clusters.groups;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Add Group Response value object class.
  * <p>
- * Cluster: <b>Groups</b>. Command is sent <b>FROM</b> the server.
+ * Cluster: <b>Groups</b>. Command ID 0x00 is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the Groups cluster.
+ * <p>
+ * The add group response is sent by the groups cluster server in response to an add group
+ * command.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class AddGroupResponse extends ZclCommand {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0004;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x00;
+
     /**
      * Status command message field.
      */
@@ -39,9 +52,9 @@ public class AddGroupResponse extends ZclCommand {
      * Default constructor.
      */
     public AddGroupResponse() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 4;
-        commandId = 0;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
 

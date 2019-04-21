@@ -8,7 +8,11 @@
 package com.zsmartsystems.zigbee.zcl;
 
 import java.util.Calendar;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
+import com.zsmartsystems.zigbee.CommandResult;
+import com.zsmartsystems.zigbee.database.ZclAttributeDao;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -22,29 +26,29 @@ public class ZclAttribute {
     /**
      *
      */
-    private final ZclClusterType cluster;
+    private ZclCluster cluster;
 
     /**
      * The attribute identifier field is 16-bits in length and shall contain the
      * identifier of the attribute that the reporting configuration details
      * apply to.
      */
-    private final int id;
+    private int id;
 
     /**
      * Stores the name of this attribute;
      */
-    private final String name;
+    private String name;
 
     /**
      * Defines the ZigBee data type.
      */
-    private final ZclDataType dataType;
+    private ZclDataType dataType;
 
     /**
      * Defines if this attribute is mandatory to be implemented
      */
-    private final boolean mandatory;
+    private boolean mandatory;
 
     /**
      * Defines if the attribute is implemented by the device
@@ -57,9 +61,9 @@ public class ZclAttribute {
     private boolean readable;
 
     /**
-     * True if this attribute is writeable
+     * True if this attribute is writable
      */
-    private boolean writeable;
+    private boolean writable;
 
     /**
      * True if this attribute is reportable
@@ -113,26 +117,52 @@ public class ZclAttribute {
     private Object lastValue;
 
     /**
+     * Default constructor
+     */
+    public ZclAttribute() {
+    }
+
+    /**
      * Constructor used to set the static information
      *
-     * @param cluster
-     * @param id
-     * @param dataType
-     * @param mandatory
-     * @param readable
-     * @param writeable
-     * @param reportable
+     * @param cluster the {@link ZclCluster} to which the attribute belongs
+     * @param id the attribute ID
+     * @param dataType the {@link ZclDataType} for this attribute
+     * @param mandatory true if this is defined as mandatory in the ZCL specification
+     * @param readable true if this is defined as readable in the ZCL specification
+     * @param writable true if this is defined as writable in the ZCL specification
+     * @param reportable true if this is defined as reportable in the ZCL specification
      */
-    public ZclAttribute(final ZclClusterType cluster, final int id, final String name, final ZclDataType dataType,
-            final boolean mandatory, final boolean readable, final boolean writeable, final boolean reportable) {
+    public ZclAttribute(final ZclCluster cluster, final int id, final String name, final ZclDataType dataType,
+            final boolean mandatory, final boolean readable, final boolean writable, final boolean reportable) {
         this.cluster = cluster;
         this.id = id;
         this.name = name;
         this.dataType = dataType;
         this.mandatory = mandatory;
         this.readable = readable;
-        this.writeable = writeable;
+        this.writable = writable;
         this.reportable = reportable;
+    }
+
+    /**
+     * Returns the value of the attribute. If the current value is newer than refreshPeriod (in milliseconds) then the
+     * current value will be returned, otherwise the value will be requested from the remote device.
+     *
+     * @param refreshPeriod the number of milliseconds to consider the value current
+     * @return an Object with the attribute value, or null on error
+     */
+    public Object readValue(long refreshPeriod) {
+        if (isLastValueCurrent(refreshPeriod)) {
+            return getLastValue();
+        }
+
+        try {
+            return cluster.readAttribute(id).get();
+        } catch (InterruptedException | ExecutionException e) {
+            // Eat me!
+        }
+        return null;
     }
 
     /**
@@ -141,7 +171,7 @@ public class ZclAttribute {
      * @return the {@link ZclClusterType} for this attribute
      */
     public ZclClusterType getCluster() {
-        return cluster;
+        return ZclClusterType.getValueById(cluster.getClusterId());
     }
 
     /**
@@ -155,7 +185,8 @@ public class ZclAttribute {
 
     /**
      * Returns true if the implementation of this attribute in the cluster is
-     * mandatory as required by the ZigBee standard. <br>
+     * mandatory as required by the ZigBee standard.
+     * <p>
      * Note that this does not necessarily mean that the attribute is actually
      * implemented in any device if it does not conform to the standard.
      *
@@ -189,7 +220,7 @@ public class ZclAttribute {
      * @return true if the attribute is writable
      */
     public boolean isWritable() {
-        return writeable;
+        return writable;
     }
 
     /**
@@ -239,7 +270,8 @@ public class ZclAttribute {
     }
 
     /**
-     * Gets the reportable change field. <br>
+     * Gets the reportable change field.
+     * <p>
      * The reportable change field shall contain the minimum change to the
      * attribute that will result in a report being issued. For attributes with
      * 'analog' data type the field has the same data type as the attribute. If
@@ -253,7 +285,8 @@ public class ZclAttribute {
     }
 
     /**
-     * Gets the reporting timeout in seconds. <br>
+     * Gets the reporting timeout in seconds.
+     * <p>
      * The timeout period field is 16-bits in length and shall contain the
      * maximum expected time, in seconds, between received reports for the
      * attribute specified in the attribute identifier field. If the timeout
@@ -283,6 +316,64 @@ public class ZclAttribute {
      */
     public Calendar getLastReportTime() {
         return lastReportTime;
+    }
+
+    /**
+     * Configures the reporting for the specified attribute ID for analog attributes.
+     * <p>
+     * <b>minInterval</b>:
+     * The minimum reporting interval field is 16 bits in length and shall contain the
+     * minimum interval, in seconds, between issuing reports of the specified attribute.
+     * If minInterval is set to 0x0000, then there is no minimum limit, unless one is
+     * imposed by the specification of the cluster using this reporting mechanism or by
+     * the applicable profile.
+     * <p>
+     * <b>maxInterval</b>:
+     * The maximum reporting interval field is 16 bits in length and shall contain the
+     * maximum interval, in seconds, between issuing reports of the specified attribute.
+     * If maxInterval is set to 0xffff, then the device shall not issue reports for the specified
+     * attribute, and the configuration information for that attribute need not be
+     * maintained.
+     * <p>
+     * <b>reportableChange</b>:
+     * The reportable change field shall contain the minimum change to the attribute that
+     * will result in a report being issued. This field is of variable length. For attributes
+     * with 'analog' data type the field has the same data type as the attribute. The sign (if any) of the reportable
+     * change field is ignored.
+     *
+     * @param minInterval the minimum reporting interval
+     * @param maxInterval the maximum reporting interval
+     * @param reportableChange the minimum change required to report an update
+     * @return command future {@link CommandResult}
+     */
+    public Future<CommandResult> setReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return cluster.setReporting(id, minInterval, maxInterval, reportableChange);
+    }
+
+    /**
+     * Configures the reporting for the specified attribute ID for discrete attributes.
+     * <p>
+     * <b>minInterval</b>:
+     * The minimum reporting interval field is 16 bits in length and shall contain the
+     * minimum interval, in seconds, between issuing reports of the specified attribute.
+     * If minInterval is set to 0x0000, then there is no minimum limit, unless one is
+     * imposed by the specification of the cluster using this reporting mechanism or by
+     * the applicable profile.
+     * <p>
+     * <b>maxInterval</b>:
+     * The maximum reporting interval field is 16 bits in length and shall contain the
+     * maximum interval, in seconds, between issuing reports of the specified attribute.
+     * If maxInterval is set to 0xffff, then the device shall not issue reports for the specified
+     * attribute, and the configuration information for that attribute need not be
+     * maintained.
+     *
+     * @param minInterval the minimum reporting interval
+     * @param maxInterval the maximum reporting interval
+     * @return command future {@link CommandResult}
+     */
+    public Future<CommandResult> setReporting(final int minInterval, final int maxInterval) {
+        return cluster.setReporting(id, minInterval, maxInterval);
     }
 
     /**
@@ -317,8 +408,7 @@ public class ZclAttribute {
     /**
      * Updates the attribute value This will also record the time of the last update
      *
-     * @param attributeValue
-     *            the attribute value to be updated {@link Object}
+     * @param attributeValue the attribute value to be updated {@link Object}
      */
     public void updateValue(Object attributeValue) {
         lastValue = attributeValue;
@@ -347,4 +437,55 @@ public class ZclAttribute {
 
         return builder.toString();
     }
+
+    /**
+     * Sets the state of the attribute from a {@link ZclAttributeDao} which has been restored from a persisted state.
+     *
+     * @param dao the {@link ZclAttributeDao} to restore
+     */
+    public void setDao(ZclCluster cluster, ZclAttributeDao dao) {
+        this.cluster = cluster;
+        id = dao.getId();
+        name = dao.getName();
+        dataType = dao.getDataType();
+        mandatory = dao.isMandatory();
+        implemented = dao.isImplemented();
+        writable = dao.isWritable();
+        readable = dao.isReadable();
+        reportable = dao.isReportable();
+        lastValue = dao.getLastValue();
+        lastReportTime = dao.getLastReportTime();
+        minimumReportingPeriod = dao.getMinimumReportingPeriod();
+        maximumReportingPeriod = dao.getMaximumReportingPeriod();
+        reportingChange = dao.getReportingChange();
+        reportingTimeout = dao.getReportingTimeout();
+    }
+
+    /**
+     * Returns a Data Acquisition Object for this attribute. This is a clean class recording the state of the primary
+     * fields of the attribute for persistence purposes.
+     *
+     * @return the {@link ZclAttributeDao} from this {@link ZclAttribute}
+     */
+    public ZclAttributeDao getDao() {
+        ZclAttributeDao dao = new ZclAttributeDao();
+
+        dao.setId(id);
+        dao.setDataType(dataType);
+        dao.setName(name);
+        dao.setMandatory(mandatory);
+        dao.setImplemented(implemented);
+        dao.setMinimumReportingPeriod(minimumReportingPeriod);
+        dao.setMaximumReportingPeriod(maximumReportingPeriod);
+        dao.setReadable(readable);
+        dao.setWritable(writable);
+        dao.setReportable(reportable);
+        dao.setReportingChange(reportingChange);
+        dao.setReportingTimeout(reportingTimeout);
+        dao.setLastValue(lastValue);
+        dao.setLastReportTime(lastReportTime);
+
+        return dao;
+    }
+
 }
