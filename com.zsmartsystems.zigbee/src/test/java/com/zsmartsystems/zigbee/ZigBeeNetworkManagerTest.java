@@ -626,6 +626,7 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
 
         manager.shutdown();
         Mockito.verify(transport, Mockito.times(1)).shutdown();
+        Mockito.verify(databaseManager, Mockito.times(1)).shutdown();
 
         assertEquals(ZigBeeNetworkState.SHUTDOWN, manager.getNetworkState());
     }
