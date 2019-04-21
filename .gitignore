@@ -1,6 +1,5 @@
 target/
 bin/
-database/
 *.iml
 *.log
 *.log.*
@@ -32,6 +31,9 @@ simple-network.xml
 *.ebl
 *.gbl
 *.s37
+
+com.zsmartsystems.zigbee.console.main/database/
+
 
 # Gradle
 .gradle

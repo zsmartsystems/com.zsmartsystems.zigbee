@@ -16,6 +16,7 @@ import java.util.Calendar;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import com.zsmartsystems.zigbee.database.ZclAttributeDao;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
@@ -83,6 +84,38 @@ public class ZclAttributeTest {
 
         attribute.setReporting(1, 2, 3);
         Mockito.verify(cluster, Mockito.times(1)).setReporting(123, 1, 2, 3);
+    }
 
+    @Test
+    public void dao() {
+        ZclCluster cluster = Mockito.mock(ZclCluster.class);
+        ZclAttribute attribute = new ZclAttribute(cluster, 123, "Test Name", ZclDataType.UNSIGNED_8_BIT_INTEGER, true,
+                false, true, false);
+
+        attribute.updateValue(Integer.valueOf(12345));
+
+        ZclAttributeDao dao = attribute.getDao();
+        assertEquals(123, dao.getId());
+        assertEquals("Test Name", dao.getName());
+        assertEquals(ZclDataType.UNSIGNED_8_BIT_INTEGER, dao.getDataType());
+        assertTrue(dao.isMandatory());
+        assertFalse(dao.isImplemented());
+        assertTrue(dao.isWritable());
+        assertFalse(dao.isReadable());
+        assertFalse(dao.isReportable());
+        assertEquals(12345, dao.getLastValue());
+
+        ZclAttribute daoAttribute = new ZclAttribute();
+        daoAttribute.setDao(cluster, dao);
+
+        assertEquals(123, daoAttribute.getId());
+        assertEquals("Test Name", daoAttribute.getName());
+        assertEquals(ZclDataType.UNSIGNED_8_BIT_INTEGER, daoAttribute.getDataType());
+        assertTrue(daoAttribute.isMandatory());
+        assertFalse(daoAttribute.isImplemented());
+        assertTrue(daoAttribute.isWritable());
+        assertFalse(daoAttribute.isReadable());
+        assertFalse(daoAttribute.isReportable());
+        assertEquals(12345, daoAttribute.getLastValue());
     }
 }

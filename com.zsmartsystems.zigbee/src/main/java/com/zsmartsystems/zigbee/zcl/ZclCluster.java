@@ -30,6 +30,7 @@ import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
+import com.zsmartsystems.zigbee.database.ZclAttributeDao;
 import com.zsmartsystems.zigbee.database.ZclClusterDao;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingCommand;
@@ -1038,12 +1039,18 @@ public abstract class ZclCluster {
         }
         dao.setSupportedCommandsGenerated(Collections.unmodifiableSet(new TreeSet<>(supportedCommandsGenerated)));
         dao.setSupportedCommandsReceived(Collections.unmodifiableSet(new TreeSet<>(supportedCommandsReceived)));
+        Collection<ZclAttribute> daoZclAttributes;
         if (isClient) {
-            dao.setAttributes(clientAttributes);
+            daoZclAttributes = clientAttributes.values();
         } else {
-            dao.setAttributes(serverAttributes);
+            daoZclAttributes = serverAttributes.values();
         }
 
+        Map<Integer, ZclAttributeDao> daoAttributes = new HashMap<>();
+        for (ZclAttribute attribute : daoZclAttributes) {
+            daoAttributes.put(attribute.getId(), attribute.getDao());
+        }
+        dao.setAttributes(daoAttributes);
         return dao;
     }
 
@@ -1061,10 +1068,18 @@ public abstract class ZclCluster {
         }
         supportedCommandsGenerated.addAll(dao.getSupportedCommandsGenerated());
         supportedCommandsReceived.addAll(dao.getSupportedCommandsReceived());
+
+        Map<Integer, ZclAttribute> daoZclAttributes = new HashMap<>();
+        for (ZclAttributeDao daoAttribute : dao.getAttributes().values()) {
+            ZclAttribute attribute = new ZclAttribute();
+            attribute.setDao(this, daoAttribute);
+            daoZclAttributes.put(daoAttribute.getId(), attribute);
+        }
+
         if (isClient) {
-            clientAttributes = dao.getAttributes();
+            clientAttributes = daoZclAttributes;
         } else {
-            serverAttributes = dao.getAttributes();
+            serverAttributes = daoZclAttributes;
         }
     }
 

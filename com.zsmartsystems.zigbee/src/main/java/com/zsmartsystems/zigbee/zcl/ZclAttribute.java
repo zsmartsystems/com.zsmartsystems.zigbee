@@ -12,6 +12,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import com.zsmartsystems.zigbee.CommandResult;
+import com.zsmartsystems.zigbee.database.ZclAttributeDao;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -25,29 +26,29 @@ public class ZclAttribute {
     /**
      *
      */
-    private final ZclCluster cluster;
+    private ZclCluster cluster;
 
     /**
      * The attribute identifier field is 16-bits in length and shall contain the
      * identifier of the attribute that the reporting configuration details
      * apply to.
      */
-    private final int id;
+    private int id;
 
     /**
      * Stores the name of this attribute;
      */
-    private final String name;
+    private String name;
 
     /**
      * Defines the ZigBee data type.
      */
-    private final ZclDataType dataType;
+    private ZclDataType dataType;
 
     /**
      * Defines if this attribute is mandatory to be implemented
      */
-    private final boolean mandatory;
+    private boolean mandatory;
 
     /**
      * Defines if the attribute is implemented by the device
@@ -60,9 +61,9 @@ public class ZclAttribute {
     private boolean readable;
 
     /**
-     * True if this attribute is writeable
+     * True if this attribute is writable
      */
-    private boolean writeable;
+    private boolean writable;
 
     /**
      * True if this attribute is reportable
@@ -116,6 +117,12 @@ public class ZclAttribute {
     private Object lastValue;
 
     /**
+     * Default constructor
+     */
+    public ZclAttribute() {
+    }
+
+    /**
      * Constructor used to set the static information
      *
      * @param cluster the {@link ZclCluster} to which the attribute belongs
@@ -123,18 +130,18 @@ public class ZclAttribute {
      * @param dataType the {@link ZclDataType} for this attribute
      * @param mandatory true if this is defined as mandatory in the ZCL specification
      * @param readable true if this is defined as readable in the ZCL specification
-     * @param writeable true if this is defined as writable in the ZCL specification
+     * @param writable true if this is defined as writable in the ZCL specification
      * @param reportable true if this is defined as reportable in the ZCL specification
      */
     public ZclAttribute(final ZclCluster cluster, final int id, final String name, final ZclDataType dataType,
-            final boolean mandatory, final boolean readable, final boolean writeable, final boolean reportable) {
+            final boolean mandatory, final boolean readable, final boolean writable, final boolean reportable) {
         this.cluster = cluster;
         this.id = id;
         this.name = name;
         this.dataType = dataType;
         this.mandatory = mandatory;
         this.readable = readable;
-        this.writeable = writeable;
+        this.writable = writable;
         this.reportable = reportable;
     }
 
@@ -213,7 +220,7 @@ public class ZclAttribute {
      * @return true if the attribute is writable
      */
     public boolean isWritable() {
-        return writeable;
+        return writable;
     }
 
     /**
@@ -430,4 +437,55 @@ public class ZclAttribute {
 
         return builder.toString();
     }
+
+    /**
+     * Sets the state of the attribute from a {@link ZclAttributeDao} which has been restored from a persisted state.
+     *
+     * @param dao the {@link ZclAttributeDao} to restore
+     */
+    public void setDao(ZclCluster cluster, ZclAttributeDao dao) {
+        this.cluster = cluster;
+        id = dao.getId();
+        name = dao.getName();
+        dataType = dao.getDataType();
+        mandatory = dao.isMandatory();
+        implemented = dao.isImplemented();
+        writable = dao.isWritable();
+        readable = dao.isReadable();
+        reportable = dao.isReportable();
+        lastValue = dao.getLastValue();
+        lastReportTime = dao.getLastReportTime();
+        minimumReportingPeriod = dao.getMinimumReportingPeriod();
+        maximumReportingPeriod = dao.getMaximumReportingPeriod();
+        reportingChange = dao.getReportingChange();
+        reportingTimeout = dao.getReportingTimeout();
+    }
+
+    /**
+     * Returns a Data Acquisition Object for this attribute. This is a clean class recording the state of the primary
+     * fields of the attribute for persistence purposes.
+     *
+     * @return the {@link ZclAttributeDao} from this {@link ZclAttribute}
+     */
+    public ZclAttributeDao getDao() {
+        ZclAttributeDao dao = new ZclAttributeDao();
+
+        dao.setId(id);
+        dao.setDataType(dataType);
+        dao.setName(name);
+        dao.setMandatory(mandatory);
+        dao.setImplemented(implemented);
+        dao.setMinimumReportingPeriod(minimumReportingPeriod);
+        dao.setMaximumReportingPeriod(maximumReportingPeriod);
+        dao.setReadable(readable);
+        dao.setWritable(writable);
+        dao.setReportable(reportable);
+        dao.setReportingChange(reportingChange);
+        dao.setReportingTimeout(reportingTimeout);
+        dao.setLastValue(lastValue);
+        dao.setLastReportTime(lastReportTime);
+
+        return dao;
+    }
+
 }
