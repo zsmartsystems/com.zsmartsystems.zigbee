@@ -10,37 +10,48 @@ package com.zsmartsystems.zigbee.zcl.clusters.thermostat;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Set Weekly Schedule value object class.
  * <p>
- * Cluster: <b>Thermostat</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>Thermostat</b>. Command ID 0x01 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Thermostat cluster.
  * <p>
- * The set weekly schedule command is used to update the thermostat weekly set point schedule from a management system.
- * If the thermostat already has a weekly set point schedule programmed then it SHOULD replace each daily set point set
- * as it receives the updates from the management system. For example if the thermostat has 4 set points for every day of
- * the week and is sent a Set Weekly Schedule command with one set point for Saturday then the thermostat SHOULD remove
- * all 4 set points for Saturday and replace those with the updated set point but leave all other days unchanged.
- * <br>
- * If the schedule is larger than what fits in one ZigBee frame or contains more than 10 transitions, the schedule SHALL
- * then be sent using multipleSet Weekly Schedule Commands.
+ * The set weekly schedule command is used to update the thermostat weekly set point schedule
+ * from a management system. If the thermostat already has a weekly set point schedule
+ * programmed then it should replace each daily set point set as it receives the updates from the
+ * management system. For example if the thermostat has 4 set points for every day of the week and
+ * is sent a Set Weekly Schedule command with one set point for Saturday then the thermostat
+ * should remove all 4 set points for Saturday and replace those with the updated set point but
+ * leave all other days unchanged. <br> If the schedule is larger than what fits in one ZigBee
+ * frame or contains more than 10 transitions, the schedule shall then be sent using
+ * multipleSet Weekly Schedule Commands.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class SetWeeklySchedule extends ZclCommand {
     /**
-     * Number of Transitions command message field.
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0201;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x01;
+
+    /**
+     * Number Of Transitions command message field.
      */
     private Integer numberOfTransitions;
 
     /**
-     * Day of Week command message field.
+     * Day Of Week command message field.
      */
     private Integer dayOfWeek;
 
@@ -68,43 +79,43 @@ public class SetWeeklySchedule extends ZclCommand {
      * Default constructor.
      */
     public SetWeeklySchedule() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 513;
-        commandId = 1;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     /**
-     * Gets Number of Transitions.
+     * Gets Number Of Transitions.
      *
-     * @return the Number of Transitions
+     * @return the Number Of Transitions
      */
     public Integer getNumberOfTransitions() {
         return numberOfTransitions;
     }
 
     /**
-     * Sets Number of Transitions.
+     * Sets Number Of Transitions.
      *
-     * @param numberOfTransitions the Number of Transitions
+     * @param numberOfTransitions the Number Of Transitions
      */
     public void setNumberOfTransitions(final Integer numberOfTransitions) {
         this.numberOfTransitions = numberOfTransitions;
     }
 
     /**
-     * Gets Day of Week.
+     * Gets Day Of Week.
      *
-     * @return the Day of Week
+     * @return the Day Of Week
      */
     public Integer getDayOfWeek() {
         return dayOfWeek;
     }
 
     /**
-     * Sets Day of Week.
+     * Sets Day Of Week.
      *
-     * @param dayOfWeek the Day of Week
+     * @param dayOfWeek the Day Of Week
      */
     public void setDayOfWeek(final Integer dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
@@ -188,8 +199,8 @@ public class SetWeeklySchedule extends ZclCommand {
         serializer.serialize(dayOfWeek, ZclDataType.ENUMERATION_8_BIT);
         serializer.serialize(mode, ZclDataType.ENUMERATION_8_BIT);
         serializer.serialize(transition, ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        serializer.serialize(heatSet, ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        serializer.serialize(coolSet, ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        serializer.serialize(heatSet, ZclDataType.SIGNED_16_BIT_INTEGER);
+        serializer.serialize(coolSet, ZclDataType.SIGNED_16_BIT_INTEGER);
     }
 
     @Override
@@ -198,8 +209,8 @@ public class SetWeeklySchedule extends ZclCommand {
         dayOfWeek = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
         mode = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
         transition = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        heatSet = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        coolSet = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        heatSet = (Integer) deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
+        coolSet = (Integer) deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
     }
 
     @Override

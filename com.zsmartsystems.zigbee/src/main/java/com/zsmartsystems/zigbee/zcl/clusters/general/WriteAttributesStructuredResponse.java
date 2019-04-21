@@ -7,48 +7,53 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.general;
 
+import java.util.List;
+
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
-
-import java.util.List;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.field.WriteAttributeStatusRecord;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Write Attributes Structured Response value object class.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>General</b>. Command ID 0x10 is sent <b>TO</b> the server.
  * This command is a <b>generic</b> command used across the profile.
  * <p>
- * The write attributes structured response command is generated in response to a
- * write attributes structured command.
+ * The write attributes structured response command is generated in response to a write
+ * attributes structured command.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class WriteAttributesStructuredResponse extends ZclCommand {
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x10;
+
     /**
      * Status command message field.
      * <p>
-     * Status is only provided if the command was successful, and the write
-     * attribute status records are not included for successfully
-     * written attributes, in order to save bandwidth.
+     * Status is only provided if the command was successful, and the write attribute status
+     * records are not included for successfully written attributes, in order to save
+     * bandwidth.
      */
     private ZclStatus status;
 
     /**
      * Records command message field.
      * <p>
-     * Note that write attribute status records are not included for successfully
-     * written attributes, in order to save bandwidth.  In the case of successful
-     * writing of all attributes, only a single write attribute status record
-     * SHALL be included in the command, with the status field set to SUCCESS and the
-     * attribute identifier field omitted.
+     * Note that write attribute status records are not included for successfully written
+     * attributes, in order to save bandwidth. In the case of successful writing of all
+     * attributes, only a single write attribute status record shall be included in the
+     * command, with the status field set to SUCCESS and the attribute identifier field
+     * omitted.
      */
     private List<WriteAttributeStatusRecord> records;
 
@@ -56,8 +61,8 @@ public class WriteAttributesStructuredResponse extends ZclCommand {
      * Default constructor.
      */
     public WriteAttributesStructuredResponse() {
+        commandId = COMMAND_ID;
         genericCommand = true;
-        commandId = 16;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
@@ -76,10 +81,10 @@ public class WriteAttributesStructuredResponse extends ZclCommand {
 
     /**
      * Gets Status.
-     *
-     * Status is only provided if the command was successful, and the write
-     * attribute status records are not included for successfully
-     * written attributes, in order to save bandwidth.
+     * <p>
+     * Status is only provided if the command was successful, and the write attribute status
+     * records are not included for successfully written attributes, in order to save
+     * bandwidth.
      *
      * @return the Status
      */
@@ -89,10 +94,10 @@ public class WriteAttributesStructuredResponse extends ZclCommand {
 
     /**
      * Sets Status.
-     *
-     * Status is only provided if the command was successful, and the write
-     * attribute status records are not included for successfully
-     * written attributes, in order to save bandwidth.
+     * <p>
+     * Status is only provided if the command was successful, and the write attribute status
+     * records are not included for successfully written attributes, in order to save
+     * bandwidth.
      *
      * @param status the Status
      */
@@ -102,12 +107,12 @@ public class WriteAttributesStructuredResponse extends ZclCommand {
 
     /**
      * Gets Records.
-     *
-     * Note that write attribute status records are not included for successfully
-     * written attributes, in order to save bandwidth.  In the case of successful
-     * writing of all attributes, only a single write attribute status record
-     * SHALL be included in the command, with the status field set to SUCCESS and the
-     * attribute identifier field omitted.
+     * <p>
+     * Note that write attribute status records are not included for successfully written
+     * attributes, in order to save bandwidth. In the case of successful writing of all
+     * attributes, only a single write attribute status record shall be included in the
+     * command, with the status field set to SUCCESS and the attribute identifier field
+     * omitted.
      *
      * @return the Records
      */
@@ -117,12 +122,12 @@ public class WriteAttributesStructuredResponse extends ZclCommand {
 
     /**
      * Sets Records.
-     *
-     * Note that write attribute status records are not included for successfully
-     * written attributes, in order to save bandwidth.  In the case of successful
-     * writing of all attributes, only a single write attribute status record
-     * SHALL be included in the command, with the status field set to SUCCESS and the
-     * attribute identifier field omitted.
+     * <p>
+     * Note that write attribute status records are not included for successfully written
+     * attributes, in order to save bandwidth. In the case of successful writing of all
+     * attributes, only a single write attribute status record shall be included in the
+     * command, with the status field set to SUCCESS and the attribute identifier field
+     * omitted.
      *
      * @param records the Records
      */

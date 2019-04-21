@@ -210,7 +210,7 @@ public abstract class ClassGenerator {
             len += word.length();
         }
 
-        if (len != 0) {
+        if (len != 2) {
             out.println();
         }
     }

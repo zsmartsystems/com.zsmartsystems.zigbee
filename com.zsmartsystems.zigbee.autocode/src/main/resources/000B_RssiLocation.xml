@@ -1,0 +1,284 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x000B">
+    <name>RSSI Location</name>
+    <description>This cluster provides a means for exchanging Received Signal Strength Indication (RSSI) information among one hop devices as well as messages to report RSSI data to a centralized device that collects all the RSSI data in the network. </description>
+    <command code="0x00" source="client">
+        <name>Set Absolute Location Command</name>
+        <field type="SIGNED_16_BIT_INTEGER">
+            <name>Coordinate 1</name>
+        </field>
+        <field type="SIGNED_16_BIT_INTEGER">
+            <name>Coordinate 2</name>
+        </field>
+        <field type="SIGNED_16_BIT_INTEGER">
+            <name>Coordinate 3</name>
+        </field>
+        <field type="SIGNED_16_BIT_INTEGER">
+            <name>Power</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Path Loss Exponent</name>
+        </field>
+    </command>
+    <command code="0x01" source="client">
+        <name>Set Device Configuration Command</name>
+        <field type="SIGNED_16_BIT_INTEGER">
+            <name>Power</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Path Loss Exponent</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Calculation Period</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Number RSSI Measurements</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Reporting Period</name>
+        </field>
+    </command>
+    <command code="0x02" source="client">
+        <name>Get Device Configuration Command</name>
+        <field type="IEEE_ADDRESS">
+            <name>Target Address</name>
+        </field>
+    </command>
+    <command code="0x03" source="client">
+        <name>Get Location Data Command</name>
+        <field type="BITMAP_8_BIT">
+            <name>Header</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Number Responses</name>
+        </field>
+        <field type="IEEE_ADDRESS">
+            <name>Target Address</name>
+        </field>
+    </command>
+    <command code="0x04" source="client">
+        <name>RSSI Response</name>
+        <field type="IEEE_ADDRESS">
+            <name>Replying Device</name>
+        </field>
+        <field type="SIGNED_16_BIT_INTEGER">
+            <name>Coordinate 1</name>
+        </field>
+        <field type="SIGNED_16_BIT_INTEGER">
+            <name>Coordinate 2</name>
+        </field>
+        <field type="SIGNED_16_BIT_INTEGER">
+            <name>Coordinate 3</name>
+        </field>
+        <field type="SIGNED_8_BIT_INTEGER">
+            <name>RSSI</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Number RSSI Measurements</name>
+        </field>
+    </command>
+    <command code="0x05" source="client">
+        <name>Send Pings Command</name>
+        <field type="IEEE_ADDRESS">
+            <name>Target Address</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Number RSSI Measurements</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Calculation Period</name>
+        </field>
+    </command>
+    <command code="0x06" source="client">
+        <name>Anchor Node Announce Command</name>
+        <field type="IEEE_ADDRESS">
+            <name>Anchor Node Address</name>
+        </field>
+        <field type="SIGNED_16_BIT_INTEGER">
+            <name>Coordinate 1</name>
+        </field>
+        <field type="SIGNED_16_BIT_INTEGER">
+            <name>Coordinate 2</name>
+        </field>
+        <field type="SIGNED_16_BIT_INTEGER">
+            <name>Coordinate 3</name>
+        </field>
+    </command>
+    <command code="0x00" source="server">
+        <name>Device Configuration Response</name>
+        <field type="ENUMERATION_8_BIT">
+            <name>Status</name>
+        </field>
+        <field type="SIGNED_16_BIT_INTEGER">
+            <name>Power</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Path Loss Exponent</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Calculation Period</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Number RSSI Measurements</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Reporting Period</name>
+        </field>
+    </command>
+    <command code="0x01" source="server">
+        <name>Location Data Response</name>
+        <field type="ENUMERATION_8_BIT">
+            <name>Status</name>
+        </field>
+        <field type="DATA_8_BIT">
+            <name>Location Type</name>
+        </field>
+        <field type="SIGNED_16_BIT_INTEGER">
+            <name>Coordinate 1</name>
+        </field>
+        <field type="SIGNED_16_BIT_INTEGER">
+            <name>Coordinate 2</name>
+        </field>
+        <field type="SIGNED_16_BIT_INTEGER">
+            <name>Coordinate 3</name>
+        </field>
+        <field type="SIGNED_16_BIT_INTEGER">
+            <name>Power</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Path Loss Exponent</name>
+        </field>
+        <field type="ENUMERATION_8_BIT">
+            <name>Location Method</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Quality Measure</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Location Age</name>
+        </field>
+    </command>
+    <command code="0x02" source="server">
+        <name>Location Data Notification Command</name>
+        <field type="DATA_8_BIT">
+            <name>Location Type</name>
+        </field>
+        <field type="SIGNED_16_BIT_INTEGER">
+            <name>Coordinate 1</name>
+        </field>
+        <field type="SIGNED_16_BIT_INTEGER">
+            <name>Coordinate 2</name>
+        </field>
+        <field type="SIGNED_16_BIT_INTEGER">
+            <name>Coordinate 3</name>
+        </field>
+        <field type="SIGNED_16_BIT_INTEGER">
+            <name>Power</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Path Loss Exponent</name>
+        </field>
+        <field type="ENUMERATION_8_BIT">
+            <name>Location Method</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Quality Measure</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Location Age</name>
+        </field>
+    </command>
+    <command code="0x03" source="server">
+        <name>Compact Location Data Notification Command</name>
+    </command>
+    <command code="0x04" source="server">
+        <name>RSSI Ping Command</name>
+        <field type="DATA_8_BIT">
+            <name>Location Type</name>
+        </field>
+    </command>
+    <command code="0x05" source="server">
+        <name>RSSI Request Command</name>
+    </command>
+    <command code="0x06" source="server">
+        <name>Report RSSI Measurements Command</name>
+        <field type="IEEE_ADDRESS">
+            <name>Reporting Address</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Number Of Neighbors</name>
+        </field>
+        <field type="N_X_NEIGHBORS_INFORMATION">
+            <name>Neighbors Information</name>
+        </field>
+    </command>
+    <command code="0x07" source="server">
+        <name>Request Own Location Command</name>
+        <field type="IEEE_ADDRESS">
+            <name>Requesting Address</name>
+        </field>
+    </command>
+    <attribute code="0x0000" type="DATA_8_BIT" side="server" optional="false" writable="false" reportable="false">
+        <name>Location Type</name>
+        <description>The LocationType attribute is 8 bits long and is divided into bit fields.</description>
+    </attribute>
+    <attribute code="0x0001" type="ENUMERATION_8_BIT" side="server" optional="false" writable="false" reportable="false">
+        <name>Location Method</name>
+    </attribute>
+    <attribute code="0x0002" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false">
+        <name>Location Age</name>
+        <description>The LocationAge attribute indicates the amount of time, measured in seconds, that has transpired since the location information was last calculated. This attribute is not valid if the Absolute bit of the LocationType attribute is set to one.</description>
+    </attribute>
+    <attribute code="0x0003" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false">
+        <name>Quality Measure</name>
+        <description>The QualityMeasure attribute is a measure of confidence in the corresponding location information. The higher the value, the more confident the transmitting device is in the location information. A value of 0x64 indicates complete (100%) confidence and a value of 0x00 indicates zero confidence. (Note: no fixed confidence metric is mandated &#8211; the metric may be application and manufacturer dependent).</description>
+        <description>This field is not valid if the Absolute bit of the LocationType attribute is set to one.</description>
+    </attribute>
+    <attribute code="0x0004" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false">
+        <name>Number Of Devices</name>
+        <description>The NumberOfDevices attribute is the number of devices whose location data were used to calculate the last location value. This attribute is related to the QualityMeasure attribute.</description>
+    </attribute>
+    <attribute code="0x0010" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="true" reportable="false">
+        <name>Coordinate 1</name>
+        <description>The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit integers, and represent orthogonal linear coordinates x, y, z in meters as follows.</description>
+        <description>x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10</description>
+        <description>The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1 between 0x8001 and 0x7fff. The same range applies to y and z. A value of 0x8000 for any of the coordinates indicates that the coordinate is unknown.</description>
+    </attribute>
+    <attribute code="0x0011" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="true" reportable="false">
+        <name>Coordinate 2</name>
+        <description>The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit integers, and represent orthogonal linear coordinates x, y, z in meters as follows.</description>
+        <description>x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10</description>
+        <description>The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1 between 0x8001 and 0x7fff. The same range applies to y and z. A value of 0x8000 for any of the coordinates indicates that the coordinate is unknown.</description>
+    </attribute>
+    <attribute code="0x0012" type="SIGNED_16_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false">
+        <name>Coordinate 3</name>
+        <description>The Coordinate1, Coordinate2 and Coordinate3 attributes are signed 16-bit integers, and represent orthogonal linear coordinates x, y, z in meters as follows.</description>
+        <description>x = Coordinate1 / 10, y = Coordinate2 / 10, z = Coordinate3 / 10</description>
+        <description>The range of x is -3276.7 to 3276.7 meters, corresponding to Coordinate1 between 0x8001 and 0x7fff. The same range applies to y and z. A value of 0x8000 for any of the coordinates indicates that the coordinate is unknown.</description>
+    </attribute>
+    <attribute code="0x0013" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="true" reportable="false">
+        <name>Power</name>
+        <description>The Power attribute specifies the value of the average power P0, measured in dBm, received at a reference distance of one meter from the transmitter.</description>
+        <description>P0 = Power / 100</description>
+        <description>A value of 0x8000 indicates that Power is unknown.</description>
+    </attribute>
+    <attribute code="0x0014" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="true" reportable="false">
+        <name>Path Loss Exponent</name>
+        <description>The PathLossExponent attribute specifies the value of the Path Loss Exponent n, an exponent that describes the rate at which the signal power decays with increasing distance from the transmitter.</description>
+        <description>n = PathLossExponent / 100</description>
+        <description>A value of 0xffff indicates that PathLossExponent is unknown.</description>
+    </attribute>
+    <attribute code="0x0015" type="SIGNED_16_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false">
+        <name>Reporting Period</name>
+        <description>The ReportingPeriod attribute specifies the time in seconds between successive reports of the device&apos;s location by means of the Location Data Notification command. The minimum value this attribute can take is specified by the profile in use. If ReportingPeriod is zero, the device does not automatically report its location. Note that location information can always be polled at any time.</description>
+    </attribute>
+    <attribute code="0x0016" type="SIGNED_16_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false">
+        <name>Calculation Period</name>
+        <description>The CalculationPeriod attribute specifies the time in seconds between successive calculations of the device&apos;s location. If CalculationPeriod is less than the physically possible minimum period that the calculation can be performed, the calculation will be repeated as frequently as possible.</description>
+    </attribute>
+    <attribute code="0x0017" type="SIGNED_16_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false">
+        <name>Number RSSI Measurements</name>
+        <description>The NumberRSSIMeasurements attribute specifies the number of RSSI measurements to be used to generate one location estimate. The measurements are averaged to improve accuracy. NumberRSSIMeasurements must be greater than or equal to 1.</description>
+    </attribute>
+
+</cluster>

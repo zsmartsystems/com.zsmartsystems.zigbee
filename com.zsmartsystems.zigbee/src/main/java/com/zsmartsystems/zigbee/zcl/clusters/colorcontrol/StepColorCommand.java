@@ -10,33 +10,43 @@ package com.zsmartsystems.zigbee.zcl.clusters.colorcontrol;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Step Color Command value object class.
  * <p>
- * Cluster: <b>Color Control</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>Color Control</b>. Command ID 0x09 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Color Control cluster.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class StepColorCommand extends ZclCommand {
     /**
-     * StepX command message field.
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0300;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x09;
+
+    /**
+     * Step X command message field.
      */
     private Integer stepX;
 
     /**
-     * StepY command message field.
+     * Step Y command message field.
      */
     private Integer stepY;
 
     /**
-     * Transition time command message field.
+     * Transition Time command message field.
      */
     private Integer transitionTime;
 
@@ -44,61 +54,61 @@ public class StepColorCommand extends ZclCommand {
      * Default constructor.
      */
     public StepColorCommand() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 768;
-        commandId = 9;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     /**
-     * Gets StepX.
+     * Gets Step X.
      *
-     * @return the StepX
+     * @return the Step X
      */
     public Integer getStepX() {
         return stepX;
     }
 
     /**
-     * Sets StepX.
+     * Sets Step X.
      *
-     * @param stepX the StepX
+     * @param stepX the Step X
      */
     public void setStepX(final Integer stepX) {
         this.stepX = stepX;
     }
 
     /**
-     * Gets StepY.
+     * Gets Step Y.
      *
-     * @return the StepY
+     * @return the Step Y
      */
     public Integer getStepY() {
         return stepY;
     }
 
     /**
-     * Sets StepY.
+     * Sets Step Y.
      *
-     * @param stepY the StepY
+     * @param stepY the Step Y
      */
     public void setStepY(final Integer stepY) {
         this.stepY = stepY;
     }
 
     /**
-     * Gets Transition time.
+     * Gets Transition Time.
      *
-     * @return the Transition time
+     * @return the Transition Time
      */
     public Integer getTransitionTime() {
         return transitionTime;
     }
 
     /**
-     * Sets Transition time.
+     * Sets Transition Time.
      *
-     * @param transitionTime the Transition time
+     * @param transitionTime the Transition Time
      */
     public void setTransitionTime(final Integer transitionTime) {
         this.transitionTime = transitionTime;

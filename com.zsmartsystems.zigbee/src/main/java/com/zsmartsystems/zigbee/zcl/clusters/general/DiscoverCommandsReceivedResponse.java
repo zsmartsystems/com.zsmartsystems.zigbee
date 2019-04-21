@@ -7,36 +7,41 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.general;
 
+import java.util.List;
+
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
-
-import java.util.List;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Discover Commands Received Response value object class.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>General</b>. Command ID 0x12 is sent <b>TO</b> the server.
  * This command is a <b>generic</b> command used across the profile.
  * <p>
- * The Discover Commands Received Response is generated in response to a Discover Commands Received
- * command.
+ * The Discover Commands Received Response is generated in response to a Discover Commands
+ * Received command.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class DiscoverCommandsReceivedResponse extends ZclCommand {
     /**
-     * Discovery complete command message field.
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x12;
+
+    /**
+     * Discovery Complete command message field.
      */
     private Boolean discoveryComplete;
 
     /**
-     * Command identifiers command message field.
+     * Command Identifiers command message field.
      */
     private List<Integer> commandIdentifiers;
 
@@ -44,8 +49,8 @@ public class DiscoverCommandsReceivedResponse extends ZclCommand {
      * Default constructor.
      */
     public DiscoverCommandsReceivedResponse() {
+        commandId = COMMAND_ID;
         genericCommand = true;
-        commandId = 18;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
@@ -63,36 +68,36 @@ public class DiscoverCommandsReceivedResponse extends ZclCommand {
     }
 
     /**
-     * Gets Discovery complete.
+     * Gets Discovery Complete.
      *
-     * @return the Discovery complete
+     * @return the Discovery Complete
      */
     public Boolean getDiscoveryComplete() {
         return discoveryComplete;
     }
 
     /**
-     * Sets Discovery complete.
+     * Sets Discovery Complete.
      *
-     * @param discoveryComplete the Discovery complete
+     * @param discoveryComplete the Discovery Complete
      */
     public void setDiscoveryComplete(final Boolean discoveryComplete) {
         this.discoveryComplete = discoveryComplete;
     }
 
     /**
-     * Gets Command identifiers.
+     * Gets Command Identifiers.
      *
-     * @return the Command identifiers
+     * @return the Command Identifiers
      */
     public List<Integer> getCommandIdentifiers() {
         return commandIdentifiers;
     }
 
     /**
-     * Sets Command identifiers.
+     * Sets Command Identifiers.
      *
-     * @param commandIdentifiers the Command identifiers
+     * @param commandIdentifiers the Command Identifiers
      */
     public void setCommandIdentifiers(final List<Integer> commandIdentifiers) {
         this.commandIdentifiers = commandIdentifiers;

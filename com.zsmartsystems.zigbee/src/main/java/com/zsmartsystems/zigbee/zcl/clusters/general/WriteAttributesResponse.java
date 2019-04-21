@@ -7,30 +7,35 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.general;
 
+import java.util.List;
+
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
-
-import java.util.List;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.field.WriteAttributeStatusRecord;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Write Attributes Response value object class.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>General</b>. Command ID 0x04 is sent <b>TO</b> the server.
  * This command is a <b>generic</b> command used across the profile.
  * <p>
- * The write attributes response command is generated in response to a write
- * attributes command.
+ * The write attributes response command is generated in response to a write attributes
+ * command.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class WriteAttributesResponse extends ZclCommand {
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x04;
+
     /**
      * Records command message field.
      */
@@ -40,8 +45,8 @@ public class WriteAttributesResponse extends ZclCommand {
      * Default constructor.
      */
     public WriteAttributesResponse() {
+        commandId = COMMAND_ID;
         genericCommand = true;
-        commandId = 4;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 

@@ -10,33 +10,43 @@ package com.zsmartsystems.zigbee.zcl.clusters.colorcontrol;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
- * Move to Color Command value object class.
+ * Move To Color Command value object class.
  * <p>
- * Cluster: <b>Color Control</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>Color Control</b>. Command ID 0x07 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Color Control cluster.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class MoveToColorCommand extends ZclCommand {
     /**
-     * ColorX command message field.
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0300;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x07;
+
+    /**
+     * Color X command message field.
      */
     private Integer colorX;
 
     /**
-     * ColorY command message field.
+     * Color Y command message field.
      */
     private Integer colorY;
 
     /**
-     * Transition time command message field.
+     * Transition Time command message field.
      */
     private Integer transitionTime;
 
@@ -44,61 +54,61 @@ public class MoveToColorCommand extends ZclCommand {
      * Default constructor.
      */
     public MoveToColorCommand() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 768;
-        commandId = 7;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     /**
-     * Gets ColorX.
+     * Gets Color X.
      *
-     * @return the ColorX
+     * @return the Color X
      */
     public Integer getColorX() {
         return colorX;
     }
 
     /**
-     * Sets ColorX.
+     * Sets Color X.
      *
-     * @param colorX the ColorX
+     * @param colorX the Color X
      */
     public void setColorX(final Integer colorX) {
         this.colorX = colorX;
     }
 
     /**
-     * Gets ColorY.
+     * Gets Color Y.
      *
-     * @return the ColorY
+     * @return the Color Y
      */
     public Integer getColorY() {
         return colorY;
     }
 
     /**
-     * Sets ColorY.
+     * Sets Color Y.
      *
-     * @param colorY the ColorY
+     * @param colorY the Color Y
      */
     public void setColorY(final Integer colorY) {
         this.colorY = colorY;
     }
 
     /**
-     * Gets Transition time.
+     * Gets Transition Time.
      *
-     * @return the Transition time
+     * @return the Transition Time
      */
     public Integer getTransitionTime() {
         return transitionTime;
     }
 
     /**
-     * Sets Transition time.
+     * Sets Transition Time.
      *
-     * @param transitionTime the Transition time
+     * @param transitionTime the Transition Time
      */
     public void setTransitionTime(final Integer transitionTime) {
         this.transitionTime = transitionTime;

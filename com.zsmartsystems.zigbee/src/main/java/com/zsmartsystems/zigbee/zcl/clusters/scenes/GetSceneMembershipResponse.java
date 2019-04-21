@@ -7,26 +7,36 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.scenes;
 
+import java.util.List;
+
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
-
-import java.util.List;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Get Scene Membership Response value object class.
  * <p>
- * Cluster: <b>Scenes</b>. Command is sent <b>FROM</b> the server.
+ * Cluster: <b>Scenes</b>. Command ID 0x05 is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the Scenes cluster.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class GetSceneMembershipResponse extends ZclCommand {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0005;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x05;
+
     /**
      * Status command message field.
      */
@@ -43,12 +53,12 @@ public class GetSceneMembershipResponse extends ZclCommand {
     private Integer groupId;
 
     /**
-     * Scene count command message field.
+     * Scene Count command message field.
      */
     private Integer sceneCount;
 
     /**
-     * Scene list command message field.
+     * Scene List command message field.
      */
     private List<Integer> sceneList;
 
@@ -56,9 +66,9 @@ public class GetSceneMembershipResponse extends ZclCommand {
      * Default constructor.
      */
     public GetSceneMembershipResponse() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 5;
-        commandId = 5;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
 
@@ -117,36 +127,36 @@ public class GetSceneMembershipResponse extends ZclCommand {
     }
 
     /**
-     * Gets Scene count.
+     * Gets Scene Count.
      *
-     * @return the Scene count
+     * @return the Scene Count
      */
     public Integer getSceneCount() {
         return sceneCount;
     }
 
     /**
-     * Sets Scene count.
+     * Sets Scene Count.
      *
-     * @param sceneCount the Scene count
+     * @param sceneCount the Scene Count
      */
     public void setSceneCount(final Integer sceneCount) {
         this.sceneCount = sceneCount;
     }
 
     /**
-     * Gets Scene list.
+     * Gets Scene List.
      *
-     * @return the Scene list
+     * @return the Scene List
      */
     public List<Integer> getSceneList() {
         return sceneList;
     }
 
     /**
-     * Sets Scene list.
+     * Sets Scene List.
      *
-     * @param sceneList the Scene list
+     * @param sceneList the Scene List
      */
     public void setSceneList(final List<Integer> sceneList) {
         this.sceneList = sceneList;

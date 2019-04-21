@@ -166,14 +166,14 @@ public class ZclIasZoneClient implements ZigBeeApplication {
                     currentState);
         }
 
-        IeeeAddress currentIeeeAddress = iasZoneCluster.getIascieAddress(0);
+        IeeeAddress currentIeeeAddress = iasZoneCluster.getIasCieAddress(0);
         logger.debug("{}: IAS CIE address is currently {}", iasZoneCluster.getZigBeeAddress(), currentIeeeAddress);
 
         if (!ieeeAddress.equals(currentIeeeAddress)) {
             // Set the CIE address in the remote device. This is where the device will send its reports.
-            iasZoneCluster.setIascieAddress(ieeeAddress);
+            iasZoneCluster.setIasCieAddress(ieeeAddress);
 
-            currentIeeeAddress = iasZoneCluster.getIascieAddress(0);
+            currentIeeeAddress = iasZoneCluster.getIasCieAddress(0);
             logger.debug("{}: IAS CIE address is confirmed {}", iasZoneCluster.getZigBeeAddress(), currentIeeeAddress);
         }
 

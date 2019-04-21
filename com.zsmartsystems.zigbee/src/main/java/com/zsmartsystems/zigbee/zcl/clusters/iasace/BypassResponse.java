@@ -7,34 +7,45 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.iasace;
 
+import java.util.List;
+
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
-
-import java.util.List;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Bypass Response value object class.
  * <p>
- * Cluster: <b>IAS ACE</b>. Command is sent <b>FROM</b> the server.
+ * Cluster: <b>IAS ACE</b>. Command ID 0x07 is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the IAS ACE cluster.
  * <p>
- * Provides the response of the security panel to the request from the IAS ACE client to bypass zones via a Bypass command.
+ * Provides the response of the security panel to the request from the IAS ACE client to bypass
+ * zones via a Bypass command.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class BypassResponse extends ZclCommand {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0501;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x07;
+
     /**
      * Bypass Result command message field.
      * <p>
-     * An array of Zone IDs for each zone requested to be bypassed via the Bypass command where X is equal to the value of
-     * the Number of Zones field. The order of results for Zone IDs SHALL be the same as the order of Zone IDs sent in
-     * the Bypass command by the IAS ACE client.
+     * An array of Zone IDs for each zone requested to be bypassed via the Bypass command where X
+     * is equal to the value of the Number of Zones field. The order of results for Zone IDs shall
+     * be the same as the order of Zone IDs sent in the Bypass command by the IAS ACE client.
      */
     private List<Integer> bypassResult;
 
@@ -42,18 +53,18 @@ public class BypassResponse extends ZclCommand {
      * Default constructor.
      */
     public BypassResponse() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 1281;
-        commandId = 7;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
 
     /**
      * Gets Bypass Result.
-     *
-     * An array of Zone IDs for each zone requested to be bypassed via the Bypass command where X is equal to the value of
-     * the Number of Zones field. The order of results for Zone IDs SHALL be the same as the order of Zone IDs sent in
-     * the Bypass command by the IAS ACE client.
+     * <p>
+     * An array of Zone IDs for each zone requested to be bypassed via the Bypass command where X
+     * is equal to the value of the Number of Zones field. The order of results for Zone IDs shall
+     * be the same as the order of Zone IDs sent in the Bypass command by the IAS ACE client.
      *
      * @return the Bypass Result
      */
@@ -63,10 +74,10 @@ public class BypassResponse extends ZclCommand {
 
     /**
      * Sets Bypass Result.
-     *
-     * An array of Zone IDs for each zone requested to be bypassed via the Bypass command where X is equal to the value of
-     * the Number of Zones field. The order of results for Zone IDs SHALL be the same as the order of Zone IDs sent in
-     * the Bypass command by the IAS ACE client.
+     * <p>
+     * An array of Zone IDs for each zone requested to be bypassed via the Bypass command where X
+     * is equal to the value of the Number of Zones field. The order of results for Zone IDs shall
+     * be the same as the order of Zone IDs sent in the Bypass command by the IAS ACE client.
      *
      * @param bypassResult the Bypass Result
      */

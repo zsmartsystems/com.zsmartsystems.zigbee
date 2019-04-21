@@ -7,48 +7,52 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.general;
 
+import java.util.List;
+
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
-
-import java.util.List;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.field.AttributeStatusRecord;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Configure Reporting Response value object class.
  * <p>
- * Cluster: <b>General</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>General</b>. Command ID 0x07 is sent <b>TO</b> the server.
  * This command is a <b>generic</b> command used across the profile.
  * <p>
- * The Configure Reporting Response command is generated in response to a
- * Configure Reporting command.
+ * The Configure Reporting Response command is generated in response to a Configure Reporting
+ * command.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class ConfigureReportingResponse extends ZclCommand {
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x07;
+
     /**
      * Status command message field.
      * <p>
-     * Status is only provided if the command was successful, and the
-     * attribute status records are not included for successfully
-     * written attributes, in order to save bandwidth.
+     * Status is only provided if the command was successful, and the attribute status records
+     * are not included for successfully written attributes, in order to save bandwidth.
      */
     private ZclStatus status;
 
     /**
      * Records command message field.
      * <p>
-     * Note that attribute status records are not included for successfully
-     * configured attributes in order to save bandwidth.  In the case of successful
-     * configuration of all attributes, only a single attribute status record SHALL
-     * be included in the command, with the status field set to SUCCESS and the direction and
-     * attribute identifier fields omitted.
+     * Note that attribute status records are not included for successfully configured
+     * attributes in order to save bandwidth. In the case of successful configuration of all
+     * attributes, only a single attribute status record shall be included in the command,
+     * with the status field set to SUCCESS and the direction and attribute identifier fields
+     * omitted.
      */
     private List<AttributeStatusRecord> records;
 
@@ -56,8 +60,8 @@ public class ConfigureReportingResponse extends ZclCommand {
      * Default constructor.
      */
     public ConfigureReportingResponse() {
+        commandId = COMMAND_ID;
         genericCommand = true;
-        commandId = 7;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
@@ -76,10 +80,9 @@ public class ConfigureReportingResponse extends ZclCommand {
 
     /**
      * Gets Status.
-     *
-     * Status is only provided if the command was successful, and the
-     * attribute status records are not included for successfully
-     * written attributes, in order to save bandwidth.
+     * <p>
+     * Status is only provided if the command was successful, and the attribute status records
+     * are not included for successfully written attributes, in order to save bandwidth.
      *
      * @return the Status
      */
@@ -89,10 +92,9 @@ public class ConfigureReportingResponse extends ZclCommand {
 
     /**
      * Sets Status.
-     *
-     * Status is only provided if the command was successful, and the
-     * attribute status records are not included for successfully
-     * written attributes, in order to save bandwidth.
+     * <p>
+     * Status is only provided if the command was successful, and the attribute status records
+     * are not included for successfully written attributes, in order to save bandwidth.
      *
      * @param status the Status
      */
@@ -102,12 +104,12 @@ public class ConfigureReportingResponse extends ZclCommand {
 
     /**
      * Gets Records.
-     *
-     * Note that attribute status records are not included for successfully
-     * configured attributes in order to save bandwidth.  In the case of successful
-     * configuration of all attributes, only a single attribute status record SHALL
-     * be included in the command, with the status field set to SUCCESS and the direction and
-     * attribute identifier fields omitted.
+     * <p>
+     * Note that attribute status records are not included for successfully configured
+     * attributes in order to save bandwidth. In the case of successful configuration of all
+     * attributes, only a single attribute status record shall be included in the command,
+     * with the status field set to SUCCESS and the direction and attribute identifier fields
+     * omitted.
      *
      * @return the Records
      */
@@ -117,12 +119,12 @@ public class ConfigureReportingResponse extends ZclCommand {
 
     /**
      * Sets Records.
-     *
-     * Note that attribute status records are not included for successfully
-     * configured attributes in order to save bandwidth.  In the case of successful
-     * configuration of all attributes, only a single attribute status record SHALL
-     * be included in the command, with the status field set to SUCCESS and the direction and
-     * attribute identifier fields omitted.
+     * <p>
+     * Note that attribute status records are not included for successfully configured
+     * attributes in order to save bandwidth. In the case of successful configuration of all
+     * attributes, only a single attribute status record shall be included in the command,
+     * with the status field set to SUCCESS and the direction and attribute identifier fields
+     * omitted.
      *
      * @param records the Records
      */

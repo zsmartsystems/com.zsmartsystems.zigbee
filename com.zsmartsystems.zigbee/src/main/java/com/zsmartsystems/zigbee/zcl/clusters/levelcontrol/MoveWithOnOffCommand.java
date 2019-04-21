@@ -10,23 +10,33 @@ package com.zsmartsystems.zigbee.zcl.clusters.levelcontrol;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Move (with On/Off) Command value object class.
  * <p>
- * Cluster: <b>Level Control</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>Level Control</b>. Command ID 0x05 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Level Control cluster.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class MoveWithOnOffCommand extends ZclCommand {
     /**
-     * Move mode command message field.
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0008;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x05;
+
+    /**
+     * Move Mode command message field.
      */
     private Integer moveMode;
 
@@ -39,25 +49,25 @@ public class MoveWithOnOffCommand extends ZclCommand {
      * Default constructor.
      */
     public MoveWithOnOffCommand() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 8;
-        commandId = 5;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     /**
-     * Gets Move mode.
+     * Gets Move Mode.
      *
-     * @return the Move mode
+     * @return the Move Mode
      */
     public Integer getMoveMode() {
         return moveMode;
     }
 
     /**
-     * Sets Move mode.
+     * Sets Move Mode.
      *
-     * @param moveMode the Move mode
+     * @param moveMode the Move Mode
      */
     public void setMoveMode(final Integer moveMode) {
         this.moveMode = moveMode;

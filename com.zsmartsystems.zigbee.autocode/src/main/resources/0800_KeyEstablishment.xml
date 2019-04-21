@@ -1,0 +1,134 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0800">
+    <name>Key Establishment</name>
+    <description>This cluster provides attributes and commands to perform mutual authentication and establish keys between two ZigBee devices.</description>
+    <description>All Key Establishment messages should be sent with APS retries enabled. A failure to receive an ACK in a timely manner can be seen as a failure of key establishment. No Terminate Key Establishment should be sent to the partner of device that has timed out the operation.</description>
+    <description>The initiator can initiate the key establishment with any active endpoint on the responder device that supports the key establishment cluster. The endpoint can be either preconfigured or discovered, for example, by using ZDO Match_Desc_req. A link key successfully established using key establishment is valid for all endpoints on a particular device. The responder shall respond to the initiator using the source endpoint of the initiator's messages as the destination endpoint of the responder's messages.</description>
+    <description>It is expected that the time it takes to perform the various cryptographic computations of the key establishment cluster may vary greatly based on the device. Therefore rather than set static timeouts, the Initiate Key Establishment Request and Response messages will contain approximate values for how long the device will take to generate the ephemeral data and how long the device will take to generate confirm key message. A device performing key establishment can use this information in order to choose a reasonable timeout for its partner during those operations. The timeout should also take into consideration the time it takes for a message to traverse the network including APS retries. A minimum transmission time of 2 seconds is recommended.</description>
+    <description>For the Initiate Key Establishment Response message, it is recommended the initiator wait at least 2 seconds before timing out the operation. It is not expected that generating an Initiate Key Establishment Response will take significant time compared to generating the Ephemeral Data and Confirm Key messages.</description>
+    <command code="0x00" source="client">
+        <name>Initiate Key Establishment Request Command</name>
+        <description>The Initiate Key Establishment Request command allows a device to initiate key establishment with another device. The sender will transmit its identity information and key establishment protocol information to the receiving device.</description>
+        <description>If the device does not currently have the resources to respond to a key establishment request it shall send a Terminate Key Establishment command with the result value set to NO_RESOURCES and the Wait Time field shall be set to an approximation of the time that must pass before the device will have the resources to process a new Key Establishment Request.</description>
+        <description>If the device can process this request, it shall check the Issuer field of the device's implicit certificate. If the Issuer field does not contain a value that corresponds to a known Certificate Authority, the device shall send a Terminate Key Establishment command with the result set to UNKNOWN_ISSUER.</description>
+        <description>If the device accepts the request it shall send an Initiate Key Establishment Response command containing its own identity information. The device should verify the certificate belongs to the address that the device is communicating with. The binding between the identity of the communicating device and its address is verifiable using out-of-band method.</description>
+        <field type="BITMAP_16_BIT" class="KeyEstablishmentSuiteBitmap">
+            <name>Key Establishment Suite</name>
+            <description>This will be the type of Key Establishment that the initiator is requesting for the Key Establishment Cluster. For CBKE-ECMQV this will be 0x0001.</description>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Ephemeral Data Generate Time</name>
+            <description>This value indicates approximately how long the initiator device will take in seconds to generate the Ephemeral Data Request command. The valid range is 0x00 to 0xFE.</description>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Confirm Key Generate Time</name>
+            <description>This value indicates approximately how long the initiator device will take in seconds to generate the Confirm Key Request command. The valid range is 0x00 to 0xFE.</description>
+        </field>
+        <field type="RAW_OCTET">
+            <name>Identity</name>
+            <description>For KeyEstablishmentSuite = 0x0001 (CBKE), the identity field shall be the block of octets containing the implicit certificate CERTU.</description>
+        </field>
+    </command>
+    <command code="0x01" source="client">
+        <name>Ephemeral Data Request Command</name>
+        <description>The Ephemeral Data Request command allows a device to communicate its ephemeral data to another device and request that the device send back its own ephemeral data.</description>
+        <field type="RAW_OCTET">
+            <name>Ephemeral Data</name>
+        </field>
+    </command>
+    <command code="0x02" source="client">
+        <name>Confirm Key Data Request Command</name>
+        <description>The Confirm Key Request command allows the initiator sending device to confirm the key established with the responder receiving device based on performing a cryptographic hash using part of the generated keying material and the identities and ephemeral data of both parties.</description>
+        <field type="RAW_OCTET">
+            <name>Secure Message Authentication Code</name>
+        </field>
+    </command>
+    <command code="0x00" source="server">
+        <name>Initiate Key Establishment Response</name>
+        <description>The Initiate Key Establishment Response command allows a device to respond to a device requesting the initiation of key establishment with it. The sender will transmit its identity information and key establishment protocol information to the receiving device.</description>
+        <field type="BITMAP_16_BIT" class="KeyEstablishmentSuiteBitmap">
+            <name>Requested Key Establishment Suite</name>
+            <description>This will be the type of KeyEstablishmentSuite that the initiator has requested be used for the key establishment exchange. The device shall set a single bit in the bitmask indicating the requested suite, all other bits shall be set to zero.</description>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Ephemeral Data Generate Time</name>
+            <description>This value indicates approximately how long in seconds the responder device takes to generate the Ephemeral Data Response message. The valid range is 0x00 to 0xFE.</description>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Confirm Key Generate Time</name>
+            <description>This value indicates approximately how long the responder device will take in seconds to generate the Confirm Key Response message. The valid range is 0x00 to 0xFE.</description>
+        </field>
+        <field type="RAW_OCTET">
+            <name>Identity</name>
+            <description>For KeyEstablishmentSuite = 0x0001 (CBKE), the identity field shall be the block of Octets containing the implicit certificate CERTU .</description>
+        </field>
+    </command>
+    <command code="0x01" source="server">
+        <name>Ephemeral Data Response</name>
+        <description>The Ephemeral Data Response command allows a device to communicate its ephemeral data to another device that previously requested it.</description>
+        <field type="RAW_OCTET">
+            <name>Ephemeral Data</name>
+        </field>
+    </command>
+    <command code="0x02" source="server">
+        <name>Confirm Key Response</name>
+        <description>The Confirm Key Response command allows the responder to verify the initiator has derived the same secret key. This is done by sending the initiator a cryptographic hash generated using the keying material and the identities and ephemeral data of both parties.</description>
+        <field type="RAW_OCTET">
+            <name>Secure Message Authentication Code</name>
+        </field>
+    </command>
+    <command code="0x03" source="server">
+        <name>Terminate Key Establishment</name>
+        <description>The Terminate Key Establishment command may be sent by either the initiator or responder to indicate a failure in the key establishment exchange.</description>
+        <field type="ENUMERATION_8_BIT" class="KeyEstablishmentStatusEnum">
+            <name>Status Code</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Wait Time</name>
+            <description>This value indicates the minimum amount of time in seconds the initiator device should wait before trying to initiate key establishment again. The valid range is 0x00 to 0xFE.</description>
+        </field>
+        <field type="BITMAP_16_BIT" class="KeyEstablishmentSuiteBitmap">
+            <name>Key Establishment Suite</name>
+            <description>This value will be set the value of the KeyEstablishmentSuite attribute. It indicates the list of key exchange methods that the device supports.</description>
+        </field>
+    </command>
+    
+    <attribute code="0x0000" type="ENUMERATION_16_BIT" side="client" optional="false" writable="false" reportable="false" default="0x0000">
+        <name>Client Key Establishment Suite</name>
+        <description>The KeyEstablishmentSuite attribute is 16-bits in length and specifies all the cryptographic schemes for key establishment on the device. A device shall set the corresponding bit to 1 for every cryptographic scheme that is supports. All other cryptographic schemes and reserved bits shall be set to 0.</description>
+    </attribute>
+    <attribute code="0x0000" type="ENUMERATION_16_BIT" side="server" optional="false" writable="false" reportable="false" default="0x0000">
+        <name>Server Key Establishment Suite</name>
+        <description>The KeyEstablishmentSuite attribute is 16-bits in length and specifies all the cryptographic schemes for key establishment on the device. A device shall set the corresponding bit to 1 for every cryptographic scheme that is supports. All other cryptographic schemes and reserved bits shall be set to 0.</description>
+    </attribute>
+
+    <constant type="ENUMERATION_8_BIT" class="KeyEstablishmentStatusEnum">
+        <name>Key Establishment Status</name>
+        <value code="0x01" name="Unknown Issuer">
+        		<description>The Issuer field within the key establishment partner's certificate is unknown to the sending device, and it has terminated the key establishment.</description>
+        </value>
+        <value code="0x02" name="Bad Key Confirm">
+        		<description>The device could not confirm that it shares the same key with the corresponding device and has terminated the key establishment.</description>
+        </value>
+        <value code="0x03" name="Bad Message">
+        		<description>The device received a bad message from the corresponding device (e.g. message with bad data, an out of sequence number, or a message with a bad format) and has terminated the key establishment.</description>
+        </value>
+        <value code="0x04" name="No Resources">
+        		<description>The device does not currently have the internal resources necessary to perform key establishment and has terminated the exchange.</description>
+        </value>
+        <value code="0x05" name="Unsupported Suite">
+        		<description>The device does not support the specified key establishment suite in the partner's Initiate Key Establishment message.</description>
+        </value>
+        <value code="0x06" name="Invalid Certificate">
+            <description>The received certificate specifies a type, curve, hash, or other parameter that is either unsupported by the device or invalid.</description>
+        </value>
+    </constant>
+
+    <constant type="BITMAP_16_BIT" class="KeyEstablishmentSuiteBitmap">
+        <name>Key Establishment Suite</name>
+        <value code="0x01" name="Crypto Suite 1">
+        </value>
+        <value code="0x02" name="Crypto Suite 2">
+        </value>
+	</constant>
+</cluster>

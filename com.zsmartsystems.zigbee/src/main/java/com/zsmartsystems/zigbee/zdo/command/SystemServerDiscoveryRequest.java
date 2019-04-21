@@ -7,27 +7,33 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 import javax.annotation.Generated;
+
+import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
  * System Server Discovery Request value object class.
  * <p>
- * The System_Server_Discovery_req is generated from a Local Device wishing to
- * discover the location of a particular system server or servers as indicated by the
- * ServerMask parameter. The destination addressing on this request is "broadcast to
- * all devices for which macRxOnWhenIdle = TRUE".
+ * <p>
+ * The System_Server_Discovery_req is generated from a Local Device wishing to discover the
+ * location of a particular system server or servers as indicated by the ServerMask parameter.
+ * The destination addressing on this request is "broadcast to all devices for which
+ * macRxOnWhenIdle = TRUE".
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
 public class SystemServerDiscoveryRequest extends ZdoRequest {
+    /**
+     * The ZDO cluster ID.
+     */
+    public static int CLUSTER_ID = 0x0015;
+
     /**
      * Default constructor.
      */
     public SystemServerDiscoveryRequest() {
-        clusterId = 0x0015;
+        clusterId = CLUSTER_ID;
     }
 
     @Override

@@ -1,0 +1,48 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0403">
+    <name>Pressure Measurement</name>
+    <description>The cluster provides an interface to pressure measurement functionality, including configuration and provision of notifications of pressure measurements.</description>
+    <attribute code="0x0000" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="true" default="0x0000">
+        <name>Measured Value</name>
+        <description>MeasuredValue represents the pressure in kPa as follows:-</description>
+        <description>MeasuredValue = 10 x Pressure</description>
+        <description>Where -3276.7 kPa &lt;= Pressure &lt;= 3276.7 kPa, corresponding to a MeasuredValue in the range 0x8001 to 0x7fff.</description>
+        <description>Note:- The maximum resolution this format allows is 0.1 kPa.</description>
+        <description>A MeasuredValue of 0x8000 indicates that the pressure measurement is invalid. MeasuredValue is updated continuously as new measurements are made.</description>
+    </attribute>
+    <attribute code="0x0001" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x8001" maximum="0x7FFE">
+        <name>Min Measured Value</name>
+        <description>The MinMeasuredValue attribute indicates the minimum value of MeasuredValue that can be measured. A value of 0x8000 means this attribute is not defined.</description>
+    </attribute>
+    <attribute code="0x0002" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="true" minimum="0x8002" maximum="0x7FFF">
+        <name>Max Measured Value</name>
+        <description>The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue that can be measured. A value of 0x8000 means this attribute is not defined.</description>
+        <description>MaxMeasuredValue shall be greater than MinMeasuredValue.</description>
+        <description>MinMeasuredValue and MaxMeasuredValue define the range of the sensor.</description>
+    </attribute>
+    <attribute code="0x0003" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x0000" maximum="0x0800">
+        <name>Tolerance</name>
+        <description>The Tolerance attribute indicates the magnitude of the possible error that is associated with MeasuredValue . The true value is located in the range (MeasuredValue &#8211; Tolerance) to (MeasuredValue + Tolerance).</description>
+    </attribute>
+    <attribute code="0x0010" type="SIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="true" default="0x0000">
+        <name>Scaled Value</name>
+        <description>ScaledValue represents the pressure in Pascals as follows: ScaledValue = 10Scale x Pressure in Pa</description>
+    </attribute>
+    <attribute code="0x0011" type="SIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x8001" maximum="0x7FFE">
+        <name>Min Scaled Value</name>
+        <description>The MinScaledValue attribute indicates the minimum value of ScaledValue that can be measured. A value of 0x8000 means this attribute is not defined</description>
+    </attribute>
+    <attribute code="0x0012" type="SIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x8002" maximum="0x7FFF">
+        <name>Max Scaled Value</name>
+        <description>The MaxScaledValue attribute indicates the maximum value of ScaledValue that can be measured. A value of 0x8000 means this attribute is not defined.</description>
+    </attribute>
+    <attribute code="0x0013" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="true" minimum="0x0000" maximum="0x0800">
+        <name>Scaled Tolerance</name>
+        <description>The ScaledTolerance attribute indicates the magnitude of the possible error that is associated with ScaledValue. The true value is located in the range (ScaledValue – ScaledTolerance) to (ScaledValue + ScaledTolerance).</description>
+    </attribute>
+    <attribute code="0x0014" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x81" maximum="0x7F">
+        <name>Scale</name>
+        <description>The Scale attribute indicates the base 10 exponent used to obtain ScaledValue.</description>
+    </attribute>
+
+</cluster>

@@ -10,34 +10,42 @@ package com.zsmartsystems.zigbee.zcl.clusters.iaswd;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Start Warning Command value object class.
  * <p>
- * Cluster: <b>IAS WD</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>IAS WD</b>. Command ID 0x00 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the IAS WD cluster.
  * <p>
- * This command starts the WD operation. The WD alerts the surrounding area by
- * audible (siren) and visual (strobe) signals.
- * <br>
- * A Start Warning command shall always terminate the effect of any previous
- * command that is still current.
+ * This command starts the WD operation. The WD alerts the surrounding area by audible (siren)
+ * and visual (strobe) signals. <br> A Start Warning command shall always terminate the effect
+ * of any previous command that is still current.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class StartWarningCommand extends ZclCommand {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0502;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x00;
+
     /**
      * Header command message field.
      */
     private Integer header;
 
     /**
-     * Warning duration command message field.
+     * Warning Duration command message field.
      */
     private Integer warningDuration;
 
@@ -45,9 +53,9 @@ public class StartWarningCommand extends ZclCommand {
      * Default constructor.
      */
     public StartWarningCommand() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 1282;
-        commandId = 0;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
@@ -70,18 +78,18 @@ public class StartWarningCommand extends ZclCommand {
     }
 
     /**
-     * Gets Warning duration.
+     * Gets Warning Duration.
      *
-     * @return the Warning duration
+     * @return the Warning Duration
      */
     public Integer getWarningDuration() {
         return warningDuration;
     }
 
     /**
-     * Sets Warning duration.
+     * Sets Warning Duration.
      *
-     * @param warningDuration the Warning duration
+     * @param warningDuration the Warning Duration
      */
     public void setWarningDuration(final Integer warningDuration) {
         this.warningDuration = warningDuration;

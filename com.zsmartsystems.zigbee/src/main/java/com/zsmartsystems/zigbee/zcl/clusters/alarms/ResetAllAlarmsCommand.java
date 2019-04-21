@@ -15,20 +15,34 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 /**
  * Reset All Alarms Command value object class.
  * <p>
- * Cluster: <b>Alarms</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>Alarms</b>. Command ID 0x01 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Alarms cluster.
+ * <p>
+ * This command resets all alarms. Any alarm conditions that were in fact still active will
+ * cause a new notification to be generated and, where implemented, a new record added to the
+ * alarm log.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class ResetAllAlarmsCommand extends ZclCommand {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0009;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x01;
+
     /**
      * Default constructor.
      */
     public ResetAllAlarmsCommand() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 9;
-        commandId = 1;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 

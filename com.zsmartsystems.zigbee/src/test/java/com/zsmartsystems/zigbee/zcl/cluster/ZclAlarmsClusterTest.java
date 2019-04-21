@@ -13,12 +13,14 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
+import com.zsmartsystems.zigbee.zcl.ZclFrameType;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclAlarmsCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.alarms.AlarmCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.alarms.GetAlarmCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.alarms.GetAlarmResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.alarms.ResetAlarmCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.alarms.ResetAllAlarmsCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
 
 /**
  *
@@ -30,16 +32,20 @@ public class ZclAlarmsClusterTest {
     public void getCommandFromId() {
         ZclAlarmsCluster cluster = new ZclAlarmsCluster(Mockito.mock(ZigBeeEndpoint.class));
 
-        assertTrue(cluster.getCommandFromId(0) instanceof ResetAlarmCommand);
-        assertTrue(cluster.getCommandFromId(1) instanceof ResetAllAlarmsCommand);
-        assertTrue(cluster.getCommandFromId(2) instanceof GetAlarmCommand);
+        assertTrue(cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND, 0) instanceof ResetAlarmCommand);
+        assertTrue(cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND, 1) instanceof ResetAllAlarmsCommand);
+        assertTrue(cluster.getCommandFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND, 2) instanceof GetAlarmCommand);
+
+        assertTrue(cluster.getCommandFromId(ZclFrameType.ENTIRE_PROFILE_COMMAND, 0) instanceof ReadAttributesCommand);
     }
 
     @Test
     public void getResponseFromId() {
         ZclAlarmsCluster cluster = new ZclAlarmsCluster(Mockito.mock(ZigBeeEndpoint.class));
 
-        assertTrue(cluster.getResponseFromId(0) instanceof AlarmCommand);
-        assertTrue(cluster.getResponseFromId(1) instanceof GetAlarmResponse);
+        assertTrue(cluster.getResponseFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND, 0) instanceof AlarmCommand);
+        assertTrue(cluster.getResponseFromId(ZclFrameType.CLUSTER_SPECIFIC_COMMAND, 1) instanceof GetAlarmResponse);
+
+        assertTrue(cluster.getResponseFromId(ZclFrameType.ENTIRE_PROFILE_COMMAND, 0) instanceof ReadAttributesCommand);
     }
 }
