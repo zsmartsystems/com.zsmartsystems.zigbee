@@ -62,7 +62,7 @@ public class ZstackAppCnfSetAllowrejoinTcPolicySreq extends ZstackFrameRequest {
         serializeHeader(ZSTACK_SREQ, ZSTACK_APP_CNF, 0x02);
 
         // Serialize the fields
-        serializeBoolean(allowRejoin);
+        serializer.serializeBoolean(allowRejoin);
         return getPayload();
     }
 

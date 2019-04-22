@@ -63,7 +63,7 @@ public class ZstackSysSetExtAddrSreq extends ZstackFrameRequest {
         serializeHeader(ZSTACK_SREQ, ZSTACK_SYS, 0x03);
 
         // Serialize the fields
-        serializeIeeeAddress(extAddress);
+        serializer.serializeIeeeAddress(extAddress);
         return getPayload();
     }
 

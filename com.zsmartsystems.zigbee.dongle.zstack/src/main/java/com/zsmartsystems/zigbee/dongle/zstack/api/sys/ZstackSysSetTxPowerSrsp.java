@@ -36,7 +36,7 @@ public class ZstackSysSetTxPowerSrsp extends ZstackFrameResponse {
         synchronousCommand = true;
 
         // Deserialize the fields
-        txPower = deserializeUInt8();
+        txPower = deserializer.deserializeUInt8();
     }
 
     /**

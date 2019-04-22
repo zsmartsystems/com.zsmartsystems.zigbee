@@ -235,14 +235,14 @@ public class ZstackMacScanReqSreq extends ZstackFrameRequest {
         serializeHeader(ZSTACK_SREQ, ZSTACK_MAC, 0x0C);
 
         // Serialize the fields
-        serializeUInt32(scanChannels);
-        serializeUInt8(scanType);
-        serializeUInt8(scanDuration);
-        serializeUInt8(channelPage);
-        serializeUInt8(keySource);
-        serializeUInt8(securityLevel);
-        serializeUInt8(keyIdMode);
-        serializeUInt8(keyIndex);
+        serializer.serializeUInt32(scanChannels);
+        serializer.serializeUInt8(scanType);
+        serializer.serializeUInt8(scanDuration);
+        serializer.serializeUInt8(channelPage);
+        serializer.serializeUInt8(keySource);
+        serializer.serializeUInt8(securityLevel);
+        serializer.serializeUInt8(keyIdMode);
+        serializer.serializeUInt8(keyIndex);
         return getPayload();
     }
 

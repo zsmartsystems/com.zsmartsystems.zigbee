@@ -86,8 +86,8 @@ public class ZstackSysOsalNvReadSreq extends ZstackFrameRequest {
         serializeHeader(ZSTACK_SREQ, ZSTACK_SYS, 0x08);
 
         // Serialize the fields
-        serializeUInt8(id.getKey());
-        serializeUInt8(offset);
+        serializer.serializeUInt8(id.getKey());
+        serializer.serializeUInt8(offset);
         return getPayload();
     }
 

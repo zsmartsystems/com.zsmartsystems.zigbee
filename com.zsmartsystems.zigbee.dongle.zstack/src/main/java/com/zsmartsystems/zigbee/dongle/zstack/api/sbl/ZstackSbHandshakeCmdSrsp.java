@@ -52,11 +52,11 @@ public class ZstackSbHandshakeCmdSrsp extends ZstackFrameResponse {
         synchronousCommand = true;
 
         // Deserialize the fields
-        status = ZstackResponseCode.valueOf(deserializeUInt8());
-        bootloaderRevision = deserializeUInt32();
-        deviceType = deserializeUInt8();
-        bufferLength = deserializeUInt32();
-        pageSize = deserializeUInt32();
+        status = ZstackResponseCode.valueOf(deserializer.deserializeUInt8());
+        bootloaderRevision = deserializer.deserializeUInt32();
+        deviceType = deserializer.deserializeUInt8();
+        bufferLength = deserializer.deserializeUInt32();
+        pageSize = deserializer.deserializeUInt32();
     }
 
     /**

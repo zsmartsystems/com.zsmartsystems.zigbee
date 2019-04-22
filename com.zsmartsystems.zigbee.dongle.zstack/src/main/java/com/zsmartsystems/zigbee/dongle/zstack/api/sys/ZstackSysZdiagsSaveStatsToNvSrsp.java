@@ -35,7 +35,7 @@ public class ZstackSysZdiagsSaveStatsToNvSrsp extends ZstackFrameResponse {
         synchronousCommand = true;
 
         // Deserialize the fields
-        sysClock = deserializeUInt32();
+        sysClock = deserializer.deserializeUInt32();
     }
 
     /**

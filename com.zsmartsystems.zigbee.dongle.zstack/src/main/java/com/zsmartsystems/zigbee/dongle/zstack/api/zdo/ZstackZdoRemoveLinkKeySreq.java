@@ -63,7 +63,7 @@ public class ZstackZdoRemoveLinkKeySreq extends ZstackFrameRequest {
         serializeHeader(ZSTACK_SREQ, ZSTACK_ZDO, 0x24);
 
         // Serialize the fields
-        serializeIeeeAddress(ieeeAddr);
+        serializer.serializeIeeeAddress(ieeeAddr);
         return getPayload();
     }
 

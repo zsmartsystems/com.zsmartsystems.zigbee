@@ -85,8 +85,8 @@ public class ZstackUtilLedControlSreq extends ZstackFrameRequest {
         serializeHeader(ZSTACK_SREQ, ZSTACK_UTIL, 0x09);
 
         // Serialize the fields
-        serializeUInt8(ledId);
-        serializeBoolean(mode);
+        serializer.serializeUInt8(ledId);
+        serializer.serializeBoolean(mode);
         return getPayload();
     }
 

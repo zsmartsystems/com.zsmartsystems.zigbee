@@ -52,10 +52,10 @@ public class ZstackUtilApsmeLinkKeyDataGetSrsp extends ZstackFrameResponse {
         synchronousCommand = true;
 
         // Deserialize the fields
-        status = ZstackResponseCode.valueOf(deserializeUInt8());
-        secKey = deserializeZigBeeKey();
-        txFrmCntr = deserializeUInt32();
-        rxFrmCntr = deserializeUInt32();
+        status = ZstackResponseCode.valueOf(deserializer.deserializeUInt8());
+        secKey = deserializer.deserializeZigBeeKey();
+        txFrmCntr = deserializer.deserializeUInt32();
+        rxFrmCntr = deserializer.deserializeUInt32();
     }
 
     /**

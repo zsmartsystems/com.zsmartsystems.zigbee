@@ -64,12 +64,12 @@ public class ZstackUtilGetNvInfoSrsp extends ZstackFrameResponse {
         synchronousCommand = true;
 
         // Deserialize the fields
-        status = deserializeUInt8();
-        ieeeAddress = deserializeIeeeAddress();
-        scanChannels = deserializeUInt32();
-        panId = deserializeUInt16();
-        securityLevel = deserializeUInt8();
-        preConfigKey = deserializeZigBeeKey();
+        status = deserializer.deserializeUInt8();
+        ieeeAddress = deserializer.deserializeIeeeAddress();
+        scanChannels = deserializer.deserializeUInt32();
+        panId = deserializer.deserializeUInt16();
+        securityLevel = deserializer.deserializeUInt8();
+        preConfigKey = deserializer.deserializeZigBeeKey();
     }
 
     /**

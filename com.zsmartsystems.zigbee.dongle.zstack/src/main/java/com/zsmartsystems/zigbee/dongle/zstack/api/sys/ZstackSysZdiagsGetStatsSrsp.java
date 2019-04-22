@@ -35,7 +35,7 @@ public class ZstackSysZdiagsGetStatsSrsp extends ZstackFrameResponse {
         synchronousCommand = true;
 
         // Deserialize the fields
-        attributeValue = deserializeUInt32();
+        attributeValue = deserializer.deserializeUInt32();
     }
 
     /**

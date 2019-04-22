@@ -62,7 +62,7 @@ public class ZstackZbGetDeviceInfoSreq extends ZstackFrameRequest {
         serializeHeader(ZSTACK_SREQ, ZSTACK_SAPI, 0x06);
 
         // Serialize the fields
-        serializeUInt8(param);
+        serializer.serializeUInt8(param);
         return getPayload();
     }
 

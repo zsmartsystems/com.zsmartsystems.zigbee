@@ -48,9 +48,9 @@ public class ZstackZdoGetLinkKeySrsp extends ZstackFrameResponse {
         synchronousCommand = true;
 
         // Deserialize the fields
-        status = ZstackResponseCode.valueOf(deserializeUInt8());
-        ieeeAddr = deserializeIeeeAddress();
-        linkKeyData = deserializeZigBeeKey();
+        status = ZstackResponseCode.valueOf(deserializer.deserializeUInt8());
+        ieeeAddr = deserializer.deserializeIeeeAddress();
+        linkKeyData = deserializer.deserializeZigBeeKey();
     }
 
     /**

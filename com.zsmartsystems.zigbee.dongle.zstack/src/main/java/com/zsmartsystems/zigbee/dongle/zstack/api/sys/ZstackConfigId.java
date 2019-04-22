@@ -454,7 +454,7 @@ public enum ZstackConfigId {
     ZCD_NV_USERDESC(0x0081),
 
     /**
-     * This holds the value of nwkActiveKeyItems struct and restores the NWK key counter after power cycles.
+     * This holds the value of nwkActiveKeyItems structure and restores the NWK key counter after power cycles.
      */
     ZCD_NV_NWKKEY(0x0082),
 

@@ -63,7 +63,7 @@ public class ZstackSysZdiagsClearStatsSreq extends ZstackFrameRequest {
         serializeHeader(ZSTACK_SREQ, ZSTACK_SYS, 0x18);
 
         // Serialize the fields
-        serializeBoolean(clearNv);
+        serializer.serializeBoolean(clearNv);
         return getPayload();
     }
 

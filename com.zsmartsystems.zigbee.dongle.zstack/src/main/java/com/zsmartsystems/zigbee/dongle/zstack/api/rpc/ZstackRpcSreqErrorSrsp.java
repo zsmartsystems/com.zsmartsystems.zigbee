@@ -45,9 +45,9 @@ public class ZstackRpcSreqErrorSrsp extends ZstackFrameResponse {
         synchronousCommand = true;
 
         // Deserialize the fields
-        errorCode = ZstackSreqErrorCode.valueOf(deserializeUInt8());
-        reqCmd0 = deserializeUInt8();
-        reqCmd1 = deserializeUInt8();
+        errorCode = ZstackSreqErrorCode.valueOf(deserializer.deserializeUInt8());
+        reqCmd0 = deserializer.deserializeUInt8();
+        reqCmd1 = deserializer.deserializeUInt8();
     }
 
     /**

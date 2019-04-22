@@ -85,8 +85,8 @@ public class ZstackAppCnfBdbSetActiveDefaultCentralizedKeySreq extends ZstackFra
         serializeHeader(ZSTACK_SREQ, ZSTACK_APP_CNF, 0x07);
 
         // Serialize the fields
-        serializeUInt8(centralizedLinkKeyMode.getKey());
-        serializeUInt8(installCode);
+        serializer.serializeUInt8(centralizedLinkKeyMode.getKey());
+        serializer.serializeUInt8(installCode);
         return getPayload();
     }
 

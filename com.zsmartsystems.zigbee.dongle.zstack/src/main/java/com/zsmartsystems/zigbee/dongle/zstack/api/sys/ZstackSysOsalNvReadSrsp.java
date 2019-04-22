@@ -42,9 +42,9 @@ public class ZstackSysOsalNvReadSrsp extends ZstackFrameResponse {
         synchronousCommand = true;
 
         // Deserialize the fields
-        status = ZstackResponseCode.valueOf(deserializeUInt8());
-        int len = deserializeUInt8();
-        value = deserializeUInt8Array(len);
+        status = ZstackResponseCode.valueOf(deserializer.deserializeUInt8());
+        int len = deserializer.deserializeUInt8();
+        value = deserializer.deserializeUInt8Array(len);
     }
 
     /**

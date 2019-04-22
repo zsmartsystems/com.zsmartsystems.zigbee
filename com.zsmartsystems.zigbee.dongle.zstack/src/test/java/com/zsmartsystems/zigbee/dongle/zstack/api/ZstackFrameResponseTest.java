@@ -24,29 +24,29 @@ public class ZstackFrameResponseTest {
     public void deserializeUInt16() {
         Response response = new Response(new int[] { 0x00, 0x00, 0x34, 0x12 });
 
-        assertEquals(0x1234, response.deserializeUInt16());
+        assertEquals(0x1234, response.deserializer.deserializeUInt16());
     }
 
     @Test
     public void deserializeUInt32() {
         Response response = new Response(new int[] { 0x00, 0x00, 0x78, 0x56, 0x34, 0x12 });
 
-        assertEquals(0x12345678, response.deserializeUInt32());
+        assertEquals(0x12345678, response.deserializer.deserializeUInt32());
     }
 
     @Test
     public void deserializeBoolean() {
         Response response = new Response(new int[] { 0x00, 0x00, 0x00, 0x01 });
 
-        assertEquals(false, response.deserializeBoolean());
-        assertEquals(true, response.deserializeBoolean());
+        assertEquals(false, response.deserializer.deserializeBoolean());
+        assertEquals(true, response.deserializer.deserializeBoolean());
     }
 
     @Test
     public void deserializeIeeeAddress() {
         Response response = new Response(new int[] { 0x00, 0x00, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12 });
 
-        assertEquals(new IeeeAddress("1234567890ABCDEF"), response.deserializeIeeeAddress());
+        assertEquals(new IeeeAddress("1234567890ABCDEF"), response.deserializer.deserializeIeeeAddress());
     }
 
     class Response extends ZstackFrameResponse {

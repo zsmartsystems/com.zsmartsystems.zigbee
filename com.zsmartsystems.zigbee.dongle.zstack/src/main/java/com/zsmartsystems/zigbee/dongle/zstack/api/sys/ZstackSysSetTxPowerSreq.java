@@ -63,7 +63,7 @@ public class ZstackSysSetTxPowerSreq extends ZstackFrameRequest {
         serializeHeader(ZSTACK_SREQ, ZSTACK_SYS, 0x14);
 
         // Serialize the fields
-        serializeUInt8(txPower);
+        serializer.serializeUInt8(txPower);
         return getPayload();
     }
 

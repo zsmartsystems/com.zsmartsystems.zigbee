@@ -203,15 +203,15 @@ public class ZstackAfRegisterSreq extends ZstackFrameRequest {
         serializeHeader(ZSTACK_SREQ, ZSTACK_AF, 0x00);
 
         // Serialize the fields
-        serializeUInt8(endPoint);
-        serializeUInt16(appProfId);
-        serializeUInt16(appDeviceId);
-        serializeUInt8(appDevVer);
-        serializeUInt8(latencyReq);
-        serializeUInt8(appInClusterList.length);
-        serializeUInt16Array(appInClusterList);
-        serializeUInt8(appOutClusterList.length);
-        serializeUInt16Array(appOutClusterList);
+        serializer.serializeUInt8(endPoint);
+        serializer.serializeUInt16(appProfId);
+        serializer.serializeUInt16(appDeviceId);
+        serializer.serializeUInt8(appDevVer);
+        serializer.serializeUInt8(latencyReq);
+        serializer.serializeUInt8(appInClusterList.length);
+        serializer.serializeUInt16Array(appInClusterList);
+        serializer.serializeUInt8(appOutClusterList.length);
+        serializer.serializeUInt16Array(appOutClusterList);
         return getPayload();
     }
 
