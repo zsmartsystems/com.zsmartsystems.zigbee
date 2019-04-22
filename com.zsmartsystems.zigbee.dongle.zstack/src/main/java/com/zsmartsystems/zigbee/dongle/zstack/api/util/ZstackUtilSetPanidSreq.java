@@ -62,7 +62,7 @@ public class ZstackUtilSetPanidSreq extends ZstackFrameRequest {
         serializeHeader(ZSTACK_SREQ, ZSTACK_UTIL, 0x02);
 
         // Serialize the fields
-        serializeUInt16(panId);
+        serializer.serializeUInt16(panId);
         return getPayload();
     }
 

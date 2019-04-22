@@ -177,6 +177,9 @@ public class ZstackAutocoder {
                     if (nodes.item(temp).getNodeName().equals("description")) {
                         structure.description = nodes.item(temp).getTextContent().trim();
                     }
+                    if (nodes.item(temp).getNodeName().equals("subsystem")) {
+                        structure.subsystem = nodes.item(temp).getTextContent().trim();
+                    }
 
                     if (nodes.item(temp).getNodeName().equals("parameters")) {
                         structure.parameters = (List<Parameter>) processNode(nodes.item(temp));

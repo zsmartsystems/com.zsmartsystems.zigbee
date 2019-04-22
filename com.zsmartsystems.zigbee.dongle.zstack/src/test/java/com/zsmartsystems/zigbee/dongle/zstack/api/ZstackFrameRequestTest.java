@@ -25,17 +25,19 @@ public class ZstackFrameRequestTest {
     @Test
     public void deserializeUInt16() {
         Request request = new Request();
-        request.serializeUInt16(0x1234);
+        request.serializeHeader(0, 0, 0);
+        request.serializer.serializeUInt16(0x1234);
 
-        assertTrue(Arrays.equals(new int[] { 0xFE, 0x04, 0x00, 0x00, 0x34, 0x12, 0x22 }, request.getPayload()));
+        assertTrue(Arrays.equals(new int[] { 0xFE, 0x02, 0x00, 0x00, 0x34, 0x12, 0x24 }, request.getPayload()));
     }
 
     @Test
     public void serializeUInt32() {
         Request request = new Request();
-        request.serializeUInt32(0x12345678);
+        request.serializeHeader(0, 0, 0);
+        request.serializer.serializeUInt32(0x12345678);
 
-        assertTrue(Arrays.equals(new int[] { 0xFE, 0x06, 0x00, 0x00, 0x78, 0x56, 0x34, 0x12, 0x0E },
+        assertTrue(Arrays.equals(new int[] { 0xFE, 0x04, 0x00, 0x00, 0x78, 0x56, 0x34, 0x12, 0x0C },
                 request.getPayload()));
     }
 
@@ -43,20 +45,22 @@ public class ZstackFrameRequestTest {
     public void serializeIeeeAddress() {
         Request request = new Request();
         IeeeAddress address = new IeeeAddress("1234567890ABCDEF");
-        request.serializeIeeeAddress(address);
+        request.serializeHeader(0, 0, 0);
+        request.serializer.serializeIeeeAddress(address);
 
         assertTrue(Arrays.equals(
-                new int[] { 0xFE, 0x0A, 0x00, 0x00, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0x1B },
+                new int[] { 0xFE, 0x08, 0x00, 0x00, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0x19 },
                 request.getPayload()));
     }
 
     @Test
     public void serializeBoolean() {
         Request request = new Request();
-        request.serializeBoolean(false);
-        request.serializeBoolean(true);
+        request.serializeHeader(0, 0, 0);
+        request.serializer.serializeBoolean(false);
+        request.serializer.serializeBoolean(true);
 
-        assertTrue(Arrays.equals(new int[] { 0xFE, 0x04, 0x00, 0x00, 0x00, 0x01, 0x05 }, request.getPayload()));
+        assertTrue(Arrays.equals(new int[] { 0xFE, 0x02, 0x00, 0x00, 0x00, 0x01, 0x03 }, request.getPayload()));
     }
 
     class Request extends ZstackFrameRequest {

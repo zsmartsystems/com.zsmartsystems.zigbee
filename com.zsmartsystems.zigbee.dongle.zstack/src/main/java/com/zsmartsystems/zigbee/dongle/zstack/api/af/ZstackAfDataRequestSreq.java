@@ -244,19 +244,19 @@ public class ZstackAfDataRequestSreq extends ZstackFrameRequest {
         serializeHeader(ZSTACK_SREQ, ZSTACK_AF, 0x01);
 
         // Serialize the fields
-        serializeUInt16(dstAddr);
-        serializeUInt8(destEndpoint);
-        serializeUInt8(srcEndpoint);
-        serializeUInt16(clusterId);
-        serializeUInt8(transId);
+        serializer.serializeUInt16(dstAddr);
+        serializer.serializeUInt8(destEndpoint);
+        serializer.serializeUInt8(srcEndpoint);
+        serializer.serializeUInt16(clusterId);
+        serializer.serializeUInt8(transId);
         int tmpOptions = 0;
         for (AfDataOptions value : options) {
             tmpOptions += value.getKey();
         }
-        serializeUInt8(tmpOptions);
-        serializeUInt8(radius);
-        serializeUInt8(data.length);
-        serializeUInt8Array(data);
+        serializer.serializeUInt8(tmpOptions);
+        serializer.serializeUInt8(radius);
+        serializer.serializeUInt8(data.length);
+        serializer.serializeUInt8Array(data);
         return getPayload();
     }
 

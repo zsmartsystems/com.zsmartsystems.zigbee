@@ -62,7 +62,7 @@ public class ZstackSysZdiagsGetStatsSreq extends ZstackFrameRequest {
         serializeHeader(ZSTACK_SREQ, ZSTACK_SYS, 0x19);
 
         // Serialize the fields
-        serializeUInt16(attributeId.getKey());
+        serializer.serializeUInt16(attributeId.getKey());
         return getPayload();
     }
 

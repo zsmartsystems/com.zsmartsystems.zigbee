@@ -113,9 +113,9 @@ public class ZstackAppCnfBdbAddInstallcodeSreq extends ZstackFrameRequest {
         serializeHeader(ZSTACK_SREQ, ZSTACK_APP_CNF, 0x02);
 
         // Serialize the fields
-        serializeUInt8(installCodeFormat.getKey());
-        serializeIeeeAddress(ieeeAddress);
-        serializeZigBeeKey(installCode);
+        serializer.serializeUInt8(installCodeFormat.getKey());
+        serializer.serializeIeeeAddress(ieeeAddress);
+        serializer.serializeZigBeeKey(installCode);
         return getPayload();
     }
 

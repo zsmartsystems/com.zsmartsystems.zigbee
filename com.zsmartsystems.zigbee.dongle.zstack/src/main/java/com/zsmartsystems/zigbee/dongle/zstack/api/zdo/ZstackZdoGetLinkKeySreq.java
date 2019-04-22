@@ -63,7 +63,7 @@ public class ZstackZdoGetLinkKeySreq extends ZstackFrameRequest {
         serializeHeader(ZSTACK_SREQ, ZSTACK_ZDO, 0x25);
 
         // Serialize the fields
-        serializeIeeeAddress(ieeeAddr);
+        serializer.serializeIeeeAddress(ieeeAddr);
         return getPayload();
     }
 

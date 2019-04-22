@@ -3025,4 +3025,23 @@
 		</values>
 	</enum>
 
+
+	<structure>
+		<name>ZstackNwkKeyDesc</name>
+		<subsystem>SYS</subsystem>
+		<description></description>
+		<parameters>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>keySeqNum</name>
+				<description></description>
+			</parameter>
+			<parameter>
+				<data_type>ZigBeeKey</data_type>
+				<name>key</name>
+				<description></description>
+			</parameter>
+		</parameters>
+	</structure>
+
 </protocol>

@@ -45,9 +45,9 @@ public class ZstackZdoTcDevIndAreq extends ZstackFrameResponse {
         super(inputBuffer);
 
         // Deserialize the fields
-        srcAddr = deserializeUInt16();
-        extAddr = deserializeIeeeAddress();
-        parentAddr = deserializeUInt16();
+        srcAddr = deserializer.deserializeUInt16();
+        extAddr = deserializer.deserializeIeeeAddress();
+        parentAddr = deserializer.deserializeUInt16();
     }
 
     /**

@@ -110,9 +110,9 @@ public class ZstackZdoSetLinkKeySreq extends ZstackFrameRequest {
         serializeHeader(ZSTACK_SREQ, ZSTACK_ZDO, 0x23);
 
         // Serialize the fields
-        serializeUInt16(shortAddr);
-        serializeIeeeAddress(ieeeAddr);
-        serializeZigBeeKey(linkKeyData);
+        serializer.serializeUInt16(shortAddr);
+        serializer.serializeIeeeAddress(ieeeAddr);
+        serializer.serializeZigBeeKey(linkKeyData);
         return getPayload();
     }
 

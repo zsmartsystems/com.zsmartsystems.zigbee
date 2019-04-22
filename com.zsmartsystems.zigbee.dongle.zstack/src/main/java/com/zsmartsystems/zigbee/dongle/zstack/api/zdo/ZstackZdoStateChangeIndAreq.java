@@ -34,7 +34,7 @@ public class ZstackZdoStateChangeIndAreq extends ZstackFrameResponse {
         super(inputBuffer);
 
         // Deserialize the fields
-        state = ZstackZdoState.valueOf(deserializeUInt8());
+        state = ZstackZdoState.valueOf(deserializer.deserializeUInt8());
     }
 
     /**

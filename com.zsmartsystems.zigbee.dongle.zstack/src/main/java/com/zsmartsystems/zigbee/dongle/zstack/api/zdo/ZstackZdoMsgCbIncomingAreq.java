@@ -63,13 +63,13 @@ public class ZstackZdoMsgCbIncomingAreq extends ZstackFrameResponse {
         super(inputBuffer);
 
         // Deserialize the fields
-        srcAddr = deserializeUInt16();
-        wasBroadcast = deserializeBoolean();
-        clusterId = deserializeUInt16();
-        securityUse = deserializeBoolean();
-        seqNumber = deserializeUInt8();
-        dstAddr = deserializeUInt16();
-        data = deserializeUInt8Array();
+        srcAddr = deserializer.deserializeUInt16();
+        wasBroadcast = deserializer.deserializeBoolean();
+        clusterId = deserializer.deserializeUInt16();
+        securityUse = deserializer.deserializeBoolean();
+        seqNumber = deserializer.deserializeUInt8();
+        dstAddr = deserializer.deserializeUInt16();
+        data = deserializer.deserializeUInt8Array();
     }
 
     /**

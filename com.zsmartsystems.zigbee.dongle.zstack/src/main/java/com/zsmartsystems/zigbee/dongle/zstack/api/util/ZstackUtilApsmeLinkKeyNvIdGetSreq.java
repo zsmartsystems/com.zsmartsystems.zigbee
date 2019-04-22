@@ -63,7 +63,7 @@ public class ZstackUtilApsmeLinkKeyNvIdGetSreq extends ZstackFrameRequest {
         serializeHeader(ZSTACK_SREQ, ZSTACK_UTIL, 0x45);
 
         // Serialize the fields
-        serializeIeeeAddress(extAddr);
+        serializer.serializeIeeeAddress(extAddr);
         return getPayload();
     }
 

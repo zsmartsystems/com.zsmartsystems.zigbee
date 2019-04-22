@@ -18,4 +18,5 @@ public class Structure {
     public String name;
     public String description;
     public List<Parameter> parameters;
+    public String subsystem;
 }

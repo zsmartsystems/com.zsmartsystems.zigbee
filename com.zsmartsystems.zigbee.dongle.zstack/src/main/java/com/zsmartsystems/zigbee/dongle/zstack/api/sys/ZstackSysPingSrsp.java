@@ -35,7 +35,7 @@ public class ZstackSysPingSrsp extends ZstackFrameResponse {
         synchronousCommand = true;
 
         // Deserialize the fields
-        capabilities = deserializeUInt16();
+        capabilities = deserializer.deserializeUInt16();
     }
 
     /**

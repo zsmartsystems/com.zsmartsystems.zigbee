@@ -63,7 +63,7 @@ public class ZstackZbReadConfigurationSreq extends ZstackFrameRequest {
         serializeHeader(ZSTACK_SREQ, ZSTACK_SAPI, 0x04);
 
         // Serialize the fields
-        serializeUInt8(configId.getKey());
+        serializer.serializeUInt8(configId.getKey());
         return getPayload();
     }
 

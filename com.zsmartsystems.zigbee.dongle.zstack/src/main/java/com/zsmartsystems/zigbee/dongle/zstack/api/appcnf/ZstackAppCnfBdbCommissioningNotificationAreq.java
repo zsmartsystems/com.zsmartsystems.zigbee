@@ -48,9 +48,9 @@ public class ZstackAppCnfBdbCommissioningNotificationAreq extends ZstackFrameRes
         super(inputBuffer);
 
         // Deserialize the fields
-        status = ZstackBdbStatus.valueOf(deserializeUInt8());
-        commissioningMode = ZstackBdbCommissioningMode.valueOf(deserializeUInt8());
-        int tmpRemainingCommissioningModes = deserializeUInt8();
+        status = ZstackBdbStatus.valueOf(deserializer.deserializeUInt8());
+        commissioningMode = ZstackBdbCommissioningMode.valueOf(deserializer.deserializeUInt8());
+        int tmpRemainingCommissioningModes = deserializer.deserializeUInt8();
         for (ZstackBdbRemainingCommissioningModes value : ZstackBdbRemainingCommissioningModes.values()) {
             if ((tmpRemainingCommissioningModes & value.getKey()) != 0) {
                 remainingCommissioningModes.add(value);

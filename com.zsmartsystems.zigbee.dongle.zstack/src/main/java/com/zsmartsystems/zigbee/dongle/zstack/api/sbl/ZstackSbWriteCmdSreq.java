@@ -60,8 +60,8 @@ public class ZstackSbWriteCmdSreq extends ZstackFrameRequest {
         serializeHeader(ZSTACK_SREQ, ZSTACK_SBL, 0x00);
 
         // Serialize the fields
-        serializeUInt32(payload.length);
-        serializeUInt8Array(payload);
+        serializer.serializeUInt32(payload.length);
+        serializer.serializeUInt8Array(payload);
         return getPayload();
     }
 

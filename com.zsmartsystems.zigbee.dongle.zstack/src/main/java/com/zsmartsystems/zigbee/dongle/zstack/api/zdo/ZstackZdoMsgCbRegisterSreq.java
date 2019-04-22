@@ -62,7 +62,7 @@ public class ZstackZdoMsgCbRegisterSreq extends ZstackFrameRequest {
         serializeHeader(ZSTACK_SREQ, ZSTACK_ZDO, 0x3E);
 
         // Serialize the fields
-        serializeUInt16(clusterId);
+        serializer.serializeUInt16(clusterId);
         return getPayload();
     }
 

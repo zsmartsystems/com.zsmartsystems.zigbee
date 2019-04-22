@@ -50,9 +50,9 @@ public class ZstackAfDataConfirmAreq extends ZstackFrameResponse {
         super(inputBuffer);
 
         // Deserialize the fields
-        status = ZstackResponseCode.valueOf(deserializeUInt8());
-        endpoint = deserializeUInt8();
-        transId = deserializeUInt8();
+        status = ZstackResponseCode.valueOf(deserializer.deserializeUInt8());
+        endpoint = deserializer.deserializeUInt8();
+        transId = deserializer.deserializeUInt8();
     }
 
     /**

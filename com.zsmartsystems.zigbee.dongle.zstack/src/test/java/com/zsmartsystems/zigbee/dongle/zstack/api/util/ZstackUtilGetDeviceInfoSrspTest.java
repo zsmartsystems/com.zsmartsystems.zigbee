@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.zstack.api.ZstackResponseCode;
+import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackZdoState;
 
 /**
  *
@@ -32,7 +33,7 @@ public class ZstackUtilGetDeviceInfoSrspTest {
         assertEquals(1, res.getDeviceType());
         assertEquals(0, res.getShortAddr());
         assertEquals(new IeeeAddress("00124B0002F1D414"), res.getIeeeAddress());
-        assertEquals(ZstackDeviceState.UNINITIALIZED, res.getDeviceState());
+        assertEquals(ZstackZdoState.DEV_HOLD, res.getDeviceState());
         assertEquals(4, res.getAssocDevicesList().length);
         assertEquals(0x35FC, res.getAssocDevicesList()[0]);
     }

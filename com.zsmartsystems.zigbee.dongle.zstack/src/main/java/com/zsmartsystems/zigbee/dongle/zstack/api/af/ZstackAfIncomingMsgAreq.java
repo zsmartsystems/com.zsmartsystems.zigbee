@@ -84,18 +84,18 @@ public class ZstackAfIncomingMsgAreq extends ZstackFrameResponse {
         super(inputBuffer);
 
         // Deserialize the fields
-        groupId = deserializeUInt16();
-        clusterId = deserializeUInt16();
-        srcAddr = deserializeUInt16();
-        srcEndpoint = deserializeUInt8();
-        destEndpoint = deserializeUInt8();
-        wasBroadcast = deserializeBoolean();
-        linkQuality = deserializeUInt8();
-        securityUse = deserializeBoolean();
-        timeStamp = deserializeUInt32();
-        seqNumber = deserializeUInt8();
-        int len = deserializeUInt8();
-        data = deserializeUInt8Array(len);
+        groupId = deserializer.deserializeUInt16();
+        clusterId = deserializer.deserializeUInt16();
+        srcAddr = deserializer.deserializeUInt16();
+        srcEndpoint = deserializer.deserializeUInt8();
+        destEndpoint = deserializer.deserializeUInt8();
+        wasBroadcast = deserializer.deserializeBoolean();
+        linkQuality = deserializer.deserializeUInt8();
+        securityUse = deserializer.deserializeBoolean();
+        timeStamp = deserializer.deserializeUInt32();
+        seqNumber = deserializer.deserializeUInt8();
+        int len = deserializer.deserializeUInt8();
+        data = deserializer.deserializeUInt8Array(len);
     }
 
     /**

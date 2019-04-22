@@ -235,6 +235,9 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
         logger.debug("ZStack subsystem capabilities: {}", capabilities);
 
         ZstackSysVersionSrsp version = ncp.getVersion();
+        if (version == null) {
+            return ZigBeeStatus.COMMUNICATION_ERROR;
+        }
         StringBuilder builder = new StringBuilder();
         builder.append("Software=");
         builder.append(version.getMajorRel());

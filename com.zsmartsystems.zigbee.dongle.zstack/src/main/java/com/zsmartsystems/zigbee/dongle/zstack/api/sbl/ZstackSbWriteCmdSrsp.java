@@ -34,7 +34,7 @@ public class ZstackSbWriteCmdSrsp extends ZstackFrameResponse {
         synchronousCommand = true;
 
         // Deserialize the fields
-        status = ZstackResponseCode.valueOf(deserializeUInt8());
+        status = ZstackResponseCode.valueOf(deserializer.deserializeUInt8());
     }
 
     /**

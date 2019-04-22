@@ -85,8 +85,8 @@ public class ZstackZdoNwkDiscoveryReqSreq extends ZstackFrameRequest {
         serializeHeader(ZSTACK_SREQ, ZSTACK_ZDO, 0x26);
 
         // Serialize the fields
-        serializeUInt32(scanChannels);
-        serializeUInt8(scanDuration);
+        serializer.serializeUInt32(scanChannels);
+        serializer.serializeUInt8(scanDuration);
         return getPayload();
     }
 

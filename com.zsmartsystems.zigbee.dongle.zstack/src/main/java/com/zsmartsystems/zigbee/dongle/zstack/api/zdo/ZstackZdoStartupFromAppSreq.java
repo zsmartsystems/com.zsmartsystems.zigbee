@@ -62,7 +62,7 @@ public class ZstackZdoStartupFromAppSreq extends ZstackFrameRequest {
         serializeHeader(ZSTACK_SREQ, ZSTACK_ZDO, 0x40);
 
         // Serialize the fields
-        serializeUInt16(startDelay);
+        serializer.serializeUInt16(startDelay);
         return getPayload();
     }
 
