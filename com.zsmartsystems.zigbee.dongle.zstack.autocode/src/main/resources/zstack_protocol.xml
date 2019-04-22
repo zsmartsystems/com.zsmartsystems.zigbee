@@ -1500,7 +1500,7 @@
 	<command>
 		<name>APP_CNF_SET_ALLOWREJOIN_TC_POLICY</name>
 		<subsystem>APP_CNF</subsystem>
-		<id>0x02</id>
+		<id>0x03</id>
 		<description>Sets the AllowRejoin TC policy.</description>
 		<type>SYNC</type>
 		<request>
@@ -1522,7 +1522,7 @@
 	<command>
 		<name>APP_CNF_BDB_ADD_INSTALLCODE</name>
 		<subsystem>APP_CNF</subsystem>
-		<id>0x02</id>
+		<id>0x04</id>
 		<description>Add a preconfigured key (plain key or IC) to Trust Center device.</description>
 		<type>SYNC</type>
 		<request>
@@ -2406,6 +2406,26 @@
 				<enum_value>0x00D2</enum_value>
 				<description></description>
 			</value>
+			<value>
+				<name>ZCD_NV_TCLK_TABLE_START</name>
+				<enum_value>0x0101</enum_value>
+				<description></description>
+			</value>
+			<value>
+				<name>ZCD_NV_TCLK_TABLE_END</name>
+				<enum_value>0x01FF</enum_value>
+				<description></description>
+			</value>
+			<value>
+				<name>ZCD_NV_APS_LINK_KEY_DATA_START</name>
+				<enum_value>0x0201</enum_value>
+				<description></description>
+			</value>
+			<value>
+				<name>ZCD_NV_APS_LINK_KEY_DATA_END</name>
+				<enum_value>0x02FF</enum_value>
+				<description></description>
+			</value>
 		</values>
 	</enum>
 
@@ -3025,7 +3045,30 @@
 		</values>
 	</enum>
 
-
+	<enum>
+		<name>ZstackAuthenticationOption</name>
+		<data_type>uint8</data_type>
+		<description></description>
+		<subsystem>APP_CNF</subsystem>
+		<values fully_defined="true">
+			<value>
+				<name>Not_Authenticated</name>
+				<enum_value>0x0000</enum_value>
+				<description>The device has not been authenticated</description>
+			</value>
+			<value>
+				<name>Authenticated_CBCK</name>
+				<enum_value>0x0001</enum_value>
+				<description>The device has been authenticated using CBKE</description>
+			</value>
+			<value>
+				<name>Authenticated_EA</name>
+				<enum_value>0x0002</enum_value>
+				<description>The device has been authenticated using EA</description>
+			</value>
+		</values>
+	</enum>
+	
 	<structure>
 		<name>ZstackNwkKeyDesc</name>
 		<subsystem>SYS</subsystem>
@@ -3039,6 +3082,29 @@
 			<parameter>
 				<data_type>ZigBeeKey</data_type>
 				<name>key</name>
+				<description></description>
+			</parameter>
+		</parameters>
+	</structure>
+
+	<structure>
+		<name>ZstackSecMgrEntry</name>
+		<subsystem>SYS</subsystem>
+		<description></description>
+		<parameters>
+			<parameter>
+				<data_type>uint16</data_type>
+				<name>ami</name>
+				<description>Address manager index that holds the IEEE address of destination device. INVALID_NODE_ADDR = 0xFFFE</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16</data_type>
+				<name>keyNvId</name>
+				<description>Index to the Link Key table in NV</description>
+			</parameter>
+			<parameter>
+				<data_type>ZstackAuthenticationOption</data_type>
+				<name>authenticateOption</name>
 				<description></description>
 			</parameter>
 		</parameters>
