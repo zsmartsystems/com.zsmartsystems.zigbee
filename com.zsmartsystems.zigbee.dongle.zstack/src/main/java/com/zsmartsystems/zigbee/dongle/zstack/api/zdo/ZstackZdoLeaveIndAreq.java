@@ -54,11 +54,11 @@ public class ZstackZdoLeaveIndAreq extends ZstackFrameResponse {
         super(inputBuffer);
 
         // Deserialize the fields
-        srcAddr = deserializeUInt16();
-        extAddr = deserializeIeeeAddress();
-        request = deserializeBoolean();
-        remove = deserializeBoolean();
-        rejoin = deserializeBoolean();
+        srcAddr = deserializer.deserializeUInt16();
+        extAddr = deserializer.deserializeIeeeAddress();
+        request = deserializer.deserializeBoolean();
+        remove = deserializer.deserializeBoolean();
+        rejoin = deserializer.deserializeBoolean();
     }
 
     /**

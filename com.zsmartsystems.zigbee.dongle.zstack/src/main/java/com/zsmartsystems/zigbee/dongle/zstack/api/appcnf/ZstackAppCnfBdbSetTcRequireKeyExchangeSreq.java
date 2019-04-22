@@ -74,7 +74,7 @@ public class ZstackAppCnfBdbSetTcRequireKeyExchangeSreq extends ZstackFrameReque
         serializeHeader(ZSTACK_SREQ, ZSTACK_APP_CNF, 0x09);
 
         // Serialize the fields
-        serializeBoolean(trustCenterRequireKeyExchange);
+        serializer.serializeBoolean(trustCenterRequireKeyExchange);
         return getPayload();
     }
 

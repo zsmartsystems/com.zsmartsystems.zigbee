@@ -36,7 +36,7 @@ public class ZstackSysZdiagsClearStatsSrsp extends ZstackFrameResponse {
         synchronousCommand = true;
 
         // Deserialize the fields
-        sysClock = deserializeUInt32();
+        sysClock = deserializer.deserializeUInt32();
     }
 
     /**

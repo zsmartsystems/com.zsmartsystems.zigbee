@@ -147,13 +147,14 @@ public class CommandGenerator extends ClassGenerator {
             Map<String, String> autoSizers = new HashMap<String, String>();
             for (Parameter parameter : parameters) {
                 if (parameter.auto_size != null) {
-                    out.println("        int " + camelCaseToLowerCamelCase(parameter.name) + " = deserialize"
-                            + getTypeSerializer(command.subsystem, parameter.data_type) + "();");
+                    out.println(
+                            "        int " + camelCaseToLowerCamelCase(parameter.name) + " = deserializer.deserialize"
+                                    + getTypeSerializer(command.subsystem, parameter.data_type) + "();");
                     autoSizers.put(parameter.auto_size, camelCaseToLowerCamelCase(parameter.name));
                     continue;
                 }
                 if (autoSizers.get(parameter.name) != null) {
-                    out.println("        " + camelCaseToLowerCamelCase(parameter.name) + " = deserialize"
+                    out.println("        " + camelCaseToLowerCamelCase(parameter.name) + " = deserializer.deserialize"
                             + getTypeSerializer(command.subsystem, parameter.data_type) + "("
                             + autoSizers.get(parameter.name) + ");");
                     continue;
@@ -162,14 +163,14 @@ public class CommandGenerator extends ClassGenerator {
                         && !parameter.data_type.contains("[]")) {
                     int length = Integer.parseInt(parameter.data_type.substring(parameter.data_type.indexOf("[") + 1,
                             parameter.data_type.indexOf("]")));
-                    out.println("        " + camelCaseToLowerCamelCase(parameter.name) + " = deserialize"
+                    out.println("        " + camelCaseToLowerCamelCase(parameter.name) + " = deserializer.deserialize"
                             + getTypeSerializer(command.subsystem, parameter.data_type) + "(" + length + ");");
                     continue;
                 }
                 if (getDataType(parameter.data_type) != parameter.data_type) {
                     if (parameter.multiple) {
                         out.println("        " + getTypeClass(command.subsystem, getDataType(parameter.data_type))
-                                + " tmp" + upperCaseFirstCharacter(parameter.name) + " = deserialize"
+                                + " tmp" + upperCaseFirstCharacter(parameter.name) + " = deserializer.deserialize"
                                 + getTypeSerializer(command.subsystem, parameter.data_type) + "();");
                         out.println("        for (" + getTypeClass(parameter.data_type) + " value : "
                                 + getTypeClass(parameter.data_type) + ".values()) {");
@@ -180,11 +181,11 @@ public class CommandGenerator extends ClassGenerator {
                         out.println("        }");
                     } else {
                         out.println("        " + camelCaseToLowerCamelCase(parameter.name) + " = " + parameter.data_type
-                                + ".valueOf(deserialize" + getTypeSerializer(command.subsystem, parameter.data_type)
-                                + "());");
+                                + ".valueOf(deserializer.deserialize"
+                                + getTypeSerializer(command.subsystem, parameter.data_type) + "());");
                     }
                 } else {
-                    out.println("        " + camelCaseToLowerCamelCase(parameter.name) + " = deserialize"
+                    out.println("        " + camelCaseToLowerCamelCase(parameter.name) + " = deserializer.deserialize"
                             + getTypeSerializer(command.subsystem, parameter.data_type) + "();");
                 }
             }
@@ -300,8 +301,9 @@ public class CommandGenerator extends ClassGenerator {
                     enumModifier = ".getKey()";
                 }
                 if (parameter.auto_size != null) {
-                    out.println("        serialize" + getTypeSerializer(command.subsystem, parameter.data_type) + "("
-                            + camelCaseToLowerCamelCase(parameter.auto_size) + ".length);");
+                    out.println(
+                            "        serializer.serialize" + getTypeSerializer(command.subsystem, parameter.data_type)
+                                    + "(" + camelCaseToLowerCamelCase(parameter.auto_size) + ".length);");
                     continue;
                 }
                 if (parameter.multiple) {
@@ -311,11 +313,13 @@ public class CommandGenerator extends ClassGenerator {
                             + camelCaseToLowerCamelCase(parameter.name) + ") {");
                     out.println("            tmp" + upperCaseFirstCharacter(parameter.name) + " += value.getKey();");
                     out.println("        }");
-                    out.println("        serialize" + getTypeSerializer(command.subsystem, parameter.data_type) + "("
-                            + "tmp" + upperCaseFirstCharacter(parameter.name) + ");");
+                    out.println(
+                            "        serializer.serialize" + getTypeSerializer(command.subsystem, parameter.data_type)
+                                    + "(" + "tmp" + upperCaseFirstCharacter(parameter.name) + ");");
                 } else {
-                    out.println("        serialize" + getTypeSerializer(command.subsystem, parameter.data_type) + "("
-                            + camelCaseToLowerCamelCase(parameter.name) + enumModifier + ");");
+                    out.println(
+                            "        serializer.serialize" + getTypeSerializer(command.subsystem, parameter.data_type)
+                                    + "(" + camelCaseToLowerCamelCase(parameter.name) + enumModifier + ");");
                 }
             }
             out.println("        return getPayload();");

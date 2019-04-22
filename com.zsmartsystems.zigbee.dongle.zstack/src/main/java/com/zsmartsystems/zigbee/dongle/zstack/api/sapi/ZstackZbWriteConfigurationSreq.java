@@ -86,9 +86,9 @@ public class ZstackZbWriteConfigurationSreq extends ZstackFrameRequest {
         serializeHeader(ZSTACK_SREQ, ZSTACK_SAPI, 0x05);
 
         // Serialize the fields
-        serializeUInt8(configId.getKey());
-        serializeUInt8(value.length);
-        serializeUInt8Array(value);
+        serializer.serializeUInt8(configId.getKey());
+        serializer.serializeUInt8(value.length);
+        serializer.serializeUInt8Array(value);
         return getPayload();
     }
 

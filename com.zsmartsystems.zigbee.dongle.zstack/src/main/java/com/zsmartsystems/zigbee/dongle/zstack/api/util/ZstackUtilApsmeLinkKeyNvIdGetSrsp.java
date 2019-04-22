@@ -41,8 +41,8 @@ public class ZstackUtilApsmeLinkKeyNvIdGetSrsp extends ZstackFrameResponse {
         synchronousCommand = true;
 
         // Deserialize the fields
-        status = ZstackResponseCode.valueOf(deserializeUInt8());
-        linkKeyNvId = deserializeUInt16();
+        status = ZstackResponseCode.valueOf(deserializer.deserializeUInt8());
+        linkKeyNvId = deserializer.deserializeUInt16();
     }
 
     /**

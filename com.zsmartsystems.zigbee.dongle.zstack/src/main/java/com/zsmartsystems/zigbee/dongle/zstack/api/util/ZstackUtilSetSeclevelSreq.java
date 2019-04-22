@@ -63,7 +63,7 @@ public class ZstackUtilSetSeclevelSreq extends ZstackFrameRequest {
         serializeHeader(ZSTACK_SREQ, ZSTACK_UTIL, 0x04);
 
         // Serialize the fields
-        serializeUInt8(secLevel);
+        serializer.serializeUInt8(secLevel);
         return getPayload();
     }
 

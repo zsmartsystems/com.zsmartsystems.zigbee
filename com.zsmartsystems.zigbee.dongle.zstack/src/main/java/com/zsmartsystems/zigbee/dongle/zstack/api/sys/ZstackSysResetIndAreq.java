@@ -58,12 +58,12 @@ public class ZstackSysResetIndAreq extends ZstackFrameResponse {
         super(inputBuffer);
 
         // Deserialize the fields
-        reason = ZstackResetReason.valueOf(deserializeUInt8());
-        transportRev = deserializeUInt8();
-        product = deserializeUInt8();
-        majorRel = deserializeUInt8();
-        minorRel = deserializeUInt8();
-        hwRev = deserializeUInt8();
+        reason = ZstackResetReason.valueOf(deserializer.deserializeUInt8());
+        transportRev = deserializer.deserializeUInt8();
+        product = deserializer.deserializeUInt8();
+        majorRel = deserializer.deserializeUInt8();
+        minorRel = deserializer.deserializeUInt8();
+        hwRev = deserializer.deserializeUInt8();
     }
 
     /**

@@ -86,7 +86,7 @@ public class ZstackAppCnfBdbSetJoinusesinstallcodekeySreq extends ZstackFrameReq
         serializeHeader(ZSTACK_SREQ, ZSTACK_APP_CNF, 0x06);
 
         // Serialize the fields
-        serializeBoolean(joinUsesInstallCodeKey);
+        serializer.serializeBoolean(joinUsesInstallCodeKey);
         return getPayload();
     }
 

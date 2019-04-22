@@ -63,7 +63,7 @@ public class ZstackUtilSetChannelsSreq extends ZstackFrameRequest {
         serializeHeader(ZSTACK_SREQ, ZSTACK_UTIL, 0x03);
 
         // Serialize the fields
-        serializeUInt32(channels);
+        serializer.serializeUInt32(channels);
         return getPayload();
     }
 

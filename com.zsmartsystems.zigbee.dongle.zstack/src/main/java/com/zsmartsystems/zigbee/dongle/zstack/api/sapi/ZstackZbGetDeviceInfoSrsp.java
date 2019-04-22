@@ -40,8 +40,8 @@ public class ZstackZbGetDeviceInfoSrsp extends ZstackFrameResponse {
         synchronousCommand = true;
 
         // Deserialize the fields
-        param = deserializeUInt8();
-        value = deserializeUInt16();
+        param = deserializer.deserializeUInt8();
+        value = deserializer.deserializeUInt16();
     }
 
     /**

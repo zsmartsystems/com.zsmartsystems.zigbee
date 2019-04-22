@@ -36,7 +36,7 @@ public class ZstackSysGetExtAddrSrsp extends ZstackFrameResponse {
         synchronousCommand = true;
 
         // Deserialize the fields
-        extAddress = deserializeIeeeAddress();
+        extAddress = deserializer.deserializeIeeeAddress();
     }
 
     /**

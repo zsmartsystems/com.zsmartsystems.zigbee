@@ -55,11 +55,11 @@ public class ZstackSysVersionSrsp extends ZstackFrameResponse {
         synchronousCommand = true;
 
         // Deserialize the fields
-        transportRev = deserializeUInt8();
-        product = deserializeUInt8();
-        majorRel = deserializeUInt8();
-        minorRel = deserializeUInt8();
-        maintRel = deserializeUInt8();
+        transportRev = deserializer.deserializeUInt8();
+        product = deserializer.deserializeUInt8();
+        majorRel = deserializer.deserializeUInt8();
+        minorRel = deserializer.deserializeUInt8();
+        maintRel = deserializer.deserializeUInt8();
     }
 
     /**

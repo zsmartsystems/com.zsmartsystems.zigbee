@@ -59,7 +59,7 @@ public class ZstackSysResetReqAcmd extends ZstackFrameRequest {
         serializeHeader(ZSTACK_ACMD, ZSTACK_SYS, 0x00);
 
         // Serialize the fields
-        serializeUInt8(type.getKey());
+        serializer.serializeUInt8(type.getKey());
         return getPayload();
     }
 

@@ -65,13 +65,13 @@ public class ZstackUtilGetDeviceInfoSrsp extends ZstackFrameResponse {
         synchronousCommand = true;
 
         // Deserialize the fields
-        status = ZstackResponseCode.valueOf(deserializeUInt8());
-        ieeeAddress = deserializeIeeeAddress();
-        shortAddr = deserializeUInt16();
-        deviceType = deserializeUInt8();
-        deviceState = ZstackZdoState.valueOf(deserializeUInt8());
-        int numAssocDevices = deserializeUInt8();
-        assocDevicesList = deserializeUInt16Array(numAssocDevices);
+        status = ZstackResponseCode.valueOf(deserializer.deserializeUInt8());
+        ieeeAddress = deserializer.deserializeIeeeAddress();
+        shortAddr = deserializer.deserializeUInt16();
+        deviceType = deserializer.deserializeUInt8();
+        deviceState = ZstackZdoState.valueOf(deserializer.deserializeUInt8());
+        int numAssocDevices = deserializer.deserializeUInt8();
+        assocDevicesList = deserializer.deserializeUInt16Array(numAssocDevices);
     }
 
     /**

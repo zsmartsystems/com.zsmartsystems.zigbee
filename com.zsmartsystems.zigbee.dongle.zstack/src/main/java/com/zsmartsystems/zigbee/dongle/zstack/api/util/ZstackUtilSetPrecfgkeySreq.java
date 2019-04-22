@@ -64,7 +64,7 @@ public class ZstackUtilSetPrecfgkeySreq extends ZstackFrameRequest {
         serializeHeader(ZSTACK_SREQ, ZSTACK_UTIL, 0x05);
 
         // Serialize the fields
-        serializeZigBeeKey(preCfgKey);
+        serializer.serializeZigBeeKey(preCfgKey);
         return getPayload();
     }
 
