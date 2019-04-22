@@ -53,13 +53,13 @@ public class ZstackAppCnfSetAllowrejoinTcPolicySreq extends ZstackFrameRequest {
 
     @Override
     public boolean matchSreqError(ZstackRpcSreqErrorSrsp response) {
-        return (((response.getReqCmd0() & 0x1F) == ZSTACK_APP_CNF) && (response.getReqCmd1() == 0x02));
+        return (((response.getReqCmd0() & 0x1F) == ZSTACK_APP_CNF) && (response.getReqCmd1() == 0x03));
     }
 
     @Override
     public int[] serialize() {
         // Serialize the header
-        serializeHeader(ZSTACK_SREQ, ZSTACK_APP_CNF, 0x02);
+        serializeHeader(ZSTACK_SREQ, ZSTACK_APP_CNF, 0x03);
 
         // Serialize the fields
         serializer.serializeBoolean(allowRejoin);

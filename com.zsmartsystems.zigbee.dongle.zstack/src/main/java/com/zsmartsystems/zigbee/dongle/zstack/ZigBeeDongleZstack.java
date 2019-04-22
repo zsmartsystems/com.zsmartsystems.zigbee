@@ -38,6 +38,7 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.af.ZstackAfIncomingMsgAreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackConfigId;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysVersionSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSystemCapabilities;
+import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetDeviceInfoSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetDeviceInfoSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetNvInfoSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoMsgCbIncomingAreq;
@@ -400,7 +401,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
                     return;
                 }
                 // Don't wait for the response. This is running in a single thread scheduler
-                // frameHandler.queueFrame(new ZstackUtilGetDeviceInfoSreq());
+                frameHandler.queueFrame(new ZstackUtilGetDeviceInfoSreq());
             }
         }, pollRate, pollRate, TimeUnit.MILLISECONDS);
     }
@@ -627,11 +628,8 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
             @Override
             public void run() {
                 if (linkState) {
-                    // ZstackNcp ncp = getEmberNcp();
-                    // int addr = ncp.getNwkAddress();
-                    // if (addr != 0xFFFE) {
-                    // nwkAddress = addr;
-                    // }
+                    ZstackNcp ncp = getZstackNcp();
+                    nwkAddress = ncp.getNwkAddress();
                 }
                 // Handle link changes and notify framework
                 zigbeeTransportReceive

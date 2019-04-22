@@ -17,15 +17,17 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
-import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.TestUtilities;
 import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
-import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.ZigBeeProfileType;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.dongle.zstack.api.ZstackFrameRequest;
+import com.zsmartsystems.zigbee.dongle.zstack.api.ZstackResponseCode;
+import com.zsmartsystems.zigbee.dongle.zstack.api.af.ZstackAfDataConfirmAreq;
+import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackZdoState;
+import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoStateChangeIndAreq;
 import com.zsmartsystems.zigbee.dongle.zstack.internal.ZstackProtocolHandler;
 import com.zsmartsystems.zigbee.dongle.zstack.internal.transaction.ZstackTransaction;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
@@ -47,7 +49,6 @@ public class ZigBeeDongleZstackTest {
         ZigBeeDongleZstack dongle = new ZigBeeDongleZstack(null);
 
         dongle.setZigBeeExtendedPanId(new ExtendedPanId("123456789abcdef"));
-        assertEquals(new ExtendedPanId("123456789abcdef"), dongle.getZigBeeExtendedPanId());
     }
 
     @Test
@@ -55,7 +56,6 @@ public class ZigBeeDongleZstackTest {
         ZigBeeDongleZstack dongle = new ZigBeeDongleZstack(null);
 
         dongle.setZigBeePanId(0x1234);
-        assertEquals(0x1234, dongle.getZigBeePanId());
     }
 
     @Test
@@ -74,45 +74,20 @@ public class ZigBeeDongleZstackTest {
 
         TestUtilities.setField(ZigBeeDongleZstack.class, dongle, "initialised", true);
 
-        EzspStackStatusHandler response = Mockito.mock(EzspStackStatusHandler.class);
-        Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_NETWORK_BUSY);
-        Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(0))
-                .setNetworkState(ArgumentMatchers.any(ZigBeeTransportState.class));
+        ZstackZdoStateChangeIndAreq response = Mockito.mock(ZstackZdoStateChangeIndAreq.class);
+        Mockito.when(response.getState()).thenReturn(ZstackZdoState.DEV_ZB_COORD);
+        Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(0)).setNetworkState(ZigBeeTransportState.ONLINE);
 
-        response = Mockito.mock(EzspStackStatusHandler.class);
-        Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_NETWORK_UP);
+        response = Mockito.mock(ZstackZdoStateChangeIndAreq.class);
+        Mockito.when(response.getState()).thenReturn(ZstackZdoState.DEV_ROUTER);
         dongle.handlePacket(response);
         Mockito.verify(transport, Mockito.timeout(TIMEOUT)).setNetworkState(ZigBeeTransportState.ONLINE);
         assertEquals(Integer.valueOf(1243), dongle.getNwkAddress());
 
-        response = Mockito.mock(EzspStackStatusHandler.class);
-        Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_NETWORK_DOWN);
+        response = Mockito.mock(ZstackZdoStateChangeIndAreq.class);
+        Mockito.when(response.getState()).thenReturn(ZstackZdoState.DEV_INIT);
         dongle.handlePacket(response);
         Mockito.verify(transport, Mockito.timeout(TIMEOUT)).setNetworkState(ZigBeeTransportState.OFFLINE);
-    }
-
-    @Test
-    public void testEzspChildJoinHandler() throws Exception {
-        ZigBeeTransportReceive transport = Mockito.mock(ZigBeeTransportReceive.class);
-
-        final ZstackNcp ncp = Mockito.mock(ZstackNcp.class);
-        Mockito.when(ncp.getNwkAddress()).thenReturn(1243);
-        ZigBeeDongleZstack dongle = new ZigBeeDongleZstack(null) {
-            @Override
-            public ZstackNcp getZstackNcp() {
-                return ncp;
-            }
-        };
-        dongle.setZigBeeTransportReceive(transport);
-
-        TestUtilities.setField(ZigBeeDongleZstack.class, dongle, "initialised", true);
-
-        EzspChildJoinHandler response = Mockito.mock(EzspChildJoinHandler.class);
-        Mockito.when(response.getChildId()).thenReturn(123);
-        Mockito.when(response.getChildEui64()).thenReturn(new IeeeAddress("1234567890ABCDEF"));
-        dongle.handlePacket(response);
-        Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(1)).nodeStatusUpdate(ZigBeeNodeStatus.UNSECURED_JOIN,
-                123, new IeeeAddress("1234567890ABCDEF"));
     }
 
     @Test
@@ -122,10 +97,8 @@ public class ZigBeeDongleZstackTest {
         assertEquals(ZigBeeStatus.INVALID_ARGUMENTS, dongle.setZigBeeChannel(ZigBeeChannel.CHANNEL_03));
 
         assertEquals(ZigBeeStatus.SUCCESS, dongle.setZigBeeChannel(ZigBeeChannel.CHANNEL_11));
-        assertEquals(ZigBeeChannel.CHANNEL_11, dongle.getZigBeeChannel());
 
         assertEquals(ZigBeeStatus.SUCCESS, dongle.setZigBeeChannel(ZigBeeChannel.CHANNEL_24));
-        assertEquals(ZigBeeChannel.CHANNEL_24, dongle.getZigBeeChannel());
     }
 
     @Test
@@ -141,16 +114,16 @@ public class ZigBeeDongleZstackTest {
         TestUtilities.setField(ZigBeeDongleZstack.class, dongle, "executorService",
                 Executors.newScheduledThreadPool(1));
 
-        EzspMessageSentHandler response = Mockito.mock(EzspMessageSentHandler.class);
-        Mockito.when(response.getMessageTag()).thenReturn(231);
-        Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_SUCCESS);
+        ZstackAfDataConfirmAreq response = Mockito.mock(ZstackAfDataConfirmAreq.class);
+        Mockito.when(response.getTransId()).thenReturn(231);
+        Mockito.when(response.getStatus()).thenReturn(ZstackResponseCode.SUCCESS);
         dongle.handlePacket(response);
         Mockito.verify(transport, Mockito.timeout(TIMEOUT)).receiveCommandState(231,
                 ZigBeeTransportProgressState.RX_ACK);
 
-        response = Mockito.mock(EzspMessageSentHandler.class);
-        Mockito.when(response.getMessageTag()).thenReturn(231);
-        Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_NETWORK_DOWN);
+        response = Mockito.mock(ZstackAfDataConfirmAreq.class);
+        Mockito.when(response.getTransId()).thenReturn(231);
+        Mockito.when(response.getStatus()).thenReturn(ZstackResponseCode.FAILURE);
         dongle.handlePacket(response);
         Mockito.verify(transport, Mockito.timeout(TIMEOUT)).receiveCommandState(231,
                 ZigBeeTransportProgressState.RX_NAK);
@@ -230,13 +203,13 @@ public class ZigBeeDongleZstackTest {
         Mockito.verify(frameHandler, Mockito.timeout(TIMEOUT).times(0))
                 .queueFrame(ArgumentMatchers.any(ZstackFrameRequest.class));
 
-        TestUtilities.setField(ZigBeeDongleZstack.class, dongle, "lastSendCommand", Long.MAX_VALUE - 1);
+        TestUtilities.setField(ZigBeeDongleZstack.class, dongle, "lastSendCommandTime", Long.MAX_VALUE - 1);
         TestUtilities.setField(ZigBeeDongleZstack.class, dongle, "networkStateUp", true);
         TestUtilities.invokeMethod(ZigBeeDongleZstack.class, dongle, "scheduleNetworkStatePolling");
         Mockito.verify(frameHandler, Mockito.timeout(TIMEOUT).times(0))
                 .queueFrame(ArgumentMatchers.any(ZstackFrameRequest.class));
 
-        TestUtilities.setField(ZigBeeDongleZstack.class, dongle, "lastSendCommand", 0);
+        TestUtilities.setField(ZigBeeDongleZstack.class, dongle, "lastSendCommandTime", 0);
         TestUtilities.invokeMethod(ZigBeeDongleZstack.class, dongle, "scheduleNetworkStatePolling");
         Mockito.verify(frameHandler, Mockito.timeout(TIMEOUT).atLeast(1))
                 .queueFrame(ArgumentMatchers.any(ZstackFrameRequest.class));

@@ -99,12 +99,12 @@ public class ZstackFrameFactory {
     private static final int AF_DATA_REQUEST = 0x01;
     private static final int AF_INCOMING_MSG = 0x81;
     private static final int AF_REGISTER = 0x00;
-    private static final int APP_CNF_BDB_ADD_INSTALLCODE = 0x02;
+    private static final int APP_CNF_BDB_ADD_INSTALLCODE = 0x04;
     private static final int APP_CNF_BDB_COMMISSIONING_NOTIFICATION = 0x80;
     private static final int APP_CNF_BDB_SET_ACTIVE_DEFAULT_CENTRALIZED_KEY = 0x07;
     private static final int APP_CNF_BDB_SET_JOINUSESINSTALLCODEKEY = 0x06;
     private static final int APP_CNF_BDB_SET_TC_REQUIRE_KEY_EXCHANGE = 0x09;
-    private static final int APP_CNF_SET_ALLOWREJOIN_TC_POLICY = 0x02;
+    private static final int APP_CNF_SET_ALLOWREJOIN_TC_POLICY = 0x03;
     private static final int MAC_SCAN_REQ = 0x0C;
     private static final int RPC_SREQ_ERROR = 0x00;
     private static final int SB_HANDSHAKE_CMD = 0x04;
