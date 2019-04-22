@@ -960,6 +960,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 // Globally update the state
                 networkState = state;
 
+                // Disable JOIN mode.
+                // This should be disabled by default (at least in ZigBee 3.0) but some older stacks may
+                // have join enabled permanently by default.
+                permitJoin(0);
+
                 // Start the extensions
                 for (ZigBeeNetworkExtension extension : extensions) {
                     extension.extensionStartup();
