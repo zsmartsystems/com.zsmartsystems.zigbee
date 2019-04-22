@@ -67,11 +67,14 @@ public class ZstackConsoleNcpStateCommand extends ZstackConsoleAbstractCommand {
         int[] concentratorDiscovery = ncp.readConfiguration(ZstackConfigId.ZCD_NV_CONCENTRATOR_DISCOVERY);
         int[] routeExpiry = ncp.readConfiguration(ZstackConfigId.ZCD_NV_ROUTE_EXPIRY_TIME);
         int[] stackProfile = ncp.readConfiguration(ZstackConfigId.ZCD_NV_STACK_PROFILE);
+        int[] tcAddress = ncp.readConfiguration(ZstackConfigId.ZCD_NV_TRUSTCENTER_ADDR);
 
         out.println("User Description                 : " + hex2String(userDesc));
         out.println("BDB Device On Network            : " + hex2Boolean(bdbDeviceOnNwk));
         out.println("Stack Profile                    : " + hex2Uint8(stackProfile));
-        out.println("Route Expiry                     : " + hex2Uint8(routeExpiry));
+        out.println("Trust Centre Address             : " + hex2Uint8(routeExpiry));
+
+        out.println("Route Expiry                     : " + hex2Uint16(tcAddress));
 
         out.println("Concentrator Enabled             : " + hex2Boolean(concentratorEnable));
         out.println("Concentrator Radius              : " + hex2Uint8(concentratorRadius));

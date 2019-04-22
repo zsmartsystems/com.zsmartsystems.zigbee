@@ -51,6 +51,14 @@ public abstract class ZstackConsoleAbstractCommand implements ZigBeeConsoleComma
         return Integer.valueOf(bytes[0]).toString();
     }
 
+    protected String hex2Uint16(int[] bytes) {
+        if (bytes == null) {
+            return CFG_UNSUPPORTED;
+        }
+
+        return Integer.valueOf(bytes[0] + (bytes[1] * 256)).toString();
+    }
+
     protected String hex2String(int[] bytes) {
         if (bytes == null) {
             return CFG_UNSUPPORTED;
@@ -71,5 +79,19 @@ public abstract class ZstackConsoleAbstractCommand implements ZigBeeConsoleComma
         } catch (UnsupportedEncodingException e) {
             return null;
         }
+    }
+
+    protected String hexDump(int[] bytes) {
+        if (bytes == null) {
+            return CFG_UNSUPPORTED;
+        }
+
+        StringBuilder builder = new StringBuilder(bytes.length * 3);
+
+        for (int value : bytes) {
+            builder.append(String.format("%02X ", value));
+        }
+
+        return builder.toString();
     }
 }

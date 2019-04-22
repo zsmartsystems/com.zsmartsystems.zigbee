@@ -592,7 +592,27 @@ public enum ZstackConfigId {
     /**
      *
      */
-    ZCD_NV_SAS_CURR_NWK_KEY(0x00D2);
+    ZCD_NV_SAS_CURR_NWK_KEY(0x00D2),
+
+    /**
+     *
+     */
+    ZCD_NV_TCLK_TABLE_START(0x0101),
+
+    /**
+     *
+     */
+    ZCD_NV_TCLK_TABLE_END(0x01FF),
+
+    /**
+     *
+     */
+    ZCD_NV_APS_LINK_KEY_DATA_START(0x0201),
+
+    /**
+     *
+     */
+    ZCD_NV_APS_LINK_KEY_DATA_END(0x02FF);
 
     /**
      * A mapping between the integer code and its corresponding type to
