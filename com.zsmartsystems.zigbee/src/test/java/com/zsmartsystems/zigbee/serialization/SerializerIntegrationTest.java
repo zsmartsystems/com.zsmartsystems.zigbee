@@ -60,6 +60,12 @@ public class SerializerIntegrationTest {
     }
 
     @Test
+    public void testDeserialize_RAW_OCTET() {
+        ByteArray valIn = new ByteArray(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 });
+        testSerializer(valIn, ZclDataType.RAW_OCTET);
+    }
+
+    @Test
     public void testDeserialize_OCTET_STRING() {
         ByteArray valIn = new ByteArray(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 });
         testSerializer(valIn, ZclDataType.OCTET_STRING);

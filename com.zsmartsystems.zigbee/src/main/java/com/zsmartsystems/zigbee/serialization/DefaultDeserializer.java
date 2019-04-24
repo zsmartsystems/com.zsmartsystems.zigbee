@@ -73,6 +73,11 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
             case BOOLEAN:
                 value[0] = payload[index++] == 0 ? false : true;
                 break;
+            case RAW_OCTET:
+                int rawSize = payload.length - index;
+                value[0] = new ByteArray(payload, index, index + rawSize);
+                index += rawSize;
+                break;
             case OCTET_STRING:
                 int octetSize = payload[index++];
                 value[0] = new ByteArray(payload, index, index + octetSize);

@@ -140,6 +140,12 @@ public class DefaultSerializer implements ZigBeeSerializer {
                 break;
             case N_X_WRITE_ATTRIBUTE_STATUS_RECORD:
                 break;
+            case RAW_OCTET:
+                final ByteArray rawArray = (ByteArray) data;
+                for (byte arrayByte : rawArray.get()) {
+                    buffer[length++] = arrayByte;
+                }
+                break;
             case OCTET_STRING:
                 final ByteArray array = (ByteArray) data;
                 buffer[length++] = ((byte) (array.size() & 0xFF));

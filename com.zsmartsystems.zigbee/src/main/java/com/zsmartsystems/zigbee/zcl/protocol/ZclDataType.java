@@ -105,6 +105,7 @@ public enum ZclDataType {
     USER_DESCRIPTOR("User Descriptor", UserDescriptor.class, 0x00, false),
     ZDO_STATUS("Zdo Status", ZdoStatus.class, 0x00, false),
     UNSIGNED_8_BIT_INTEGER_ARRAY("Unsigned 8 bit Integer Array", int[].class, 0x00, false),
+    RAW_OCTET("RAW_OCTET", ByteArray.class, 0x00, false),
     ZIGBEE_DATA_TYPE("ZigBee Data Type", ZclDataType.class, 0x00, false);
 
     private final String label;
