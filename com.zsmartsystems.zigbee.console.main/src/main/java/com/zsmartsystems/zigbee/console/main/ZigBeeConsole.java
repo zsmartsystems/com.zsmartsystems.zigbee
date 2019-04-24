@@ -50,6 +50,7 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeSupportedCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeWriteCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleBindCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleBindingTableCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleChannelCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommandsSupportedCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleDescribeEndpointCommand;
@@ -212,6 +213,7 @@ public final class ZigBeeConsole {
         newCommands.put("discovery", new ZigBeeConsoleNetworkDiscoveryCommand());
 
         newCommands.put("otaupgrade", new ZigBeeConsoleOtaUpgradeCommand());
+        newCommands.put("channel", new ZigBeeConsoleChannelCommand());
 
         zigBeeApi = new ZigBeeApi(networkManager);
 
