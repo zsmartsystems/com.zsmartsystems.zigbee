@@ -44,6 +44,7 @@ import com.zsmartsystems.zigbee.zdo.field.UserDescriptor;
 public enum ZclDataType {
     BITMAP_8_BIT("Bitmap 8-bit", Integer.class, 0x18, false),
     BITMAP_16_BIT("16-bit Bitmap", Integer.class, 0x19, false),
+    BITMAP_24_BIT("24-bit Bitmap", Integer.class, 0x1A, false),
     BITMAP_32_BIT("32-bit Bitmap", Integer.class, 0x1B, false),
     BITMAP_40_BIT("40-bit Bitmap", Long.class, 0x1C, false),
     BITMAP_48_BIT("48-bit bitmap", Long.class, 0x1D, false),
@@ -79,6 +80,7 @@ public enum ZclDataType {
     OCTET_STRING("Octet string", ByteArray.class, 0x41, false),
     SIGNED_8_BIT_INTEGER("Signed 8-bit Integer", Integer.class, 0x28, true),
     SIGNED_16_BIT_INTEGER("Signed 16-bit Integer", Integer.class, 0x29, true),
+    SIGNED_24_BIT_INTEGER("Signed 24-bit Integer", Integer.class, 0x2A, true),
     SIGNED_32_BIT_INTEGER("Signed 32-bit Integer", Integer.class, 0x2B, true),
     UNSIGNED_8_BIT_INTEGER("Unsigned 8-bit integer", Integer.class, 0x20, true),
     UNSIGNED_16_BIT_INTEGER("Unsigned 16-bit integer", Integer.class, 0x21, true),
@@ -131,6 +133,13 @@ public enum ZclDataType {
         return codeTypeMapping.get(id);
     }
 
+    /**
+     * Gets the label for the data type
+     *
+     * @return
+     * @deprecated use the enumeration
+     */
+    @Deprecated
     public String getLabel() {
         return label;
     }
