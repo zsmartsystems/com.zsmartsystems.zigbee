@@ -309,7 +309,14 @@ public class SpiFrameHandler implements EzspProtocolHandler {
         switch (packetData[0]) {
             case SPI_CMD_EZSP:
                 if (lastFrameSent[0] == SPI_CMD_EZSP) {
-                    spiTransactionComplete();
+                    if (packetData.length >= 5 && lastFrameSent[4] == packetData[4]) {
+                        spiTransactionComplete();
+                    } else if (lastFrameSent.length >= 5) {
+                        logger.debug("<-- RX SPI frame SPI_CMD_EZSP mismatch [{}] [{}]", frameToString(packetData),
+                                frameToString(lastFrameSent));
+                    } else {
+                        logger.debug("<-- RX SPI frame SPI_CMD_EZSP too short {}", packetData.length);
+                    }
                 } else {
                     logger.debug("<-- RX SPI frame type mismatch SPI_CMD_EZSP != {}",
                             String.format("%02X", lastFrameSent[0]));
@@ -396,28 +403,16 @@ public class SpiFrameHandler implements EzspProtocolHandler {
             return;
         }
 
-        // Only trace-log for NoCallbacksResponse (which is due to polling)
-        String logMessage = String.format("RX EZSP: %s", response.toString());
-        if (response instanceof EzspNoCallbacksResponse) {
-            logger.trace(logMessage);
-        } else {
-            logger.debug(logMessage);
-        }
-
         // If there is a callback pending, then send a poll
         if (response.isCallbackPending()) {
             doCallbackRequest.set(true);
         }
 
-        if (notifyTransactionComplete(response)) {
-            // Response to our request was received
-            stopRetryTimer();
-        } else {
-            // No transactions owned this response, so we pass it to
-            // our unhandled response handler
-            if (!(response instanceof EzspNoCallbacksResponse)) {
-                frameHandler.handlePacket(response);
-            }
+        // Handle SPI transactions
+        notifyTransactionComplete(response);
+        // And pass the frame to the upper layer
+        if (!(response instanceof EzspNoCallbacksResponse)) {
+            frameHandler.handlePacket(response);
         }
 
         // We restart polling to avoid polling too often.

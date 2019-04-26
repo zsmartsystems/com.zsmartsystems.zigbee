@@ -7,9 +7,13 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember.internal.spi;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -51,7 +55,7 @@ public class SpiFrameHandlerTest {
             bytedata[cnt++] = (byte) value;
         }
         ByteArrayInputStream stream = new ByteArrayInputStream(bytedata);
-        ZigBeePort port = new TestPort(stream, null);
+        ZigBeePort port = new TestPort(stream, Mockito.mock(ByteArrayOutputStream.class));
 
         Method privateMethod;
         try {
@@ -114,7 +118,8 @@ public class SpiFrameHandlerTest {
         Mockito.doNothing().when(receiveHandler).handlePacket(responseCaptor.capture());
 
         SpiFrameHandler frameHandler = new SpiFrameHandler(receiveHandler);
-        frameHandler.start(new TestPort(null, null));
+        frameHandler.start(
+                new TestPort(Mockito.mock(ByteArrayInputStream.class), Mockito.mock(ByteArrayOutputStream.class)));
 
         Method privateMethod;
         try {
@@ -180,7 +185,7 @@ public class SpiFrameHandlerTest {
     @Test
     public void testRunning() {
         SpiFrameHandler frameHandler = new SpiFrameHandler(null);
-        frameHandler.start(null);
+        frameHandler.start(Mockito.mock(ZigBeePort.class));
 
         assertTrue(frameHandler.isAlive());
         frameHandler.close();
@@ -189,18 +194,20 @@ public class SpiFrameHandlerTest {
 
     @Test
     public void testReceiveEzsp() {
-        processSpiCommand(new int[] { 0xFE }, new int[] { 0xFE, 0x07, 0x04, 0x80, 0x00, 0x04, 0x02, 0x50, 0x58 });
+        processSpiCommand(new int[] { 0xFE, 0x07, 0x04, 0x00, 0x00 },
+                new int[] { 0xFE, 0x07, 0x04, 0x80, 0x00, 0x04, 0x02, 0x50, 0x58 });
         System.out.println(responseCaptor.getValue());
         assertTrue(responseCaptor.getValue() instanceof EzspVersionResponse);
 
-        processSpiCommand(new int[] { 0xFE }, new int[] { 0xFE, 0x06, 0x02, 0x80, 0x52, 0x00, 0x08, 0x00 });
+        processSpiCommand(new int[] { 0xFE, 0x06, 0x02, 0x00, 0x52 },
+                new int[] { 0xFE, 0x06, 0x02, 0x80, 0x52, 0x00, 0x08, 0x00 });
         System.out.println(responseCaptor.getValue());
         assertTrue(responseCaptor.getValue() instanceof EzspGetConfigurationValueResponse);
     }
 
     @Test
     public void testReceiveInvalidEzsp() {
-        processSpiCommand(new int[] { 0xFE }, new int[] { 0xFE, 0x04, 0x02, 0x80, 0xFF, 0x00 });
+        processSpiCommand(new int[] { 0xFE, 0x07, 0x04, 0x00, 0x00 }, new int[] { 0xFE, 0x04, 0x02, 0x80, 0xFF, 0x00 });
         assertTrue(responseCaptor.getAllValues().size() == 0);
     }
 
@@ -256,7 +263,9 @@ public class SpiFrameHandlerTest {
         portOutData = new ArrayList<>();
         SpiFrameHandler handler = new SpiFrameHandler(null);
 
-        handler.start(new TestPort(null, null));
+        handler.start(
+                new TestPort(Mockito.mock(ByteArrayInputStream.class), Mockito.mock(ByteArrayOutputStream.class)));
+
         handler.connect();
 
         // Verify the version command is sent
@@ -269,7 +278,8 @@ public class SpiFrameHandlerTest {
     public void testSendEzspFrame() {
         portOutData = new ArrayList<>();
         SpiFrameHandler handler = new SpiFrameHandler(null);
-        handler.start(new TestPort(null, null));
+        handler.start(
+                new TestPort(Mockito.mock(ByteArrayInputStream.class), Mockito.mock(ByteArrayOutputStream.class)));
 
         EzspVersionRequest command = new EzspVersionRequest();
         command.setDesiredProtocolVersion(4);

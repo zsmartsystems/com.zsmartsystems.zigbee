@@ -1042,10 +1042,16 @@ public class CommandGenerator extends ClassGenerator {
         out.println("     */");
         out.println("    public static EzspFrameResponse createHandler(int[] data) {");
         out.println("        Class<?> ezspClass;");
-        out.println("        if (data[2] != 0xFF) {");
-        out.println("            ezspClass = ezspHandlerMap.get(data[2]);");
-        out.println("        } else {");
-        out.println("            ezspClass = ezspHandlerMap.get(data[4]);");
+
+        out.println("        try {");
+        out.println("            if (data[2] != 0xFF) {");
+        out.println("                ezspClass = ezspHandlerMap.get(data[2]);");
+        out.println("            } else {");
+        out.println("                ezspClass = ezspHandlerMap.get(data[4]);");
+        out.println("            }");
+        out.println("        } catch (ArrayIndexOutOfBoundsException e) {");
+        out.println("            logger.debug(\"Error creating instance of EzspFrame: Too short.\");");
+        out.println("            return null;");
         out.println("        }");
         out.println();
         out.println("        if (ezspClass == null) {");
