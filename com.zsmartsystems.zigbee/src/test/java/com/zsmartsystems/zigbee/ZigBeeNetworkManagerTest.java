@@ -21,6 +21,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.file.FileSystems;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -638,7 +639,7 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
     }
 
     @Test
-    public void nodeStatusUpdate() {
+    public void nodeStatusUpdate() throws Exception {
         ZigBeeNetworkManager manager = mockZigBeeNetworkManager();
 
         ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
@@ -647,6 +648,11 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
 
         ZigBeeAnnounceListener announceListener = Mockito.mock(ZigBeeAnnounceListener.class);
         manager.addAnnounceListener(announceListener);
+        assertEquals(1, ((Collection<ZigBeeAnnounceListener>) TestUtilities.getField(ZigBeeNetworkManager.class,
+                manager, "announceListeners")).size());
+        manager.addAnnounceListener(announceListener);
+        assertEquals(1, ((Collection<ZigBeeAnnounceListener>) TestUtilities.getField(ZigBeeNetworkManager.class,
+                manager, "announceListeners")).size());
 
         manager.nodeStatusUpdate(ZigBeeNodeStatus.DEVICE_LEFT, 1234, new IeeeAddress("123456789ABCDEF0"));
         Mockito.verify(node, Mockito.times(0)).setNodeState(ArgumentMatchers.any(ZigBeeNodeState.class));

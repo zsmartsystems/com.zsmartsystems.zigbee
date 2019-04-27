@@ -11,6 +11,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -135,10 +136,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     /**
      * The announce listeners are notified whenever a new device is discovered.
-     * This can be called from the transport layer, or internally by methods watching
-     * the network state.
+     * This can be called from the transport layer, or internally by methods watching the network state.
      */
-    private List<ZigBeeAnnounceListener> announceListeners = Collections.unmodifiableList(new ArrayList<>());
+    private Collection<ZigBeeAnnounceListener> announceListeners = Collections.unmodifiableCollection(new HashSet<>());
 
     /**
      * {@link AtomicInteger} used to generate APS header counters
@@ -834,9 +834,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @param announceListener the new {@link ZigBeeAnnounceListener} to add
      */
     public void addAnnounceListener(ZigBeeAnnounceListener announceListener) {
-        final List<ZigBeeAnnounceListener> modifiedStateListeners = new ArrayList<>(announceListeners);
+        if (announceListeners.contains(announceListener)) {
+            return;
+        }
+        final Collection<ZigBeeAnnounceListener> modifiedStateListeners = new HashSet<>(announceListeners);
         modifiedStateListeners.add(announceListener);
-        announceListeners = Collections.unmodifiableList(modifiedStateListeners);
+        announceListeners = Collections.unmodifiableCollection(modifiedStateListeners);
     }
 
     /**
@@ -845,9 +848,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @param announceListener the new {@link ZigBeeAnnounceListener} to remove
      */
     public void removeAnnounceListener(ZigBeeAnnounceListener announceListener) {
-        final List<ZigBeeAnnounceListener> modifiedStateListeners = new ArrayList<>(announceListeners);
+        final Collection<ZigBeeAnnounceListener> modifiedStateListeners = new HashSet<>(announceListeners);
         modifiedStateListeners.remove(announceListener);
-        announceListeners = Collections.unmodifiableList(modifiedStateListeners);
+        announceListeners = Collections.unmodifiableCollection(modifiedStateListeners);
     }
 
     @Override

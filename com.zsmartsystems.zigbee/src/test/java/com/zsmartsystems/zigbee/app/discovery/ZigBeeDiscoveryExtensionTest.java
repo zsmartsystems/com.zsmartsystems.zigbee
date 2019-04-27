@@ -54,7 +54,8 @@ public class ZigBeeDiscoveryExtensionTest {
         extension.setUpdatePeriod(0);
 
         assertEquals(ZigBeeStatus.SUCCESS, extension.extensionInitialize(networkManager));
-        extension.extensionStartup();
+        assertEquals(ZigBeeStatus.SUCCESS, extension.extensionStartup());
+        assertEquals(ZigBeeStatus.INVALID_STATE, extension.extensionStartup());
 
         extension.setUpdatePeriod(0);
         Mockito.verify(extension, Mockito.times(1)).stopScheduler();

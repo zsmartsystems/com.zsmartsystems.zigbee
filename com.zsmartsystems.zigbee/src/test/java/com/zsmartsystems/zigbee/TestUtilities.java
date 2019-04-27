@@ -14,7 +14,7 @@ import java.lang.reflect.Modifier;
 
 /**
  * A class of helper methods for running tests.
- * 
+ *
  * @author Chris Jackson
  *
  */
@@ -22,7 +22,7 @@ public class TestUtilities {
 
     /**
      * Set the value of a private field in a class
-     * 
+     *
      * @param clazz the class where the field resides
      * @param object the object where the field resides
      * @param fieldName the field name
@@ -66,6 +66,24 @@ public class TestUtilities {
         method = clazz.getDeclaredMethod(methodName, classArray);
         method.setAccessible(true);
         return method.invoke(object, paramArray);
+    }
+
+    /**
+     * Gets the value of the private field
+     * 
+     * @param clazz the class where the field resides
+     * @param object the object where the field resides
+     * @param fieldName the field name
+     * @return the {@link Object} containing the field value
+     * @throws Exception
+     */
+    static public Object getField(Class clazz, Object object, String fieldName) throws Exception {
+        Field field = clazz.getDeclaredField(fieldName);
+        field.setAccessible(true);
+        Field modifiersField = Field.class.getDeclaredField("modifiers");
+        modifiersField.setAccessible(true);
+        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+        return field.get(object);
     }
 
 }

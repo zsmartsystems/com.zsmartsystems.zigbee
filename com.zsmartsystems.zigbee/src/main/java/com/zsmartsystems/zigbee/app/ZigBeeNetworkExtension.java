@@ -53,7 +53,8 @@ public interface ZigBeeNetworkExtension {
      * not attempt to communicate on the network until after {@link #extensionStartup()} is called.
      *
      * @param networkManager The {@link ZigBeeNetworkManager} of the network
-     * @return {@link ZigBeeStatus#SUCCESS} if the extension initialized successfully
+     * @return {@link ZigBeeStatus#SUCCESS} if the extension initialized successfully,
+     *         {@link ZigBeeStatus#INVALID_STATE} if the extension was already started.
      */
     public ZigBeeStatus extensionInitialize(final ZigBeeNetworkManager networkManager);
 
