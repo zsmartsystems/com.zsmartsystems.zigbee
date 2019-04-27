@@ -87,6 +87,10 @@ public class ZigBeeDiscoveryExtension
 
     @Override
     public ZigBeeStatus extensionStartup() {
+        if (extensionStarted) {
+            logger.debug("DISCOVERY Extension: Already started");
+            return ZigBeeStatus.INVALID_STATE;
+        }
         logger.debug("DISCOVERY Extension: Startup");
 
         networkManager.addNetworkNodeListener(this);
