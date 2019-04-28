@@ -16,6 +16,7 @@ import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
+import com.zsmartsystems.zigbee.zcl.field.ZclDataPair;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.field.BindingTable;
@@ -215,6 +216,10 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 value[0] = payload[index++] + (payload[index++] << 8) + (payload[index++] << 16)
                         + (payload[index++] << 24);
                 break;
+            case UNSIGNED_40_BIT_INTEGER:
+                value[0] = (payload[index++]) + ((long) (payload[index++]) << 8) + ((long) (payload[index++]) << 16)
+                        + ((long) (payload[index++]) << 24) + ((long) (payload[index++]) << 32);
+                break;
             case UNSIGNED_48_BIT_INTEGER:
                 value[0] = (payload[index++]) + ((long) (payload[index++]) << 8) + ((long) (payload[index++]) << 16)
                         + ((long) (payload[index++]) << 24) + ((long) (payload[index++]) << 32)
@@ -274,6 +279,16 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                     arrayB8[arrayIndex] = (byte) (payload[index++] & 0xff);
                 }
                 value[0] = new ByteArray(arrayB8);
+                break;
+            case ORDERED_SEQUENCE_STRUCTURE:
+                int structSize = Integer.valueOf((payload[index++] + (payload[index++] << 8)));
+                List<ZclDataPair> structure = new ArrayList<>();
+                for (int cnt = 0; cnt < structSize; cnt++) {
+                    ZclDataType structType = ZclDataType.getType(payload[index++]);
+                    Object structValue = readZigBeeType(structType);
+                    structure.add(new ZclDataPair(structType, structValue));
+                }
+                value[0] = structure;
                 break;
             case FLOAT_32_BIT:
                 Float float32 = Float.intBitsToFloat(payload[index++] + (payload[index++] << 8)
