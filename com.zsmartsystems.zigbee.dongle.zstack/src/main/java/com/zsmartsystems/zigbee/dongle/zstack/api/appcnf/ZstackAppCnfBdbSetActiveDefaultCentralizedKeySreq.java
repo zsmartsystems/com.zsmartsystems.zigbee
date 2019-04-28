@@ -29,7 +29,7 @@ public class ZstackAppCnfBdbSetActiveDefaultCentralizedKeySreq extends ZstackFra
     /**
      * Buffer with the key in any of its formats.
      */
-    private int installCode;
+    private int[] installCode;
 
     /**
      * Request constructor
@@ -59,18 +59,18 @@ public class ZstackAppCnfBdbSetActiveDefaultCentralizedKeySreq extends ZstackFra
     /**
      * Buffer with the key in any of its formats.
      *
-     * @return the current installCode as {@link int}
+     * @return the current installCode as {@link int[]}
      */
-    public int getInstallCode() {
+    public int[] getInstallCode() {
         return installCode;
     }
 
     /**
      * Buffer with the key in any of its formats.
      *
-     * @param installCode the InstallCode to set as {@link int}
+     * @param installCode the InstallCode to set as {@link int[]}
      */
-    public void setInstallCode(int installCode) {
+    public void setInstallCode(int[] installCode) {
         this.installCode = installCode;
     }
 
@@ -86,7 +86,7 @@ public class ZstackAppCnfBdbSetActiveDefaultCentralizedKeySreq extends ZstackFra
 
         // Serialize the fields
         serializer.serializeUInt8(centralizedLinkKeyMode.getKey());
-        serializer.serializeUInt8(installCode);
+        serializer.serializeUInt8Array(installCode);
         return getPayload();
     }
 
@@ -96,7 +96,12 @@ public class ZstackAppCnfBdbSetActiveDefaultCentralizedKeySreq extends ZstackFra
         builder.append("ZstackAppCnfBdbSetActiveDefaultCentralizedKeySreq [centralizedLinkKeyMode=");
         builder.append(centralizedLinkKeyMode);
         builder.append(", installCode=");
-        builder.append(installCode);
+        for (int c = 0; c < installCode.length; c++) {
+            if (c > 0) {
+                builder.append(' ');
+            }
+            builder.append(String.format("%02X", installCode[c]));
+        }
         builder.append(']');
         return builder.toString();
     }

@@ -69,7 +69,6 @@ public class ZstackConsoleNcpStateCommand extends ZstackConsoleAbstractCommand {
         int[] stackProfile = ncp.readConfiguration(ZstackConfigId.ZCD_NV_STACK_PROFILE);
         int[] tcAddress = ncp.readConfiguration(ZstackConfigId.ZCD_NV_TRUSTCENTER_ADDR);
 
-        out.println("User Description                 : " + hex2String(userDesc));
         out.println("BDB Device On Network            : " + hex2Boolean(bdbDeviceOnNwk));
         out.println("Stack Profile                    : " + hex2Uint8(stackProfile));
         out.println("Trust Centre Address             : " + hex2Uint8(routeExpiry));
@@ -113,6 +112,7 @@ public class ZstackConsoleNcpStateCommand extends ZstackConsoleAbstractCommand {
         } else {
             out.println("NCP API Capabilities             : " + ncpCapabilities);
         }
+        out.println("User Description                 : " + hex2String(userDesc));
     }
 
 }

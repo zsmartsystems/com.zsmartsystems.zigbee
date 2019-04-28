@@ -164,6 +164,8 @@ public class ZstackNetworkInitialisation {
         ncp.setNetworkSecurity(true);
 
         ncp.zdoRegisterCallback(0x0006);// MatchDescriptorRequest
+        ncp.zdoRegisterCallback(0x0013);// DeviceAnnounce
+        ncp.zdoRegisterCallback(0x0036);// ManagementPermitJoiningRequest
         ncp.zdoRegisterCallback(0x8000);// NetworkAddressResponse() {
         ncp.zdoRegisterCallback(0x8001);// IeeeAddressResponse() {
         ncp.zdoRegisterCallback(0x8002);// NodeDescriptorResponse.);
@@ -172,7 +174,6 @@ public class ZstackNetworkInitialisation {
         ncp.zdoRegisterCallback(0x8005);// ActiveEndpointsResponse
         ncp.zdoRegisterCallback(0x8006);// MatchDescriptorResponse
         ncp.zdoRegisterCallback(0x8011);// UserDescriptorResponse
-        ncp.zdoRegisterCallback(0x8013);// DeviceAnnounce
         ncp.zdoRegisterCallback(0x8020);// EndDeviceBindResponse
         ncp.zdoRegisterCallback(0x8021);// BindResponse
         ncp.zdoRegisterCallback(0x8022);// UnbindResponse
