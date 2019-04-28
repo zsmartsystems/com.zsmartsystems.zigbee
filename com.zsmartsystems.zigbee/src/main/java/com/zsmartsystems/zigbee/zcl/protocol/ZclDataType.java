@@ -9,6 +9,7 @@ package com.zsmartsystems.zigbee.zcl.protocol;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
@@ -86,7 +87,10 @@ public enum ZclDataType {
     UNSIGNED_16_BIT_INTEGER("Unsigned 16-bit integer", Integer.class, 0x21, true),
     UNSIGNED_24_BIT_INTEGER("Unsigned 24-bit integer", Integer.class, 0x22, true),
     UNSIGNED_32_BIT_INTEGER("Unsigned 32-bit integer", Integer.class, 0x23, true),
+    UNSIGNED_40_BIT_INTEGER("Unsigned 40-bit integer", Long.class, 0x24, true),
     UNSIGNED_48_BIT_INTEGER("Unsigned 48-bit integer", Long.class, 0x25, true),
+    UNSIGNED_56_BIT_INTEGER("Unsigned 48-bit integer", Long.class, 0x26, true),
+    UNSIGNED_64_BIT_INTEGER("Unsigned 48-bit integer", Long.class, 0x27, true),
     UTCTIME("UTCTime", Calendar.class, 0xE2, true),
     X_UNSIGNED_8_BIT_INTEGER("X Unsigned 8-bit integer", Integer.class, 0x00, false),
     ZCL_STATUS("Zcl Status", ZclStatus.class, 0x00, false),
@@ -107,6 +111,7 @@ public enum ZclDataType {
     ZDO_STATUS("Zdo Status", ZdoStatus.class, 0x00, false),
     UNSIGNED_8_BIT_INTEGER_ARRAY("Unsigned 8 bit Integer Array", int[].class, 0x00, false),
     RAW_OCTET("RAW_OCTET", ByteArray.class, 0x00, false),
+    ORDERED_SEQUENCE_STRUCTURE("ORDERED_SEQUENCE_STRUCTURE", List.class, 0x4C, false),
     ZIGBEE_DATA_TYPE("ZigBee Data Type", ZclDataType.class, 0x00, false);
 
     private final String label;
