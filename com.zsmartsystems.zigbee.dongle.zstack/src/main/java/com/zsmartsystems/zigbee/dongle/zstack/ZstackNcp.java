@@ -22,6 +22,13 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.af.ZstackAfRegisterSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.af.ZstackAfRegisterSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfBdbAddInstallcodeSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfBdbAddInstallcodeSrsp;
+import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfBdbSetActiveDefaultCentralizedKeySreq;
+import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfBdbSetActiveDefaultCentralizedKeySrsp;
+import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfBdbSetTcRequireKeyExchangeSreq;
+import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfBdbSetTcRequireKeyExchangeSrsp;
+import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfSetAllowrejoinTcPolicySreq;
+import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfSetAllowrejoinTcPolicySrsp;
+import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackCentralizedLinkKeyMode;
 import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackInstallCodeFormat;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sapi.ZstackZbReadConfigurationSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sapi.ZstackZbReadConfigurationSrsp;
@@ -499,7 +506,78 @@ public class ZstackNcp {
                 .sendTransaction(new ZstackSingleResponseTransaction(request, ZstackZdoStartupFromAppSrsp.class));
         ZstackZdoStartupFromAppSrsp response = (ZstackZdoStartupFromAppSrsp) transaction.getResponse();
         if (response == null) {
-            logger.debug("No response from StartupApplication command");
+            logger.debug("No response from startupApplication command");
+            return ZstackResponseCode.FAILURE;
+        }
+        logger.debug(response.toString());
+        return response.getStatus();
+    }
+
+    /**
+     * Sets the policy flag on Trust Center device to mandate or not the TCLK exchange procedure.
+     * <p>
+     * APP_CNF_BDB_SET_TC_REQUIRE_KEY_EXCHANGE
+     *
+     * @param required true if the TCLK exchange procedure is required.
+     * @return {@link ZstackResponseCode} returned from the NCP
+     */
+    public ZstackResponseCode requireKeyExchange(boolean required) {
+        ZstackAppCnfBdbSetTcRequireKeyExchangeSreq request = new ZstackAppCnfBdbSetTcRequireKeyExchangeSreq();
+        request.setTrustCenterRequireKeyExchange(required);
+        ZstackTransaction transaction = protocolHandler.sendTransaction(
+                new ZstackSingleResponseTransaction(request, ZstackAppCnfBdbSetTcRequireKeyExchangeSrsp.class));
+        ZstackAppCnfBdbSetTcRequireKeyExchangeSrsp response = (ZstackAppCnfBdbSetTcRequireKeyExchangeSrsp) transaction
+                .getResponse();
+        if (response == null) {
+            logger.debug("No response from requireKeyExchange command");
+            return ZstackResponseCode.FAILURE;
+        }
+        logger.debug(response.toString());
+        return response.getStatus();
+    }
+
+    /**
+     * Sets the policy to mandate or not the usage of an Install Code upon joining.
+     * <p>
+     * APP_CNF_BDB_SET_ACTIVE_DEFAULT_CENTRALIZED_KEY
+     *
+     * @param mode the {@link ZstackCentralizedLinkKeyMode}
+     * @param installCode array with the code in the required format
+     * @return {@link ZstackResponseCode} returned from the NCP
+     */
+    public ZstackResponseCode setCentralisedKey(ZstackCentralizedLinkKeyMode mode, int[] installCode) {
+        ZstackAppCnfBdbSetActiveDefaultCentralizedKeySreq request = new ZstackAppCnfBdbSetActiveDefaultCentralizedKeySreq();
+        request.setCentralizedLinkKeyMode(mode);
+        request.setInstallCode(installCode);
+        ZstackTransaction transaction = protocolHandler.sendTransaction(
+                new ZstackSingleResponseTransaction(request, ZstackAppCnfBdbSetActiveDefaultCentralizedKeySrsp.class));
+        ZstackAppCnfBdbSetActiveDefaultCentralizedKeySrsp response = (ZstackAppCnfBdbSetActiveDefaultCentralizedKeySrsp) transaction
+                .getResponse();
+        if (response == null) {
+            logger.debug("No response from setCentralisedKey command");
+            return ZstackResponseCode.FAILURE;
+        }
+        logger.debug(response.toString());
+        return response.getStatus();
+    }
+
+    /**
+     * Sets the AllowRejoin TC policy.
+     * <p>
+     * APP_CNF_SET_ALLOWREJOIN_TC_POLICY
+     *
+     * @param allow true to allow rejoins
+     * @return {@link ZstackResponseCode} returned from the NCP
+     */
+    public ZstackResponseCode allowRejoin(boolean allow) {
+        ZstackAppCnfSetAllowrejoinTcPolicySreq request = new ZstackAppCnfSetAllowrejoinTcPolicySreq();
+        request.setAllowRejoin(allow);
+        ZstackTransaction transaction = protocolHandler.sendTransaction(
+                new ZstackSingleResponseTransaction(request, ZstackAppCnfSetAllowrejoinTcPolicySrsp.class));
+        ZstackAppCnfSetAllowrejoinTcPolicySrsp response = (ZstackAppCnfSetAllowrejoinTcPolicySrsp) transaction
+                .getResponse();
+        if (response == null) {
+            logger.debug("No response from allowRejoin command");
             return ZstackResponseCode.FAILURE;
         }
         logger.debug(response.toString());

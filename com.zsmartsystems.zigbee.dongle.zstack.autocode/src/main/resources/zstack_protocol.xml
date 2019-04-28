@@ -1601,7 +1601,7 @@
 				</description>
 			</parameter>
 			<parameter>
-				<data_type>uint8</data_type>
+				<data_type>uint8[]</data_type>
 				<name>InstallCode</name>
 				<description>Buffer with the key in any of its formats.</description>
 			</parameter>

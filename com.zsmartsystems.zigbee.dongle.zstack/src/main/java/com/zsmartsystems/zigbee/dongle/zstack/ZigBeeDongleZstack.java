@@ -26,6 +26,7 @@ import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.ZigBeeProfileType;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.dongle.zstack.api.ZstackCommand;
@@ -35,6 +36,7 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.af.ZstackAfDataConfirmAreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.af.ZstackAfDataRequestSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.af.ZstackAfDataRequestSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.af.ZstackAfIncomingMsgAreq;
+import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackCentralizedLinkKeyMode;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackConfigId;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysVersionSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSystemCapabilities;
@@ -43,6 +45,7 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetDeviceInfoSr
 import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetNvInfoSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoMsgCbIncomingAreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoStateChangeIndAreq;
+import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoTcDevIndAreq;
 import com.zsmartsystems.zigbee.dongle.zstack.internal.ZstackFrameHandler;
 import com.zsmartsystems.zigbee.dongle.zstack.internal.ZstackNetworkInitialisation;
 import com.zsmartsystems.zigbee.dongle.zstack.internal.ZstackProtocolHandler;
@@ -66,7 +69,6 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
  *
  */
 public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameHandler {
-
     /**
      * The {@link Logger}.
      */
@@ -179,6 +181,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
 
         // Define the default configuration
         stackConfiguration = new LinkedHashMap<>();
+        stackConfiguration.put(ZstackConfigId.ZCD_NV_APS_ALLOW_R19_SECURITY, new int[] { 0x01 });
 
         networkKey = new ZigBeeKey();
     }
@@ -525,6 +528,11 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
         }
 
         if (response instanceof ZstackZdoMsgCbIncomingAreq) {
+            // Ignore frames before we're initialised
+            if (nwkAddress == null) {
+                return;
+            }
+
             ZstackZdoMsgCbIncomingAreq incomingMsg = (ZstackZdoMsgCbIncomingAreq) response;
             ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
             apsFrame.setCluster(incomingMsg.getClusterId());
@@ -579,36 +587,13 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
             return;
         }
 
-        /*
-         * if (response instanceof EzspTrustCenterJoinHandler) {
-         * EzspTrustCenterJoinHandler joinHandler = (EzspTrustCenterJoinHandler) response;
-         *
-         * ZigBeeNodeStatus status;
-         * switch (joinHandler.getStatus()) {
-         * case EMBER_HIGH_SECURITY_UNSECURED_JOIN:
-         * case EMBER_STANDARD_SECURITY_UNSECURED_JOIN:
-         * status = ZigBeeNodeStatus.UNSECURED_JOIN;
-         * break;
-         * case EMBER_HIGH_SECURITY_UNSECURED_REJOIN:
-         * case EMBER_STANDARD_SECURITY_UNSECURED_REJOIN:
-         * status = ZigBeeNodeStatus.UNSECURED_REJOIN;
-         * break;
-         * case EMBER_HIGH_SECURITY_SECURED_REJOIN:
-         * case EMBER_STANDARD_SECURITY_SECURED_REJOIN:
-         * status = ZigBeeNodeStatus.SECURED_REJOIN;
-         * break;
-         * case EMBER_DEVICE_LEFT:
-         * status = ZigBeeNodeStatus.DEVICE_LEFT;
-         * break;
-         * default:
-         * logger.debug("Unknown state in trust centre join handler {}", joinHandler.getStatus());
-         * return;
-         * }
-         *
-         * zigbeeTransportReceive.nodeStatusUpdate(status, joinHandler.getNewNodeId(), joinHandler.getNewNodeEui64());
-         * return;
-         * }
-         */
+        if (response instanceof ZstackZdoTcDevIndAreq) {
+            ZstackZdoTcDevIndAreq tcDeviceInd = (ZstackZdoTcDevIndAreq) response;
+
+            zigbeeTransportReceive.nodeStatusUpdate(ZigBeeNodeStatus.UNSECURED_JOIN, tcDeviceInd.getSrcAddr(),
+                    tcDeviceInd.getExtAddr());
+            return;
+        }
     }
 
     @Override
@@ -697,16 +682,28 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
 
     @Override
     public ZigBeeStatus setTcLinkKey(ZigBeeKey key) {
-        linkKey = key;
-        if (networkStateUp) {
-            return ZigBeeStatus.INVALID_STATE;
-        }
-        return ZigBeeStatus.SUCCESS;
+        ZstackNcp ncp = getZstackNcp();
+
+        return ncp.setCentralisedKey(ZstackCentralizedLinkKeyMode.PROVIDED_APS_KEY,
+                key.getValue()) == ZstackResponseCode.SUCCESS ? ZigBeeStatus.SUCCESS : ZigBeeStatus.FAILURE;
     }
 
     @Override
     public ZigBeeKey getTcLinkKey() {
         return null;
+    }
+
+    /**
+     * Sets the policy flag on Trust Center device to mandate or not the TCLK exchange procedure.
+     *
+     * @param required true if the TCLK exchange procedure is required.
+     * @return {@link ZigBeeStatus}
+     */
+    public ZigBeeStatus requireKeyExchange(boolean required) {
+        ZstackNcp ncp = getZstackNcp();
+
+        return ncp.requireKeyExchange(required) == ZstackResponseCode.SUCCESS ? ZigBeeStatus.SUCCESS
+                : ZigBeeStatus.FAILURE;
     }
 
     @Override
