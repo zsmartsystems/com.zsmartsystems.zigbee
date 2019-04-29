@@ -1294,6 +1294,39 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             return;
         }
 
+        notifyListenersAboutAddedNode(node);
+    }
+
+    /**
+     * Adds a {@link ZigBeeNode} to the network if it doesn't exist yet
+     *
+     * @param node the {@link ZigBeeNode} to add
+     */
+    public void addNodeIfNotExist(final ZigBeeNode node) {
+        if (node == null) {
+            return;
+        }
+
+        synchronized (networkNodes) {
+            // Don't add if the node is already known
+            // We especially don't want to notify listeners
+            if (networkNodes.containsKey(node.getIeeeAddress())) {
+                logger.debug("{}: Tried to add Node {} to the network, but it already exists", node.getIeeeAddress(),
+                        node.getNetworkAddress());
+                return;
+            }
+            networkNodes.put(node.getIeeeAddress(), node);
+            logger.debug("{}: Node {} added to the network", node.getIeeeAddress(), node.getNetworkAddress());
+        }
+
+        if (networkState != ZigBeeTransportState.ONLINE) {
+            return;
+        }
+
+        notifyListenersAboutAddedNode(node);
+    }
+
+    private void notifyListenersAboutAddedNode(final ZigBeeNode node) {
         for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
             NotificationService.execute(new Runnable() {
                 @Override
