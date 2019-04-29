@@ -612,6 +612,17 @@ public abstract class ZclCluster {
     }
 
     /**
+     * Sends a default response to the client
+     *
+     * @param transactionId the transaction ID to use in the response
+     * @param commandIdentifier the command identifier to which this is a response
+     * @param status the {@link ZclStatus} to send in the response
+     */
+    public void sendDefaultResponse(Integer transactionId, Integer commandIdentifier, ZclStatus status) {
+        sendDefaultResponse(transactionId, commandIdentifier, status, null);
+    }
+
+    /**
      * Gets the list of attributes supported by this device.
      * After initialisation, the list will contain all standard attributes defined by ZCL, so is not customised to the
      * specific device. Once a successful call to {@link #discoverAttributes()} has been made, the list will reflect the
