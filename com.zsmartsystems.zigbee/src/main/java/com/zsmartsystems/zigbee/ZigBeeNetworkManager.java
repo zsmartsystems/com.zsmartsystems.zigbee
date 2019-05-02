@@ -1286,6 +1286,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             networkNodes.remove(node.getIeeeAddress());
         }
 
+        synchronized (this) {
+            if (networkState != ZigBeeNetworkState.ONLINE) {
+                return;
+            }
+        }
+
         for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
             NotificationService.execute(new Runnable() {
                 @Override
@@ -1366,6 +1372,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         final boolean updated = nodeDiscoveryComplete.contains(node.getIeeeAddress());
         if (!updated && node.isDiscovered() || node.getIeeeAddress().equals(localIeeeAddress)) {
             nodeDiscoveryComplete.add(node.getIeeeAddress());
+        }
+
+        synchronized (this) {
+            if (networkState != ZigBeeNetworkState.ONLINE) {
+                return;
+            }
         }
 
         for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
