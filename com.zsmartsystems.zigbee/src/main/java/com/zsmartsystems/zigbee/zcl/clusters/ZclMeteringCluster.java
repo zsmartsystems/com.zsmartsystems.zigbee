@@ -66,7 +66,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-05-02T20:51:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-05-02T21:42:46Z")
 public class ZclMeteringCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -2651,6 +2651,14 @@ public class ZclMeteringCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(2);
 
+        attributeMap.put(ATTR_FUNCTIONALNOTIFICATIONFLAGS, new ZclAttribute(this, ATTR_FUNCTIONALNOTIFICATIONFLAGS, "Functional Notification Flags", ZclDataType.BITMAP_32_BIT, true, true, false, false));
+        attributeMap.put(ATTR_NOTIFICATIONFLAGS2, new ZclAttribute(this, ATTR_NOTIFICATIONFLAGS2, "Notification Flags 2", ZclDataType.BITMAP_32_BIT, true, true, false, false));
+        attributeMap.put(ATTR_NOTIFICATIONFLAGS3, new ZclAttribute(this, ATTR_NOTIFICATIONFLAGS3, "Notification Flags 3", ZclDataType.BITMAP_32_BIT, true, true, false, false));
+        attributeMap.put(ATTR_NOTIFICATIONFLAGS4, new ZclAttribute(this, ATTR_NOTIFICATIONFLAGS4, "Notification Flags 4", ZclDataType.BITMAP_32_BIT, true, true, false, false));
+        attributeMap.put(ATTR_NOTIFICATIONFLAGS5, new ZclAttribute(this, ATTR_NOTIFICATIONFLAGS5, "Notification Flags 5", ZclDataType.BITMAP_32_BIT, true, true, false, false));
+        attributeMap.put(ATTR_NOTIFICATIONFLAGS6, new ZclAttribute(this, ATTR_NOTIFICATIONFLAGS6, "Notification Flags 6", ZclDataType.BITMAP_32_BIT, true, true, false, false));
+        attributeMap.put(ATTR_NOTIFICATIONFLAGS7, new ZclAttribute(this, ATTR_NOTIFICATIONFLAGS7, "Notification Flags 7", ZclDataType.BITMAP_32_BIT, true, true, false, false));
+        attributeMap.put(ATTR_NOTIFICATIONFLAGS8, new ZclAttribute(this, ATTR_NOTIFICATIONFLAGS8, "Notification Flags 8", ZclDataType.BITMAP_32_BIT, true, true, false, false));
 
         return attributeMap;
     }

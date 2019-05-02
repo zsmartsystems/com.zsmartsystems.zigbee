@@ -108,7 +108,7 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
         }
 
         importsAdd(packageRoot + packageZcl + ".ZclCluster");
-        if (attributesServer.size() > 0) {
+        if (cluster.attributes.size() > 0) {
             importsAdd(packageRoot + packageZclProtocol + ".ZclDataType");
             // importsAdd(packageRoot + packageZclProtocol + ".ZclClusterType");
         }
@@ -440,10 +440,6 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
         if (attributes.size() != 0) {
             out.println();
             for (final ZigBeeXmlAttribute attribute : attributes) {
-                if (!attribute.side.equalsIgnoreCase("server")) {
-                    continue;
-                }
-
                 if (attribute.arrayStart != null && attribute.arrayCount != null && attribute.arrayCount > 0) {
                     int arrayCount = attribute.arrayStart;
                     int arrayStep = attribute.arrayStep == null ? 1 : attribute.arrayStep;

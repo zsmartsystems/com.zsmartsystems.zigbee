@@ -31,6 +31,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QuerySpecificFileRespons
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.UpgradeEndCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.UpgradeEndResponse;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * <b>Ota Upgrade</b> cluster implementation (<i>Cluster ID 0x0019</i>).
@@ -62,7 +63,7 @@ import com.zsmartsystems.zigbee.zcl.field.ByteArray;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T14:56:52Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-05-02T22:06:26Z")
 public class ZclOtaUpgradeCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -162,6 +163,17 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(11);
 
+        attributeMap.put(ATTR_UPGRADESERVERID, new ZclAttribute(this, ATTR_UPGRADESERVERID, "Upgrade Server ID", ZclDataType.IEEE_ADDRESS, true, true, false, false));
+        attributeMap.put(ATTR_FILEOFFSET, new ZclAttribute(this, ATTR_FILEOFFSET, "File Offset", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTFILEVERSION, new ZclAttribute(this, ATTR_CURRENTFILEVERSION, "Current File Version", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTZIGBEESTACKVERSION, new ZclAttribute(this, ATTR_CURRENTZIGBEESTACKVERSION, "Current ZigBee Stack Version", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_DOWNLOADEDFILEVERSION, new ZclAttribute(this, ATTR_DOWNLOADEDFILEVERSION, "Downloaded File Version", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_DOWNLOADEDZIGBEESTACKVERSION, new ZclAttribute(this, ATTR_DOWNLOADEDZIGBEESTACKVERSION, "Downloaded ZigBee Stack Version", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_IMAGEUPGRADESTATUS, new ZclAttribute(this, ATTR_IMAGEUPGRADESTATUS, "Image Upgrade Status", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_MANUFACTURERID, new ZclAttribute(this, ATTR_MANUFACTURERID, "Manufacturer ID", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_IMAGETYPEID, new ZclAttribute(this, ATTR_IMAGETYPEID, "Image Type ID", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_MINIMUMBLOCKREQUESTPERIOD, new ZclAttribute(this, ATTR_MINIMUMBLOCKREQUESTPERIOD, "Minimum Block Request Period", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_IMAGESTAMP, new ZclAttribute(this, ATTR_IMAGESTAMP, "Image Stamp", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
 
         return attributeMap;
     }
