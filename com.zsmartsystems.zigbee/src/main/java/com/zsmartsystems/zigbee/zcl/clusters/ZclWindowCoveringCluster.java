@@ -35,7 +35,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-18T19:39:16Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-05-02T20:51:08Z")
 public class ZclWindowCoveringCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -270,7 +270,7 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getWindowCoveringType(final long refreshPeriod) {
@@ -340,7 +340,7 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getPhysicalClosedLimitLift(final long refreshPeriod) {
@@ -412,7 +412,7 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getPhysicalClosedLimitTilt(final long refreshPeriod) {
@@ -484,7 +484,7 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getCurrentPositionLift(final long refreshPeriod) {
@@ -556,7 +556,7 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getCurrentPositionTilt(final long refreshPeriod) {
@@ -626,7 +626,7 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getNumberOfActuationsLift(final long refreshPeriod) {
@@ -695,7 +695,7 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getNumberOfActuationsTilt(final long refreshPeriod) {
@@ -768,7 +768,7 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getConfigStatus(final long refreshPeriod) {
@@ -846,7 +846,7 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getCurrentPositionLiftPercentage(final long refreshPeriod) {
@@ -927,7 +927,7 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getCurrentPositionTiltPercentage(final long refreshPeriod) {
@@ -1002,7 +1002,7 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getInstalledOpenLimitLift(final long refreshPeriod) {
@@ -1074,7 +1074,7 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getInstalledClosedLimitLift(final long refreshPeriod) {
@@ -1148,7 +1148,7 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getInstalledOpenLimitTilt(final long refreshPeriod) {
@@ -1223,7 +1223,7 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getInstalledClosedLimitTilt(final long refreshPeriod) {
@@ -1313,7 +1313,7 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getVelocityLift(final long refreshPeriod) {
@@ -1380,7 +1380,7 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getAccelerationTimeLift(final long refreshPeriod) {
@@ -1447,7 +1447,7 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getDecelerationTimeLift(final long refreshPeriod) {
@@ -1517,7 +1517,7 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getMode(final long refreshPeriod) {
@@ -1590,7 +1590,7 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link ByteArray} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public ByteArray getIntermediateSetpointsLift(final long refreshPeriod) {
@@ -1663,7 +1663,7 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link ByteArray} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public ByteArray getIntermediateSetpointsTilt(final long refreshPeriod) {

@@ -55,7 +55,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-18T19:39:16Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-05-02T20:51:08Z")
 public class ZclDoorLockCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -437,7 +437,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getLockState(final long refreshPeriod) {
@@ -502,7 +502,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getLockType(final long refreshPeriod) {
@@ -567,7 +567,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Boolean} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Boolean getActuatorEnabled(final long refreshPeriod) {
@@ -632,7 +632,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getDoorState(final long refreshPeriod) {
@@ -718,7 +718,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getDoorOpenEvents(final long refreshPeriod) {
@@ -785,7 +785,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getDoorClosedEvents(final long refreshPeriod) {
@@ -852,7 +852,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getOpenPeriod(final long refreshPeriod) {
@@ -898,7 +898,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getNumLockRecordsSupported(final long refreshPeriod) {
@@ -966,7 +966,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getNumTotalUsersSupported(final long refreshPeriod) {
@@ -1033,7 +1033,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getNumPinUsersSupported(final long refreshPeriod) {
@@ -1099,7 +1099,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getNumRfidUsersSupported(final long refreshPeriod) {
@@ -1165,7 +1165,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getNumWeekdaySchedulesSupportedPerUser(final long refreshPeriod) {
@@ -1231,7 +1231,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getNumYeardaySchedulesSupportedPerUser(final long refreshPeriod) {
@@ -1297,7 +1297,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getNumHolidaySchedulesSupportedPerUser(final long refreshPeriod) {
@@ -1367,7 +1367,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getMaxPinLength(final long refreshPeriod) {
@@ -1439,7 +1439,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getMinPinLength(final long refreshPeriod) {
@@ -1513,7 +1513,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getMaxRfidCodeLength(final long refreshPeriod) {
@@ -1588,7 +1588,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getMinRfidCodeLength(final long refreshPeriod) {
@@ -1687,7 +1687,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Boolean} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Boolean getEnableLogging(final long refreshPeriod) {
@@ -1760,7 +1760,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link String} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public String getLanguage(final long refreshPeriod) {
@@ -1824,7 +1824,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getLedSettings(final long refreshPeriod) {
@@ -1894,7 +1894,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getAutoRelockTime(final long refreshPeriod) {
@@ -1958,7 +1958,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getSoundVolume(final long refreshPeriod) {
@@ -2022,7 +2022,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getOperatingMode(final long refreshPeriod) {
@@ -2072,7 +2072,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getSupportedOperatingModes(final long refreshPeriod) {
@@ -2155,7 +2155,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getDefaultConfigurationRegister(final long refreshPeriod) {
@@ -2261,7 +2261,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Boolean} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Boolean getEnableLocalProgramming(final long refreshPeriod) {
@@ -2325,7 +2325,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Boolean} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Boolean getEnableOneTouchLocking(final long refreshPeriod) {
@@ -2389,7 +2389,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Boolean} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Boolean getEnableInsideStatusLed(final long refreshPeriod) {
@@ -2456,7 +2456,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Boolean} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Boolean getEnablePrivacyModeButton(final long refreshPeriod) {
@@ -2526,7 +2526,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getWrongCodeEntryLimit(final long refreshPeriod) {
@@ -2596,7 +2596,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getUserCodeTemporaryDisableTime(final long refreshPeriod) {
@@ -2684,7 +2684,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Boolean} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Boolean getSendPinOverTheAir(final long refreshPeriod) {
@@ -2754,7 +2754,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Boolean} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Boolean getRequirePinForRfOperation(final long refreshPeriod) {
@@ -2814,7 +2814,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getZigbeeSecurityLevel(final long refreshPeriod) {
@@ -2913,7 +2913,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getAlarmMask(final long refreshPeriod) {
@@ -2980,7 +2980,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getKeypadOperationEventMask(final long refreshPeriod) {
@@ -3047,7 +3047,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getRfOperationEventMask(final long refreshPeriod) {
@@ -3114,7 +3114,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getManualOperationEventMask(final long refreshPeriod) {
@@ -3181,7 +3181,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getRfidOperationEventMask(final long refreshPeriod) {
@@ -3248,7 +3248,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getKeypadProgrammingEventMask(final long refreshPeriod) {
@@ -3315,7 +3315,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getRfProgrammingEventMask(final long refreshPeriod) {
@@ -3382,7 +3382,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getRfidProgrammingEventMask(final long refreshPeriod) {
