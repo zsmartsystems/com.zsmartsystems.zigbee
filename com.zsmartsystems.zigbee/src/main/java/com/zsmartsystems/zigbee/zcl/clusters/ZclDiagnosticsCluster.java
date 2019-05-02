@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-18T19:39:16Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-05-02T20:51:08Z")
 public class ZclDiagnosticsCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -190,7 +190,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getNumberOfResets(final long refreshPeriod) {
@@ -260,7 +260,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getPersistentMemoryWrites(final long refreshPeriod) {
@@ -327,7 +327,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getMacRxBcast(final long refreshPeriod) {
@@ -393,7 +393,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getMacTxBcast(final long refreshPeriod) {
@@ -459,7 +459,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getMacRxUcast(final long refreshPeriod) {
@@ -525,7 +525,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getMacTxUcast(final long refreshPeriod) {
@@ -587,7 +587,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getMacTxUcastRetry(final long refreshPeriod) {
@@ -647,7 +647,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getMacTxUcastFail(final long refreshPeriod) {
@@ -707,7 +707,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getApsRxBcast(final long refreshPeriod) {
@@ -767,7 +767,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getApsTxBcast(final long refreshPeriod) {
@@ -827,7 +827,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getApsRxUcast(final long refreshPeriod) {
@@ -887,7 +887,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getApsTxUcastSuccess(final long refreshPeriod) {
@@ -947,7 +947,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getApsTxUcastRetry(final long refreshPeriod) {
@@ -1007,7 +1007,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getApsTxUcastFail(final long refreshPeriod) {
@@ -1067,7 +1067,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getRouteDiscInitiated(final long refreshPeriod) {
@@ -1127,7 +1127,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getNeighborAdded(final long refreshPeriod) {
@@ -1187,7 +1187,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getNeighborRemoved(final long refreshPeriod) {
@@ -1247,7 +1247,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getNeighborStale(final long refreshPeriod) {
@@ -1307,7 +1307,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getJoinIndication(final long refreshPeriod) {
@@ -1367,7 +1367,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getChildMoved(final long refreshPeriod) {
@@ -1427,7 +1427,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getNwkFcFailure(final long refreshPeriod) {
@@ -1487,7 +1487,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getApsFcFailure(final long refreshPeriod) {
@@ -1547,7 +1547,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getApsUnauthorizedKey(final long refreshPeriod) {
@@ -1607,7 +1607,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getNwkDecryptFailures(final long refreshPeriod) {
@@ -1667,7 +1667,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getApsDecryptFailures(final long refreshPeriod) {
@@ -1727,7 +1727,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getPacketBufferAllocateFailures(final long refreshPeriod) {
@@ -1787,7 +1787,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getRelayedUcast(final long refreshPeriod) {
@@ -1847,7 +1847,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getPhyToMacQueueLimitReached(final long refreshPeriod) {
@@ -1907,7 +1907,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getPacketValidateDropCount(final long refreshPeriod) {
@@ -1967,7 +1967,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getAverageMacRetryPerApsMessageSent(final long refreshPeriod) {
@@ -2027,7 +2027,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getLastMessageLqi(final long refreshPeriod) {
@@ -2087,7 +2087,7 @@ public class ZclDiagnosticsCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getLastMessageRssi(final long refreshPeriod) {

@@ -34,7 +34,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-18T19:39:16Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-05-02T20:51:08Z")
 public class ZclThermostatCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -219,7 +219,7 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getLocalTemperature(final long refreshPeriod) {
@@ -288,7 +288,7 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getOutdoorTemperature(final long refreshPeriod) {
@@ -334,7 +334,7 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getOccupancy(final long refreshPeriod) {
@@ -382,7 +382,7 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getAbsMinHeatSetpointLimit(final long refreshPeriod) {
@@ -430,7 +430,7 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getAbsMaxHeatSetpointLimit(final long refreshPeriod) {
@@ -478,7 +478,7 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getAbsMinCoolSetpointLimit(final long refreshPeriod) {
@@ -526,7 +526,7 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getAbsMaxCoolSetpointLimit(final long refreshPeriod) {
@@ -576,7 +576,7 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getPiCoolingDemand(final long refreshPeriod) {
@@ -626,7 +626,7 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getPiHeatingDemand(final long refreshPeriod) {
@@ -668,7 +668,7 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getHvacSystemTypeConfiguration(final long refreshPeriod) {
@@ -710,7 +710,7 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getLocalTemperatureCalibration(final long refreshPeriod) {
@@ -752,7 +752,7 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getOccupiedCoolingSetpoint(final long refreshPeriod) {
@@ -812,7 +812,7 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getOccupiedHeatingSetpoint(final long refreshPeriod) {
@@ -872,7 +872,7 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getUnoccupiedCoolingSetpoint(final long refreshPeriod) {
@@ -914,7 +914,7 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getUnoccupiedHeatingSetpoint(final long refreshPeriod) {
@@ -956,7 +956,7 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getMinHeatSetpointLimit(final long refreshPeriod) {
@@ -998,7 +998,7 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getMaxHeatSetpointLimit(final long refreshPeriod) {
@@ -1040,7 +1040,7 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getMinCoolSetpointLimit(final long refreshPeriod) {
@@ -1082,7 +1082,7 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getMaxCoolSetpointLimit(final long refreshPeriod) {
@@ -1124,7 +1124,7 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getMinSetpointDeadBand(final long refreshPeriod) {
@@ -1166,7 +1166,7 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getRemoteSensing(final long refreshPeriod) {
@@ -1208,7 +1208,7 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getControlSequenceOfOperation(final long refreshPeriod) {
@@ -1267,7 +1267,7 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getSystemMode(final long refreshPeriod) {
@@ -1326,7 +1326,7 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getAlarmMask(final long refreshPeriod) {
@@ -1368,7 +1368,7 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
-     * @deprecated As of release 1.2.0, replaced by {@link #readAttributeValue(int attributeId, long refreshPeriod)}
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
     public Integer getThermostatRunningMode(final long refreshPeriod) {

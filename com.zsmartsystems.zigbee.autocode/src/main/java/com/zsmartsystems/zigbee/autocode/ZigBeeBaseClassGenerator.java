@@ -401,7 +401,7 @@ public abstract class ZigBeeBaseClassGenerator {
         } else if (type.contains("Set")) {
             replacedBy = "writeAttribute(int attributeId, Object value";
         } else if ("Synchronously get".equals(type)) {
-            replacedBy = "readAttributeValue(int attributeId, long refreshPeriod";
+            replacedBy = "ZclAttribute#readValue(long refreshPeriod";
         } else {
             replacedBy = "readAttribute(int attributeId";
         }
