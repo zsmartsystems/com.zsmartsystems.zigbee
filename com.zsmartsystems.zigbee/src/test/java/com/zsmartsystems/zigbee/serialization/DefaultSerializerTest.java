@@ -17,6 +17,7 @@ import org.junit.Test;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -42,6 +43,13 @@ public class DefaultSerializerTest {
         int valIn = 0x9;
         int[] valOut = { 0x9 };
         testSerializedData(valIn, valOut, ZclDataType.DATA_8_BIT);
+    }
+
+    @Test
+    public void testSerialize_RAW_OCTET() {
+        ByteArray valIn = new ByteArray(new int[] { 0x00, 0x11, 0x22, 0x44, 0x88, 0xCC, 0xFF });
+        int[] valOut = { 0x00, 0x11, 0x22, 0x44, 0x88, 0xCC, 0xFF };
+        testSerializedData(valIn, valOut, ZclDataType.RAW_OCTET);
     }
 
     @Test
@@ -81,6 +89,24 @@ public class DefaultSerializerTest {
         DefaultSerializer serializer = new DefaultSerializer();
         serializer.appendZigBeeType(object, type);
         int[] data = serializer.getPayload();
+        System.out.println("Serialize: " + type + " >> " + object + " = " + arrayToString(data) + ", expect "
+                + arrayToString(output));
         assertTrue(Arrays.equals(output, data));
+    }
+
+    private String arrayToString(int[] value) {
+        StringBuilder builder = new StringBuilder(120);
+        builder.append('[');
+        boolean first = true;
+        for (int val : value) {
+            if (!first) {
+                builder.append(' ');
+            }
+            first = false;
+            builder.append(String.format("%02X", val & 0xFF));
+        }
+        builder.append(']');
+
+        return builder.toString();
     }
 }

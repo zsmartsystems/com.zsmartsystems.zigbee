@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -26,6 +27,13 @@ public class DefaultDeserializerTest {
         int[] valIn = { 0x9 };
         int valOut = 0x9;
         testDeserialize(valIn, valOut, ZclDataType.DATA_8_BIT);
+    }
+
+    @Test
+    public void testDeserialize_RAW_OCTET() {
+        int[] valIn = { 0x00, 0x11, 0x22, 0x44, 0x88, 0xCC, 0xFF };
+        ByteArray valOut = new ByteArray(new int[] { 0x00, 0x11, 0x22, 0x44, 0x88, 0xCC, 0xFF });
+        testDeserialize(valIn, valOut, ZclDataType.RAW_OCTET);
     }
 
     @Test
