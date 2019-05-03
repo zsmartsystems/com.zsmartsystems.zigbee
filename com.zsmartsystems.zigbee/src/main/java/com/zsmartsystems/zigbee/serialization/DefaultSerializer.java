@@ -143,7 +143,7 @@ public class DefaultSerializer implements ZigBeeSerializer {
             case RAW_OCTET:
                 final ByteArray rawArray = (ByteArray) data;
                 for (byte arrayByte : rawArray.get()) {
-                    buffer[length++] = arrayByte;
+                    buffer[length++] = arrayByte & 0xFF;
                 }
                 break;
             case OCTET_STRING:
