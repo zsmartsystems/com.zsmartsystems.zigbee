@@ -88,8 +88,8 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_BINDING_IS_ACTIVE = 0x2E;
     protected static final int FRAME_ID_CALCULATE_SMACS = 0x9F;
     protected static final int FRAME_ID_CALCULATE_SMACS283K1 = 0xEA;
+    protected static final int FRAME_ID_CALCULATE_SMACS283K1_HANDLER = 0xEB;
     protected static final int FRAME_ID_CALCULATE_SMACS_HANDLER = 0xA0;
-    protected static final int FRAME_ID_CALCULATE_SMACS_HANDLER283K1 = 0xEB;
     protected static final int FRAME_ID_CALLBACK = 0x06;
     protected static final int FRAME_ID_CHANGE_SOURCE_ROUTE_HANDLER = 0xC4;
     protected static final int FRAME_ID_CHILD_JOIN_HANDLER = 0x23;
@@ -110,8 +110,8 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_FORM_NETWORK = 0x1E;
     protected static final int FRAME_ID_GENERATE_CBKE_KEYS = 0xA4;
     protected static final int FRAME_ID_GENERATE_CBKE_KEYS283K1 = 0xE8;
+    protected static final int FRAME_ID_GENERATE_CBKE_KEYS283K1_HANDLER = 0xE9;
     protected static final int FRAME_ID_GENERATE_CBKE_KEYS_HANDLER = 0x9E;
-    protected static final int FRAME_ID_GENERATE_CBKE_KEYS_HANDLER283K1 = 0xE9;
     protected static final int FRAME_ID_GET_ADDRESS_TABLE_REMOTE_EUI64 = 0x5E;
     protected static final int FRAME_ID_GET_BINDING = 0x2C;
     protected static final int FRAME_ID_GET_BINDING_REMOTE_NODE_ID = 0x2F;
@@ -225,8 +225,8 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_BINDING_IS_ACTIVE, EzspBindingIsActiveResponse.class);
         ezspHandlerMap.put(FRAME_ID_CALCULATE_SMACS, EzspCalculateSmacsResponse.class);
         ezspHandlerMap.put(FRAME_ID_CALCULATE_SMACS283K1, EzspCalculateSmacs283k1Response.class);
+        ezspHandlerMap.put(FRAME_ID_CALCULATE_SMACS283K1_HANDLER, EzspCalculateSmacs283k1Handler.class);
         ezspHandlerMap.put(FRAME_ID_CALCULATE_SMACS_HANDLER, EzspCalculateSmacsHandler.class);
-        ezspHandlerMap.put(FRAME_ID_CALCULATE_SMACS_HANDLER283K1, EzspCalculateSmacsHandler283k1Response.class);
         ezspHandlerMap.put(FRAME_ID_CALLBACK, EzspCallbackResponse.class);
         ezspHandlerMap.put(FRAME_ID_CHANGE_SOURCE_ROUTE_HANDLER, EzspChangeSourceRouteHandler.class);
         ezspHandlerMap.put(FRAME_ID_CHILD_JOIN_HANDLER, EzspChildJoinHandler.class);
@@ -247,8 +247,8 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_FORM_NETWORK, EzspFormNetworkResponse.class);
         ezspHandlerMap.put(FRAME_ID_GENERATE_CBKE_KEYS, EzspGenerateCbkeKeysResponse.class);
         ezspHandlerMap.put(FRAME_ID_GENERATE_CBKE_KEYS283K1, EzspGenerateCbkeKeys283k1Response.class);
+        ezspHandlerMap.put(FRAME_ID_GENERATE_CBKE_KEYS283K1_HANDLER, EzspGenerateCbkeKeys283k1Handler.class);
         ezspHandlerMap.put(FRAME_ID_GENERATE_CBKE_KEYS_HANDLER, EzspGenerateCbkeKeysHandler.class);
-        ezspHandlerMap.put(FRAME_ID_GENERATE_CBKE_KEYS_HANDLER283K1, EzspGenerateCbkeKeysHandler283k1Response.class);
         ezspHandlerMap.put(FRAME_ID_GET_ADDRESS_TABLE_REMOTE_EUI64, EzspGetAddressTableRemoteEui64Response.class);
         ezspHandlerMap.put(FRAME_ID_GET_BINDING, EzspGetBindingResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_BINDING_REMOTE_NODE_ID, EzspGetBindingRemoteNodeIdResponse.class);
@@ -391,16 +391,11 @@ public abstract class EzspFrame {
      * @return the {@link EzspFrameResponse} or null if the response can't be created.
      */
     public static EzspFrameResponse createHandler(int[] data) {
-        Class<?> ezspClass = null;
-        
-        try {
-            if (data[2] != 0xFF) {
-                ezspClass = ezspHandlerMap.get(data[2]);
-            } else {
-                ezspClass = ezspHandlerMap.get(data[4]);
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            logger.debug("Error detecting the Ezsp frame type", e);
+        Class<?> ezspClass;
+        if (data[2] != 0xFF) {
+            ezspClass = ezspHandlerMap.get(data[2]);
+        } else {
+            ezspClass = ezspHandlerMap.get(data[4]);
         }
 
         if (ezspClass == null) {
