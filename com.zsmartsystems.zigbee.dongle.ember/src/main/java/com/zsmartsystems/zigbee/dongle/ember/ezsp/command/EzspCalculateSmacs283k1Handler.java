@@ -12,7 +12,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberSmacData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 
 /**
- * Class to implement the Ember EZSP command <b>calculateSmacsHandler283k1</b>.
+ * Class to implement the Ember EZSP command <b>calculateSmacs283k1Handler</b>.
  * <p>
  * A callback to indicate that the NCP has finished calculating the Secure Message
  * Authentication Codes (SMAC) for both the initiator and responder for the CBKE 283k1
@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspCalculateSmacsHandler283k1Response extends EzspFrameResponse {
+public class EzspCalculateSmacs283k1Handler extends EzspFrameResponse {
     public static final int FRAME_ID = 0xEB;
 
     /**
@@ -52,7 +52,7 @@ public class EzspCalculateSmacsHandler283k1Response extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspCalculateSmacsHandler283k1Response(int[] inputBuffer) {
+    public EzspCalculateSmacs283k1Handler(int[] inputBuffer) {
         // Super creates deserializer and reads header fields
         super(inputBuffer);
 
@@ -124,8 +124,8 @@ public class EzspCalculateSmacsHandler283k1Response extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(116);
-        builder.append("EzspCalculateSmacsHandler283k1Response [status=");
+        final StringBuilder builder = new StringBuilder(108);
+        builder.append("EzspCalculateSmacs283k1Handler [status=");
         builder.append(status);
         builder.append(", initiatorSmac=");
         builder.append(initiatorSmac);

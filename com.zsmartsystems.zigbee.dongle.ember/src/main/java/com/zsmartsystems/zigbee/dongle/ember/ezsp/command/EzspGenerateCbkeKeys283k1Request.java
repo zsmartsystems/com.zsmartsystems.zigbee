@@ -15,7 +15,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
  * <p>
  * This call starts the generation of the ECC 283k1 curve Ephemeral Public/Private key pair.
  * When complete it stores the private key. The results are returned via
- * ezspGenerateCbkeKeysHandler283k1().
+ * ezspGenerateCbkeKeys283k1Handler().
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>

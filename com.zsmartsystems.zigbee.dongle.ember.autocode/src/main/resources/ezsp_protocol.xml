@@ -3003,7 +3003,7 @@
 	<command>
 		<name>generateCbkeKeys283k1</name>
 		<id>0xE8</id>
-		<description>This call starts the generation of the ECC 283k1 curve Ephemeral Public/Private key pair. When complete it stores the private key. The results are returned via ezspGenerateCbkeKeysHandler283k1().</description>
+		<description>This call starts the generation of the ECC 283k1 curve Ephemeral Public/Private key pair. When complete it stores the private key. The results are returned via ezspGenerateCbkeKeys283k1Handler().</description>
 		<command_parameters>
 		</command_parameters>
 		<response_parameters>
@@ -3016,7 +3016,7 @@
 	</command>
 	
 	<command>
-		<name>generateCbkeKeysHandler283k1</name>
+		<name>generateCbkeKeys283k1Handler</name>
 		<id>0xE9</id>
 		<description>A callback by the Crypto Engine indicating that a new 283k1 ephemeral public/private key pair has been generated. The public/private key pair is stored on the NCP, but only the associate public key is returned to the host. The node’s associated certificate is also returned.</description>
 		<command_parameters>
@@ -3066,7 +3066,7 @@
 	</command>
 	
 	<command>
-		<name>calculateSmacsHandler283k1</name>
+		<name>calculateSmacs283k1Handler</name>
 		<id>0xEB</id>
 		<description>A callback to indicate that the NCP has finished calculating the Secure Message Authentication Codes (SMAC) for both the initiator and responder for the CBKE 283k1 Library. The associated link key is kept in temporary storage until the host tells the NCP to store or discard the key via emberClearTemporaryDataMaybeStoreLinkKey().</description>
 		<command_parameters>
