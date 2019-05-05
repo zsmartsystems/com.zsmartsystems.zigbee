@@ -295,15 +295,19 @@ public class SpiFrameHandler implements EzspProtocolHandler {
      * variables, and stops the timer.
      */
     private void spiTransactionComplete() {
-        lastFrameSent = null;
-        retries = 0;
+        synchronized (outputFrameSynchronisation) {
+            lastFrameSent = null;
+            retries = 0;
+        }
         stopRetryTimer();
     }
 
     private void processSpiCommand(int[] packetData) {
-        if (lastFrameSent == null) {
-            logger.debug("<-- RX SPI frame when lastFrameSent is null: {}", frameToString(packetData));
-            return;
+        synchronized (outputFrameSynchronisation) {
+            if (lastFrameSent == null) {
+                logger.debug("<-- RX SPI frame when lastFrameSent is null: {}", frameToString(packetData));
+                return;
+            }
         }
 
         switch (packetData[0]) {
@@ -434,15 +438,17 @@ public class SpiFrameHandler implements EzspProtocolHandler {
 
     @Override
     public void close() {
-        if (pollingTimer != null) {
-            pollingTimer.cancel(true);
-        }
-        pollingScheduler.shutdown();
-
         logger.debug("SpiFrameHandler close.");
-
         setClosing();
-        stopRetryTimer();
+
+        synchronized (this) {
+            if (pollingTimer != null) {
+                pollingTimer.cancel(true);
+            }
+            pollingScheduler.shutdown();
+
+            stopRetryTimer();
+        }
 
         synchronized (transactionListeners) {
             for (SpiListener listener : transactionListeners) {
@@ -556,7 +562,7 @@ public class SpiFrameHandler implements EzspProtocolHandler {
         outputFrame(requestSpiVersion);
     }
 
-    private void restartPolling() {
+    private synchronized void restartPolling() {
         if (pollingTimer != null) {
             pollingTimer.cancel(true);
         }
@@ -598,7 +604,6 @@ public class SpiFrameHandler implements EzspProtocolHandler {
         @Override
         public void run() {
             synchronized (outputFrameSynchronisation) {
-
                 logger.debug("SPI Timer task [{}].  {}", retries, frameToString(lastFrameSent));
 
                 // Resend the last message sent if there is one
