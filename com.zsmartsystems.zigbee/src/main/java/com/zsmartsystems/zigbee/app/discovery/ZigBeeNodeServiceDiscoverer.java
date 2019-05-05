@@ -661,8 +661,10 @@ public class ZigBeeNodeServiceDiscoverer {
         logger.debug("{}: Node SVC Discovery: start discovery", node.getIeeeAddress());
         Set<NodeDiscoveryTask> tasks = new HashSet<NodeDiscoveryTask>();
 
-        // Always request the network address - in case it's changed
-        tasks.add(NodeDiscoveryTask.NWK_ADDRESS);
+        // Always request the network address unless this is our local node - in case it's changed
+        if (!networkManager.getLocalNwkAddress().equals(node.getNetworkAddress())) {
+            tasks.add(NodeDiscoveryTask.NWK_ADDRESS);
+        }
 
         if (node.getNodeDescriptor().getLogicalType() == LogicalType.UNKNOWN) {
             tasks.add(NodeDiscoveryTask.NODE_DESCRIPTOR);
