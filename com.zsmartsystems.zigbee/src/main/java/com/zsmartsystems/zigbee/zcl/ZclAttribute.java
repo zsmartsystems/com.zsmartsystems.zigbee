@@ -127,6 +127,7 @@ public class ZclAttribute {
      *
      * @param cluster the {@link ZclCluster} to which the attribute belongs
      * @param id the attribute ID
+     * @param name the human readable name
      * @param dataType the {@link ZclDataType} for this attribute
      * @param mandatory true if this is defined as mandatory in the ZCL specification
      * @param readable true if this is defined as readable in the ZCL specification
