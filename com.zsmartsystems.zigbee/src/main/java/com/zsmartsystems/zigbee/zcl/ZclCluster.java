@@ -273,17 +273,17 @@ public abstract class ZclCluster {
     /**
      * Write an attribute
      *
-     * @param attribute the attribute ID to write
+     * @param attributeId the attribute ID to write
      * @param dataType the {@link ZclDataType} of the object
      * @param value the value to set (as {@link Object})
      * @return command future {@link CommandResult}
      */
-    public Future<CommandResult> writeAttribute(final int attribute, final ZclDataType dataType, final Object value) {
+    public Future<CommandResult> writeAttribute(final int attributeId, final ZclDataType dataType, final Object value) {
         logger.debug("{}: Writing {} cluster {}, attribute {}, value {}, as dataType {}",
-                zigbeeEndpoint.getIeeeAddress(), (isClient ? "Client" : "Server"), clusterId, attribute, value,
+                zigbeeEndpoint.getIeeeAddress(), (isClient ? "Client" : "Server"), clusterId, attributeId, value,
                 dataType);
         final WriteAttributeRecord attributeIdentifier = new WriteAttributeRecord();
-        attributeIdentifier.setAttributeIdentifier(attribute);
+        attributeIdentifier.setAttributeIdentifier(attributeId);
         attributeIdentifier.setAttributeDataType(dataType);
         attributeIdentifier.setAttributeValue(value);
         return writeAttributes(Collections.singletonList(attributeIdentifier));
@@ -307,25 +307,25 @@ public abstract class ZclCluster {
     /**
      * Read an attribute given the attribute ID
      *
-     * @param attribute the integer attribute ID to read
+     * @param attributeId the integer attribute ID to read
      * @return command future
      */
-    public Future<CommandResult> readAttribute(final int attribute) {
-        return readAttributes(Collections.singletonList(attribute));
+    public Future<CommandResult> readAttribute(final int attributeId) {
+        return readAttributes(Collections.singletonList(attributeId));
     }
 
     /**
      * Read a number of attributes given a list of attribute IDs. Care must be taken not to request too many attributes
      * so as to exceed the allowable frame length
      *
-     * @param attributes List of attribute identifiers to read
+     * @param attributeIds List of attribute identifiers to read
      * @return command future
      */
-    public Future<CommandResult> readAttributes(final List<Integer> attributes) {
+    public Future<CommandResult> readAttributes(final List<Integer> attributeIds) {
         final ReadAttributesCommand command = new ReadAttributesCommand();
 
         command.setClusterId(clusterId);
-        command.setIdentifiers(attributes);
+        command.setIdentifiers(attributeIds);
         command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
 
         return send(command);
@@ -428,15 +428,14 @@ public abstract class ZclCluster {
     /**
      * Gets an attribute from the attribute ID
      *
-     * @param id
-     *            the attribute ID
+     * @param attributeId the attribute ID
      * @return the {@link ZclAttribute}
      */
-    public ZclAttribute getAttribute(int id) {
+    public ZclAttribute getAttribute(int attributeId) {
         if (isClient) {
-            return clientAttributes.get(id);
+            return clientAttributes.get(attributeId);
         } else {
-            return serverAttributes.get(id);
+            return serverAttributes.get(attributeId);
         }
     }
 
