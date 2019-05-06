@@ -35,6 +35,7 @@ import org.slf4j.LoggerFactory;
 import com.zsmartsystems.zigbee.ZigBeeNode.ZigBeeNodeState;
 import com.zsmartsystems.zigbee.app.ZigBeeNetworkExtension;
 import com.zsmartsystems.zigbee.app.discovery.ZigBeeDiscoveryExtension;
+import com.zsmartsystems.zigbee.aps.ApsDataEntity;
 import com.zsmartsystems.zigbee.internal.ClusterMatcher;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.internal.ZigBeeCommandNotifier;
@@ -167,7 +168,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     /**
      * The {@link ZigBeeTransactionManager} responsible for queueing and sending commands, and correlating transactions.
      */
-    private ZigBeeTransactionManager transactionManager;
+    private final ZigBeeTransactionManager transactionManager;
+
+    /**
+     * The {@link ApsDataEntity} provides APS layer services such as duplicate removal and fragmentation control
+     */
+    private final ApsDataEntity apsDataEntity;
 
     /**
      * The {@link ZigBeeCommandNotifier}. This is used for sending notifications asynchronously to listeners.
@@ -262,6 +268,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
         transport.setZigBeeTransportReceive(this);
 
+        apsDataEntity = new ApsDataEntity();
         transactionManager = new ZigBeeTransactionManager(this);
     }
 
@@ -713,8 +720,14 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     @Override
-    public void receiveCommand(final ZigBeeApsFrame apsFrame) {
-        logger.debug("RX APS: {}", apsFrame);
+    public void receiveCommand(final ZigBeeApsFrame incomingApsFrame) {
+        logger.debug("RX APS: {}", incomingApsFrame);
+
+        // Process the APS layer - this performs services such as duplicate removal and defragmentation
+        ZigBeeApsFrame apsFrame = apsDataEntity.receive(incomingApsFrame);
+        if (apsFrame == null) {
+            return;
+        }
 
         // Create the deserialiser
         Constructor<? extends ZigBeeDeserializer> constructor;

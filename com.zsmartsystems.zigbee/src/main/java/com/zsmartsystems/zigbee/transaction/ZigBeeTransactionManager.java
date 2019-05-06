@@ -471,7 +471,6 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      * @param transaction the {@link ZigBeeTransaction} that will receive the notifications
      */
     private void addTransactionListener(ZigBeeTransaction transaction) {
-        logger.debug("addTransactionListener: {}", transaction);
         synchronized (outstandingTransactions) {
             outstandingTransactions.add(transaction);
         }
