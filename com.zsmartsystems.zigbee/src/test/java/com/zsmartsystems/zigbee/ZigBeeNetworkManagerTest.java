@@ -7,11 +7,7 @@
  */
 package com.zsmartsystems.zigbee;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -273,6 +269,7 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
 
         apsFrame.setPayload(zclHeader.serialize(fieldSerializer, new int[] {}));
 
+        TestUtilities.setField(ZigBeeNetworkManager.class, networkManager, "networkState", ZigBeeNetworkState.ONLINE);
         networkManager.receiveCommand(apsFrame);
         Awaitility.await().until(() -> commandListenerUpdated());
 
@@ -564,6 +561,7 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
 
         networkManager.addNode(node);
 
+        TestUtilities.setField(ZigBeeNetworkManager.class, networkManager, "networkState", ZigBeeNetworkState.ONLINE);
         networkManager.receiveCommand(apsFrame);
         Awaitility.await().until(() -> commandListenerUpdated());
         if (commandListenerCapture.size() == 0) {

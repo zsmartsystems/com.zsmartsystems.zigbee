@@ -733,6 +733,13 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     @Override
     public void receiveCommand(final ZigBeeApsFrame apsFrame) {
+
+        synchronized (this) {
+            if (networkState != ZigBeeNetworkState.ONLINE) {
+                return;
+            }
+        }
+
         logger.debug("RX APS: {}", apsFrame);
 
         // Create the deserialiser
