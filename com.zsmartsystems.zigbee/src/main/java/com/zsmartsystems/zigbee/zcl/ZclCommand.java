@@ -7,8 +7,6 @@
  */
 package com.zsmartsystems.zigbee.zcl;
 
-import static java.lang.Integer.toHexString;
-
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
@@ -129,7 +127,7 @@ public abstract class ZclCommand extends ZigBeeCommand {
         Integer resolvedClusterId = getClusterId();
         final StringBuilder builder = new StringBuilder();
         ZclClusterType clusterType = ZclClusterType.getValueById(resolvedClusterId);
-        builder.append(clusterType != null ? clusterType.getLabel() : toHexString(resolvedClusterId));
+        builder.append(clusterType != null ? clusterType.getLabel() : Integer.toHexString(resolvedClusterId));
         builder.append(": ");
         builder.append(super.toString());
         return builder.toString();

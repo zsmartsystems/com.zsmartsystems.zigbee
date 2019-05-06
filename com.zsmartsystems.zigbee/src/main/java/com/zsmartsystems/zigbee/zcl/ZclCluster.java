@@ -13,8 +13,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.Callable;
@@ -303,14 +301,21 @@ public abstract class ZclCluster {
         command.setRecords(attributes);
         command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
 
-        Optional<ZclAttribute> manufacturerSpecificAttribute = attributes.stream()
-                .map(attr -> getAttribute(attr.getAttributeIdentifier())).filter(Objects::nonNull)
-                .filter(ZclAttribute::isManufacturerSpecific).findFirst();
+        ZclAttribute manufacturerSpecificAttribute = null;
+        for (WriteAttributeRecord attributeRecord : attributes) {
+            ZclAttribute attribute = getAttribute(attributeRecord.getAttributeIdentifier());
+            if (attribute != null) {
+                if (attribute.isManufacturerSpecific()) {
+                    manufacturerSpecificAttribute = attribute;
+                    break;
+                }
+            }
+        }
 
         if (isManufacturerSpecific()) {
             command.setManufacturerCode(getManufacturerCode());
-        } else if (manufacturerSpecificAttribute.isPresent()) {
-            command.setManufacturerCode(manufacturerSpecificAttribute.get().getManufacturerCode());
+        } else if (manufacturerSpecificAttribute != null) {
+            command.setManufacturerCode(manufacturerSpecificAttribute.getManufacturerCode());
         }
 
         return send(command);
@@ -1429,6 +1434,8 @@ public abstract class ZclCluster {
 
     /**
      * Adds additional attributes to the cluster (like, e.g., manufacturer-specific attributes).
+     *
+     * @param attributes the attributes which should be added to the cluster
      */
     public void addAttributes(Set<ZclAttribute> attributes) {
         for (ZclAttribute attribute : attributes) {
@@ -1442,6 +1449,8 @@ public abstract class ZclCluster {
 
     /**
      * Adds additional client commands to the cluster (like, e.g., manufacturer-specific commands).
+     *
+     * @param commands the client commands which should be added to the cluster
      */
     public void addClientCommands(Map<Integer, Class<? extends ZclCommand>> commands) {
         this.clientCommands.putAll(commands);
@@ -1449,6 +1458,8 @@ public abstract class ZclCluster {
 
     /**
      * Adds additional server commands to the cluster (like, e.g., manufacturer-specific commands).
+     *
+     * @param commands the server commands which should be added to the cluster
      */
     public void addServerCommands(Map<Integer, Class<? extends ZclCommand>> commands) {
         this.serverCommands.putAll(commands);

@@ -154,14 +154,15 @@ public class ZclAttribute {
     /**
      * Constructor used to set the static information (for manufacturer-specific attribute)
      *
-     * @param cluster
-     * @param id
-     * @param dataType
-     * @param mandatory
-     * @param readable
-     * @param writeable
-     * @param reportable
-     * @param manufacturerCode
+     * @param cluster the {@link ZclCluster} to which the attribute belongs
+     * @param id the attribute ID
+     * @param name the human readable name
+     * @param dataType the {@link ZclDataType} for this attribute
+     * @param mandatory true if this is defined as mandatory in the ZCL specification
+     * @param readable true if this is defined as readable in the ZCL specification
+     * @param writable true if this is defined as writable in the ZCL specification
+     * @param reportable true if this is defined as reportable in the ZCL specification
+     * @param manufacturerCode the code for the manufacturer specific cluster, for ex. 0x1234
      */
     public ZclAttribute(final ZclCluster cluster, final int id, final String name, final ZclDataType dataType,
             final boolean mandatory, final boolean readable, final boolean writable, final boolean reportable,
