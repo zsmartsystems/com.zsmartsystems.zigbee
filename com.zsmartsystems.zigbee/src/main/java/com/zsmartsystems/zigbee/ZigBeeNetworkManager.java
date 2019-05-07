@@ -745,6 +745,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     @Override
     public void receiveCommand(final ZigBeeApsFrame incomingApsFrame) {
+        synchronized (this) {
+            if (networkState != ZigBeeNetworkState.ONLINE) {
+                return;
+            }
+        }
+
         logger.debug("RX APS: {}", incomingApsFrame);
 
         // Process the APS layer - this performs services such as duplicate removal and defragmentation
