@@ -715,6 +715,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             zclHeader.setSequenceNumber(command.getTransactionId());
             zclHeader.setDirection(zclCommand.getCommandDirection());
 
+            if (zclCommand.isManufacturerSpecific()) {
+                zclHeader.setManufacturerSpecific(true);
+                zclHeader.setManufacturerCode(zclCommand.getManufacturerCode());
+            }
+
             command.serialize(fieldSerializer);
 
             // Serialise the ZCL header and add the payload

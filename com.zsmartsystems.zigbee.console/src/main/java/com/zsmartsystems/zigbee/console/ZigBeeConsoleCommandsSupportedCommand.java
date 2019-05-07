@@ -36,7 +36,7 @@ public class ZigBeeConsoleCommandsSupportedCommand extends ZigBeeConsoleAbstract
 
     @Override
     public String getSyntax() {
-        return "ENDPOINT CLUSTER [gen|rcv]";
+        return "ENDPOINT CLUSTER [gen|rcv] [MANUFACTURER-CODE]";
     }
 
     @Override
@@ -47,19 +47,31 @@ public class ZigBeeConsoleCommandsSupportedCommand extends ZigBeeConsoleAbstract
     @Override
     public void process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out)
             throws IllegalArgumentException, InterruptedException, ExecutionException {
-        if (args.length < 3 || args.length > 4) {
+        if (args.length < 3 || args.length > 5) {
             throw new IllegalArgumentException("Invalid number of arguments");
         }
 
         String endpointParam = args[1];
         String clusterSpecParam = args[2];
-        String genRcvParam = (args.length == 4) ? args[3] : null;
+
+        String genRcvParam = null;
+        Integer manufacturerCode = null;
+        if (args.length == 4) {
+            if (args[3].equals("gen") || args[3].equals("rcv")) {
+                genRcvParam = args[3];
+            } else {
+                manufacturerCode = parseInteger(args[3]);
+            }
+        } else if (args.length == 5) {
+            genRcvParam = args[3];
+            manufacturerCode = parseInteger(args[4]);
+        }
 
         final ZigBeeEndpoint endpoint = getEndpoint(networkManager, endpointParam);
         ZclCluster cluster = getCluster(endpoint, clusterSpecParam);
 
         if (showGenerated(genRcvParam)) {
-            if (cluster.discoverCommandsGenerated(false).get()) {
+            if (cluster.discoverCommandsGenerated(false, manufacturerCode).get()) {
                 out.println("Supported generated commands for " + printCluster(cluster));
                 printCommands(out, cluster, cluster.getSupportedCommandsGenerated());
 
@@ -70,7 +82,7 @@ public class ZigBeeConsoleCommandsSupportedCommand extends ZigBeeConsoleAbstract
         }
 
         if (showReceived(genRcvParam)) {
-            if (cluster.discoverCommandsReceived(false).get()) {
+            if (cluster.discoverCommandsReceived(false, manufacturerCode).get()) {
                 out.println("Supported received commands for " + printCluster(cluster));
                 printCommands(out, cluster, cluster.getSupportedCommandsReceived());
             } else {
