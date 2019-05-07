@@ -353,10 +353,15 @@ public class ZstackProtocolHandler {
     private synchronized void sendFrame(ZstackFrameRequest request) {
         logger.debug("ZSTACK TX: {}", request);
 
+        StringBuilder builder = new StringBuilder(100);
+        builder.append("ZSTACK TX: FrameData [ data=");
+
         for (int outByte : request.serialize()) {
-            logger.trace("ZSTACK TX Byte: {}", String.format("%02X", outByte));
             port.write(outByte);
+            builder.append(String.format("%02X ", outByte));
         }
+        builder.append(']');
+        logger.debug(builder.toString());
     }
 
     public void sendRaw(int rawByte) {
