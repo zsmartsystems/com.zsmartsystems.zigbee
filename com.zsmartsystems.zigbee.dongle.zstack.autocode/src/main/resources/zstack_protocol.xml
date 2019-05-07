@@ -466,6 +466,7 @@
 			<parameter>
 				<data_type>uint16</data_type>
 				<name>AppProfId</name>
+				<display>hex[4]</display>
 				<description>Specifies the profile id of the application.</description>
 			</parameter>
 			<parameter>
@@ -495,7 +496,7 @@
 			<parameter>
 				<data_type>uint16[]</data_type>
 				<name>AppInClusterList</name>
-				<description>Specifies the list of Input Cluster Ids ( 2bytes each ).</description>
+				<description>Specifies the list of Input Cluster Ids (2 bytes each).</description>
 			</parameter>
 			<parameter>
 				<data_type>uint8</data_type>
@@ -506,7 +507,7 @@
 			<parameter>
 				<data_type>uint16[]</data_type>
 				<name>AppOutClusterList</name>
-				<description>Specifies the list of Output Cluster Ids ( 2bytes each )</description>
+				<description>Specifies the list of Output Cluster Ids (2 bytes each)</description>
 			</parameter>
 		</request>
 		<response>
@@ -1760,6 +1761,11 @@
 				<name>AF_EN_SECURITY</name>
 				<enum_value>0x40</enum_value>
 				<description>Set this bit to enable APS security for this packet.</description>
+			</value>
+			<value>
+				<name>AF_NO_ROUTING</name>
+				<enum_value>0x80</enum_value>
+				<description>Skip routing.</description>
 			</value>
 		</values>
 	</enum>

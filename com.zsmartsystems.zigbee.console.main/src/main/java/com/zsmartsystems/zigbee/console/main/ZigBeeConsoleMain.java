@@ -348,10 +348,16 @@ public class ZigBeeConsoleMain {
 
         networkManager.addSupportedCluster(ZclIasZoneCluster.CLUSTER_ID);
 
-        if (dongleName.toUpperCase().equals("CC2531")) {
+        if (dongleName.equalsIgnoreCase("CC2531")) {
             ZigBeeDongleTiCc2531 tiDongle = (ZigBeeDongleTiCc2531) dongle;
             tiDongle.setLedMode(1, false);
             tiDongle.setLedMode(2, false);
+        }
+
+        if (dongleName.equalsIgnoreCase("ZSTACK")) {
+            // Required to allow HA1.2 devices to join the ZB3.0 compatible coordinator
+            ZigBeeDongleZstack zstackDongle = (ZigBeeDongleZstack) dongle;
+            zstackDongle.requireKeyExchange(false);
         }
 
         console.start();
