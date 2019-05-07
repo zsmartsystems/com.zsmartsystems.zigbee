@@ -64,6 +64,14 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
 
 /**
  * Implementation of the Texas instruments Z-Stack dongle implementation.
+ * <p>
+ * Usage notes...
+ * <ul>
+ * <li>To be compatible with older devices (ie pre-ZigBee 3.0), MT_APP_CNF_BDB_SET_TC_REQUIRE_KEY_EXCHANGE should be set
+ * to FALSE. Failing to set this to FALSE will require the R21 join procedure to exchange keys following the initial
+ * association, which older devices will not perform, and the coordinator will then remove them from the network. This
+ * can be achieved with the {@link ZigBeeDongleZstack#requireKeyExchange(boolean)} method.
+ * </ul>
  *
  * @author Chris Jackson
  *
@@ -181,7 +189,6 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
 
         // Define the default configuration
         stackConfiguration = new LinkedHashMap<>();
-        stackConfiguration.put(ZstackConfigId.ZCD_NV_APS_ALLOW_R19_SECURITY, new int[] { 0x01 });
 
         networkKey = new ZigBeeKey();
     }
@@ -277,6 +284,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
 
         // Add the endpoint
         ncp.addEndpoint(1, 0, ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getKey(), new int[] { 0 }, new int[] { 0 });
+        sender2EndPoint.put(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getKey(), 1);
 
         /*
          * Create the scheduler with a single thread. This ensures that commands sent to the dongle, and the processing
