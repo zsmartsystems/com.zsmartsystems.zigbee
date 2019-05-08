@@ -355,6 +355,43 @@ public abstract class ZclCluster {
     }
 
     /**
+     * Read an attribute
+     *
+     * @param attributeId the attribute id to read
+     * @return and object containing the value, or null
+     */
+    protected Object readAttributeValue(final int attributeId) {
+        logger.debug("readSync request: {}", attributeId);
+        CommandResult result;
+        try {
+            result = readAttribute(attributeId).get();
+        } catch (InterruptedException e) {
+            logger.debug("readAttributeValue interrupted");
+            return null;
+        } catch (ExecutionException e) {
+            logger.debug("readAttributeValue exception ", e);
+            return null;
+        }
+
+        if (!result.isSuccess()) {
+            return null;
+        }
+
+        ReadAttributesResponse response = result.getResponse();
+        if (response.getRecords().get(0).getStatus() != ZclStatus.SUCCESS) {
+            return null;
+        }
+
+        // If we don't know this attribute, then just return the received data
+        if (getAttribute(attributeId) == null) {
+            return response.getRecords().get(0).getAttributeValue();
+        }
+
+        return normalizer.normalizeZclData(getAttribute(attributeId).getDataType(),
+                response.getRecords().get(0).getAttributeValue());
+    }
+
+    /**
      * Configures the reporting for the specified attribute ID for discrete attributes.
      * <p>
      * <b>minInterval</b>:
