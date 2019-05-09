@@ -8,7 +8,6 @@
 package com.zsmartsystems.zigbee.zcl;
 
 import java.util.Calendar;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import com.zsmartsystems.zigbee.CommandResult;
@@ -190,12 +189,7 @@ public class ZclAttribute {
             return getLastValue();
         }
 
-        try {
-            return cluster.readAttribute(id).get();
-        } catch (InterruptedException | ExecutionException e) {
-            // Eat me!
-        }
-        return null;
+        return cluster.readAttributeValue(id);
     }
 
     /**
