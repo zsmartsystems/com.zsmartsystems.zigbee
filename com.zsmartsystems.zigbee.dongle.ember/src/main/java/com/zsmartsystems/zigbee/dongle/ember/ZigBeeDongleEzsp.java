@@ -298,10 +298,11 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
      * <p>
      * This may only be used if the {@link ZigBeeDongleEmber} instance has not been initialized on a ZigBee network.
      *
+     * @param mfglibListener a {@link EmberMfglibListener} to receive packets received. May be null.
      * @return the {@link EmberMfglib} instance, or null on error
      */
     public EmberMfglib getEmberMfglib(EmberMfglibListener mfglibListener) {
-        if (!initialiseEzspProtocol()) {
+        if (frameHandler == null && !initialiseEzspProtocol()) {
             return null;
         }
 
