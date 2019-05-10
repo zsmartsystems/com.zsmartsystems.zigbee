@@ -26,6 +26,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspPolicyId;
+import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 
 /**
  * Console command that displays the current security configuration for the Ember NCP.
@@ -91,6 +92,8 @@ public class EmberConsoleSecurityStateCommand extends EmberConsoleAbstractComman
         EmberCertificateData certificate163k1 = ncp.getCertificateData();
         EmberCertificate283k1Data certificate283k1 = ncp.getCertificate283k1Data();
 
+        ByteArray installCode = ncp.getMfgInstallationCode();
+
         List<EmberKeyStruct> keyTable = new ArrayList<>();
         for (int cnt = 0; cnt < keyTableSize; cnt++) {
             EmberKeyStruct key = ncp.getKeyTableEntry(cnt);
@@ -111,6 +114,8 @@ public class EmberConsoleSecurityStateCommand extends EmberConsoleAbstractComman
         out.println("Trust Centre Policy        : " + trustCentrePolicy);
         out.println("Trust Centre Key Policy    : " + trustCentreKeyPolicy);
         out.println("Trust Centre Rejoin Policy : " + trustCentreRejoinPolicy);
+        out.println(
+                "Installation Code          : " + (installCode == null ? "" : printArray(installCode.getAsIntArray())));
         out.println("ECC Library Support        : " + libraryEcc);
         out.println("CBKE Library Support       : " + libraryCbke);
         out.println("CBKE 163k1 Library Support : " + libraryCbke163k1);
