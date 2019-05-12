@@ -20,9 +20,9 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
-import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
+import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.XBeeFrameHandler;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeCommand;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeTransmitRequestExplicitCommand;

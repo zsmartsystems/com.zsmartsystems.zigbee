@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import com.zsmartsystems.zigbee.ZigBeeApsFrame;
+import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoIeeeAddress;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
 

@@ -17,9 +17,9 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
-import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
+import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoActiveEndpoint;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoCallbackIncoming;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoEndDeviceAnnounce;

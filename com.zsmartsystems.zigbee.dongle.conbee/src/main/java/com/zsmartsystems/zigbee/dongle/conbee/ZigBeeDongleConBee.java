@@ -12,11 +12,11 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
-import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeGroupAddress;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
+import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.dongle.conbee.internal.ConBeeFrameHandler;
 import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeAddressMode;
 import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeDeviceState;
