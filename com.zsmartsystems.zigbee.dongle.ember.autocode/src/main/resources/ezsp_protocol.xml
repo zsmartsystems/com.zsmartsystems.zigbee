@@ -3260,6 +3260,146 @@
 		</response_parameters>
 	</command>
 
+	<command>
+		<name>gpProxyTableGetEntry</name>
+		<id>0xC8</id>
+		<description>Retrieves the proxy table entry stored at the passed index.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>proxyIndex</name>
+				<description>The index of the requested proxy table entry.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>An EmberStatus value indicating success or the reason for failure.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberGpProxyTableEntry</data_type>
+				<name>entry</name>
+				<description>An EmberGpProxyTableEntry struct containing a copy of the requested proxy entry.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+	
+	<command>
+		<name>gpSinkTableGetEntry</name>
+		<id>0xDD</id>
+		<description>Retrieves the sink table entry stored at the passed index.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>sinkIndex</name>
+				<description>The index of the requested sink table entry.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>An EmberStatus value indicating success or the reason for failure.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberGpSinkTableEntry</data_type>
+				<name>entry</name>
+				<description>An EmberGpSinkTableEntry struct containing a copy of the requested sink entry.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+	
+	<command>
+		<name>gpSinkTableLookup</name>
+		<id>0xDE</id>
+		<description>Finds the index of the passed address in the gp table.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>EmberGpAddress</data_type>
+				<name>addr</name>
+				<description>The address to search for.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>index</name>
+				<description>The index or 0xFF for not found.</description>
+			</parameter>			
+		</response_parameters>
+	</command>
+	
+	<command>
+		<name>gpSinkTableSetEntry</name>
+		<id>0xDF</id>
+		<description>Retrieves the sink table entry stored at the passed index.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>sinkIndex</name>
+				<description>The index of the requested sink table entry.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberGpSinkTableEntry</data_type>
+				<name>entry</name>
+				<description>An EmberGpSinkTableEntry struct containing a copy of the sink entry to be updated.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>An EmberStatus value indicating success or the reason for failure.</description>
+			</parameter>			
+		</response_parameters>
+	</command>
+	
+	<command>
+		<name>gpSinkTableRemoveEntry</name>
+		<id>0xE0</id>
+		<description>Removes the sink table entry stored at the passed index.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>sinkIndex</name>
+				<description>The index of the requested sink entry.</description>
+			</parameter>
+		</command_parameters>
+	</command>
+	
+	<command>
+		<name>gpSinkTableFindOrAllocateEntry</name>
+		<id>0xE1</id>
+		<description>FFinds or allocates a sink entry.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>EmberGpAddress</data_type>
+				<name>addr</name>
+				<description>An EmberGpAddress struct containing a copy of the gpd address to be found.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>index</name>
+				<description>An index of found or allocated sink or 0xFF if failed.</description>
+			</parameter>			
+		</response_parameters>
+	</command>
+	
+	<command>
+		<name>gpsinkTableClearAll</name>
+		<id>0xE2</id>
+		<description>Clears the entire sink table.</description>
+	</command>
+	
+	<command>
+		<name>gpSinkTableInit</name>
+		<id>0x70</id>
+		<description>Initializes the sink table.</description>
+	</command>
+	
 	<structure>
 		<name>EmberCertificateData</name>
 		<description>The implicit certificate used in CBKE.</description>
@@ -3781,7 +3921,7 @@
 			</parameter>
 		</parameters>
 	</structure>
-<!-- 
+
 	<structure>
 		<name>EmberGpProxyTableEntry</name>
 		<description>The internal representation of a proxy table entry.</description>
@@ -3827,8 +3967,8 @@
 				<description>The key to use for GPD.</description>
 			</parameter>
 			<parameter>
-				<data_type>EmberGpSinkListEntry</data_type>
-				<name>sinkList[]</name>
+				<data_type>EmberGpSinkListEntry[]</data_type>
+				<name>sinkList</name>
 				<description>The list of sinks (hardcoded to 2 which is the spec minimum).</description>
 			</parameter>
 			<parameter>
@@ -3869,8 +4009,8 @@
 				<description>The device id for the GPD.</description>
 			</parameter>
 			<parameter>
-				<data_type>EmberGpSinkListEntry</data_type>
-				<name>sinkList[]</name>
+				<data_type>EmberGpSinkListEntry[]</data_type>
+				<name>sinkList</name>
 				<description>The list of sinks (hardcoded to 2 which is the spec minimum).</description>
 			</parameter>
 			<parameter>
@@ -3900,7 +4040,7 @@
 			</parameter>
 		</parameters>
 	</structure>
- -->
+
 	<enum>
 		<name>EzspPolicyId</name>
 		<description></description>
@@ -6581,6 +6721,13 @@
 
 	<enum>
 		<name>EmberGpProxyTableEntryStatus</name>
+		<description></description>
+		<values>
+		</values>
+	</enum>
+	
+	<enum>
+		<name>EmberGpSinkTableEntryStatus</name>
 		<description></description>
 		<values>
 		</values>
