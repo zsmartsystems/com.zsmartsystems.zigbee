@@ -12,10 +12,10 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
-import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
+import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.XBeeEventListener;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.XBeeFrameHandler;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.EncryptionOptions;

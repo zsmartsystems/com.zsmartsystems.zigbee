@@ -9,7 +9,7 @@ package com.zsmartsystems.zigbee.dongle.cc2531.frame;
 
 import java.util.Arrays;
 
-import com.zsmartsystems.zigbee.ZigBeeApsFrame;
+import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
 
 /**

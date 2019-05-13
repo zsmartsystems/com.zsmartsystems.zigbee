@@ -5,7 +5,10 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee;
+package com.zsmartsystems.zigbee.aps;
+
+import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 
 /**
  * Defines the APS layer frame along with some network layer elements that may be needed by the application.
