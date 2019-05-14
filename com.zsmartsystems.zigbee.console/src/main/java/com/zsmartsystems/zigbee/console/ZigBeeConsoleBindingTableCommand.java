@@ -13,6 +13,7 @@ import java.util.concurrent.ExecutionException;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zdo.field.BindingTable;
 
@@ -52,9 +53,9 @@ public class ZigBeeConsoleBindingTableCommand extends ZigBeeConsoleAbstractComma
 
         ZigBeeNode node = getNode(networkManager, args[1]);
 
-        final Boolean result = node.updateBindingTable().get();
-        if (!result) {
-            out.println("Binding table read error");
+        final ZigBeeStatus result = node.updateBindingTable().get();
+        if (result != ZigBeeStatus.SUCCESS) {
+            out.println("Binding table read error: " + result);
             return;
         }
 

@@ -29,6 +29,7 @@ import com.zsmartsystems.zigbee.database.ZigBeeNodeDao;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.command.ManagementBindRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementBindResponse;
 import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningRequest;
@@ -353,17 +354,20 @@ public class ZigBeeNode implements ZigBeeCommandListener {
     /**
      * Request an update of the binding table for this node.
      * <p>
-     * This method returns a future to a boolean. Upon success the caller should call {@link #getBindingTable()}
+     * This method returns a future to a {@link ZigBeeStatus}. Upon success the caller should call
+     * {@link #getBindingTable()}
+     * <p>
+     * Note that some devices will not support this command and the method will return ZigBeeStatus.UNSUPPORTED
      *
-     * @return {@link Future} returning a {@link Boolean}
+     * @return {@link Future} returning a {@link ZigBeeStatus}
      */
-    public Future<Boolean> updateBindingTable() {
-        RunnableFuture<Boolean> future = new FutureTask<Boolean>(new Callable<Boolean>() {
+    public Future<ZigBeeStatus> updateBindingTable() {
+        RunnableFuture<ZigBeeStatus> future = new FutureTask<ZigBeeStatus>(new Callable<ZigBeeStatus>() {
             @Override
-            public Boolean call() throws Exception {
+            public ZigBeeStatus call() throws Exception {
                 int index = 0;
                 int tableSize = 0;
-                List<BindingTable> bindingTable = new ArrayList<BindingTable>();
+                List<BindingTable> bindingTable = new ArrayList<>();
 
                 do {
                     ManagementBindRequest bindingRequest = new ManagementBindRequest();
@@ -371,11 +375,17 @@ public class ZigBeeNode implements ZigBeeCommandListener {
                     bindingRequest.setStartIndex(index);
 
                     CommandResult result = network.sendTransaction(bindingRequest, new ManagementBindRequest()).get();
-                    if (result.isError()) {
-                        return false;
+                    if (result.isTimeout()) {
+                        return ZigBeeStatus.FAILURE;
                     }
 
                     ManagementBindResponse response = (ManagementBindResponse) result.getResponse();
+
+                    // Some devices do not support reading the binding table
+                    if (response.getStatus() == ZdoStatus.NOT_SUPPORTED) {
+                        return ZigBeeStatus.UNSUPPORTED;
+                    }
+
                     if (response.getStartIndex() == index) {
                         tableSize = response.getBindingTableEntries();
                         index += response.getBindingTableList().size();
@@ -384,7 +394,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
                 } while (index < tableSize);
 
                 setBindingTable(bindingTable);
-                return true;
+                return ZigBeeStatus.SUCCESS;
             }
         });
 
