@@ -7,27 +7,32 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 import javax.annotation.Generated;
+
+import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
  * Discovery Cache Request value object class.
  * <p>
- * The Discovery_Cache_req is provided to enable devices on the network to locate
- * a Primary Discovery Cache device on the network. The destination addressing on
- * this primitive shall be broadcast to all devices for which macRxOnWhenIdle =
- * TRUE.
+ * <p>
+ * The Discovery_Cache_req is provided to enable devices on the network to locate a Primary
+ * Discovery Cache device on the network. The destination addressing on this primitive shall
+ * be broadcast to all devices for which macRxOnWhenIdle = TRUE.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
 public class DiscoveryCacheRequest extends ZdoRequest {
+    /**
+     * The ZDO cluster ID.
+     */
+    public static int CLUSTER_ID = 0x0012;
+
     /**
      * Default constructor.
      */
     public DiscoveryCacheRequest() {
-        clusterId = 0x0012;
+        clusterId = CLUSTER_ID;
     }
 
     @Override

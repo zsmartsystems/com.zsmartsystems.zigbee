@@ -1,0 +1,154 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0001">
+	<name>Power Configuration</name>
+	<description>Attributes for determining detailed information about a device&#8217;s power source(s), and for configuring under/over voltage alarms.</description>
+	<attribute code="0x0000" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false"
+		reportable="false">
+		<name>Mains Voltage</name>
+		<description>The MainsVoltage attribute is 16-bits in length and specifies the actual (measured) RMS voltage (or DC voltage in the case of a DC supply) currently applied to the device, measured in units of 100mV.</description>
+	</attribute>
+	<attribute code="0x0001" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false"
+		reportable="false">
+		<name>Mains Frequency</name>
+		<description>The MainsFrequency attribute is 8-bits in length and represents the frequency, in Hertz, of the mains as determined by the device as follows:-</description>
+		<description>MainsFrequency = 0.5 x measured frequency</description>
+		<description>Where 2 Hz &lt;= measured frequency &lt;= 506 Hz, corresponding to a MainsFrequency in the range 1 to 0xfd.</description>
+		<description>The maximum resolution this format allows is 2 Hz. The following special values of MainsFrequency apply. &lt;li&gt;0x00 indicates a frequency that is too low to be measured.&lt;/li&gt; &lt;li&gt;0xfe indicates a frequency that is too high to be measured.&lt;/li&gt; &lt;li&gt;0xff indicates that the frequency could not be measured.&lt;/li&gt;</description>
+	</attribute>
+	<attribute code="0x0010" type="BITMAP_8_BIT" side="server" optional="true" writable="true" reportable="false">
+		<name>Mains Alarm Mask</name>
+		<description>The MainsAlarmMask attribute is 8-bits in length and specifies which mains alarms may be generated. A &#8216;1&#8217; in each bit position enables the alarm.</description>
+	</attribute>
+	<attribute code="0x0011" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="true"
+		reportable="false">
+		<name>Mains Voltage Min Threshold</name>
+		<description>The MainsVoltageMinThreshold attribute is 16-bits in length and specifies the lower alarm threshold, measured in units of 100mV, for the MainsVoltage attribute. The value of this attribute shall be less than MainsVoltageMaxThreshold.</description>
+		<description>If the value of MainsVoltage drops below the threshold specified by MainsVoltageMinThreshold, the device shall start a timer to expire after MainsVoltageDwellTripPoint seconds. If the value of this attribute increases to greater than or equal to MainsVoltageMinThreshold before the timer expires, the device shall stop and reset the timer. If the timer expires, an alarm shall be generated.</description>
+		<description>The Alarm Code field included in the generated alarm shall be 0x00.</description>
+		<description>If this attribute takes the value 0xffff then this alarm shall not be generated.</description>
+	</attribute>
+	<attribute code="0x0012" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="true"
+		reportable="false">
+		<name>Mains Voltage Max Threshold</name>
+		<description>The MainsVoltageMaxThreshold attribute is 16-bits in length and specifies the upper alarm threshold, measured in units of 100mV, for the MainsVoltage attribute. The value of this attribute shall be greater than MainsVoltageMinThreshold.</description>
+		<description>If the value of MainsVoltage rises above the threshold specified by MainsVoltageMaxThreshold, the device shall start a timer to expire after MainsVoltageDwellTripPoint seconds. If the value of this attribute drops to lower than or equal to MainsVoltageMaxThreshold before the timer expires, the device shall stop and reset the timer. If the timer expires, an alarm shall be generated.</description>
+		<description>The Alarm Code field included in the generated alarm shall be 0x01.</description>
+		<description>If this attribute takes the value 0xffff then this alarm shall not be generated.</description>
+	</attribute>
+	<attribute code="0x0013" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="true"
+		reportable="false">
+		<name>Mains Voltage Dwell Trip Point</name>
+		<description>The MainsVoltageDwellTripPoint attribute is 16-bits in length and specifies the length of time, in seconds that the value of MainsVoltage may exist beyond either of its thresholds before an alarm is generated.</description>
+		<description>If this attribute takes the value 0xffff then the associated alarms shall not be generated.</description>
+	</attribute>
+	<attribute code="0x0020" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false"
+		reportable="false">
+		<name>Battery Voltage</name>
+		<description>The BatteryVoltage attribute is 8-bits in length and specifies the current actual (measured) battery voltage, in units of 100mV. The value 0xff indicates an invalid or unknown reading.</description>
+	</attribute>
+	<attribute code="0x0021" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false"
+		reportable="true">
+		<name>Battery Percentage Remaining</name>
+	</attribute>
+	<attribute code="0x0030" type="CHARACTER_STRING" side="server" optional="true" writable="true"
+		reportable="false">
+		<name>Battery Manufacturer</name>
+		<description>The BatteryManufacturer attribute is a maximum of 16 bytes in length and specifies the name of the battery manufacturer as a ZigBee character string.</description>
+	</attribute>
+	<attribute code="0x0031" type="ENUMERATION_8_BIT" side="server" class="BatterySizeEnum" optional="true"
+		writable="true" reportable="false">
+		<name>Battery Size</name>
+		<description>The BatterySize attribute is an enumeration which specifies the type of battery being used by the device.</description>
+	</attribute>
+	<attribute code="0x0032" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="true"
+		reportable="false">
+		<name>Battery A Hr Rating</name>
+		<description>The BatteryAHrRating attribute is 16-bits in length and specifies the Ampere-hour rating of the battery, measured in units of 10mAHr.</description>
+	</attribute>
+	<attribute code="0x0033" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true"
+		reportable="false">
+		<name>Battery Quantity</name>
+		<description>The BatteryQuantity attribute is 8-bits in length and specifies the number of battery cells used to power the device.</description>
+	</attribute>
+	<attribute code="0x0034" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true"
+		reportable="false">
+		<name>Battery Rated Voltage</name>
+		<description>The BatteryRatedVoltage attribute is 8-bits in length and specifies the rated voltage of the battery being used in the device, measured in units of 100mV.</description>
+	</attribute>
+	<attribute code="0x0035" type="BITMAP_8_BIT" side="server" optional="true" writable="true" reportable="false">
+		<name>Battery Alarm Mask</name>
+		<description>The BatteryAlarmMask attribute is 8-bits in length and specifies which battery alarms may be generated.</description>
+	</attribute>
+	<attribute code="0x0036" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true"
+		reportable="false">
+		<name>Battery Voltage Min Threshold</name>
+		<description>The BatteryVoltageMinThreshold attribute is 8-bits in length and specifies the low voltage alarm threshold, measured in units of 100mV, for the BatteryVoltage attribute.</description>
+		<description>If the value of BatteryVoltage drops below the threshold specified by BatteryVoltageMinThreshold an alarm shall be generated.</description>
+		<description>The Alarm Code field included in the generated alarm shall be 0x10.</description>
+		<description>If this attribute takes the value 0xff then this alarm shall not be generated.</description>
+	</attribute>
+	<attribute code="0x0037" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true"
+		reportable="false">
+		<name>Battery Voltage Threshold 1</name>
+		<description>Specify the low voltage alarm thresholds, measured in units of 100mV, for the BatteryVoltage attribute.</description>
+	</attribute>
+	<attribute code="0x0038" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true"
+		reportable="false">
+		<name>Battery Voltage Threshold 2</name>
+		<description>Specify the low voltage alarm thresholds, measured in units of 100mV, for the BatteryVoltage attribute.</description>
+	</attribute>
+	<attribute code="0x0039" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true"
+		reportable="false">
+		<name>Battery Voltage Threshold 3</name>
+		<description>Specify the low voltage alarm thresholds, measured in units of 100mV, for the BatteryVoltage attribute.</description>
+	</attribute>
+	<attribute code="0x003A" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true"
+		reportable="false">
+		<name>Battery Percentage Min Threshold</name>
+		<description>Specifies the low battery percentage alarm threshold, measured in percentage (i.e., zero to 100%), for the BatteryPercentageRemaining attribute.</description>
+	</attribute>
+	<attribute code="0x003B" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true"
+		reportable="false">
+		<name>Battery Percentage Threshold 1</name>
+		<description>Specifies the low battery percentage alarm threshold, measured in percentage (i.e., zero to 100%), for the BatteryPercentageRemaining attribute.</description>
+	</attribute>
+	<attribute code="0x003C" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true"
+		reportable="false">
+		<name>Battery Percentage Threshold 2</name>
+		<description>Specifies the low battery percentage alarm threshold, measured in percentage (i.e., zero to 100%), for the BatteryPercentageRemaining attribute.</description>
+	</attribute>
+	<attribute code="0x003D" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true"
+		reportable="false">
+		<name>Battery Percentage Threshold 3</name>
+		<description>Specifies the low battery percentage alarm threshold, measured in percentage (i.e., zero to 100%), for the BatteryPercentageRemaining attribute.</description>
+	</attribute>
+	<attribute code="0x003E" type="BITMAP_32_BIT" side="server" optional="true" writable="false"
+		reportable="false">
+		<name>Battery Alarm State</name>
+		<description>Specifies the current state of the device's battery alarms. This attribute provides a persistent record of a device's battery alarm conditions as well as a mechanism for reporting changes to those conditions, including the elimination of battery alarm states (e.g., when a battery is replaced).</description>
+	</attribute>
+
+	<constant class="BatterySizeEnum">
+		<name>Battery Size</name>
+		<value code="0x00" name="No Battery">
+        </value>
+		<value code="0x01" name="Build In">
+        </value>
+		<value code="0x02" name="Other">
+        </value>
+		<value code="0x03" name="AA Cell">
+        </value>
+		<value code="0x04" name="AAA Cell">
+        </value>
+		<value code="0x05" name="C Cell">
+        </value>
+		<value code="0x06" name="D Cell">
+        </value>
+		<value code="0x07" name="CR 2 Cell">
+        </value>
+		<value code="0x08" name="CR 123 A Cell">
+        </value>
+		<value code="0xFF" name="Unknown">
+        </value>
+	</constant>
+</cluster>

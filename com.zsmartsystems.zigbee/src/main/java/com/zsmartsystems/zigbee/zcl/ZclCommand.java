@@ -38,6 +38,23 @@ public abstract class ZclCommand extends ZigBeeCommand {
     protected ZclCommandDirection commandDirection;
 
     /**
+     * The manufacturer code; this value needs to be set for manufacturer-specific commands. If this value is null, then
+     * the command is assumed to be not manufacturer-specific.
+     * <p>
+     * Examples for manufacturer-specific commands are:
+     * <ul>
+     * <li>Commands from a manufacturer-specific cluster
+     * <li>Manufacturer-specific commands added to a non-manufacturer-specific cluster
+     * <li>Generic commands that target manufacturer-specific attributes
+     * </ul>
+     */
+    private Integer manufacturerCode = null;
+
+    protected void setManufacturerCode(int manufacturerCode) {
+        this.manufacturerCode = manufacturerCode;
+    }
+
+    /**
      * Sets the cluster ID for <i>generic</i> commands.
      * <p>
      * For commands that are not <i>generic</i>, this method will do nothing as the cluster ID is fixed.
@@ -86,11 +103,31 @@ public abstract class ZclCommand extends ZigBeeCommand {
         this.commandDirection = commandDirection;
     }
 
+    /**
+     * Gets whether the manufacturer-specific bit needs to be set for this command.
+     *
+     * @return whether the manufacturer-specific bit needs to be set for this command
+     */
+    public boolean isManufacturerSpecific() {
+        return manufacturerCode != null;
+    }
+
+    /**
+     * Returns the manufacturer code (should be ignored if this command does not need the manufacturer-specific bit to
+     * be set).
+     *
+     * @return the manufacturer code; null if no manufacturer code has been set
+     */
+    public Integer getManufacturerCode() {
+        return manufacturerCode;
+    }
+
     @Override
     public String toString() {
         Integer resolvedClusterId = getClusterId();
         final StringBuilder builder = new StringBuilder();
-        builder.append(ZclClusterType.getValueById(resolvedClusterId).getLabel());
+        ZclClusterType clusterType = ZclClusterType.getValueById(resolvedClusterId);
+        builder.append(clusterType != null ? clusterType.getLabel() : Integer.toHexString(resolvedClusterId));
         builder.append(": ");
         builder.append(super.toString());
         return builder.toString();

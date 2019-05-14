@@ -15,20 +15,33 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 /**
  * Remove All Groups Command value object class.
  * <p>
- * Cluster: <b>Groups</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>Groups</b>. Command ID 0x04 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Groups cluster.
+ * <p>
+ * The remove all groups command allows the sending device to direct the receiving entity or
+ * entities to remove all group associations.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class RemoveAllGroupsCommand extends ZclCommand {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0004;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x04;
+
     /**
      * Default constructor.
      */
     public RemoveAllGroupsCommand() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 4;
-        commandId = 4;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 

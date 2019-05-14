@@ -3,11 +3,11 @@
 # Comments can be added with the # on the first character and empty lines are allowed
 
 
-ZigBeeApsFrame [sourceAddress=33197/1, destinationAddress=0/1, profile=0104, cluster=0500, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=A9, payload=19 43 00 02 00 00 00 00 00]
-ZoneStatusChangeNotificationCommand [IAS Zone: 33197/1 -> 0/1, cluster=0500, TID=43, zoneStatus=2, extendedStatus=0]
+ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=0/1, profile=0104, cluster=0500, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=A9, payload=19 43 00 02 00 00 00 00 00]
+ZoneStatusChangeNotificationCommand [IAS Zone: 0/1 -> 0/1, cluster=0500, TID=43, zoneStatus=2, extendedStatus=0]
 
-ZigBeeApsFrame [sourceAddress=33197/1, destinationAddress=0/1, profile=0104, cluster=0500, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=8F, payload=19 04 01 0D 00 37 10]
-ZoneEnrollRequestCommand [IAS Zone: 33197/1 -> 0/1, cluster=0500, TID=04, zoneType=13, manufacturerCode=4151]
+ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=0/1, profile=0104, cluster=0500, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=8F, payload=19 04 01 0D 00 37 10]
+ZoneEnrollRequestCommand [IAS Zone: 0/1 -> 0/1, cluster=0500, TID=04, zoneType=13, manufacturerCode=4151]
 
 ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=33197/1, profile=0104, cluster=0500, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=93, payload=01 93 00 00 00]
 ZoneEnrollResponse [IAS Zone: 0/0 -> 33197/1, cluster=0500, TID=93, enrollResponseCode=0, zoneId=0]

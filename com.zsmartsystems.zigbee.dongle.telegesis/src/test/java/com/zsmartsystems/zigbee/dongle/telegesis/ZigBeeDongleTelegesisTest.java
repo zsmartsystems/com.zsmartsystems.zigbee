@@ -21,10 +21,10 @@ import org.mockito.stubbing.Answer;
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.TestUtilities;
-import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.ZigBeeProfileType;
+import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisFrameHandler;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisAckMessageEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisCommand;
@@ -177,7 +177,7 @@ public class ZigBeeDongleTelegesisTest {
         TelegesisNetworkLeftEvent response = Mockito.mock(TelegesisNetworkLeftEvent.class);
         dongle.telegesisEventReceived(response);
 
-        Mockito.verify(transport, Mockito.timeout(TIMEOUT)).setNetworkState(ZigBeeTransportState.OFFLINE);
+        Mockito.verify(transport, Mockito.timeout(TIMEOUT)).setTransportState(ZigBeeTransportState.OFFLINE);
     }
 
     @Test
@@ -192,7 +192,7 @@ public class ZigBeeDongleTelegesisTest {
         TelegesisNetworkLostEvent response = Mockito.mock(TelegesisNetworkLostEvent.class);
         dongle.telegesisEventReceived(response);
 
-        Mockito.verify(transport, Mockito.timeout(TIMEOUT)).setNetworkState(ZigBeeTransportState.OFFLINE);
+        Mockito.verify(transport, Mockito.timeout(TIMEOUT)).setTransportState(ZigBeeTransportState.OFFLINE);
     }
 
     @Test
@@ -207,7 +207,7 @@ public class ZigBeeDongleTelegesisTest {
         TelegesisNetworkJoinedEvent response = Mockito.mock(TelegesisNetworkJoinedEvent.class);
         dongle.telegesisEventReceived(response);
 
-        Mockito.verify(transport, Mockito.timeout(TIMEOUT)).setNetworkState(ZigBeeTransportState.ONLINE);
+        Mockito.verify(transport, Mockito.timeout(TIMEOUT)).setTransportState(ZigBeeTransportState.ONLINE);
     }
 
     @Test

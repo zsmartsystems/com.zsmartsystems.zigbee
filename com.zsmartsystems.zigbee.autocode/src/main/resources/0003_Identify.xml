@@ -1,0 +1,31 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0003">
+    <name>Identify</name>
+    <description>Attributes and commands to put a device into an Identification mode (e.g. flashing a light), that indicates to an observer &#8211; e.g. an installer - which of several devices it is, also to request any device that is identifying itself to respond to the initiator.</description>
+    <description>Note that this cluster cannot be disabled, and remains functional regardless of the setting of the DeviceEnable attribute in the Basic cluster.</description>
+    <command code="0x00" source="client">
+        <name>Identify Command</name>
+        <description>The identify command starts or stops the receiving device identifying itself.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Identify Time</name>
+        </field>
+    </command>
+    <command code="0x01" source="client">
+        <name>Identify Query Command</name>
+    </command>
+    <command code="0x00" source="server">
+        <name>Identify Query Response</name>
+        <description>The identify query response command is generated in response to receiving an Identify Query command in the case that the device is currently identifying itself.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Identify Time</name>
+        </field>
+    </command>
+
+    <attribute code="0x0000" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="true" reportable="false">
+        <name>Identify Time</name>
+        <description>The IdentifyTime attribute specifies the remaining length of time, in seconds, that the device will continue to identify itself.</description>
+        <description>If this attribute is set to a value other than 0x0000 then the device shall enter its identification procedure, in order to indicate to an observer which of several devices it is. It is recommended that this procedure consists of flashing a light with a period of 0.5 seconds. The IdentifyTime attribute shall be decremented every second.</description>
+        <description>If this attribute reaches or is set to the value 0x0000 then the device shall terminate its identification procedure.</description>
+    </attribute>
+
+</cluster>

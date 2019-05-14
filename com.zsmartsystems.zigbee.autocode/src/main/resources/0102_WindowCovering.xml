@@ -1,0 +1,126 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0102">
+    <name>Window Covering</name>
+    <description>Provides an interface for controlling and adjusting automatic window coverings.</description>
+    <command code="0x00" source="client">
+        <name>Window Covering Up Open</name>
+        <description>Moves window covering to InstalledOpenLimit</description>
+    </command>
+    <command code="0x01" source="client">
+        <name>Window Covering Down Close</name>
+        <description>Moves window covering to InstalledClosedLimit</description>
+    </command>
+    <command code="0x02" source="client">
+        <name>Window Covering Stop</name>
+        <description>Stop any adjustment of window covering</description>
+    </command>
+    <command code="0x04" source="client">
+        <name>Window Covering Go To Lift Value</name>
+        <description>Goto the specified lift value</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Lift Value</name>
+        </field>
+    </command>
+    <command code="0x05" source="client">
+        <name>Window Covering Go To Lift Percentage</name>
+        <description>Goto the specified lift percentage</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Percentage Lift Value</name>
+        </field>
+    </command>
+    <command code="0x07" source="client">
+        <name>Window Covering Go To Tilt Value</name>
+        <description>Goto the specified tilt value</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Tilt Value</name>
+        </field>
+    </command>
+    <command code="0x08" source="client">
+        <name>Window Covering Go To Tilt Percentage</name>
+        <description>Goto the specified tilt percentage</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Percentage Tilt Value</name>
+        </field>
+    </command>
+    <attribute code="0x0000" type="ENUMERATION_8_BIT" side="server" optional="false" writable="false" reportable="false" default="0x00">
+        <name>Window Covering Type</name>
+        <description>The WindowCoveringType attribute identifies the type of window covering being controlled by this endpoint.</description>
+    </attribute>
+    <attribute code="0x0001" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Physical Closed Limit - Lift</name>
+        <description>The PhysicalClosedLimitLift attribute identifies the maximum possible encoder position possible (in centi- meters) to position the height of the window covering – this is ignored if the device is running in Open Loop Control.</description>
+    </attribute>
+    <attribute code="0x0002" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Physical Closed Limit - Tilt</name>
+        <description>The PhysicalClosedLimitTilt attribute identifies the maximum possible encoder position possible (tenth of a degrees) to position the angle of the window covering – this is ignored if the device is running in Open Loop Control.</description>
+    </attribute>
+    <attribute code="0x0003" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Current Position - Lift</name>
+        <description>The CurrentPositionLift attribute identifies the actual position (in centimeters) of the window covering from the top of the shade if Closed Loop Control is enabled. This attribute is ignored if the device is running in Open Loop Control.</description>
+    </attribute>
+    <attribute code="0x0004" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Current Position - Tilt</name>
+        <description>The CurrentPositionTilt attribute identifies the actual tilt position (in tenth of an degree) of the window covering from Open if Closed Loop Control is enabled. This attribute is ignored if the device is running in Open Loop Control.</description>
+    </attribute>
+    <attribute code="0x0005" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Number Of Actuations - Lift</name>
+        <description>The NumberOfActuationsLift attribute identifies the total number of lift actuations applied to the Window Covering since the device was installed.</description>
+    </attribute>
+    <attribute code="0x0006" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Number Of Actuations - Tilt</name>
+        <description>The NumberOfActuationsTilt attribute identifies the total number of tilt actuations applied to the Window Covering since the device was installed.</description>
+    </attribute>
+    <attribute code="0x0007" type="BITMAP_8_BIT" side="server" optional="false" writable="false" reportable="false" default="0x03">
+        <name>Config Status</name>
+        <description>The ConfigStatus attribute makes configuration and status information available. To change settings, devices SHALL write to the Mode attribute of the Window Covering Settings Attribute Set. The behavior causing the setting or clearing of each bit is vendor specific.</description>
+    </attribute>
+    <attribute code="0x0008" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x00" maximum="0x64" default="0x00">
+        <name>Current Position Lift Percentage</name>
+        <description>The CurrentPositionLiftPercentage attribute identifies the actual position as a percentage between the InstalledOpenLimitLift attribute and the InstalledClosedLimitLift58attribute of the window covering from the up/open position if Closed Loop Control is enabled. If the device is running in Open Loop Control or the device only supports Tilt actions, this attribute is not required as an attribute but has a special interpretation when received as part of a scene command.</description>
+    </attribute>
+    <attribute code="0x0009" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x00" maximum="0x64" default="0x00">
+        <name>Current Position Tilt Percentage</name>
+        <description>The CurrentPositionTiltPercentage attribute identifies the actual position as a percentage between the InstalledOpenLimitTilt attribute and the InstalledClosedLimitTilt59attribute of the window covering from the up/open position if Closed Loop Control is enabled. If the device is running in Open Loop Control or the device only support Lift actions, this attribute is not required as an attribute but has a special interpretation when received as part of a scene command.</description>
+    </attribute>
+    <attribute code="0x0010" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Installed Open Limit - Lift</name>
+        <description>The InstalledOpenLimitLift attribute identifies the Open Limit for Lifting the Window Covering whether position (in centimeters) is encoded or timed. This attribute is ignored if the device is running in Open Loop Control or only supports Tilt actions.</description>
+    </attribute>
+    <attribute code="0x0011" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0xFFFF">
+        <name>Installed Closed Limit - Lift</name>
+        <description>The InstalledClosedLimitLift attribute identifies the Closed Limit for Lifting the Window Covering whether position (in centimeters) is encoded or timed. This attribute is ignored if the device is running in Open Loop Control or only supports Tilt actions.</description>
+    </attribute>
+    <attribute code="0x0012" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Installed Open Limit - Tilt</name>
+        <description>The InstalledOpenLimitTilt attribute identifies the Open Limit for Tilting the Window Covering whether position (in tenth of a degree) is encoded or timed. This attribute is ignored if the device is running in Open Loop Control or only supports Lift actions.</description>
+    </attribute>
+    <attribute code="0x0013" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0xFFFF">
+        <name>Installed Closed Limit - Tilt</name>
+        <description>The InstalledClosedLimitTilt attribute identifies the Closed Limit for Tilting the Window Covering whether position (in tenth of a degree) is encoded or timed. This attribute is ignored if the device is running in Open Loop Control or only supports Lift actions.</description>
+    </attribute>
+    <attribute code="0x0014" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="true" reportable="true" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Velocity - Lift</name>
+        <description>The VelocityLift attribute identifies the velocity (in centimeters per second) associated with Lifting the Window Covering.</description>
+    </attribute>
+    <attribute code="0x0015" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="true" reportable="true" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Acceleration Time - Lift</name>
+        <description>The AccelerationTimeLift attribute identifies any ramp up times to reaching the velocity setting (in tenth of a second) for positioning the Window Covering.</description>
+    </attribute>
+    <attribute code="0x0016" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="true" reportable="true" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Deceleration Time - Lift</name>
+        <description>The DecelerationTimeLift attribute identifies any ramp down times associated with stopping the positioning (in tenth of a second) of the Window Covering.</description>
+    </attribute>
+    <attribute code="0x0017" type="BITMAP_8_BIT" side="server" optional="true" writable="true" reportable="true" default="0x14">
+        <name>Mode</name>
+        <description>The Mode attribute allows configuration of the Window Covering, such as: reversing the motor direction, placing the Window Covering into calibration mode, placing the motor into maintenance mode, disabling the ZigBee network, and disabling status LEDs. </description>
+    </attribute>
+    <attribute code="0x0018" type="OCTET_STRING" side="server" optional="true" writable="true" reportable="true">
+        <name>Intermediate Setpoints - Lift</name>
+        <description>Identifies the number of Intermediate Setpoints supported by the Window Covering for Lift and then iden- tifies the position settings for those Intermediate Setpoints if Closed Loop Control is supported. This is a comma delimited ASCII character string. For example: “2,0x0013, 0x0030”</description>
+    </attribute>
+    <attribute code="0x0019" type="OCTET_STRING" side="server" optional="true" writable="true" reportable="true">
+        <name>Intermediate Setpoints - Tilt</name>
+        <description>Identifies the number of Intermediate Setpoints supported by the Window Covering for Tilt and then iden- tifies the position settings for those Intermediate Setpoints if Closed Loop Control is supported. This is a comma delimited ASCII character string. For example: “2,0x0013, 0x0030”</description>
+    </attribute>
+
+</cluster>

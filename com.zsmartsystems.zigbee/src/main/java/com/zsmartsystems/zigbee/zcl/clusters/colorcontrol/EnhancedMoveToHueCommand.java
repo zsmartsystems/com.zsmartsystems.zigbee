@@ -10,25 +10,45 @@ package com.zsmartsystems.zigbee.zcl.clusters.colorcontrol;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Enhanced Move To Hue Command value object class.
  * <p>
- * Cluster: <b>Color Control</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>Color Control</b>. Command ID 0x40 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Color Control cluster.
+ * <p>
+ * The Enhanced Move to Hue command allows lamps to be moved in a smooth continuous transition
+ * from their current hue to a target hue.
+ * <p>
+ * On receipt of this command, a device shall set the ColorMode attribute to 0x00 and set the
+ * EnhancedColorMode attribute to the value 0x03. The device shall then move from its current
+ * enhanced hue to the value given in the Enhanced Hue field.
+ * <p>
+ * The movement shall be continuous, i.e., not a step function, and the time taken to move to the
+ * new en- hanced hue shall be equal to the Transition Time field.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-13T17:16:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class EnhancedMoveToHueCommand extends ZclCommand {
     /**
-     * Hue command message field.
+     * The cluster ID to which this command belongs.
      */
-    private Integer hue;
+    public static int CLUSTER_ID = 0x0300;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x40;
+
+    /**
+     * Enhanced Hue command message field.
+     */
+    private Integer enhancedHue;
 
     /**
      * Direction command message field.
@@ -36,7 +56,7 @@ public class EnhancedMoveToHueCommand extends ZclCommand {
     private Integer direction;
 
     /**
-     * Transition time command message field.
+     * Transition Time command message field.
      */
     private Integer transitionTime;
 
@@ -44,28 +64,28 @@ public class EnhancedMoveToHueCommand extends ZclCommand {
      * Default constructor.
      */
     public EnhancedMoveToHueCommand() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 768;
-        commandId = 64;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     /**
-     * Gets Hue.
+     * Gets Enhanced Hue.
      *
-     * @return the Hue
+     * @return the Enhanced Hue
      */
-    public Integer getHue() {
-        return hue;
+    public Integer getEnhancedHue() {
+        return enhancedHue;
     }
 
     /**
-     * Sets Hue.
+     * Sets Enhanced Hue.
      *
-     * @param hue the Hue
+     * @param enhancedHue the Enhanced Hue
      */
-    public void setHue(final Integer hue) {
-        this.hue = hue;
+    public void setEnhancedHue(final Integer enhancedHue) {
+        this.enhancedHue = enhancedHue;
     }
 
     /**
@@ -87,18 +107,18 @@ public class EnhancedMoveToHueCommand extends ZclCommand {
     }
 
     /**
-     * Gets Transition time.
+     * Gets Transition Time.
      *
-     * @return the Transition time
+     * @return the Transition Time
      */
     public Integer getTransitionTime() {
         return transitionTime;
     }
 
     /**
-     * Sets Transition time.
+     * Sets Transition Time.
      *
-     * @param transitionTime the Transition time
+     * @param transitionTime the Transition Time
      */
     public void setTransitionTime(final Integer transitionTime) {
         this.transitionTime = transitionTime;
@@ -106,25 +126,25 @@ public class EnhancedMoveToHueCommand extends ZclCommand {
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
-        serializer.serialize(hue, ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        serializer.serialize(enhancedHue, ZclDataType.UNSIGNED_16_BIT_INTEGER);
         serializer.serialize(direction, ZclDataType.ENUMERATION_8_BIT);
         serializer.serialize(transitionTime, ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        hue = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        enhancedHue = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         direction = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
         transitionTime = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(113);
+        final StringBuilder builder = new StringBuilder(121);
         builder.append("EnhancedMoveToHueCommand [");
         builder.append(super.toString());
-        builder.append(", hue=");
-        builder.append(hue);
+        builder.append(", enhancedHue=");
+        builder.append(enhancedHue);
         builder.append(", direction=");
         builder.append(direction);
         builder.append(", transitionTime=");

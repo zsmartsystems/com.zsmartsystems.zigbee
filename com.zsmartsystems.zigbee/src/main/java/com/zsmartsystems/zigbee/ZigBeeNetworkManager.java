@@ -36,6 +36,9 @@ import com.zsmartsystems.zigbee.ZigBeeNode.ZigBeeNodeState;
 import com.zsmartsystems.zigbee.app.ZigBeeNetworkExtension;
 import com.zsmartsystems.zigbee.app.discovery.ZigBeeDiscoveryExtension;
 import com.zsmartsystems.zigbee.aps.ApsDataEntity;
+import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
+import com.zsmartsystems.zigbee.database.ZigBeeNetworkDataStore;
+import com.zsmartsystems.zigbee.database.ZigBeeNetworkDatabaseManager;
 import com.zsmartsystems.zigbee.internal.ClusterMatcher;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.internal.ZigBeeCommandNotifier;
@@ -50,12 +53,13 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportProgressState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
+import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFrameType;
 import com.zsmartsystems.zigbee.zcl.ZclHeader;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandType;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zdo.ZdoCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoCommandType;
 import com.zsmartsystems.zigbee.zdo.command.ManagementLeaveRequest;
@@ -82,17 +86,28 @@ import com.zsmartsystems.zigbee.zdo.command.NetworkAddressRequest;
  * <h2>Lifecycle</h2>
  * The ZigBeeNetworkManager lifecycle is as follows -:
  * <ul>
- * <li>Instantiate a {@link ZigBeeTransportTransmit} class
+ * <li>Instantiate a {@link ZigBeeTransportTransmit} class. The network state will be initialised to
+ * {@link ZigBeeNetworkState#UNINITIALISED}.
  * <li>Instantiate a {@link ZigBeeNetworkManager} class passing the previously created {@link ZigBeeTransportTransmit}
- * class
- * <li>Optionally set the {@link ZigBeeSerializer} and {@link ZigBeeDeserializer} using the {@link #setSerializer}
- * method
- * <li>Call the {@link #initialize} method to perform the initial initialization of the ZigBee network
+ * class.
+ * <li>Set the {@link ZigBeeSerializer} and {@link ZigBeeDeserializer} using the {@link #} method.
+ * <li>Optionally call the {@link #setNetworkDataStore(ZigBeeNetworkDataStore)} method to set the
+ * {@link ZigBeeNetworkDataStore} that will be called to serialise network data to a persistent store.
+ * <li>Call the {@link #initialize()} method to perform the initial initialization of the ZigBee network. The network
+ * state will be set to {@link ZigBeeNetworkState#INITIALISING}.
  * <li>Set the network configuration (see below).
- * <li>Call the {@link #startup} method to start using the configured ZigBee network. Configuration methods may not be
- * used.
- * <li>Call the {@link shutdown} method to close the network
+ * <li>Call the {@link #startup(boolean)} method to start using the configured ZigBee network. Configuration methods may
+ * not be used following this call. The network state will be updated to {@link ZigBeeNetworkState#ONLINE} on success,
+ * or {@link ZigBeeNetworkState#OFFLINE} on failure.
+ * <li>Call the {@link #reinitialize()} method to reinitialise the network. This will take the transport
+ * {@link ZigBeeTransportState#OFFLINE} and place the network state in {@link ZigBeeNetworkState#INITIALISING}.
+ * <li>Call the {@link shutdown()} method to close the network and free all resources. The network will be placed in
+ * {@link ZigBeeNetworkState#SHUTDOWN} and may not be restarted.
  * </ul>
+ * <p>
+ * See the {@link ZigBeeNetworkState} transition diagram below -:
+ * <p>
+ * <img src="./doc-files/ZigBeeNetworkStateTransitions.png" width="50%">
  * <p>
  * Following a call to {@link #initialize} configuration calls can be made to configure the transport layer. This
  * includes -:
@@ -109,7 +124,11 @@ import com.zsmartsystems.zigbee.zdo.command.NetworkAddressRequest;
  * <li>{@link #setZigBeeLinkKey(ZigBeeKey)}
  * </ul>
  * <p>
- * Once all transport initialization is complete, {@link #startup} must be called.
+ * Once all transport initialization is complete, {@link #startup()} must be called to bring the network
+ * {@link ZigBeeNetworkState#ONLINE}.
+ * <p>
+ * To shutdown the network and free all resources, call {@link #shutdown()}. The network may not be restarted and a new
+ * {@link ZigBeeNetworkManager} must be instantiated. The network state will be {@link ZigBeeNetworkState#SHUTDOWN}.
  *
  * @author Chris Jackson
  */
@@ -147,9 +166,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     private final static AtomicInteger apsCounter = new AtomicInteger();
 
     /**
-     * The network state serializer
+     * The network database - used to save the state of the network and all its nodes
      */
-    private ZigBeeNetworkStateSerializer networkStateSerializer;
+    private final ZigBeeNetworkDatabaseManager databaseManager;
 
     /**
      * Executor service to execute update threads for discovery or mesh updates etc.
@@ -212,14 +231,14 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     private ClusterMatcher clusterMatcher = null;
 
     /**
-     * The current {@link ZigBeeTransportState}
+     * The current {@link ZigBeeNetworkState}
      */
-    private ZigBeeTransportState networkState = ZigBeeTransportState.UNINITIALISED;
+    private ZigBeeNetworkState networkState = ZigBeeNetworkState.UNINITIALISED;
 
     /**
-     * Map of allowable state transitions
+     * Map of allowable transport state transitions
      */
-    private final Map<ZigBeeTransportState, Set<ZigBeeTransportState>> validStateTransitions;
+    private final Map<ZigBeeNetworkState, Set<ZigBeeTransportState>> validTransportStateTransitions;
 
     /**
      * Our local {@link IeeeAddress}
@@ -231,38 +250,22 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      */
     private int localNwkAddress = 0;
 
-    public enum ZigBeeInitializeResponse {
-        /**
-         * Device is initialized successfully and is currently joined to a network
-         */
-        JOINED,
-        /**
-         * Device initialization failed
-         */
-        FAILED,
-        /**
-         * Device is initialized successfully and is currently not joined to a network
-         */
-        NOT_JOINED
-    }
-
     /**
      * Constructor which configures serial port and ZigBee network.
      *
-     * @param transport the dongle
+     * @param transport the dongle providing the {@link ZigBeeTransportTransmit}
      */
     public ZigBeeNetworkManager(final ZigBeeTransportTransmit transport) {
-        Map<ZigBeeTransportState, Set<ZigBeeTransportState>> transitions = new HashMap<>();
+        databaseManager = new ZigBeeNetworkDatabaseManager(this);
 
-        transitions.put(null, new HashSet<>(Arrays.asList(ZigBeeTransportState.UNINITIALISED)));
-        transitions.put(ZigBeeTransportState.UNINITIALISED,
+        Map<ZigBeeNetworkState, Set<ZigBeeTransportState>> transitions = new ConcurrentHashMap<>();
+        transitions.put(ZigBeeNetworkState.UNINITIALISED,
                 new HashSet<>(Arrays.asList(ZigBeeTransportState.INITIALISING, ZigBeeTransportState.OFFLINE)));
-        transitions.put(ZigBeeTransportState.INITIALISING,
-                new HashSet<>(Arrays.asList(ZigBeeTransportState.ONLINE, ZigBeeTransportState.OFFLINE)));
-        transitions.put(ZigBeeTransportState.ONLINE, new HashSet<>(Arrays.asList(ZigBeeTransportState.OFFLINE)));
-        transitions.put(ZigBeeTransportState.OFFLINE, new HashSet<>(Arrays.asList(ZigBeeTransportState.ONLINE)));
+        transitions.put(ZigBeeNetworkState.INITIALISING, new HashSet<>(Arrays.asList(ZigBeeTransportState.ONLINE)));
+        transitions.put(ZigBeeNetworkState.ONLINE, new HashSet<>(Arrays.asList(ZigBeeTransportState.OFFLINE)));
+        transitions.put(ZigBeeNetworkState.OFFLINE, new HashSet<>(Arrays.asList(ZigBeeTransportState.ONLINE)));
 
-        validStateTransitions = Collections.unmodifiableMap(new HashMap<>(transitions));
+        validTransportStateTransitions = Collections.unmodifiableMap(new HashMap<>(transitions));
 
         this.transport = transport;
 
@@ -273,15 +276,13 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Set a state {@link ZigBeeNetworkStateSerializer}. This will allow saving and restoring the network.
-     * The network manager will call {@link ZigBeeNetworkStateSerializer#deserialize} during the startup and
-     * {@link ZigBeeNetworkStateSerializer#serialize} during shutdown.
+     * Set a state {@link ZigBeeNetworkDataStore}. This will allow saving and restoring the network.
      *
-     * @param networkStateSerializer the {@link ZigBeeNetworkStateSerializer}
+     * @param dataStore the {@link ZigBeeNetworkDataStore}
      */
-    public void setNetworkStateSerializer(ZigBeeNetworkStateSerializer networkStateSerializer) {
+    public void setNetworkDataStore(ZigBeeNetworkDataStore dataStore) {
         synchronized (this) {
-            this.networkStateSerializer = networkStateSerializer;
+            databaseManager.setDataStore(dataStore);
         }
     }
 
@@ -322,21 +323,20 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      */
     public ZigBeeStatus initialize() {
         synchronized (this) {
-            if (networkState != ZigBeeTransportState.UNINITIALISED) {
+            if (networkState != ZigBeeNetworkState.UNINITIALISED) {
                 return ZigBeeStatus.INVALID_STATE;
             }
-            setNetworkState(ZigBeeTransportState.INITIALISING);
-
-            if (networkStateSerializer != null) {
-                networkStateSerializer.deserialize(this);
-            }
+            setNetworkState(ZigBeeNetworkState.INITIALISING);
         }
+
+        databaseManager.startup();
 
         ZigBeeStatus transportResponse = transport.initialize();
         if (transportResponse != ZigBeeStatus.SUCCESS) {
-            setNetworkState(ZigBeeTransportState.OFFLINE);
+            setNetworkState(ZigBeeNetworkState.OFFLINE);
             return transportResponse;
         }
+        setNetworkState(ZigBeeNetworkState.INITIALISING);
 
         addLocalNode();
 
@@ -501,23 +501,43 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Starts up ZigBee manager components.
+     * Starts up ZigBee manager components, and starts the transport layer to bring the network ONLINE.
      *
      * @param reinitialize true if the provider is to reinitialise the network with the parameters configured since the
      *            {@link #initialize} method was called.
      * @return {@link ZigBeeStatus} with the status of function
      */
     public ZigBeeStatus startup(boolean reinitialize) {
-        if (networkState == ZigBeeTransportState.UNINITIALISED) {
+        if (networkState == ZigBeeNetworkState.UNINITIALISED) {
             return ZigBeeStatus.INVALID_STATE;
         }
 
         ZigBeeStatus status = transport.startup(reinitialize);
         if (status != ZigBeeStatus.SUCCESS) {
-            setNetworkState(ZigBeeTransportState.OFFLINE);
+            setNetworkState(ZigBeeNetworkState.OFFLINE);
             return status;
         }
-        setNetworkState(ZigBeeTransportState.ONLINE);
+        setNetworkState(ZigBeeNetworkState.ONLINE);
+        return ZigBeeStatus.SUCCESS;
+    }
+
+    /**
+     * Reinitialises the network. This may take the transport layer OFFLINE, and will return the
+     * {@link ZigBeeNetworkState} to {@link ZigBeeNetworkState#INITIALISING}. Following this call, the system should be
+     * in the same state as if the {@link #initialize()} method had first been called. {@link #startup(boolean)} must be
+     * called to place the network back ONLINE.
+     * <p>
+     * Note that while this method will take the {@link ZigBeeTransportState} to {@link ZigBeeTransportState#OFFLINE}
+     * the {@link ZigBeeNetworkState} will be {@link ZigBeeNetworkState#INITIALISING} - the
+     * {@link ZigBeeTransportState#OFFLINE} will not be reflected through the the application.
+     *
+     * @return
+     */
+    public ZigBeeStatus reinitialize() {
+        // Set the state to INITIALISING before reconfiguring the transport layer
+        // to ensure we don't pass the OFFLINE state to the application
+        setNetworkState(ZigBeeNetworkState.INITIALISING);
+
         return ZigBeeStatus.SUCCESS;
     }
 
@@ -525,6 +545,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * Shuts down ZigBee manager components.
      */
     public void shutdown() {
+        networkState = ZigBeeNetworkState.SHUTDOWN;
+
         executorService.shutdownNow();
 
         synchronized (this) {
@@ -532,9 +554,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 node.shutdown();
             }
 
-            if (networkStateSerializer != null) {
-                networkStateSerializer.serialize(this);
-            }
+            databaseManager.shutdown();
 
             for (ZigBeeNetworkExtension extension : extensions) {
                 extension.extensionShutdown();
@@ -551,7 +571,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @param runnableTask the {@link Runnable} to execute
      */
     public void executeTask(Runnable runnableTask) {
-        if (networkState != ZigBeeTransportState.ONLINE) {
+        if (networkState != ZigBeeNetworkState.ONLINE) {
             return;
         }
         executorService.execute(runnableTask);
@@ -565,7 +585,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @return the {@link ScheduledFuture} for the scheduled task
      */
     public ScheduledFuture<?> scheduleTask(Runnable runnableTask, long delay) {
-        if (networkState != ZigBeeTransportState.ONLINE) {
+        if (networkState != ZigBeeNetworkState.ONLINE) {
             return null;
         }
         return executorService.schedule(runnableTask, delay, TimeUnit.MILLISECONDS);
@@ -582,7 +602,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      */
     public ScheduledFuture<?> rescheduleTask(ScheduledFuture<?> futureTask, Runnable runnableTask, long delay) {
         futureTask.cancel(false);
-        if (networkState != ZigBeeTransportState.ONLINE) {
+        if (networkState != ZigBeeNetworkState.ONLINE) {
             return null;
         }
 
@@ -696,6 +716,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             zclHeader.setSequenceNumber(command.getTransactionId());
             zclHeader.setDirection(zclCommand.getCommandDirection());
 
+            if (zclCommand.isManufacturerSpecific()) {
+                zclHeader.setManufacturerSpecific(true);
+                zclHeader.setManufacturerCode(zclCommand.getManufacturerCode());
+            }
+
             command.serialize(fieldSerializer);
 
             // Serialise the ZCL header and add the payload
@@ -721,6 +746,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     @Override
     public void receiveCommand(final ZigBeeApsFrame incomingApsFrame) {
+        synchronized (this) {
+            if (networkState != ZigBeeNetworkState.ONLINE) {
+                return;
+            }
+        }
+
         logger.debug("RX APS: {}", incomingApsFrame);
 
         // Process the APS layer - this performs services such as duplicate removal and defragmentation
@@ -784,6 +815,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             final ZigBeeApsFrame apsFrame) {
         ZdoCommandType commandType = ZdoCommandType.getValueById(apsFrame.getCluster());
         if (commandType == null) {
+            logger.debug("Error instantiating ZDO command: Unknown cluster {}",
+                    String.format("%04X", apsFrame.getCluster()));
             return null;
         }
 
@@ -810,25 +843,36 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         ZclHeader zclHeader = new ZclHeader(fieldDeserializer);
         logger.debug("RX ZCL: {}", zclHeader);
 
-        // Get the command type
-        ZclCommandType commandType = null;
-        if (zclHeader.getFrameType() == ZclFrameType.ENTIRE_PROFILE_COMMAND) {
-            commandType = ZclCommandType.getGeneric(zclHeader.getCommandId());
-        } else {
-            commandType = ZclCommandType.getCommandType(apsFrame.getCluster(), zclHeader.getCommandId(),
-                    zclHeader.getDirection());
-        }
-
-        if (commandType == null) {
-            logger.debug("No command type found for {}, cluster={}, command={}, direction={}", zclHeader.getFrameType(),
-                    apsFrame.getCluster(), zclHeader.getCommandId(), zclHeader.getDirection());
+        ZigBeeNode node = getNode(apsFrame.getSourceAddress());
+        if (node == null) {
+            logger.debug("Unknown node {}", apsFrame.getSourceAddress());
             return null;
         }
 
-        ZclCommand command = commandType.instantiateCommand();
+        ZigBeeEndpoint endpoint = node.getEndpoint(apsFrame.getSourceEndpoint());
+        if (endpoint == null) {
+            logger.debug("Unknown endpoint {}", apsFrame.getSourceEndpoint());
+            return null;
+        }
+
+        ZclCommand command;
+        if (zclHeader.getDirection() == ZclCommandDirection.SERVER_TO_CLIENT) {
+            ZclCluster cluster = endpoint.getInputCluster(apsFrame.getCluster());
+            if (cluster == null) {
+                logger.debug("Unknown input cluster {}", apsFrame.getCluster());
+                return null;
+            }
+            command = cluster.getResponseFromId(zclHeader.getFrameType(), zclHeader.getCommandId());
+        } else {
+            ZclCluster cluster = endpoint.getOutputCluster(apsFrame.getCluster());
+            if (cluster == null) {
+                logger.debug("Unknown output cluster {}", apsFrame.getCluster());
+                return null;
+            }
+            command = cluster.getCommandFromId(zclHeader.getFrameType(), zclHeader.getCommandId());
+        }
         if (command == null) {
-            logger.debug("No command found for {}, cluster={}, command={}", zclHeader.getFrameType(),
-                    apsFrame.getCluster(), zclHeader.getCommandId());
+            logger.debug("Unknown command {}", zclHeader.getCommandId());
             return null;
         }
 
@@ -939,14 +983,21 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     @Override
-    public synchronized void setNetworkState(final ZigBeeTransportState state) {
-        // Only notify users of state changes
-        if (state.equals(networkState)) {
+    public synchronized void setTransportState(final ZigBeeTransportState state) {
+        if (!validTransportStateTransitions.get(networkState).contains(state)) {
+            logger.debug(
+                    "Ignoring invalid transport state transition in ZigBeeNetworkState.{} by ZigBeeTransportState.{}",
+                    networkState, state);
             return;
         }
 
-        if (!validStateTransitions.get(networkState).contains(state)) {
-            logger.debug("Ignoring invalid network state transition from {} to {}", networkState, state);
+        // Process the network state given the updated transport layer state
+        setNetworkState(ZigBeeNetworkState.valueOf(state.toString()));
+    }
+
+    private synchronized void setNetworkState(final ZigBeeNetworkState state) {
+        // Only notify users of state changes
+        if (state.equals(networkState)) {
             return;
         }
 
@@ -958,7 +1009,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         });
     }
 
-    private void setNetworkStateRunnable(final ZigBeeTransportState state) {
+    private void setNetworkStateRunnable(final ZigBeeNetworkState state) {
         synchronized (this) {
             networkState = state;
 
@@ -966,7 +1017,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
             // If the state has changed to online, then we need to add any pending nodes,
             // and ensure that the local node is added
-            if (state == ZigBeeTransportState.ONLINE) {
+            if (state == ZigBeeNetworkState.ONLINE) {
                 localNwkAddress = transport.getNwkAddress();
                 localIeeeAddress = transport.getIeeeAddress();
 
@@ -1001,10 +1052,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             // Now that everything is added and started, notify the listeners that the state has updated
             for (final ZigBeeNetworkStateListener stateListener : stateListeners) {
                 NotificationService.execute(new Runnable() {
+
                     @Override
                     public void run() {
                         stateListener.networkStateUpdated(state);
                     }
+
                 });
             }
         }
@@ -1258,6 +1311,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             networkNodes.remove(node.getIeeeAddress());
         }
 
+        synchronized (this) {
+            if (networkState != ZigBeeNetworkState.ONLINE) {
+                return;
+            }
+        }
+
         for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
             NotificationService.execute(new Runnable() {
                 @Override
@@ -1266,19 +1325,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 }
             });
         }
-
-        node.shutdown();
-
-        executorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                synchronized (ZigBeeNetworkManager.this) {
-                    if (networkStateSerializer != null) {
-                        networkStateSerializer.serialize(ZigBeeNetworkManager.this);
-                    }
-                }
-            }
-        });
     }
 
     /**
@@ -1303,8 +1349,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             networkNodes.put(node.getIeeeAddress(), node);
         }
 
-        if (networkState != ZigBeeTransportState.ONLINE) {
-            return;
+        synchronized (this) {
+            if (networkState != ZigBeeNetworkState.ONLINE) {
+                return;
+            }
         }
 
         for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
@@ -1315,17 +1363,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 }
             });
         }
-
-        executorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                synchronized (ZigBeeNetworkManager.this) {
-                    if (networkStateSerializer != null) {
-                        networkStateSerializer.serialize(ZigBeeNetworkManager.this);
-                    }
-                }
-            }
-        });
     }
 
     /**
@@ -1362,6 +1399,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             nodeDiscoveryComplete.add(node.getIeeeAddress());
         }
 
+        synchronized (this) {
+            if (networkState != ZigBeeNetworkState.ONLINE) {
+                return;
+            }
+        }
+
         for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
             NotificationService.execute(new Runnable() {
                 @Override
@@ -1374,17 +1417,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 }
             });
         }
-
-        executorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                synchronized (ZigBeeNetworkManager.this) {
-                    if (networkStateSerializer != null) {
-                        networkStateSerializer.serialize(ZigBeeNetworkManager.this);
-                    }
-                }
-            }
-        });
     }
 
     /**
@@ -1413,7 +1445,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         extension.extensionInitialize(this);
 
         // If the network is online, start the extension
-        if (networkState == ZigBeeTransportState.ONLINE) {
+        if (networkState == ZigBeeNetworkState.ONLINE) {
             extension.extensionStartup();
         }
     }
@@ -1421,7 +1453,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     /**
      * Gets a functional extension that has been registered with the network.
      *
-     * @param <T> {@link ZigBeeNetworkExtension}
      * @param requestedExtension the {@link ZigBeeNetworkExtension} to get
      * @return the requested {@link ZigBeeNetworkExtension} if it exists, or null
      */
@@ -1437,11 +1468,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Gets the current {@link ZigBeeTransportState}
+     * Gets the current {@link ZigBeeNetworkState}
      *
-     * @return the current {@link ZigBeeTransportState}
+     * @return the current {@link ZigBeeNetworkState}
      */
-    public ZigBeeTransportState getNetworkState() {
+    public ZigBeeNetworkState getNetworkState() {
         return networkState;
     }
 

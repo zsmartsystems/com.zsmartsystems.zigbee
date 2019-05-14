@@ -12,10 +12,10 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
-import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
+import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.XBeeEventListener;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.XBeeFrameHandler;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.EncryptionOptions;
@@ -188,7 +188,7 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
         XBeeIeeeAddressLowResponse ieeeLowResponse = (XBeeIeeeAddressLowResponse) frameHandler
                 .sendRequest(ieeeLowCommand);
 
-        if (ieeeHighResponse == null || ieeeLowCommand == null) {
+        if (ieeeHighResponse == null || ieeeLowResponse == null) {
             logger.error("Unable to get XBee IEEE address");
             return ZigBeeStatus.BAD_RESPONSE;
         }
@@ -284,7 +284,7 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
             return;
         }
         frameHandler.setClosing();
-        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
+        zigbeeTransportReceive.setTransportState(ZigBeeTransportState.OFFLINE);
         serialPort.close();
         frameHandler.close();
         logger.debug("XBee dongle shutdown.");
@@ -398,7 +398,7 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
 
     private void setNetworkState(ZigBeeTransportState state) {
         if (initialisationComplete) {
-            zigbeeTransportReceive.setNetworkState(state);
+            zigbeeTransportReceive.setTransportState(state);
         }
     }
 

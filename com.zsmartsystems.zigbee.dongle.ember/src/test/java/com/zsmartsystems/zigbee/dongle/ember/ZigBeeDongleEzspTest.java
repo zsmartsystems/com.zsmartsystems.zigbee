@@ -25,12 +25,12 @@ import org.mockito.Mockito;
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.TestUtilities;
-import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.ZigBeeProfileType;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
+import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspChildJoinHandler;
@@ -156,18 +156,18 @@ public class ZigBeeDongleEzspTest {
         EzspStackStatusHandler response = Mockito.mock(EzspStackStatusHandler.class);
         Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_NETWORK_BUSY);
         Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(0))
-                .setNetworkState(ArgumentMatchers.any(ZigBeeTransportState.class));
+                .setTransportState(ArgumentMatchers.any(ZigBeeTransportState.class));
 
         response = Mockito.mock(EzspStackStatusHandler.class);
         Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_NETWORK_UP);
         dongle.handlePacket(response);
-        Mockito.verify(transport, Mockito.timeout(TIMEOUT)).setNetworkState(ZigBeeTransportState.ONLINE);
+        Mockito.verify(transport, Mockito.timeout(TIMEOUT)).setTransportState(ZigBeeTransportState.ONLINE);
         assertEquals(Integer.valueOf(1243), dongle.getNwkAddress());
 
         response = Mockito.mock(EzspStackStatusHandler.class);
         Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_NETWORK_DOWN);
         dongle.handlePacket(response);
-        Mockito.verify(transport, Mockito.timeout(TIMEOUT)).setNetworkState(ZigBeeTransportState.OFFLINE);
+        Mockito.verify(transport, Mockito.timeout(TIMEOUT)).setTransportState(ZigBeeTransportState.OFFLINE);
     }
 
     @Test

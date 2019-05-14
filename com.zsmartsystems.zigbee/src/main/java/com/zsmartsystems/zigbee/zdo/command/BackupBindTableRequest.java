@@ -7,27 +7,32 @@
  */
 package com.zsmartsystems.zigbee.zdo.command;
 
-import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 import javax.annotation.Generated;
+
+import com.zsmartsystems.zigbee.zdo.ZdoRequest;
 
 /**
  * Backup Bind Table Request value object class.
  * <p>
- * The Backup_Bind_Table_req is generated from a local primary binding table
- * cache and sent to the remote backup binding table cache device to request backup
- * storage of its entire binding table. The destination addressing mode for this
- * request is unicast.
+ * <p>
+ * The Backup_Bind_Table_req is generated from a local primary binding table cache and sent to
+ * the remote backup binding table cache device to request backup storage of its entire binding
+ * table. The destination addressing mode for this request is unicast.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
 public class BackupBindTableRequest extends ZdoRequest {
+    /**
+     * The ZDO cluster ID.
+     */
+    public static int CLUSTER_ID = 0x0027;
+
     /**
      * Default constructor.
      */
     public BackupBindTableRequest() {
-        clusterId = 0x0027;
+        clusterId = CLUSTER_ID;
     }
 
     @Override

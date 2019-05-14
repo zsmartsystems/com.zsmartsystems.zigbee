@@ -7,10 +7,19 @@
  */
 package com.zsmartsystems.zigbee;
 
-import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
-
 /**
  * ZigBee network listener. Provides notifications on updates to the network state
+ * <p>
+ * This is used to provide status updates to higher layer listeners registered through the
+ * {@link ZigBeeNetworkStateListener} interface.
+ * <p>
+ * Valid state transitions are -:
+ * <ul>
+ * <li>UNITIALISED to INITIALISING or OFFLINE
+ * <li>INITIALISING to ONLINE or OFFLINE
+ * <li>ONLINE to OFFLINE
+ * <li>OFFLINE to ONLINE
+ * </ul
  *
  * @author Chris Jackson
  */
@@ -19,8 +28,7 @@ public interface ZigBeeNetworkStateListener {
     /**
      * Network state has been updated.
      *
-     * @param state
-     *            the updated {@link TransportState}
+     * @param state the updated {@link ZigBeeNetworkState}
      */
-    void networkStateUpdated(final ZigBeeTransportState state);
+    void networkStateUpdated(final ZigBeeNetworkState state);
 }

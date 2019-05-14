@@ -7,12 +7,14 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import javax.annotation.Generated;
+
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import javax.annotation.Generated;
 
 /**
  * <b>Binary Value (BACnet Regular)</b> cluster implementation (<i>Cluster ID 0x060C</i>).
@@ -32,7 +34,15 @@ public class ZclBinaryValueBaCnetRegularCluster extends ZclCluster {
     public static final String CLUSTER_NAME = "Binary Value (BACnet Regular)";
 
     // Attribute initialisation
-    protected Map<Integer, ZclAttribute> initializeAttributes() {
+    @Override
+    protected Map<Integer, ZclAttribute> initializeClientAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(0);
+
+        return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(0);
 
         return attributeMap;

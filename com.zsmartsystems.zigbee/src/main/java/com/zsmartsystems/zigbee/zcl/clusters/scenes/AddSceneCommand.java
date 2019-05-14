@@ -7,29 +7,39 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.scenes;
 
+import java.util.List;
+
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
-
-import java.util.List;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.field.ExtensionFieldSet;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Add Scene Command value object class.
  * <p>
- * Cluster: <b>Scenes</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>Scenes</b>. Command ID 0x00 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Scenes cluster.
  * <p>
  * The Add Scene command shall be addressed to a single device (not a group).
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-04-26T19:23:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
 public class AddSceneCommand extends ZclCommand {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0005;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x00;
+
     /**
      * Group ID command message field.
      */
@@ -41,7 +51,7 @@ public class AddSceneCommand extends ZclCommand {
     private Integer sceneId;
 
     /**
-     * Transition time command message field.
+     * Transition Time command message field.
      */
     private Integer transitionTime;
 
@@ -51,7 +61,7 @@ public class AddSceneCommand extends ZclCommand {
     private String sceneName;
 
     /**
-     * Extension field sets command message field.
+     * Extension Field Sets command message field.
      */
     private List<ExtensionFieldSet> extensionFieldSets;
 
@@ -59,9 +69,9 @@ public class AddSceneCommand extends ZclCommand {
      * Default constructor.
      */
     public AddSceneCommand() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 5;
-        commandId = 0;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
@@ -102,18 +112,18 @@ public class AddSceneCommand extends ZclCommand {
     }
 
     /**
-     * Gets Transition time.
+     * Gets Transition Time.
      *
-     * @return the Transition time
+     * @return the Transition Time
      */
     public Integer getTransitionTime() {
         return transitionTime;
     }
 
     /**
-     * Sets Transition time.
+     * Sets Transition Time.
      *
-     * @param transitionTime the Transition time
+     * @param transitionTime the Transition Time
      */
     public void setTransitionTime(final Integer transitionTime) {
         this.transitionTime = transitionTime;
@@ -138,18 +148,18 @@ public class AddSceneCommand extends ZclCommand {
     }
 
     /**
-     * Gets Extension field sets.
+     * Gets Extension Field Sets.
      *
-     * @return the Extension field sets
+     * @return the Extension Field Sets
      */
     public List<ExtensionFieldSet> getExtensionFieldSets() {
         return extensionFieldSets;
     }
 
     /**
-     * Sets Extension field sets.
+     * Sets Extension Field Sets.
      *
-     * @param extensionFieldSets the Extension field sets
+     * @param extensionFieldSets the Extension Field Sets
      */
     public void setExtensionFieldSets(final List<ExtensionFieldSet> extensionFieldSets) {
         this.extensionFieldSets = extensionFieldSets;

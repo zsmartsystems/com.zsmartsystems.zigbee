@@ -13,17 +13,27 @@ import java.util.Map;
 import javax.annotation.Generated;
 
 /**
- * Enumeration of Color control attribute ColorMode options.
+ * Color Mode value enumeration.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
- *
- * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-31T12:00:43Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
 public enum ColorModeEnum {
-    CURRENTHUE_AND_CURRENTSATURATION(0x0000),
-    CURRENTX_AND_CURRENTY(0x0001),
-    COLORTEMPERATURE(0x0002);
+
+    /**
+     * Current Hue And Current Saturation
+     */
+    CURRENT_HUE_AND_CURRENT_SATURATION(0x0000),
+
+    /**
+     * Current X And Current Y
+     */
+    CURRENT_X_AND_CURRENT_Y(0x0001),
+
+    /**
+     * Color Temperature
+     */
+    COLOR_TEMPERATURE(0x0002);
 
     /**
      * A mapping between the integer code and its corresponding ColorModeEnum type to facilitate lookup by value.
@@ -39,7 +49,7 @@ public enum ColorModeEnum {
 
     private final int key;
 
-    ColorModeEnum(final int key) {
+    private ColorModeEnum(final int key) {
         this.key = key;
     }
 

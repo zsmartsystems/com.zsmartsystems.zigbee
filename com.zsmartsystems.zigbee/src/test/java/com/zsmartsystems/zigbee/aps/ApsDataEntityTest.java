@@ -12,8 +12,6 @@ import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
-import com.zsmartsystems.zigbee.ZigBeeApsFrame;
-
 /**
  *
  * @author Chris Jackson

@@ -4,8 +4,11 @@ bin/
 *.log
 *.log.*
 *.json
+*.sh
+*.zip
 .metadata
 local.properties
+pom.xml.releaseBackup
 
 # Eclipse project specific
 .classpath
@@ -28,6 +31,9 @@ simple-network.xml
 *.ebl
 *.gbl
 *.s37
+
+com.zsmartsystems.zigbee.console.main/database/
+
 
 # Gradle
 .gradle

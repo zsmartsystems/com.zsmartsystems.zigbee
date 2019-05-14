@@ -18,6 +18,7 @@ public interface ZclAttributeListener {
      * Called when an attribute is updated
      *
      * @param attribute the {@link ZclAttribute} that has been updated
+     * @param value the new value of the attribute
      */
-    void attributeUpdated(ZclAttribute attribute);
+    void attributeUpdated(ZclAttribute attribute, Object value);
 }

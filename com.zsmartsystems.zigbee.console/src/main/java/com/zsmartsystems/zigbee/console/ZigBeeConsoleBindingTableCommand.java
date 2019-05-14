@@ -13,6 +13,7 @@ import java.util.concurrent.ExecutionException;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zdo.field.BindingTable;
 
@@ -52,9 +53,9 @@ public class ZigBeeConsoleBindingTableCommand extends ZigBeeConsoleAbstractComma
 
         ZigBeeNode node = getNode(networkManager, args[1]);
 
-        final Boolean result = node.updateBindingTable().get();
-        if (!result) {
-            out.println("Binding table read error");
+        final ZigBeeStatus result = node.updateBindingTable().get();
+        if (result != ZigBeeStatus.SUCCESS) {
+            out.println("Binding table read error: " + result);
             return;
         }
 
@@ -66,13 +67,15 @@ public class ZigBeeConsoleBindingTableCommand extends ZigBeeConsoleAbstractComma
 
         out.println("Src Address          | Dest Address         | Group | Mode    | Cluster");
         for (BindingTable entry : node.getBindingTable()) {
+            ZclClusterType clusterType = ZclClusterType.getValueById(entry.getClusterId());
+            String clusterTypeLabel = clusterType != null ? clusterType.toString()
+                    : String.format("0x%04X", entry.getClusterId());
             out.println(String
                     .format("%s | %20s | %5s | %-7s | %04X:%s", getAddress(entry.getSrcAddr(), entry.getSrcEndpoint()),
                             entry.getDstAddrMode() == 3 ? getAddress(entry.getDstNodeAddr(), entry.getDstNodeEndpoint())
                                     : "",
                             entry.getDstAddrMode() == 1 ? Integer.toString(entry.getDstGroupAddr()) : "",
-                            getAddressMode(entry.getDstAddrMode()), entry.getClusterId(),
-                            ZclClusterType.getValueById(entry.getClusterId())));
+                            getAddressMode(entry.getDstAddrMode()), entry.getClusterId(), clusterTypeLabel));
         }
     }
 

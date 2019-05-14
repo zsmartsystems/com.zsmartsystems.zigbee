@@ -20,8 +20,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.app.ZigBeeApplication;
-import com.zsmartsystems.zigbee.dao.ZclClusterDao;
-import com.zsmartsystems.zigbee.dao.ZigBeeEndpointDao;
+import com.zsmartsystems.zigbee.database.ZclClusterDao;
+import com.zsmartsystems.zigbee.database.ZigBeeEndpointDao;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
@@ -341,8 +341,7 @@ public class ZigBeeEndpoint {
                 // Get the cluster type
                 ZclCluster clusterClass = getClusterClass(id);
                 if (clusterClass == null) {
-                    logger.debug("{}: Cluster {} not found cluster {}", getEndpointAddress(),
-                            String.format("%04X", id));
+                    logger.debug("{}: Cluster {} not found", getEndpointAddress(), String.format("%04X", id));
                     continue;
                 }
 

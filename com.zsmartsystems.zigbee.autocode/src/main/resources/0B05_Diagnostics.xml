@@ -1,0 +1,108 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0B05">
+    <name>Diagnostics</name>
+    <description>The diagnostics cluster provides access to information regarding the operation of the ZigBee stack over time. This information is useful to installers and other network administrators who wish to know how a particular device is functioning on the network.</description>
+    <attribute code="0x0000" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Number Of Resets</name>
+        <description>An attribute that is incremented each time the device resets. A reset is defined as any time the device restarts. This is not the same as a reset to factory defaults, which SHOULD clear this and all values.</description>
+    </attribute>
+    <attribute code="0x0001" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Persistent Memory Writes</name>
+        <description>This attribute keeps track of the number of writes to persistent memory. Each time that the device stores a token in persistent memory it will increment this value.</description>
+    </attribute>
+    <attribute code="0x0100" type="UNSIGNED_32_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x00000000" maximum="0xFFFFFFFF" default="0x00000000">
+        <name>MAC Rx Bcast</name>
+        <description>A counter that is incremented each time the MAC layer receives a broadcast.</description>
+    </attribute>
+    <attribute code="0x0101" type="UNSIGNED_32_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x00000000" maximum="0xFFFFFFFF" default="0x00000000">
+        <name>MAC Tx Bcast</name>
+        <description>A counter that is incremented each time the MAC layer transmits a broadcast.</description>
+    </attribute>
+    <attribute code="0x0102" type="UNSIGNED_32_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x00000000" maximum="0xFFFFFFFF" default="0x00000000">
+        <name>MAC Rx Ucast</name>
+        <description>A counter that is incremented each time the MAC layer receives a unicast.</description>
+    </attribute>
+    <attribute code="0x0103" type="UNSIGNED_32_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x00000000" maximum="0xFFFFFFFF" default="0x00000000">
+        <name>MAC Tx Ucast</name>
+        <description>A counter that is incremented each time the MAC layer transmits a unicast.</description>
+    </attribute>
+    <attribute code="0x0104" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>MAC Tx Ucast Retry</name>
+    </attribute>
+    <attribute code="0x0105" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>MAC Tx Ucast Fail</name>
+    </attribute>
+    <attribute code="0x0106" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>APS Rx Bcast</name>
+    </attribute>
+    <attribute code="0x0107" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>APS Tx Bcast</name>
+    </attribute>
+    <attribute code="0x0108" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>APS Rx Ucast</name>
+    </attribute>
+    <attribute code="0x0109" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>APS Tx Ucast Success</name>
+    </attribute>
+    <attribute code="0x010A" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>APS Tx Ucast Retry</name>
+    </attribute>
+    <attribute code="0x010B" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>APS Tx Ucast Fail</name>
+    </attribute>
+    <attribute code="0x010C" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Route Disc Initiated</name>
+    </attribute>
+    <attribute code="0x010D" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Neighbor Added</name>
+    </attribute>
+    <attribute code="0x010E" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Neighbor Removed</name>
+    </attribute>
+    <attribute code="0x010F" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Neighbor Stale</name>
+    </attribute>
+    <attribute code="0x0110" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Join Indication</name>
+    </attribute>
+    <attribute code="0x0111" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Child Moved</name>
+    </attribute>
+    <attribute code="0x0112" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>NWK FC Failure</name>
+    </attribute>
+    <attribute code="0x0113" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>APS FC Failure</name>
+    </attribute>
+    <attribute code="0x0114" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>APS Unauthorized Key</name>
+    </attribute>
+    <attribute code="0x0115" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>NWK Decrypt Failures</name>
+    </attribute>
+    <attribute code="0x0116" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>APS Decrypt Failures</name>
+    </attribute>
+    <attribute code="0x0117" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Packet Buffer Allocate Failures</name>
+    </attribute>
+    <attribute code="0x0118" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Relayed Ucast</name>
+    </attribute>
+    <attribute code="0x0119" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Phy To MAC Queue Limit Reached</name>
+    </attribute>
+    <attribute code="0x011A" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Packet Validate Drop Count</name>
+    </attribute>
+    <attribute code="0x011B" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>Average MAC Retry Per APS Message Sent</name>
+    </attribute>
+    <attribute code="0x011C" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x00" maximum="0xFF" default="0x00">
+        <name>Last Message LQI</name>
+    </attribute>
+    <attribute code="0x011D" type="SIGNED_8_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x00" maximum="0xFF" default="0x00">
+        <name>Last Message RSSI</name>
+    </attribute>
+
+</cluster>

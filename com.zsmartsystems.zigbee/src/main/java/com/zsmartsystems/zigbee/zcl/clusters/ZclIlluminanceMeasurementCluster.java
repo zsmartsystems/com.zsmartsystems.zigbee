@@ -7,27 +7,27 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Future;
+
+import javax.annotation.Generated;
+
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Future;
-import javax.annotation.Generated;
 
 /**
- * <b>Illuminance measurement</b> cluster implementation (<i>Cluster ID 0x0400</i>).
+ * <b>Illuminance Measurement</b> cluster implementation (<i>Cluster ID 0x0400</i>).
  * <p>
- * The cluster provides an interface to illuminance measurement functionality,
- * including configuration and provision of notifications of illuminance
- * measurements.
+ * The cluster provides an interface to illuminance measurement functionality, including
+ * configuration and provision of notifications of illuminance measurements.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-10-24T19:40:52Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-05-02T20:51:08Z")
 public class ZclIlluminanceMeasurementCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -37,7 +37,7 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster Name
      */
-    public static final String CLUSTER_NAME = "Illuminance measurement";
+    public static final String CLUSTER_NAME = "Illuminance Measurement";
 
     // Attribute constants
     /**
@@ -45,22 +45,22 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
      * <p>
      * MeasuredValue = 10,000 x log10 Illuminance + 1
      * <p>
-     * Where 1 lx <= Illuminance <=3.576 Mlx, corresponding to a MeasuredValue in
-     * the range 1 to 0xfffe.
+     * Where 1 lx <= Illuminance <=3.576 Mlx, corresponding to a MeasuredValue in the range 1 to
+     * 0xfffe.
      * <p>
-     * The following special values of MeasuredValue apply.
-     * <li>0x0000 indicates a value of Illuminance that is too low to be measured.</li>
-     * <li>0xffff indicates that the Illuminance measurement is invalid.</li>
+     * The following special values of MeasuredValue apply. <li>0x0000 indicates a value of
+     * Illuminance that is too low to be measured.</li> <li>0xffff indicates that the
+     * Illuminance measurement is invalid.</li>
      */
     public static final int ATTR_MEASUREDVALUE = 0x0000;
     /**
-     * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
-     * that can be measured. A value of 0xffff indicates that this attribute is not defined.
+     * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue that can
+     * be measured. A value of 0xffff indicates that this attribute is not defined.
      */
     public static final int ATTR_MINMEASUREDVALUE = 0x0001;
     /**
-     * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue
-     * that can be measured. A value of 0xffff indicates that this attribute is not defined.
+     * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue that can
+     * be measured. A value of 0xffff indicates that this attribute is not defined.
      * <p>
      * MaxMeasuredValue shall be greater than MinMeasuredValue.
      * <p>
@@ -69,8 +69,8 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
     public static final int ATTR_MAXMEASUREDVALUE = 0x0002;
     /**
      * The Tolerance attribute indicates the magnitude of the possible error that is
-     * associated with MeasuredValue . The true value is located in the range
-     * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
+     * associated with MeasuredValue . The true value is located in the range (MeasuredValue –
+     * Tolerance) to (MeasuredValue + Tolerance).
      */
     public static final int ATTR_TOLERANCE = 0x0003;
     /**
@@ -78,65 +78,74 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
      */
     public static final int ATTR_LIGHTSENSORTYPE = 0x0004;
 
-    // Attribute initialisation
-    protected Map<Integer, ZclAttribute> initializeAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(5);
+    @Override
+    protected Map<Integer, ZclAttribute> initializeClientAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
 
-        attributeMap.put(ATTR_MEASUREDVALUE, new ZclAttribute(ZclClusterType.ILLUMINANCE_MEASUREMENT, ATTR_MEASUREDVALUE, "MeasuredValue", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, true));
-        attributeMap.put(ATTR_MINMEASUREDVALUE, new ZclAttribute(ZclClusterType.ILLUMINANCE_MEASUREMENT, ATTR_MINMEASUREDVALUE, "MinMeasuredValue", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_MAXMEASUREDVALUE, new ZclAttribute(ZclClusterType.ILLUMINANCE_MEASUREMENT, ATTR_MAXMEASUREDVALUE, "MaxMeasuredValue", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_TOLERANCE, new ZclAttribute(ZclClusterType.ILLUMINANCE_MEASUREMENT, ATTR_TOLERANCE, "Tolerance", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, true));
-        attributeMap.put(ATTR_LIGHTSENSORTYPE, new ZclAttribute(ZclClusterType.ILLUMINANCE_MEASUREMENT, ATTR_LIGHTSENSORTYPE, "LightSensorType", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
+        return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, ZclAttribute> initializeServerAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(5);
+
+        attributeMap.put(ATTR_MEASUREDVALUE, new ZclAttribute(this, ATTR_MEASUREDVALUE, "Measured Value", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, true));
+        attributeMap.put(ATTR_MINMEASUREDVALUE, new ZclAttribute(this, ATTR_MINMEASUREDVALUE, "Min Measured Value", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_MAXMEASUREDVALUE, new ZclAttribute(this, ATTR_MAXMEASUREDVALUE, "Max Measured Value", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_TOLERANCE, new ZclAttribute(this, ATTR_TOLERANCE, "Tolerance", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, true));
+        attributeMap.put(ATTR_LIGHTSENSORTYPE, new ZclAttribute(this, ATTR_LIGHTSENSORTYPE, "Light Sensor Type", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
 
         return attributeMap;
     }
 
     /**
-     * Default constructor to create a Illuminance measurement cluster.
+     * Default constructor to create a Illuminance Measurement cluster.
      *
-     * @param zigbeeEndpoint the {@link ZigBeeEndpoint}
+     * @param zigbeeEndpoint the {@link ZigBeeEndpoint} this cluster is contained within
      */
     public ZclIlluminanceMeasurementCluster(final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
     }
 
     /**
-     * Get the <i>MeasuredValue</i> attribute [attribute ID <b>0</b>].
+     * Get the <i>Measured Value</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
      * MeasuredValue represents the Illuminance in Lux (symbol lx) as follows:-
      * <p>
      * MeasuredValue = 10,000 x log10 Illuminance + 1
      * <p>
-     * Where 1 lx <= Illuminance <=3.576 Mlx, corresponding to a MeasuredValue in
-     * the range 1 to 0xfffe.
+     * Where 1 lx <= Illuminance <=3.576 Mlx, corresponding to a MeasuredValue in the range 1 to
+     * 0xfffe.
      * <p>
-     * The following special values of MeasuredValue apply.
-     * <li>0x0000 indicates a value of Illuminance that is too low to be measured.</li>
-     * <li>0xffff indicates that the Illuminance measurement is invalid.</li>
+     * The following special values of MeasuredValue apply. <li>0x0000 indicates a value of
+     * Illuminance that is too low to be measured.</li> <li>0xffff indicates that the
+     * Illuminance measurement is invalid.</li>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMeasuredValueAsync() {
-        return read(attributes.get(ATTR_MEASUREDVALUE));
+        return read(serverAttributes.get(ATTR_MEASUREDVALUE));
     }
 
     /**
-     * Synchronously get the <i>MeasuredValue</i> attribute [attribute ID <b>0</b>].
+     * Synchronously get the <i>Measured Value</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
      * MeasuredValue represents the Illuminance in Lux (symbol lx) as follows:-
      * <p>
      * MeasuredValue = 10,000 x log10 Illuminance + 1
      * <p>
-     * Where 1 lx <= Illuminance <=3.576 Mlx, corresponding to a MeasuredValue in
-     * the range 1 to 0xfffe.
+     * Where 1 lx <= Illuminance <=3.576 Mlx, corresponding to a MeasuredValue in the range 1 to
+     * 0xfffe.
      * <p>
-     * The following special values of MeasuredValue apply.
-     * <li>0x0000 indicates a value of Illuminance that is too low to be measured.</li>
-     * <li>0xffff indicates that the Illuminance measurement is invalid.</li>
+     * The following special values of MeasuredValue apply. <li>0x0000 indicates a value of
+     * Illuminance that is too low to be measured.</li> <li>0xffff indicates that the
+     * Illuminance measurement is invalid.</li>
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -151,63 +160,69 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMeasuredValue(final long refreshPeriod) {
-        if (attributes.get(ATTR_MEASUREDVALUE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MEASUREDVALUE).getLastValue();
+        if (serverAttributes.get(ATTR_MEASUREDVALUE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MEASUREDVALUE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MEASUREDVALUE));
+        return (Integer) readSync(serverAttributes.get(ATTR_MEASUREDVALUE));
     }
 
     /**
-     * Set reporting for the <i>MeasuredValue</i> attribute [attribute ID <b>0</b>].
+     * Set reporting for the <i>Measured Value</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
      * MeasuredValue represents the Illuminance in Lux (symbol lx) as follows:-
      * <p>
      * MeasuredValue = 10,000 x log10 Illuminance + 1
      * <p>
-     * Where 1 lx <= Illuminance <=3.576 Mlx, corresponding to a MeasuredValue in
-     * the range 1 to 0xfffe.
+     * Where 1 lx <= Illuminance <=3.576 Mlx, corresponding to a MeasuredValue in the range 1 to
+     * 0xfffe.
      * <p>
-     * The following special values of MeasuredValue apply.
-     * <li>0x0000 indicates a value of Illuminance that is too low to be measured.</li>
-     * <li>0xffff indicates that the Illuminance measurement is invalid.</li>
+     * The following special values of MeasuredValue apply. <li>0x0000 indicates a value of
+     * Illuminance that is too low to be measured.</li> <li>0xffff indicates that the
+     * Illuminance measurement is invalid.</li>
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
-     * @param minInterval {@link int} minimum reporting period
-     * @param maxInterval {@link int} maximum reporting period
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
+    @Deprecated
     public Future<CommandResult> setMeasuredValueReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_MEASUREDVALUE), minInterval, maxInterval, reportableChange);
+        return setReporting(serverAttributes.get(ATTR_MEASUREDVALUE), minInterval, maxInterval, reportableChange);
     }
 
     /**
-     * Get the <i>MinMeasuredValue</i> attribute [attribute ID <b>1</b>].
+     * Get the <i>Min Measured Value</i> attribute [attribute ID <b>0x0001</b>].
      * <p>
-     * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
-     * that can be measured. A value of 0xffff indicates that this attribute is not defined.
+     * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue that can
+     * be measured. A value of 0xffff indicates that this attribute is not defined.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getMinMeasuredValueAsync() {
-        return read(attributes.get(ATTR_MINMEASUREDVALUE));
+        return read(serverAttributes.get(ATTR_MINMEASUREDVALUE));
     }
 
     /**
-     * Synchronously get the <i>MinMeasuredValue</i> attribute [attribute ID <b>1</b>].
+     * Synchronously get the <i>Min Measured Value</i> attribute [attribute ID <b>0x0001</b>].
      * <p>
-     * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue
-     * that can be measured. A value of 0xffff indicates that this attribute is not defined.
+     * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue that can
+     * be measured. A value of 0xffff indicates that this attribute is not defined.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -222,135 +237,171 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
+    @Deprecated
     public Integer getMinMeasuredValue(final long refreshPeriod) {
-        if (attributes.get(ATTR_MINMEASUREDVALUE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MINMEASUREDVALUE).getLastValue();
+        if (serverAttributes.get(ATTR_MINMEASUREDVALUE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MINMEASUREDVALUE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_MINMEASUREDVALUE));
+        return (Integer) readSync(serverAttributes.get(ATTR_MINMEASUREDVALUE));
     }
 
     /**
-     * Get the <i>MaxMeasuredValue</i> attribute [attribute ID <b>2</b>].
+     * Set reporting for the <i>Min Measured Value</i> attribute [attribute ID <b>0x0001</b>].
      * <p>
-     * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue
-     * that can be measured. A value of 0xffff indicates that this attribute is not defined.
-     * <p>
-     * MaxMeasuredValue shall be greater than MinMeasuredValue.
-     * <p>
-     * MinMeasuredValue and MaxMeasuredValue define the range of the sensor.
+     * The MinMeasuredValue attribute indicates the minimum value of MeasuredValue that can
+     * be measured. A value of 0xffff indicates that this attribute is not defined.
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
      *
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> getMaxMeasuredValueAsync() {
-        return read(attributes.get(ATTR_MAXMEASUREDVALUE));
-    }
-
-    /**
-     * Synchronously get the <i>MaxMeasuredValue</i> attribute [attribute ID <b>2</b>].
-     * <p>
-     * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue
-     * that can be measured. A value of 0xffff indicates that this attribute is not defined.
-     * <p>
-     * MaxMeasuredValue shall be greater than MinMeasuredValue.
-     * <p>
-     * MinMeasuredValue and MaxMeasuredValue define the range of the sensor.
-     * <p>
-     * This method can return cached data if the attribute has already been received.
-     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
-     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
-     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
-     * <p>
-     * This method will block until the response is received or a timeout occurs unless the current value is returned.
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is MANDATORY
-     *
-     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Integer} attribute value, or null on error
-     */
-    public Integer getMaxMeasuredValue(final long refreshPeriod) {
-        if (attributes.get(ATTR_MAXMEASUREDVALUE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_MAXMEASUREDVALUE).getLastValue();
-        }
-
-        return (Integer) readSync(attributes.get(ATTR_MAXMEASUREDVALUE));
-    }
-
-    /**
-     * Get the <i>Tolerance</i> attribute [attribute ID <b>3</b>].
-     * <p>
-     * The Tolerance attribute indicates the magnitude of the possible error that is
-     * associated with MeasuredValue . The true value is located in the range
-     * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is OPTIONAL
-     *
-     * @return the {@link Future<CommandResult>} command result future
-     */
-    public Future<CommandResult> getToleranceAsync() {
-        return read(attributes.get(ATTR_TOLERANCE));
-    }
-
-    /**
-     * Synchronously get the <i>Tolerance</i> attribute [attribute ID <b>3</b>].
-     * <p>
-     * The Tolerance attribute indicates the magnitude of the possible error that is
-     * associated with MeasuredValue . The true value is located in the range
-     * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
-     * <p>
-     * This method can return cached data if the attribute has already been received.
-     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
-     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
-     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
-     * <p>
-     * This method will block until the response is received or a timeout occurs unless the current value is returned.
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is OPTIONAL
-     *
-     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
-     * @return the {@link Integer} attribute value, or null on error
-     */
-    public Integer getTolerance(final long refreshPeriod) {
-        if (attributes.get(ATTR_TOLERANCE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_TOLERANCE).getLastValue();
-        }
-
-        return (Integer) readSync(attributes.get(ATTR_TOLERANCE));
-    }
-
-    /**
-     * Set reporting for the <i>Tolerance</i> attribute [attribute ID <b>3</b>].
-     * <p>
-     * The Tolerance attribute indicates the magnitude of the possible error that is
-     * associated with MeasuredValue . The true value is located in the range
-     * (MeasuredValue – Tolerance) to (MeasuredValue + Tolerance).
-     * <p>
-     * The attribute is of type {@link Integer}.
-     * <p>
-     * The implementation of this attribute by a device is OPTIONAL
-     *
-     * @param minInterval {@link int} minimum reporting period
-     * @param maxInterval {@link int} maximum reporting period
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
-    public Future<CommandResult> setToleranceReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(attributes.get(ATTR_TOLERANCE), minInterval, maxInterval, reportableChange);
+    @Deprecated
+    public Future<CommandResult> setMinMeasuredValueReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_MINMEASUREDVALUE), minInterval, maxInterval, reportableChange);
     }
 
     /**
-     * Get the <i>LightSensorType</i> attribute [attribute ID <b>4</b>].
+     * Get the <i>Max Measured Value</i> attribute [attribute ID <b>0x0002</b>].
+     * <p>
+     * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue that can
+     * be measured. A value of 0xffff indicates that this attribute is not defined.
+     * <p>
+     * MaxMeasuredValue shall be greater than MinMeasuredValue.
+     * <p>
+     * MinMeasuredValue and MaxMeasuredValue define the range of the sensor.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getMaxMeasuredValueAsync() {
+        return read(serverAttributes.get(ATTR_MAXMEASUREDVALUE));
+    }
+
+    /**
+     * Synchronously get the <i>Max Measured Value</i> attribute [attribute ID <b>0x0002</b>].
+     * <p>
+     * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue that can
+     * be measured. A value of 0xffff indicates that this attribute is not defined.
+     * <p>
+     * MaxMeasuredValue shall be greater than MinMeasuredValue.
+     * <p>
+     * MinMeasuredValue and MaxMeasuredValue define the range of the sensor.
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getMaxMeasuredValue(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_MAXMEASUREDVALUE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MAXMEASUREDVALUE).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_MAXMEASUREDVALUE));
+    }
+
+    /**
+     * Set reporting for the <i>Max Measured Value</i> attribute [attribute ID <b>0x0002</b>].
+     * <p>
+     * The MaxMeasuredValue attribute indicates the maximum value of MeasuredValue that can
+     * be measured. A value of 0xffff indicates that this attribute is not defined.
+     * <p>
+     * MaxMeasuredValue shall be greater than MinMeasuredValue.
+     * <p>
+     * MinMeasuredValue and MaxMeasuredValue define the range of the sensor.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @param reportableChange {@link Object} delta required to trigger report
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     */
+    @Deprecated
+    public Future<CommandResult> setMaxMeasuredValueReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_MAXMEASUREDVALUE), minInterval, maxInterval, reportableChange);
+    }
+
+    /**
+     * Get the <i>Tolerance</i> attribute [attribute ID <b>0x0003</b>].
+     * <p>
+     * The Tolerance attribute indicates the magnitude of the possible error that is
+     * associated with MeasuredValue . The true value is located in the range (MeasuredValue –
+     * Tolerance) to (MeasuredValue + Tolerance).
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getToleranceAsync() {
+        return read(serverAttributes.get(ATTR_TOLERANCE));
+    }
+
+    /**
+     * Synchronously get the <i>Tolerance</i> attribute [attribute ID <b>0x0003</b>].
+     * <p>
+     * The Tolerance attribute indicates the magnitude of the possible error that is
+     * associated with MeasuredValue . The true value is located in the range (MeasuredValue –
+     * Tolerance) to (MeasuredValue + Tolerance).
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getTolerance(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_TOLERANCE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TOLERANCE).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_TOLERANCE));
+    }
+
+    /**
+     * Get the <i>Light Sensor Type</i> attribute [attribute ID <b>0x0004</b>].
      * <p>
      * The LightSensorType attribute specifies the electronic type of the light sensor.
      * <p>
@@ -359,13 +410,15 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
      * The implementation of this attribute by a device is OPTIONAL
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
+    @Deprecated
     public Future<CommandResult> getLightSensorTypeAsync() {
-        return read(attributes.get(ATTR_LIGHTSENSORTYPE));
+        return read(serverAttributes.get(ATTR_LIGHTSENSORTYPE));
     }
 
     /**
-     * Synchronously get the <i>LightSensorType</i> attribute [attribute ID <b>4</b>].
+     * Synchronously get the <i>Light Sensor Type</i> attribute [attribute ID <b>0x0004</b>].
      * <p>
      * The LightSensorType attribute specifies the electronic type of the light sensor.
      * <p>
@@ -382,12 +435,14 @@ public class ZclIlluminanceMeasurementCluster extends ZclCluster {
      *
      * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
      * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
+    @Deprecated
     public Integer getLightSensorType(final long refreshPeriod) {
-        if (attributes.get(ATTR_LIGHTSENSORTYPE).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) attributes.get(ATTR_LIGHTSENSORTYPE).getLastValue();
+        if (serverAttributes.get(ATTR_LIGHTSENSORTYPE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_LIGHTSENSORTYPE).getLastValue();
         }
 
-        return (Integer) readSync(attributes.get(ATTR_LIGHTSENSORTYPE));
+        return (Integer) readSync(serverAttributes.get(ATTR_LIGHTSENSORTYPE));
     }
 }

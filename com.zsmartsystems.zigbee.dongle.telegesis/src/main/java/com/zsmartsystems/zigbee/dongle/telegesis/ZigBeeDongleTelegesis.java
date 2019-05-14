@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
-import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeBroadcastDestination;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
@@ -27,6 +26,7 @@ import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.ZigBeeProfileType;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
+import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisEventListener;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisFirmwareUpdateHandler;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.TelegesisFrameHandler;
@@ -471,7 +471,7 @@ public class ZigBeeDongleTelegesis
         }
         frameHandler.removeEventListener(this);
         frameHandler.setClosing();
-        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
+        zigbeeTransportReceive.setTransportState(ZigBeeTransportState.OFFLINE);
         serialPort.close();
         frameHandler.close();
         logger.debug("Telegesis dongle shutdown.");
@@ -760,11 +760,11 @@ public class ZigBeeDongleTelegesis
 
         // Handle link changes and notify framework or just reset link with dongle?
         if (event instanceof TelegesisNetworkLeftEvent | event instanceof TelegesisNetworkLostEvent) {
-            zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
+            zigbeeTransportReceive.setTransportState(ZigBeeTransportState.OFFLINE);
             return;
         }
         if (event instanceof TelegesisNetworkJoinedEvent) {
-            zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.ONLINE);
+            zigbeeTransportReceive.setTransportState(ZigBeeTransportState.ONLINE);
             return;
         }
 
@@ -885,7 +885,7 @@ public class ZigBeeDongleTelegesis
             return false;
         }
 
-        zigbeeTransportReceive.setNetworkState(ZigBeeTransportState.OFFLINE);
+        zigbeeTransportReceive.setTransportState(ZigBeeTransportState.OFFLINE);
         callback.firmwareUpdateCallback(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_STARTED);
 
         // Send the bootload command, but ignore the response since there doesn't seem to be one
@@ -1060,7 +1060,7 @@ public class ZigBeeDongleTelegesis
         if (!startupComplete) {
             return;
         }
-        zigbeeTransportReceive.setNetworkState(state ? ZigBeeTransportState.ONLINE : ZigBeeTransportState.OFFLINE);
+        zigbeeTransportReceive.setTransportState(state ? ZigBeeTransportState.ONLINE : ZigBeeTransportState.OFFLINE);
     }
 
 }

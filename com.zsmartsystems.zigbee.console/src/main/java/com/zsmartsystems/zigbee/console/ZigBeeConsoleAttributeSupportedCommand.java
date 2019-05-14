@@ -34,7 +34,7 @@ public class ZigBeeConsoleAttributeSupportedCommand extends ZigBeeConsoleAbstrac
 
     @Override
     public String getSyntax() {
-        return "ENDPOINT CLUSTER";
+        return "ENDPOINT CLUSTER [MANUFACTURER-CODE]";
     }
 
     @Override
@@ -45,17 +45,21 @@ public class ZigBeeConsoleAttributeSupportedCommand extends ZigBeeConsoleAbstrac
     @Override
     public void process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out)
             throws IllegalArgumentException, InterruptedException, ExecutionException {
-        if (args.length != 3) {
+        if (args.length < 3 || args.length > 4) {
             throw new IllegalArgumentException("Invalid number of arguments");
         }
 
         final ZigBeeEndpoint endpoint = getEndpoint(networkManager, args[1]);
         ZclCluster cluster = getCluster(endpoint, args[2]);
+        Integer manufacturerCode = args.length == 4 ? parseInteger(args[3]) : null;
 
-        final Future<Boolean> future = cluster.discoverAttributes(false);
+        final Future<Boolean> future = cluster.discoverAttributes(false, manufacturerCode);
         Boolean result = future.get();
         if (result) {
             out.println("Supported attributes for " + printCluster(cluster));
+            if (manufacturerCode != null) {
+                out.println("For manufacturer code " + args[3]);
+            }
             out.println("AttrId  Data Type                  Name");
             for (Integer attributeId : cluster.getSupportedAttributes()) {
                 out.print(" ");
