@@ -105,6 +105,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspMultiRespo
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspSingleResponseTransaction;
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransaction;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
+import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 
 /**
  * This class provides utility methods for accessing the Ember NCP.
@@ -666,8 +667,8 @@ public class EmberNcp {
      * If successful, it updates the key data and resets the associated incoming frame counter. If it fails to find an
      * existing entry and no free one exists, it returns a failure.
      *
-     * @param address
-     * @param key
+     * @param address the {@link IeeeAddress}
+     * @param key the {@link ZigBeeKey}
      * @param linkKey This indicates whether the key is a Link or a Master Key
      * @return the returned {@link EmberStatus} of the request
      */
@@ -716,7 +717,41 @@ public class EmberNcp {
     public int getMfgCustomVersion() {
         int[] response = getMfgToken(EzspMfgTokenId.EZSP_MFG_CUSTOM_VERSION);
 
-        return response[0] << 8 + response[1];
+        return (response[0] << 8) + response[1];
+    }
+
+    /**
+     * Gets the install code stored in the NCP memory
+     *
+     * @return {@link ByteArray} defining the install code. May be empty if no installation code is defined, or null on
+     *         error.
+     */
+    public ByteArray getMfgInstallationCode() {
+        int[] response = getMfgToken(EzspMfgTokenId.EZSP_MFG_INSTALLATION_CODE);
+
+        int length = 0;
+        int flags = response[0] + (response[1] << 8);
+        switch (flags) {
+            case 0:
+                length = 6;
+                break;
+            case 2:
+                length = 8;
+                break;
+            case 4:
+                length = 12;
+                break;
+            case 6:
+                length = 16;
+                break;
+            case 65535:
+                return new ByteArray(new int[] {});
+            default:
+                return null;
+        }
+        response[length + 2] = response[18];
+        response[length + 3] = response[19];
+        return new ByteArray(response, 2, length + 4);
     }
 
     /**
