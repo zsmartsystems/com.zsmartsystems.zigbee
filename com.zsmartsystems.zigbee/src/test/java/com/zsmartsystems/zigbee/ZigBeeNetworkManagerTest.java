@@ -7,7 +7,11 @@
  */
 package com.zsmartsystems.zigbee;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -645,6 +649,8 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
 
         manager.shutdown();
         Mockito.verify(databaseManager, Mockito.times(1)).shutdown();
+
+        assertEquals(ZigBeeNetworkState.SHUTDOWN, manager.getNetworkState());
     }
 
     @Test
