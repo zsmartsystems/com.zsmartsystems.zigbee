@@ -71,7 +71,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-05-02T20:51:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-05-15T10:07:42Z")
 public class ZclPriceCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -3682,6 +3682,9 @@ public class ZclPriceCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(3);
 
+        attributeMap.put(ATTR_PRICEINCREASERANDOMIZEMINUTES, new ZclAttribute(this, ATTR_PRICEINCREASERANDOMIZEMINUTES, "Price Increase Randomize Minutes", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_PRICEDECREASERANDOMIZEMINUTES, new ZclAttribute(this, ATTR_PRICEDECREASERANDOMIZEMINUTES, "Price Decrease Randomize Minutes", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_COMMODITYTYPECLIENT, new ZclAttribute(this, ATTR_COMMODITYTYPECLIENT, "Commodity Type Client", ZclDataType.ENUMERATION_8_BIT, false, true, true, false));
 
         return attributeMap;
     }

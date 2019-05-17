@@ -45,7 +45,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T14:56:52Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-05-15T10:07:42Z")
 public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -111,6 +111,10 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(4);
 
+        attributeMap.put(ATTR_UTILITYENROLLMENTGROUP, new ZclAttribute(this, ATTR_UTILITYENROLLMENTGROUP, "Utility Enrollment Group", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, true));
+        attributeMap.put(ATTR_STARTRANDOMIZATIONMINUTES, new ZclAttribute(this, ATTR_STARTRANDOMIZATIONMINUTES, "Start Randomization Minutes", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, true));
+        attributeMap.put(ATTR_ENDRANDOMIZATIONMINUTES, new ZclAttribute(this, ATTR_ENDRANDOMIZATIONMINUTES, "End Randomization Minutes", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, true));
+        attributeMap.put(ATTR_DEVICECLASSVALUE, new ZclAttribute(this, ATTR_DEVICECLASSVALUE, "Device Class Value", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, true));
 
         return attributeMap;
     }

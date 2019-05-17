@@ -62,7 +62,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-05-02T20:51:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-05-15T10:07:42Z")
 public class ZclKeyEstablishmentCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -94,6 +94,7 @@ public class ZclKeyEstablishmentCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(1);
 
+        attributeMap.put(ATTR_CLIENTKEYESTABLISHMENTSUITE, new ZclAttribute(this, ATTR_CLIENTKEYESTABLISHMENTSUITE, "Client Key Establishment Suite", ZclDataType.ENUMERATION_16_BIT, true, true, false, false));
 
         return attributeMap;
     }

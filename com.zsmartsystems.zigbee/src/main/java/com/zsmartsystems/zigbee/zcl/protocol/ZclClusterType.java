@@ -64,9 +64,8 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclWindowCoveringCluster;
  * Code is auto-generated. Modifications may be overwritten!
  *
  * @author Chris Jackson
-
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T12:30:33Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-05-15T10:07:42Z")
 public enum ZclClusterType {
     BASIC(0x0000, ZclBasicCluster.class, "Basic"),
     POWER_CONFIGURATION(0x0001, ZclPowerConfigurationCluster.class, "Power Configuration"),
