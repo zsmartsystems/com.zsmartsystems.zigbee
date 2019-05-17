@@ -25,7 +25,12 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCurrentSecurity
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberDeviceUpdate;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberGpAddress;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberGpKeyType;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberGpProxyTableEntry;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberGpProxyTableEntryStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberGpSecurityLevel;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberGpSinkListEntry;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberGpSinkTableEntry;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberGpSinkTableEntryStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberIncomingMessageType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurityBitmask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberJoinDecision;
@@ -357,4 +362,30 @@ public class EzspDeserializer {
     public EmberTransientKeyData deserializeEmberTransientKeyData() {
         return new EmberTransientKeyData(this);
     }
+
+    //added by me TODO remove this line
+	public EmberGpProxyTableEntryStatus deserializeEmberGpProxyTableEntryStatus() {
+		return EmberGpProxyTableEntryStatus.getEmberGpProxyTableEntryStatus(deserializeUInt8());
+	}
+
+	//added by me TODO remove this line
+	public EmberGpSinkListEntry[] deserializeEmberGpSinkListEntry() {
+		EmberGpSinkListEntry[] array = { new EmberGpSinkListEntry(this), new EmberGpSinkListEntry(this) };
+		return array;
+	}
+
+	//added by me TODO remove this line
+	public EmberGpSinkTableEntry deserializeEmberGpSinkTableEntry() {
+		return new EmberGpSinkTableEntry(this);
+	}
+
+	//added by me TODO remove this line
+	public EmberGpSinkTableEntryStatus deserializeEmberGpSinkTableEntryStatus() {
+		return EmberGpSinkTableEntryStatus.getEmberGpSinkTableEntryStatus(deserializeUInt8());
+	}
+
+	//added by me TODO remove this line
+	public EmberGpProxyTableEntry deserializeEmberGpProxyTableEntry() {
+		return new EmberGpProxyTableEntry(this);
+	}
 }

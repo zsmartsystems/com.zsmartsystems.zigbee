@@ -23,6 +23,9 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberConcentratorTyp
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCurrentSecurityBitmask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberGpAddress;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberGpProxyTableEntryStatus;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberGpSinkListEntry;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberGpSinkTableEntry;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberGpSinkTableEntryStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurityBitmask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurityState;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberJoinMethod;
@@ -292,4 +295,20 @@ public class EzspSerializer {
     public void serializeEzspMfgTokenId(EzspMfgTokenId tokenId) {
         buffer[length++] = tokenId.getKey();
     }
+
+    //added by me TODO remove this line
+	public void serializeEmberGpSinkListEntry(EmberGpSinkListEntry[] sinkList) {
+		sinkList[0].serialize(this);
+		sinkList[1].serialize(this);		
+	}
+
+	//added by me TODO remmove this line
+	public void serializeEmberGpSinkTableEntryStatus(EmberGpSinkTableEntryStatus status) {
+		buffer[length++]=status.getKey();		
+	}
+
+	//added by me TODO remove this line
+	public void serializeEmberGpSinkTableEntry(EmberGpSinkTableEntry entry) {
+		entry.serialize(this);
+	}
 }
