@@ -22,13 +22,13 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
-import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.ZigBeeProfileType;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
+import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.dongle.zstack.api.ZstackCommand;
 import com.zsmartsystems.zigbee.dongle.zstack.api.ZstackResponseCode;
 import com.zsmartsystems.zigbee.dongle.zstack.api.af.AfDataOptions;
@@ -626,7 +626,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
                 }
                 // Handle link changes and notify framework
                 zigbeeTransportReceive
-                        .setNetworkState(linkState ? ZigBeeTransportState.ONLINE : ZigBeeTransportState.OFFLINE);
+                        .setTransportState(linkState ? ZigBeeTransportState.ONLINE : ZigBeeTransportState.OFFLINE);
             }
         }.start();
     }
@@ -703,6 +703,9 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
 
     /**
      * Sets the policy flag on Trust Center device to mandate or not the TCLK exchange procedure.
+     * <p>
+     * Note that for ZB3, this should be set to true, however for backward compatability with HA1.2, this needs to be
+     * set to false or devices will not be able to join the network.
      *
      * @param required true if the TCLK exchange procedure is required.
      * @return {@link ZigBeeStatus}
@@ -817,5 +820,4 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
             }
         }
     }
-
 }
