@@ -18,11 +18,11 @@ import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.TestUtilities;
-import com.zsmartsystems.zigbee.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.ZigBeeProfileType;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
+import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.dongle.zstack.api.ZstackFrameRequest;
 import com.zsmartsystems.zigbee.dongle.zstack.api.ZstackResponseCode;
 import com.zsmartsystems.zigbee.dongle.zstack.api.af.ZstackAfDataConfirmAreq;
@@ -76,18 +76,18 @@ public class ZigBeeDongleZstackTest {
 
         ZstackZdoStateChangeIndAreq response = Mockito.mock(ZstackZdoStateChangeIndAreq.class);
         Mockito.when(response.getState()).thenReturn(ZstackZdoState.DEV_ZB_COORD);
-        Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(0)).setNetworkState(ZigBeeTransportState.ONLINE);
+        Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(0)).setTransportState(ZigBeeTransportState.ONLINE);
 
         response = Mockito.mock(ZstackZdoStateChangeIndAreq.class);
         Mockito.when(response.getState()).thenReturn(ZstackZdoState.DEV_ROUTER);
         dongle.handlePacket(response);
-        Mockito.verify(transport, Mockito.timeout(TIMEOUT)).setNetworkState(ZigBeeTransportState.ONLINE);
+        Mockito.verify(transport, Mockito.timeout(TIMEOUT)).setTransportState(ZigBeeTransportState.ONLINE);
         assertEquals(Integer.valueOf(1243), dongle.getNwkAddress());
 
         response = Mockito.mock(ZstackZdoStateChangeIndAreq.class);
         Mockito.when(response.getState()).thenReturn(ZstackZdoState.DEV_INIT);
         dongle.handlePacket(response);
-        Mockito.verify(transport, Mockito.timeout(TIMEOUT)).setNetworkState(ZigBeeTransportState.OFFLINE);
+        Mockito.verify(transport, Mockito.timeout(TIMEOUT)).setTransportState(ZigBeeTransportState.OFFLINE);
     }
 
     @Test
