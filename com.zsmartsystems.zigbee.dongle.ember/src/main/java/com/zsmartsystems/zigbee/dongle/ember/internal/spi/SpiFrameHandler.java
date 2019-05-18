@@ -50,6 +50,10 @@ import com.zsmartsystems.zigbee.transport.ZigBeePort;
  * return with the completed result.
  * <p>
  * AN711: EZSP-SPI Host Interfacing Guide
+ * <p>
+ * This handler does not retry messages since all commands must receive a response in the SPI synchronous system.
+ * A timer is used to time-out any commands that don't receive a response and the link is taken offline. The upper
+ * layer must restart the connection.
  *
  * @author Chris Jackson
  *
@@ -59,12 +63,6 @@ public class SpiFrameHandler implements EzspProtocolHandler {
      * The logger.
      */
     private final Logger logger = LoggerFactory.getLogger(SpiFrameHandler.class);
-
-    /**
-     * Maximum number of consecutive timeouts allowed while waiting to receive the response
-     */
-    private final int ACK_TIMEOUTS = 4;
-    private int retries = 0;
 
     private final int SPI_FLAG_BYTE = 0xA7;
 
@@ -98,9 +96,9 @@ public class SpiFrameHandler implements EzspProtocolHandler {
     private Object outputFrameSynchronisation = new Object();
 
     /**
-     * Response timeout. The number of milliseconds to wait for a response before resending the request.
+     * Response timeout. The number of milliseconds to wait for a response before timing out.
      */
-    private int receiveTimeout = 500;
+    private int receiveTimeout = 5000;
 
     /**
      * Callback polling rate in milliseconds.
@@ -140,8 +138,7 @@ public class SpiFrameHandler implements EzspProtocolHandler {
     private Thread parserThread = null;
 
     /**
-     * Flag reflecting that parser has been closed and parser parserThread
-     * should exit.
+     * Flag reflecting that parser has been closed and parser parserThread should exit.
      */
     private boolean closeHandler = false;
 
@@ -297,7 +294,6 @@ public class SpiFrameHandler implements EzspProtocolHandler {
     private void spiTransactionComplete() {
         synchronized (outputFrameSynchronisation) {
             lastFrameSent = null;
-            retries = 0;
         }
         stopRetryTimer();
     }
@@ -588,7 +584,7 @@ public class SpiFrameHandler implements EzspProtocolHandler {
         stopRetryTimer();
 
         // Create the timer task
-        timerTask = new RetryTimer();
+        timerTask = new CancelTimer();
         timer.schedule(timerTask, receiveTimeout);
     }
 
@@ -600,35 +596,16 @@ public class SpiFrameHandler implements EzspProtocolHandler {
         }
     }
 
-    private class RetryTimer extends TimerTask {
+    private class CancelTimer extends TimerTask {
         @Override
         public void run() {
-            synchronized (outputFrameSynchronisation) {
-                logger.debug("SPI Timer task [{}].  {}", retries, frameToString(lastFrameSent));
+            logger.debug("SPI Timer task triggered.");
 
-                // Resend the last message sent if there is one
-                if (lastFrameSent == null) {
-                    return;
-                }
+            // We should alert the upper layer so they can reset the link
+            frameHandler.handleLinkStateChange(false);
 
-                if (retries++ > ACK_TIMEOUTS) {
-                    // Too many retries.
-                    // We should alert the upper layer so they can reset the link?
-                    frameHandler.handleLinkStateChange(false);
-
-                    logger.debug("Error: number of retries exceeded [{}].", retries);
-                    // drop message
-                    lastFrameSent = null;
-                    retries = 0;
-                    return;
-                }
-
-                try {
-                    outputFrame(lastFrameSent);
-                } catch (Exception e) {
-                    logger.warn("Caught exception while attempting to retry message in SpiRetryTimer", e);
-                }
-            }
+            // Close the handler to cancel outstanding transactions and prevent new transactions
+            close();
         }
     }
 
