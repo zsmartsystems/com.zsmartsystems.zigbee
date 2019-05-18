@@ -60,8 +60,6 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilSetChannelsSreq
 import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilSetChannelsSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoMsgCbRegisterSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoMsgCbRegisterSrsp;
-import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoSetLinkKeySreq;
-import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoSetLinkKeySrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoStartupFromAppSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoStartupFromAppSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.internal.ZstackFrameHandler;
@@ -432,21 +430,6 @@ public class ZstackNcp {
         }
         // Enable the network key
         return writeConfiguration(ZstackConfigId.ZCD_NV_PRECFGKEYS_ENABLE, valueFromUInt8(1));
-    }
-
-    public ZstackResponseCode setTcLinkKey(ZigBeeKey key) {
-        ZstackZdoSetLinkKeySreq request = new ZstackZdoSetLinkKeySreq();
-        request.setIeeeAddr(new IeeeAddress("FFFFFFFFFFFFFFFF"));
-        request.setLinkKeyData(key);
-        ZstackTransaction transaction = protocolHandler
-                .sendTransaction(new ZstackSingleResponseTransaction(request, ZstackZdoSetLinkKeySrsp.class));
-        ZstackZdoSetLinkKeySrsp response = (ZstackZdoSetLinkKeySrsp) transaction.getResponse();
-        if (response == null) {
-            logger.debug("No response from SetLinkKey command");
-            return null;
-        }
-        logger.debug(response.toString());
-        return response.getStatus();
     }
 
     public ZstackResponseCode setNetworkSecurity(boolean enableSecurity) {
