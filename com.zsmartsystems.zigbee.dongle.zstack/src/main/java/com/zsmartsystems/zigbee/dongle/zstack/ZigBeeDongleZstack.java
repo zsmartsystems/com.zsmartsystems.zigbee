@@ -24,6 +24,7 @@ import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
+import com.zsmartsystems.zigbee.ZigBeeDeviceType;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.ZigBeeProfileType;
@@ -282,10 +283,6 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
         ieeeAddress = ncp.getIeeeAddress();
         logger.debug("ZStack local IEEE Address is {}", ieeeAddress);
 
-        // Add the endpoint
-        ncp.addEndpoint(1, 0, ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getKey(), new int[] { 0 }, new int[] { 0 });
-        sender2EndPoint.put(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getKey(), 1);
-
         /*
          * Create the scheduler with a single thread. This ensures that commands sent to the dongle, and the processing
          * of responses is performed in order
@@ -327,7 +324,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
                 return ZigBeeStatus.COMMUNICATION_ERROR;
             }
 
-            ncpResponse = ncp.setTcLinkKey(linkKey);
+            ncpResponse = ncp.setCentralisedKey(ZstackCentralizedLinkKeyMode.PROVIDED_APS_KEY, linkKey.getValue());
             if (ncpResponse != ZstackResponseCode.SUCCESS) {
                 logger.debug("ZStack error setting link key: {}", ncpResponse);
                 // return ZigBeeStatus.COMMUNICATION_ERROR;
@@ -354,16 +351,17 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
             }
         }
 
+        // Add the endpoint
+        ncp.addEndpoint(1, ZigBeeDeviceType.HOME_GATEWAY.getKey(), ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getKey(),
+                new int[] { 0 }, new int[] { 0 });
+        sender2EndPoint.put(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getKey(), 1);
+
         if (setTxPower(txPower) != ZigBeeStatus.SUCCESS) {
             logger.debug("ZStack error setting transmit power");
             return ZigBeeStatus.COMMUNICATION_ERROR;
         }
 
         netInitialiser.startNetwork();
-
-        // Check if the network is now up
-        // networkState = ncp.getNetworkState();
-        // logger.debug("ZStack networkStateResponse {}", networkState);
 
         ZstackUtilGetDeviceInfoSrsp deviceInfo = ncp.getDeviceInfo();
         if (deviceInfo == null) {
@@ -690,6 +688,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
 
     @Override
     public ZigBeeStatus setTcLinkKey(ZigBeeKey key) {
+        linkKey = key;
         ZstackNcp ncp = getZstackNcp();
 
         return ncp.setCentralisedKey(ZstackCentralizedLinkKeyMode.PROVIDED_APS_KEY,

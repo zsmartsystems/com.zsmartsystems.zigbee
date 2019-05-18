@@ -355,8 +355,26 @@ public class CommandGenerator extends ClassGenerator {
                     out.println("            if (c > 0) {");
                     out.println("                builder.append(' ');");
                     out.println("            }");
-                    out.println("            builder.append(String.format(\"%02X\", " + formatParameterString(parameter)
-                            + "[c]));");
+
+                    String format = "%02X";
+                    if (parameter.displayType != null) {
+                        switch (parameter.displayType.toLowerCase()) {
+                            case "hex":
+                                String size = "";
+                                if (parameter.displayLength != 0) {
+                                    size = "0" + parameter.displayLength;
+                                }
+                                format = "%" + size + "X";
+                                break;
+                        }
+                    }
+
+                    out.println("            builder.append(String.format(\"" + format + "\", "
+                            + camelCaseToLowerCamelCase(parameter.name) + "[c]));");
+
+                    //
+                    // out.println(" builder.append(String.format(\"%02X\", " + formatParameterString(parameter)
+                    // + "[c]));");
                     out.println("        }");
                 } else {
                     out.println("        builder.append(" + formatParameterString(parameter) + ");");
@@ -637,8 +655,19 @@ public class CommandGenerator extends ClassGenerator {
                     out.println("            if (c > 0) {");
                     out.println("                builder.append(' ');");
                     out.println("            }");
-                    out.println("            builder.append(String.format(\"%02X\", " + formatParameterString(parameter)
-                            + "[c]));");
+
+                    String format = "%02X";
+                    switch (parameter.displayType.toLowerCase()) {
+                        case "hex":
+                            String size = "";
+                            if (parameter.displayLength != 0) {
+                                size = "0" + parameter.displayLength;
+                            }
+                            format = "%" + size;
+                            break;
+                    }
+
+                    out.println("            builder.append(String.format(\"" + format + "\", " + parameter + "[c]));");
                     out.println("        }");
                 } else {
                     out.println("        builder.append(" + formatParameterString(parameter) + ");");
