@@ -497,6 +497,7 @@
 				<data_type>uint16[]</data_type>
 				<name>AppInClusterList</name>
 				<description>Specifies the list of Input Cluster Ids (2 bytes each).</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint8</data_type>
@@ -508,6 +509,7 @@
 				<data_type>uint16[]</data_type>
 				<name>AppOutClusterList</name>
 				<description>Specifies the list of Output Cluster Ids (2 bytes each)</description>
+				<display>hex[4]</display>
 			</parameter>
 		</request>
 		<response>

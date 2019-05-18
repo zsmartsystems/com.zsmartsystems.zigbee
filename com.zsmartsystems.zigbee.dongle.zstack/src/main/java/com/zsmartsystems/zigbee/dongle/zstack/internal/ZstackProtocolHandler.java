@@ -130,10 +130,10 @@ public class ZstackProtocolHandler {
 
                         ZstackFrameResponse response = ZstackFrameFactory.createFrame(frameData);
                         if (response == null) {
-                            logger.debug("ZSTACK RX: ZstackUnknownFrame [ data={}]", frameToString(frameData));
+                            logger.debug("RX ZSTACK: ZstackUnknownFrame [ data={}]", frameToString(frameData));
                             continue;
                         } else {
-                            logger.debug("ZSTACK RX: {}", response);
+                            logger.debug("RX ZSTACK: {}", response);
                         }
 
                         // Send this into the stack
@@ -351,7 +351,7 @@ public class ZstackProtocolHandler {
     }
 
     private synchronized void sendFrame(ZstackFrameRequest request) {
-        logger.debug("ZSTACK TX: {}", request);
+        logger.debug("TX ZSTACK: {}", request);
 
         StringBuilder builder = new StringBuilder(100);
         builder.append("ZSTACK TX: FrameData [ data=");
@@ -507,7 +507,7 @@ public class ZstackProtocolHandler {
      * @return response {@link ZstackCommand}
      */
     public ZstackTransaction sendTransaction(ZstackTransaction transaction) {
-        logger.debug("TX ZSTACK: {}", transaction.getRequest());
+        logger.debug("QUEUE ZSTACK: {}", transaction.getRequest());
 
         Future<ZstackFrameResponse> futureResponse = sendZstackRequestAsync(transaction);
         if (futureResponse == null) {

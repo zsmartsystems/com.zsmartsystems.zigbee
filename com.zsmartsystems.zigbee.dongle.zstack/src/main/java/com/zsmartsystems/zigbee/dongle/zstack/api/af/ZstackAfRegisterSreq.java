@@ -50,12 +50,12 @@ public class ZstackAfRegisterSreq extends ZstackFrameRequest {
     private int latencyReq;
 
     /**
-     * Specifies the list of Input Cluster Ids ( 2bytes each ).
+     * Specifies the list of Input Cluster Ids (2 bytes each).
      */
     private int[] appInClusterList;
 
     /**
-     * Specifies the list of Output Cluster Ids ( 2bytes each )
+     * Specifies the list of Output Cluster Ids (2 bytes each)
      */
     private int[] appOutClusterList;
 
@@ -157,7 +157,7 @@ public class ZstackAfRegisterSreq extends ZstackFrameRequest {
     }
 
     /**
-     * Specifies the list of Input Cluster Ids ( 2bytes each ).
+     * Specifies the list of Input Cluster Ids (2 bytes each).
      *
      * @return the current appInClusterList as {@link int[]}
      */
@@ -166,7 +166,7 @@ public class ZstackAfRegisterSreq extends ZstackFrameRequest {
     }
 
     /**
-     * Specifies the list of Input Cluster Ids ( 2bytes each ).
+     * Specifies the list of Input Cluster Ids (2 bytes each).
      *
      * @param appInClusterList the AppInClusterList to set as {@link int[]}
      */
@@ -175,7 +175,7 @@ public class ZstackAfRegisterSreq extends ZstackFrameRequest {
     }
 
     /**
-     * Specifies the list of Output Cluster Ids ( 2bytes each )
+     * Specifies the list of Output Cluster Ids (2 bytes each)
      *
      * @return the current appOutClusterList as {@link int[]}
      */
@@ -184,7 +184,7 @@ public class ZstackAfRegisterSreq extends ZstackFrameRequest {
     }
 
     /**
-     * Specifies the list of Output Cluster Ids ( 2bytes each )
+     * Specifies the list of Output Cluster Ids (2 bytes each)
      *
      * @param appOutClusterList the AppOutClusterList to set as {@link int[]}
      */
@@ -221,7 +221,7 @@ public class ZstackAfRegisterSreq extends ZstackFrameRequest {
         builder.append("ZstackAfRegisterSreq [endPoint=");
         builder.append(String.format("%02X", endPoint));
         builder.append(", appProfId=");
-        builder.append(appProfId);
+        builder.append(String.format("%04X", appProfId));
         builder.append(", appDeviceId=");
         builder.append(appDeviceId);
         builder.append(", appDevVer=");
@@ -233,14 +233,14 @@ public class ZstackAfRegisterSreq extends ZstackFrameRequest {
             if (c > 0) {
                 builder.append(' ');
             }
-            builder.append(String.format("%02X", appInClusterList[c]));
+            builder.append(String.format("%04X", appInClusterList[c]));
         }
         builder.append(", appOutClusterList=");
         for (int c = 0; c < appOutClusterList.length; c++) {
             if (c > 0) {
                 builder.append(' ');
             }
-            builder.append(String.format("%02X", appOutClusterList[c]));
+            builder.append(String.format("%04X", appOutClusterList[c]));
         }
         builder.append(']');
         return builder.toString();

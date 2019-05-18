@@ -38,7 +38,12 @@ public enum AfDataOptions {
     /**
      * Set this bit to enable APS security for this packet.
      */
-    AF_EN_SECURITY(0x0040);
+    AF_EN_SECURITY(0x0040),
+
+    /**
+     * Skip routing.
+     */
+    AF_NO_ROUTING(0x0080);
 
     /**
      * A mapping between the integer code and its corresponding type to
