@@ -256,6 +256,12 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 EzspDecisionId.EZSP_CHECK_BINDING_MODIFICATIONS_ARE_VALID_ENDPOINT_CLUSTERS);
 
         networkKey = new ZigBeeKey();
+
+        /*
+         * Create the scheduler with a single thread. This ensures that commands sent to the dongle, and the processing
+         * of responses is performed in order
+         */
+        executorService = Executors.newScheduledThreadPool(1);
     }
 
     /**
@@ -361,11 +367,6 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         // print current security state to debug logs
         ncp.getCurrentSecurityState();
 
-        /*
-         * Create the scheduler with a single thread. This ensures that commands sent to the dongle, and the processing
-         * of responses is performed in order
-         */
-        executorService = Executors.newScheduledThreadPool(1);
         scheduleNetworkStatePolling();
 
         logger.debug("EZSP dongle initialize done: Initialised {}", initResponse != EmberStatus.EMBER_NOT_JOINED);
