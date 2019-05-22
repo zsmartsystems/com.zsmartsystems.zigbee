@@ -41,7 +41,7 @@ public class ZigBeeConsoleAttributeReadCommand extends ZigBeeConsoleAbstractComm
 
     @Override
     public String getSyntax() {
-        return "ENDPOINT CLUSTER ATTRIBUTE1 [ATTRIBUTE2 ...]";
+        return "ENDPOINT CLUSTER ATTRIBUTE1 [ATTRIBUTE2 ...] [PERIOD=x] [CYCLES=x]";
     }
 
     @Override
@@ -59,16 +59,47 @@ public class ZigBeeConsoleAttributeReadCommand extends ZigBeeConsoleAbstractComm
         final ZigBeeEndpoint endpoint = getEndpoint(networkManager, args[1]);
         ZclCluster cluster = getCluster(endpoint, args[2]);
 
+        int repeatPeriod = 0;
+        int repeatCycles = 10;
         final Map<Integer, String> attributes = new HashMap<>();
         for (int i = 3; i < args.length; i++) {
+            String cmd[] = args[i].split("=");
+            if (cmd != null && cmd.length == 2) {
+                switch (cmd[0].toLowerCase()) {
+                    case "period":
+                        repeatPeriod = parseInteger(cmd[1]);
+                        break;
+                    case "cycles":
+                        repeatCycles = parseInteger(cmd[1]);
+                        break;
+                    default:
+                        break;
+                }
+                continue;
+            }
             Integer attributeId = parseAttribute(args[i]);
             ZclAttribute attribute = cluster.getAttribute(attributeId);
             attributes.put(attributeId,
                     attribute != null ? attribute.getName() : String.format("Attribute %d", attributeId));
         }
 
-        out.println("Reading " + printCluster(cluster) + ", attributes " + String.join(", ", attributes.values()));
+        out.println("Reading endpoint " + endpoint.getEndpointAddress() + ", cluster " + printCluster(cluster)
+                + ", attributes " + String.join(", ", attributes.values())
+                + (repeatPeriod == 0 ? "" : (" @period = " + repeatPeriod + " sec")));
 
+        for (int cnt = 0; cnt < repeatCycles; cnt++) {
+            if (!readAttribute(out, cluster, attributes)) {
+                break;
+            }
+            if (repeatPeriod == 0) {
+                break;
+            }
+            Thread.sleep(repeatPeriod * 1000L);
+        }
+    }
+
+    private boolean readAttribute(PrintStream out, ZclCluster cluster, Map<Integer, String> attributes)
+            throws InterruptedException, ExecutionException {
         CommandResult result = cluster.read(new ArrayList<>(attributes.keySet())).get();
 
         if (result.isSuccess()) {
@@ -78,7 +109,7 @@ public class ZigBeeConsoleAttributeReadCommand extends ZigBeeConsoleAbstractComm
 
             if (response.getRecords().size() == 0) {
                 out.println("No records returned");
-                return;
+                return false;
             }
 
             for (ReadAttributeStatusRecord statusRecord : response.getRecords()) {
@@ -91,10 +122,10 @@ public class ZigBeeConsoleAttributeReadCommand extends ZigBeeConsoleAbstractComm
                 }
             }
 
-            return;
+            return true;
         } else {
             out.println("Error executing command: " + result);
-            return;
+            return false;
         }
     }
 }
