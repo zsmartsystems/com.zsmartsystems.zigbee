@@ -41,6 +41,12 @@ import com.zsmartsystems.zigbee.transport.ZigBeePort;
  */
 public class TelegesisFrameHandler {
     /**
+     * The delay until the network polling will be started. On slow machines it might take a long while until
+     * initialization is finished and the polling should not start before this is finished.
+     */
+    private static final int POLLING_THREAD_START_DELAY = 15000;
+
+    /**
      * The logger.
      */
     private final Logger logger = LoggerFactory.getLogger(TelegesisFrameHandler.class);
@@ -703,7 +709,7 @@ public class TelegesisFrameHandler {
                     sendNextFrame();
                 }
             }
-        }, pollRate, pollRate, TimeUnit.MILLISECONDS);
+        }, POLLING_THREAD_START_DELAY, pollRate, TimeUnit.MILLISECONDS);
     }
 
 }
