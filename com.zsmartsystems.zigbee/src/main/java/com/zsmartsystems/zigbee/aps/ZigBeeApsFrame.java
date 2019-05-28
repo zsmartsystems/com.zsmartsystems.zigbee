@@ -260,6 +260,11 @@ public class ZigBeeApsFrame {
         return apsCounter;
     }
 
+    /**
+     * Sets the APS counter. This may be set to -1 to indicate no counter is available
+     * 
+     * @param apsCounter the APS counter for the frame
+     */
     public void setApsCounter(final int apsCounter) {
         this.apsCounter = apsCounter;
     }

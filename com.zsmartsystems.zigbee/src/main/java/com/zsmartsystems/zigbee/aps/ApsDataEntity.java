@@ -75,6 +75,8 @@ public class ApsDataEntity {
      * Processes a received {@link ZigBeeApsFrame}, and returns the frame that is to fed up the stack. The APS layer may
      * return null from this command if it should not be processed up the stack, or it may return a different frame if
      * defragmentation is performed.
+     * <p>
+     * If the APS frame counter is set to -1, then duplicate packet checks will not be performed.
      *
      * @param apsFrame the received {@link ZigBeeApsFrame}
      * @return the {@link ZigBeeApsFrame} to be used within the upper layers or null if the frame is not to be fed into
@@ -89,9 +91,10 @@ public class ApsDataEntity {
             return null;
         }
 
-        apsCounters.put(apsFrame.getSourceAddress(), apsFrame.getApsCounter());
-        lastFrameTimes.put(apsFrame.getSourceAddress(), System.currentTimeMillis());
-
+        if (apsFrame.getApsCounter() != -1) {
+            apsCounters.put(apsFrame.getSourceAddress(), apsFrame.getApsCounter());
+            lastFrameTimes.put(apsFrame.getSourceAddress(), System.currentTimeMillis());
+        }
         return apsFrame;
     }
 }
