@@ -39,5 +39,12 @@ public class ApsDataEntityTest {
         apsFrame.setApsCounter(2);
         response = aps.receive(apsFrame);
         assertEquals(apsFrame, response);
+
+        // -1 counter value is allowed - indicates no counter available and will always pass
+        apsFrame.setApsCounter(-1);
+        response = aps.receive(apsFrame);
+        assertEquals(apsFrame, response);
+        response = aps.receive(apsFrame);
+        assertEquals(apsFrame, response);
     }
 }
