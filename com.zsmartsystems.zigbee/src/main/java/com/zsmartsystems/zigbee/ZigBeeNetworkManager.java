@@ -264,7 +264,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         transitions.put(ZigBeeNetworkState.INITIALISING, new HashSet<>(Arrays.asList(ZigBeeTransportState.ONLINE)));
         transitions.put(ZigBeeNetworkState.ONLINE, new HashSet<>(Arrays.asList(ZigBeeTransportState.OFFLINE)));
         transitions.put(ZigBeeNetworkState.OFFLINE, new HashSet<>(Arrays.asList(ZigBeeTransportState.ONLINE)));
-        transitions.put(ZigBeeNetworkState.SHUTDOWN, new HashSet<>(Arrays.asList(ZigBeeTransportState.OFFLINE)));
+        transitions.put(ZigBeeNetworkState.SHUTDOWN, new HashSet<>());
 
         validTransportStateTransitions = Collections.unmodifiableMap(new HashMap<>(transitions));
 
