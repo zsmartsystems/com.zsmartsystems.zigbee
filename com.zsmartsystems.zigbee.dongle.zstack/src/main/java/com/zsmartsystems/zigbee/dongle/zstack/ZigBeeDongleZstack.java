@@ -72,6 +72,7 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
  * to FALSE. Failing to set this to FALSE will require the R21 join procedure to exchange keys following the initial
  * association, which older devices will not perform, and the coordinator will then remove them from the network. This
  * can be achieved with the {@link ZigBeeDongleZstack#requireKeyExchange(boolean)} method.
+ * <li>There is a bug in the TI ZStack 3.0.2 which always return 00 as the SeqNum in the ZstackZdoMsgCbIncomingAreq
  * </ul>
  *
  * @author Chris Jackson
@@ -545,7 +546,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
             apsFrame.setDestinationAddress(nwkAddress);
             apsFrame.setDestinationEndpoint(0);
             apsFrame.setSourceEndpoint(0);
-            apsFrame.setSourceAddress(incomingMsg.getSrcAddr());
+            apsFrame.setSourceAddress(-1);
             apsFrame.setApsCounter(incomingMsg.getSeqNumber());
             apsFrame.setProfile(0);
             apsFrame.setSecurityEnabled(incomingMsg.getSecurityUse());
