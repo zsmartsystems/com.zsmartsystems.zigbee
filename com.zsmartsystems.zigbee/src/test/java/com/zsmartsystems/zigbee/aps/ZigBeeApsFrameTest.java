@@ -14,8 +14,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
-
 /**
  *
  * @author Chris Jackson
@@ -62,9 +60,10 @@ public class ZigBeeApsFrameTest {
     @Test
     public void testGroupAddress() {
         ZigBeeApsFrame frame = new ZigBeeApsFrame();
-        System.out.println(frame);
-
+        frame.setApsCounter(-1);
+        assertEquals(-1, frame.getApsCounter());
         frame.setGroupAddress(1);
+        System.out.println(frame);
         assertEquals(1, frame.getGroupAddress());
     }
 
