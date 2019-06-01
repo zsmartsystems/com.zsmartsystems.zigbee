@@ -21,4 +21,5 @@ public class Enumeration {
     public String format;
     public List<Value> values;
     public String data_type;
+    public boolean fullyDefined;
 }

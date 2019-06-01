@@ -432,6 +432,26 @@ public class ZstackNcp {
         return writeConfiguration(ZstackConfigId.ZCD_NV_PRECFGKEYS_ENABLE, valueFromUInt8(1));
     }
 
+    /**
+     * Gets the network key.
+     *
+     * @return the {@link ZigBeeKey} returned from the NCP or null on error
+     */
+    public ZigBeeKey getNetworkKey() {
+        int[] response = readConfiguration(ZstackConfigId.ZCD_NV_PRECFGKEY);
+        if (response == null) {
+            return null;
+        }
+
+        return new ZigBeeKey(response);
+    }
+
+    /**
+     * Enables network security
+     *
+     * @param enableSecurity true to enable network security
+     * @return {@link ZstackResponseCode} returned from the NCP
+     */
     public ZstackResponseCode setNetworkSecurity(boolean enableSecurity) {
         return writeConfiguration(ZstackConfigId.ZCD_NV_SECURITY_MODE, valueFromBoolean(enableSecurity));
     }

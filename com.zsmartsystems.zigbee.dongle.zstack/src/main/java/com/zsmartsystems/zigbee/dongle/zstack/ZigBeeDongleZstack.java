@@ -39,6 +39,7 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.af.ZstackAfDataRequestSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.af.ZstackAfIncomingMsgAreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackCentralizedLinkKeyMode;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackConfigId;
+import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackResetType;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysVersionSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSystemCapabilities;
 import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetDeviceInfoSreq;
@@ -178,7 +179,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
      */
     private long lastSendCommandTime;
 
-    private final HashMap<Integer, Integer> sender2EndPoint = new HashMap<Integer, Integer>();
+    private final HashMap<Integer, Integer> sender2Endpoint = new HashMap<Integer, Integer>();
     private final HashMap<Integer, Integer> endpoint2Profile = new HashMap<Integer, Integer>();
 
     /**
@@ -240,7 +241,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
         ZstackNetworkInitialisation netInitialiser = new ZstackNetworkInitialisation(frameHandler);
         netInitialiser.setMagicNumber(magicNumber);
 
-        netInitialiser.initializeNcp();
+        netInitialiser.initializeNcp(false);
 
         ZstackNcp ncp = getZstackNcp();
 
@@ -267,29 +268,11 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
         ieeeAddress = ncp.getIeeeAddress();
         logger.debug("ZStack local IeeeAddress: {}", ieeeAddress);
 
-        // Perform any stack configuration
-        ZstackStackConfiguration stackConfigurer = new ZstackStackConfiguration(ncp);
-
-        Map<ZstackConfigId, int[]> configuration = stackConfigurer.getConfiguration(stackConfiguration.keySet());
-        for (Entry<ZstackConfigId, int[]> config : configuration.entrySet()) {
-            logger.debug("Configuration state {} = {}", config.getKey(), config.getValue());
-        }
-
-        stackConfigurer.setConfiguration(stackConfiguration);
-        configuration = stackConfigurer.getConfiguration(stackConfiguration.keySet());
-        for (Entry<ZstackConfigId, int[]> config : configuration.entrySet()) {
-            logger.debug("Configuration state {} = {}", config.getKey(), config.getValue());
-        }
-
-        ieeeAddress = ncp.getIeeeAddress();
-        logger.debug("ZStack local IEEE Address is {}", ieeeAddress);
-
         /*
          * Create the scheduler with a single thread. This ensures that commands sent to the dongle, and the processing
          * of responses is performed in order
          */
         executorService = Executors.newScheduledThreadPool(1);
-        scheduleNetworkStatePolling();
 
         logger.debug("ZStack dongle initialize: Done");
 
@@ -313,11 +296,15 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
         netInitialiser.setMagicNumber(magicNumber);
         if (reinitialize) {
             logger.debug("Reinitialising ZStack NCP network.");
+            netInitialiser.initializeNcp(true);
+
             if (deviceType == DeviceType.COORDINATOR) {
                 netInitialiser.formNetwork();
             } else {
                 netInitialiser.joinNetwork();
             }
+
+            ncp.resetNcp(ZstackResetType.SERIAL_BOOTLOADER);
 
             ZstackResponseCode ncpResponse = ncp.setNetworkKey(networkKey);
             if (ncpResponse != ZstackResponseCode.SUCCESS) {
@@ -343,7 +330,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
 
             if (extendedPanId == null) {
                 // Allow the NCP to create a random extended PAN ID
-                extendedPanId = new ExtendedPanId("FFFFFFFF");
+                extendedPanId = new ExtendedPanId("FFFFFFFFFFFFFFFF");
             }
             ncpResponse = ncp.setExtendedPanId(extendedPanId);
             if (ncpResponse != ZstackResponseCode.SUCCESS) {
@@ -352,10 +339,25 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
             }
         }
 
+        // Perform any stack configuration
+        ZstackStackConfiguration stackConfigurer = new ZstackStackConfiguration(ncp);
+
+        Map<ZstackConfigId, int[]> configuration = stackConfigurer.getConfiguration(stackConfiguration.keySet());
+        for (Entry<ZstackConfigId, int[]> config : configuration.entrySet()) {
+            logger.debug("Configuration state {} = {}", config.getKey(), config.getValue());
+        }
+
+        stackConfigurer.setConfiguration(stackConfiguration);
+        configuration = stackConfigurer.getConfiguration(stackConfiguration.keySet());
+        for (Entry<ZstackConfigId, int[]> config : configuration.entrySet()) {
+            logger.debug("Configuration state {} = {}", config.getKey(), config.getValue());
+        }
+
         // Add the endpoint
         ncp.addEndpoint(1, ZigBeeDeviceType.HOME_GATEWAY.getKey(), ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getKey(),
                 new int[] { 0 }, new int[] { 0 });
-        sender2EndPoint.put(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getKey(), 1);
+        sender2Endpoint.put(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getKey(), 1);
+        endpoint2Profile.put(1, ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getKey());
 
         if (setTxPower(txPower) != ZigBeeStatus.SUCCESS) {
             logger.debug("ZStack error setting transmit power");
@@ -388,6 +390,9 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
 
         logger.debug("ZStack dongle startup: Done");
         initialised = true;
+        handleLinkStateChange(true);
+        scheduleNetworkStatePolling();
+
         return ZigBeeStatus.SUCCESS;
     }
 
@@ -525,7 +530,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
             apsFrame.setDestinationEndpoint(incomingMsg.getDestEndpoint());
             apsFrame.setSourceEndpoint(incomingMsg.getSrcEndpoint());
             apsFrame.setSourceAddress(incomingMsg.getSrcAddr());
-            apsFrame.setApsCounter(incomingMsg.getSeqNumber());
+            apsFrame.setApsCounter(-1);
             apsFrame.setProfile(getEndpointProfile(incomingMsg.getDestEndpoint()));
             apsFrame.setSecurityEnabled(incomingMsg.getSecurityUse());
             apsFrame.setPayload(incomingMsg.getData());
@@ -546,8 +551,8 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
             apsFrame.setDestinationAddress(nwkAddress);
             apsFrame.setDestinationEndpoint(0);
             apsFrame.setSourceEndpoint(0);
-            apsFrame.setSourceAddress(-1);
-            apsFrame.setApsCounter(incomingMsg.getSeqNumber());
+            apsFrame.setSourceAddress(incomingMsg.getSrcAddr());
+            apsFrame.setApsCounter(-1);
             apsFrame.setProfile(0);
             apsFrame.setSecurityEnabled(incomingMsg.getSecurityUse());
 
@@ -656,6 +661,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
         if (networkStateUp) {
             return ZigBeeStatus.INVALID_STATE;
         }
+        this.panId = panId;
         return ZigBeeStatus.SUCCESS;
     }
 
@@ -670,21 +676,23 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
         if (networkStateUp) {
             return ZigBeeStatus.INVALID_STATE;
         }
+        this.extendedPanId = extendedPanId;
         return ZigBeeStatus.SUCCESS;
     }
 
     @Override
     public ZigBeeStatus setZigBeeNetworkKey(final ZigBeeKey key) {
-        networkKey = key;
         if (networkStateUp) {
             return ZigBeeStatus.INVALID_STATE;
         }
+        networkKey = key;
         return ZigBeeStatus.SUCCESS;
     }
 
     @Override
     public ZigBeeKey getZigBeeNetworkKey() {
-        return null;
+        ZstackNcp ncp = getZstackNcp();
+        return ncp.getNetworkKey();
     }
 
     @Override
@@ -791,13 +799,18 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
         return versionString;
     }
 
+    /**
+     * Gets the endpoint given the profile - for sending
+     *
+     * @param profileId the profile ID
+     * @return the endpoint used for this profile
+     */
     private int getSendingEndpoint(int profileId) {
-        synchronized (sender2EndPoint) {
-            if (sender2EndPoint.containsKey(profileId)) {
-                return sender2EndPoint.get(profileId);
+        synchronized (sender2Endpoint) {
+            if (sender2Endpoint.containsKey(profileId)) {
+                return sender2Endpoint.get(profileId);
             } else {
                 logger.info("No endpoint registered for profileId={}", profileId);
-                // final byte ep = createEndPoint( profileId);
                 return -1;
             }
         }
