@@ -262,7 +262,7 @@ public class ZigBeeApsFrame {
 
     /**
      * Sets the APS counter. This may be set to -1 to indicate no counter is available
-     * 
+     *
      * @param apsCounter the APS counter for the frame
      */
     public void setApsCounter(final int apsCounter) {
@@ -296,7 +296,12 @@ public class ZigBeeApsFrame {
         builder.append(radius);
         builder.append(", apsSecurity=");
         builder.append(securityEnable);
-        builder.append(String.format(", apsCounter=%02X", apsCounter));
+        builder.append(", apsCounter=");
+        if (apsCounter == -1) {
+            builder.append("--");
+        } else {
+            builder.append(String.format("%02X", apsCounter));
+        }
         builder.append(", payload=");
         if (payload != null) {
             for (int c = 0; c < payload.length; c++) {
