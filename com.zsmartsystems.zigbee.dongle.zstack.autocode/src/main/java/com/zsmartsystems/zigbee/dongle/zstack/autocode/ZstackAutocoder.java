@@ -202,6 +202,9 @@ public class ZstackAutocoder {
                         enumeration.description = nodes.item(temp).getTextContent().trim();
                     }
                     if (nodes.item(temp).getNodeName().equals("values")) {
+                        Element dataTypeElement = (Element) nodes.item(temp);
+                        enumeration.fullyDefined = "true"
+                                .equalsIgnoreCase(dataTypeElement.getAttribute("fully_defined"));
                         enumeration.values = (List<Value>) processNode(nodes.item(temp));
                     }
                     if (nodes.item(temp).getNodeName().equals("format")) {

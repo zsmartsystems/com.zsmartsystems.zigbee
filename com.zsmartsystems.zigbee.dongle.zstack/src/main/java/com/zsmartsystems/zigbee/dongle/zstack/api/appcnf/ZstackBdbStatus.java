@@ -18,10 +18,6 @@ import java.util.Map;
  * @author Chris Jackson
  */
 public enum ZstackBdbStatus {
-    /**
-     * Default unknown value
-     */
-    UNKNOWN(-1),
 
     /**
      *
@@ -124,9 +120,6 @@ public enum ZstackBdbStatus {
      * @return enumeration value of the alarm type.
      */
     public static ZstackBdbStatus valueOf(int code) {
-        if (codeMapping.get(code) == null) {
-            return UNKNOWN;
-        }
 
         return codeMapping.get(code);
     }
