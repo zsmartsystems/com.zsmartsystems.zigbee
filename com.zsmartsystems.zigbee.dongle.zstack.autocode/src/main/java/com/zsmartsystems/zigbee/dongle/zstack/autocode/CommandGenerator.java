@@ -729,10 +729,12 @@ public class CommandGenerator extends ClassGenerator {
 
         out.println("public enum " + className + " {");
 
-        out.println("    /**");
-        out.println("     * Default unknown value");
-        out.println("     */");
-        out.println("    UNKNOWN(-1),");
+        if (!enumeration.fullyDefined) {
+            out.println("    /**");
+            out.println("     * Default unknown value");
+            out.println("     */");
+            out.println("    UNKNOWN(-1),");
+        }
 
         boolean first = true;
         for (Value value : enumeration.values) {
@@ -781,9 +783,11 @@ public class CommandGenerator extends ClassGenerator {
         out.println("     * @return enumeration value of the alarm type.");
         out.println("     */");
         out.println("    public static " + className + " valueOf(int code) {");
-        out.println("        if (codeMapping.get(code) == null) {");
-        out.println("            return UNKNOWN;");
-        out.println("        }");
+        if (!enumeration.fullyDefined) {
+            out.println("        if (codeMapping.get(code) == null) {");
+            out.println("            return UNKNOWN;");
+            out.println("        }");
+        }
         out.println();
 
         out.println("        return codeMapping.get(code);");

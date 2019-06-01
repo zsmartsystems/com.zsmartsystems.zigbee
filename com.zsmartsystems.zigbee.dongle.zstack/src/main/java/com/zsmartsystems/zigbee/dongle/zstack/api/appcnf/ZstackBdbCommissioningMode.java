@@ -18,10 +18,6 @@ import java.util.Map;
  * @author Chris Jackson
  */
 public enum ZstackBdbCommissioningMode {
-    /**
-     * Default unknown value
-     */
-    UNKNOWN(-1),
 
     /**
      *
@@ -79,9 +75,6 @@ public enum ZstackBdbCommissioningMode {
      * @return enumeration value of the alarm type.
      */
     public static ZstackBdbCommissioningMode valueOf(int code) {
-        if (codeMapping.get(code) == null) {
-            return UNKNOWN;
-        }
 
         return codeMapping.get(code);
     }

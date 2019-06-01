@@ -1748,7 +1748,7 @@
 		<data_type>uint8</data_type>
 		<description>Options applied when sending frames</description>
 		<subsystem>AF</subsystem>
-		<values>
+		<values fully_defined="true">
 			<value>
 				<name>AF_ACK_REQUEST</name>
 				<enum_value>0x10</enum_value>

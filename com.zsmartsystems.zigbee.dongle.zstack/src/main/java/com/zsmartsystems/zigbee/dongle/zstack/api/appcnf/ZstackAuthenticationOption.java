@@ -18,10 +18,6 @@ import java.util.Map;
  * @author Chris Jackson
  */
 public enum ZstackAuthenticationOption {
-    /**
-     * Default unknown value
-     */
-    UNKNOWN(-1),
 
     /**
      * The device has not been authenticated
@@ -64,9 +60,6 @@ public enum ZstackAuthenticationOption {
      * @return enumeration value of the alarm type.
      */
     public static ZstackAuthenticationOption valueOf(int code) {
-        if (codeMapping.get(code) == null) {
-            return UNKNOWN;
-        }
 
         return codeMapping.get(code);
     }

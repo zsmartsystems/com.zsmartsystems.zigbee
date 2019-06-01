@@ -89,8 +89,10 @@ public class ZstackNetworkInitialisation {
      * defaults. From here we have a known configuration on which to start our session.
      * <p>
      * The dongle is not reset completely, thus allowing it to be placed back into the previous network.
+     *
+     * @param initialize set to true to reset the dongle and erase all current network settings
      */
-    public ZigBeeStatus initializeNcp() {
+    public ZigBeeStatus initializeNcp(boolean initialize) {
         logger.debug("ZStack Initialisation: Initialise");
         ZstackNcp ncp = new ZstackNcp(protocolHandler);
 
@@ -105,7 +107,10 @@ public class ZstackNetworkInitialisation {
             }
         }
 
-        return resetNcp(ncp, false);
+        if (initialize) {
+            return resetNcp(ncp, true);
+        }
+        return ZigBeeStatus.SUCCESS;
     }
 
     /**
@@ -123,9 +128,6 @@ public class ZstackNetworkInitialisation {
             logger.debug("ZStack forming network: Error setting NCP to coordinator");
             return ZigBeeStatus.COMMUNICATION_ERROR;
         }
-
-        // Reset the NCP so that this take effect, and also scrub the network information
-        resetNcp(ncp, true);
 
         return ZigBeeStatus.SUCCESS;
     }
@@ -145,9 +147,6 @@ public class ZstackNetworkInitialisation {
             logger.debug("ZStack forming network: Error setting NCP to router");
             return ZigBeeStatus.COMMUNICATION_ERROR;
         }
-
-        // Reset the NCP so that this take effect, and also scrub the network information
-        resetNcp(ncp, true);
 
         return ZigBeeStatus.SUCCESS;
     }
@@ -225,18 +224,6 @@ public class ZstackNetworkInitialisation {
         if (ncp.setStartupOptions(true, initialise) != ZstackResponseCode.SUCCESS) {
             logger.debug("ZStack Initialisation: Failed to set startup options");
             return ZigBeeStatus.COMMUNICATION_ERROR;
-        }
-
-        // Perform another reset so that the startup options take effect
-        ZstackSysResetIndAreq resetResponse = ncp.resetNcp(ZstackResetType.SERIAL_BOOTLOADER);
-        logger.debug("ZStack Initialisation: Reset response {}", resetResponse);
-
-        // Clear the clearState option so the next restart doesn't clear the network information
-        if (initialise) {
-            if (ncp.setStartupOptions(true, initialise) != ZstackResponseCode.SUCCESS) {
-                logger.debug("ZStack Initialisation: Failed to set startup options");
-                return ZigBeeStatus.COMMUNICATION_ERROR;
-            }
         }
 
         return ZigBeeStatus.SUCCESS;

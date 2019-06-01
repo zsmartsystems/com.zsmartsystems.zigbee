@@ -20,10 +20,6 @@ import java.util.Map;
  * @author Chris Jackson
  */
 public enum AfDataOptions {
-    /**
-     * Default unknown value
-     */
-    UNKNOWN(-1),
 
     /**
      * Set this bit to request APS acknowledgement for this packet
@@ -71,9 +67,6 @@ public enum AfDataOptions {
      * @return enumeration value of the alarm type.
      */
     public static AfDataOptions valueOf(int code) {
-        if (codeMapping.get(code) == null) {
-            return UNKNOWN;
-        }
 
         return codeMapping.get(code);
     }
