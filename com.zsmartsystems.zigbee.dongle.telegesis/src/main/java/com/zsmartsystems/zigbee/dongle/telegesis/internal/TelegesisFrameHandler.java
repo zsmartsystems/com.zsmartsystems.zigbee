@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.dongle.telegesis.ZigBeeDongleTelegesis;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisCommand;
-import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDisplayNetworkInformationCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisFrame;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisStatusCode;
@@ -124,9 +123,6 @@ public class TelegesisFrameHandler {
     private final int ACK_TIMEOUTS = 2;
     private int retries = 0;
 
-    private ScheduledExecutorService pollingScheduler;
-    private ScheduledFuture<?> pollingTimer = null;
-
     /**
      * The rate at which we will do a status poll if we've not sent any other messages within this period
      */
@@ -159,7 +155,6 @@ public class TelegesisFrameHandler {
         this.serialPort = serialPort;
 
         timeoutScheduler = Executors.newSingleThreadScheduledExecutor();
-        pollingScheduler = Executors.newSingleThreadScheduledExecutor();
 
         parserThread = new Thread("TelegesisFrameHandler") {
             @Override
@@ -190,7 +185,6 @@ public class TelegesisFrameHandler {
                         TelegesisEvent event = TelegesisEventFactory.getTelegesisFrame(responseData);
                         if (event != null) {
                             notifyEventReceived(event);
-                            scheduleNetworkStatePolling();
                             continue;
                         }
 
@@ -209,7 +203,6 @@ public class TelegesisFrameHandler {
                                 if (done) {
                                     // Command completed
                                     notifyTransactionComplete(sentCommand);
-                                    scheduleNetworkStatePolling();
                                     sentCommand = null;
                                 }
                             }
@@ -224,8 +217,6 @@ public class TelegesisFrameHandler {
 
         parserThread.setDaemon(true);
         parserThread.start();
-
-        scheduleNetworkStatePolling();
     }
 
     private int[] getPacket() {
@@ -328,7 +319,6 @@ public class TelegesisFrameHandler {
         setClosing();
 
         timeoutScheduler.shutdown();
-        pollingScheduler.shutdown();
 
         try {
             parserThread.interrupt();
@@ -687,23 +677,4 @@ public class TelegesisFrameHandler {
     interface TelegesisListener {
         boolean transactionEvent(TelegesisCommand response);
     }
-
-    private void scheduleNetworkStatePolling() {
-        if (pollingTimer != null) {
-            pollingTimer.cancel(true);
-        }
-
-        retries = 0;
-
-        pollingTimer = pollingScheduler.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                if (sendQueue.isEmpty() && sentCommand == null) {
-                    queueFrame(new TelegesisDisplayNetworkInformationCommand());
-                    sendNextFrame();
-                }
-            }
-        }, pollRate, pollRate, TimeUnit.MILLISECONDS);
-    }
-
 }

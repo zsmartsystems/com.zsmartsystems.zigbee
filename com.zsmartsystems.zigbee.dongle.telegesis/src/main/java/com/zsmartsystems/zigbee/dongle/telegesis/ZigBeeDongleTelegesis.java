@@ -13,6 +13,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +25,7 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeBroadcastDestination;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
+import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.ZigBeeProfileType;
@@ -162,6 +166,26 @@ public class ZigBeeDongleTelegesis
      * online before the higher layer has had the chance to initialise.
      */
     private boolean startupComplete = false;
+
+    private ScheduledExecutorService executorService;
+
+    private ScheduledFuture<?> pollingTimer;
+
+    /**
+     * The rate at which we will do a status poll if we've not sent any other messages within this period
+     */
+    private int pollRate = 1000;
+
+    /**
+     * The time the last command was sent from the {@link ZigBeeNetworkManager}. This is used by the dongle polling task
+     * to not poll if commands are otherwise being sent so as to reduce unnecessary communications with the dongle.
+     */
+    private long lastSendCommand;
+
+    /**
+     * Boolean that is true when the network is UP
+     */
+    private boolean networkStateUp = false;
 
     /**
      * S0A – Main Function
@@ -335,6 +359,8 @@ public class ZigBeeDongleTelegesis
      */
     public ZigBeeDongleTelegesis(final ZigBeePort serialPort) {
         this.serialPort = serialPort;
+
+        executorService = Executors.newScheduledThreadPool(1);
     }
 
     /**
@@ -459,7 +485,10 @@ public class ZigBeeDongleTelegesis
         panId = networkInfo.getPanId();
         extendedPanId = networkInfo.getEpanId();
 
+        networkStateUp = true;
         startupComplete = true;
+
+        scheduleNetworkStatePolling();
 
         return ZigBeeStatus.SUCCESS;
     }
@@ -469,6 +498,14 @@ public class ZigBeeDongleTelegesis
         if (frameHandler == null) {
             return;
         }
+
+        if (pollingTimer != null) {
+            pollingTimer.cancel(true);
+        }
+        if (executorService != null) {
+            executorService.shutdown();
+        }
+
         frameHandler.removeEventListener(this);
         frameHandler.setClosing();
         zigbeeTransportReceive.setTransportState(ZigBeeTransportState.OFFLINE);
@@ -623,6 +660,8 @@ public class ZigBeeDongleTelegesis
             return;
         }
 
+        lastSendCommand = System.currentTimeMillis();
+
         TelegesisCommand command;
         if (apsFrame.getAddressMode() == ZigBeeNwkAddressMode.DEVICE
                 && !ZigBeeBroadcastDestination.isBroadcast(apsFrame.getDestinationAddress())) {
@@ -675,7 +714,9 @@ public class ZigBeeDongleTelegesis
                     return;
                 }
 
-                messageIdMap.put(((TelegesisSendUnicastCommand) command).getMessageId(), msgTag);
+                if (((TelegesisSendUnicastCommand) command).getMessageId() != null) {
+                    messageIdMap.put(((TelegesisSendUnicastCommand) command).getMessageId(), msgTag);
+                }
             }
         });
     }
@@ -760,10 +801,12 @@ public class ZigBeeDongleTelegesis
 
         // Handle link changes and notify framework or just reset link with dongle?
         if (event instanceof TelegesisNetworkLeftEvent | event instanceof TelegesisNetworkLostEvent) {
+            networkStateUp = false;
             zigbeeTransportReceive.setTransportState(ZigBeeTransportState.OFFLINE);
             return;
         }
         if (event instanceof TelegesisNetworkJoinedEvent) {
+            networkStateUp = true;
             zigbeeTransportReceive.setTransportState(ZigBeeTransportState.ONLINE);
             return;
         }
@@ -1060,7 +1103,33 @@ public class ZigBeeDongleTelegesis
         if (!startupComplete) {
             return;
         }
+        networkStateUp = state;
         zigbeeTransportReceive.setTransportState(state ? ZigBeeTransportState.ONLINE : ZigBeeTransportState.OFFLINE);
+    }
+
+    /**
+     * This method schedules sending a status request frame on the interval specified by pollRate. If the frameHandler
+     * does not receive a response after a certain amount of retries, the state will be set to OFFLINE.
+     * The poll will not be sent if other commands have been sent to the dongle within the pollRate period so as to
+     * eliminate any unnecessary traffic with the dongle.
+     */
+    private void scheduleNetworkStatePolling() {
+        if (pollingTimer != null) {
+            pollingTimer.cancel(true);
+        }
+
+        pollingTimer = executorService.scheduleWithFixedDelay(new Runnable() {
+            @Override
+            public void run() {
+                // Don't poll the state if the network is down
+                // or we've sent a command to the dongle within the pollRate
+                if (!networkStateUp || (lastSendCommand + pollRate > System.currentTimeMillis())) {
+                    return;
+                }
+                // Don't wait for the response. This is running in a single thread scheduler
+                frameHandler.queueFrame(new TelegesisDisplayNetworkInformationCommand());
+            }
+        }, pollRate, pollRate, TimeUnit.MILLISECONDS);
     }
 
 }
