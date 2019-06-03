@@ -39,6 +39,8 @@ import com.zsmartsystems.zigbee.aps.ApsDataEntity;
 import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDataStore;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDatabaseManager;
+import com.zsmartsystems.zigbee.greenpower.ZigbeeGpTransportReceive;
+import com.zsmartsystems.zigbee.greenpower.ZigbeeGreenPowerFrame;
 import com.zsmartsystems.zigbee.internal.ClusterMatcher;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.internal.ZigBeeCommandNotifier;
@@ -132,7 +134,7 @@ import com.zsmartsystems.zigbee.zdo.command.NetworkAddressRequest;
  *
  * @author Chris Jackson
  */
-public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportReceive {
+public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportReceive,ZigbeeGpTransportReceive {
     /**
      * The logger.
      */
@@ -849,6 +851,37 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         commandNotifier.notifyCommandListeners(command);
     }
 
+
+    //method responsible for receiving Green power frames. 
+    //TODO fuse with receiveCommand and only make a difference if apsFrame.getProfile()==0xA1E0 ?
+    @Override
+    public void receiveGpCommand(ZigbeeGreenPowerFrame gpFrame) {
+    	synchronized (this) {
+    		if (networkState != ZigBeeNetworkState.ONLINE) {
+    			return;
+    		}
+    	}
+
+    	logger.debug("RX APS: {}", gpFrame);
+
+    	// Create the deserialiser
+    	Constructor<? extends ZigBeeDeserializer> constructor;
+    	ZigBeeDeserializer deserializer;
+    	try {
+    		constructor = deserializerClass.getConstructor(int[].class);
+    		deserializer = constructor.newInstance(new Object[] { gpFrame.getPayload() });
+    	} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
+    			| IllegalArgumentException | InvocationTargetException e) {
+    		logger.debug("Error creating deserializer", e);
+    		return;
+    	}
+    	ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);
+    	
+    	ZigBeeCommand command = null;
+    	//TODO create the command based on the frame.
+    	//command = transactionManager.receive(command);
+    }
+    
     private ZigBeeCommand receiveZdoCommand(final ZclFieldDeserializer fieldDeserializer,
             final ZigBeeApsFrame apsFrame) {
         ZdoCommandType commandType = ZdoCommandType.getValueById(apsFrame.getCluster());

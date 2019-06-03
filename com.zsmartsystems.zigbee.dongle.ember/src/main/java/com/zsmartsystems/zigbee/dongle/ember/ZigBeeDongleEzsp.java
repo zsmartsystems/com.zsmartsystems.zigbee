@@ -32,8 +32,10 @@ import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.ZigBeeProfileType;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
+import com.zsmartsystems.zigbee.greenpower.ZigbeeGpTransportReceive;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspChildJoinHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGpepIncomingMessageHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIncomingMessageHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLaunchStandaloneBootloaderRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLaunchStandaloneBootloaderResponse;
@@ -75,6 +77,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ash.AshFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.spi.SpiFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspSingleResponseTransaction;
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransaction;
+import com.zsmartsystems.zigbee.greenpower.ZigbeeGreenPowerFrame;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.transport.ConcentratorConfig;
 import com.zsmartsystems.zigbee.transport.DeviceType;
@@ -138,7 +141,9 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
      * The reference to the receive interface
      */
     private ZigBeeTransportReceive zigbeeTransportReceive;
-
+    
+    private ZigbeeGpTransportReceive zigbeeGpTransportReceiver;
+    
     /**
      * The current link key as {@link ZigBeeKey}
      */
@@ -725,6 +730,27 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 mfglibListener.emberMfgLibPacketReceived(mfglibHandler.getLinkQuality(), mfglibHandler.getLinkQuality(),
                         mfglibHandler.getPacketContents());
             }
+            return;
+        }
+        
+        if (response instanceof EzspGpepIncomingMessageHandler) {
+        	//creation de la GPDF et on la fait remonter.
+        	if (nwkAddress == null) {
+                logger.debug("Ignoring received frame as stack still initialising");
+                return;
+            }
+        	EzspGpepIncomingMessageHandler incomingMessage = (EzspGpepIncomingMessageHandler) response;
+
+            ZigbeeGreenPowerFrame gpFrame = new ZigbeeGreenPowerFrame();
+           
+            
+            gpFrame.setSourceID(incomingMessage.getAddr().getSourceId());
+            gpFrame.setEndpoint(incomingMessage.getAddr().getEndpoint());
+            gpFrame.setSecurityFrameCounter(incomingMessage.getGpdSecurityFrameCounterLength());
+            gpFrame.setPayload(incomingMessage.getGpdCommandPayload());
+            gpFrame.setMic(incomingMessage.getMic());
+
+        	zigbeeGpTransportReceiver.receiveGpCommand(gpFrame);
             return;
         }
     }

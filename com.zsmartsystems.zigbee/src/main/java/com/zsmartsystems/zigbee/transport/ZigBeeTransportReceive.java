@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.transport;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
+import com.zsmartsystems.zigbee.greenpower.ZigbeeGreenPowerFrame;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
 
@@ -78,5 +79,4 @@ public interface ZigBeeTransportReceive {
      * @param state the acknowledged {@link ZigBeeTransportProgressState}
      */
     void receiveCommandState(int msgTag, ZigBeeTransportProgressState state);
-
 }
