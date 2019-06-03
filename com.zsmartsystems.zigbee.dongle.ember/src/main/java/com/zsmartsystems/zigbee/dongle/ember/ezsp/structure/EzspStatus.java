@@ -262,8 +262,7 @@ public enum EzspStatus {
     EZSP_ASH_ERROR_XON_XOF(0x0057),
 
     /**
-     * 
-     */
+     *      */
     EZSP_ASH_STARTED(0x0070),
 
     /**

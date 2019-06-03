@@ -8,13 +8,13 @@
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.command;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyType;
 import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
 
 /**
- * Class to implement the Ember EZSP command <b>getKey</b>.
+ * Class to implement the Ember EZSP command <b>nop</b>.
  * <p>
- * Gets a Security Key based on the passed key type.
+ * A command which does nothing. The Host can use this to set the sleep mode or check the status of
+ * the NCP.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>
@@ -22,14 +22,8 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspGetKeyRequest extends EzspFrameRequest {
-    public static final int FRAME_ID = 0x6A;
-
-    /**
-     *      * <p>
-     * EZSP type is <i>EmberKeyType</i> - Java type is {@link EmberKeyType}
-     */
-    private EmberKeyType keyType;
+public class EzspNopRequest extends EzspFrameRequest {
+    public static final int FRAME_ID = 0x05;
 
     /**
      * Serialiser used to serialise to binary line data
@@ -39,27 +33,9 @@ public class EzspGetKeyRequest extends EzspFrameRequest {
     /**
      * Request constructor
      */
-    public EzspGetKeyRequest() {
+    public EzspNopRequest() {
         frameId = FRAME_ID;
         serializer = new EzspSerializer();
-    }
-
-    /**
-     *      * <p>
-     * EZSP type is <i>EmberKeyType</i> - Java type is {@link EmberKeyType}
-     *
-     * @return the current keyType as {@link EmberKeyType}
-     */
-    public EmberKeyType getKeyType() {
-        return keyType;
-    }
-
-    /**
-     *      *
-     * @param keyType the keyType to set as {@link EmberKeyType}
-     */
-    public void setKeyType(EmberKeyType keyType) {
-        this.keyType = keyType;
     }
 
     @Override
@@ -68,16 +44,11 @@ public class EzspGetKeyRequest extends EzspFrameRequest {
         serializeHeader(serializer);
 
         // Serialize the fields
-        serializer.serializeEmberKeyType(keyType);
         return serializer.getPayload();
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(45);
-        builder.append("EzspGetKeyRequest [keyType=");
-        builder.append(keyType);
-        builder.append(']');
-        return builder.toString();
+        return "EzspNopRequest []";
     }
 }

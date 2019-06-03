@@ -24,28 +24,23 @@ public enum EmberLeaveReason {
     UNKNOWN(-1),
 
     /**
-     * 
-     */
+     *      */
     EMBER_LEAVE_REASON_NONE(0x0000),
 
     /**
-     * 
-     */
+     *      */
     EMBER_LEAVE_DUE_TO_NWK_LEAVE_MESSAGE(0x0001),
 
     /**
-     * 
-     */
+     *      */
     EMBER_LEAVE_DUE_TO_APS_REMOVE_MESSAGE(0x0002),
 
     /**
-     * 
-     */
+     *      */
     EMBER_LEAVE_DUE_TO_ZDO_LEAVE_MESSAGE(0x0003),
 
     /**
-     * 
-     */
+     *      */
     EMBER_LEAVE_DUE_TO_ZLL_TOUCHLINK(0x0004);
 
     /**

@@ -85,7 +85,7 @@ public class EmberGpProxyTableEntry {
      * <p>
      * EZSP type is <i>EmberGpSinkListEntry[]</i> - Java type is {@link EmberGpSinkListEntry}
      */
-    private EmberGpSinkListEntry[] sinkList = new EmberGpSinkListEntry[2];
+    private EmberGpSinkListEntry[] sinkList;
 
     /**
      * The groupcast radius.

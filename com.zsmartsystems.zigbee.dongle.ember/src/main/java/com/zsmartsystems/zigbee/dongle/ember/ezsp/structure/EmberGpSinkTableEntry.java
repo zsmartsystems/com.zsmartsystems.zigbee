@@ -57,7 +57,7 @@ public class EmberGpSinkTableEntry {
      * <p>
      * EZSP type is <i>EmberGpSinkListEntry[]</i> - Java type is {@link EmberGpSinkListEntry}
      */
-    private EmberGpSinkListEntry[] sinkList = new EmberGpSinkListEntry[2];
+    private EmberGpSinkListEntry[] sinkList;
 
     /**
      * The assigned alias for the GPD.
@@ -341,6 +341,9 @@ public class EmberGpSinkTableEntry {
         securityOptions = deserializer.deserializeUInt8();
         gpdSecurityFrameCounter = deserializer.deserializeUInt32();
         gpdKey = deserializer.deserializeEmberKeyData();
+//        EmberKeyData key = new EmberKeyData();
+//        key.setContents( new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}) ;
+//        gpdKey = key;
     }
 
     @Override
@@ -363,7 +366,7 @@ public class EmberGpSinkTableEntry {
                 if (cnt != 0) {
                     builder.append(' ');
                 }
-                builder.append(String.format("%02X", sinkList[cnt]));
+                builder.append(sinkList[cnt].toString());
             }
         }
         builder.append('}');

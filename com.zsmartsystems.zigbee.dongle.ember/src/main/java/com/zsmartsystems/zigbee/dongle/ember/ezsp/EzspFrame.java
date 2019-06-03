@@ -179,6 +179,7 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_NETWORK_INIT = 0x17;
     protected static final int FRAME_ID_NETWORK_STATE = 0x18;
     protected static final int FRAME_ID_NO_CALLBACKS = 0x07;
+    protected static final int FRAME_ID_NOP = 0x05;
     protected static final int FRAME_ID_PERMIT_JOINING = 0x22;
     protected static final int FRAME_ID_POLL_HANDLER = 0x44;
     protected static final int FRAME_ID_READ_AND_CLEAR_COUNTERS = 0x65;
@@ -324,6 +325,7 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_NETWORK_INIT, EzspNetworkInitResponse.class);
         ezspHandlerMap.put(FRAME_ID_NETWORK_STATE, EzspNetworkStateResponse.class);
         ezspHandlerMap.put(FRAME_ID_NO_CALLBACKS, EzspNoCallbacksResponse.class);
+        ezspHandlerMap.put(FRAME_ID_NOP, EzspNopResponse.class);
         ezspHandlerMap.put(FRAME_ID_PERMIT_JOINING, EzspPermitJoiningResponse.class);
         ezspHandlerMap.put(FRAME_ID_POLL_HANDLER, EzspPollHandler.class);
         ezspHandlerMap.put(FRAME_ID_READ_AND_CLEAR_COUNTERS, EzspReadAndClearCountersResponse.class);

@@ -2864,32 +2864,7 @@
 			</parameter>
 		</response_parameters>
 	</command>
-<!--
-	<command>
-		<name>gpProxyTableGetEntry</name>
-		<id>0xC8</id>
-		<description>Retrieves the proxy table entry stored at the passed index.</description>
-		<command_parameters>
-			<parameter>
-				<data_type>uint8_t</data_type>
-				<name>proxyIndex</name>
-				<description>The index of the requested proxy table entry</description>
-			</parameter>
-		</command_parameters>
-		<response_parameters>
-			<parameter>
-				<data_type>EmberStatus</data_type>
-				<name>status</name>
-				<description>An EmberStatus value indicating success or the reason for failure.</description>
-			</parameter>
-			<parameter>
-				<data_type>EmberGpProxyTableEntry</data_type>
-				<name>entry</name>
-				<description>An EmberGpProxyTableEntry struct containing a copy of the requested proxy entry.</description>
-			</parameter>
-		</response_parameters>
-	</command>
--->
+	
 	<command>
 		<name>gpProxyTableLookup</name>
 		<id>0xC0</id>
@@ -3284,7 +3259,7 @@
 			</parameter>
 		</response_parameters>
 	</command>
-	
+<!-- commented to prevent erasure of necessary manual modifications -->
 	<command>
 		<name>gpSinkTableGetEntry</name>
 		<id>0xDD</id>
@@ -3309,7 +3284,7 @@
 			</parameter>
 		</response_parameters>
 	</command>
-	
+
 	<command>
 		<name>gpSinkTableLookup</name>
 		<id>0xDE</id>
@@ -3329,7 +3304,7 @@
 			</parameter>			
 		</response_parameters>
 	</command>
-	
+<!--  commented to prevent erasure of necessary manual modifications -->
 	<command>
 		<name>gpSinkTableSetEntry</name>
 		<id>0xDF</id>
@@ -3354,7 +3329,7 @@
 			</parameter>			
 		</response_parameters>
 	</command>
-	
+
 	<command>
 		<name>gpSinkTableRemoveEntry</name>
 		<id>0xE0</id>
@@ -3398,6 +3373,12 @@
 		<name>gpSinkTableInit</name>
 		<id>0x70</id>
 		<description>Initializes the sink table.</description>
+	</command>
+	
+	<command>
+		<name>nop</name>
+		<id>0x05</id>
+		<description>A command which does nothing. The Host can use this to set the sleep mode or check the status of the NCP.</description>
 	</command>
 	
 	<structure>
@@ -3888,7 +3869,7 @@
 				<description>The GPD's source ID.</description>
 			</parameter>
 			<parameter>
-				<data_type>uint8_t</data_type>
+				<data_type>EmberGpApplicationId</data_type>
 				<name>applicationId</name>
 				<description>The GPD Application ID.</description>
 			</parameter>
@@ -3899,7 +3880,7 @@
 			</parameter>
 		</parameters>
 	</structure>
-
+<!--  commented to prevent erasure of necessary manual modifications -->
 	<structure>
 		<name>EmberGpSinkListEntry</name>
 		<description>A sink list entry</description>
@@ -4798,7 +4779,7 @@
 			</value>
 		</values>
 	</enum>
-
+	-->
 	<enum>
 		<name>EzspConfigId</name>
 		<description>Identifies which configuration value to read or change with getConfigurationValue and setConfigurationValue.</description>
@@ -5274,6 +5255,46 @@
 				<name>EMBER_ADDRESS_TABLE_ENTRY_IS_ACTIVE</name>
 				<enum_value>0x0076</enum_value>
 				<description>The application is trying to overwrite an address table entry that is in use.</description>
+			</value>
+			<value>
+				<name>EMBER_MATCH</name>
+				<enum_value>0x0078</enum_value>
+				<description>Security match.</description>
+			</value>
+			<value>
+				<name>EMBER_DROP_FRAME</name>
+				<enum_value>0x0079</enum_value>
+				<description>Security match. </description>
+			</value>
+			<value>
+				<name>EMBER_PASS_UNPROCESSED</name>
+				<enum_value>0x007A</enum_value>
+				<description>Security match. </description>
+			</value>
+			<value>
+				<name>EMBER_TX_THEN_DROP</name>
+				<enum_value>0x007B</enum_value>
+				<description>Security match. </description>
+			</value>
+			<value>
+				<name>EMBER_NO_SECURITY</name>
+				<enum_value>0x007C</enum_value>
+				<description>Security match. </description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_FAILURE</name>
+				<enum_value>0x007D</enum_value>
+				<description>Security match. </description>
+			</value>
+			<value>
+				<name>EMBER_AUTH_FAILURE</name>
+				<enum_value>0x007E</enum_value>
+				<description>Security match. </description>
+			</value>
+			<value>
+				<name>EMBER_UNPROCESSED</name>
+				<enum_value>0x007F</enum_value>
+				<description>Security match. </description>
 			</value>
 			<value>
 				<name>EMBER_ADC_CONVERSION_DONE</name>
@@ -6721,29 +6742,99 @@
 
 	<enum>
 		<name>EmberGpProxyTableEntryStatus</name>
-		<description></description>
+		<description>GP proxy table entry status.</description>
 		<values>
+			<value>
+				<name>EMBER_GP_PROXY_TABLE_ENTRY_STATUS_ACTIVE</name>
+				<enum_value>0x01</enum_value>
+				<description>The GP table entry is in use for a Proxy Table Entry.</description>
+			</value>
+			<value>
+				<name>EMBER_GP_PROXY_TABLE_ENTRY_STATUS_UNUSED</name>
+				<enum_value>0xFF</enum_value>
+				<description>The proxy table entry is not in use.</description>
+			</value>
 		</values>
 	</enum>
 	
 	<enum>
 		<name>EmberGpSinkTableEntryStatus</name>
-		<description></description>
+		<description>GP sink table entry status.</description>
 		<values>
+			<value>
+				<name>EMBER_GP_SINK_TABLE_ENTRY_STATUS_ACTIVE</name>
+				<enum_value>0x01</enum_value>
+				<description>The GP table entry is in use for a Sink Table Entry.</description>
+			</value>
+			<value>
+				<name>EMBER_GP_SINK_TABLE_ENTRY_STATUS_UNUSED</name>
+				<enum_value>0xFF</enum_value>
+				<description>The proxy table entry is not in use.</description>
+			</value>
 		</values>
 	</enum>
 
 	<enum>
 		<name>EmberGpSecurityLevel</name>
-		<description></description>
+		<description>Options to use when sending a message.</description>
 		<values>
+			<value>
+				<name>EMBER_GP_SECURITY_LEVEL_NONE</name>
+				<enum_value>0x00</enum_value>
+				<description>None.</description>
+			</value>
+			<value>
+				<name>EMBER_GP_SECURITY_LEVEL_RESERVED</name>
+				<enum_value>0x01</enum_value>
+				<description>reserved</description>
+			</value>
+			<value>
+				<name>EMBER_GP_SECURITY_LEVEL_FC_MIC</name>
+				<enum_value>0x02</enum_value>
+				<description>4 Byte Frame Counter + 4 Byte MIC</description>
+			</value>
+			<value>
+				<name>EMBER_GP_SECURITY_LEVEL_FC_MIC_ENCRYPTED</name>
+				<enum_value>0x03</enum_value>
+				<description>4 Byte Frame Counter + 4 Byte MIC + encryption</description>
+			</value>
 		</values>
 	</enum>
 
 	<enum>
 		<name>EmberGpKeyType</name>
-		<description></description>
+		<description>Options to use when sending a message.</description>
 		<values>
+			<value>
+				<name>EMBER_GP_SECURITY_KEY_NONE</name>
+				<enum_value>0x00</enum_value>
+				<description></description>
+			</value>
+			<value>
+				<name>EMBER_GP_SECURITY_KEY_NWK</name>
+				<enum_value>0x01</enum_value>
+				<description></description>
+			</value>
+			<value>
+				<name>EMBER_GP_SECURITY_KEY_GPD_GROUP</name>
+				<enum_value>0x02</enum_value>
+				<description></description>
+			</value>
+			<value>
+				<name>EMBER_GP_SECURITY_KEY_NWK_DERIVED</name>
+				<enum_value>0x03</enum_value>
+				<description></description>
+			</value>
+			<value>
+				<name>EMBER_GP_SECURITY_KEY_GPD_OOB</name>
+				<enum_value>0x04</enum_value>
+				<description></description>
+			</value>
+			<value>
+				<name>EMBER_GP_SECURITY_KEY_GPD_DERIVED</name>
+				<enum_value>0x07</enum_value>
+				<description></description>
+			</value>
 		</values>
 	</enum>
 
@@ -6872,6 +6963,22 @@
 				<name>EMBER_LIBRARY_IS_STUB</name>
 				<enum_value>0x00</enum_value>
 				<description>Library is not installed</description>
+			</value>
+		</values>
+	</enum>
+	<enum>
+		<name>EmberGpApplicationId</name>
+		<description>Options to use when sending a message.</description>
+		<values>
+			<value>
+				<name>EMBER_GP_APPLICATION_SOURCE_ID</name>
+				<enum_value>0x00</enum_value>
+				<description>Source identifier</description>
+			</value>
+			<value>
+				<name>EMBER_GP_APPLICATION_IEEE_ADDRESS</name>
+				<enum_value>0x02</enum_value>
+				<description>IEEE address</description>
 			</value>
 		</values>
 	</enum>

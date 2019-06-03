@@ -24,38 +24,31 @@ public enum EmberDeviceUpdate {
     UNKNOWN(-1),
 
     /**
-     * 
-     */
+     *      */
     EMBER_STANDARD_SECURITY_SECURED_REJOIN(0x0000),
 
     /**
-     * 
-     */
+     *      */
     EMBER_STANDARD_SECURITY_UNSECURED_JOIN(0x0001),
 
     /**
-     * 
-     */
+     *      */
     EMBER_DEVICE_LEFT(0x0002),
 
     /**
-     * 
-     */
+     *      */
     EMBER_STANDARD_SECURITY_UNSECURED_REJOIN(0x0003),
 
     /**
-     * 
-     */
+     *      */
     EMBER_HIGH_SECURITY_SECURED_REJOIN(0x0004),
 
     /**
-     * 
-     */
+     *      */
     EMBER_HIGH_SECURITY_UNSECURED_JOIN(0x0005),
 
     /**
-     * 
-     */
+     *      */
     EMBER_HIGH_SECURITY_UNSECURED_REJOIN(0x0007);
 
     /**

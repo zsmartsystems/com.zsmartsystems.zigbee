@@ -20,7 +20,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EmberGpAddress {
+public class EmberGpAddressUnion extends EmberGpAddress{
 
     /**
      * The GPD's EUI64.
@@ -53,10 +53,10 @@ public class EmberGpAddress {
     /**
      * Default Constructor
      */
-    public EmberGpAddress() {
+    public EmberGpAddressUnion() {
     }
 
-    public EmberGpAddress(EzspDeserializer deserializer) {
+    public EmberGpAddressUnion(EzspDeserializer deserializer) {
         deserialize(deserializer);
     }
 
@@ -161,8 +161,9 @@ public class EmberGpAddress {
      */
     public void deserialize(EzspDeserializer deserializer) {
         // Deserialize the fields
-        gpdIeeeAddress = deserializer.deserializeEmberEui64();
-        sourceId = deserializer.deserializeUInt32();
+    	int[] address = deserializer.deserializeRawAddress();
+        gpdIeeeAddress = new IeeeAddress(address);
+        sourceId = (address[0] <<24) + (address[1] <<16) + (address[2] <<8) + address[3];
         applicationId = deserializer.deserializeEmberGpApplicationId();
         endpoint = deserializer.deserializeUInt8();
     }

@@ -541,7 +541,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
         setNetworkState(ZigBeeNetworkState.ONLINE);
         return ZigBeeStatus.SUCCESS;
-    }
+}
 
     /**
      * Reinitialises the network. This may take the transport layer OFFLINE, and will return the
@@ -733,10 +733,17 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             // The ZCL packet is serialised here.
             ZclCommand zclCommand = (ZclCommand) command;
 
-            apsFrame.setSourceEndpoint(1);
+            if (zclCommand.getClusterId() == 0x0021) {
+            	apsFrame.setSourceEndpoint(242);
 
-            // TODO set the profile properly
-            apsFrame.setProfile(0x104);
+                // TODO set the profile properly
+                apsFrame.setProfile(ZigBeeProfileType.ZIGBEE_GREEN_POWER.getKey());
+            } else {
+            	apsFrame.setSourceEndpoint(1);
+
+                // TODO set the profile properly
+                apsFrame.setProfile(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getKey());
+            }
 
             // Create the cluster library header
             ZclHeader zclHeader = new ZclHeader();

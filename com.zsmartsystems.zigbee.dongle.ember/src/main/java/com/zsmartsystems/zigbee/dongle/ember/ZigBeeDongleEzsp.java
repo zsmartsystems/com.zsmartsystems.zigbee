@@ -115,7 +115,10 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
      * The protocol handler used to send and receive EZSP packets
      */
     private EzspProtocolHandler frameHandler;
-
+    
+    // DEBUG
+    public EzspProtocolHandler getFrameHandler() { return frameHandler; }
+    
     /**
      * The Ember bootload handler
      */
@@ -187,6 +190,10 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     private boolean initialised = false;
 
     private ScheduledExecutorService executorService;
+    
+    //debug
+    public ScheduledExecutorService getExecutorService() { return executorService; }
+    
     private ScheduledFuture<?> pollingTimer = null;
 
     /**
@@ -360,7 +367,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         // Add the endpoint
         ncp.addEndpoint(1, 0, ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getKey(), new int[] { 0 }, new int[] { 0 });
-
+        ncp.addEndpoint(242, 0x0064, ZigBeeProfileType.ZIGBEE_GREEN_POWER.getKey(), new int[] { 0x0021 }, new int[] { 0 });
+        
         // Now initialise the network
         EmberStatus initResponse = ncp.networkInit();
 
@@ -613,7 +621,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         if (response.getFrameId() != POLL_FRAME_ID) {
             logger.debug("RX EZSP: " + response.toString());
         }
-
+        
         if (response instanceof EzspIncomingMessageHandler) {
             if (nwkAddress == null) {
                 logger.debug("Ignoring received frame as stack still initialising");
