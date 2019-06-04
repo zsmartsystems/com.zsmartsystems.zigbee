@@ -1,13 +1,37 @@
 package com.zsmartsystems.zigbee.greenpower;
 
-public class ZigbeeGreenPowerFrame {
+import com.zsmartsystems.zigbee.ZigBeeAddress;
 
+public class ZigbeeGreenPowerFrame {
+   
+	/**
+     * The source GPD's ID.
+     */
 	private int SourceID;
+	/**
+	 * The source Endpoint.
+	 */
 	private int Endpoint;
-	private int SecurityFrameCounter;
-	private int[] payload;
-	private int mic;
 	
+	/**
+	 * The security frame counter used to prevent the reception of duplicate frames.
+	 */
+	private int SecurityFrameCounter;
+	
+	/**
+	 * The Command ID
+	 */
+	private int CommandId;
+
+	/**
+	 * The GPD command payload.
+	 */
+	private int[] payload;
+	
+	/**
+	 * The frame's MIC.
+	 */
+	private int mic;
 	
 	public int getSourceID() {
 		return SourceID;
@@ -27,6 +51,12 @@ public class ZigbeeGreenPowerFrame {
 	public void setSecurityFrameCounter(int securityFrameCounter) {
 		SecurityFrameCounter = securityFrameCounter;
 	}
+	public int getCommandId() {
+		return CommandId;
+	}
+	public void setCommandId(int commandId) {
+		CommandId = commandId;
+	}
 	public int[] getPayload() {
 		return payload;
 	}
@@ -39,4 +69,28 @@ public class ZigbeeGreenPowerFrame {
 	public void setMic(int mic) {
 		this.mic = mic;
 	}
+	
+	@Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder(164);
+        builder.append("ZigBeeGreenPowerFrame [sourceID=");
+        builder.append(SourceID);
+        builder.append(", Endpoint=");
+        builder.append(Endpoint);
+        builder.append(", SecurityFrameCounter=");
+        builder.append(SecurityFrameCounter);
+        builder.append(", payload=");
+        if (payload != null) {
+            for (int c = 0; c < payload.length; c++) {
+                if (c != 0) {
+                    builder.append(' ');
+                }
+                builder.append(String.format("%02X", payload[c]));
+            }
+        }
+        builder.append(", Mic=");
+        builder.append(mic);
+        builder.append(']');
+        return builder.toString();
+    }
 }

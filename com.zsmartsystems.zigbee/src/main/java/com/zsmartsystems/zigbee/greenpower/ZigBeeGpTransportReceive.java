@@ -1,6 +1,6 @@
 package com.zsmartsystems.zigbee.greenpower;
 
-public interface ZigbeeGpTransportReceive {
+public interface ZigBeeGpTransportReceive {
     
     void receiveGpCommand(ZigbeeGreenPowerFrame gpFrame);
 

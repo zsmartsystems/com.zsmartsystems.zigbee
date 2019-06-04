@@ -39,7 +39,8 @@ import com.zsmartsystems.zigbee.aps.ApsDataEntity;
 import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDataStore;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDatabaseManager;
-import com.zsmartsystems.zigbee.greenpower.ZigbeeGpTransportReceive;
+import com.zsmartsystems.zigbee.greenpower.ZigBeeGpTransportReceive;
+import com.zsmartsystems.zigbee.greenpower.ZigBeeGpTransportTransmit;
 import com.zsmartsystems.zigbee.greenpower.ZigbeeGreenPowerFrame;
 import com.zsmartsystems.zigbee.internal.ClusterMatcher;
 import com.zsmartsystems.zigbee.internal.NotificationService;
@@ -134,7 +135,7 @@ import com.zsmartsystems.zigbee.zdo.command.NetworkAddressRequest;
  *
  * @author Chris Jackson
  */
-public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportReceive,ZigbeeGpTransportReceive {
+public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportReceive, ZigBeeGpTransportReceive {
     /**
      * The logger.
      */
@@ -185,6 +186,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * interface (eg a Dongle).
      */
     private final ZigBeeTransportTransmit transport;
+    
+    private ZigBeeGpTransportTransmit gpTransport = null;
 
     /**
      * The {@link ZigBeeTransactionManager} responsible for queueing and sending commands, and correlating transactions.
@@ -277,7 +280,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         this.transport = transport;
 
         transport.setZigBeeTransportReceive(this);
-
+        
         apsDataEntity = new ApsDataEntity();
         transactionManager = new ZigBeeTransactionManager(this);
     }
@@ -877,9 +880,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     	}
     	ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);
     	
-    	ZigBeeCommand command = null;
+    	ZigBeeCommand command = new ZigBeeCommand();
     	//TODO create the command based on the frame.
-    	//command = transactionManager.receive(command);
+    	command = transactionManager.receiveGp(command);
     }
     
     private ZigBeeCommand receiveZdoCommand(final ZclFieldDeserializer fieldDeserializer,
@@ -1625,5 +1628,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     public void receiveCommandState(int msgTag, ZigBeeTransportProgressState state) {
         logger.debug("RX STA: msgTag={} state={}", String.format("%02X", msgTag), state);
         transactionManager.receiveCommandState(msgTag, state);
+    }
+    
+    public void setGpTransport(ZigBeeGpTransportTransmit gpTransport) {
+    	this.gpTransport=gpTransport;
+    	gpTransport.setZigBeeGpTransportReceive(this);
     }
 }

@@ -32,7 +32,8 @@ import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.ZigBeeProfileType;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
-import com.zsmartsystems.zigbee.greenpower.ZigbeeGpTransportReceive;
+import com.zsmartsystems.zigbee.greenpower.ZigBeeGpTransportTransmit;
+import com.zsmartsystems.zigbee.greenpower.ZigBeeGpTransportReceive;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspChildJoinHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGpepIncomingMessageHandler;
@@ -99,7 +100,7 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
  * @author Chris Jackson
  *
  */
-public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTransportFirmwareUpdate, EzspFrameHandler {
+public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTransportFirmwareUpdate, EzspFrameHandler, ZigBeeGpTransportTransmit {
 
     private static final int POLL_FRAME_ID = EzspNetworkStateRequest.FRAME_ID;
     private static final int WAIT_FOR_ONLINE = 5000;
@@ -142,7 +143,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
      */
     private ZigBeeTransportReceive zigbeeTransportReceive;
     
-    private ZigbeeGpTransportReceive zigbeeGpTransportReceiver;
+    private ZigBeeGpTransportReceive zigbeeGpTransportReceive;
     
     /**
      * The current link key as {@link ZigBeeKey}
@@ -621,6 +622,11 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         this.zigbeeTransportReceive = zigbeeTransportReceive;
     }
 
+	@Override
+	public void setZigBeeGpTransportReceive(ZigBeeGpTransportReceive zigbeeGpTransportReceive) {
+		this.zigbeeGpTransportReceive = zigbeeGpTransportReceive;
+	}
+	
     @Override
     public void handlePacket(EzspFrame response) {
         if (response.getFrameId() != POLL_FRAME_ID) {
@@ -739,18 +745,19 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 logger.debug("Ignoring received frame as stack still initialising");
                 return;
             }
+        	
         	EzspGpepIncomingMessageHandler incomingMessage = (EzspGpepIncomingMessageHandler) response;
-
             ZigbeeGreenPowerFrame gpFrame = new ZigbeeGreenPowerFrame();
-           
             
             gpFrame.setSourceID(incomingMessage.getAddr().getSourceId());
             gpFrame.setEndpoint(incomingMessage.getAddr().getEndpoint());
             gpFrame.setSecurityFrameCounter(incomingMessage.getGpdSecurityFrameCounterLength());
+            gpFrame.setCommandId(incomingMessage.getGpdCommandId());
             gpFrame.setPayload(incomingMessage.getGpdCommandPayload());
             gpFrame.setMic(incomingMessage.getMic());
 
-        	zigbeeGpTransportReceiver.receiveGpCommand(gpFrame);
+            System.out.println("Frame remontée: " + gpFrame.toString());
+        	zigbeeGpTransportReceive.receiveGpCommand(gpFrame);
             return;
         }
     }
@@ -1158,4 +1165,11 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     protected EzspProtocolHandler getProtocolHandler() {
         return frameHandler;
     }
+
+	@Override
+	public void sendGpCommand(int msgTag, ZigbeeGreenPowerFrame gpFrame) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

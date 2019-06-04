@@ -5,7 +5,7 @@ import com.zsmartsystems.zigbee.ZigBeeCommand;
 /**
  * Base class for the implementation of Green Power commands, extended from {@link ZigBeeCommand}.
  */
-public class GpCommand extends ZigBeeCommand{
+public class GpCommand {
 
 	/**
 	 * The command ID
