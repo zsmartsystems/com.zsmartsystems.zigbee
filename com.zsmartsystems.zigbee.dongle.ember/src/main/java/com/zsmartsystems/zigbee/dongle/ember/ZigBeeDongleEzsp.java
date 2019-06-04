@@ -26,6 +26,7 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeBroadcastDestination;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
+import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
@@ -748,7 +749,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         	
         	EzspGpepIncomingMessageHandler incomingMessage = (EzspGpepIncomingMessageHandler) response;
             ZigbeeGreenPowerFrame gpFrame = new ZigbeeGreenPowerFrame();
-            
+              
+            gpFrame.setAutoCommissioning(incomingMessage.getAutoCommissioning());
             gpFrame.setSourceID(incomingMessage.getAddr().getSourceId());
             gpFrame.setEndpoint(incomingMessage.getAddr().getEndpoint());
             gpFrame.setSecurityFrameCounter(incomingMessage.getGpdSecurityFrameCounterLength());

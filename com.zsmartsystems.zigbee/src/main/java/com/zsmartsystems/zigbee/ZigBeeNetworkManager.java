@@ -39,6 +39,9 @@ import com.zsmartsystems.zigbee.aps.ApsDataEntity;
 import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDataStore;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDatabaseManager;
+import com.zsmartsystems.zigbee.greenpower.GpCommand;
+import com.zsmartsystems.zigbee.greenpower.ZigBeeGpCommandListener;
+import com.zsmartsystems.zigbee.greenpower.ZigBeeGpCommandNotifier;
 import com.zsmartsystems.zigbee.greenpower.ZigBeeGpTransportReceive;
 import com.zsmartsystems.zigbee.greenpower.ZigBeeGpTransportTransmit;
 import com.zsmartsystems.zigbee.greenpower.ZigbeeGreenPowerFrame;
@@ -203,6 +206,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * The {@link ZigBeeCommandNotifier}. This is used for sending notifications asynchronously to listeners.
      */
     private final ZigBeeCommandNotifier commandNotifier = new ZigBeeCommandNotifier();
+    
+    private final ZigBeeGpCommandNotifier gpCommandNotifier = new ZigBeeGpCommandNotifier();
 
     /**
      * The listeners of the ZigBee network state.
@@ -786,6 +791,14 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         commandNotifier.removeCommandListener(commandListener);
     }
 
+    public void addGpCommandListener(ZigBeeGpCommandListener gpCommandListener) {
+    	gpCommandNotifier.addCommandListener(gpCommandListener);
+    }
+    
+    public void removeGpCommandListener(ZigBeeGpCommandListener gpCommandListener) {
+        gpCommandNotifier.removeCommandListener(gpCommandListener);
+    }
+    
     @Override
     public void receiveCommand(final ZigBeeApsFrame incomingApsFrame) {
         synchronized (this) {
@@ -866,23 +879,21 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     	}
 
     	logger.debug("RX APS: {}", gpFrame);
-
-    	// Create the deserialiser
-    	Constructor<? extends ZigBeeDeserializer> constructor;
-    	ZigBeeDeserializer deserializer;
-    	try {
-    		constructor = deserializerClass.getConstructor(int[].class);
-    		deserializer = constructor.newInstance(new Object[] { gpFrame.getPayload() });
-    	} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
-    			| IllegalArgumentException | InvocationTargetException e) {
-    		logger.debug("Error creating deserializer", e);
+    	
+    	GpCommand command = new GpCommand();
+    	
+    	command.setSourceID(gpFrame.getSourceID());
+    	command.setEndpoint(gpFrame.getEndpoint());
+    	command.setCommandId(gpFrame.getCommandId());
+    	command.setSecurityFrameCounter(gpFrame.getSecurityFrameCounter());
+    	command.setPayload(gpFrame.getPayload());
+    	
+    	command = transactionManager.receiveGp(command);
+    	if (command==null) {
     		return;
     	}
-    	ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);
-    	
-    	ZigBeeCommand command = new ZigBeeCommand();
-    	//TODO create the command based on the frame.
-    	command = transactionManager.receiveGp(command);
+
+    	gpCommandNotifier.notifyCommandListeners(command);
     }
     
     private ZigBeeCommand receiveZdoCommand(final ZclFieldDeserializer fieldDeserializer,

@@ -1,9 +1,12 @@
 package com.zsmartsystems.zigbee.greenpower;
 
-import com.zsmartsystems.zigbee.ZigBeeAddress;
-
 public class ZigbeeGreenPowerFrame {
-   
+
+	/**
+	 * Whether the GPDF as autoComissioning bit set or no.
+	 */
+	private boolean AutoCommissioning;
+
 	/**
      * The source GPD's ID.
      */
@@ -32,7 +35,13 @@ public class ZigbeeGreenPowerFrame {
 	 * The frame's MIC.
 	 */
 	private int mic;
-	
+
+	public boolean isAutoCommissioning() {
+		return AutoCommissioning;
+	}
+	public void setAutoCommissioning(boolean autoCommissioning) {
+		AutoCommissioning = autoCommissioning;
+	}
 	public int getSourceID() {
 		return SourceID;
 	}

@@ -12,6 +12,7 @@ import java.util.Set;
 
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeCommandListener;
+import com.zsmartsystems.zigbee.greenpower.GpCommand;
 
 /**
  * Class to manage notifications of received commands. The library distributes commands hierarchically so this class
@@ -59,5 +60,6 @@ public class ZigBeeCommandNotifier {
                 }
             });
         }
-    }
+    }   
+    
 }

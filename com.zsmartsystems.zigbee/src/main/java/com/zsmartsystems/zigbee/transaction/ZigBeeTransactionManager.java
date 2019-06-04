@@ -33,6 +33,7 @@ import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.greenpower.GpCommand;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransaction.TransactionState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportProgressState;
@@ -455,6 +456,10 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
         return command;
     }
 
+    public GpCommand receiveGp(final GpCommand command) {
+    	//notify
+    	return command;
+    }
     /**
      * Callback from the transport layer when it has progressed the state of the transaction.
      *

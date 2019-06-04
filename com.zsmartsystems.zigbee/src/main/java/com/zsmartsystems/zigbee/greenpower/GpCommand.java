@@ -6,23 +6,30 @@ import com.zsmartsystems.zigbee.ZigBeeCommand;
  * Base class for the implementation of Green Power commands, extended from {@link ZigBeeCommand}.
  */
 public class GpCommand {
+	
+	/**
+     * The source GPD's ID.
+     */
+	private int SourceID;
+	/**
+	 * The source Endpoint.
+	 */
+	private int Endpoint;
 
 	/**
-	 * The command ID
+	 * The security frame counter used to prevent the reception of duplicate frames.
+	 */
+	private int SecurityFrameCounter;
+	
+	/**
+	 * The Command ID
 	 */
 	protected int commandId;
 
 	/**
-	 * Sets the cluster ID for <i>generic</i> commands.
-	 * <p>
-	 * For commands that are not <i>generic</i>, this method will do nothing as the cluster ID is fixed.
-	 * To test if a command is <i>generic</i>, use the {@link #isGenericCommand} method.
-	 *
-	 * @param clusterId the cluster ID used for <i>generic</i> commands as an {@link Integer}
+	 * The GPD command payload.
 	 */
-	public void setClusterId(Integer clusterId) {
-		// Default implementation does nothing. Generic commands will override this.
-	}
+	private int[] payload;
 
 	/**
 	 * Gets the command ID.
@@ -33,7 +40,43 @@ public class GpCommand {
 		return commandId;
 	}
 	
+	/**
+	 * Sets the commandId.
+	 * 
+	 * @param commandId
+	 */
 	public void setCommandId(int commandId) {
 		this.commandId=commandId;
+	}
+	public int getSourceID() {
+		return SourceID;
+	}
+
+	public void setSourceID(int sourceID) {
+		SourceID = sourceID;
+	}
+
+	public int getEndpoint() {
+		return Endpoint;
+	}
+
+	public void setEndpoint(int endpoint) {
+		Endpoint = endpoint;
+	}
+
+	public int getSecurityFrameCounter() {
+		return SecurityFrameCounter;
+	}
+
+	public void setSecurityFrameCounter(int securityFrameCounter) {
+		SecurityFrameCounter = securityFrameCounter;
+	}
+
+	public int[] getPayload() {
+		return payload;
+	}
+
+	public void setPayload(int[] payload) {
+		this.payload = payload;
 	}
 }
