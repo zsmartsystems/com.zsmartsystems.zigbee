@@ -1,6 +1,6 @@
 package com.zsmartsystems.zigbee.greenpower;
 
-public class ZigbeeGreenPowerFrame {
+public class ZigBeeGreenPowerFrame {
 
 	/**
 	 * Whether the GPDF as autoComissioning bit set or no.

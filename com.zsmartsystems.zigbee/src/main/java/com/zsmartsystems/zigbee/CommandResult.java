@@ -11,12 +11,6 @@ import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
 import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 
-/**
- * Value class containing command response.
- *
- * @author Tommi S.E. Laukkanen
- * @author Chris Jackson
- */
 public class CommandResult {
 
     /**

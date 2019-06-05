@@ -7,6 +7,12 @@ import com.zsmartsystems.zigbee.ZigBeeCommand;
  */
 public class GpCommand {
 	
+	private boolean autoCommissioning;
+	/**
+     * The transaction ID.
+     */
+    private Integer transactionId;
+    
 	/**
      * The source GPD's ID.
      */
@@ -31,6 +37,8 @@ public class GpCommand {
 	 */
 	private int[] payload;
 
+	private int mic;
+	
 	/**
 	 * Gets the command ID.
 	 *
@@ -47,6 +55,18 @@ public class GpCommand {
 	 */
 	public void setCommandId(int commandId) {
 		this.commandId=commandId;
+	}
+	public boolean isAutoCommissioning() {
+		return this.autoCommissioning;
+	}
+	public void setAutoCommissioning(boolean autoCommissioning) {
+		this.autoCommissioning=autoCommissioning;
+	}
+	public Integer getTransactionId() {
+		return transactionId;
+	}
+	public void setTransactionId(Integer transactionId) {
+		this.transactionId=transactionId;
 	}
 	public int getSourceID() {
 		return SourceID;
@@ -78,5 +98,13 @@ public class GpCommand {
 
 	public void setPayload(int[] payload) {
 		this.payload = payload;
+	}
+	
+	public int getMic() {
+		return this.mic;
+	}
+	
+	public void setMic(int mic) {
+		this.mic=mic;
 	}
 }

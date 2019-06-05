@@ -1,10 +1,3 @@
-/**
- * Copyright (c) 2016-2019 by the respective copyright holders.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- */
 package com.zsmartsystems.zigbee.transaction;
 
 import java.util.concurrent.ScheduledFuture;
@@ -14,23 +7,11 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeAddress;
-import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.greenpower.GpCommand;
+import com.zsmartsystems.zigbee.greenpower.GpCommandResult;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportProgressState;
 
-/**
- * Transaction class to handle the sending of commands and timeout in the event there is no response.
- * <p>
- * The transaction handles the feedback from the dongle via the
- * {@link #transactionStatusReceived(ZigBeeTransportProgressState, int)} callback, and if these notifications are
- * provided, will ensure that the dongle sends an APS ack/nak before the transaction is completed. This is done to avoid
- * the situation where at application level the transaction is considered complete as the response command was received,
- * but at transport level the APS ACK has not yet been received and the transport has not released the transaction.
- *
- * @author Chris Jackson
- *
- */
-public class ZigBeeTransaction {
+public class ZigBeeGpTransaction {
     /**
      * The logger.
      */
@@ -82,22 +63,22 @@ public class ZigBeeTransaction {
     /**
      * The {@link ZigBeeTransactionManager} through which the transaction is being managed
      */
-    private final ZigBeeTransactionManager transactionManager;
+    private final ZigBeeGpTransactionManager transactionManager;
 
     /**
-     * The {@link ZigBeeTransactionFuture} that will be fulfilled once the transaction completes
+     * The {@link ZigBeeGpTransactionFuture} that will be fulfilled once the transaction completes
      */
-    private ZigBeeTransactionFuture transactionFuture;
+    private ZigBeeGpTransactionFuture transactionFuture;
 
     /**
-     * The {@link ZigBeeTransactionMatcher} used to match the response to the command
+     * The {@link ZigBeeGpTransactionMatcher} used to match the response to the command
      */
-    private ZigBeeTransactionMatcher responseMatcher;
+    private ZigBeeGpTransactionMatcher responseMatcher;
 
     /**
-     * The {@link ZigBeeCommand} that we are sending
+     * The {@link Command} that we are sending
      */
-    private ZigBeeCommand command;
+    private GpCommand command;
 
     /**
      * The task used for transaction timeouts
@@ -118,7 +99,7 @@ public class ZigBeeTransaction {
      * In the event that the application level response is received before the transport response, we need to remember
      * the command that completed the transaction.
      */
-    private ZigBeeCommand completionCommand;
+    private GpCommand completionCommand;
 
     /**
      * The amount of time (in milliseconds) from when the command is sent to the transport, until when the transport
@@ -145,12 +126,12 @@ public class ZigBeeTransaction {
      * Transaction constructor
      *
      * @param transactionManager the {@link ZigBeeTransactionManager} through which the transaction is being sent.
-     * @param command the {@link ZigBeeCommand}.
-     * @param responseMatcher the {@link ZigBeeTransactionMatcher} to match the response and complete the transaction.
+     * @param command the {@link GpCommand}.
+     * @param responseMatcher the {@link ZigBeeGpTransactionMatcher} to match the response and complete the transaction.
      *            May be null if no response is expected.
      */
-    public ZigBeeTransaction(ZigBeeTransactionManager transactionManager, final ZigBeeCommand command,
-            final ZigBeeTransactionMatcher responseMatcher) {
+    public ZigBeeGpTransaction(ZigBeeGpTransactionManager transactionManager, final GpCommand command,
+            final ZigBeeGpTransactionMatcher responseMatcher) {
         this.transactionManager = transactionManager;
         this.command = command;
         this.responseMatcher = responseMatcher;
@@ -203,22 +184,13 @@ public class ZigBeeTransaction {
     /**
      * Starts the transaction. Called by the {@link ZigBeeTransactionManager} when it sends the transaction.
      *
-     * @return the {@link ZigBeeCommand} to be transmitted
+     * @return the {@link GpCommand} to be transmitted
      */
-    protected ZigBeeCommand startTransaction() {
+    protected GpCommand startTransaction() {
         state = TransactionState.DISPATCHED;
         startTimer(timeout1);
         sendCnt++;
         return command;
-    }
-
-    /**
-     * Gets the {@link ZigBeeAddress} that this transaction is being sent to
-     *
-     * @return the {@link ZigBeeAddress} for the transaction
-     */
-    protected ZigBeeAddress getDestinationAddress() {
-        return command.getDestinationAddress();
     }
 
     /**
@@ -284,18 +256,18 @@ public class ZigBeeTransaction {
     /**
      * Sets the future for this transaction. The transaction will be completed when the transaction finishes or aborts.
      *
-     * @param transactionFuture the {@link ZigBeeTransactionFuture} to be completed when the transaction completes.
+     * @param transactionFuture the {@link ZigBeeGpTransactionFuture} to be completed when the transaction completes.
      */
-    protected void setFuture(ZigBeeTransactionFuture transactionFuture) {
+    protected void setFuture(ZigBeeGpTransactionFuture transactionFuture) {
         this.transactionFuture = transactionFuture;
     }
 
     /**
      * Gets the future for this transaction. The transaction will be completed when the transaction finishes or aborts.
      *
-     * @return the {@link ZigBeeTransactionFuture} to be completed when the transaction completes.
+     * @return the {@link ZigBeeGpTransactionFuture} to be completed when the transaction completes.
      */
-    protected ZigBeeTransactionFuture getFuture() {
+    protected ZigBeeGpTransactionFuture getFuture() {
         return transactionFuture;
     }
 
@@ -321,12 +293,12 @@ public class ZigBeeTransaction {
     }
 
     /**
-     * Called by the transaction manager when a {@link ZigBeeCommand} is received. The transaction should check this
+     * Called by the transaction manager when a {@link GpCommand} is received. The transaction should check this
      * command to see if it completes the transaction.
      *
-     * @param receivedCommand the incoming {@link ZigBeeCommand}
+     * @param receivedCommand the incoming {@link GpCommand}
      */
-    public void commandReceived(ZigBeeCommand receivedCommand) {
+    public void commandReceived(GpCommand receivedCommand) {
         if (responseMatcher == null) {
             return;
         }
@@ -372,14 +344,14 @@ public class ZigBeeTransaction {
         }, timeout);
     }
 
-    private void completeTransaction(ZigBeeCommand receivedCommand) {
+    private void completeTransaction(GpCommand receivedCommand) {
         state = TransactionState.COMPLETE;
         if (timeoutTask != null) {
             timeoutTask.cancel(false);
         }
         if (transactionFuture != null) {
             synchronized (transactionFuture) {
-                transactionFuture.set(new CommandResult(receivedCommand));
+                transactionFuture.set(new GpCommandResult(receivedCommand));
                 transactionFuture.notify();
             }
         }

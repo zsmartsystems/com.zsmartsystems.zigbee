@@ -44,13 +44,14 @@ import com.zsmartsystems.zigbee.greenpower.ZigBeeGpCommandListener;
 import com.zsmartsystems.zigbee.greenpower.ZigBeeGpCommandNotifier;
 import com.zsmartsystems.zigbee.greenpower.ZigBeeGpTransportReceive;
 import com.zsmartsystems.zigbee.greenpower.ZigBeeGpTransportTransmit;
-import com.zsmartsystems.zigbee.greenpower.ZigbeeGreenPowerFrame;
+import com.zsmartsystems.zigbee.greenpower.ZigBeeGreenPowerFrame;
 import com.zsmartsystems.zigbee.internal.ClusterMatcher;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.internal.ZigBeeCommandNotifier;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
+import com.zsmartsystems.zigbee.transaction.ZigBeeGpTransactionManager;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionManager;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
@@ -197,6 +198,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      */
     private final ZigBeeTransactionManager transactionManager;
 
+    private ZigBeeGpTransactionManager gpTransactionManager;
     /**
      * The {@link ApsDataEntity} provides APS layer services such as duplicate removal and fragmentation control
      */
@@ -780,6 +782,25 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         transport.sendCommand(command.getTransactionId(), apsFrame);
         return true;
     }
+    
+    //TODO add verifications
+    public boolean sendGpCommand(GpCommand command) {
+    	// Create the application frame
+        ZigBeeGreenPowerFrame gpFrame = new ZigBeeGreenPowerFrame();
+
+        logger.debug("TX CMD: {}", command);
+        
+        gpFrame.setSourceID(command.getSourceID());
+        gpFrame.setEndpoint(command.getEndpoint());
+        gpFrame.setSecurityFrameCounter(command.getSecurityFrameCounter());
+        gpFrame.setCommandId(command.getCommandId());
+        gpFrame.setPayload(command.getPayload());
+        gpFrame.setMic(command.getMic());
+        
+        logger.debug("TX APS: {}", gpFrame);
+    	gpTransport.sendGpCommand(command.getTransactionId(), gpFrame);
+    	return true;
+    }
 
     @Override
     public void addCommandListener(ZigBeeCommandListener commandListener) {
@@ -871,7 +892,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     //method responsible for receiving Green power frames. 
     //TODO fuse with receiveCommand and only make a difference if apsFrame.getProfile()==0xA1E0 ?
     @Override
-    public void receiveGpCommand(ZigbeeGreenPowerFrame gpFrame) {
+    public void receiveGpCommand(ZigBeeGreenPowerFrame gpFrame) {
     	synchronized (this) {
     		if (networkState != ZigBeeNetworkState.ONLINE) {
     			return;
@@ -882,13 +903,15 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     	
     	GpCommand command = new GpCommand();
     	
+    	command.setAutoCommissioning(gpFrame.isAutoCommissioning());
     	command.setSourceID(gpFrame.getSourceID());
     	command.setEndpoint(gpFrame.getEndpoint());
     	command.setCommandId(gpFrame.getCommandId());
     	command.setSecurityFrameCounter(gpFrame.getSecurityFrameCounter());
     	command.setPayload(gpFrame.getPayload());
+    	command.setMic(gpFrame.getMic());
     	
-    	command = transactionManager.receiveGp(command);
+    	command = gpTransactionManager.receive(command);
     	if (command==null) {
     		return;
     	}
@@ -1644,5 +1667,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     public void setGpTransport(ZigBeeGpTransportTransmit gpTransport) {
     	this.gpTransport=gpTransport;
     	gpTransport.setZigBeeGpTransportReceive(this);
+    }
+    
+    public void setGpTransactionManager() {
+    	this.gpTransactionManager = new ZigBeeGpTransactionManager(this);
     }
 }

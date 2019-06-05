@@ -28,14 +28,14 @@ import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeBroadcastDestination;
-import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.greenpower.GpCommand;
+import com.zsmartsystems.zigbee.greenpower.GpCommandResult;
 import com.zsmartsystems.zigbee.internal.NotificationService;
-import com.zsmartsystems.zigbee.transaction.ZigBeeTransaction.TransactionState;
+import com.zsmartsystems.zigbee.transaction.ZigBeeGpTransaction.TransactionState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportProgressState;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.MacCapabilitiesType;
 
@@ -69,7 +69,7 @@ import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.MacCapabilitiesType;
  * @author Chris Jackson
  *
  */
-public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
+public class ZigBeeGpTransactionManager implements ZigBeeNetworkNodeListener {
     /**
      * The logger.
      */
@@ -109,7 +109,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     /**
      * The set of outstanding transactions - used to notify transactions when responses are received.
      */
-    private Set<ZigBeeTransaction> outstandingTransactions = new HashSet<>();
+    private Set<ZigBeeGpTransaction> outstandingTransactions = new HashSet<>();
 
     /**
      * The maximum number of transactions the manager will allow at any time
@@ -138,7 +138,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      * A Map containing the queue for each node. This provides quick access when adding commands to queue, or performing
      * any queue function where we know the node.
      */
-    private final Map<IeeeAddress, ZigBeeTransactionQueue> nodeQueue = new ConcurrentHashMap<>();
+    private final Map<IeeeAddress, ZigBeeGpTransactionQueue> nodeQueue = new ConcurrentHashMap<>();
 
     /**
      * {@link AtomicInteger} used to generate transaction IDs
@@ -148,11 +148,11 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     /**
      * A List of queues with outstanding commands. This is used for random access when sending transactions.
      */
-    private final List<ZigBeeTransactionQueue> outstandingQueues = new ArrayList<>();
+    private final List<ZigBeeGpTransactionQueue> outstandingQueues = new ArrayList<>();
 
-    private final ZigBeeTransactionQueue defaultQueue;
-    private final ZigBeeTransactionQueue broadcastQueue;
-    private final ZigBeeTransactionQueue multicastQueue;
+    private final ZigBeeGpTransactionQueue defaultQueue;
+    private final ZigBeeGpTransactionQueue broadcastQueue;
+    private final ZigBeeGpTransactionQueue multicastQueue;
 
     private ZigBeeTransactionProfile defaultProfile;
     private ZigBeeTransactionProfile defaultSleepyProfile;
@@ -162,20 +162,20 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      */
     private ScheduledFuture<?> timeoutTask;
 
-    public ZigBeeTransactionManager(ZigBeeNetworkManager manager) {
+    public ZigBeeGpTransactionManager(ZigBeeNetworkManager manager) {
         this.networkManager = manager;
 
         defaultProfile = new ZigBeeTransactionProfile(NODE_RETRIES, NODE_TRANSACTIONS, NODE_DELAY);
         defaultSleepyProfile = new ZigBeeTransactionProfile(SLEEPY_RETRIES, SLEEPY_TRANSACTIONS, SLEEPY_DELAY);
 
-        defaultQueue = new ZigBeeTransactionQueue("Default");
+        defaultQueue = new ZigBeeGpTransactionQueue("Default");
         defaultQueue.setProfile(defaultProfile);
         defaultQueue.setSleepy(false);
 
-        broadcastQueue = new ZigBeeTransactionQueue("Broadcast");
+        broadcastQueue = new ZigBeeGpTransactionQueue("Broadcast");
         broadcastQueue.setProfile(new ZigBeeTransactionProfile(BCAST_RETRIES, BCAST_TRANSACTIONS, BCAST_DELAY));
 
-        multicastQueue = new ZigBeeTransactionQueue("Multicast");
+        multicastQueue = new ZigBeeGpTransactionQueue("Multicast");
         multicastQueue.setProfile(new ZigBeeTransactionProfile(MCAST_RETRIES, MCAST_TRANSACTIONS, MCAST_DELAY));
 
         networkManager.addNetworkNodeListener(this);
@@ -189,7 +189,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
 
         networkManager.removeNetworkNodeListener(this);
 
-        executorService.shutdownNow();
+        executorService.shutdown();
 
         if (timeoutTask != null) {
             timeoutTask.cancel(false);
@@ -197,7 +197,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
 
         broadcastQueue.shutdown();
         multicastQueue.shutdown();
-        for (ZigBeeTransactionQueue queue : nodeQueue.values()) {
+        for (ZigBeeGpTransactionQueue queue : nodeQueue.values()) {
             queue.shutdown();
         }
 
@@ -205,7 +205,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
 
         synchronized (outstandingTransactions) {
             // Notify the listeners
-            for (final ZigBeeTransaction transaction : outstandingTransactions) {
+            for (final ZigBeeGpTransaction transaction : outstandingTransactions) {
                 NotificationService.execute(new Runnable() {
                     @Override
                     public void run() {
@@ -327,26 +327,26 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     /**
      * Sends a command without waiting for a response
      *
-     * @param command the {@link ZigBeeCommand} to send
+     * @param command the {@link GpCommand} to send
      */
-    public void sendTransaction(ZigBeeCommand command) {
+    public void sendTransaction(GpCommand command) {
         sendTransaction(command, null);
     }
 
     /**
-     * Sends a command, and uses the {@link ZigBeeTransactionMatcher} to match the response which will complete the
+     * Sends a command, and uses the {@link ZigBeeGpTransactionMatcher} to match the response which will complete the
      * transaction.
      *
-     * @param command the {@link ZigBeeCommand} to send
-     * @param responseMatcher the {@link ZigBeeTransactionMatcher} to match the response which will complete the
+     * @param command the {@link GpCommand} to send
+     * @param responseMatcher the {@link ZigBeeGpTransactionMatcher} to match the response which will complete the
      *            transaction.
      * @return the future {@link CommandResult}
      */
-    public Future<CommandResult> sendTransaction(ZigBeeCommand command, ZigBeeTransactionMatcher responseMatcher) {
-        ZigBeeTransaction transaction = new ZigBeeTransaction(this, command, responseMatcher);
+    public Future<GpCommandResult> sendTransaction(GpCommand command, ZigBeeGpTransactionMatcher responseMatcher) {
+        ZigBeeGpTransaction transaction = new ZigBeeGpTransaction(this, command, responseMatcher);
 
         synchronized (this) {
-            ZigBeeTransactionQueue queue = getTransactionQueue(transaction);
+            ZigBeeGpTransactionQueue queue = getTransactionQueue(transaction);
             if (queue == null) {
                 logger.debug("Error getting queue for {}", transaction);
                 return null;
@@ -357,12 +357,12 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     }
 
     /**
-     * Adds a {@link ZigBeeTransaction} to the respective {@link ZigBeeTransactionQueue}
+     * Adds a {@link ZigBeeGpTransaction} to the respective {@link ZigBeeGpTransactionQueue}
      *
-     * @param transaction the {@link ZigBeeTransaction} to add to the queue. Not null.
+     * @param transaction the {@link ZigBeeGpTransaction} to add to the queue. Not null.
      * @return the future {@link CommandResult}
      */
-    private ZigBeeTransactionFuture queueTransaction(ZigBeeTransactionQueue queue, ZigBeeTransaction transaction) {
+    private ZigBeeGpTransactionFuture queueTransaction(ZigBeeGpTransactionQueue queue, ZigBeeGpTransaction transaction) {
         queue.addToQueue(transaction);
         if (!queue.isEmpty() && !outstandingQueues.contains(queue)) {
             outstandingQueues.add(queue);
@@ -379,47 +379,48 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      * <p>
      * This method will only return null if the node address is unknown, and therefore no queue can be created.
      *
-     * @param transaction the {@link ZigBeeTransaction}
-     * @return the {@link ZigBeeTransactionQueue} or null if no queue could be derived
+     * @param transaction the {@link ZigBeeGpTransaction}
+     * @return the {@link ZigBeeGpTransactionQueue} or null if no queue could be derived
      */
-    private ZigBeeTransactionQueue getTransactionQueue(ZigBeeTransaction transaction) {
-        ZigBeeAddress address = transaction.getDestinationAddress();
-        if (address instanceof ZigBeeEndpointAddress && !ZigBeeBroadcastDestination.isBroadcast(address.getAddress())) {
-            // Get the IEEE address
-            ZigBeeNode node = networkManager.getNode(address.getAddress());
-            if (node == null) {
-                logger.debug("Attempt to send command with unknown destination: {}", transaction);
-                return defaultQueue;
-            }
-            // Add the transaction to the device queue - if it doesn't currently exist, create it
-            ZigBeeTransactionQueue queue = nodeQueue.get(node.getIeeeAddress());
-            if (queue == null) {
-                logger.debug("{}: Creating new Transaction Queue", node.getIeeeAddress());
-                queue = new ZigBeeTransactionQueue(node.getIeeeAddress().toString());
-                setQueueType(node, queue);
-
-                nodeQueue.put(node.getIeeeAddress(), queue);
-            }
-            return queue;
-        } else if (address instanceof ZigBeeEndpointAddress
-                && ZigBeeBroadcastDestination.isBroadcast(address.getAddress())) {
-            return broadcastQueue;
-        } else {
-            return multicastQueue;
-        }
+    private ZigBeeGpTransactionQueue getTransactionQueue(ZigBeeGpTransaction transaction) {
+//        ZigBeeAddress address = transaction.getDestinationAddress();
+//        if (address instanceof ZigBeeEndpointAddress && !ZigBeeBroadcastDestination.isBroadcast(address.getAddress())) {
+//            // Get the IEEE address
+//            ZigBeeNode node = networkManager.getNode(address.getAddress());
+//            if (node == null) {
+//                logger.debug("Attempt to send command with unknown destination: {}", transaction);
+//                return defaultQueue;
+//            }
+//            // Add the transaction to the device queue - if it doesn't currently exist, create it
+//            ZigBeeGpTransactionQueue queue = nodeQueue.get(node.getIeeeAddress());
+//            if (queue == null) {
+//                logger.debug("{}: Creating new Transaction Queue", node.getIeeeAddress());
+//                queue = new ZigBeeGpTransactionQueue(node.getIeeeAddress().toString());
+//                setQueueType(node, queue);
+//
+//                nodeQueue.put(node.getIeeeAddress(), queue);
+//            }
+//            return queue;
+//        } else if (address instanceof ZigBeeEndpointAddress
+//                && ZigBeeBroadcastDestination.isBroadcast(address.getAddress())) {
+//            return broadcastQueue;
+//        } else {
+//            return multicastQueue;
+//        }
+    	//No need to use the address to decide which type of queue to use as all GP frames are broadcasted.
+    	return multicastQueue;
     }
 
     /**
      * Sets the queue type to sleepy or non-sleepy. This will update the profile, and the sleepy flag in the quque
      *
      * @param node the {@link ZigBeeNode} of the queue to update
-     * @param queue the {@link ZigBeeTransactionQueue} to update
+     * @param queue the {@link ZigBeeGpTransactionQueue} to update
      * @return true if the queue state was changed
      */
-    private boolean setQueueType(ZigBeeNode node, ZigBeeTransactionQueue queue) {
+    private boolean setQueueType(ZigBeeNode node, ZigBeeGpTransactionQueue queue) {
         boolean sleepy;
-        if (node.getNodeDescriptor() != null
-                && !node.getNodeDescriptor().getMacCapabilities().contains(MacCapabilitiesType.RECEIVER_ON_WHEN_IDLE)) {
+        if (!node.getNodeDescriptor().getMacCapabilities().contains(MacCapabilitiesType.RECEIVER_ON_WHEN_IDLE)) {
             queue.setProfile(defaultSleepyProfile);
             sleepy = true;
         } else {
@@ -432,30 +433,29 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     /**
      * Sends the transaction to the transport layer.
      *
-     * @param transaction the {@link ZigBeeTransaction} to send
+     * @param transaction the {@link ZigBeeGpTransaction} to send
      */
-    private void send(ZigBeeTransaction transaction) {
+    private void send(ZigBeeGpTransaction transaction) {
         if (transaction.getTransactionId() == null) {
             transaction.setTransactionId(transactionIdCounter.getAndIncrement() & 0xff);
         }
-        logger.debug("{}: Sending {}", transaction.getDestinationAddress(), transaction);
+        logger.debug("{}: Sending {}", transaction);
         addTransactionListener(transaction);
-        networkManager.sendCommand(transaction.startTransaction());
+        networkManager.sendGpCommand(transaction.startTransaction());
     }
 
     /**
      * Processes a received frame within the transaction manager, and returns the frame that is to fed up the stack. The
      * transaction manager may return null from this command if it should not be processed up the stack.
      *
-     * @param command the received {@link ZigBeeCommand}
-     * @return the {@link ZigBeeCommand} to be used within the library or null if the frame is not to be fed into the
+     * @param command the received {@link GpCommand}
+     * @return the {@link GpCommand} to be used within the library or null if the frame is not to be fed into the
      *         rest of the system
      */
-    public ZigBeeCommand receive(final ZigBeeCommand command) {
+    public GpCommand receive(final GpCommand command) {
         notifyTransactionCommand(command);
         return command;
     }
-
     /**
      * Callback from the transport layer when it has progressed the state of the transaction.
      *
@@ -470,9 +470,9 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      * Adds a transaction to the list of outstanding transactions. Transactions will receive notifications when a
      * command is received, or when the status is updated
      *
-     * @param transaction the {@link ZigBeeTransaction} that will receive the notifications
+     * @param transaction the {@link ZigBeeGpTransaction} that will receive the notifications
      */
-    private void addTransactionListener(ZigBeeTransaction transaction) {
+    private void addTransactionListener(ZigBeeGpTransaction transaction) {
         synchronized (outstandingTransactions) {
             outstandingTransactions.add(transaction);
         }
@@ -482,11 +482,11 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     /**
      * Removes a transaction from the list of outstanding transactions.
      * <p>
-     * This is called by the {@link ZigBeeTransaction} when it terminates
+     * This is called by the {@link ZigBeeGpTransaction} when it terminates
      *
-     * @param transaction the {@link ZigBeeTransaction} to remove
+     * @param transaction the {@link ZigBeeGpTransaction} to remove
      */
-    private void removeTransactionListener(ZigBeeTransaction transaction) {
+    private void removeTransactionListener(ZigBeeGpTransaction transaction) {
         synchronized (outstandingTransactions) {
             outstandingTransactions.remove(transaction);
         }
@@ -494,7 +494,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     }
 
     /**
-     * Schedules a task with a timeout. Used by {@link ZigBeeTransaction}s to time out failed transactions
+     * Schedules a task with a timeout. Used by {@link ZigBeeGpTransaction}s to time out failed transactions
      *
      * @param runnableTask the {@link Runnable} to call when the timer expires
      * @param delay the delay in milliseconds
@@ -505,17 +505,17 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     }
 
     /**
-     * Callback from {@link ZigBeeTransaction} when a transaction has completed or failed.
+     * Callback from {@link ZigBeeGpTransaction} when a transaction has completed or failed.
      *
-     * @param transaction the {@link ZigBeeTransaction} to complete. Not null.
+     * @param transaction the {@link ZigBeeGpTransaction} to complete. Not null.
      * @param state the {@link TransactionState} of the transaction on completion
      */
-    protected void transactionComplete(ZigBeeTransaction transaction, TransactionState state) {
+    protected void transactionComplete(ZigBeeGpTransaction transaction, TransactionState state) {
         logger.debug("Transaction complete: {}", transaction);
         removeTransactionListener(transaction);
 
         synchronized (this) {
-            ZigBeeTransactionQueue queue = getTransactionQueue(transaction);
+            ZigBeeGpTransactionQueue queue = getTransactionQueue(transaction);
             if (queue == null) {
                 logger.debug("Transaction complete: No queue found {}", transaction);
             } else {
@@ -533,13 +533,13 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     /**
      * Notify transactions of the received command
      *
-     * @param command the {@link ZigBeeCommand} to send to the transactions
+     * @param command the {@link GpCommand} to send to the transactions
      */
-    private void notifyTransactionCommand(final ZigBeeCommand command) {
+    private void notifyTransactionCommand(final GpCommand command) {
         logger.debug("notifyTransactionCommand: {} ", command);
         synchronized (outstandingTransactions) {
             // Notify the listeners
-            for (final ZigBeeTransaction transaction : outstandingTransactions) {
+            for (final ZigBeeGpTransaction transaction : outstandingTransactions) {
                 logger.debug("notifyTransactionCommand: {} {}", command, transaction);
                 NotificationService.execute(new Runnable() {
                     @Override
@@ -562,7 +562,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
                 String.format("%02X", transactionId), state, outstandingTransactions.size());
         synchronized (outstandingTransactions) {
             // Notify the listeners
-            for (final ZigBeeTransaction transaction : outstandingTransactions) {
+            for (final ZigBeeGpTransaction transaction : outstandingTransactions) {
                 NotificationService.execute(new Runnable() {
                     @Override
                     public void run() {
@@ -574,13 +574,13 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     }
 
     /**
-     * Gets the {@link ZigBeeTransactionQueue} for the specified address
+     * Gets the {@link ZigBeeGpTransactionQueue} for the specified address
      *
      * @param address the {@link IeeeAddress} of the node
-     * @return the {@link ZigBeeTransactionQueue} for the specified address or null if there is no current queue for the
+     * @return the {@link ZigBeeGpTransactionQueue} for the specified address or null if there is no current queue for the
      *         requested address
      */
-    public ZigBeeTransactionQueue getQueue(IeeeAddress address) {
+    public ZigBeeGpTransactionQueue getQueue(IeeeAddress address) {
         return nodeQueue.get(address);
     }
 
@@ -590,7 +590,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      * @param address the {@link IeeeAddress} of the node
      */
     public void removeNode(IeeeAddress address) {
-        ZigBeeTransactionQueue queue = nodeQueue.get(address);
+        ZigBeeGpTransactionQueue queue = nodeQueue.get(address);
         if (queue == null) {
             return;
         }
@@ -600,7 +600,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
 
         // Remove any outstanding transactions from this queue that have already been sent
         synchronized (outstandingTransactions) {
-            for (ZigBeeTransaction transaction : outstandingTransactions) {
+            for (ZigBeeGpTransaction transaction : outstandingTransactions) {
                 if (getTransactionQueue(transaction) == queue) {
                     transaction.cancel();
                 }
@@ -624,7 +624,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
                 timeoutTask.cancel(false);
             }
 
-            ZigBeeTransaction transaction;
+            ZigBeeGpTransaction transaction;
 
             // Randomly loop through all queues, taking a transaction from each one in turn
             // If we have more transactions outstanding than we're allowed, then exit
@@ -634,7 +634,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
             // * Queues may have more than one transaction to send
             // * Queues may have transactions to send, but be unable to send them at this time
 
-            List<ZigBeeTransactionQueue> emptyQueues = new ArrayList<>();
+            List<ZigBeeGpTransactionQueue> emptyQueues = new ArrayList<>();
             boolean sendDone;
             do {
                 // Exit unless we send at least one transaction
@@ -646,7 +646,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
                 // Clear the list of queues that have been emptied
                 emptyQueues.clear();
 
-                for (ZigBeeTransactionQueue queue : outstandingQueues) {
+                for (ZigBeeGpTransactionQueue queue : outstandingQueues) {
                     // Check if we've reached the maximum number of commands we can send
                     if (outstandingTransactions.size() >= maxOutstandingTransactions) {
                         sendDone = true;
@@ -682,7 +682,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
 
             // Loop through all outstanding queues and find the next release time
             long timeout = Long.MAX_VALUE;
-            for (ZigBeeTransactionQueue queue : outstandingQueues) {
+            for (ZigBeeGpTransactionQueue queue : outstandingQueues) {
                 long nextTime = queue.getNextReleaseTime();
                 if (nextTime < timeout) {
                     timeout = nextTime;
@@ -720,7 +720,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
         // Make sure that the queue is set to the correct type for this node
         // This is handled here as this may change after the device is initially paired
         // since the {@link NodeDescriptor} isn't initially known
-        ZigBeeTransactionQueue queue = nodeQueue.get(node.getIeeeAddress());
+        ZigBeeGpTransactionQueue queue = nodeQueue.get(node.getIeeeAddress());
         if (queue == null) {
             return;
         }
@@ -729,8 +729,8 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
             synchronized (outstandingTransactions) {
                 int sleepyCnt = 0;
                 // The queue type changed - resync the sleepyTransactions counter
-                for (ZigBeeTransaction transaction : outstandingTransactions) {
-                    ZigBeeTransactionQueue transactionQueue = getTransactionQueue(transaction);
+                for (ZigBeeGpTransaction transaction : outstandingTransactions) {
+                    ZigBeeGpTransactionQueue transactionQueue = getTransactionQueue(transaction);
                     if (transactionQueue != null && transactionQueue.isSleepy()) {
                         sleepyCnt++;
                         continue;
