@@ -56,7 +56,7 @@ public class EzspGpSinkTableEntry implements VirtualSinkEntry {
      *
      * @return the current gpd as {@link EmberGpAddress}
      */
-    public EmberGpAddress getGpd() {
+    public EmberGpAddress getAddress() {
         return gpd;
     }
 
@@ -65,7 +65,7 @@ public class EzspGpSinkTableEntry implements VirtualSinkEntry {
      *
      * @param gpd the gpd to set as {@link EmberGpAddress}
      */
-    public void setGpd(EmberGpAddress gpd) {
+    public void setaddress(EmberGpAddress gpd) {
         this.gpd = gpd;
     }
 

@@ -40,6 +40,7 @@ import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDataStore;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDatabaseManager;
 import com.zsmartsystems.zigbee.greenpower.GpCommand;
+import com.zsmartsystems.zigbee.greenpower.VirtualSink;
 import com.zsmartsystems.zigbee.greenpower.ZigBeeGpCommandListener;
 import com.zsmartsystems.zigbee.greenpower.ZigBeeGpCommandNotifier;
 import com.zsmartsystems.zigbee.greenpower.ZigBeeGpTransportReceive;
@@ -267,6 +268,15 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      */
     private int localNwkAddress = 0;
 
+    /**
+     * The optional VirtualSink, used if the transport layer doesn't use his own sink table.
+     */
+    private VirtualSink sinkTable = null;
+    
+    /**
+     * whether the transport layer uses a virtual sink table implementation or no.
+     */
+    private boolean virtualSinkUse = false;
     /**
      * Constructor which configures serial port and ZigBee network.
      *
@@ -901,22 +911,32 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     	logger.debug("RX APS: {}", gpFrame);
     	
-    	GpCommand command = new GpCommand();
-    	
-    	command.setAutoCommissioning(gpFrame.isAutoCommissioning());
-    	command.setSourceID(gpFrame.getSourceID());
-    	command.setEndpoint(gpFrame.getEndpoint());
-    	command.setCommandId(gpFrame.getCommandId());
-    	command.setSecurityFrameCounter(gpFrame.getSecurityFrameCounter());
-    	command.setPayload(gpFrame.getPayload());
-    	command.setMic(gpFrame.getMic());
-    	
-    	command = gpTransactionManager.receive(command);
-    	if (command==null) {
-    		return;
-    	}
+    	//this will fail the invalid frames, so the construction of the command can be done after this without any risk.
+    	if (virtualSinkUse) {
+    		if (gpFrame.getCommandId()==0xE0) {
+    			int index = sinkTable.findOrAllocateEntry(gpFrame.getSourceAddress());
+    			sinkTable.setEntry(index, entry); //TODO add entry construction.
+    		}
+    	}else {
+    		//TODO add regular sink verification process
+    		GpCommand command = new GpCommand();
+        	
+        	command.setAutoCommissioning(gpFrame.isAutoCommissioning());
+        	//command.setSourceID(gpFrame.getSourceID()); change to getSourceAddress().getSourceID() once implemented.
+        	//command.setEndpoint(gpFrame.getEndpoint()); change to getSourceAddress().getEndpoint() once implemented.
+        	command.setCommandId(gpFrame.getCommandId());
+        	command.setSecurityFrameCounter(gpFrame.getSecurityFrameCounter());
+        	command.setPayload(gpFrame.getPayload());
+        	command.setMic(gpFrame.getMic());
+        	
+        	command = gpTransactionManager.receive(command);
+        	if (command==null) {
+        		return;
+        	}
 
-    	gpCommandNotifier.notifyCommandListeners(command);
+        	gpCommandNotifier.notifyCommandListeners(command);
+    	}
+    	
     }
     
     private ZigBeeCommand receiveZdoCommand(final ZclFieldDeserializer fieldDeserializer,
@@ -1671,5 +1691,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     
     public void setGpTransactionManager() {
     	this.gpTransactionManager = new ZigBeeGpTransactionManager(this);
+    }
+    
+    public void useVirtualSink(VirtualSink sink) {
+    	this.virtualSinkUse=true;
+    	this.sinkTable = sink; 
     }
 }

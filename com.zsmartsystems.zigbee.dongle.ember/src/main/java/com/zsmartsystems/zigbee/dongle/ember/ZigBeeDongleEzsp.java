@@ -18,6 +18,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import org.mockito.internal.matchers.InstanceOf;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,6 +71,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspPolicyId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspStatus;
+import com.zsmartsystems.zigbee.dongle.ember.greenpower.EmberGpFrame;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EmberFirmwareUpdateHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EmberNetworkInitialisation;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EmberStackConfiguration;
@@ -122,7 +124,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     private EzspProtocolHandler frameHandler;
     
     // DEBUG
-    //public EzspProtocolHandler getFrameHandler() { return frameHandler; }
+    public EzspProtocolHandler getFrameHandler() { return frameHandler; }
     
     /**
      * The Ember bootload handler
@@ -199,7 +201,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     private ScheduledExecutorService executorService;
     
     //debug
-    //public ScheduledExecutorService getExecutorService() { return executorService; }
+    public ScheduledExecutorService getExecutorService() { return executorService; }
     
     private ScheduledFuture<?> pollingTimer = null;
 
@@ -620,7 +622,58 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     @Override
 	public void sendGpCommand(int msgTag, ZigBeeGreenPowerFrame gpFrame) {
-		// TODO Auto-generated method stub
+    	if (frameHandler == null) {
+            return;
+        }
+        lastSendCommand = System.currentTimeMillis();
+
+        EzspTransaction transaction;
+
+        EmberApsFrame emberApsFrame = new EmberApsFrame();
+        emberApsFrame.setClusterId(0x0021);//always the Green power cluster.
+        emberApsFrame.setProfileId(ZigBeeProfileType.ZIGBEE_GREEN_POWER.getKey());
+        emberApsFrame.setSourceEndpoint(242);
+        emberApsFrame.setDestinationEndpoint(242);
+        emberApsFrame.setSequence(gpFrame.getSecurityFrameCounter());
+        emberApsFrame.addOptions(EmberApsOption.EMBER_APS_OPTION_RETRY);
+        emberApsFrame.addOptions(EmberApsOption.EMBER_APS_OPTION_ENABLE_ROUTE_DISCOVERY);
+        emberApsFrame.addOptions(EmberApsOption.EMBER_APS_OPTION_ENABLE_ADDRESS_DISCOVERY);
+        emberApsFrame.addOptions(EmberApsOption.EMBER_APS_OPTION_ENCRYPTION);
+
+        EzspSendUnicastRequest request = new EzspSendUnicastRequest();
+        request.setIndexOrDestination(0);
+        request.setMessageTag(msgTag);
+        request.setSequenceNumber(gpFrame.getSecurityFrameCounter());
+        request.setType(EmberOutgoingMessageType.EMBER_OUTGOING_DIRECT);
+        request.setApsFrame(emberApsFrame);
+        request.setMessageContents(gpFrame.getPayload());
+
+        transaction = new EzspSingleResponseTransaction(request, EzspSendUnicastResponse.class); 
+        
+        // The response from the SendXxxcast messages returns the network layer sequence number
+        // We need to correlate this with the messageTag
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                frameHandler.sendEzspTransaction(transaction);
+
+                EmberStatus status = null;
+                if (transaction.getResponse() instanceof EzspSendUnicastResponse) {
+                    status = ((EzspSendUnicastResponse) transaction.getResponse()).getStatus();
+                } else {
+                    logger.debug("Unable to get response from {} :: {}", transaction.getRequest(),
+                            transaction.getResponse());
+                    return;
+                }
+
+                // If this is EMBER_SUCCESS, then do nothing as the command is still not transmitted.
+                // If there was an error, then we let the system know we've failed already!
+                if (status == EmberStatus.EMBER_SUCCESS) {
+                    return;
+                }
+                zigbeeTransportReceive.receiveCommandState(msgTag, ZigBeeTransportProgressState.TX_NAK);
+            }
+        });
 	}
     
     @Override
@@ -756,6 +809,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             ZigBeeGreenPowerFrame gpFrame = new ZigBeeGreenPowerFrame();
               
             gpFrame.setAutoCommissioning(incomingMessage.getAutoCommissioning());
+            gpFrame.setSourceAddress(incomingMessage.getAddr());
             gpFrame.setSourceID(incomingMessage.getAddr().getSourceId());
             gpFrame.setEndpoint(incomingMessage.getAddr().getEndpoint());
             gpFrame.setSecurityFrameCounter(incomingMessage.getGpdSecurityFrameCounterLength());
@@ -768,7 +822,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         }
     }
 
-    @Override
+	@Override
     public void handleLinkStateChange(final boolean linkState) {
         // Only act on changes to OFFLINE once we have completed initialisation
         // changes to ONLINE have to work during init because they mark the end of the initialisation

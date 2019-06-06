@@ -8,13 +8,10 @@ public class ZigBeeGreenPowerFrame {
 	private boolean AutoCommissioning;
 
 	/**
-     * The source GPD's ID.
-     */
-	private int SourceID;
-	/**
-	 * The source Endpoint.
+	 * The source GPD's address
 	 */
-	private int Endpoint;
+	//TODO change from object to possible GpAddress class.
+	private Object sourceAddress;
 	
 	/**
 	 * The security frame counter used to prevent the reception of duplicate frames.
@@ -42,17 +39,11 @@ public class ZigBeeGreenPowerFrame {
 	public void setAutoCommissioning(boolean autoCommissioning) {
 		AutoCommissioning = autoCommissioning;
 	}
-	public int getSourceID() {
-		return SourceID;
+	public Object getSourceAddress() {
+		return sourceAddress;
 	}
-	public void setSourceID(int sourceID) {
-		SourceID = sourceID;
-	}
-	public int getEndpoint() {
-		return Endpoint;
-	}
-	public void setEndpoint(int endpoint) {
-		Endpoint = endpoint;
+	public void setSourceAddress(Object address) {
+		sourceAddress = address;
 	}
 	public int getSecurityFrameCounter() {
 		return SecurityFrameCounter;
@@ -82,10 +73,8 @@ public class ZigBeeGreenPowerFrame {
 	@Override
     public String toString() {
         StringBuilder builder = new StringBuilder(164);
-        builder.append("ZigBeeGreenPowerFrame [sourceID=");
-        builder.append(SourceID);
-        builder.append(", Endpoint=");
-        builder.append(Endpoint);
+        builder.append("ZigBeeGreenPowerFrame [source Address=");
+        builder.append(sourceAddress);
         builder.append(", SecurityFrameCounter=");
         builder.append(SecurityFrameCounter);
         builder.append(", payload=");
