@@ -41,6 +41,7 @@ import com.zsmartsystems.zigbee.database.ZigBeeNetworkDataStore;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDatabaseManager;
 import com.zsmartsystems.zigbee.greenpower.GpCommand;
 import com.zsmartsystems.zigbee.greenpower.VirtualSink;
+import com.zsmartsystems.zigbee.greenpower.VirtualSinkEntry;
 import com.zsmartsystems.zigbee.greenpower.ZigBeeGpCommandListener;
 import com.zsmartsystems.zigbee.greenpower.ZigBeeGpCommandNotifier;
 import com.zsmartsystems.zigbee.greenpower.ZigBeeGpTransportReceive;
@@ -793,15 +794,14 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         return true;
     }
     
-    //TODO add verifications
     public boolean sendGpCommand(GpCommand command) {
     	// Create the application frame
         ZigBeeGreenPowerFrame gpFrame = new ZigBeeGreenPowerFrame();
 
         logger.debug("TX CMD: {}", command);
         
-        gpFrame.setSourceID(command.getSourceID());
-        gpFrame.setEndpoint(command.getEndpoint());
+        gpFrame.setAutoCommissioning(command.isAutoCommissioning());
+        gpFrame.setSourceAddress(command.getAddress());
         gpFrame.setSecurityFrameCounter(command.getSecurityFrameCounter());
         gpFrame.setCommandId(command.getCommandId());
         gpFrame.setPayload(command.getPayload());
@@ -914,29 +914,46 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     	//this will fail the invalid frames, so the construction of the command can be done after this without any risk.
     	if (virtualSinkUse) {
     		if (gpFrame.getCommandId()==0xE0) {
+    			//add the GPD to the sink table
+    			if (!sinkTable.getStatus()) {
+    				sinkTable.init();
+    			}
     			int index = sinkTable.findOrAllocateEntry(gpFrame.getSourceAddress());
-    			sinkTable.setEntry(index, entry); //TODO add entry construction.
+    			//TODO add definitive sink verification.
+    			VirtualSinkEntry entry = null;
+    			entry.setAddress(gpFrame.getSourceAddress());
+    			entry.setCounter(gpFrame.getSecurityFrameCounter());
+    			sinkTable.setEntry(index, entry); 
+    		}else {
+    			//test if the GPD is in the sink table.
+    			int index = sinkTable.lookup(gpFrame.getSourceAddress());
+    			
+    			if (index == -1) {
+    				logger.debug("GPD Sink Entry not found, Frame dropped.");
+    				return;
+    			}			
     		}
     	}else {
     		//TODO add regular sink verification process
-    		GpCommand command = new GpCommand();
-        	
-        	command.setAutoCommissioning(gpFrame.isAutoCommissioning());
-        	//command.setSourceID(gpFrame.getSourceID()); change to getSourceAddress().getSourceID() once implemented.
-        	//command.setEndpoint(gpFrame.getEndpoint()); change to getSourceAddress().getEndpoint() once implemented.
-        	command.setCommandId(gpFrame.getCommandId());
-        	command.setSecurityFrameCounter(gpFrame.getSecurityFrameCounter());
-        	command.setPayload(gpFrame.getPayload());
-        	command.setMic(gpFrame.getMic());
-        	
-        	command = gpTransactionManager.receive(command);
-        	if (command==null) {
-        		return;
-        	}
-
-        	gpCommandNotifier.notifyCommandListeners(command);
     	}
     	
+    	System.out.println("this command passed the tests\n\n\n");
+    	GpCommand command = new GpCommand();
+    	
+    	command.setAutoCommissioning(gpFrame.isAutoCommissioning());
+//    	command.setSourceID(gpFrame.getSourceAddress().getSourceID());
+//    	command.setEndpoint(gpFrame.getSourceAddress().getEndpoint());
+    	command.setCommandId(gpFrame.getCommandId());
+    	command.setSecurityFrameCounter(gpFrame.getSecurityFrameCounter());
+    	command.setPayload(gpFrame.getPayload());
+    	command.setMic(gpFrame.getMic());
+    	
+    	command = gpTransactionManager.receive(command);
+    	if (command==null) {
+    		return;
+    	}
+
+    	gpCommandNotifier.notifyCommandListeners(command);
     }
     
     private ZigBeeCommand receiveZdoCommand(final ZclFieldDeserializer fieldDeserializer,

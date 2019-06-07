@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.structure;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspDeserializer;
 import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
+import com.zsmartsystems.zigbee.greenpower.GpAddress;
 
 /**
  * Class to implement the Ember Structure <b>EmberGpAddress</b>.
@@ -20,7 +21,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EmberGpAddress {
+public class EmberGpAddress implements GpAddress{
 
     /**
      * The GPD's EUI64.

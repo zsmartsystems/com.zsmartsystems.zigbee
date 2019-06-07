@@ -810,8 +810,6 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
               
             gpFrame.setAutoCommissioning(incomingMessage.getAutoCommissioning());
             gpFrame.setSourceAddress(incomingMessage.getAddr());
-            gpFrame.setSourceID(incomingMessage.getAddr().getSourceId());
-            gpFrame.setEndpoint(incomingMessage.getAddr().getEndpoint());
             gpFrame.setSecurityFrameCounter(incomingMessage.getGpdSecurityFrameCounterLength());
             gpFrame.setCommandId(incomingMessage.getGpdCommandId());
             gpFrame.setPayload(incomingMessage.getGpdCommandPayload());

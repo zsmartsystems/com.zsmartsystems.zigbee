@@ -4,6 +4,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberGpAddress;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberGpSinkListEntry;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberGpSinkTableEntryStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
+import com.zsmartsystems.zigbee.greenpower.GpAddress;
 import com.zsmartsystems.zigbee.greenpower.VirtualSinkEntry;
 
 public class EzspGpSinkTableEntry implements VirtualSinkEntry {
@@ -65,8 +66,8 @@ public class EzspGpSinkTableEntry implements VirtualSinkEntry {
      *
      * @param gpd the gpd to set as {@link EmberGpAddress}
      */
-    public void setaddress(EmberGpAddress gpd) {
-        this.gpd = gpd;
+    public void setAddress(GpAddress gpd) {
+        this.gpd = (EmberGpAddress) gpd;
     }
 
     /**
@@ -185,7 +186,7 @@ public class EzspGpSinkTableEntry implements VirtualSinkEntry {
      *
      * @param gpdSecurityFrameCounter the gpdSecurityFrameCounter to set as {@link int}
      */
-    public void setGpdSecurityFrameCounter(int gpdSecurityFrameCounter) {
+    public void setCounter(int gpdSecurityFrameCounter) {
         this.gpdSecurityFrameCounter = gpdSecurityFrameCounter;
     }
 

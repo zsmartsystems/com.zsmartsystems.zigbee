@@ -4,19 +4,18 @@ public interface VirtualSink {
 
 	public VirtualSinkEntry getEntry(Integer index);
 	
-	//TODO find a more specific class than Object.
-	public int lookup(Object address);
+	public int lookup(GpAddress address);
 	
 	public boolean setEntry(Integer index, VirtualSinkEntry entry);
 	
-	//TODO add return to indicate success or failure ?
 	public void removeEntry(Integer index);
 	
-	public int findOrAllocateEntry(Object address);
+	public int findOrAllocateEntry(GpAddress address);
 	
-	//TODO same as removeEntry.
 	public void clearAll();
 	
-	//not usefull ?
+	//not usefull unless verification of initialization is used.
 	public void init();
+	
+	public boolean getStatus();
 }

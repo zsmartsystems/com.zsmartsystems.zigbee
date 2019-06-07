@@ -10,8 +10,7 @@ public class ZigBeeGreenPowerFrame {
 	/**
 	 * The source GPD's address
 	 */
-	//TODO change from object to possible GpAddress class.
-	private Object sourceAddress;
+	private GpAddress sourceAddress;
 	
 	/**
 	 * The security frame counter used to prevent the reception of duplicate frames.
@@ -39,10 +38,10 @@ public class ZigBeeGreenPowerFrame {
 	public void setAutoCommissioning(boolean autoCommissioning) {
 		AutoCommissioning = autoCommissioning;
 	}
-	public Object getSourceAddress() {
+	public GpAddress getSourceAddress() {
 		return sourceAddress;
 	}
-	public void setSourceAddress(Object address) {
+	public void setSourceAddress(GpAddress address) {
 		sourceAddress = address;
 	}
 	public int getSecurityFrameCounter() {
@@ -77,6 +76,8 @@ public class ZigBeeGreenPowerFrame {
         builder.append(sourceAddress);
         builder.append(", SecurityFrameCounter=");
         builder.append(SecurityFrameCounter);
+        builder.append(", command ID=");
+        builder.append(CommandId);
         builder.append(", payload=");
         if (payload != null) {
             for (int c = 0; c < payload.length; c++) {

@@ -13,14 +13,10 @@ public class GpCommand {
      */
     private Integer transactionId;
     
-	/**
-     * The source GPD's ID.
-     */
-	private int SourceID;
-	/**
-	 * The source Endpoint.
+    /**
+	 * The source GPD's address
 	 */
-	private int Endpoint;
+	private GpAddress sourceAddress;
 
 	/**
 	 * The security frame counter used to prevent the reception of duplicate frames.
@@ -37,22 +33,14 @@ public class GpCommand {
 	 */
 	private int[] payload;
 
+	/**
+	 * The GPD's mic.
+	 */
 	private int mic;
 	
-	/**
-	 * Gets the command ID.
-	 *
-	 * @return the cluster ID.
-	 */
 	public Integer getCommandId() {
 		return commandId;
 	}
-	
-	/**
-	 * Sets the commandId.
-	 * 
-	 * @param commandId
-	 */
 	public void setCommandId(int commandId) {
 		this.commandId=commandId;
 	}
@@ -68,20 +56,12 @@ public class GpCommand {
 	public void setTransactionId(Integer transactionId) {
 		this.transactionId=transactionId;
 	}
-	public int getSourceID() {
-		return SourceID;
+	public GpAddress getAddress() {
+		return sourceAddress;
 	}
 
-	public void setSourceID(int sourceID) {
-		SourceID = sourceID;
-	}
-
-	public int getEndpoint() {
-		return Endpoint;
-	}
-
-	public void setEndpoint(int endpoint) {
-		Endpoint = endpoint;
+	public void setAddress(GpAddress address) {
+		sourceAddress = address;
 	}
 
 	public int getSecurityFrameCounter() {
@@ -106,5 +86,32 @@ public class GpCommand {
 	
 	public void setMic(int mic) {
 		this.mic=mic;
+	}
+	
+	@Override
+	public String toString() {
+		final StringBuilder builder = new StringBuilder();
+        builder.append("Gp Command = [");
+        builder.append("transactionId=");
+        builder.append(transactionId);
+        builder.append(", Source Address=");
+        builder.append(sourceAddress);
+        builder.append(", SecurityFrameCounter=");
+        builder.append(SecurityFrameCounter);
+        builder.append(", CommandId=");
+        builder.append(commandId);
+        builder.append(", payload=");
+        if (payload != null) {
+            for (int c = 0; c < payload.length; c++) {
+                if (c != 0) {
+                    builder.append(' ');
+                }
+                builder.append(String.format("%02X", payload[c]));
+            }
+        }
+        builder.append(", Mic=");
+        builder.append(mic);
+        builder.append(']');
+        return builder.toString();
 	}
 }
