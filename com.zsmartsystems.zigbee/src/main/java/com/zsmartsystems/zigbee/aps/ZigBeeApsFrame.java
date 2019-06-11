@@ -126,8 +126,10 @@ public class ZigBeeApsFrame {
     /**
      * This field is eight bits in length and is used to prevent the reception of duplicate frames. This value shall be
      * incremented by one for each new transmission.
+     * <p>
+     * A value of -1 indicates that the counter is invalid
      */
-    private int apsCounter;
+    private int apsCounter = -1;
 
     /**
      * The APS payload.
