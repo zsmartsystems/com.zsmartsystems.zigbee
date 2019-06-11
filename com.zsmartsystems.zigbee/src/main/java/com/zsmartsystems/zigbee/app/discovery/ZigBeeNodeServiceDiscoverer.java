@@ -164,6 +164,8 @@ public class ZigBeeNodeServiceDiscoverer {
      */
     private final Queue<NodeDiscoveryTask> discoveryTasks = new LinkedList<NodeDiscoveryTask>();
 
+    private boolean closed = false;
+
     /**
      * Creates the discoverer
      *
@@ -239,6 +241,10 @@ public class ZigBeeNodeServiceDiscoverer {
      * Stops service discovery and removes any scheduled tasks
      */
     public void stopDiscovery() {
+        closed = true;
+        synchronized (discoveryTasks) {
+            discoveryTasks.clear();
+        }
         if (futureTask != null) {
             futureTask.cancel(true);
         }
@@ -616,6 +622,11 @@ public class ZigBeeNodeServiceDiscoverer {
                     default:
                         logger.debug("{}: Node SVC Discovery: unknown task: {}", node.getIeeeAddress(), discoveryTask);
                         break;
+                }
+
+                if (closed) {
+                    logger.debug("{}: Node SVC Discovery: closing scheduler thread", node.getIeeeAddress());
+                    return;
                 }
 
                 retryCnt++;
