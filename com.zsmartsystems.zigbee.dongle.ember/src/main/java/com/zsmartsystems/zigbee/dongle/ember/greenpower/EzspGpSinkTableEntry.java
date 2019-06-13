@@ -66,6 +66,7 @@ public class EzspGpSinkTableEntry implements VirtualSinkEntry {
      *
      * @param gpd the gpd to set as {@link EmberGpAddress}
      */
+    @Override
     public void setAddress(GpAddress gpd) {
         this.gpd = (EmberGpAddress) gpd;
     }
@@ -86,6 +87,7 @@ public class EzspGpSinkTableEntry implements VirtualSinkEntry {
      *
      * @param deviceId the deviceId to set as {@link int}
      */
+    @Override
     public void setDeviceId(int deviceId) {
         this.deviceId = deviceId;
     }
@@ -246,4 +248,5 @@ public class EzspGpSinkTableEntry implements VirtualSinkEntry {
         builder.append(']');
         return builder.toString();
     }
+
 }

@@ -918,12 +918,23 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     			if (!sinkTable.getStatus()) {
     				sinkTable.init();
     			}
+    			
     			int index = sinkTable.findOrAllocateEntry(gpFrame.getSourceAddress());
-    			//TODO add definitive sink verification.
-    			VirtualSinkEntry entry = null;
+    			
+    			VirtualSink sinkInstance = null;
+				try {
+					sinkInstance = sinkTable.getClass().newInstance();
+				} catch (IllegalAccessException | InstantiationException e) {
+					e.printStackTrace();
+				}
+    			
+    			VirtualSinkEntry entry = (VirtualSinkEntry) sinkInstance.getEntryClass();
+    			
     			entry.setAddress(gpFrame.getSourceAddress());
-    			entry.setCounter(gpFrame.getSecurityFrameCounter());
-    			sinkTable.setEntry(index, entry); 
+    			entry.setDeviceId(gpFrame.getPayload()[0]);
+    			
+    			sinkTable.setEntry(index, entry);
+    			
     		}else {
     			//test if the GPD is in the sink table.
     			int index = sinkTable.lookup(gpFrame.getSourceAddress());
@@ -937,12 +948,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     		//TODO add regular sink verification process
     	}
     	
-    	System.out.println("this command passed the tests\n\n\n");
+    	System.out.println("this command passed the tests");
     	GpCommand command = new GpCommand();
     	
     	command.setAutoCommissioning(gpFrame.isAutoCommissioning());
-//    	command.setSourceID(gpFrame.getSourceAddress().getSourceID());
-//    	command.setEndpoint(gpFrame.getSourceAddress().getEndpoint());
+    	command.setSourceId(gpFrame.getSourceAddress().getSourceId());
+    	command.setEndpoint(gpFrame.getSourceAddress().getEndpoint());
     	command.setCommandId(gpFrame.getCommandId());
     	command.setSecurityFrameCounter(gpFrame.getSecurityFrameCounter());
     	command.setPayload(gpFrame.getPayload());

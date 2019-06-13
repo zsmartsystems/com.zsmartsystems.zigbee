@@ -1,6 +1,7 @@
 package com.zsmartsystems.zigbee.dongle.ember.greenpower;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberGpAddress;
@@ -20,7 +21,7 @@ public class EzspGpSinkTable implements VirtualSink{
 	private Map<Integer, EzspGpSinkTableEntry> entries;
 	
 	public EzspGpSinkTable() {
-		entries = Collections.emptyMap();
+		entries = new HashMap<Integer, EzspGpSinkTableEntry>();
 	}
 	
 	@Override
@@ -31,19 +32,17 @@ public class EzspGpSinkTable implements VirtualSink{
 	@Override
 	public int lookup(GpAddress address) {
 		if(entries.isEmpty()) {
-			System.out.println("table vide.\n");
 			return -1;
 		}
 		
 		if (address instanceof EmberGpAddress) {
 			for (int index : entries.keySet()) {
-				if(address.equals(entries.get(index).getAddress())) {
-					System.out.println("GG ! \n\n");
+				EmberGpAddress test_adr = (EmberGpAddress) address;
+				if(entries.get(index).getAddress().equals(test_adr)) {
 					return index;
 				}
 			}
 		}
-		System.out.println("juste nul\n\n");
 		return -1;		
 	}
 
@@ -54,6 +53,8 @@ public class EzspGpSinkTable implements VirtualSink{
 			return false;
 		}
 		entries.put(index,(EzspGpSinkTableEntry) entry);
+		System.out.println("debug: " + (EzspGpSinkTableEntry) entry);
+		System.out.println(((EzspGpSinkTableEntry) entry).getAddress().getApplicationId());
 		return false;
 	}
 
@@ -75,6 +76,7 @@ public class EzspGpSinkTable implements VirtualSink{
 			}
 			index++;
 		}
+		entries.put(index,null);
 		return index;		
 	}
 
@@ -95,5 +97,21 @@ public class EzspGpSinkTable implements VirtualSink{
 	 */
 	public boolean getStatus() {
 		return this.status;
+	}
+	
+	public boolean test() {
+		System.out.println("Test starting:");
+		System.out.println("Ajout de l'entrée vide...");
+		entries.put(0, new EzspGpSinkTableEntry());
+		if (entries.containsKey(0)) {
+			System.out.println("succes");
+		} else {
+			System.out.println("failure");
+		}
+		return true;
+	}
+	
+	public Object getEntryClass() {
+		return new EzspGpSinkTableEntry();
 	}
 }

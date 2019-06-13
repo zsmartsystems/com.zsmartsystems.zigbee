@@ -18,4 +18,9 @@ public interface VirtualSink {
 	public void init();
 	
 	public boolean getStatus();
+	
+	public boolean test();
+	
+	public Object getEntryClass();
 }
+

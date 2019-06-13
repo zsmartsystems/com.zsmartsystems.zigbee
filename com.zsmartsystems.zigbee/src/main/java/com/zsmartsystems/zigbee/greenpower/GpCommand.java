@@ -19,6 +19,16 @@ public class GpCommand {
 	private GpAddress sourceAddress;
 
 	/**
+	 * The GPDF's source endpoint
+	 */
+	private int endpoint;
+	
+	/**
+	 * the GPDF's sourceID
+	 */
+	private int sourceId;
+	
+	/**
 	 * The security frame counter used to prevent the reception of duplicate frames.
 	 */
 	private int SecurityFrameCounter;
@@ -86,6 +96,22 @@ public class GpCommand {
 	
 	public void setMic(int mic) {
 		this.mic=mic;
+	}
+	
+	public int getEndpoint() {
+		return endpoint;
+	}
+	
+	public void setEndpoint(int endpoint) {
+		this.endpoint = endpoint;
+	}
+	
+	public int getSourceId() {
+		return sourceId;
+	}
+	
+	public void setSourceId(int sourceid) {
+		this.sourceId = sourceid;
 	}
 	
 	@Override
