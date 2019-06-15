@@ -206,6 +206,9 @@ public final class ZigBeeConsole {
 
         newCommands.put("otaupgrade", new ZigBeeConsoleOtaUpgradeCommand());
         newCommands.put("channel", new ZigBeeConsoleChannelCommand());
+        newCommands.put("smartenergy", new ZigBeeConsoleSmartEnergyCommand());
+
+        // newCommands.put("testsep", new ZigBeeConsoleTestHarnessSep11bCommand());
 
         newCommands.put("smartenergy", new ZigBeeConsoleSmartEnergyCommand());
         newCommands.put("cbke", new ZigBeeConsoleCbkeCommand());
