@@ -25,6 +25,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.slf4j.Logger;
@@ -749,6 +750,88 @@ public class SpiFrameHandler implements EzspProtocolHandler {
         boolean transactionEvent(EzspFrameResponse ezspResponse);
 
         void transactionComplete();
+    }
+
+    /**
+     * Wait for the requested {@link EzspFrameResponse} to be received
+     *
+     * @param eventClass Request {@link EzspFrameResponse} to wait for
+     * @return response {@link Future} {@link EzspFrameResponse}
+     */
+    @Override
+    public Future<EzspFrameResponse> eventWaitAsync(final Class<?> eventClass) {
+        class TransactionWaiter implements Callable<EzspFrameResponse>, SpiListener {
+            private boolean complete = false;
+            private EzspFrameResponse receivedEvent = null;
+
+            @Override
+            public EzspFrameResponse call() {
+                // Register a listener
+                addTransactionListener(this);
+
+                // Wait for the event
+                synchronized (this) {
+                    while (!complete) {
+                        try {
+                            wait();
+                        } catch (InterruptedException e) {
+                            logger.debug("ASH interrupted in eventWaitAsync {}", eventClass);
+                        }
+                    }
+                }
+
+                // Remove the listener
+                removeTransactionListener(this);
+
+                return receivedEvent;
+            }
+
+            @Override
+            public boolean transactionEvent(EzspFrameResponse ezspResponse) {
+                // Check if this response completes our transaction
+                if (ezspResponse.getClass() != eventClass) {
+                    return false;
+                }
+
+                receivedEvent = ezspResponse;
+
+                synchronized (this) {
+                    complete = true;
+                    notify();
+                }
+                return true;
+            }
+
+            @Override
+            public void transactionComplete() {
+                synchronized (this) {
+                    complete = true;
+                    notify();
+                }
+            }
+        }
+
+        Callable<EzspFrameResponse> worker = new TransactionWaiter();
+        return executor.submit(worker);
+    }
+
+    /**
+     * Wait for the requested {@link EzspFrameResponse} to be received
+     *
+     * @param eventClass Request {@link EzspFrameResponse} to wait for
+     * @param timeout the time in milliseconds to wait for the response
+     * @return the {@link EzspFrameResponse} once received, or null on exception
+     */
+    @Override
+    public EzspFrameResponse eventWait(final Class<?> eventClass, int timeout) {
+        Future<EzspFrameResponse> future = eventWaitAsync(eventClass);
+        try {
+            return future.get(timeout, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+            logger.debug("ASH interrupted in eventWait {}", eventClass);
+            future.cancel(true);
+            return null;
+        }
     }
 
     @Override
