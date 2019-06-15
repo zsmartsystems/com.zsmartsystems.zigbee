@@ -34,7 +34,6 @@ import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspChildJoinHandler;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetParentChildParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIncomingMessageHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLaunchStandaloneBootloaderRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLaunchStandaloneBootloaderResponse;
@@ -100,6 +99,8 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
 public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTransportFirmwareUpdate, EzspFrameHandler {
 
     private static final int POLL_FRAME_ID = EzspNetworkStateRequest.FRAME_ID;
+    private static final int WAIT_FOR_ONLINE = 5000;
+
     /**
      * The {@link Logger}.
      */
@@ -404,19 +405,25 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         }
         ncp.getNetworkParameters();
 
-        // Check if the network is now up
-        networkState = ncp.getNetworkState();
-        logger.debug("EZSP networkStateResponse {}", networkState);
+        // Wait for the network to come up
+        long timer = System.currentTimeMillis() + WAIT_FOR_ONLINE;
+        do {
+            networkState = ncp.getNetworkState();
+            if (networkState != EmberNetworkStatus.EMBER_JOINING_NETWORK) {
+                break;
+            }
+
+            try {
+                Thread.sleep(250);
+            } catch (InterruptedException e) {
+                break;
+            }
+        } while (timer > System.currentTimeMillis());
+        logger.debug("EZSP networkState after online wait {}", networkState);
 
         // Get the security state - mainly for information
         EmberCurrentSecurityState currentSecurityState = ncp.getCurrentSecurityState();
         logger.debug("Current Security State = {}", currentSecurityState);
-
-        EzspGetParentChildParametersResponse childParametersResponse = ncp.getChildParameters();
-        logger.debug("Current Parent Child Information = {}", childParametersResponse);
-        for (int childId = 0; childId < childParametersResponse.getChildCount(); childId++) {
-            ncp.getChildInformation(childId);
-        }
 
         EmberStatus txPowerResponse = ncp.setRadioPower(networkParameters.getRadioTxPower());
         if (txPowerResponse != EmberStatus.EMBER_SUCCESS) {
