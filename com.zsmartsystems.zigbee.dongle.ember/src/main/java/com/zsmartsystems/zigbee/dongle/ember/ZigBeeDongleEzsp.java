@@ -1116,4 +1116,12 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         return key;
     }
 
+    /**
+     * Gets the {@link EzspProtocolHandler}
+     *
+     * @return the {@link EzspProtocolHandler}
+     */
+    protected EzspProtocolHandler getProtocolHandler() {
+        return frameHandler;
+    }
 }

@@ -15,10 +15,9 @@ import javax.annotation.Generated;
 /**
  * ZigBee Stack Type value enumeration.
  * <p>
- * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-06-15T20:20:47Z")
 public enum ZigBeeStackType {
 
     /**

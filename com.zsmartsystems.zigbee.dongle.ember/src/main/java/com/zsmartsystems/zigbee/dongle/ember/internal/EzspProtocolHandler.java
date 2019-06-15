@@ -12,6 +12,7 @@ import java.util.concurrent.Future;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransaction;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 
@@ -78,6 +79,23 @@ public interface EzspProtocolHandler {
      * @return response {@link EzspTransaction}
      */
     public EzspTransaction sendEzspTransaction(EzspTransaction ezspTransaction);
+
+    /**
+     * Wait for the requested {@link EzspFrameResponse} to be received
+     *
+     * @param eventClass Request {@link EzspFrameResponse} to wait for
+     * @return response {@link Future} {@link EzspFrameResponse}
+     */
+    public Future<EzspFrameResponse> eventWaitAsync(final Class<?> eventClass);
+
+    /**
+     * Wait for the requested {@link EzspFrameResponse} to be received
+     *
+     * @param eventClass Request {@link EzspFrameResponse} to wait for
+     * @param timeout the time in milliseconds to wait for the response
+     * @return the {@link EzspFrameResponse} once received, or null on exception
+     */
+    public EzspFrameResponse eventWait(final Class<?> eventClass, int timeout);
 
     /**
      * Get a map of statistics counters from the handler
