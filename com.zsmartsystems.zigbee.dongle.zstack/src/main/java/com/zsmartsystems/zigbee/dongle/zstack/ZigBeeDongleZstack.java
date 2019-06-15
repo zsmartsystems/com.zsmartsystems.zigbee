@@ -530,7 +530,6 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
             apsFrame.setDestinationEndpoint(incomingMsg.getDestEndpoint());
             apsFrame.setSourceEndpoint(incomingMsg.getSrcEndpoint());
             apsFrame.setSourceAddress(incomingMsg.getSrcAddr());
-            apsFrame.setApsCounter(-1);
             apsFrame.setProfile(getEndpointProfile(incomingMsg.getDestEndpoint()));
             apsFrame.setSecurityEnabled(incomingMsg.getSecurityUse());
             apsFrame.setPayload(incomingMsg.getData());
@@ -552,7 +551,6 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
             apsFrame.setDestinationEndpoint(0);
             apsFrame.setSourceEndpoint(0);
             apsFrame.setSourceAddress(incomingMsg.getSrcAddr());
-            apsFrame.setApsCounter(-1);
             apsFrame.setProfile(0);
             apsFrame.setSecurityEnabled(incomingMsg.getSecurityUse());
 
