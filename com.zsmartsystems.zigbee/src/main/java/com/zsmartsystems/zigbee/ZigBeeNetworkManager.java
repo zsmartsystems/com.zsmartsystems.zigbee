@@ -749,7 +749,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
             apsFrame.setSourceEndpoint(1);
 
-            // Set the profile properly
+            // Set the profile
             apsFrame.setProfile(defaultProfileId);
 
             // Create the cluster library header
@@ -824,6 +824,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 command = receiveZdoCommand(fieldDeserializer, apsFrame);
                 break;
             case 0x0104:
+            case 0x0109:
             case 0xC05E:
                 command = receiveZclCommand(fieldDeserializer, apsFrame);
                 break;
