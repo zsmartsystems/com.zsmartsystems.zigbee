@@ -62,6 +62,7 @@ public class ZigBeeCodeGenerator {
         zclParser.addFile("src/main/resources/0012_MultistateInputBasic.xml");
         zclParser.addFile("src/main/resources/0013_MultistateOutputBasic.xml");
         zclParser.addFile("src/main/resources/0014_MultistateValueBasic.xml");
+        zclParser.addFile("src/main/resources/0015_Commissioning.xml");
         zclParser.addFile("src/main/resources/0019_OtaUpgrade.xml");
         zclParser.addFile("src/main/resources/0020_PollControl.xml");
 

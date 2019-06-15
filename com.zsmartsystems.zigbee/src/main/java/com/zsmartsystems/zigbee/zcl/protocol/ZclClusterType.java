@@ -18,6 +18,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclAnalogInputBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBinaryInputBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclColorControlCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclCommissioningCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclDehumidificationControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclDemandResponseAndLoadControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclDiagnosticsCluster;
@@ -65,7 +66,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclWindowCoveringCluster;
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-05-15T10:07:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-06-15T18:41:42Z")
 public enum ZclClusterType {
     BASIC(0x0000, ZclBasicCluster.class, "Basic"),
     POWER_CONFIGURATION(0x0001, ZclPowerConfigurationCluster.class, "Power Configuration"),
@@ -83,6 +84,7 @@ public enum ZclClusterType {
     MULTISTATE_INPUT_BASIC(0x0012, ZclMultistateInputBasicCluster.class, "Multistate Input (Basic)"),
     MULTISTATE_OUTPUT_BASIC(0x0013, ZclMultistateOutputBasicCluster.class, "Multistate Output (Basic)"),
     MULTISTATE_VALUE_BASIC(0x0014, ZclMultistateValueBasicCluster.class, "Multistate Value (Basic)"),
+    COMMISSIONING(0x0015, ZclCommissioningCluster.class, "Commissioning"),
     OTA_UPGRADE(0x0019, ZclOtaUpgradeCluster.class, "Ota Upgrade"),
     POLL_CONTROL(0x0020, ZclPollControlCluster.class, "Poll Control"),
     DOOR_LOCK(0x0101, ZclDoorLockCluster.class, "Door Lock"),

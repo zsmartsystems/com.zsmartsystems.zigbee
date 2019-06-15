@@ -1,0 +1,75 @@
+<cluster code="0x0015">
+    <name>Commissioning</name>
+    <description>This cluster provides attributes and commands pertaining to the commissioning and management of ZigBee devices operating in a network.</description>
+    <command code="0x00" source="client">
+        <name>Restart Device Command</name>
+        <description></description>
+        <field type="BITMAP_8_BIT">
+            <name>Option</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Delay</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Jitter</name>
+        </field>
+    </command>
+    <command code="0x01" source="client">
+        <name>Save Startup Parameters Command</name>
+        <description></description>
+        <field type="BITMAP_8_BIT">
+            <name>Option</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Index</name>
+        </field>
+    </command>
+    <command code="0x02" source="client">
+        <name>Restore Startup Parameters Command</name>
+        <description></description>
+        <field type="BITMAP_8_BIT">
+            <name>Option</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Index</name>
+        </field>
+    </command>
+    <command code="0x03" source="client">
+        <name>Reset Startup Parameters Command</name>
+        <description></description>
+        <field type="BITMAP_8_BIT">
+            <name>Option</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Index</name>
+        </field>
+    </command>
+    <command code="0x00" source="server">
+        <name>Restart Device Response Response</name>
+        <description></description>
+        <field type="ENUMERATION_8_BIT">
+            <name>Status</name>
+        </field>
+    </command>
+    <command code="0x01" source="server">
+        <name>Save Startup Parameters Response</name>
+        <description></description>
+        <field type="ENUMERATION_8_BIT">
+            <name>Status</name>
+        </field>
+    </command>
+    <command code="0x02" source="server">
+        <name>Restore Startup Parameters Response</name>
+        <description></description>
+        <field type="ENUMERATION_8_BIT">
+            <name>Status</name>
+        </field>
+    </command>
+    <command code="0x03" source="server">
+        <name>Reset Startup Parameters Response</name>
+        <description></description>
+        <field type="ENUMERATION_8_BIT">
+            <name>Status</name>
+        </field>
+    </command>
+</cluster>

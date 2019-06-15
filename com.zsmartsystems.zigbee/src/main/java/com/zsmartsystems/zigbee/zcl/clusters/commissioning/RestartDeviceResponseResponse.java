@@ -10,21 +10,31 @@ package com.zsmartsystems.zigbee.zcl.clusters.commissioning;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Restart Device Response Response value object class.
  * <p>
- * Cluster: <b>Commissioning</b>. Command is sent <b>FROM</b> the server.
+ * Cluster: <b>Commissioning</b>. Command ID 0x00 is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the Commissioning cluster.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-06-15T20:20:47Z")
 public class RestartDeviceResponseResponse extends ZclCommand {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0015;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x00;
+
     /**
      * Status command message field.
      */
@@ -34,9 +44,9 @@ public class RestartDeviceResponseResponse extends ZclCommand {
      * Default constructor.
      */
     public RestartDeviceResponseResponse() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 21;
-        commandId = 0;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
     }
 
