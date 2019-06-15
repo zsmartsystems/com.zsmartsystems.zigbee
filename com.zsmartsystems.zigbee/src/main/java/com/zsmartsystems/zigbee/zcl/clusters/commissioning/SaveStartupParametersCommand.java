@@ -10,21 +10,31 @@ package com.zsmartsystems.zigbee.zcl.clusters.commissioning;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
-import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Save Startup Parameters Command value object class.
  * <p>
- * Cluster: <b>Commissioning</b>. Command is sent <b>TO</b> the server.
+ * Cluster: <b>Commissioning</b>. Command ID 0x01 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Commissioning cluster.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-03-14T23:37:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-06-15T20:20:47Z")
 public class SaveStartupParametersCommand extends ZclCommand {
+    /**
+     * The cluster ID to which this command belongs.
+     */
+    public static int CLUSTER_ID = 0x0015;
+
+    /**
+     * The command ID.
+     */
+    public static int COMMAND_ID = 0x01;
+
     /**
      * Option command message field.
      */
@@ -39,9 +49,9 @@ public class SaveStartupParametersCommand extends ZclCommand {
      * Default constructor.
      */
     public SaveStartupParametersCommand() {
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
         genericCommand = false;
-        clusterId = 21;
-        commandId = 1;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 

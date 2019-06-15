@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-05-02T20:51:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-06-15T20:20:47Z")
 public class ZclAnalogInputBasicCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -62,8 +62,6 @@ public class ZclAnalogInputBasicCluster extends ZclCluster {
      * Output or Analog Value cluster.
      */
     public static final int ATTR_MINPRESENTVALUE = 0x0045;
-    /**
-     */
     public static final int ATTR_OUTOFSERVICE = 0x0051;
     /**
      * The PresentValue attribute indicates the current value of the input, output or value,
@@ -412,7 +410,6 @@ public class ZclAnalogInputBasicCluster extends ZclCluster {
     /**
      * Set the <i>Out Of Service</i> attribute [attribute ID <b>0x0051</b>].
      * <p>
-     * <p>
      * The attribute is of type {@link Boolean}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
@@ -429,7 +426,6 @@ public class ZclAnalogInputBasicCluster extends ZclCluster {
     /**
      * Get the <i>Out Of Service</i> attribute [attribute ID <b>0x0051</b>].
      * <p>
-     * <p>
      * The attribute is of type {@link Boolean}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
@@ -444,7 +440,6 @@ public class ZclAnalogInputBasicCluster extends ZclCluster {
 
     /**
      * Synchronously get the <i>Out Of Service</i> attribute [attribute ID <b>0x0051</b>].
-     * <p>
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received

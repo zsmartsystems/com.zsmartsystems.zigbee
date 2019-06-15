@@ -123,7 +123,10 @@ public class ZigBeeXmlParser {
                         cluster.name = nodes.item(temp).getTextContent().trim();
                     }
                     if (nodes.item(temp).getNodeName().equals("description")) {
-                        cluster.description.add((ZigBeeXmlDescription) processNode(nodes.item(temp)));
+                        ZigBeeXmlDescription description = (ZigBeeXmlDescription) processNode(nodes.item(temp));
+                        if (description != null) {
+                            cluster.description.add(description);
+                        }
                     }
                     if (nodes.item(temp).getNodeName().equals("command")) {
                         cluster.commands.add((ZigBeeXmlCommand) processNode(nodes.item(temp)));
@@ -172,7 +175,10 @@ public class ZigBeeXmlParser {
                         attribute.name = nodes.item(temp).getTextContent().trim();
                     }
                     if (nodes.item(temp).getNodeName().equals("description")) {
-                        attribute.description.add((ZigBeeXmlDescription) processNode(nodes.item(temp)));
+                        ZigBeeXmlDescription description = (ZigBeeXmlDescription) processNode(nodes.item(temp));
+                        if (description != null) {
+                            attribute.description.add(description);
+                        }
                     }
                 }
 
@@ -194,7 +200,10 @@ public class ZigBeeXmlParser {
                         command.name = nodes.item(temp).getTextContent().trim();
                     }
                     if (nodes.item(temp).getNodeName().equals("description")) {
-                        command.description.add((ZigBeeXmlDescription) processNode(nodes.item(temp)));
+                        ZigBeeXmlDescription description = (ZigBeeXmlDescription) processNode(nodes.item(temp));
+                        if (description != null) {
+                            command.description.add(description);
+                        }
                     }
                     if (nodes.item(temp).getNodeName().equals("field")) {
                         command.fields.add((ZigBeeXmlField) processNode(nodes.item(temp)));
@@ -228,7 +237,10 @@ public class ZigBeeXmlParser {
                         field.sizer = nodes.item(temp).getTextContent().trim();
                     }
                     if (nodes.item(temp).getNodeName().equals("description")) {
-                        field.description.add((ZigBeeXmlDescription) processNode(nodes.item(temp)));
+                        ZigBeeXmlDescription description = (ZigBeeXmlDescription) processNode(nodes.item(temp));
+                        if (description != null) {
+                            field.description.add(description);
+                        }
                     }
                     if (nodes.item(temp).getNodeName().equals("conditional")) {
                         field.condition = (ZigBeeXmlCondition) processNode(nodes.item(temp));
@@ -252,7 +264,10 @@ public class ZigBeeXmlParser {
                         constant.name = nodes.item(temp).getTextContent().trim();
                     }
                     if (nodes.item(temp).getNodeName().equals("description")) {
-                        constant.description.add((ZigBeeXmlDescription) processNode(nodes.item(temp)));
+                        ZigBeeXmlDescription description = (ZigBeeXmlDescription) processNode(nodes.item(temp));
+                        if (description != null) {
+                            constant.description.add(description);
+                        }
                     }
                     if (nodes.item(temp).getNodeName().equals("value")) {
                         e = (Element) nodes.item(temp);
@@ -279,7 +294,10 @@ public class ZigBeeXmlParser {
                         structure.name = nodes.item(temp).getTextContent().trim();
                     }
                     if (nodes.item(temp).getNodeName().equals("description")) {
-                        structure.description.add((ZigBeeXmlDescription) processNode(nodes.item(temp)));
+                        ZigBeeXmlDescription description = (ZigBeeXmlDescription) processNode(nodes.item(temp));
+                        if (description != null) {
+                            structure.description.add(description);
+                        }
                     }
                     if (nodes.item(temp).getNodeName().equals("field")) {
                         structure.fields.add((ZigBeeXmlField) processNode(nodes.item(temp)));
@@ -300,6 +318,9 @@ public class ZigBeeXmlParser {
                     description.format = e.getAttribute("format").trim();
                 }
 
+                if (description.description == null || description.description.isEmpty()) {
+                    return null;
+                }
                 return description;
 
             case "conditional":

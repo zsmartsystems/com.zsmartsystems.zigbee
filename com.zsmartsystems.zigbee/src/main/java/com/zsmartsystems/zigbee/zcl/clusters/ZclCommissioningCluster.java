@@ -17,6 +17,7 @@ import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
+import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.commissioning.ResetStartupParametersCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.commissioning.ResetStartupParametersResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.commissioning.RestartDeviceCommand;
@@ -29,9 +30,12 @@ import com.zsmartsystems.zigbee.zcl.clusters.commissioning.SaveStartupParameters
 /**
  * <b>Commissioning</b> cluster implementation (<i>Cluster ID 0x0015</i>).
  * <p>
+ * This cluster provides attributes and commands pertaining to the commissioning and
+ * management of ZigBee devices operating in a network.
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZclProtocolCodeGenerator", date = "2018-10-24T19:40:52Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-06-15T20:20:47Z")
 public class ZclCommissioningCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -43,25 +47,48 @@ public class ZclCommissioningCluster extends ZclCluster {
      */
     public static final String CLUSTER_NAME = "Commissioning";
 
-    // Attribute initialisation
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(0);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
 
         return attributeMap;
     }
 
     @Override
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<Integer, ZclAttribute>(0);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
 
         return attributeMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(4);
+
+        commandMap.put(0x0000, RestartDeviceResponseResponse.class);
+        commandMap.put(0x0001, SaveStartupParametersResponse.class);
+        commandMap.put(0x0002, RestoreStartupParametersResponse.class);
+        commandMap.put(0x0003, ResetStartupParametersResponse.class);
+
+        return commandMap;
+    }
+
+    @Override
+    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(4);
+
+        commandMap.put(0x0000, RestartDeviceCommand.class);
+        commandMap.put(0x0001, SaveStartupParametersCommand.class);
+        commandMap.put(0x0002, RestoreStartupParametersCommand.class);
+        commandMap.put(0x0003, ResetStartupParametersCommand.class);
+
+        return commandMap;
     }
 
     /**
      * Default constructor to create a Commissioning cluster.
      *
-     * @param zigbeeEndpoint the {@link ZigBeeEndpoint}
+     * @param zigbeeEndpoint the {@link ZigBeeEndpoint} this cluster is contained within
      */
     public ZclCommissioningCluster(final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
@@ -196,5 +223,4 @@ public class ZclCommissioningCluster extends ZclCluster {
 
         return send(command);
     }
-
 }
