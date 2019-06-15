@@ -132,6 +132,12 @@ public class ZigBeeApsFrame {
      */
     private int apsCounter = -1;
 
+    protected int fragmentSize;
+    protected int fragmentBase = 0;
+    protected int fragmentTotal = 0;
+    protected int fragmentOutstanding = 0;
+    private int msgTag;
+
     /**
      * The APS payload.
      * <p>
@@ -140,18 +146,38 @@ public class ZigBeeApsFrame {
      */
     private int[] payload;
 
+    /**
+     * Gets the destination network address of this frame
+     *
+     * @return the destination network address of this frame
+     */
     public int getDestinationAddress() {
         return destinationAddress;
     }
 
+    /**
+     * Sets the destination network address of this frame
+     *
+     * @param destinationAddress the destination network address of this frame
+     */
     public void setDestinationAddress(int destinationAddress) {
         this.destinationAddress = destinationAddress;
     }
 
+    /**
+     * Gets the destination {@link IeeeAddress} of this frame
+     *
+     * @return the destination {@link IeeeAddress} of this frame
+     */
     public IeeeAddress getDestinationIeeeAddress() {
         return destinationIeeeAddress;
     }
 
+    /**
+     * Sets the destination {@link IeeeAddress} of this frame
+     *
+     * @param destinationIeeeAddress the destination {@link IeeeAddress} of this frame
+     */
     public void setDestinationIeeeAddress(IeeeAddress destinationIeeeAddress) {
         this.destinationIeeeAddress = destinationIeeeAddress;
     }
@@ -162,6 +188,84 @@ public class ZigBeeApsFrame {
 
     public void setSourceAddress(int sourceAddress) {
         this.sourceAddress = sourceAddress;
+    }
+
+    /**
+     * Set the fragment size
+     *
+     * @param fragmentSize the fragment size
+     */
+    public void setFragmentSize(int fragmentSize) {
+        this.fragmentSize = fragmentSize;
+    }
+
+    /**
+     * The fragmentBase is the next unsent fragment
+     *
+     * @return the fragmentBase
+     */
+    public int getFragmentBase() {
+        return fragmentBase;
+    }
+
+    /**
+     * The fragmentBase is the next unsent fragment
+     *
+     * @param fragmentBase the fragmentBase to set
+     */
+    public void setFragmentBase(int fragmentBase) {
+        this.fragmentBase = fragmentBase;
+    }
+
+    /**
+     * @return the fragmentTotal
+     */
+    public int getFragmentTotal() {
+        return fragmentTotal;
+    }
+
+    /**
+     * @param fragmentTotal the fragmentTotal to set
+     */
+    public void setFragmentTotal(int fragmentTotal) {
+        this.fragmentTotal = fragmentTotal;
+    }
+
+    /**
+     * Sets the number of fragments currently outstanding - this is the number that have been transmitted, but not
+     * acknowledged.
+     *
+     * @return the current number of fragments outstanding
+     */
+    public int getFragmentOutstanding() {
+        return fragmentOutstanding;
+    }
+
+    /**
+     * Sets the number of fragments currently outstanding - this is the number that have been transmitted, but not
+     * acknowledged.
+     *
+     * @param fragmentOutstanding the current number of fragments outstanding
+     */
+    public void setFragmentOutstanding(int fragmentOutstanding) {
+        if (fragmentOutstanding == 0 || fragmentOutstanding > fragmentTotal) {
+            return;
+        }
+        this.fragmentOutstanding = fragmentOutstanding;
+    }
+
+    /**
+     * @return the msgTag
+     */
+    public int getMsgTag() {
+        return msgTag;
+    }
+
+    /**
+     * @param msgTag the msgTag to set
+     */
+    public void setMsgTag(int msgTag) {
+        this.msgTag = msgTag;
     }
 
     /**
