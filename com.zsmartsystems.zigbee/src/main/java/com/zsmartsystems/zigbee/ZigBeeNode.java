@@ -652,11 +652,8 @@ public class ZigBeeNode implements ZigBeeCommandListener {
     public void commandReceived(ZigBeeCommand command) {
         // This gets called for all received commands
         // Check if it's our address
-        if (command.getSourceAddress().getAddress() != networkAddress) {
-            return;
-        }
-
-        if (!(command instanceof ZclCommand)) {
+        if (!(command instanceof ZclCommand) || networkAddress == null
+                || command.getSourceAddress().getAddress() != networkAddress) {
             return;
         }
 
