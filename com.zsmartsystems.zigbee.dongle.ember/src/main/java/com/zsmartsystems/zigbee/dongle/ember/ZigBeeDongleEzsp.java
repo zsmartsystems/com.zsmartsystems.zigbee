@@ -409,7 +409,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         long timer = System.currentTimeMillis() + WAIT_FOR_ONLINE;
         do {
             networkState = ncp.getNetworkState();
-            if (networkState != EmberNetworkStatus.EMBER_JOINING_NETWORK) {
+            if (networkState == EmberNetworkStatus.EMBER_JOINED_NETWORK) {
                 break;
             }
 
