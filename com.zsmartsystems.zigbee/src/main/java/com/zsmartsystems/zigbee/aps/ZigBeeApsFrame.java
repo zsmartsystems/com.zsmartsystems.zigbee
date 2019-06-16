@@ -18,7 +18,7 @@ import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
  * <p>
  * Note that not all APS header fields may be present in this class. The class is passed from the framework to the
  * hardware drivers where it is processed accordingly. Should data be missing that is required by a hardware
- * implemention, it will be added.
+ * implementation, it will be added.
  *
  * @author Chris Jackson
  *
