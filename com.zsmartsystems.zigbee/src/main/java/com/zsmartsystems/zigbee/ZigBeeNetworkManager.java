@@ -323,6 +323,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @return {@link ZigBeeStatus}
      */
     public ZigBeeStatus initialize() {
+        logger.debug("ZigBeeNetworkManager initialize: networkState={}", networkState);
         synchronized (this) {
             if (networkState != ZigBeeNetworkState.UNINITIALISED) {
                 return ZigBeeStatus.INVALID_STATE;
@@ -509,6 +510,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @return {@link ZigBeeStatus} with the status of function
      */
     public ZigBeeStatus startup(boolean reinitialize) {
+        logger.debug("ZigBeeNetworkManager startup: reinitialize={}, networkState={}", reinitialize, networkState);
         if (networkState == ZigBeeNetworkState.UNINITIALISED) {
             return ZigBeeStatus.INVALID_STATE;
         }
@@ -535,6 +537,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * @return
      */
     public ZigBeeStatus reinitialize() {
+        logger.debug("ZigBeeNetworkManager reinitialize: networkState={}", networkState);
+
         // Set the state to INITIALISING before reconfiguring the transport layer
         // to ensure we don't pass the OFFLINE state to the application
         setNetworkState(ZigBeeNetworkState.INITIALISING);
@@ -546,6 +550,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * Shuts down ZigBee manager components.
      */
     public void shutdown() {
+        logger.debug("ZigBeeNetworkManager shutdown: networkState={}", networkState);
+
         networkState = ZigBeeNetworkState.SHUTDOWN;
 
         executorService.shutdownNow();
@@ -749,6 +755,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     public void receiveCommand(final ZigBeeApsFrame incomingApsFrame) {
         synchronized (this) {
             if (networkState != ZigBeeNetworkState.ONLINE) {
+                logger.debug("Dropping APS: state={}, frame={}", networkState, incomingApsFrame);
                 return;
             }
         }
@@ -985,6 +992,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     @Override
     public synchronized void setTransportState(final ZigBeeTransportState state) {
+        logger.debug("ZigBeeNetworkManager transport state updated to {}", state);
+
         if (!validTransportStateTransitions.get(networkState).contains(state)) {
             logger.debug(
                     "Ignoring invalid transport state transition in ZigBeeNetworkState.{} by ZigBeeTransportState.{}",
@@ -1001,6 +1010,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         if (state.equals(networkState)) {
             return;
         }
+        logger.debug("Network state will be updated to {}", state);
 
         NotificationService.execute(new Runnable() {
             @Override
@@ -1028,10 +1038,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 // Globally update the state
                 networkState = state;
 
-                // Disable JOIN mode.
+                // Disable JOIN mode if we are the coordinator.
                 // This should be disabled by default (at least in ZigBee 3.0) but some older stacks may
                 // have join enabled permanently by default.
-                permitJoin(0);
+                if (localNwkAddress == 0) {
+                    permitJoin(0);
+                }
 
                 // Start the extensions
                 for (ZigBeeNetworkExtension extension : extensions) {

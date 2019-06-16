@@ -295,7 +295,7 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         ZigBeeNetworkStateListener stateListener = Mockito.mock(ZigBeeNetworkStateListener.class);
         manager.addNetworkStateListener(stateListener);
 
-        Mockito.when(mockedTransport.getNwkAddress()).thenReturn(Integer.valueOf(123));
+        Mockito.when(mockedTransport.getNwkAddress()).thenReturn(Integer.valueOf(0));
         Mockito.when(mockedTransport.getIeeeAddress()).thenReturn(new IeeeAddress("1234567890ABCDEF"));
 
         // Default state is uninitialised
@@ -323,8 +323,7 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         ManagementPermitJoiningRequest joinRequest = (ManagementPermitJoiningRequest) mockedTransactionCaptor
                 .getValue();
         assertEquals(Integer.valueOf(0), joinRequest.getPermitDuration());
-
-        assertEquals(Integer.valueOf(123), manager.getLocalNwkAddress());
+        assertEquals(Integer.valueOf(0), manager.getLocalNwkAddress());
         assertEquals(new IeeeAddress("1234567890ABCDEF"), manager.getLocalIeeeAddress());
 
         manager.removeNetworkStateListener(mockedStateListener);
