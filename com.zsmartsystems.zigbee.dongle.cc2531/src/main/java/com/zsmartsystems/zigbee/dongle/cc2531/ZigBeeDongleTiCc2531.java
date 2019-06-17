@@ -314,7 +314,6 @@ public class ZigBeeDongleTiCc2531
 
         // nwkHeader.setDestinationAddress(clusterMessage.geta);
         apsFrame.setSourceAddress(clusterMessage.getSrcAddr());
-        apsFrame.setApsCounter(clusterMessage.getTransId());
 
         apsFrame.setPayload(clusterMessage.getData());
 

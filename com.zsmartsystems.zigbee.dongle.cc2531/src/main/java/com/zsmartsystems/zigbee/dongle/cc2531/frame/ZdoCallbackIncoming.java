@@ -27,7 +27,6 @@ public class ZdoCallbackIncoming extends TiDongleReceivePacket {
         apsFrame.setSourceAddress(packet.getPacket()[4] + (packet.getPacket()[5] << 8));
         apsFrame.setSourceEndpoint(0);
         apsFrame.setProfile(0);
-        apsFrame.setApsCounter(packet.getPacket()[10]);
         apsFrame.setPayload(Arrays.copyOfRange(packet.getPacket(), 12, packet.getPacket().length - 1));
 
         return apsFrame;
