@@ -35,5 +35,31 @@ public class ZclAttributeNormalizerTest {
         assertEquals(Integer.valueOf(123), normalizer.normalizeZclData(ZclDataType.UNSIGNED_8_BIT_INTEGER, "123"));
         assertEquals(Integer.valueOf(0), normalizer.normalizeZclData(ZclDataType.UNSIGNED_8_BIT_INTEGER,
                 String.valueOf(new char[] { 1, 2, 3 })));
+        assertEquals(Integer.valueOf(123),
+                normalizer.normalizeZclData(ZclDataType.UNSIGNED_8_BIT_INTEGER, Double.valueOf(123)));
+    }
+
+    @Test
+    public void testNormalizeSIGNED_8_BIT_INTEGER() {
+        ZclAttributeNormalizer normalizer = new ZclAttributeNormalizer();
+
+        assertEquals(Integer.valueOf(123),
+                normalizer.normalizeZclData(ZclDataType.SIGNED_8_BIT_INTEGER, Double.valueOf(123)));
+    }
+
+    @Test
+    public void testNormalizeUNSIGNED_16_BIT_INTEGER() {
+        ZclAttributeNormalizer normalizer = new ZclAttributeNormalizer();
+
+        assertEquals(Integer.valueOf(123),
+                normalizer.normalizeZclData(ZclDataType.UNSIGNED_16_BIT_INTEGER, Double.valueOf(123)));
+    }
+
+    @Test
+    public void testNormalizeSIGNED_16_BIT_INTEGER() {
+        ZclAttributeNormalizer normalizer = new ZclAttributeNormalizer();
+
+        assertEquals(Integer.valueOf(123),
+                normalizer.normalizeZclData(ZclDataType.SIGNED_16_BIT_INTEGER, Double.valueOf(123)));
     }
 }

@@ -15,8 +15,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Future;
 
@@ -31,6 +33,7 @@ import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.database.ZclAttributeDao;
 import com.zsmartsystems.zigbee.database.ZclClusterDao;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
@@ -434,5 +437,25 @@ public class ZclClusterTest {
         assertEquals(2, record.getAttributeIdentifier());
         assertEquals(ZclDataType.SIGNED_16_BIT_INTEGER, record.getAttributeDataType());
         assertEquals(Integer.valueOf(123), record.getAttributeValue());
+    }
+
+    @Test
+    public void setDao() {
+        createEndpoint();
+
+        ZclOnOffCluster cluster = new ZclOnOffCluster(endpoint);
+
+        ZclClusterDao clusterDao = cluster.getDao();
+        ZclAttributeDao attributeDao = new ZclAttributeDao();
+        attributeDao.setDataType(ZclDataType.SIGNED_16_BIT_INTEGER);
+        attributeDao.setId(1);
+        attributeDao.setLastValue(Double.valueOf(123));
+        Map<Integer, ZclAttributeDao> attributes = new HashMap<>();
+        attributes.put(1, attributeDao);
+        clusterDao.setAttributes(attributes);
+
+        cluster.setDao(clusterDao);
+        assertEquals(1, cluster.getAttributes().size());
+        assertEquals(Integer.class, cluster.getAttributes().iterator().next().getLastValue().getClass());
     }
 }

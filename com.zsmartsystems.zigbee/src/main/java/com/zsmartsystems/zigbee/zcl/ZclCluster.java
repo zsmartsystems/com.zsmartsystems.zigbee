@@ -1234,6 +1234,9 @@ public abstract class ZclCluster {
 
         Map<Integer, ZclAttribute> daoZclAttributes = new HashMap<>();
         for (ZclAttributeDao daoAttribute : dao.getAttributes().values()) {
+            // Normalize the data to protect against the users serialisation system restoring incorrect data classes
+            daoAttribute
+                    .setLastValue(normalizer.normalizeZclData(daoAttribute.getDataType(), daoAttribute.getLastValue()));
             ZclAttribute attribute = new ZclAttribute();
             attribute.setDao(this, daoAttribute);
             daoZclAttributes.put(daoAttribute.getId(), attribute);
