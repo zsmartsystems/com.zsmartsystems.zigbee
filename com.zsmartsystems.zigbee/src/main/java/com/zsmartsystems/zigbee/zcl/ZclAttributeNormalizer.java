@@ -48,6 +48,28 @@ public class ZclAttributeNormalizer {
                         logger.debug("Normalizing data String {} to UNSIGNED_8_BIT_INTEGER", data);
                         return Integer.parseInt((String) data);
                     }
+                    if (data instanceof Double) {
+                        logger.debug("Normalizing data Double {} to UNSIGNED_8_BIT_INTEGER", data);
+                        return ((Double) data).intValue();
+                    }
+                    break;
+                case UNSIGNED_16_BIT_INTEGER:
+                    if (data instanceof Double) {
+                        logger.debug("Normalizing data Double {} to UNSIGNED_16_BIT_INTEGER", data);
+                        return ((Double) data).intValue();
+                    }
+                    break;
+                case SIGNED_8_BIT_INTEGER:
+                    if (data instanceof Double) {
+                        logger.debug("Normalizing data Double {} to SIGNED_8_BIT_INTEGER", data);
+                        return ((Double) data).intValue();
+                    }
+                    break;
+                case SIGNED_16_BIT_INTEGER:
+                    if (data instanceof Double) {
+                        logger.debug("Normalizing data Double {} to SIGNED_16_BIT_INTEGER", data);
+                        return ((Double) data).intValue();
+                    }
                     break;
                 default:
                     break;
