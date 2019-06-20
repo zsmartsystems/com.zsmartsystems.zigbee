@@ -186,33 +186,25 @@ public class EmberGpAddress implements GpAddress{
     @Override
     public boolean equals(Object obj) {
     	
-    	if (obj == null || this.getClass() != obj.getClass()) {
+    	if(obj == null) {
     		return false;
     	}
     	
     	EmberGpAddress address = (EmberGpAddress) obj;
 
     	if (!address.getGpdIeeeAddress().equals(this.getGpdIeeeAddress())) {
-    		System.out.println("failed: different gpdIeeeAddress");
-    		System.out.println(this.getGpdIeeeAddress());
-    		System.out.println(address.getGpdIeeeAddress());
     		return false;
     	}
     	
     	if (address.getSourceId() != this.getSourceId()) {
-    		System.out.println("failed: different sourceId");
     		return false;
     	}
     	
     	if (address.getApplicationId() != this.getApplicationId()) {
-    		System.out.println("failed: different ApplicationId");
-    		System.out.println(this.getApplicationId());
-    		System.out.println(address.getApplicationId());
     		return false;
     	}
     	
     	if (address.getEndpoint() != this.getEndpoint()) {
-    		System.out.println("failed: different endpoint");
     		return false;
     	}
     	

@@ -1,6 +1,5 @@
 package com.zsmartsystems.zigbee.dongle.ember.greenpower;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,8 +52,6 @@ public class EzspGpSinkTable implements VirtualSink{
 			return false;
 		}
 		entries.put(index,(EzspGpSinkTableEntry) entry);
-		System.out.println("debug: " + (EzspGpSinkTableEntry) entry);
-		System.out.println(((EzspGpSinkTableEntry) entry).getAddress().getApplicationId());
 		return false;
 	}
 
@@ -111,7 +108,7 @@ public class EzspGpSinkTable implements VirtualSink{
 		return true;
 	}
 	
-	public Object getEntryClass() {
+	public VirtualSinkEntry getNewEntry() {
 		return new EzspGpSinkTableEntry();
 	}
 }

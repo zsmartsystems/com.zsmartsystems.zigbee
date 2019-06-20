@@ -21,6 +21,6 @@ public interface VirtualSink {
 	
 	public boolean test();
 	
-	public Object getEntryClass();
+	public VirtualSinkEntry getNewEntry();
 }
 

@@ -910,10 +910,14 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     	}
 
     	logger.debug("RX APS: {}", gpFrame);
+    	logger.debug("[GP]GreenPower frame received: " + gpFrame);
     	
     	//this will fail the invalid frames, so the construction of the command can be done after this without any risk.
     	if (virtualSinkUse) {
     		if (gpFrame.getCommandId()==0xE0) {
+    			
+    			logger.debug("[GP]Commissioning frame received, starting sink table tests");
+    			
     			//add the GPD to the sink table
     			if (!sinkTable.getStatus()) {
     				sinkTable.init();
@@ -928,27 +932,27 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 					e.printStackTrace();
 				}
     			
-    			VirtualSinkEntry entry = (VirtualSinkEntry) sinkInstance.getEntryClass();
+    			VirtualSinkEntry entry = (VirtualSinkEntry) sinkInstance.getNewEntry();
     			
     			entry.setAddress(gpFrame.getSourceAddress());
     			entry.setDeviceId(gpFrame.getPayload()[0]);
     			
     			sinkTable.setEntry(index, entry);
+    			logger.debug("[GP]Succesfully added Sink table entry: " + entry);
     			
-    		}else {
+    		}else {			
     			//test if the GPD is in the sink table.
     			int index = sinkTable.lookup(gpFrame.getSourceAddress());
-    			
     			if (index == -1) {
-    				logger.debug("GPD Sink Entry not found, Frame dropped.");
-    				return;
-    			}			
+    				logger.debug("[GP]GPD Sink Entry not found, Frame dropped.");
+        			return;
+        		}	
     		}
     	}else {
     		//TODO add regular sink verification process
     	}
     	
-    	System.out.println("this command passed the tests");
+    	logger.debug("[GP]Sink table test passed");
     	GpCommand command = new GpCommand();
     	
     	command.setAutoCommissioning(gpFrame.isAutoCommissioning());
