@@ -361,9 +361,12 @@ public class AshFrameHandler implements EzspProtocolHandler {
     }
 
     private void handleError(AshFrameError packet) {
-        logger.warn("ASH: ERROR received (code {}). Disconnecting.", packet.getErrorCode());
+        logger.debug("ASH: ERROR received (code {}).", packet.getErrorCode());
         statsRxErrs++;
-        disconnect();
+        if (stateConnected) {
+            logger.warn("ASH: ERROR received (code {}). Disconnecting.", packet.getErrorCode());
+            disconnect();
+        }
     }
 
     @Override
