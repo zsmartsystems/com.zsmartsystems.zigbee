@@ -54,6 +54,7 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFrameType;
 import com.zsmartsystems.zigbee.zcl.ZclHeader;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclColorControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclElectricalMeasurementCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclIasZoneCluster;
@@ -533,6 +534,9 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         ZigBeeEndpoint endpoint = Mockito.mock(ZigBeeEndpoint.class);
         ZclCluster cluster;
 
+        cluster = new ZclBasicCluster(endpoint);
+        Mockito.when(endpoint.getInputCluster(0x0000)).thenReturn(cluster);
+        Mockito.when(endpoint.getOutputCluster(0x0000)).thenReturn(cluster);
         cluster = new ZclOnOffCluster(endpoint);
         Mockito.when(endpoint.getInputCluster(0x0006)).thenReturn(cluster);
         Mockito.when(endpoint.getOutputCluster(0x0006)).thenReturn(cluster);
@@ -903,7 +907,7 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
                 }
             }
 
-            assertEquals(convertedData, data);
+            assertEquals(data, convertedData);
         }
     }
 
