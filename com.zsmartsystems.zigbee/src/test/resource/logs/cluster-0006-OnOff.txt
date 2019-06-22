@@ -3,5 +3,5 @@
 # Comments can be added with the # on the first character and empty lines are allowed
 
 ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=18314/3, profile=0104, cluster=0006, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=20, payload=01 20 00]
-OffCommand [On/Off: 0/0 -> 18314/3, cluster=0006, TID=20]
+OffCommand [On/Off: 0/1 -> 18314/3, cluster=0006, TID=20]
 
