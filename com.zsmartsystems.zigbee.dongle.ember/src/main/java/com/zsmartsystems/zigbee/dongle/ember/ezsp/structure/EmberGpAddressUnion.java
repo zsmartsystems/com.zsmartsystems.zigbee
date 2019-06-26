@@ -147,9 +147,9 @@ public class EmberGpAddressUnion extends EmberGpAddress{
      */
     public int[] serialize(EzspSerializer serializer) {
         // Serialize the fields
-        serializer.serializeEmberEui64(gpdIeeeAddress);
-        serializer.serializeUInt32(sourceId);
         serializer.serializeEmberGpApplicationId(applicationId);
+        serializer.serializeEmberEui64(gpdIeeeAddress);
+//        serializer.serializeUInt32(sourceId);
         serializer.serializeUInt8(endpoint);
         return serializer.getPayload();
     }
@@ -161,10 +161,10 @@ public class EmberGpAddressUnion extends EmberGpAddress{
      */
     public void deserialize(EzspDeserializer deserializer) {
         // Deserialize the fields
+        applicationId = deserializer.deserializeEmberGpApplicationId();
     	int[] address = deserializer.deserializeRawAddress();
         gpdIeeeAddress = new IeeeAddress(address);
         sourceId = (address[0] <<24) + (address[1] <<16) + (address[2] <<8) + address[3];
-        applicationId = deserializer.deserializeEmberGpApplicationId();
         endpoint = deserializer.deserializeUInt8();
     }
 
