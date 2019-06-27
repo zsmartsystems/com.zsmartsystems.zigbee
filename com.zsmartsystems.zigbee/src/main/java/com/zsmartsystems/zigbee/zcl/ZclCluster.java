@@ -1018,8 +1018,11 @@ public abstract class ZclCluster {
     public void addAttributeListener(ZclAttributeListener listener) {
         // Don't add more than once.
         if (attributeListeners.contains(listener)) {
+            logger.trace("{}: ZclCluster.addAttributeListener already contains {}", zigbeeEndpoint.getEndpointAddress(),
+                    listener);
             return;
         }
+        logger.trace("{}: ZclCluster.addAttributeListener adding {}", zigbeeEndpoint.getEndpointAddress(), listener);
         attributeListeners.add(listener);
     }
 
@@ -1029,6 +1032,8 @@ public abstract class ZclCluster {
      * @param listener callback listener implementing {@link ZclAttributeListener} to remove
      */
     public void removeAttributeListener(final ZclAttributeListener listener) {
+        logger.trace("{}: ZclCluster.removeAttributeListener removing {}", zigbeeEndpoint.getEndpointAddress(),
+                listener);
         attributeListeners.remove(listener);
     }
 
@@ -1043,6 +1048,9 @@ public abstract class ZclCluster {
             NotificationService.execute(new Runnable() {
                 @Override
                 public void run() {
+                    logger.trace("{}: ZclCluster.notifyAttributeListener {} of {} with value {}",
+                            zigbeeEndpoint.getEndpointAddress(), listener, attribute, value);
+
                     listener.attributeUpdated(attribute, value);
                 }
             });
@@ -1083,6 +1091,9 @@ public abstract class ZclCluster {
             NotificationService.execute(new Runnable() {
                 @Override
                 public void run() {
+                    logger.trace("{}: ZclCluster.notifyCommandListener {} of {}", zigbeeEndpoint.getEndpointAddress(),
+                            listener, command);
+
                     listener.commandReceived(command);
                 }
             });
@@ -1095,6 +1106,7 @@ public abstract class ZclCluster {
      * @param reports List of {@link AttributeReport}
      */
     public void handleAttributeReport(List<AttributeReport> reports) {
+        logger.trace("{}: ZclCluster.handleAttributeReport({})", zigbeeEndpoint.getEndpointAddress(), reports);
         for (AttributeReport report : reports) {
             updateAttribute(report.getAttributeIdentifier(), report.getAttributeValue());
         }
@@ -1106,6 +1118,7 @@ public abstract class ZclCluster {
      * @param records List of {@link ReadAttributeStatusRecord}
      */
     public void handleAttributeStatus(List<ReadAttributeStatusRecord> records) {
+        logger.trace("{}: ZclCluster.handleAttributeStatus({})", zigbeeEndpoint.getEndpointAddress(), records);
         for (ReadAttributeStatusRecord record : records) {
             if (record.getStatus() != ZclStatus.SUCCESS) {
                 logger.debug("{}: Error reading attribute {} in {} cluster {} - {}",
@@ -1119,6 +1132,8 @@ public abstract class ZclCluster {
     }
 
     private void updateAttribute(int attributeId, Object attributeValue) {
+        logger.trace("{}: Attribute {} in {} cluster {} updated to {}", zigbeeEndpoint.getEndpointAddress(),
+                attributeId, (isClient ? "Client" : "Server"), clusterId, attributeValue);
         ZclAttribute attribute = getAttribute(attributeId);
         if (attribute == null) {
             logger.debug("{}: Unknown {} attribute in {} cluster {}", zigbeeEndpoint.getEndpointAddress(),

@@ -657,7 +657,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
             return;
         }
 
-        logger.trace("{}: ZigBeeEndpoint.commandReceived({})", ieeeAddress, command);
+        logger.trace("{}: ZigBeeNode.commandReceived({})", ieeeAddress, command);
 
         ZclCommand zclCommand = (ZclCommand) command;
         ZigBeeEndpointAddress endpointAddress = (ZigBeeEndpointAddress) zclCommand.getSourceAddress();
