@@ -14,6 +14,7 @@ Features include -:
 
 * ZigBee Cluster Library
 * Over-The-Air firmware upgrade
+* Device information data store
 
 ### ZigBee Cluster Library
 
@@ -176,6 +177,12 @@ The following table provides a summary of some of the dongles / chipsets that ar
 
 * Receive: Defines the typical receive performance. A lower number is best.
 * Transmit: Defines the maximum output power. A higher number is best.
+
+## Device Data-Store
+
+The framework implements a data store to serialise device information to and from disk to ensure network information is persisted across restarts. This is implemented via the ```ZigBeeNetworkDataStore``` interface, and the implementation of this interface is set in the ```ZigBeeNetworkManager``` with the  ```setNetworkDataStore(ZigBeeNetworkDataStore)``` method.
+
+While optional, it is highly recommended that this data store be implemented as it will greatly enhance performance across system restarts.
 
 # Application Extensions
 
