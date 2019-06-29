@@ -67,14 +67,12 @@ public class ZigBeeNodeServiceDiscovererTest {
 
     ZigBeeNetworkManager networkManager;
     ArgumentCaptor<ZigBeeNode> nodeCapture;
-    ArgumentCaptor<ZigBeeEndpoint> endpointCapture;
     Map<Integer, ZigBeeCommand> responses = new HashMap<Integer, ZigBeeCommand>();
 
     @Before
     public void setupTest() {
         networkManager = Mockito.mock(ZigBeeNetworkManager.class);
         nodeCapture = ArgumentCaptor.forClass(ZigBeeNode.class);
-        endpointCapture = ArgumentCaptor.forClass(ZigBeeEndpoint.class);
 
         Mockito.doAnswer(new Answer<Future<CommandResult>>() {
             @Override
@@ -127,6 +125,7 @@ public class ZigBeeNodeServiceDiscovererTest {
         Mockito.when(node.getPowerDescriptor()).thenReturn(initialPowerDescriptor);
 
         Mockito.when(node.getNetworkAddress()).thenReturn(123);
+        Mockito.when(node.getIeeeAddress()).thenReturn(new IeeeAddress("1234567890ABCDEF"));
 
         discoverer.setMaxBackoff(10);
         assertEquals(10, discoverer.getMaxBackoff());
@@ -215,12 +214,13 @@ public class ZigBeeNodeServiceDiscovererTest {
 
         discoverer.startDiscovery();
 
-        Mockito.verify(node, Mockito.timeout(TIMEOUT).times(1)).addEndpoint(endpointCapture.capture());
-
         // Then wait for the node to be updated
         Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).times(1)).updateNode(nodeCapture.capture());
 
-        ZigBeeEndpoint endpoint = endpointCapture.getValue();
+        ZigBeeNode discoveredNode = nodeCapture.getValue();
+        assertEquals(new IeeeAddress("1234567890ABCDEF"), discoveredNode.getIeeeAddress());
+        assertEquals(Integer.valueOf(123), discoveredNode.getNetworkAddress());
+        ZigBeeEndpoint endpoint = discoveredNode.getEndpoint(1);
         assertEquals(1, endpoint.getEndpointId());
         assertEquals(node, endpoint.getParentNode());
     }
@@ -242,6 +242,7 @@ public class ZigBeeNodeServiceDiscovererTest {
 
         // Use node 0 and we should not try and get the local endpoints
         Mockito.when(node.getNetworkAddress()).thenReturn(0);
+        Mockito.when(node.getIeeeAddress()).thenReturn(new IeeeAddress("1234567890ABCDEF"));
 
         ScheduledFuture<?> futureTask = Mockito.mock(ScheduledFuture.class);
         TestUtilities.setField(ZigBeeNodeServiceDiscoverer.class, discoverer, "futureTask", futureTask);
@@ -281,6 +282,7 @@ public class ZigBeeNodeServiceDiscovererTest {
         Mockito.when(node.getPowerDescriptor()).thenReturn(initialPowerDescriptor);
 
         Mockito.when(node.getNetworkAddress()).thenReturn(1);
+        Mockito.when(node.getIeeeAddress()).thenReturn(new IeeeAddress("1234567890ABCDEF"));
 
         ScheduledFuture<?> futureTask = Mockito.mock(ScheduledFuture.class);
         TestUtilities.setField(ZigBeeNodeServiceDiscoverer.class, discoverer, "futureTask", futureTask);

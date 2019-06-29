@@ -12,11 +12,16 @@ import static org.junit.Assert.assertEquals;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
+import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.TestUtilities;
 import com.zsmartsystems.zigbee.ZigBeeCommandListener;
@@ -27,7 +32,10 @@ import com.zsmartsystems.zigbee.ZigBeeNode.ZigBeeNodeState;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.app.discovery.ZigBeeNodeServiceDiscoverer.NodeDiscoveryTask;
 import com.zsmartsystems.zigbee.zdo.command.DeviceAnnounce;
+import com.zsmartsystems.zigbee.zdo.command.IeeeAddressRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementLeaveResponse;
+import com.zsmartsystems.zigbee.zdo.command.MatchDescriptorRequest;
+import com.zsmartsystems.zigbee.zdo.command.NetworkAddressRequest;
 
 /**
  *
@@ -35,9 +43,26 @@ import com.zsmartsystems.zigbee.zdo.command.ManagementLeaveResponse;
  *
  */
 public class ZigBeeDiscoveryExtensionTest {
+    final static int TIMEOUT = 5000;
+
     @Test
     public void test() throws Exception {
         ZigBeeNetworkManager networkManager = Mockito.mock(ZigBeeNetworkManager.class);
+        Mockito.doAnswer(new Answer<Future<CommandResult>>() {
+            @Override
+            public Future<CommandResult> answer(InvocationOnMock invocation)
+                    throws InterruptedException, ExecutionException {
+                Runnable runnable = (Runnable) invocation.getArguments()[0];
+                new Thread(runnable).start();
+                return null;
+            }
+        }).when(networkManager).executeTask(ArgumentMatchers.any(Runnable.class));
+
+        Future<CommandResult> future = Mockito.mock(Future.class);
+        CommandResult cmdResult = Mockito.mock(CommandResult.class);
+        Mockito.when(cmdResult.isError()).thenReturn(true);
+        Mockito.when(future.get()).thenReturn(cmdResult);
+        Mockito.when(networkManager.sendTransaction(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(future);
 
         ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
         Mockito.when(node.getIeeeAddress()).thenReturn(new IeeeAddress("1234567890ABCDEF"));
@@ -65,9 +90,9 @@ public class ZigBeeDiscoveryExtensionTest {
         Mockito.verify(extension, Mockito.times(1)).startScheduler(1);
         assertEquals(1, extension.getUpdatePeriod());
 
-        Mockito.verify(networkManager, Mockito.timeout(1000).atLeast(1))
+        Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).atLeast(1))
                 .addNetworkNodeListener(ArgumentMatchers.any(ZigBeeNetworkNodeListener.class));
-        Mockito.verify(networkManager, Mockito.timeout(1000).atLeast(1))
+        Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).atLeast(1))
                 .addCommandListener(ArgumentMatchers.any(ZigBeeCommandListener.class));
 
         extension.nodeAdded(node);
@@ -115,11 +140,23 @@ public class ZigBeeDiscoveryExtensionTest {
         extension.commandReceived(announce);
         Mockito.verify(extension, Mockito.times(2)).refresh();
 
+        MatchDescriptorRequest nothing = Mockito.mock(MatchDescriptorRequest.class);
+        extension.commandReceived(nothing);
+        Mockito.verify(extension, Mockito.times(2)).refresh();
+
+        extension.rediscoverNode(1);
+        Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).atLeast(1)).sendTransaction(
+                ArgumentMatchers.any(IeeeAddressRequest.class), ArgumentMatchers.any(IeeeAddressRequest.class));
+
+        extension.rediscoverNode(new IeeeAddress("1234567890ABCDEF"));
+        Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).atLeast(1)).sendTransaction(
+                ArgumentMatchers.any(NetworkAddressRequest.class), ArgumentMatchers.any(NetworkAddressRequest.class));
+
         extension.extensionShutdown();
 
-        Mockito.verify(networkManager, Mockito.timeout(1000).atLeast(1))
+        Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).atLeast(1))
                 .removeNetworkNodeListener(ArgumentMatchers.any(ZigBeeNetworkNodeListener.class));
-        Mockito.verify(networkManager, Mockito.timeout(1000).atLeast(1))
+        Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).atLeast(1))
                 .removeCommandListener(ArgumentMatchers.any(ZigBeeCommandListener.class));
     }
 }
