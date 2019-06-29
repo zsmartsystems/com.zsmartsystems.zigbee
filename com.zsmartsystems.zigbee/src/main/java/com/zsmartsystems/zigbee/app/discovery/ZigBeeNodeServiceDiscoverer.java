@@ -66,7 +66,7 @@ import com.zsmartsystems.zigbee.zdo.field.SimpleDescriptor;
  * A random exponential backoff is used for retries to reduce congestion. If the device replies that a command is not
  * supported, then this will not be issued again on subsequent requests.
  * <p>
- * Once the discovery update is complete the {@link ZigBeeNetworkManager#updateNode(ZigBeeNode)} is called to alert
+ * Once the discovery update is complete the {@link ZigBeeNetworkManager#addNode(ZigBeeNode)} is called to alert
  * users.
  *
  * @author Chris Jackson
@@ -84,9 +84,15 @@ public class ZigBeeNodeServiceDiscoverer {
     private final ZigBeeNetworkManager networkManager;
 
     /**
-     * The {@link ZigBeeNode}.
+     * The original {@link ZigBeeNode}. This is a reference to the node in the {@link ZigBeeNetworkManager}
      */
     private final ZigBeeNode node;
+
+    /**
+     * The {@link ZigBeeNode} that we are updating. All changes are made here so that we are not changing the data in
+     * the {@link ZigBeeNetworkManager} directly. This ensures that change detection is working correctly.
+     */
+    private ZigBeeNode updatedNode;
 
     /**
      * Default maximum number of retries to perform
@@ -195,6 +201,8 @@ public class ZigBeeNodeServiceDiscoverer {
         // Tasks are managed in a queue. The worker thread will only remove the task from the queue once the task is
         // complete. When no tasks are left in the queue, the worker thread will exit.
         synchronized (discoveryTasks) {
+            logger.debug("{}: Node SVC Discovery: starting new tasks {}", node.getIeeeAddress(), newTasks);
+
             // Remove any tasks that we know are not supported by this device
             if ((!supportsManagementLqi || node.getNodeDescriptor().getLogicalType() == LogicalType.UNKNOWN)
                     && newTasks.contains(NodeDiscoveryTask.NEIGHBORS)) {
@@ -208,11 +216,13 @@ public class ZigBeeNodeServiceDiscoverer {
 
             // Make sure there are still tasks to perform
             if (newTasks.isEmpty()) {
-                logger.debug("{}: Node SVC Discovery: has no tasks to perform", node.getIeeeAddress());
+                logger.debug("{}: Node SVC Discovery: has no new tasks to perform", node.getIeeeAddress());
                 return;
             }
 
-            boolean startWorker = discoveryTasks.isEmpty();
+            // Check the current list of tasks to decide if we need to start the worker
+            // This prevents restarting if we didn't add new tasks, which might overload the system
+            boolean startWorker = discoveryTasks.isEmpty() | (futureTask == null);
 
             // Add new tasks, avoiding any duplication
             for (NodeDiscoveryTask newTask : newTasks) {
@@ -224,6 +234,10 @@ public class ZigBeeNodeServiceDiscoverer {
             if (!startWorker) {
                 logger.debug("{}: Node SVC Discovery: already scheduled or running", node.getIeeeAddress());
             } else {
+                // Create a new node to store the data from this update.
+                // We set the network address so that we can detect the change later if needed.
+                updatedNode = new ZigBeeNode(networkManager, node.getIeeeAddress());
+                updatedNode.setNetworkAddress(node.getNetworkAddress());
                 lastDiscoveryStarted = Calendar.getInstance();
             }
 
@@ -286,14 +300,16 @@ public class ZigBeeNodeServiceDiscoverer {
 
         CommandResult response = networkManager.sendTransaction(networkAddressRequest, networkAddressRequest).get();
         final NetworkAddressResponse networkAddressResponse = (NetworkAddressResponse) response.getResponse();
-        logger.debug("{}: Node SVC Discovery: NetworkAddressRequest returned {}", node.getNetworkAddress(),
+        logger.debug("{}: Node SVC Discovery: NetworkAddressRequest returned {}", node.getIeeeAddress(),
                 networkAddressResponse);
         if (networkAddressResponse == null) {
             return false;
         }
 
         if (networkAddressResponse.getStatus() == ZdoStatus.SUCCESS) {
-            node.setNetworkAddress(networkAddressResponse.getNwkAddrRemoteDev());
+            if (updatedNode.setNetworkAddress(networkAddressResponse.getNwkAddrRemoteDev())) {
+                networkManager.updateNode(updatedNode);
+            }
 
             return true;
         }
@@ -333,7 +349,7 @@ public class ZigBeeNodeServiceDiscoverer {
             }
         } while (startIndex < totalAssociatedDevices);
 
-        node.setAssociatedDevices(associatedDevices);
+        updatedNode.setAssociatedDevices(associatedDevices);
 
         return true;
     }
@@ -359,7 +375,7 @@ public class ZigBeeNodeServiceDiscoverer {
         }
 
         if (nodeDescriptorResponse.getStatus() == ZdoStatus.SUCCESS) {
-            node.setNodeDescriptor(nodeDescriptorResponse.getNodeDescriptor());
+            updatedNode.setNodeDescriptor(nodeDescriptorResponse.getNodeDescriptor());
 
             return true;
         }
@@ -388,7 +404,7 @@ public class ZigBeeNodeServiceDiscoverer {
         }
 
         if (powerDescriptorResponse.getStatus() == ZdoStatus.SUCCESS) {
-            node.setPowerDescriptor(powerDescriptorResponse.getPowerDescriptor());
+            updatedNode.setPowerDescriptor(powerDescriptorResponse.getPowerDescriptor());
 
             return true;
         } else if (powerDescriptorResponse.getStatus() == ZdoStatus.NOT_SUPPORTED) {
@@ -430,7 +446,7 @@ public class ZigBeeNodeServiceDiscoverer {
 
         // All endpoints have been received, so add them to the node
         for (ZigBeeEndpoint endpoint : endpoints) {
-            node.addEndpoint(endpoint);
+            updatedNode.addEndpoint(endpoint);
         }
 
         return true;
@@ -485,7 +501,7 @@ public class ZigBeeNodeServiceDiscoverer {
 
         logger.debug("{}: Node SVC Discovery: ManagementLqiRequest complete [{} neighbors]", node.getIeeeAddress(),
                 neighbors.size());
-        node.setNeighbors(neighbors);
+        updatedNode.setNeighbors(neighbors);
 
         return true;
     }
@@ -534,7 +550,7 @@ public class ZigBeeNodeServiceDiscoverer {
 
         logger.debug("{}: Node SVC Discovery: ManagementLqiRequest complete [{} routes]", node.getIeeeAddress(),
                 routes.size());
-        node.setRoutes(routes);
+        updatedNode.setRoutes(routes);
 
         return true;
     }
@@ -591,7 +607,7 @@ public class ZigBeeNodeServiceDiscoverer {
                 if (discoveryTask == null) {
                     lastDiscoveryCompleted = Calendar.getInstance();
                     logger.debug("{}: Node SVC Discovery: complete", node.getIeeeAddress());
-                    networkManager.updateNode(node);
+                    networkManager.updateNode(updatedNode);
                     return;
                 }
                 logger.debug("{}: Node SVC Discovery: running {}", node.getIeeeAddress(), discoveryTask);
@@ -701,7 +717,6 @@ public class ZigBeeNodeServiceDiscoverer {
     public void updateMesh() {
         logger.debug("{}: Node SVC Discovery: Update mesh", node.getIeeeAddress());
         Set<NodeDiscoveryTask> tasks = new HashSet<NodeDiscoveryTask>();
-
         tasks.addAll(meshUpdateTasks);
 
         startDiscovery(tasks);

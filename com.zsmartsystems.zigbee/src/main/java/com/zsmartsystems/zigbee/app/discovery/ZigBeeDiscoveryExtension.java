@@ -119,8 +119,10 @@ public class ZigBeeDiscoveryExtension
             networkDiscoverer.shutdown();
         }
 
-        for (ZigBeeNodeServiceDiscoverer nodeDiscoverer : nodeDiscovery.values()) {
-            nodeDiscoverer.stopDiscovery();
+        synchronized (nodeDiscovery) {
+            for (ZigBeeNodeServiceDiscoverer nodeDiscoverer : nodeDiscovery.values()) {
+                nodeDiscoverer.stopDiscovery();
+            }
         }
 
         extensionStarted = false;
@@ -186,30 +188,35 @@ public class ZigBeeDiscoveryExtension
 
     @Override
     public void nodeAdded(ZigBeeNode node) {
-        if (nodeDiscovery.containsKey(node.getIeeeAddress())) {
-            return;
+        synchronized (nodeDiscovery) {
+            if (nodeDiscovery.containsKey(node.getIeeeAddress())) {
+                return;
+            }
+
+            logger.debug("{}: DISCOVERY Extension: Adding discoverer for added node", node.getIeeeAddress());
+            startDiscovery(node);
         }
-
-        logger.debug("DISCOVERY Extension: Adding discoverer for {}", node.getIeeeAddress());
-
-        startDiscovery(node);
     }
 
     @Override
     public void nodeUpdated(ZigBeeNode node) {
-        // We need to handle the cases where the node changes to ONLINE, or to OFFLINE
-        if (node.getNodeState() == ZigBeeNodeState.ONLINE && !nodeDiscovery.containsKey(node.getIeeeAddress())) {
-            // If the state is ONLINE, then ensure discovery is running
-            startDiscovery(node);
-        } else if (node.getNodeState() != ZigBeeNodeState.ONLINE && nodeDiscovery.containsKey(node.getIeeeAddress())) {
-            // If state is not ONLINE, then stop discovery
-            stopDiscovery(node);
+        synchronized (nodeDiscovery) {
+            // We need to handle the cases where the node changes to ONLINE, or to OFFLINE
+            if (node.getNodeState() == ZigBeeNodeState.ONLINE && !nodeDiscovery.containsKey(node.getIeeeAddress())) {
+                logger.debug("{}: DISCOVERY Extension: Adding discoverer for updated node", node.getIeeeAddress());
+                // If the state is ONLINE, then ensure discovery is running
+                startDiscovery(node);
+            } else if (node.getNodeState() != ZigBeeNodeState.ONLINE
+                    && nodeDiscovery.containsKey(node.getIeeeAddress())) {
+                // If state is not ONLINE, then stop discovery
+                stopDiscovery(node);
+            }
         }
     }
 
     @Override
     public void nodeRemoved(ZigBeeNode node) {
-        logger.debug("DISCOVERY Extension: Removing discoverer for {}", node.getIeeeAddress());
+        logger.debug("{}: DISCOVERY Extension: Removing discoverer", node.getIeeeAddress());
         stopDiscovery(node);
     }
 
@@ -242,10 +249,12 @@ public class ZigBeeDiscoveryExtension
     }
 
     protected void startDiscovery(ZigBeeNode node) {
-        ZigBeeNodeServiceDiscoverer nodeDiscoverer = new ZigBeeNodeServiceDiscoverer(networkManager, node);
-        nodeDiscoverer.setUpdateMeshTasks(meshUpdateTasks);
-        nodeDiscovery.put(node.getIeeeAddress(), nodeDiscoverer);
-        nodeDiscoverer.startDiscovery();
+        synchronized (nodeDiscovery) {
+            ZigBeeNodeServiceDiscoverer nodeDiscoverer = new ZigBeeNodeServiceDiscoverer(networkManager, node);
+            nodeDiscoverer.setUpdateMeshTasks(meshUpdateTasks);
+            nodeDiscovery.put(node.getIeeeAddress(), nodeDiscoverer);
+            nodeDiscoverer.startDiscovery();
+        }
     }
 
     protected void stopDiscovery(ZigBeeNode node) {
@@ -268,11 +277,13 @@ public class ZigBeeDiscoveryExtension
         Runnable meshUpdateThread = new Runnable() {
             @Override
             public void run() {
-                logger.debug("DISCOVERY Extension: Starting mesh update");
-                for (ZigBeeNodeServiceDiscoverer node : nodeDiscovery.values()) {
-                    logger.debug("DISCOVERY Extension: Starting mesh update for {}", node.getNode().getIeeeAddress());
-                    node.setUpdateMeshTasks(meshUpdateTasks);
-                    node.updateMesh();
+                synchronized (nodeDiscovery) {
+                    logger.debug("DISCOVERY Extension: Starting mesh update");
+                    for (ZigBeeNodeServiceDiscoverer node : nodeDiscovery.values()) {
+                        logger.debug("{}: DISCOVERY Extension: Starting mesh update", node.getNode().getIeeeAddress());
+                        node.setUpdateMeshTasks(meshUpdateTasks);
+                        node.updateMesh();
+                    }
                 }
             }
         };
@@ -287,7 +298,9 @@ public class ZigBeeDiscoveryExtension
      * @return Collection of {@link ZigBeeNodeServiceDiscoverer}
      */
     public Collection<ZigBeeNodeServiceDiscoverer> getNodeDiscoverers() {
-        return nodeDiscovery.values();
+        synchronized (nodeDiscovery) {
+            return nodeDiscovery.values();
+        }
     }
 
 }

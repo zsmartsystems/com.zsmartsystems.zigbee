@@ -133,7 +133,8 @@ public class ZigBeeNetworkDatabaseManager implements ZigBeeNetworkNodeListener {
                 continue;
             }
             node.setDao(nodeDao);
-            networkManager.addNode(node);
+            logger.debug("{}: Data store: Node was restored.", nodeAddress);
+            networkManager.updateNode(node);
         }
 
         networkManager.addNetworkNodeListener(this);
@@ -154,9 +155,6 @@ public class ZigBeeNetworkDatabaseManager implements ZigBeeNetworkNodeListener {
             return;
         }
 
-        // for(int node :networkManager.getNodes()) {
-        // }
-        // dataStore.writeNetworkNodes();
         saveNode(node);
     }
 
