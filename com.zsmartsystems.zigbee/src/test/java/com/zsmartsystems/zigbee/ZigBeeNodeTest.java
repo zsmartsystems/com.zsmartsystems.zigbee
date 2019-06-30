@@ -37,6 +37,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoCommandType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.command.ManagementBindResponse;
+import com.zsmartsystems.zigbee.zdo.field.BindingTable;
 import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.LogicalType;
@@ -54,14 +55,16 @@ public class ZigBeeNodeTest {
     public void testAddDescriptors() {
         ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress());
 
-        // Not null by default
-        assertNotNull(node.getNodeDescriptor());
-        assertNotNull(node.getPowerDescriptor());
+        // Null by default
+        assertNull(node.getNodeDescriptor());
+        assertNull(node.getPowerDescriptor());
 
-        node.setPowerDescriptor(null);
-        assertEquals(null, node.getPowerDescriptor());
-        node.setNodeDescriptor(null);
-        assertEquals(null, node.getPowerDescriptor());
+        assertEquals(LogicalType.UNKNOWN, node.getLogicalType());
+
+        node.setPowerDescriptor(new PowerDescriptor());
+        assertNotNull(node.getPowerDescriptor());
+        node.setNodeDescriptor(new NodeDescriptor());
+        assertNotNull(node.getNodeDescriptor());
 
         System.out.println(node.toString());
     }
@@ -312,7 +315,7 @@ public class ZigBeeNodeTest {
     }
 
     @Test
-    public void testUpdated() {
+    public void testUpdated() throws Exception {
         ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress("1234567890"));
         ZigBeeNode newNode = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress("1234567890"));
         ZigBeeNode invalidNode = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class),
@@ -323,6 +326,21 @@ public class ZigBeeNodeTest {
         assertFalse(node.updateNode(invalidNode));
 
         assertFalse(node.updateNode(newNode));
+
+        assertNull(node.getNodeDescriptor());
+        newNode = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress("1234567890"));
+        NodeDescriptor nodeDescriptor = Mockito.mock(NodeDescriptor.class);
+        Mockito.when(nodeDescriptor.getLogicalType()).thenReturn(LogicalType.COORDINATOR);
+        newNode.setNodeDescriptor(nodeDescriptor);
+        assertTrue(node.updateNode(newNode));
+        assertNotNull(node.getNodeDescriptor());
+
+        assertNull(node.getPowerDescriptor());
+        newNode = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress("1234567890"));
+        PowerDescriptor powerDescriptor = Mockito.mock(PowerDescriptor.class);
+        newNode.setPowerDescriptor(powerDescriptor);
+        assertTrue(node.updateNode(newNode));
+        assertNotNull(node.getPowerDescriptor());
 
         Integer oldNwkAddress = newNode.getNetworkAddress();
         assertTrue(newNode.setNetworkAddress(5678));
@@ -400,6 +418,22 @@ public class ZigBeeNodeTest {
         assertTrue(node.updateNode(newNode));
         assertFalse(node.updateNode(newNode));
         assertEquals(2, node.getEndpoints().size());
+
+        Set<BindingTable> bindingTable = new HashSet<BindingTable>();
+        bindingTable.add(new BindingTable());
+        assertEquals(0, node.getBindingTable().size());
+        newNode = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress("1234567890"));
+        TestUtilities.setField(ZigBeeNode.class, newNode, "bindingTable", bindingTable);
+        assertTrue(node.updateNode(newNode));
+        assertEquals(1, node.getBindingTable().size());
+
+        Set<RoutingTable> routeTable = new HashSet<RoutingTable>();
+        routeTable.add(new RoutingTable());
+        assertEquals(0, node.getRoutes().size());
+        newNode = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress("1234567890"));
+        newNode.setRoutes(routeTable);
+        assertTrue(node.updateNode(newNode));
+        assertEquals(1, node.getRoutes().size());
     }
 
     @Test

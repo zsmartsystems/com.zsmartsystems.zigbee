@@ -204,12 +204,14 @@ public class ZigBeeNodeServiceDiscoverer {
             logger.debug("{}: Node SVC Discovery: starting new tasks {}", node.getIeeeAddress(), newTasks);
 
             // Remove any tasks that we know are not supported by this device
-            if ((!supportsManagementLqi || node.getNodeDescriptor().getLogicalType() == LogicalType.UNKNOWN)
+            if ((!supportsManagementLqi || node.getNodeDescriptor() != null
+                    && node.getNodeDescriptor().getLogicalType() == LogicalType.UNKNOWN)
                     && newTasks.contains(NodeDiscoveryTask.NEIGHBORS)) {
                 newTasks.remove(NodeDiscoveryTask.NEIGHBORS);
             }
-            if ((!supportsManagementRouting || node.getNodeDescriptor().getLogicalType() == LogicalType.UNKNOWN
-                    || node.getNodeDescriptor().getLogicalType() == LogicalType.END_DEVICE)
+            if ((!supportsManagementRouting || node.getNodeDescriptor() != null
+                    && (node.getNodeDescriptor().getLogicalType() == LogicalType.UNKNOWN
+                            || node.getNodeDescriptor().getLogicalType() == LogicalType.END_DEVICE))
                     && newTasks.contains(NodeDiscoveryTask.ROUTES)) {
                 newTasks.remove(NodeDiscoveryTask.ROUTES);
             }
@@ -693,11 +695,12 @@ public class ZigBeeNodeServiceDiscoverer {
             tasks.add(NodeDiscoveryTask.NWK_ADDRESS);
         }
 
-        if (node.getNodeDescriptor().getLogicalType() == LogicalType.UNKNOWN) {
+        if (node.getNodeDescriptor() == null || node.getNodeDescriptor().getLogicalType() == LogicalType.UNKNOWN) {
             tasks.add(NodeDiscoveryTask.NODE_DESCRIPTOR);
         }
 
-        if (node.getPowerDescriptor().getCurrentPowerMode() == CurrentPowerModeType.UNKNOWN) {
+        if (node.getPowerDescriptor() == null
+                || node.getPowerDescriptor().getCurrentPowerMode() == CurrentPowerModeType.UNKNOWN) {
             tasks.add(NodeDiscoveryTask.POWER_DESCRIPTOR);
         }
 

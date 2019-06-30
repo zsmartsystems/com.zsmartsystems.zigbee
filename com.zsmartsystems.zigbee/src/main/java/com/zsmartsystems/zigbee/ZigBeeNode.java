@@ -71,12 +71,12 @@ public class ZigBeeNode implements ZigBeeCommandListener {
     /**
      * The {@link NodeDescriptor} for the node.
      */
-    private NodeDescriptor nodeDescriptor = new NodeDescriptor();
+    private NodeDescriptor nodeDescriptor;
 
     /**
      * The {@link PowerDescriptor} for the node.
      */
-    private PowerDescriptor powerDescriptor = new PowerDescriptor();
+    private PowerDescriptor powerDescriptor;
 
     /**
      * The time the node information was last updated. This is set from the mesh update class when it the
@@ -200,9 +200,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
      * @param nodeDescriptor the new {@link NodeDescriptor}
      */
     public void setNodeDescriptor(NodeDescriptor nodeDescriptor) {
-        synchronized (this.nodeDescriptor) {
-            this.nodeDescriptor = nodeDescriptor;
-        }
+        this.nodeDescriptor = nodeDescriptor;
     }
 
     /**
@@ -328,6 +326,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
      * <li>{@link LogicalType#COORDINATOR}
      * <li>{@link LogicalType#ROUTER}
      * <li>{@link LogicalType#END_DEVICE}
+     * <li>{@link LogicalType#UNKNOWN}
      * <ul>
      *
      * @return the {@link LogicalType} of the node
@@ -683,9 +682,8 @@ public class ZigBeeNode implements ZigBeeCommandListener {
      * @return true if basic device information is known
      */
     public boolean isDiscovered() {
-        synchronized (nodeDescriptor) {
-            return nodeDescriptor.getLogicalType() != LogicalType.UNKNOWN && endpoints.size() != 0;
-        }
+        return nodeDescriptor != null && nodeDescriptor.getLogicalType() != LogicalType.UNKNOWN
+                && endpoints.size() != 0;
     }
 
     /**
@@ -703,20 +701,23 @@ public class ZigBeeNode implements ZigBeeCommandListener {
 
         boolean updated = false;
 
-        if (node.getNetworkAddress() != null && !networkAddress.equals(node.getNetworkAddress())) {
+        if (node.getNetworkAddress() != null
+                && (networkAddress == null || !networkAddress.equals(node.getNetworkAddress()))) {
             logger.debug("{}: Network address updated from {} to {}", ieeeAddress, networkAddress,
                     node.getNetworkAddress());
             updated = true;
             networkAddress = node.getNetworkAddress();
         }
 
-        if (!nodeDescriptor.equals(node.getNodeDescriptor())) {
+        if (node.getNodeDescriptor() != null
+                && (nodeDescriptor == null || !nodeDescriptor.equals(node.getNodeDescriptor()))) {
             logger.debug("{}: Node descriptor updated", ieeeAddress);
             updated = true;
             nodeDescriptor = node.getNodeDescriptor();
         }
 
-        if (!powerDescriptor.equals(node.getPowerDescriptor())) {
+        if (node.getPowerDescriptor() != null
+                && (powerDescriptor == null || !powerDescriptor.equals(node.getPowerDescriptor()))) {
             logger.debug("{}: Power descriptor updated", ieeeAddress);
             updated = true;
             powerDescriptor = node.getPowerDescriptor();
