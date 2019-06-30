@@ -288,6 +288,23 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
+     * Serializes a node to the {@link ZigBeeNetworkDataStore}.
+     * <p>
+     * Note that the data will not be serialized instantly, but will be handled by the
+     * {@link ZigBeeNetworkDatabaseManager} as per a standard node update.
+     *
+     * @param nodeAddress the {@link IeeeAddress} of the node to serialize
+     */
+    public void serializeNetworkDataStore(IeeeAddress nodeAddress) {
+        ZigBeeNode node = getNode(nodeAddress);
+        if (node == null) {
+            return;
+        }
+
+        databaseManager.nodeUpdated(node);
+    }
+
+    /**
      * Set the serializer class to be used to convert commands and fields into data to be sent to the dongle.
      * The system instantiates a new serializer for each command.
      *
@@ -561,11 +578,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 node.shutdown();
             }
 
-            databaseManager.shutdown();
-
             for (ZigBeeNetworkExtension extension : extensions) {
                 extension.extensionShutdown();
             }
+
+            databaseManager.shutdown();
         }
 
         transport.shutdown();
