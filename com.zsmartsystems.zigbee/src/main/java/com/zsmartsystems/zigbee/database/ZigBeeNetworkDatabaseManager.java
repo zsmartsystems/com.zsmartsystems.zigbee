@@ -10,6 +10,8 @@ package com.zsmartsystems.zigbee.database;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
@@ -24,6 +26,14 @@ import com.zsmartsystems.zigbee.ZigBeeNode;
 /**
  * This class implements the management functions for the network database. The network database persists data about the
  * nodes that are currently part of the network between restarts of the system.
+ * <p>
+ * The database manager will not normally write data to the data store immediately. It will instead defer the write for
+ * the {@link #deferredWriteTime}. If there are many consecutive writes that continue to retrigger the deferred timer,
+ * then after {@link #deferredWriteTimeout} period, the node will be written to the data store.
+ * <p>
+ * All writes to the {@link ZigBeeDataStore} are managed through a single thread scheduler to ensure that only a single
+ * write is in progress at once. This allows the data store to be kept simple and ensures writes don't get queued thus
+ * causing performance issues or multiple threads to be executed.
  *
  * @author Chris Jackson
  *
@@ -34,8 +44,26 @@ public class ZigBeeNetworkDatabaseManager implements ZigBeeNetworkNodeListener {
      */
     private final Logger logger = LoggerFactory.getLogger(ZigBeeNetworkDatabaseManager.class);
 
-    private final int DEFERRED_WRITE_DEF = 1000;
-    private final int DEFERRED_WRITE_MAX = 10000;
+    /**
+     * The default time (in milliseconds) to defer writes. This will prevent multiple writes to a single node within
+     * this period.
+     */
+    private final int DEFERRED_WRITE_DEFAULT = 250;
+
+    /**
+     * The default timeout after which continued retriggers of the deferred timer will force a write.
+     */
+    private final int DEFERRED_WRITE_TIMEOUT = 1000;
+
+    /**
+     * The maximum time that the user can set the deferred timeout to.
+     */
+    private final int DEFERRED_WRITE_TIMEOUT_MAX = 10000;
+
+    /**
+     * The time to wait for all threads to shutdown in milliseconds
+     */
+    private final int SHUTDOWN_TIMEOUT = 3000;
 
     /**
      * the {@link ZigBeeNetworkDataStore} that will be used to store the data
@@ -50,22 +78,27 @@ public class ZigBeeNetworkDatabaseManager implements ZigBeeNetworkNodeListener {
     /**
      * The time to defer writes. If the node is not updated for this number of milliseconds, the data will be written.
      */
-    private int deferredWriteTime = 250;
+    private int deferredWriteTime = DEFERRED_WRITE_DEFAULT;
 
     /**
      * The maximum amount of time we will defer writes (in nanoseconds)
      */
-    private long deferredWriteMax = TimeUnit.MILLISECONDS.toNanos(DEFERRED_WRITE_DEF);
+    private long deferredWriteTimeout = TimeUnit.MILLISECONDS.toNanos(DEFERRED_WRITE_TIMEOUT);
 
     /**
      * Map of deferred write futures for each node
      */
-    private Map<IeeeAddress, ScheduledFuture<?>> deferredWriteFutures = new ConcurrentHashMap<>();
+    private final Map<IeeeAddress, ScheduledFuture<?>> deferredWriteFutures = new ConcurrentHashMap<>();
 
     /**
      * Map of the first time we deferred the write on the node
      */
-    private Map<IeeeAddress, Long> deferredWriteTimes = new ConcurrentHashMap<>();
+    private final Map<IeeeAddress, Long> deferredWriteTimes = new ConcurrentHashMap<>();
+
+    /**
+     * Single thread scheduler to ensure single writes within the data store
+     */
+    private ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
 
     /**
      * Creates the database manager
@@ -92,8 +125,8 @@ public class ZigBeeNetworkDatabaseManager implements ZigBeeNetworkNodeListener {
      * @param deferredWriteTime the number of milliseconds to wait before writing to the store
      */
     public void setDeferredWriteTime(int deferredWriteTime) {
-        if (deferredWriteTime > DEFERRED_WRITE_MAX) {
-            this.deferredWriteTime = DEFERRED_WRITE_MAX;
+        if (deferredWriteTime > DEFERRED_WRITE_TIMEOUT_MAX) {
+            this.deferredWriteTime = DEFERRED_WRITE_TIMEOUT_MAX;
             return;
         }
         this.deferredWriteTime = deferredWriteTime;
@@ -106,12 +139,12 @@ public class ZigBeeNetworkDatabaseManager implements ZigBeeNetworkNodeListener {
      * @param deferredWriteMax the maximum number of milliseconds that writes will be deferred
      */
     public void setMaxDeferredWriteTime(int deferredWriteMax) {
-        if (deferredWriteMax > DEFERRED_WRITE_MAX) {
-            this.deferredWriteMax = TimeUnit.MILLISECONDS.toNanos(DEFERRED_WRITE_MAX);
+        if (deferredWriteMax > DEFERRED_WRITE_TIMEOUT_MAX) {
+            this.deferredWriteTimeout = TimeUnit.MILLISECONDS.toNanos(DEFERRED_WRITE_TIMEOUT_MAX);
             return;
         }
         // Note that internally this is stored in nanoseconds
-        this.deferredWriteMax = TimeUnit.MILLISECONDS.toNanos(deferredWriteMax);
+        this.deferredWriteTimeout = TimeUnit.MILLISECONDS.toNanos(deferredWriteMax);
     }
 
     /**
@@ -146,18 +179,17 @@ public class ZigBeeNetworkDatabaseManager implements ZigBeeNetworkNodeListener {
     public void shutdown() {
         logger.debug("Data store: shutting down.");
         networkManager.removeNetworkNodeListener(this);
+        executorService.shutdown();
+        try {
+            executorService.awaitTermination(SHUTDOWN_TIMEOUT, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            logger.debug("Data store: shutdown did not complete all tasks.");
+        }
     }
 
     @Override
     public void nodeAdded(ZigBeeNode node) {
-        if (dataStore == null) {
-            return;
-        }
-
-        // for(int node :networkManager.getNodes()) {
-        // }
-        // dataStore.writeNetworkNodes();
-        saveNode(node);
+        nodeUpdated(node);
     }
 
     @Override
@@ -179,33 +211,39 @@ public class ZigBeeNetworkDatabaseManager implements ZigBeeNetworkNodeListener {
     }
 
     private void saveNode(ZigBeeNode node) {
-        if (deferredWriteTime == 0) {
-            writeNode(node.getDao());
-            return;
-        }
+        int deferredDelay = deferredWriteTime;
 
-        if (deferredWriteFutures.containsKey(node.getIeeeAddress())) {
-            deferredWriteFutures.get(node.getIeeeAddress()).cancel(false);
+        synchronized (deferredWriteFutures) {
+            if (deferredWriteFutures.containsKey(node.getIeeeAddress())) {
+                // Cancel the currently scheduled write
+                deferredWriteFutures.get(node.getIeeeAddress()).cancel(false);
 
-            if (deferredWriteTimes.get(node.getIeeeAddress()) != null
-                    && deferredWriteTimes.get(node.getIeeeAddress()) < System.nanoTime()) {
-                logger.debug("{}: Data store: Maximum deferred time reached.", node.getIeeeAddress());
-                writeNode(node.getDao());
-                return;
+                if (deferredWriteTimes.get(node.getIeeeAddress()) != null
+                        && deferredWriteTimes.get(node.getIeeeAddress()) < System.nanoTime()) {
+                    logger.debug("{}: Data store: Maximum deferred time reached.", node.getIeeeAddress());
+
+                    // Run the write immediately.
+                    // This is still run through the scheduler to ensure we don't make
+                    // simultaneous calls to the data store.
+                    deferredDelay = 0;
+                }
+            } else {
+                // First deferred write - save the time
+                deferredWriteTimes.put(node.getIeeeAddress(), System.nanoTime() + deferredWriteTimeout);
             }
-        } else {
-            // First deferred write - save the time
-            deferredWriteTimes.put(node.getIeeeAddress(), System.nanoTime() + deferredWriteMax);
-        }
 
-        CommitNodeTask commitTask = new CommitNodeTask(node.getDao());
-        deferredWriteFutures.put(node.getIeeeAddress(), networkManager.scheduleTask(commitTask, deferredWriteTime));
+            logger.debug("{}: Data store: Deferring write for {}ms.", node.getIeeeAddress(), deferredDelay);
+
+            CommitNodeTask commitTask = new CommitNodeTask(node);
+            deferredWriteFutures.put(node.getIeeeAddress(),
+                    executorService.schedule(commitTask, deferredDelay, TimeUnit.MILLISECONDS));
+        }
     }
 
     private class CommitNodeTask implements Runnable {
-        private ZigBeeNodeDao node;
+        private ZigBeeNode node;
 
-        CommitNodeTask(ZigBeeNodeDao node) {
+        CommitNodeTask(ZigBeeNode node) {
             this.node = node;
         }
 
@@ -215,10 +253,14 @@ public class ZigBeeNetworkDatabaseManager implements ZigBeeNetworkNodeListener {
         }
     }
 
-    private void writeNode(ZigBeeNodeDao node) {
-        deferredWriteTimes.remove(node.getIeeeAddress());
-        deferredWriteFutures.remove(node.getIeeeAddress());
-        dataStore.writeNode(node);
+    private void writeNode(ZigBeeNode node) {
+        logger.debug("{}: Data store: Writing node.", node.getIeeeAddress());
+        synchronized (deferredWriteFutures) {
+            deferredWriteTimes.remove(node.getIeeeAddress());
+            deferredWriteFutures.remove(node.getIeeeAddress());
+        }
+
+        dataStore.writeNode(node.getDao());
     }
 
 }

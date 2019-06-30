@@ -97,7 +97,7 @@ public class ZigBeeNetworkDatabaseManagerTest {
         databaseManager.setMaxDeferredWriteTime(1000);
 
         databaseManager.nodeAdded(node);
-        Mockito.verify(dataStore, Mockito.times(1)).writeNode(nodeDao);
+        Mockito.verify(dataStore, Mockito.timeout(TIMEOUT).times(1)).writeNode(nodeDao);
 
         databaseManager.setDeferredWriteTime(1);
 
@@ -121,12 +121,12 @@ public class ZigBeeNetworkDatabaseManagerTest {
                 .thenReturn(Mockito.mock(ScheduledFuture.class));
 
         databaseManager.nodeUpdated(node);
-        Mockito.verify(dataStore, Mockito.times(3)).writeNode(nodeDao);
+        Mockito.verify(dataStore, Mockito.timeout(TIMEOUT).times(3)).writeNode(nodeDao);
 
         databaseManager.nodeRemoved(node);
-        Mockito.verify(dataStore, Mockito.times(1)).removeNode(new IeeeAddress("1234567890ABCDEF"));
+        Mockito.verify(dataStore, Mockito.timeout(TIMEOUT).times(1)).removeNode(new IeeeAddress("1234567890ABCDEF"));
 
         databaseManager.shutdown();
-        Mockito.verify(networkManager, Mockito.times(1)).removeNetworkNodeListener(databaseManager);
+        Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).times(1)).removeNetworkNodeListener(databaseManager);
     }
 }
