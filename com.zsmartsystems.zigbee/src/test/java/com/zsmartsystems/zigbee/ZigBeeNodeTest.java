@@ -53,7 +53,9 @@ public class ZigBeeNodeTest {
 
     @Test
     public void testAddDescriptors() {
-        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress());
+        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress(), 1);
+
+        assertEquals(Integer.valueOf(1), node.getNetworkAddress());
 
         // Null by default
         assertNull(node.getNodeDescriptor());

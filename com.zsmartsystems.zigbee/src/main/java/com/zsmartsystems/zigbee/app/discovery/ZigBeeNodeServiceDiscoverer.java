@@ -224,7 +224,7 @@ public class ZigBeeNodeServiceDiscoverer {
 
             // Check the current list of tasks to decide if we need to start the worker
             // This prevents restarting if we didn't add new tasks, which might overload the system
-            boolean startWorker = discoveryTasks.isEmpty() | (futureTask == null);
+            boolean startWorker = discoveryTasks.isEmpty() || (futureTask == null);
 
             // Add new tasks, avoiding any duplication
             for (NodeDiscoveryTask newTask : newTasks) {
@@ -238,8 +238,7 @@ public class ZigBeeNodeServiceDiscoverer {
             } else {
                 // Create a new node to store the data from this update.
                 // We set the network address so that we can detect the change later if needed.
-                updatedNode = new ZigBeeNode(networkManager, node.getIeeeAddress());
-                updatedNode.setNetworkAddress(node.getNetworkAddress());
+                updatedNode = new ZigBeeNode(networkManager, node.getIeeeAddress(), node.getNetworkAddress());
                 lastDiscoveryStarted = Calendar.getInstance();
             }
 

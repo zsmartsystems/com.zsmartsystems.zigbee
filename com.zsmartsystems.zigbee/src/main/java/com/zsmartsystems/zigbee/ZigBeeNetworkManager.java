@@ -373,9 +373,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             ZigBeeNode node = getNode(ieeeAddress);
             if (node == null) {
                 logger.debug("{}: Adding local node to network, NWK={}", ieeeAddress, nwkAddress);
-                node = new ZigBeeNode(this, ieeeAddress);
-                node.setNetworkAddress(nwkAddress);
-
+                node = new ZigBeeNode(this, ieeeAddress, nwkAddress);
                 updateNode(node);
             }
         }

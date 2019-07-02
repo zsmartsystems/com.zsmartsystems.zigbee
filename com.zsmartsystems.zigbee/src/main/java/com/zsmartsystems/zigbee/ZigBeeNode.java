@@ -159,6 +159,20 @@ public class ZigBeeNode implements ZigBeeCommandListener {
     }
 
     /**
+     * Constructor
+     *
+     * @param network the {@link ZigBeeNetwork}
+     * @param ieeeAddress the {@link IeeeAddress} of the node
+     * @param networkAddress the network address of the node
+     * @throws {@link IllegalArgumentException} if ieeeAddress is null
+     */
+    public ZigBeeNode(ZigBeeNetwork network, IeeeAddress ieeeAddress, Integer networkAddress) {
+        this(network, ieeeAddress);
+
+        this.networkAddress = networkAddress;
+    }
+
+    /**
      * Called when the node is removed from the network.
      */
     public void shutdown() {
