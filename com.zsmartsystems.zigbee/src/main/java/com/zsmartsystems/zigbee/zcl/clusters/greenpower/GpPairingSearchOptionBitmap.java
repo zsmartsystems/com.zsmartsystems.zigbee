@@ -1,0 +1,78 @@
+/**
+ * Copyright (c) 2016-2019 by the respective copyright holders.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ */
+package com.zsmartsystems.zigbee.zcl.clusters.greenpower;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.Generated;
+
+/**
+ * Gp Pairing Search Option value enumeration.
+ * <p>
+ * Code is auto-generated. Modifications may be overwritten!
+ */
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T21:54:11Z")
+public enum GpPairingSearchOptionBitmap {
+
+    /**
+     * Application ID
+     */
+    APPLICATION_ID(0x0007),
+
+    /**
+     * Request Unicast Sinks
+     */
+    REQUEST_UNICAST_SINKS(0x0008),
+
+    /**
+     * Request Derived Groupcast Sinks
+     */
+    REQUEST_DERIVED_GROUPCAST_SINKS(0x0010),
+
+    /**
+     * Request Commissioned Groupcast Sinks
+     */
+    REQUEST_COMMISSIONED_GROUPCAST_SINKS(0x0020),
+
+    /**
+     * Request Gpd Security Frame Counter
+     */
+    REQUEST_GPD_SECURITY_FRAME_COUNTER(0x0040),
+
+    /**
+     * Request Gpd Security Key
+     */
+    REQUEST_GPD_SECURITY_KEY(0x0080);
+
+    /**
+     * A mapping between the integer code and its corresponding GpPairingSearchOptionBitmap type to facilitate lookup by value.
+     */
+    private static Map<Integer, GpPairingSearchOptionBitmap> idMap;
+
+    static {
+        idMap = new HashMap<Integer, GpPairingSearchOptionBitmap>();
+        for (GpPairingSearchOptionBitmap enumValue : values()) {
+            idMap.put(enumValue.key, enumValue);
+        }
+    }
+
+    private final int key;
+
+    private GpPairingSearchOptionBitmap(final int key) {
+        this.key = key;
+    }
+
+    public int getKey() {
+        return key;
+    }
+
+    public static GpPairingSearchOptionBitmap getByValue(final int value) {
+        return idMap.get(value);
+    }
+}

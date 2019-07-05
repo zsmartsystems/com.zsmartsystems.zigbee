@@ -17,6 +17,7 @@ import org.junit.Test;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
@@ -69,6 +70,18 @@ public class SerializerIntegrationTest {
     public void testDeserialize_OCTET_STRING() {
         ByteArray valIn = new ByteArray(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 });
         testSerializer(valIn, ZclDataType.OCTET_STRING);
+    }
+
+    @Test
+    public void testDeserialize_LONG_OCTET_STRING() {
+        ByteArray valIn = new ByteArray(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 });
+        testSerializer(valIn, ZclDataType.LONG_OCTET_STRING);
+    }
+
+    @Test
+    public void testDeserialize_SECURITY_KEY() {
+        ZigBeeKey valIn = new ZigBeeKey("11223344556677889900AABBCCDDEEFF");
+        testSerializer(valIn, ZclDataType.SECURITY_KEY);
     }
 
     @Test

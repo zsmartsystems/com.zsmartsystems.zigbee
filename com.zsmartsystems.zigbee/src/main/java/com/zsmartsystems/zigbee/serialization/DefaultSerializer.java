@@ -12,6 +12,7 @@ import java.util.List;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
@@ -158,6 +159,20 @@ public class DefaultSerializer implements ZigBeeSerializer {
                 buffer[length++] = ((byte) (str.length() & 0xFF));
                 for (int strByte : str.getBytes()) {
                     buffer[length++] = strByte;
+                }
+                break;
+            case LONG_OCTET_STRING:
+                final ByteArray longArray = (ByteArray) data;
+                buffer[length++] = ((byte) (longArray.size() & 0xFF));
+                buffer[length++] = (longArray.size() >> 8) & 0xFF;
+                for (byte arrayByte : longArray.get()) {
+                    buffer[length++] = arrayByte;
+                }
+                break;
+            case SECURITY_KEY:
+                final ZigBeeKey securityKey = (ZigBeeKey) data;
+                for (int arrayInt : securityKey.getValue()) {
+                    buffer[length++] = arrayInt;
                 }
                 break;
             case BITMAP_24_BIT:

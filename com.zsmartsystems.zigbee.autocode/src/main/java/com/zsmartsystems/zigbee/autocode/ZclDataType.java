@@ -42,8 +42,8 @@ public class ZclDataType {
     static {
         dataTypeMapping = new HashMap<String, DataTypeMap>();
 
-        dataTypeMapping.put("CHARACTER_STRING", new DataTypeMap("String", 0x42, -1, false));
         dataTypeMapping.put("IEEE_ADDRESS", new DataTypeMap("IeeeAddress", 0xf0, 8, false, 0xffffffff));
+        dataTypeMapping.put("SECURITY_KEY", new DataTypeMap("ZigBeeKey", 0xf1, 16, false));
         dataTypeMapping.put("EXTENDED_PANID", new DataTypeMap("Long", 0, 0, false));
         dataTypeMapping.put("NODE_DESCRIPTOR", new DataTypeMap("NodeDescriptor", 0, 0, false));
         dataTypeMapping.put("SIMPLE_DESCRIPTOR", new DataTypeMap("SimpleDescriptor", 0, 0, false));
@@ -105,6 +105,9 @@ public class ZclDataType {
         dataTypeMapping.put("FLOAT_32_BIT", new DataTypeMap("Double", 0x39, 4, true));
         dataTypeMapping.put("DATA_8_BIT", new DataTypeMap("Integer", 0x08, 1, false));
         dataTypeMapping.put("OCTET_STRING", new DataTypeMap("ByteArray", 0x41, -1, false));
+        dataTypeMapping.put("CHARACTER_STRING", new DataTypeMap("String", 0x42, -1, false));
+        dataTypeMapping.put("LONG_OCTET_STRING", new DataTypeMap("ByteArray", 0x43, -1, false));
+        dataTypeMapping.put("LONG_CHARACTER_STRING", new DataTypeMap("String", 0x44, -1, false));
         dataTypeMapping.put("UTCTIME", new DataTypeMap("Calendar", 0xe2, 4, true, 0xffffffff));
         dataTypeMapping.put("ZDO_STATUS", new DataTypeMap("ZdoStatus", 0, 0, false));
         dataTypeMapping.put("ZCL_STATUS", new DataTypeMap("ZclStatus", 0, 0, false));

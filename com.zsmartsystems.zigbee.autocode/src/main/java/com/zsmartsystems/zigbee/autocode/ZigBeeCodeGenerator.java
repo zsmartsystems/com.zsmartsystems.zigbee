@@ -65,6 +65,7 @@ public class ZigBeeCodeGenerator {
         zclParser.addFile("src/main/resources/0015_Commissioning.xml");
         zclParser.addFile("src/main/resources/0019_OtaUpgrade.xml");
         zclParser.addFile("src/main/resources/0020_PollControl.xml");
+        zclParser.addFile("src/main/resources/0021_Greenpower.xml");
 
         zclParser.addFile("src/main/resources/0101_DoorLock.xml");
         zclParser.addFile("src/main/resources/0102_WindowCovering.xml");
