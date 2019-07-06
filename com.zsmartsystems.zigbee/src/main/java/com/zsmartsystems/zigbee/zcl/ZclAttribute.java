@@ -193,6 +193,16 @@ public class ZclAttribute {
     }
 
     /**
+     * Write the attribute value
+     *
+     * @param value the value to set (as {@link Object})
+     * @return command future {@link CommandResult}
+     */
+    public Future<CommandResult> writeValue(Object value) {
+        return cluster.writeAttribute(id, dataType, value);
+    }
+
+    /**
      * Gets the {@link ZclClusterType} to which this attribute belongs
      *
      * @return the {@link ZclClusterType} for this attribute
