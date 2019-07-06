@@ -26,6 +26,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclDoorLockCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclElectricalMeasurementCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclFanControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclFlowMeasurementCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclGreenPowerCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclGroupsCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclIasAceCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclIasWdCluster;
@@ -66,7 +67,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclWindowCoveringCluster;
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-06-15T18:41:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T21:54:11Z")
 public enum ZclClusterType {
     BASIC(0x0000, ZclBasicCluster.class, "Basic"),
     POWER_CONFIGURATION(0x0001, ZclPowerConfigurationCluster.class, "Power Configuration"),
@@ -87,6 +88,7 @@ public enum ZclClusterType {
     COMMISSIONING(0x0015, ZclCommissioningCluster.class, "Commissioning"),
     OTA_UPGRADE(0x0019, ZclOtaUpgradeCluster.class, "Ota Upgrade"),
     POLL_CONTROL(0x0020, ZclPollControlCluster.class, "Poll Control"),
+    GREEN_POWER(0x0021, ZclGreenPowerCluster.class, "Green Power"),
     DOOR_LOCK(0x0101, ZclDoorLockCluster.class, "Door Lock"),
     WINDOW_COVERING(0x0102, ZclWindowCoveringCluster.class, "Window Covering"),
     THERMOSTAT(0x0201, ZclThermostatCluster.class, "Thermostat"),

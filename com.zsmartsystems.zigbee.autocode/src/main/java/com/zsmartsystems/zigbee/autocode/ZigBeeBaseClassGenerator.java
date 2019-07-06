@@ -110,6 +110,7 @@ public abstract class ZigBeeBaseClassGenerator {
         standardTypes.add("int[]");
 
         customTypes.put("IeeeAddress", packageRoot + ".IeeeAddress");
+        customTypes.put("ZigBeeKey", packageRoot + ".security.ZigBeeKey");
         customTypes.put("ByteArray", packageRoot + packageZclField + ".ByteArray");
         customTypes.put("ZclStatus", packageRoot + packageZcl + ".ZclStatus");
         customTypes.put("ZdoStatus", packageRoot + packageZdp + ".ZdoStatus");

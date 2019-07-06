@@ -1,0 +1,726 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0021">
+    <name>Green Power</name>
+    <description>The Green Power cluster defines the format of the commands exchanged when handling GPDs.</description>
+    <command code="0x00" source="client">
+        <name>Gp Notification</name>
+        <description>From GPP to GPS to tunnel GP frame.</description>
+        <field type="BITMAP_16_BIT" class="GpNotificationOptionBitmap">
+            <name>Options</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Gpd Src ID</name>
+        </field>
+        <field type="IEEE_ADDRESS">
+            <name>Gpd IEEE</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Gpd Endpoint</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Gpd Security Frame Counter</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Gpd Command ID</name>
+        </field>
+        <field type="OCTET_STRING">
+            <name>Gpd Command Payload</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Gpp Short Address</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Gpp Distance</name>
+        </field>
+    </command>
+    <command code="0x01" source="client">
+        <name>Gp Pairing Search</name>
+        <description>From GPP to GPSs in entire network to get pairing indication related to GPD for Proxy Table update.</description>
+        <field type="BITMAP_16_BIT" class="GpPairingSearchOptionBitmap">
+            <name>Options</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Gpd Src ID</name>
+        </field>
+        <field type="IEEE_ADDRESS">
+            <name>Gpd IEEE</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Endpoint</name>
+        </field>
+    </command>
+    <command code="0x03" source="client">
+        <name>Gp Tunneling Stop</name>
+        <description>From GPP to neighbor GPPs to indicate GP Notification sent in unicast mode.</description>
+        <field type="BITMAP_8_BIT" class="GpTunnelingStopOptionBitmap">
+            <name>Options</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Gpd Src ID</name>
+        </field>
+        <field type="IEEE_ADDRESS">
+            <name>Gpd IEEE</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Endpoint</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Gpd Security Frame Counter</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Gpp Short Address</name>
+        </field>
+        <field type="SIGNED_8_BIT_INTEGER">
+            <name>Gpp Distance</name>
+        </field>
+    </command>
+    <command code="0x04" source="client">
+        <name>Gp Commissioning Notification</name>
+        <description>From GPP to GPS to tunnel GPD commissioning data.</description>
+        <field type="BITMAP_16_BIT" class="GpCommissioningNotificationOptionBitmap">
+            <name>Options</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Gpd Src ID</name>
+        </field>
+        <field type="IEEE_ADDRESS">
+            <name>Gpd IEEE</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Endpoint</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Gpd Security Frame Counter</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Gpd Command ID</name>
+        </field>
+        <field type="OCTET_STRING">
+            <name>Gpd Command Payload</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Gpp Short Address</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Gpp Link</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Mic</name>
+        </field>
+    </command>
+    <command code="0x05" source="client">
+        <name>Gp Sink Commissioning Mode</name>
+        <description>To enable commissioning mode of the sink, over the air</description>
+        <field type="BITMAP_8_BIT" class="GpSinkCommissioningModeOptionsBitmap">
+            <name>Options</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Gpm Addr For Security</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Gpm Addr For Pairing</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Sink Endpoint</name>
+        </field>
+    </command>
+    <command code="0x07" source="client">
+        <name>Gp Translation Table Update</name>
+        <description>To configure GPD Command Translation Table.</description>
+        <field type="BITMAP_16_BIT" class="GpTranslationTableUpdateOptionBitmap">
+            <name>Options</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Gpd Src ID</name>
+        </field>
+        <field type="IEEE_ADDRESS">
+            <name>Gpd IEEE</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Endpoint</name>
+        </field>
+        <field class="GpTranslationTableUpdateTranslation">
+            <name>Translations</name>
+        </field>
+    </command>
+    <command code="0x08" source="client">
+        <name>Gp Translation Table Request</name>
+        <description>To provide GPD Command Translation Table content.</description>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Start Index</name>
+        </field>
+    </command>
+    <command code="0x09" source="client">
+        <name>Gp Pairing Configuration</name>
+        <description>To configure Sink Table.</description>
+        <field type="BITMAP_8_BIT" class="GpPairingConfigurationActionsBitmap">
+            <name>Actions</name>
+        </field>
+        <field type="BITMAP_16_BIT" class="GpPairingConfigurationOptionBitmap">
+            <name>Options</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Gpd Src ID</name>
+        </field>
+        <field type="IEEE_ADDRESS">
+            <name>Gpd IEEE</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Endpoint</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Device ID</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Group List Count</name>
+        </field>
+        <field class="GpPairingConfigurationGroupList">
+            <name>Group List</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Gpd Assigned Alias</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Forwarding Radius</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Security Options</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Gpd Security Frame Counter</name>
+        </field>
+        <field type="SECURITY_KEY">
+            <name>Gpd Security Key</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Number Of Paired Endpoints</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Paired Endpoints</name>
+        </field>
+        <field type="BITMAP_8_BIT" class="GpApplicationInformationBitmap">
+            <name>Application Information</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Manufacturer ID</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Mode ID</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Number Of Gpd Commands</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Gpd Command ID List</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Cluster ID List Count</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Cluster List Server</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Cluster List Client</name>
+        </field>
+    </command>
+    <command code="0x0A" source="client">
+        <name>Gp Sink Table Request</name>
+        <description>To read out selected Sink Table Entries, by index or by GPD ID.</description>
+        <field type="ENUMERATION_8_BIT" class="GpSinkTableRequestOptionsEnum">
+            <name>Options</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Gpd Src ID</name>
+        </field>
+        <field type="IEEE_ADDRESS">
+            <name>Gpd IEEE</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Endpoint</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Index</name>
+        </field>
+    </command>
+    <command code="0x0B" source="client">
+        <name>Gp Proxy Table Response</name>
+        <description>To reply with read-out Proxy Table entries, by index or by GPD ID.</description>
+        <field type="ENUMERATION_8_BIT" class="GpProxyTableResponseStatusEnum">
+            <name>Status</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Total Number Of Non Empty Proxy Table Entries</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Start Index</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Entries Count</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Proxy Table Entries</name>
+        </field>
+    </command>
+    <command code="0x00" source="server">
+        <name>Gp Notification Response</name>
+        <description>From GPS to GPP to acknowledge GP Notification received in unicast mode.</description>
+        <field type="BITMAP_8_BIT" class="GpNotificationResponseOptionBitmap">
+            <name>Options</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Gpd Src ID</name>
+        </field>
+        <field type="IEEE_ADDRESS">
+            <name>Gpd IEEE</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Gpd Security Frame Counter</name>
+        </field>
+    </command>
+    <command code="0x01" source="server">
+        <name>Gp Pairing</name>
+        <description>From GPS to the entire network to (de)register for tunneling service, or for removing GPD from the network.</description>
+        <field type="BITMAP_24_BIT" class="GpPairingOptionBitmap">
+            <name>Options</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Gpd Src ID</name>
+        </field>
+        <field type="IEEE_ADDRESS">
+            <name>Gpd IEEE</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Endpoint</name>
+        </field>
+        <field type="IEEE_ADDRESS">
+            <name>Sink IEEE Address</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Sink NWK Address</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Sink Group ID</name>
+        </field>
+        <field type="ENUMERATION_8_BIT" class="GpDeviceIdEnum">
+            <name>Device ID</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Gpd Security Frame Counter</name>
+        </field>
+        <field type="SECURITY_KEY">
+            <name>Gpd Key</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Assigned Alias</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Forwarding Radius</name>
+        </field>
+    </command>
+    <command code="0x02" source="server">
+        <name>Gp Proxy Commissioning Mode</name>
+        <description>From GPS to GPPs in the whole network to indicate commissioning mode.</description>
+        <field type="BITMAP_8_BIT" class="GpProxyCommissioningModeOptionBitmap">
+            <name>Options</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Commissioning Window</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Channel</name>
+        </field>
+    </command>
+    <command code="0x06" source="server">
+        <name>Gp Response</name>
+        <description>From GPS to selected GPP, to provide data to be transmitted to Rx-capable GPD.</description>
+        <field type="BITMAP_8_BIT" class="GpResponseOptionBitmap">
+            <name>Options</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Temp Master Short Address</name>
+        </field>
+        <field type="BITMAP_8_BIT">
+            <name>Temp Master Tx Channel</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Gpd Src ID</name>
+        </field>
+        <field type="IEEE_ADDRESS">
+            <name>Gpd IEEE</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Endpoint</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Gpd Command ID</name>
+        </field>
+        <field type="OCTET_STRING">
+            <name>Gpd Command Payload</name>
+        </field>
+    </command>
+    <command code="0x0A" source="server">
+        <name>Gp Sink Table Response</name>
+        <description>To selected Proxy Table entries, by index or by GPD ID.</description>
+        <field type="ENUMERATION_8_BIT">
+            <name>Status</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Total Numberof Non Empty Sink Table Entries</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Start Index</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Sink Table Entries Count</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Sink Table Entries</name>
+        </field>
+    </command>
+    <command code="0x0B" source="server">
+        <name>Gp Proxy Table Request</name>
+        <description>To request selected Proxy Table entries, by index or by GPD ID.</description>
+        <field type="BITMAP_8_BIT" class="GpProxyTableRequestOptionsBitmap">
+            <name>Options</name>
+        </field>
+        <field type="UNSIGNED_32_BIT_INTEGER">
+            <name>Gpd Src ID</name>
+        </field>
+        <field type="IEEE_ADDRESS">
+            <name>Gpd IEEE</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Endpoint</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Index</name>
+        </field>
+    </command>
+    <attribute code="0x0010" type="UNSIGNED_8_BIT_INTEGER" side="client" optional="false" writable="false" reportable="false" default="0x14">
+        <name>Gpp Max Proxy Table Entries</name>
+        <description></description>
+    </attribute>
+    <attribute code="0x0011" type="LONG_OCTET_STRING" side="client" optional="false" writable="false" reportable="false">
+        <name>Proxy Table</name>
+        <description></description>
+    </attribute>
+    <attribute code="0x0012" type="UNSIGNED_8_BIT_INTEGER" side="client" optional="true" writable="true" reportable="true" minimum="0x00" maximum="0x05" default="0x02">
+        <name>Gpp Notification Retry Number</name>
+        <description></description>
+    </attribute>
+    <attribute code="0x0013" type="UNSIGNED_8_BIT_INTEGER" side="client" optional="true" writable="true" reportable="true" minimum="0x00" maximum="0xFF" default="0x64">
+        <name>Gpp Notification Retry Timer</name>
+        <description></description>
+    </attribute>
+    <attribute code="0x0014" type="UNSIGNED_8_BIT_INTEGER" side="client" optional="true" writable="true" reportable="true" default="0x0A">
+        <name>Gpp Max Search Counter</name>
+        <description></description>
+    </attribute>
+    <attribute code="0x0015" type="LONG_OCTET_STRING" side="client" optional="false" writable="false" reportable="false">
+        <name>Gpp Blocked Gpd ID</name>
+        <description></description>
+    </attribute>
+    <attribute code="0x0016" type="BITMAP_24_BIT" side="client" optional="false" writable="false" reportable="false" default="0x09AC2F">
+        <name>Gpp Functionality</name>
+        <description></description>
+    </attribute>
+    <attribute code="0x0017" type="BITMAP_24_BIT" side="client" optional="false" writable="false" reportable="false" default="0xFFFFFF">
+        <name>Gpp Active Functionality</name>
+        <description></description>
+    </attribute>
+    <attribute code="0x0020" type="BITMAP_8_BIT" side="client" optional="true" writable="true" reportable="true" default="0x03">
+        <name>Gp Client Shared Security Key Type</name>
+        <description></description>
+    </attribute>
+    <attribute code="0x0021" type="SECURITY_KEY" side="client" optional="true" writable="true" reportable="true">
+        <name>Gp Client Shared Security Key</name>
+        <description></description>
+    </attribute>
+    <attribute code="0x0022" type="SECURITY_KEY" side="client" optional="true" writable="true" reportable="true" default="">
+        <name>Gp Client Link Key</name>
+        <description></description>
+    </attribute>
+    <attribute code="0x0000" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" default="0x05">
+        <name>Gps Max Sink Table Entries</name>
+        <description></description>
+    </attribute>
+    <attribute code="0x0001" type="LONG_OCTET_STRING" side="server" optional="false" writable="false" reportable="false">
+        <name>Sink Table</name>
+        <description></description>
+    </attribute>
+    <attribute code="0x0002" type="BITMAP_8_BIT" side="server" optional="true" writable="true" reportable="true" default="0x01">
+        <name>Gps Communication Mode</name>
+        <description></description>
+    </attribute>
+    <attribute code="0x0003" type="BITMAP_8_BIT" side="server" optional="true" writable="true" reportable="true" default="0x02">
+        <name>Gps Commissioning Exit Mode</name>
+        <description></description>
+    </attribute>
+    <attribute code="0x0004" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="true" reportable="true" default="0x00B4">
+        <name>Gps Commissioning Window</name>
+        <description></description>
+    </attribute>
+    <attribute code="0x0005" type="BITMAP_8_BIT" side="server" optional="true" writable="true" reportable="true" default="0x10">
+        <name>Gps Security Level</name>
+        <description></description>
+    </attribute>
+    <attribute code="0x0006" type="BITMAP_24_BIT" side="server" optional="false" writable="false" reportable="false">
+        <name>Gps Functionality</name>
+        <description></description>
+    </attribute>
+    <attribute code="0x0007" type="BITMAP_24_BIT" side="server" optional="false" writable="false" reportable="false" default="0xFFFFFF">
+        <name>Gps Active Functionality</name>
+        <description></description>
+    </attribute>
+    <attribute code="0x0020" type="BITMAP_8_BIT" side="server" optional="true" writable="true" reportable="true" default="0x03">
+        <name>Gp Server Shared Security Key Type</name>
+        <description></description>
+    </attribute>
+    <attribute code="0x0021" type="SECURITY_KEY" side="server" optional="true" writable="true" reportable="true">
+        <name>Gp server Shared Security Key</name>
+        <description></description>
+    </attribute>
+    <attribute code="0x0022" type="SECURITY_KEY" side="server" optional="true" writable="true" reportable="true" default="">
+        <name>Gp Server Link Key</name>
+        <description></description>
+    </attribute>
+
+    <constant type="BITMAP_8_BIT" class="GpApplicationInformationBitmap">
+        <name>Gp Application Information</name>
+        <value code="0x01" name="Manufacture ID Present">
+        </value>
+        <value code="0x02" name="Model ID Present">
+        </value>
+        <value code="0x04" name="Gpd Commands Present">
+        </value>
+        <value code="0x08" name="Cluster List Present">
+        </value>
+    </constant>
+    <constant type="BITMAP_16_BIT" class="GpCommissioningNotificationOptionBitmap">
+        <name>Gp Commissioning Notification Option</name>
+        <value code="0x0007" name="Application ID">
+        </value>
+        <value code="0x0008" name="Rx After Tx">
+        </value>
+        <value code="0x0030" name="Security Level">
+        </value>
+        <value code="0x01C0" name="Security Key Type">
+        </value>
+        <value code="0x0200" name="Security Processing Failed">
+        </value>
+        <value code="0x0400" name="Bidirectional Capability">
+        </value>
+        <value code="0x0800" name="Proxy Info Present">
+        </value>
+    </constant>
+    <constant type="ENUMERATION_8_BIT" class="GpDeviceIdEnum">
+        <name>Gp Device ID</name>
+        <value code="0x00" name="Gp Simple Generice Two State Switch">
+        </value>
+        <value code="0x08" name="Gp On Off Switch">
+        </value>
+        <value code="0x10" name="Gp Level Control Switch">
+        </value>
+        <value code="0x18" name="Gp Indoor Environment Snesor">
+        </value>
+    </constant>
+    <constant type="BITMAP_16_BIT" class="GpNotificationOptionBitmap">
+        <name>Gp Notification Option</name>
+        <value code="0x0007" name="Application ID">
+        </value>
+        <value code="0x0008" name="Also Unicast">
+        </value>
+        <value code="0x0010" name="Also Derived Group">
+        </value>
+        <value code="0x0020" name="Also Commissioned Group">
+        </value>
+        <value code="0x00C0" name="Security Level">
+        </value>
+        <value code="0x0700" name="Security Key Type">
+        </value>
+        <value code="0x0800" name="Rx After Tx">
+        </value>
+        <value code="0x1000" name="Gp Tx Queue Full">
+        </value>
+        <value code="0x2000" name="Bidirectional Capability">
+        </value>
+        <value code="0x4000" name="Proxy Info Present">
+        </value>
+    </constant>
+    <constant type="BITMAP_8_BIT" class="GpNotificationResponseOptionBitmap">
+        <name>Gp Notification Response Option</name>
+        <value code="0x07" name="Application ID">
+        </value>
+        <value code="0x08" name="First To Forward">
+        </value>
+        <value code="0x10" name="No Pairing">
+        </value>
+    </constant>
+    <constant type="BITMAP_8_BIT" class="GpPairingConfigurationActionsBitmap">
+        <name>Gp Pairing Configuration Actions</name>
+        <value code="0x07" name="Action">
+        </value>
+        <value code="0x08" name="Send Gp Pairing">
+        </value>
+    </constant>
+    <constant type="BITMAP_16_BIT" class="GpPairingConfigurationOptionBitmap">
+        <name>Gp Pairing Configuration Option</name>
+        <value code="0x0007" name="Application ID">
+        </value>
+        <value code="0x0018" name="Communication Mode">
+        </value>
+        <value code="0x0020" name="Sequence Number Capabilities">
+        </value>
+        <value code="0x0040" name="Rx On Capability">
+        </value>
+        <value code="0x0080" name="Fixed Location">
+        </value>
+        <value code="0x0100" name="Assigned Alias">
+        </value>
+        <value code="0x0200" name="Security Use">
+        </value>
+        <value code="0x0400" name="Application Information Present">
+        </value>
+    </constant>
+    <constant type="BITMAP_24_BIT" class="GpPairingOptionBitmap">
+        <name>Gp Pairing Option</name>
+        <value code="0x000007" name="Application ID">
+        </value>
+        <value code="0x000008" name="Add Sink">
+        </value>
+        <value code="0x000010" name="Remove Gpd">
+        </value>
+        <value code="0x000060" name="Communication Mode">
+        </value>
+        <value code="0x000080" name="Gpd Fixed">
+        </value>
+        <value code="0x000100" name="Gpd MAC Sequence Number Capabilities">
+        </value>
+        <value code="0x000600" name="Security Level">
+        </value>
+        <value code="0x003800" name="Security Key Type">
+        </value>
+        <value code="0x004000" name="Gpd Security Frame Counter Present">
+        </value>
+        <value code="0x008000" name="Gpd Security Key Present">
+        </value>
+        <value code="0x010000" name="Assigned Alias Present">
+        </value>
+        <value code="0x020000" name="Forwarding Radius Present">
+        </value>
+    </constant>
+    <constant type="BITMAP_16_BIT" class="GpPairingSearchOptionBitmap">
+        <name>Gp Pairing Search Option</name>
+        <value code="0x0007" name="Application ID">
+        </value>
+        <value code="0x0008" name="Request Unicast Sinks">
+        </value>
+        <value code="0x0010" name="Request Derived Groupcast Sinks">
+        </value>
+        <value code="0x0020" name="Request Commissioned Groupcast Sinks">
+        </value>
+        <value code="0x0040" name="Request Gpd Security Frame Counter">
+        </value>
+        <value code="0x0080" name="Request Gpd Security Key">
+        </value>
+    </constant>
+    <constant type="BITMAP_8_BIT" class="GpProxyCommissioningModeOptionBitmap">
+        <name>Gp Proxy Commissioning Mode Option</name>
+        <value code="0x01" name="Action">
+        </value>
+        <value code="0x0E" name="Exit Mode">
+        </value>
+        <value code="0x10" name="Channel Present">
+        </value>
+        <value code="0x20" name="Unicast Communication">
+        </value>
+    </constant>
+    <constant type="BITMAP_8_BIT" class="GpProxyTableRequestOptionsBitmap">
+        <name>Gp Proxy Table Request Options</name>
+        <value code="0x07" name="Application ID">
+        </value>
+        <value code="0x18" name="Request Type">
+        </value>
+    </constant>
+    <constant type="ENUMERATION_8_BIT" class="GpProxyTableResponseStatusEnum">
+        <name>Gp Proxy Table Response Status</name>
+        <value code="0x00" name="Success">
+        </value>
+        <value code="0x8B" name="Not_Found">
+        </value>
+    </constant>
+    <constant type="BITMAP_8_BIT" class="GpResponseOptionBitmap">
+        <name>Gp Response Option</name>
+        <value code="0x07" name="Application ID">
+        </value>
+    </constant>
+    <constant type="BITMAP_8_BIT" class="GpSinkCommissioningModeOptionsBitmap">
+        <name>Gp Sink Commissioning Mode Options</name>
+        <value code="0x01" name="Action">
+        </value>
+        <value code="0x02" name="Involve Gpm In Security">
+        </value>
+        <value code="0x04" name="Involve Gpm In Pairing">
+        </value>
+        <value code="0x08" name="Involve Proxies">
+        </value>
+    </constant>
+    <constant type="BITMAP_8_BIT" class="GpSinkTableRequestOptionsBitmap">
+        <name>Gp Sink Table Request Options</name>
+        <value code="0x07" name="Application ID">
+        </value>
+        <value code="0x18" name="Request Type">
+        </value>
+    </constant>
+    <constant type="BITMAP_16_BIT" class="GpTranslationTableUpdateOptionBitmap">
+        <name>Gp Translation Table Update Option</name>
+        <value code="0x0007" name="Application ID">
+        </value>
+        <value code="0x0018" name="Action">
+        </value>
+        <value code="0x00E0" name="Number Of Translations">
+        </value>
+    </constant>
+    <constant type="BITMAP_8_BIT" class="GpTunnelingStopOptionBitmap">
+        <name>Gp Tunneling Stop Option</name>
+        <value code="0x07" name="Application ID">
+        </value>
+        <value code="0x08" name="Also Derived Group">
+        </value>
+        <value code="0x10" name="Also Commissioned Group">
+        </value>
+    </constant>
+    <struct class="GpPairingConfigurationGroupList">
+        <name>Gp Pairing Configuration Group List</name>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Sink Group</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Alias</name>
+        </field>
+    </struct>
+    <struct class="GpTranslationTableUpdateTranslation">
+        <name>Gp Translation Table Update Translation</name>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Index</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Gpd Command ID</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Endpoint</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Profile</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Cluster</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Zigbee Command ID</name>
+        </field>
+        <field type="OCTET_STRING">
+            <name>Zigbee Command Payload</name>
+        </field>
+    </struct>
+</cluster>

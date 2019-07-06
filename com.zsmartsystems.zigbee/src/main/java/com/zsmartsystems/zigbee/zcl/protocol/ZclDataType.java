@@ -14,6 +14,7 @@ import java.util.Map;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.field.AttributeInformation;
 import com.zsmartsystems.zigbee.zcl.field.AttributeRecord;
@@ -60,6 +61,7 @@ public enum ZclDataType {
     ENUMERATION_32_BIT("32-bit enumeration", Integer.class, 0x33, false),
     FLOAT_32_BIT("Single precision float", Double.class, 0x39, true),
     IEEE_ADDRESS("IEEE Address", IeeeAddress.class, 0xF0, false),
+    SECURITY_KEY("ZigBee Key", ZigBeeKey.class, 0xF1, false),
     N_X_ATTRIBUTE_IDENTIFIER("N X Attribute identifier", Integer.class, 0x00, false),
     N_X_ATTRIBUTE_INFORMATION("N X Attribute information", AttributeInformation.class, 0x00, false),
     N_X_ATTRIBUTE_RECORD("N X Attribute record", AttributeRecord.class, 0x00, false),
@@ -79,6 +81,7 @@ public enum ZclDataType {
     N_X_WRITE_ATTRIBUTE_STATUS_RECORD("N X Write attribute status record", WriteAttributeStatusRecord.class, 0x00,
             false),
     OCTET_STRING("Octet string", ByteArray.class, 0x41, false),
+    LONG_OCTET_STRING("Long Octet string", ByteArray.class, 0x43, false),
     SIGNED_8_BIT_INTEGER("Signed 8-bit Integer", Integer.class, 0x28, true),
     SIGNED_16_BIT_INTEGER("Signed 16-bit Integer", Integer.class, 0x29, true),
     SIGNED_24_BIT_INTEGER("Signed 24-bit Integer", Integer.class, 0x2A, true),

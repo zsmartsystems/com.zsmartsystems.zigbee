@@ -14,6 +14,7 @@ import java.util.List;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 import com.zsmartsystems.zigbee.zcl.field.ZclDataPair;
@@ -106,6 +107,15 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                     break;
                 }
                 index += stringSize;
+                break;
+            case LONG_OCTET_STRING:
+                int longOctetSize = (short) (payload[index++] + (payload[index++] << 8));
+                value[0] = new ByteArray(payload, index, index + longOctetSize);
+                index += longOctetSize;
+                break;
+            case SECURITY_KEY:
+                value[0] = new ZigBeeKey(Arrays.copyOfRange(payload, index, index + 16));
+                index += 16;
                 break;
             case ENDPOINT:
             case BITMAP_8_BIT:

@@ -58,7 +58,7 @@ public class ZigBeeKey {
         hexString = hexString.replace(" ", "");
 
         if (hexString.length() != 32) {
-            throw new IllegalArgumentException("Key string must contain an array of 32 hexadecimal numbers");
+            throw new IllegalArgumentException("ZigBeeKey string must contain an array of 32 hexadecimal numbers");
         }
 
         this.key = new int[16];
@@ -78,7 +78,7 @@ public class ZigBeeKey {
      */
     public ZigBeeKey(int[] key) {
         if (key.length != 16) {
-            throw new IllegalArgumentException("NetworkKey array length must be 16 hex bytes");
+            throw new IllegalArgumentException("ZigBeeKey array length must be 16 hex bytes");
         }
         this.key = Arrays.copyOf(key, 16);
     }
