@@ -57,15 +57,4 @@ public class ZigBeeIasCieExtension implements ZigBeeNetworkExtension, ZigBeeNetw
             }
         }
     }
-
-    @Override
-    public void nodeUpdated(ZigBeeNode node) {
-        // Not used
-    }
-
-    @Override
-    public void nodeRemoved(ZigBeeNode node) {
-        // Not used
-    }
-
 }
