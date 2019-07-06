@@ -7,13 +7,16 @@
  */
 package com.zsmartsystems.zigbee.zcl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
 
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import com.zsmartsystems.zigbee.TestUtilities;
 import com.zsmartsystems.zigbee.database.ZclAttributeDao;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
@@ -72,6 +75,32 @@ public class ZclAttributeTest {
         Thread.sleep(100);
         assertFalse(attribute.isLastValueCurrent(50));
         assertTrue(attribute.isLastValueCurrent(Long.MAX_VALUE));
+    }
+
+    @Test
+    public void writeValue() {
+        ZclCluster cluster = Mockito.mock(ZclCluster.class);
+        ZclAttribute attribute = new ZclAttribute(cluster, 123, "Test Name", ZclDataType.UNSIGNED_8_BIT_INTEGER, false,
+                false, false, false);
+
+        Integer value = Integer.valueOf(888);
+        attribute.writeValue(value);
+        Mockito.verify(cluster, Mockito.times(1)).writeAttribute(123, ZclDataType.UNSIGNED_8_BIT_INTEGER, value);
+    }
+
+    @Test
+    public void readValue() throws Exception {
+        ZclCluster cluster = Mockito.mock(ZclCluster.class);
+        ZclAttribute attribute = new ZclAttribute(cluster, 123, "Test Name", ZclDataType.UNSIGNED_8_BIT_INTEGER, false,
+                false, false, false);
+
+        attribute.readValue(Long.MAX_VALUE);
+        Mockito.verify(cluster, Mockito.times(1)).readAttributeValue(123);
+
+        TestUtilities.setField(ZclAttribute.class, attribute, "lastReportTime", Calendar.getInstance());
+        TestUtilities.setField(ZclAttribute.class, attribute, "lastValue", Integer.valueOf(8888));
+        assertEquals(Integer.valueOf(8888), attribute.readValue(Long.MAX_VALUE));
+        Mockito.verify(cluster, Mockito.times(1)).readAttributeValue(123);
     }
 
     @Test
