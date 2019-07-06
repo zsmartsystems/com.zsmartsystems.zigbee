@@ -18,24 +18,27 @@ public interface ZigBeeNetworkNodeListener {
     /**
      * Node was added
      *
-     * @param node
-     *            the new {@link ZigBeeNode}
+     * @param node the new {@link ZigBeeNode}
      */
-    void nodeAdded(final ZigBeeNode node);
+    default void nodeAdded(final ZigBeeNode node) {
+        // Default implementation does nothing
+    }
 
     /**
      * Node was updated
      *
-     * @param node
-     *            the updated {@link ZigBeeNode}
+     * @param node the updated {@link ZigBeeNode}
      */
-    void nodeUpdated(final ZigBeeNode node);
+    default void nodeUpdated(final ZigBeeNode node) {
+        // Default implementation does nothing
+    }
 
     /**
      * Node was removed
      *
-     * @param node
-     *            the removed {@link ZigBeeNode}
+     * @param node the removed {@link ZigBeeNode}
      */
-    void nodeRemoved(final ZigBeeNode node);
+    default void nodeRemoved(final ZigBeeNode node) {
+        // Default implementation does nothing
+    }
 }

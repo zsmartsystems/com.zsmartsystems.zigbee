@@ -55,15 +55,4 @@ public class ZigBeeOtaUpgradeExtension implements ZigBeeNetworkExtension, ZigBee
             }
         }
     }
-
-    @Override
-    public void nodeUpdated(ZigBeeNode node) {
-        // Not used
-    }
-
-    @Override
-    public void nodeRemoved(ZigBeeNode node) {
-        // Not used
-    }
-
 }
