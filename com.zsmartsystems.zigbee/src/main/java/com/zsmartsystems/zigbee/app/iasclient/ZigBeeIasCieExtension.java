@@ -52,7 +52,7 @@ public class ZigBeeIasCieExtension implements ZigBeeNetworkExtension, ZigBeeNetw
     public void nodeAdded(ZigBeeNode node) {
         for (ZigBeeEndpoint endpoint : node.getEndpoints()) {
             if (endpoint.getInputCluster(ZclIasZoneCluster.CLUSTER_ID) != null) {
-                endpoint.addApplication(new ZclIasZoneClient(networkManager.getNode(0).getIeeeAddress(), 0));
+                endpoint.addApplication(new ZclIasZoneClient(networkManager, networkManager.getLocalIeeeAddress(), 0));
                 break;
             }
         }
