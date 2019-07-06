@@ -31,7 +31,6 @@ import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
-import com.zsmartsystems.zigbee.ZigBeeNode.ZigBeeNodeState;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionFuture;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
@@ -148,7 +147,7 @@ public class ZigBeeNetworkDiscovererTest {
         Mockito.verify(networkManager).addAnnounceListener(discoverer);
 
         // Then wait for the nodes to be added
-        Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).times(2)).addNode(nodeCapture.capture());
+        Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).times(2)).updateNode(nodeCapture.capture());
 
         ZigBeeNode node = nodeCapture.getValue();
         assertNotNull(node);
@@ -165,10 +164,6 @@ public class ZigBeeNetworkDiscovererTest {
     public void testNodeAddressUpdate() {
         IeeeAddress ieeeAddress = new IeeeAddress("123456890ABCDEF");
 
-        ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
-        Mockito.doReturn(node).when(networkManager).getNode(ArgumentMatchers.any(IeeeAddress.class));
-        Mockito.when(node.getNetworkAddress()).thenReturn(11111);
-
         DeviceAnnounce announce = new DeviceAnnounce();
         announce.setIeeeAddr(ieeeAddress);
         announce.setNwkAddrOfInterest(12345);
@@ -179,8 +174,7 @@ public class ZigBeeNetworkDiscovererTest {
         discoverer.setRetryCount(0);
 
         discoverer.commandReceived(announce);
-        Mockito.verify(node, Mockito.times(1)).setNetworkAddress(12345);
-        Mockito.verify(node, Mockito.times(1)).setNodeState(ZigBeeNodeState.ONLINE);
+        Mockito.verify(networkManager, Mockito.times(1)).updateNode(ArgumentMatchers.any());
 
         ZigBeeEndpointAddress address = Mockito.mock(ZigBeeEndpointAddress.class);
         Mockito.when(address.getAddress()).thenReturn(12345);
@@ -191,18 +185,14 @@ public class ZigBeeNetworkDiscovererTest {
 
     @Test
     public void deviceStatusUpdate() {
-        ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
-        Mockito.doReturn(node).when(networkManager).getNode(ArgumentMatchers.any(IeeeAddress.class));
-        Mockito.when(node.getNetworkAddress()).thenReturn(1111);
-
         ZigBeeNetworkDiscoverer discoverer = new ZigBeeNetworkDiscoverer(networkManager);
         discoverer.setRetryPeriod(0);
         discoverer.setRequeryPeriod(0);
         discoverer.setRetryCount(0);
 
         discoverer.deviceStatusUpdate(ZigBeeNodeStatus.UNSECURED_JOIN, 2222, new IeeeAddress("1111111111111111"));
-        Mockito.verify(node, Mockito.times(1)).setNetworkAddress(2222);
-        Mockito.verify(node, Mockito.times(1)).setNodeState(ZigBeeNodeState.ONLINE);
+
+        Mockito.verify(networkManager, Mockito.times(1)).updateNode(ArgumentMatchers.any());
     }
 
     @Test
@@ -223,7 +213,7 @@ public class ZigBeeNetworkDiscovererTest {
         TestUtilities.setField(ZigBeeNetworkDiscoverer.class, discoverer, "discoveryStartTime", discoveryStartTime);
         discoverer.rediscoverNode(1111);
 
-        Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).times(1)).addNode(nodeCapture.capture());
+        Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).times(1)).updateNode(nodeCapture.capture());
 
         ZigBeeNode node = nodeCapture.getValue();
         assertNotNull(node);
@@ -250,7 +240,7 @@ public class ZigBeeNetworkDiscovererTest {
         TestUtilities.setField(ZigBeeNetworkDiscoverer.class, discoverer, "discoveryStartTime", discoveryStartTime);
         discoverer.rediscoverNode(new IeeeAddress("1111111111111111"));
 
-        Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).times(1)).addNode(nodeCapture.capture());
+        Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).times(1)).updateNode(nodeCapture.capture());
 
         ZigBeeNode node = nodeCapture.getValue();
         assertNotNull(node);

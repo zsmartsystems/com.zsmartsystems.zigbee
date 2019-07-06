@@ -71,12 +71,12 @@ public class ZigBeeNode implements ZigBeeCommandListener {
     /**
      * The {@link NodeDescriptor} for the node.
      */
-    private NodeDescriptor nodeDescriptor = new NodeDescriptor();
+    private NodeDescriptor nodeDescriptor;
 
     /**
      * The {@link PowerDescriptor} for the node.
      */
-    private PowerDescriptor powerDescriptor = new PowerDescriptor();
+    private PowerDescriptor powerDescriptor;
 
     /**
      * The time the node information was last updated. This is set from the mesh update class when it the
@@ -159,6 +159,20 @@ public class ZigBeeNode implements ZigBeeCommandListener {
     }
 
     /**
+     * Constructor
+     *
+     * @param network the {@link ZigBeeNetwork}
+     * @param ieeeAddress the {@link IeeeAddress} of the node
+     * @param networkAddress the network address of the node
+     * @throws {@link IllegalArgumentException} if ieeeAddress is null
+     */
+    public ZigBeeNode(ZigBeeNetwork network, IeeeAddress ieeeAddress, Integer networkAddress) {
+        this(network, ieeeAddress);
+
+        this.networkAddress = networkAddress;
+    }
+
+    /**
      * Called when the node is removed from the network.
      */
     public void shutdown() {
@@ -176,16 +190,19 @@ public class ZigBeeNode implements ZigBeeCommandListener {
     /**
      * Sets the 16 bit network address of the node.
      *
-     * @param networkAddress
+     * @param networkAddress the new NWK address for the node
+     * @return true if the new NWK address is different from the original value
      */
-    public void setNetworkAddress(Integer networkAddress) {
+    public boolean setNetworkAddress(Integer networkAddress) {
+        boolean changed = this.networkAddress == null || (!this.networkAddress.equals(networkAddress));
         this.networkAddress = networkAddress;
+        return changed;
     }
 
     /**
      * Gets the 16 bit network address of the node.
      *
-     * @return networkAddress
+     * @return networkAddress the current NWK address for the node
      */
     public Integer getNetworkAddress() {
         return networkAddress;
@@ -323,11 +340,15 @@ public class ZigBeeNode implements ZigBeeCommandListener {
      * <li>{@link LogicalType#COORDINATOR}
      * <li>{@link LogicalType#ROUTER}
      * <li>{@link LogicalType#END_DEVICE}
+     * <li>{@link LogicalType#UNKNOWN}
      * <ul>
      *
      * @return the {@link LogicalType} of the node
      */
     public LogicalType getLogicalType() {
+        if (nodeDescriptor == null) {
+            return LogicalType.UNKNOWN;
+        }
         return nodeDescriptor.getLogicalType();
     }
 
@@ -371,7 +392,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
 
                 do {
                     ManagementBindRequest bindingRequest = new ManagementBindRequest();
-                    bindingRequest.setDestinationAddress(new ZigBeeEndpointAddress(networkAddress));
+                    bindingRequest.setDestinationAddress(new ZigBeeEndpointAddress(getNetworkAddress()));
                     bindingRequest.setStartIndex(index);
 
                     CommandResult result = network.sendTransaction(bindingRequest, new ManagementBindRequest()).get();
@@ -675,7 +696,8 @@ public class ZigBeeNode implements ZigBeeCommandListener {
      * @return true if basic device information is known
      */
     public boolean isDiscovered() {
-        return nodeDescriptor.getLogicalType() != LogicalType.UNKNOWN && endpoints.size() != 0;
+        return nodeDescriptor != null && nodeDescriptor.getLogicalType() != LogicalType.UNKNOWN
+                && endpoints.size() != 0;
     }
 
     /**
@@ -687,30 +709,37 @@ public class ZigBeeNode implements ZigBeeCommandListener {
      */
     protected boolean updateNode(ZigBeeNode node) {
         if (!node.getIeeeAddress().equals(ieeeAddress)) {
+            logger.debug("{}: Ieee address inconsistent during update <>{}", ieeeAddress, node.getIeeeAddress());
             return false;
         }
 
         boolean updated = false;
 
-        if (!networkAddress.equals(node.getNetworkAddress())) {
+        if (node.getNetworkAddress() != null
+                && (networkAddress == null || !networkAddress.equals(node.getNetworkAddress()))) {
             logger.debug("{}: Network address updated from {} to {}", ieeeAddress, networkAddress,
                     node.getNetworkAddress());
             updated = true;
             networkAddress = node.getNetworkAddress();
         }
 
-        if (!nodeDescriptor.equals(node.getNodeDescriptor())) {
+        if (node.getNodeDescriptor() != null
+                && (nodeDescriptor == null || !nodeDescriptor.equals(node.getNodeDescriptor()))) {
+            logger.debug("{}: Node descriptor updated", ieeeAddress);
             updated = true;
             nodeDescriptor = node.getNodeDescriptor();
         }
 
-        if (!powerDescriptor.equals(node.getPowerDescriptor())) {
+        if (node.getPowerDescriptor() != null
+                && (powerDescriptor == null || !powerDescriptor.equals(node.getPowerDescriptor()))) {
+            logger.debug("{}: Power descriptor updated", ieeeAddress);
             updated = true;
             powerDescriptor = node.getPowerDescriptor();
         }
 
         synchronized (associatedDevices) {
             if (!associatedDevices.equals(node.getAssociatedDevices())) {
+                logger.debug("{}: Associated devices updated", ieeeAddress);
                 updated = true;
                 associatedDevices.clear();
                 associatedDevices.addAll(node.getAssociatedDevices());
@@ -719,6 +748,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
 
         synchronized (bindingTable) {
             if (!bindingTable.equals(node.getBindingTable())) {
+                logger.debug("{}: Binding table updated", ieeeAddress);
                 updated = true;
                 bindingTable.clear();
                 bindingTable.addAll(node.getBindingTable());
@@ -727,6 +757,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
 
         synchronized (neighbors) {
             if (!neighbors.equals(node.getNeighbors())) {
+                logger.debug("{}: Neighbors updated", ieeeAddress);
                 updated = true;
                 neighbors.clear();
                 neighbors.addAll(node.getNeighbors());
@@ -735,13 +766,25 @@ public class ZigBeeNode implements ZigBeeCommandListener {
 
         synchronized (routes) {
             if (!routes.equals(node.getRoutes())) {
+                logger.debug("{}: Routes updated", ieeeAddress);
                 updated = true;
                 routes.clear();
                 routes.addAll(node.getRoutes());
             }
         }
 
-        // TODO: How to deal with endpoints
+        // Endpoints are only copied over if they don't exist in the node
+        // The assumption here is that endpoints are only set once, and not changed.
+        // This should be valid as they are set through the SimpleDescriptor.
+        for (ZigBeeEndpoint endpoint : node.getEndpoints()) {
+            if (endpoints.containsKey(endpoint.getEndpointId())) {
+                continue;
+            }
+
+            logger.debug("{}: Endpoint {} added", ieeeAddress, endpoint.getEndpointId());
+            updated = true;
+            endpoints.put(endpoint.getEndpointId(), endpoint);
+        }
 
         return updated;
     }
@@ -755,7 +798,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
         ZigBeeNodeDao dao = new ZigBeeNodeDao();
 
         dao.setIeeeAddress(ieeeAddress);
-        dao.setNetworkAddress(networkAddress);
+        dao.setNetworkAddress(getNetworkAddress());
         dao.setNodeDescriptor(nodeDescriptor);
         dao.setPowerDescriptor(powerDescriptor);
         dao.setBindingTable(bindingTable);
@@ -771,9 +814,9 @@ public class ZigBeeNode implements ZigBeeCommandListener {
 
     public void setDao(ZigBeeNodeDao dao) {
         ieeeAddress = dao.getIeeeAddress();
-        networkAddress = dao.getNetworkAddress();
-        nodeDescriptor = dao.getNodeDescriptor();
-        powerDescriptor = dao.getPowerDescriptor();
+        setNetworkAddress(dao.getNetworkAddress());
+        setNodeDescriptor(dao.getNodeDescriptor());
+        setPowerDescriptor(dao.getPowerDescriptor());
         if (dao.getBindingTable() != null) {
             bindingTable.addAll(dao.getBindingTable());
         }

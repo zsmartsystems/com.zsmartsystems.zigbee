@@ -459,21 +459,8 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
      */
     private void addNode(final IeeeAddress ieeeAddress, int networkAddress) {
         logger.debug("{}: NWK Discovery add node {}", ieeeAddress, networkAddress);
-        ZigBeeNode node = networkManager.getNode(ieeeAddress);
-        if (node != null) {
-            if (node.getNetworkAddress() != networkAddress) {
-                logger.debug("{}: NWK Discovery updated network address to {}", ieeeAddress, networkAddress);
-            }
-            node.setNodeState(ZigBeeNodeState.ONLINE);
-            node.setNetworkAddress(networkAddress);
-            networkManager.updateNode(node);
-            return;
-        }
-
-        node = new ZigBeeNode(networkManager, ieeeAddress);
-        node.setNetworkAddress(networkAddress);
-
-        // Add the node to the network...
-        networkManager.addNode(node);
+        ZigBeeNode node = new ZigBeeNode(networkManager, ieeeAddress, networkAddress);
+        node.setNodeState(ZigBeeNodeState.ONLINE);
+        networkManager.updateNode(node);
     }
 }

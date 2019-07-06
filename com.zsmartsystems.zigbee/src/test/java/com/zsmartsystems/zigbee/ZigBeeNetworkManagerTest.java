@@ -93,6 +93,21 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         ZigBeeNode node1 = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class),
                 new IeeeAddress("1234567890ABCDEF"));
         node1.setNetworkAddress(1234);
+        ZigBeeEndpoint node1Endpoint1 = new ZigBeeEndpoint(node1, 1);
+        ZclCluster node1Endpoint1Cluster1 = Mockito.mock(ZclCluster.class);
+        Mockito.when(node1Endpoint1Cluster1.getClusterId()).thenReturn(1);
+        node1Endpoint1.addInputCluster(node1Endpoint1Cluster1);
+        node1.addEndpoint(node1Endpoint1);
+
+        ZigBeeNode node1dup = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class),
+                new IeeeAddress("1234567890ABCDEF"));
+        node1dup.setNetworkAddress(1234);
+        ZigBeeEndpoint node1dupEndpoint1 = new ZigBeeEndpoint(node1dup, 1);
+        ZclCluster node1dupEndpoint1Cluster = Mockito.mock(ZclCluster.class);
+        Mockito.when(node1dupEndpoint1Cluster.getClusterId()).thenReturn(1);
+        node1dupEndpoint1.addInputCluster(node1dupEndpoint1Cluster);
+        node1dup.addEndpoint(node1dupEndpoint1);
+
         ZigBeeNode node2 = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class),
                 new IeeeAddress("123456789ABCDEF0"));
         node2.setNetworkAddress(5678);
@@ -100,39 +115,60 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         // Add a node and make sure it's in the list
         TestUtilities.setField(ZigBeeNetworkManager.class, networkManager, "networkState", ZigBeeNetworkState.ONLINE);
 
-        networkManager.addNode(node1);
+        networkManager.updateNode(node1);
         assertEquals(1, networkManager.getNodes().size());
         Mockito.verify(mockedNodeListener, Mockito.timeout(TIMEOUT)).nodeAdded(node1);
 
-        // Add it again to make sure it's not duplicated, but we get the added callback again as discovery is incomplete
-        networkManager.addNode(node1);
+        // Add it again to make sure it's not duplicated, and we don't get a notification as there is no change
+        networkManager.updateNode(node1);
         assertEquals(1, networkManager.getNodes().size());
-        Mockito.verify(mockedNodeListener, Mockito.timeout(TIMEOUT).times(2)).nodeAdded(node1);
-        Mockito.verify(mockedNodeListener, Mockito.times(0)).nodeUpdated(node1);
+        Mockito.verify(mockedNodeListener, Mockito.timeout(TIMEOUT).times(1)).nodeAdded(node1);
+        Mockito.verify(mockedNodeListener, Mockito.timeout(TIMEOUT).times(0)).nodeUpdated(node1);
 
         Set<Object> completeList = Collections.synchronizedSet(new HashSet<>());
         completeList.add(new IeeeAddress("1234567890ABCDEF"));
         TestUtilities.setField(ZigBeeNetworkManager.class, networkManager, "nodeDiscoveryComplete", completeList);
 
         // Add it again to make sure it's not duplicated and we get the updated callback
-        networkManager.addNode(node1);
+        networkManager.updateNode(node1dup);
         assertEquals(1, networkManager.getNodes().size());
-        Mockito.verify(mockedNodeListener, Mockito.times(2)).nodeAdded(node1);
-        Mockito.verify(mockedNodeListener, Mockito.timeout(TIMEOUT)).nodeUpdated(node1);
+        Mockito.verify(mockedNodeListener, Mockito.timeout(TIMEOUT).times(1)).nodeAdded(node1);
+        Mockito.verify(mockedNodeListener, Mockito.timeout(TIMEOUT).times(0)).nodeUpdated(node1);
 
         // Add a null node to make sure it's not added and we get the updated callback
-        networkManager.addNode(null);
+        networkManager.updateNode(null);
         assertEquals(1, networkManager.getNodes().size());
-        Mockito.verify(mockedNodeListener, Mockito.times(2)).nodeAdded(node1);
+        Mockito.verify(mockedNodeListener, Mockito.timeout(TIMEOUT).times(1)).nodeAdded(node1);
 
         // Add a new node to make sure it's added
-        networkManager.addNode(node2);
+        networkManager.updateNode(node2);
         assertEquals(2, networkManager.getNodes().size());
         Mockito.verify(mockedNodeListener, Mockito.timeout(TIMEOUT)).nodeAdded(node2);
 
         ZigBeeNode foundNode = networkManager.getNode(1234);
         assertNotNull(foundNode);
         assertTrue(node1.equals(foundNode));
+
+        // Add a duplicate of the node, but with a different NWK address
+        node1dup.setNetworkAddress(4321);
+        networkManager.updateNode(node1dup);
+        assertEquals(2, networkManager.getNodes().size());
+        assertEquals(node1, networkManager.getNode(new IeeeAddress("1234567890ABCDEF")));
+
+        // Check that the old NWK address is not found, and the new NWK is found
+        assertNull(networkManager.getNode(1234));
+        assertTrue(node1.equals(networkManager.getNode(4321)));
+
+        // Check that reading back the endpoint and clusters from the first node added
+        foundNode = networkManager.getNode(4321);
+        ZigBeeEndpoint foundEndpoint = foundNode.getEndpoint(1);
+        assertEquals(node1Endpoint1, foundEndpoint);
+
+        // The extra cluster from the duplicate node 1 should be transferred to the original node
+        ZclCluster foundCluster = foundEndpoint.getInputCluster(1);
+        assertEquals(node1Endpoint1Cluster1, foundCluster);
+        // foundCluster = foundEndpoint.getInputCluster(2);
+        // assertEquals(node1dupEndpoint1Cluster2, foundCluster);
 
         // Remove it and make sure it's gone
         networkManager.removeNode(node1);
@@ -142,12 +178,12 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         // Remove again to make sure we're ok
         networkManager.removeNode(node1);
         assertEquals(1, networkManager.getNodes().size());
-        Mockito.verify(mockedNodeListener, Mockito.times(1)).nodeRemoved(node1);
+        Mockito.verify(mockedNodeListener, Mockito.timeout(TIMEOUT).times(1)).nodeRemoved(node1);
 
         // Remove a null node to make sure we're ok
         networkManager.removeNode(null);
         assertEquals(1, networkManager.getNodes().size());
-        Mockito.verify(mockedNodeListener, Mockito.times(1)).nodeRemoved(node1);
+        Mockito.verify(mockedNodeListener, Mockito.timeout(TIMEOUT).times(1)).nodeRemoved(node1);
 
         // Really check it's gone
         foundNode = networkManager.getNode(1234);
@@ -178,11 +214,11 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         node1.setNetworkAddress(1234);
         ZigBeeNode node2 = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress(address));
         node2.setNetworkAddress(5678);
-        networkManager.addNode(node1);
+        networkManager.updateNode(node1);
         assertEquals(1, networkManager.getNodes().size());
         ZigBeeNode nodeWeGot = networkManager.getNode(new IeeeAddress(address));
         assertEquals(Integer.valueOf(1234), nodeWeGot.getNetworkAddress());
-        networkManager.addNode(node2);
+        networkManager.updateNode(node2);
         assertEquals(1, networkManager.getNodes().size());
         assertEquals(Integer.valueOf(5678), nodeWeGot.getNetworkAddress());
     }
@@ -253,7 +289,7 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         Mockito.when(node.getNetworkAddress()).thenReturn(1234);
         Mockito.when(node.getEndpoint(5)).thenReturn(endpoint);
 
-        networkManager.addNode(node);
+        networkManager.updateNode(node);
 
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
         apsFrame.setSourceAddress(1234);
@@ -307,6 +343,10 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
 
         manager.setTransportState(ZigBeeTransportState.INITIALISING);
         Mockito.verify(stateListener, Mockito.timeout(TIMEOUT)).networkStateUpdated(ZigBeeNetworkState.INITIALISING);
+
+        // Transport state can only update to ONLINE once the Network state is past INITIALISING
+        // In order for there to be a state change, we set this to OFFLINE
+        TestUtilities.setField(ZigBeeNetworkManager.class, manager, "networkState", ZigBeeNetworkState.OFFLINE);
 
         manager.setTransportState(ZigBeeTransportState.ONLINE);
         Mockito.verify(stateListener, Mockito.timeout(TIMEOUT)).networkStateUpdated(ZigBeeNetworkState.ONLINE);
@@ -419,19 +459,24 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
 
         TestUtilities.setField(ZigBeeNetworkManager.class, networkManager, "transactionManager", transactionManager);
         assertEquals(ZigBeeStatus.SUCCESS, networkManager.permitJoin(0));
-        Mockito.verify(transactionManager, Mockito.times(2)).sendTransaction(ArgumentMatchers.any(ZigBeeCommand.class));
+        Mockito.verify(transactionManager, Mockito.timeout(TIMEOUT).times(2))
+                .sendTransaction(ArgumentMatchers.any(ZigBeeCommand.class));
         assertEquals(ZigBeeStatus.SUCCESS, networkManager.permitJoin(254));
-        Mockito.verify(transactionManager, Mockito.times(4)).sendTransaction(ArgumentMatchers.any(ZigBeeCommand.class));
+        Mockito.verify(transactionManager, Mockito.timeout(TIMEOUT).times(4))
+                .sendTransaction(ArgumentMatchers.any(ZigBeeCommand.class));
         assertEquals(ZigBeeStatus.INVALID_ARGUMENTS, networkManager.permitJoin(255));
-        Mockito.verify(transactionManager, Mockito.times(4)).sendTransaction(ArgumentMatchers.any(ZigBeeCommand.class));
+        Mockito.verify(transactionManager, Mockito.timeout(TIMEOUT).times(4))
+                .sendTransaction(ArgumentMatchers.any(ZigBeeCommand.class));
 
         // Check that the unicast sends 1 frame
         networkManager.permitJoin(new ZigBeeEndpointAddress(1), 1);
-        Mockito.verify(transactionManager, Mockito.times(5)).sendTransaction(ArgumentMatchers.any(ZigBeeCommand.class));
+        Mockito.verify(transactionManager, Mockito.timeout(TIMEOUT).times(5))
+                .sendTransaction(ArgumentMatchers.any(ZigBeeCommand.class));
 
         // Check that the broadcast sends 2 frames
         networkManager.permitJoin(1);
-        Mockito.verify(transactionManager, Mockito.times(7)).sendTransaction(ArgumentMatchers.any(ZigBeeCommand.class));
+        Mockito.verify(transactionManager, Mockito.timeout(TIMEOUT).times(7))
+                .sendTransaction(ArgumentMatchers.any(ZigBeeCommand.class));
     }
 
     private ZigBeeNetworkManager mockZigBeeNetworkManager() throws Exception {
@@ -567,7 +612,7 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         Mockito.when(node.getNetworkAddress()).thenReturn(0);
         Mockito.when(node.getEndpoint(1)).thenReturn(endpoint);
 
-        networkManager.addNode(node);
+        networkManager.updateNode(node);
 
         TestUtilities.setField(ZigBeeNetworkManager.class, networkManager, "networkState", ZigBeeNetworkState.ONLINE);
         networkManager.receiveCommand(apsFrame);
@@ -738,6 +783,7 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
 
         Awaitility.await().until(() -> stateListenerUpdated());
         assertEquals(ZigBeeNetworkState.ONLINE, manager.getNetworkState());
+        manager.setTransportState(ZigBeeTransportState.ONLINE);
         manager.setTransportState(ZigBeeTransportState.OFFLINE);
         Awaitility.await().until(() -> stateListenerUpdated());
         assertEquals(ZigBeeNetworkState.OFFLINE, manager.getNetworkState());
@@ -766,7 +812,7 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
 
         ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
         Mockito.when(node.getIeeeAddress()).thenReturn(new IeeeAddress("1234567890ABCDEF"));
-        manager.addNode(node);
+        manager.updateNode(node);
 
         ZigBeeAnnounceListener announceListener = Mockito.mock(ZigBeeAnnounceListener.class);
         manager.addAnnounceListener(announceListener);
