@@ -322,7 +322,8 @@ public abstract class ZclCluster {
     }
 
     /**
-     * Read an attribute given the attribute ID
+     * Read an attribute given the attribute ID. This method will always send a {@link ReadAttributesCommand} to the
+     * remote device.
      *
      * @param attributeId the integer attribute ID to read
      * @return command future

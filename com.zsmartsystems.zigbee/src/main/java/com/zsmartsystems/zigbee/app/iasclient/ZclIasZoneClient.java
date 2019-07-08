@@ -7,13 +7,17 @@
  */
 package com.zsmartsystems.zigbee.app.iasclient;
 
+import java.util.concurrent.ScheduledFuture;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
+import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.app.ZigBeeApplication;
+import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclIasZoneCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.EnrollResponseCodeEnum;
@@ -24,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneTypeEnum;
 
 /**
  * Implements the a minimal IAS client side functionality. The IAS (Intruder Alarm Systems) server clusters require
- * support on the client side when enroling. Once an IAS device joins the network, it looks for a CIE (Control and
+ * support on the client side when enrolling. Once an IAS device joins the network, it looks for a CIE (Control and
  * Indicating Equipment) which is implemented here.
  * <p>
  * There are three methods for enrolling IAS Zone server to an IAS CIE (i.e., IAS Zone client):
@@ -45,54 +49,66 @@ import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneTypeEnum;
  * used by a user or installer to add multiple IAS Zone servers in an orderly fashion, assign names to them, configure
  * them in the system).
  * <p>
- * >
  * The detailed requirements for each commissioning method follow:
  * <p>
- * Trip-to-Pair
+ * <b>Trip-to-Pair</b>
  * <ol>
- * <li>After an IAS Zone server is commissioned to a network, the IAS CIEMAY perform service discovery.
- * <li>If the IAS CIEdetermines it wants to enroll the IAS Zone server, it SHALL send a Write Attribute command on the
- * IAS Zone server’s IAS_CIE_Addressattribute with its IEEE address
+ * <li>After an IAS Zone server is commissioned to a network, the IAS CIE MAY perform service discovery.
+ * <li>If the IAS CIE determines it wants to enroll the IAS Zone server, it SHALL send a Write Attribute command on the
+ * IAS Zone server’s IAS_CIE_Address attribute with its IEEE address
  * <li>The IAS Zone server MAY configure a binding table entry for the IAS CIE’s address because all of its
  * communication will be directed to the IAS CIE.
  * <li>Upon a user input determined by the manufacturer (e.g., a button, change to device’s ZoneStatus attribute that
- * would result in a Zone Status Change Notification command) and the IAS Zone server’s ZoneStateattribute equal to 0x00
- * (unenrolled), the IAS Zone server SHALL send a Zone Enroll Request command.
- * <li>The IAS CIESHALL send a Zone Enroll Response command, which assigns the IAS Zone server’s ZoneIDattribute.
- * <li>The IAS Zone server SHALL change its ZoneStateattribute to 0x01 (enrolled).
+ * would result in a Zone Status Change Notification command) and the IAS Zone server’s ZoneState attribute equal to
+ * 0x00 (unenrolled), the IAS Zone server SHALL send a Zone Enroll Request command.
+ * <li>The IAS CIE SHALL send a Zone Enroll Response command, which assigns the IAS Zone server’s ZoneID attribute.
+ * <li>The IAS Zone server SHALL change its ZoneState attribute to 0x01 (enrolled).
  * </ol>
  * <p>
- * Auto-Enroll-Response
+ * <b>Auto-Enroll-Response</b>
  * <ol>
- * <li>After an IAS Zone server is commissioned to a network, the IAS CIEMAY perform service discovery.
- * <li>If the IAS CIEdetermines it wants to enroll the IAS Zone server, it SHALL send a Write Attribute command
- * on the IAS Zone server’s CIE_IAS_Addressattribute with its IEEE address.
+ * <li>After an IAS Zone server is commissioned to a network, the IAS CIE MAY perform service discovery.
+ * <li>If the IAS CIE determines it wants to enroll the IAS Zone server, it SHALL send a Write Attribute command
+ * on the IAS Zone server’s CIE_IAS_Address attribute with its IEEE address.
  * <li>The IAS Zone server MAY configure a binding table entry for the IAS CIE’s address because all of its
  * communication will be directed to the IAS CIE.
- * <li>The IAS CIESHALL send a Zone Enroll Response, which assigns the IAS Zone server’s ZoneIDattribute.
- * <li>The IAS Zone server SHALL change its ZoneStateattribute to 0x01 (enrolled).
+ * <li>The IAS CIE SHALL send a Zone Enroll Response, which assigns the IAS Zone server’s ZoneID attribute.
+ * <li>The IAS Zone server SHALL change its ZoneState attribute to 0x01 (enrolled).
  * </ol>
  * <p>
- * Auto-Enroll-Request
+ * <b>Auto-Enroll-Request</b>
  * <ol>
- * <li>After an IAS Zone server is commissioned to a network, the IAS CIEMAY perform service discovery.
- * <li>If the IAS CIEdetermines it wants to enroll the IAS Zone server, it SHALL send a Write Attribute command on the
- * IAS Zone server’s IAS_CIE_Addressattribute with its IEEE address.
+ * <li>After an IAS Zone server is commissioned to a network, the IAS CIE MAY perform service discovery.
+ * <li>If the IAS CIE determines it wants to enroll the IAS Zone server, it SHALL send a Write Attribute command on the
+ * IAS Zone server’s IAS_CIE_Address attribute with its IEEE address.
  * <li>The IAS Zone server MAY configure a binding table entry for the IAS CIE’s address because all of its
  * communication will be directed to the IAS CIE.
  * <li>The IAS Zone server SHALL send a Zone Enroll Request command.
- * <li>The IAS CIESHALL send a Zone Enroll Response command, which assigns the IAS Zone server’s ZoneIDattribute.
- * <li>The IAS Zone server SHALL change its ZoneStateattribute to 0x01 (enrolled).
+ * <li>The IAS CIE SHALL send a Zone Enroll Response command, which assigns the IAS Zone server’s ZoneID attribute.
+ * <li>The IAS Zone server SHALL change its ZoneState attribute to 0x01 (enrolled).
  * </ol>
+ * <p>
+ * <img src="./doc-files/ZclIasZoneClient.png" width="100%">
  *
  * @author Chris Jackson
  *
  */
 public class ZclIasZoneClient implements ZigBeeApplication {
     /**
+     * The default number of milliseconds to wait for a {@link ZoneEnrollRequestCommand} before sending the
+     * {@link ZoneEnrollResponse}
+     */
+    private static final long DEFAULT_AUTO_ENROLL_DELAY = 2000;
+
+    /**
      * The logger.
      */
     private final Logger logger = LoggerFactory.getLogger(ZclIasZoneClient.class);
+
+    /**
+     * The {@link ZigBeeNetworkManager}
+     */
+    private final ZigBeeNetworkManager networkManager;
 
     /**
      * The IAS cluster to which we're bound
@@ -105,38 +121,56 @@ public class ZclIasZoneClient implements ZigBeeApplication {
     private IeeeAddress ieeeAddress;
 
     /**
-     * The IAS zone for this device
+     * The time to wait for a {@link ZoneEnrollRequestCommand} before sending the {@link ZoneEnrollResponse}
      */
-    private int zone;
+    private long autoEnrollDelay = DEFAULT_AUTO_ENROLL_DELAY;
 
     /**
-     * The zone type reported by the remote device during enrollment
+     * The auto enrollment task being run
      */
-    private int zoneType;
+    private ScheduledFuture<?> autoEnrollmentTask;
+
+    /**
+     * The IAS zone ID for this device
+     */
+    private int zoneId;
+
+    /**
+     * The zone type reported by the remote device during enrolment
+     */
+    private Integer zoneType;
 
     /**
      * Constructor
+     *
+     * @param networkManager the {@link ZigBeeNetworkManager} this belongs to
+     * @param ieeeAddress the {@link IeeeAddress} of the CIE
+     * @param zoneId the zone ID to use for this device
      */
-    public ZclIasZoneClient(IeeeAddress ieeeAddress, int zone) {
+    public ZclIasZoneClient(ZigBeeNetworkManager networkManager, IeeeAddress ieeeAddress, int zoneId) {
+        this.networkManager = networkManager;
         this.ieeeAddress = ieeeAddress;
-        this.zone = zone;
+        this.zoneId = zoneId;
     }
 
     /**
-     * Gets the IAS zone for this device
+     * Gets the IAS zone Id for this device
      *
-     * @return the IAS zone number
+     * @return the IAS zone ID number
      */
-    public int getZone() {
-        return zone;
+    public int getZoneId() {
+        return zoneId;
     }
 
     /**
      * Gets the IAS zone type for this device. This is provided by the remote device during enrollment.
      *
-     * @return the IAS zone type as {@link ZoneTypeEnum}
+     * @return the IAS zone type as {@link ZoneTypeEnum} or null if the zone type is unknown
      */
     public ZoneTypeEnum getZoneType() {
+        if (zoneType == null) {
+            return null;
+        }
         return ZoneTypeEnum.getByValue(zoneType);
     }
 
@@ -145,7 +179,7 @@ public class ZclIasZoneClient implements ZigBeeApplication {
      *
      * @return the IAS zone type
      */
-    public int getZoneTypeId() {
+    public Integer getZoneTypeId() {
         return zoneType;
     }
 
@@ -159,43 +193,62 @@ public class ZclIasZoneClient implements ZigBeeApplication {
     }
 
     private void initialise() {
-        Integer currentState = iasZoneCluster.getZoneState(0);
+        Integer currentState = (Integer) iasZoneCluster.getAttribute(ZclIasZoneCluster.ATTR_ZONESTATE).readValue(0);
         if (currentState != null) {
             ZoneStateEnum currentStateEnum = ZoneStateEnum.getByValue(currentState);
             logger.debug("{}: IAS CIE state is currently {}[{}]", iasZoneCluster.getZigBeeAddress(), currentStateEnum,
                     currentState);
+            if (currentStateEnum == ZoneStateEnum.ENROLLED) {
+                logger.debug("{}: IAS CIE is already enrolled", iasZoneCluster.getZigBeeAddress());
+                return;
+            }
+        } else {
+            logger.debug("{}: IAS CIE failed to get state", iasZoneCluster.getZigBeeAddress());
         }
 
-        IeeeAddress currentIeeeAddress = iasZoneCluster.getIasCieAddress(0);
+        ZclAttribute cieAddressAttribute = iasZoneCluster.getAttribute(ZclIasZoneCluster.ATTR_IASCIEADDRESS);
+        IeeeAddress currentIeeeAddress = (IeeeAddress) cieAddressAttribute.readValue(0);
         logger.debug("{}: IAS CIE address is currently {}", iasZoneCluster.getZigBeeAddress(), currentIeeeAddress);
 
         if (!ieeeAddress.equals(currentIeeeAddress)) {
             // Set the CIE address in the remote device. This is where the device will send its reports.
-            iasZoneCluster.setIasCieAddress(ieeeAddress);
+            cieAddressAttribute.writeValue(ieeeAddress);
 
-            currentIeeeAddress = iasZoneCluster.getIasCieAddress(0);
-            logger.debug("{}: IAS CIE address is confirmed {}", iasZoneCluster.getZigBeeAddress(), currentIeeeAddress);
+            currentIeeeAddress = (IeeeAddress) cieAddressAttribute.readValue(0);
+            if (ieeeAddress.equals(currentIeeeAddress)) {
+                logger.debug("{}: IAS CIE address is confirmed {}", iasZoneCluster.getZigBeeAddress(),
+                        currentIeeeAddress);
+            } else {
+                logger.warn("{}: IAS CIE address is NOT confirmed {}", iasZoneCluster.getZigBeeAddress(),
+                        currentIeeeAddress);
+            }
         }
 
-        Integer currentZone = iasZoneCluster.getZoneId(0);
+        Integer currentZone = (Integer) iasZoneCluster.getAttribute(ZclIasZoneCluster.ATTR_ZONEID).readValue(0);
         if (currentZone == null) {
             logger.debug("{}: IAS CIE zone ID request failed", iasZoneCluster.getZigBeeAddress());
         } else {
             logger.debug("{}: IAS CIE zone ID is currently {}", iasZoneCluster.getZigBeeAddress(), currentZone);
         }
 
-        Integer zoneType = iasZoneCluster.getZoneType(Long.MAX_VALUE);
+        zoneType = (Integer) iasZoneCluster.getAttribute(ZclIasZoneCluster.ATTR_ZONETYPE).readValue(Long.MAX_VALUE);
         if (zoneType == null) {
             logger.debug("{}: IAS CIE zone type request failed", iasZoneCluster.getZigBeeAddress());
         } else {
             logger.debug("{}: IAS CIE zone type is 0x{}, {}", iasZoneCluster.getZigBeeAddress(),
                     String.format("%04X", zoneType), ZoneTypeEnum.getByValue(zoneType));
         }
+
+        // Start the auto-enroll timer
+        final Runnable runnableTask = new AutoEnrollmentTask();
+        autoEnrollmentTask = networkManager.scheduleTask(runnableTask, autoEnrollDelay);
     }
 
     @Override
     public void appShutdown() {
-        // Nothing to do
+        if (autoEnrollmentTask != null) {
+            autoEnrollmentTask.cancel(true);
+        }
     }
 
     @Override
@@ -210,8 +263,23 @@ public class ZclIasZoneClient implements ZigBeeApplication {
      * @param command the received {@link ZoneEnrollRequestCommand}
      */
     private void handleZoneEnrollRequestCommand(ZoneEnrollRequestCommand command) {
+        if (autoEnrollmentTask != null) {
+            autoEnrollmentTask.cancel(true);
+        }
+
         zoneType = command.getZoneType();
-        iasZoneCluster.zoneEnrollResponse(EnrollResponseCodeEnum.SUCCESS.getKey(), zone);
+        iasZoneCluster.zoneEnrollResponse(EnrollResponseCodeEnum.SUCCESS.getKey(), zoneId);
+    }
+
+    /**
+     * Sets the auto enrollment delay in milliseconds. This is the time that the client will wait for the server to send
+     * a {@link ZoneEnrollRequestCommand} before sending the {@link ZoneEnrollResponse} to automatically enroll the
+     * device.
+     *
+     * @param autoEnrollDelay the autoEnrollDelay to set in milliseconds
+     */
+    public void setAutoEnrollDelay(long autoEnrollDelay) {
+        this.autoEnrollDelay = autoEnrollDelay;
     }
 
     @Override
@@ -222,4 +290,10 @@ public class ZclIasZoneClient implements ZigBeeApplication {
         }
     }
 
+    private class AutoEnrollmentTask implements Runnable {
+        @Override
+        public void run() {
+            iasZoneCluster.zoneEnrollResponse(EnrollResponseCodeEnum.SUCCESS.getKey(), zoneId);
+        }
+    }
 }
