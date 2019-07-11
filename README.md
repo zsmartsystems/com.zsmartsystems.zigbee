@@ -6,7 +6,7 @@ This project aims to provide a ZigBee compatible framework written in Java and c
 
 Packages are broken down to provide the main ZigBee framework, separate packages for dongles, and a console application that allows full use of the framework. The bundles include OSGi headers for use within an OSGi framework.
 
-Minimum Android support is currently API19, Android 4.4 (KitKat). It is highly recommended to move to Android 8 as this may become the minimum requirement in the future to allow the framework to use the newer classes available from API26.
+Minimum Android support is currently API19, Android 4.4 (KitKat). It is highly recommended to move to Android 8 as this may become the minimum requirement in the future to allow the framework to use the newer classes available from API26. Note that more modern language features are incorporated into the library and this may require Android users to use a modern version of Android Studio.
  
 ## Features
 
