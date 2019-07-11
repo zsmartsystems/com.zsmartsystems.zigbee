@@ -1521,9 +1521,19 @@ public abstract class ZclCluster {
         this.serverCommands.putAll(commands);
     }
 
+    /**
+     * Checks if the list of attributes contains only manufacturer specific attributes
+     *
+     * @param attributeIds the list of attribute IDs to check
+     * @return true if the attributes list contains only manufacturer specific attributes
+     */
     private boolean areAttributesManufacturerSpecific(List<Integer> attributeIds) {
-        return attributeIds.stream().map(attributeId -> getAttribute(attributeId))
-                .allMatch(attribute -> attribute != null && attribute.isManufacturerSpecific());
+        for (Integer attributeId : attributeIds) {
+            if (getAttribute(attributeId) == null || !getAttribute(attributeId).isManufacturerSpecific()) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
