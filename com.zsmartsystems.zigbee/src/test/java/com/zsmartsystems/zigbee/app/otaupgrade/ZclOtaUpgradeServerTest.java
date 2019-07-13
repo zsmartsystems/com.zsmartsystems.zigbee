@@ -17,10 +17,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import org.awaitility.Awaitility;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
@@ -30,6 +32,7 @@ import org.mockito.stubbing.Answer;
 
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.TestUtilities;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
@@ -40,6 +43,7 @@ import com.zsmartsystems.zigbee.app.otaserver.ZclOtaUpgradeServer;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaFile;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaServerStatus;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaStatusCallback;
+import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
@@ -55,8 +59,14 @@ import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
 public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
     private List<ZigBeeOtaServerStatus> otaStatusCapture;
 
+    @Before
+    public void resetNotificationService() throws Exception {
+        TestUtilities.setField(NotificationService.class, NotificationService.class, "executorService",
+                Executors.newCachedThreadPool());
+    }
+
     @Test
-    public void testNotify() {
+    public void testNotify() throws Exception {
         ArgumentCaptor<ZigBeeCommand> mockedCommandCaptor = ArgumentCaptor.forClass(ZigBeeCommand.class);
 
         NodeDescriptor nodeDescriptor = new NodeDescriptor();
@@ -151,7 +161,7 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
     }
 
     @Test
-    public void cancelUpgrade() {
+    public void cancelUpgrade() throws Exception {
         otaStatusCapture = new ArrayList<ZigBeeOtaServerStatus>();
 
         ZclOtaUpgradeCluster cluster = Mockito.mock(ZclOtaUpgradeCluster.class);

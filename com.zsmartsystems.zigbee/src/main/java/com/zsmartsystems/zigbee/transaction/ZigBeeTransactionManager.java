@@ -188,7 +188,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
 
         networkManager.removeNetworkNodeListener(this);
 
-        executorService.shutdown();
+        executorService.shutdownNow();
 
         if (timeoutTask != null) {
             timeoutTask.cancel(false);

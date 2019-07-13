@@ -571,9 +571,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     public void shutdown() {
         logger.debug("ZigBeeNetworkManager shutdown: networkState={}", networkState);
 
-        networkState = ZigBeeNetworkState.SHUTDOWN;
-
-        executorService.shutdownNow();
+        setNetworkState(ZigBeeNetworkState.SHUTDOWN);
 
         synchronized (this) {
             for (ZigBeeNode node : networkNodes.values()) {
@@ -589,6 +587,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
         transport.shutdown();
         transactionManager.shutdown();
+
+        NotificationService.shutdown(5000);
+        executorService.shutdownNow();
     }
 
     /**
@@ -1014,8 +1015,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     @Override
     public synchronized void setTransportState(final ZigBeeTransportState state) {
-        logger.debug("ZigBeeNetworkManager transport state updated to {}", state);
-
         // Filter out unwanted transport state changes
         synchronized (validTransportStateTransitions) {
             if (!validTransportStateTransitions.get(transportState).contains(state)) {
@@ -1026,7 +1025,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
 
         // Process the network state given the updated transport layer state
-        if (networkState != ZigBeeNetworkState.INITIALISING) {
+        if (networkState != ZigBeeNetworkState.INITIALISING && networkState != ZigBeeNetworkState.SHUTDOWN) {
+            logger.debug("ZigBeeNetworkManager transport state updated to {}", state);
             setNetworkState(ZigBeeNetworkState.valueOf(state.toString()));
         }
     }

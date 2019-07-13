@@ -318,7 +318,8 @@ public class TelegesisFrameHandler {
     public void close() {
         setClosing();
 
-        timeoutScheduler.shutdown();
+        timeoutScheduler.shutdownNow();
+        executor.shutdownNow();
 
         try {
             parserThread.interrupt();

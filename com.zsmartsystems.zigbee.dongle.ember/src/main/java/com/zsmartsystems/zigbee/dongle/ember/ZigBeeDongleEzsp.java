@@ -471,6 +471,11 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         if (frameHandler == null) {
             return;
         }
+        logger.debug("Ember NCP Shutdown");
+        frameHandler.setClosing();
+        frameHandler.close();
+        serialPort.close();
+        frameHandler = null;
 
         if (mfglibListener != null) {
             mfglibListener = null;
@@ -481,13 +486,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         }
 
         if (executorService != null) {
-            executorService.shutdown();
+            executorService.shutdownNow();
         }
-
-        frameHandler.setClosing();
-        serialPort.close();
-        frameHandler.close();
-        frameHandler = null;
     }
 
     /**

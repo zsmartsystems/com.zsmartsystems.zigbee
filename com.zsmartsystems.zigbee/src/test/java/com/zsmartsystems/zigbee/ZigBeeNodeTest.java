@@ -20,8 +20,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
@@ -29,6 +31,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import com.zsmartsystems.zigbee.ZigBeeNode.ZigBeeNodeState;
+import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionFuture;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
@@ -50,6 +53,12 @@ import com.zsmartsystems.zigbee.zdo.field.RoutingTable.DiscoveryState;
 
 public class ZigBeeNodeTest {
     static final int TIMEOUT = 5000;
+
+    @Before
+    public void resetNotificationService() throws Exception {
+        TestUtilities.setField(NotificationService.class, NotificationService.class, "executorService",
+                Executors.newCachedThreadPool());
+    }
 
     @Test
     public void testAddDescriptors() {
@@ -439,7 +448,7 @@ public class ZigBeeNodeTest {
     }
 
     @Test
-    public void isDiscovered() {
+    public void isDiscovered() throws Exception {
         ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress("1234567890"));
         ZigBeeNetworkEndpointListener listener = Mockito.mock(ZigBeeNetworkEndpointListener.class);
         node.addNetworkEndpointListener(listener);
