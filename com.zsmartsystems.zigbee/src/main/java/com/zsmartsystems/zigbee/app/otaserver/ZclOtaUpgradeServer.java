@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -183,12 +181,12 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
     /**
      * Timer used to handle transfer timeout
      */
-    private final Timer timer = new Timer();
+    private ScheduledExecutorService timer = Executors.newScheduledThreadPool(1);
 
     /**
      * Current timer task
      */
-    private TimerTask timerTask = null;
+    private ScheduledFuture<?> timerTask;
 
     /**
      * The current percentage complete
@@ -240,7 +238,7 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
         status = ZigBeeOtaServerStatus.OTA_UNINITIALISED;
 
         // queryJitter needs to be a random value between 1 and 100
-        this.queryJitter = new Random().nextInt(100) + 1;
+        queryJitter = new Random().nextInt(100) + 1;
     }
 
     @Override
@@ -252,7 +250,8 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
 
     @Override
     public void appShutdown() {
-        // Nothing to do
+        stopTransferTimer();
+        timer.shutdownNow();
     }
 
     @Override
@@ -799,8 +798,7 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
         stopTransferTimer();
 
         // Create the timer task
-        timerTask = new OtaTransferTimer();
-        timer.schedule(timerTask, transferTimeoutPeriod);
+        timerTask = timer.schedule(new OtaTransferTimer(), transferTimeoutPeriod, TimeUnit.MILLISECONDS);
     }
 
     /**
@@ -809,12 +807,12 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
     private synchronized void stopTransferTimer() {
         // Stop any existing timer
         if (timerTask != null) {
-            timerTask.cancel();
+            timerTask.cancel(true);
             timerTask = null;
         }
     }
 
-    private class OtaTransferTimer extends TimerTask {
+    private class OtaTransferTimer implements Runnable {
         @Override
         public void run() {
             logger.debug("{}: OTA Error: Timeout - aborting transfer.", cluster.getZigBeeAddress());

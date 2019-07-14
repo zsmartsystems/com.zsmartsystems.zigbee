@@ -503,8 +503,10 @@ public class ZigBeeDongleTelegesis
             pollingTimer.cancel(true);
         }
         if (executorService != null) {
-            executorService.shutdown();
+            executorService.shutdownNow();
         }
+
+        commandScheduler.shutdownNow();
 
         frameHandler.removeEventListener(this);
         frameHandler.setClosing();

@@ -23,9 +23,11 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledFuture;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
@@ -38,6 +40,7 @@ import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransaction.TransactionState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportProgressState;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
@@ -51,6 +54,12 @@ import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.MacCapabilitiesType;
  */
 public class ZigBeeTransactionManagerTest {
     private static int TIMEOUT = 5000;
+
+    @Before
+    public void resetNotificationService() throws Exception {
+        TestUtilities.setField(NotificationService.class, NotificationService.class, "executorService",
+                Executors.newCachedThreadPool());
+    }
 
     @Test
     public void sendTransaction() {
@@ -164,7 +173,7 @@ public class ZigBeeTransactionManagerTest {
     }
 
     @Test
-    public void shutdown() {
+    public void shutdown() throws Exception {
         ZigBeeNetworkManager networkManager = Mockito.mock(ZigBeeNetworkManager.class);
         ZigBeeTransactionManager transactionManager = new ZigBeeTransactionManager(networkManager);
         ZigBeeTransactionMatcher responseMatcher = Mockito.mock(ZigBeeTransactionMatcher.class);
@@ -325,7 +334,7 @@ public class ZigBeeTransactionManagerTest {
     }
 
     @Test
-    public void testSleepyManagement() {
+    public void testSleepyManagement() throws Exception {
         // This test sets the max sleepy transactions to 2, then fills the queue with 3 frames and makes sure only 2 are
         // sent
         ZigBeeNetworkManager networkManager = Mockito.mock(ZigBeeNetworkManager.class);

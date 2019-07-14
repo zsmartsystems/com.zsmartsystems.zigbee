@@ -13,8 +13,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -22,6 +20,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -110,8 +110,8 @@ public class AshFrameHandler implements EzspProtocolHandler {
      */
     private final Queue<AshFrameData> sentQueue = new ConcurrentLinkedQueue<AshFrameData>();
 
-    private final Timer timer = new Timer();
-    private TimerTask timerTask = null;
+    private ScheduledExecutorService timer = Executors.newScheduledThreadPool(1);
+    private ScheduledFuture<?> timerFuture;
 
     private boolean stateConnected = false;
 
@@ -389,7 +389,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
         frameHandler.handleLinkStateChange(false);
 
-        timer.cancel();
+        timer.shutdownNow();
         executor.shutdownNow();
 
         try {
@@ -418,7 +418,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
         // Check how many frames are outstanding
         if (sentQueue.size() >= TX_WINDOW) {
             // check timer task
-            if (timerTask == null) {
+            if (timerFuture == null) {
                 startRetryTimer();
             }
             return false;
@@ -559,21 +559,20 @@ public class AshFrameHandler implements EzspProtocolHandler {
         // Stop any existing timer
         stopRetryTimer();
 
-        // Create the timer task
-        timerTask = new AshRetryTimer();
-        timer.schedule(timerTask, receiveTimeout);
+        timerFuture = timer.schedule(new AshRetryTimer(), receiveTimeout, TimeUnit.MILLISECONDS);
+
         logger.trace("ASH: Started retry timer");
     }
 
     private synchronized void stopRetryTimer() {
         // Stop any existing timer
-        if (timerTask != null) {
-            timerTask.cancel();
-            timerTask = null;
+        if (timerFuture != null) {
+            timerFuture.cancel(true);
+            timerFuture = null;
         }
     }
 
-    private class AshRetryTimer extends TimerTask {
+    private class AshRetryTimer implements Runnable {
         @Override
         public void run() {
             // Resend the first message in the sentQueue

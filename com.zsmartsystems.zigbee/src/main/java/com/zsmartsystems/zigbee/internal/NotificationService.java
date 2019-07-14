@@ -9,6 +9,7 @@ package com.zsmartsystems.zigbee.internal;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,11 +31,29 @@ public class NotificationService {
     private static ExecutorService executorService = Executors.newCachedThreadPool();
 
     public static void execute(Runnable command) {
+        if (executorService.isShutdown()) {
+            logger.debug("NotificationService is shutdown. Not scheduling {}", command.getClass().getName());
+            return;
+        }
         try {
             executorService.execute(command);
         } catch (Exception e) {
-            logger.error("Error ", e);
+            logger.error("NotificationService scheduler error ", e);
         }
+    }
+
+    /**
+     * Shuts down the notification service. This will wait for the specified period before terminating all threads.
+     *
+     * @param wait the number of milliseconds to wait for all threads to close before terminating
+     */
+    public static void shutdown(long wait) {
+        executorService.shutdown();
+        try {
+            executorService.awaitTermination(wait, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+        }
+        executorService.shutdownNow();
     }
 
 }

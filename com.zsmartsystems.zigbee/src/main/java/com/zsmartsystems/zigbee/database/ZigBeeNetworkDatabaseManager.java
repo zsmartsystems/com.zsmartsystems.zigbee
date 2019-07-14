@@ -186,6 +186,7 @@ public class ZigBeeNetworkDatabaseManager implements ZigBeeNetworkNodeListener {
         } catch (InterruptedException e) {
             logger.debug("Data store: shutdown did not complete all tasks.");
         }
+        executorService.shutdownNow();
     }
 
     @Override

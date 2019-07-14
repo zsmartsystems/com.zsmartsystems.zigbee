@@ -27,11 +27,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import org.awaitility.Awaitility;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
@@ -43,6 +45,7 @@ import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaUpgradeExtension;
 import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDataStore;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDatabaseManager;
+import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
 import com.zsmartsystems.zigbee.serialization.DefaultSerializer;
@@ -85,6 +88,12 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
     private ZigBeeTransportTransmit mockedTransport;
     private ZigBeeNetworkStateListener mockedStateListener;
     private List<ZigBeeCommand> commandListenerCapture;
+
+    @Before
+    public void resetNotificationService() throws Exception {
+        TestUtilities.setField(NotificationService.class, NotificationService.class, "executorService",
+                Executors.newCachedThreadPool());
+    }
 
     @Test
     public void testAddRemoveNode() throws Exception {
@@ -754,6 +763,8 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
         Mockito.verify(mockedTransport, Mockito.timeout(TIMEOUT).times(1)).shutdown();
         Mockito.verify(databaseManager, Mockito.times(1)).shutdown();
 
+        Awaitility.await().until(() -> stateListenerUpdated());
+
         assertEquals(ZigBeeNetworkState.SHUTDOWN, manager.getNetworkState());
     }
 
@@ -963,6 +974,9 @@ public class ZigBeeNetworkManagerTest implements ZigBeeNetworkNodeListener, ZigB
 
     @Test
     public void processLogs() throws Exception {
+        TestUtilities.setField(NotificationService.class, NotificationService.class, "executorService",
+                Executors.newCachedThreadPool());
+
         File dir = FileSystems.getDefault().getPath("./src/test/resource/logs").toFile();
 
         File[] directoryListing = dir.listFiles();
