@@ -13,8 +13,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -61,6 +59,11 @@ import com.zsmartsystems.zigbee.transport.ZigBeePort;
  */
 public class SpiFrameHandler implements EzspProtocolHandler {
     /**
+     * Default poll rate used to poll the NCP for callbacks
+     */
+    private final static int DEFAULT_POLL_RATE = 100;
+
+    /**
      * The logger.
      */
     private final Logger logger = LoggerFactory.getLogger(SpiFrameHandler.class);
@@ -104,10 +107,10 @@ public class SpiFrameHandler implements EzspProtocolHandler {
     /**
      * Callback polling rate in milliseconds.
      */
-    private int pollRate = 250;
+    private int pollRate = DEFAULT_POLL_RATE;
 
-    private final Timer timer = new Timer();
-    private TimerTask timerTask = null;
+    private ScheduledExecutorService timer = Executors.newScheduledThreadPool(1);
+    private ScheduledFuture<?> timerFuture;
 
     /**
      * The queue of {@link EzspFrameRequest} frames waiting to be sent
@@ -149,6 +152,17 @@ public class SpiFrameHandler implements EzspProtocolHandler {
     private int spiErrors = 0;
 
     /**
+     * Enumeration defining the receive state machine
+     */
+    enum RxState {
+        RX_SEARCH,
+        RX_TYPE,
+        RX_LENGTH,
+        RX_DATA,
+        RX_FLAG,
+    }
+
+    /**
      * Construct the handler and provide the {@link EzspFrameHandler}
      *
      * @param frameHandler the {@link EzspFrameHandler} packet handler
@@ -163,6 +177,15 @@ public class SpiFrameHandler implements EzspProtocolHandler {
         errorMessages.put(SPI_CMD_MISSINGTERMINATOR, "Missing Terminator");
         errorMessages.put(SPI_CMD_UNSUPPORTEDCMD, "Unsupported Command");
         errorMessages.put(SPI_CMD_INVALID, "Invalid");
+    }
+
+    /**
+     * Sets the poll rate used to poll the NCP for callbacks
+     *
+     * @param pollRate the pollRate to set
+     */
+    public void setPollRate(int pollRate) {
+        this.pollRate = pollRate;
     }
 
     @Override
@@ -213,14 +236,6 @@ public class SpiFrameHandler implements EzspProtocolHandler {
         restartPolling();
     }
 
-    enum RxState {
-        RX_SEARCH,
-        RX_TYPE,
-        RX_LENGTH,
-        RX_DATA,
-        RX_FLAG,
-    }
-
     /**
      * Gets the data packet. Reads the first byte, then gets the length, and reads this number of bytes. The last byte
      * must then be the FLAG - if it isn't, the routine enters a scanning mode waiting for the FLAG byte to try and
@@ -232,6 +247,7 @@ public class SpiFrameHandler implements EzspProtocolHandler {
     private int[] getPacket() throws IOException {
         int[] inputBuffer = new int[SPI_MAX_LENGTH];
         int inputCount = 0;
+        int inputMax = 0;
         int inputLength = 0;
         RxState rxState = RxState.RX_TYPE;
 
@@ -241,7 +257,16 @@ public class SpiFrameHandler implements EzspProtocolHandler {
             switch (rxState) {
                 case RX_TYPE:
                     inputBuffer[0] = val;
-                    rxState = RxState.RX_LENGTH;
+                    // We need to account for some special frames with error messages
+                    if (val < 10) {
+                        inputLength = 1;
+                        inputCount = 0;
+                        inputMax = 1;
+
+                        rxState = RxState.RX_DATA;
+                    } else {
+                        rxState = RxState.RX_LENGTH;
+                    }
                     break;
                 case RX_LENGTH:
                     // This catches all the special 1-byte frames
@@ -249,6 +274,7 @@ public class SpiFrameHandler implements EzspProtocolHandler {
                         return Arrays.copyOfRange(inputBuffer, 0, 1);
                     }
 
+                    inputMax = val;
                     inputBuffer[1] = val;
                     if (val >= SPI_MAX_LENGTH) {
                         rxState = RxState.RX_SEARCH;
@@ -263,7 +289,7 @@ public class SpiFrameHandler implements EzspProtocolHandler {
                     break;
                 case RX_DATA:
                     inputBuffer[inputLength++] = val;
-                    if (++inputCount == inputBuffer[1]) {
+                    if (++inputCount == inputMax) {
                         rxState = RxState.RX_FLAG;
                     }
                     break;
@@ -339,11 +365,16 @@ public class SpiFrameHandler implements EzspProtocolHandler {
                 }
                 break;
 
+            case SPI_CMD_RESET:
+                logger.debug("<-- RX SPI frame: {}", frameToString(packetData));
+                logger.debug("SPI frame: {}", errorMessages.get(packetData[0]));
+                connect();
+                break;
+
             case SPI_CMD_OVERSIZE:
             case SPI_CMD_ABORT:
             case SPI_CMD_MISSINGTERMINATOR:
             case SPI_CMD_UNSUPPORTEDCMD:
-            case SPI_CMD_RESET:
             case SPI_CMD_INVALID:
                 logger.debug("<-- RX SPI frame: {}", frameToString(packetData));
                 logger.debug("SPI frame: {}", errorMessages.get(packetData[0]));
@@ -453,7 +484,7 @@ public class SpiFrameHandler implements EzspProtocolHandler {
             }
         }
 
-        timer.cancel();
+        timer.shutdownNow();
         executor.shutdownNow();
 
         try {
@@ -564,6 +595,10 @@ public class SpiFrameHandler implements EzspProtocolHandler {
             pollingTimer.cancel(true);
         }
 
+        if (pollingScheduler.isShutdown()) {
+            return;
+        }
+
         pollingTimer = pollingScheduler.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
@@ -585,19 +620,18 @@ public class SpiFrameHandler implements EzspProtocolHandler {
         stopRetryTimer();
 
         // Create the timer task
-        timerTask = new CancelTimer();
-        timer.schedule(timerTask, receiveTimeout);
+        timerFuture = timer.schedule(new CancelTimer(), receiveTimeout, TimeUnit.MILLISECONDS);
     }
 
     private synchronized void stopRetryTimer() {
         // Stop any existing timer
-        if (timerTask != null) {
-            timerTask.cancel();
-            timerTask = null;
+        if (timerFuture != null) {
+            timerFuture.cancel(true);
+            timerFuture = null;
         }
     }
 
-    private class CancelTimer extends TimerTask {
+    private class CancelTimer implements Runnable {
         @Override
         public void run() {
             logger.debug("SPI Timer task triggered.");
