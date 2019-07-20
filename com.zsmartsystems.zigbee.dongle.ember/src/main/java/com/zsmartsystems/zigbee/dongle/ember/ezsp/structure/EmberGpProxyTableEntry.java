@@ -83,7 +83,7 @@ public class EmberGpProxyTableEntry {
     /**
      * The list of sinks (hardcoded to 2 which is the spec minimum).
      * <p>
-     * EZSP type is <i>EmberGpSinkListEntry[]</i> - Java type is {@link EmberGpSinkListEntry}
+     * EZSP type is <i>EmberGpSinkListEntry[2]</i> - Java type is {@link EmberGpSinkListEntry[]}
      */
     private EmberGpSinkListEntry[] sinkList;
 
@@ -274,9 +274,9 @@ public class EmberGpProxyTableEntry {
     /**
      * The list of sinks (hardcoded to 2 which is the spec minimum).
      * <p>
-     * EZSP type is <i>EmberGpSinkListEntry[]</i> - Java type is {@link EmberGpSinkListEntry}
+     * EZSP type is <i>EmberGpSinkListEntry[2]</i> - Java type is {@link EmberGpSinkListEntry[]}
      *
-     * @return the current sinkList as {@link EmberGpSinkListEntry}
+     * @return the current sinkList as {@link EmberGpSinkListEntry[]}
      */
     public EmberGpSinkListEntry[] getSinkList() {
         return sinkList;
@@ -285,7 +285,7 @@ public class EmberGpProxyTableEntry {
     /**
      * The list of sinks (hardcoded to 2 which is the spec minimum).
      *
-     * @param sinkList the sinkList to set as {@link EmberGpSinkListEntry}
+     * @param sinkList the sinkList to set as {@link EmberGpSinkListEntry[]}
      */
     public void setSinkList(EmberGpSinkListEntry[] sinkList) {
         this.sinkList = sinkList;
@@ -367,7 +367,7 @@ public class EmberGpProxyTableEntry {
         securityOptions = deserializer.deserializeUInt8();
         gpdSecurityFrameCounter = deserializer.deserializeUInt32();
         gpdKey = deserializer.deserializeEmberKeyData();
-        sinkList = deserializer.deserializeEmberGpSinkListEntry();
+        sinkList = deserializer.deserializeEmberGpSinkListEntry(2);
         groupcastRadius = deserializer.deserializeUInt8();
         searchCounter = deserializer.deserializeUInt8();
     }
@@ -400,7 +400,7 @@ public class EmberGpProxyTableEntry {
                 if (cnt != 0) {
                     builder.append(' ');
                 }
-                builder.append(String.format("%02X", sinkList[cnt]));
+                builder.append(sinkList[cnt]);
             }
         }
         builder.append('}');

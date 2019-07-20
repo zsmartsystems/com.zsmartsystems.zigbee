@@ -239,11 +239,13 @@
 				<data_type>uint16_t[]</data_type>
 				<name>inputClusterList</name>
 				<description>Input cluster IDs the endpoint will accept.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint16_t[]</data_type>
 				<name>outputClusterList</name>
 				<description>Output cluster IDs the endpoint may send.</description>
+				<display>hex[4]</display>
 			</parameter>
 		</command_parameters>
 		<response_parameters>
@@ -332,6 +334,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>value</name>
 				<description>The value.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -356,6 +359,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>value</name>
 				<description>The new value.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</command_parameters>
 		<response_parameters>
@@ -413,6 +417,7 @@
 				<data_type>uint16_t[29]</data_type>
 				<name>values</name>
 				<description>A list of all counter values ordered according to the EmberCounterType enumeration.</description>
+				<display>hex[4]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -428,6 +433,7 @@
 				<data_type>uint16_t[29]</data_type>
 				<name>values</name>
 				<description>A list of all counter values ordered according to the EmberCounterType enumeration.</description>
+				<display>hex[4]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -454,6 +460,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>tokenData</name>
 				<description>The manufacturing token data.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -1319,6 +1326,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>messageContents</name>
 				<description>Content of the message.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</command_parameters>
 		<response_parameters>
@@ -1372,6 +1380,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>messageContents</name>
 				<description>Content of the message.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</command_parameters>
 		<response_parameters>
@@ -1420,6 +1429,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>messageContents</name>
 				<description>The reply message.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</command_parameters>
 		<response_parameters>
@@ -1467,6 +1477,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>messageContents</name>
 				<description>The multicast message.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</command_parameters>
 		<response_parameters>
@@ -1528,6 +1539,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>messageContents</name>
 				<description>The unicast message supplied by the Host. The message contents are only included here if the decision for the messageContentsInCallback policy is messageTagAndContentsInCallback.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -1644,6 +1656,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>messageContents</name>
 				<description>The incoming message.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -1685,6 +1698,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>messageContents</name>
 				<description>The raw message that was received.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -1768,6 +1782,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>data</name>
 				<description>The data to hash.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</command_parameters>
 		<response_parameters>
@@ -1806,6 +1821,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>relayList</name>
 				<description>The route record. Each relay in the list is an uint16_t node ID.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -1847,6 +1863,7 @@
 				<data_type>uint16_t[]</data_type>
 				<name>relayList</name>
 				<description>The route record. Each relay in the list is an uint16_t node ID.</description>
+				<display>hex[4]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -2556,6 +2573,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>packetContents</name>
 				<description>The packet to send. The last two bytes will be replacedwith the 16-bit CRC.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</command_parameters>
 		<response_parameters>
@@ -2649,6 +2667,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>packetContents</name>
 				<description>The received packet. The last two bytes are the 16-bit CRC.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -2743,6 +2762,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>gpdAsdu</name>
 				<description>The GP command payload.</description>
+				<display>hex[2]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint8_t</data_type>
@@ -2861,6 +2881,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>gpdCommandPayload</name>
 				<description>The GPD command payload.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -3389,6 +3410,7 @@
 				<data_type>uint8_t[48]</data_type>
 				<name>contents</name>
 				<description>The certificate data.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</parameters>
 	</structure>
@@ -3428,6 +3450,7 @@
 				<data_type>uint8_t[22]</data_type>
 				<name>contents</name>
 				<description>The public key data.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</parameters>
 	</structure>
@@ -3440,6 +3463,7 @@
 				<data_type>uint8_t[21]</data_type>
 				<name>contents</name>
 				<description>The private key data.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</parameters>
 	</structure>
@@ -3452,6 +3476,7 @@
 				<data_type>uint8_t[16]</data_type>
 				<name>contents</name>
 				<description>The Shared Message Authentication Code data.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</parameters>
 	</structure>
@@ -3464,6 +3489,7 @@
 				<data_type>uint8_t[74]</data_type>
 				<name>contents</name>
 				<description>The 283k1 certificate data.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</parameters>
 	</structure>
@@ -3476,6 +3502,7 @@
 				<data_type>uint8_t[37]</data_type>
 				<name>contents</name>
 				<description>The public key data.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</parameters>
 	</structure>
@@ -3488,6 +3515,7 @@
 				<data_type>uint8_t[36]</data_type>
 				<name>contents</name>
 				<description>The private key data.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</parameters>
 	</structure>
@@ -3561,6 +3589,7 @@
 				<data_type>uint8_t[8]</data_type>
 				<name>extendedPanId</name>
 				<description>The network's extended PAN identifier.</description>
+				<display>hex[2]</display>
 			</parameter>
 			<parameter>
 				<data_type>bool</data_type>
@@ -3791,6 +3820,7 @@
 				<data_type>uint8_t[16]</data_type>
 				<name>contents</name>
 				<description>The key data.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</parameters>
 	</structure>
@@ -3803,6 +3833,7 @@
 				<data_type>uint8_t[16]</data_type>
 				<name>result</name>
 				<description>The result of ongoing the hash operation.</description>
+				<display>hex[2]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint32_t</data_type>
@@ -3880,7 +3911,7 @@
 			</parameter>
 		</parameters>
 	</structure>
-<!--  commented to prevent erasure of necessary manual modifications -->
+
 	<structure>
 		<name>EmberGpSinkListEntry</name>
 		<description>A sink list entry</description>
@@ -3948,9 +3979,10 @@
 				<description>The key to use for GPD.</description>
 			</parameter>
 			<parameter>
-				<data_type>EmberGpSinkListEntry[]</data_type>
+				<data_type>EmberGpSinkListEntry[2]</data_type>
 				<name>sinkList</name>
 				<description>The list of sinks (hardcoded to 2 which is the spec minimum).</description>
+				<display>string</display>
 			</parameter>
 			<parameter>
 				<data_type>uint8_t</data_type>
@@ -3990,9 +4022,10 @@
 				<description>The device id for the GPD.</description>
 			</parameter>
 			<parameter>
-				<data_type>EmberGpSinkListEntry[]</data_type>
+				<data_type>EmberGpSinkListEntry[2]</data_type>
 				<name>sinkList</name>
 				<description>The list of sinks (hardcoded to 2 which is the spec minimum).</description>
+				<display>string</display>
 			</parameter>
 			<parameter>
 				<data_type>EmberNodeId</data_type>

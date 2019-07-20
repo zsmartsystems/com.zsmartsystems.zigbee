@@ -110,11 +110,11 @@ public class EzspSetValueRequest extends EzspFrameRequest {
         builder.append("EzspSetValueRequest [valueId=");
         builder.append(valueId);
         builder.append(", value=");
-        for (int c = 0; c < value.length; c++) {
-            if (c > 0) {
+        for (int cnt = 0; cnt < value.length; cnt++) {
+            if (cnt > 0) {
                 builder.append(' ');
             }
-            builder.append(String.format("%02X", value[c]));
+            builder.append(String.format("%02X", value[cnt]));
         }
         builder.append(']');
         return builder.toString();

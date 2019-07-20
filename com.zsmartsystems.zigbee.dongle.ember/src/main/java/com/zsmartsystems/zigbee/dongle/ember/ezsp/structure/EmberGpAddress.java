@@ -10,7 +10,6 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.structure;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspDeserializer;
 import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
-import com.zsmartsystems.zigbee.greenpower.GpAddress;
 
 /**
  * Class to implement the Ember Structure <b>EmberGpAddress</b>.
@@ -21,7 +20,7 @@ import com.zsmartsystems.zigbee.greenpower.GpAddress;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EmberGpAddress implements GpAddress{
+public class EmberGpAddress {
 
     /**
      * The GPD's EUI64.
@@ -181,33 +180,5 @@ public class EmberGpAddress implements GpAddress{
         builder.append(endpoint);
         builder.append(']');
         return builder.toString();
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-    	
-    	if(obj == null) {
-    		return false;
-    	}
-    	
-    	EmberGpAddress address = (EmberGpAddress) obj;
-
-    	if (!address.getGpdIeeeAddress().equals(this.getGpdIeeeAddress())) {
-    		return false;
-    	}
-    	
-    	if (address.getSourceId() != this.getSourceId()) {
-    		return false;
-    	}
-    	
-    	if (address.getApplicationId() != this.getApplicationId()) {
-    		return false;
-    	}
-    	
-    	if (address.getEndpoint() != this.getEndpoint()) {
-    		return false;
-    	}
-    	
-    	return true;
     }
 }

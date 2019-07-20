@@ -409,16 +409,11 @@ public abstract class EzspFrame {
      * @return the {@link EzspFrameResponse} or null if the response can't be created.
      */
     public static EzspFrameResponse createHandler(int[] data) {
-        Class<?> ezspClass = null;
-        
-        try {
-            if (data[2] != 0xFF) {
-                ezspClass = ezspHandlerMap.get(data[2]);
-            } else {
-                ezspClass = ezspHandlerMap.get(data[4]);
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            logger.debug("Error detecting the Ezsp frame type", e);
+        Class<?> ezspClass;
+        if (data[2] != 0xFF) {
+            ezspClass = ezspHandlerMap.get(data[2]);
+        } else {
+            ezspClass = ezspHandlerMap.get(data[4]);
         }
 
         if (ezspClass == null) {

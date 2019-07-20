@@ -245,12 +245,11 @@ public class CommandGenerator extends ClassGenerator {
                 }
                 first = false;
                 if (parameter.data_type.contains("[")) {
-                    out.println("        for (int c = 0; c < " + parameter.name + ".length; c++) {");
-                    out.println("            if (c > 0) {");
+                    out.println("        for (int cnt = 0; cnt < " + parameter.name + ".length; cnt++) {");
+                    out.println("            if (cnt > 0) {");
                     out.println("                builder.append(' ');");
                     out.println("            }");
-                    out.println("            builder.append(String.format(\"%02X\", " + formatParameterString(parameter)
-                            + "[c]));");
+                    out.println("            builder.append(" + formatParameterString(parameter) + ");");
                     out.println("        }");
                 } else {
                     out.println("        builder.append(" + formatParameterString(parameter) + ");");
@@ -501,8 +500,8 @@ public class CommandGenerator extends ClassGenerator {
                 out.println("                if (cnt != 0) {");
                 out.println("                    builder.append(' ');");
                 out.println("                }");
-                out.println("                builder.append(String.format(\"%02X\", " + formatParameterString(parameter)
-                        + "[cnt]));");
+                // if(formatParameterString(parameter)==)
+                out.println("                builder.append(" + formatParameterString(parameter) + ");");
                 out.println("            }");
                 out.println("        }");
                 out.println("        builder.append('}');");
@@ -656,9 +655,11 @@ public class CommandGenerator extends ClassGenerator {
     }
 
     protected String getTypeClass(String dataType) {
+        String modifier = "";
         String dataTypeLocal = new String(dataType);
         if (dataType.contains("[")) {
-            dataTypeLocal = dataTypeLocal.substring(0, dataTypeLocal.indexOf("[") + 1);
+            dataTypeLocal = dataTypeLocal.substring(0, dataTypeLocal.indexOf("["));
+            modifier = "[]";
         }
 
         switch (dataTypeLocal) {
@@ -672,11 +673,7 @@ public class CommandGenerator extends ClassGenerator {
             case "uint8_t":
             case "uint16_t":
             case "uint32_t":
-                return "int";
-            case "uint8_t[":
-            case "uint16_t[":
-                // if (dataType.endsWith("[]")) {
-                return "int[]";
+                return "int" + modifier;
             // }
             // int size = Integer.parseInt(dataType.substring(dataType.indexOf("[") + 1, dataType.indexOf("]")));
             // return "int[" + size + "]";
@@ -797,10 +794,11 @@ public class CommandGenerator extends ClassGenerator {
             case "EmberLibraryStatus":
             case "EmberTransientKeyData":
             case "EmberGpSinkListEntry":
+            case "EmberGpSinkTableEntry":
                 addImport(ezspStructurePackage + "." + dataTypeLocal);
-                return dataTypeLocal;
+                return dataTypeLocal + modifier;
             default:
-                return dataType;
+                return dataTypeLocal + modifier;
         }
     }
 
@@ -865,6 +863,7 @@ public class CommandGenerator extends ClassGenerator {
             case "EmberSmacData":
             case "EmberTransientKeyData":
             case "EmberGpSinkListEntry":
+            case "EmberGpSinkTableEntry":
                 return dataTypeLocal;
             default:
                 return dataType;

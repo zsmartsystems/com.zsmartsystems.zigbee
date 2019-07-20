@@ -67,11 +67,11 @@ public class EzspGetMfgTokenResponse extends EzspFrameResponse {
     public String toString() {
         final StringBuilder builder = new StringBuilder(76);
         builder.append("EzspGetMfgTokenResponse [tokenData=");
-        for (int c = 0; c < tokenData.length; c++) {
-            if (c > 0) {
+        for (int cnt = 0; cnt < tokenData.length; cnt++) {
+            if (cnt > 0) {
                 builder.append(' ');
             }
-            builder.append(String.format("%02X", tokenData[c]));
+            builder.append(String.format("%02X", tokenData[cnt]));
         }
         builder.append(']');
         return builder.toString();

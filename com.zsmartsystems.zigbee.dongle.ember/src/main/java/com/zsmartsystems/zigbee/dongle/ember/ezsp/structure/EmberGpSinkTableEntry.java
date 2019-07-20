@@ -55,7 +55,7 @@ public class EmberGpSinkTableEntry {
     /**
      * The list of sinks (hardcoded to 2 which is the spec minimum).
      * <p>
-     * EZSP type is <i>EmberGpSinkListEntry[]</i> - Java type is {@link EmberGpSinkListEntry}
+     * EZSP type is <i>EmberGpSinkListEntry[2]</i> - Java type is {@link EmberGpSinkListEntry[]}
      */
     private EmberGpSinkListEntry[] sinkList;
 
@@ -187,9 +187,9 @@ public class EmberGpSinkTableEntry {
     /**
      * The list of sinks (hardcoded to 2 which is the spec minimum).
      * <p>
-     * EZSP type is <i>EmberGpSinkListEntry[]</i> - Java type is {@link EmberGpSinkListEntry}
+     * EZSP type is <i>EmberGpSinkListEntry[2]</i> - Java type is {@link EmberGpSinkListEntry[]}
      *
-     * @return the current sinkList as {@link EmberGpSinkListEntry}
+     * @return the current sinkList as {@link EmberGpSinkListEntry[]}
      */
     public EmberGpSinkListEntry[] getSinkList() {
         return sinkList;
@@ -198,7 +198,7 @@ public class EmberGpSinkTableEntry {
     /**
      * The list of sinks (hardcoded to 2 which is the spec minimum).
      *
-     * @param sinkList the sinkList to set as {@link EmberGpSinkListEntry}
+     * @param sinkList the sinkList to set as {@link EmberGpSinkListEntry[]}
      */
     public void setSinkList(EmberGpSinkListEntry[] sinkList) {
         this.sinkList = sinkList;
@@ -335,15 +335,12 @@ public class EmberGpSinkTableEntry {
         options = deserializer.deserializeUInt32();
         gpd = deserializer.deserializeEmberGpAddress();
         deviceId = deserializer.deserializeUInt8();
-        sinkList = deserializer.deserializeEmberGpSinkListEntry();
+        sinkList = deserializer.deserializeEmberGpSinkListEntry(2);
         assignedAlias = deserializer.deserializeUInt16();
         groupcastRadius = deserializer.deserializeUInt8();
         securityOptions = deserializer.deserializeUInt8();
         gpdSecurityFrameCounter = deserializer.deserializeUInt32();
         gpdKey = deserializer.deserializeEmberKeyData();
-//        EmberKeyData key = new EmberKeyData();
-//        key.setContents( new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}) ;
-//        gpdKey = key;
     }
 
     @Override
@@ -366,7 +363,7 @@ public class EmberGpSinkTableEntry {
                 if (cnt != 0) {
                     builder.append(' ');
                 }
-                builder.append(sinkList[cnt].toString());
+                builder.append(sinkList[cnt]);
             }
         }
         builder.append('}');

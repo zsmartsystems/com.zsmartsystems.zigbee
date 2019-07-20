@@ -172,11 +172,11 @@ public class EzspAesMmoHashRequest extends EzspFrameRequest {
         builder.append(", length=");
         builder.append(length);
         builder.append(", data=");
-        for (int c = 0; c < data.length; c++) {
-            if (c > 0) {
+        for (int cnt = 0; cnt < data.length; cnt++) {
+            if (cnt > 0) {
                 builder.append(' ');
             }
-            builder.append(String.format("%02X", data[c]));
+            builder.append(String.format("%02X", data[cnt]));
         }
         builder.append(']');
         return builder.toString();

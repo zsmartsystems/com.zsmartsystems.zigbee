@@ -124,18 +124,12 @@ public class EzspGpepIncomingMessageHandler extends EzspFrameResponse {
     public EzspGpepIncomingMessageHandler(int[] inputBuffer) {
         // Super creates deserializer and reads header fields
         super(inputBuffer);
-        //debug
-//        System.out.println("inputbuffer: ");
-//        for (int cnt = 0 ; cnt<inputBuffer.length ; cnt++) {
-//        	System.out.print(Integer.toHexString(inputBuffer[cnt])+" ");
-//        }
-//        System.out.println();
-        
+
         // Deserialize the fields
         status = deserializer.deserializeEmberStatus();
         gpdLink = deserializer.deserializeUInt8();
         sequenceNumber = deserializer.deserializeUInt8();
-        addr = deserializer.deserializeEmberGpAddressUnion();
+        addr = deserializer.deserializeEmberGpAddress();
         gpdfSecurityLevel = deserializer.deserializeEmberGpSecurityLevel();
         gpdfSecurityKeyType = deserializer.deserializeEmberGpKeyType();
         autoCommissioning = deserializer.deserializeBool();
@@ -436,11 +430,11 @@ public class EzspGpepIncomingMessageHandler extends EzspFrameResponse {
         builder.append(", proxyTableIndex=");
         builder.append(proxyTableIndex);
         builder.append(", gpdCommandPayload=");
-        for (int c = 0; c < gpdCommandPayload.length; c++) {
-            if (c > 0) {
+        for (int cnt = 0; cnt < gpdCommandPayload.length; cnt++) {
+            if (cnt > 0) {
                 builder.append(' ');
             }
-            builder.append(String.format("%02X", gpdCommandPayload[c]));
+            builder.append(String.format("%02X", gpdCommandPayload[cnt]));
         }
         builder.append(']');
         return builder.toString();

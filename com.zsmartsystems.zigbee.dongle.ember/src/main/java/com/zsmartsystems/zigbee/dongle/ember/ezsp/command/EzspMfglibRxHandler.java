@@ -126,11 +126,11 @@ public class EzspMfglibRxHandler extends EzspFrameResponse {
         builder.append(", rssi=");
         builder.append(rssi);
         builder.append(", packetContents=");
-        for (int c = 0; c < packetContents.length; c++) {
-            if (c > 0) {
+        for (int cnt = 0; cnt < packetContents.length; cnt++) {
+            if (cnt > 0) {
                 builder.append(' ');
             }
-            builder.append(String.format("%02X", packetContents[c]));
+            builder.append(String.format("%02X", packetContents[cnt]));
         }
         builder.append(']');
         return builder.toString();

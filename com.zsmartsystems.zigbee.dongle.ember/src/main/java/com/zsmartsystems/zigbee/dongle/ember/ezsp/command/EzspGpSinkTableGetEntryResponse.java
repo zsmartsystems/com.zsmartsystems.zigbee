@@ -45,11 +45,7 @@ public class EzspGpSinkTableGetEntryResponse extends EzspFrameResponse {
     public EzspGpSinkTableGetEntryResponse(int[] inputBuffer) {
         // Super creates deserializer and reads header fields
         super(inputBuffer);
-        System.out.println("inputbuffer: ");
-        for (int cnt = 0 ; cnt<inputBuffer.length ; cnt++) {
-        	System.out.print(Integer.toHexString(inputBuffer[cnt])+" ");
-        }
-        System.out.println();
+
         // Deserialize the fields
         status = deserializer.deserializeEmberStatus();
         entry = deserializer.deserializeEmberGpSinkTableEntry();

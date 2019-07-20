@@ -24,8 +24,7 @@ public class ZigBeeEndpointAddress extends ZigBeeAddress {
     /**
      * Constructor for ZDO ZigBee devices where only the address is defined
      *
-     * @param address
-     *            the network address
+     * @param address the network address
      *
      */
     public ZigBeeEndpointAddress(int address) {
@@ -36,10 +35,8 @@ public class ZigBeeEndpointAddress extends ZigBeeAddress {
     /**
      * Constructor for standard ZigBee devices where the address and endpoint are defined
      *
-     * @param address
-     *            the network address
-     * @param endpoint
-     *            the endpoint number
+     * @param address the network address
+     * @param endpoint the endpoint number
      */
     public ZigBeeEndpointAddress(int address, int endpoint) {
         this.address = address;

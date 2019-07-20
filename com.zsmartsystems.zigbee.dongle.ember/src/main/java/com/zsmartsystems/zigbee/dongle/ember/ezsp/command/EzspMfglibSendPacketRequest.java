@@ -82,11 +82,11 @@ public class EzspMfglibSendPacketRequest extends EzspFrameRequest {
     public String toString() {
         final StringBuilder builder = new StringBuilder(80);
         builder.append("EzspMfglibSendPacketRequest [packetContents=");
-        for (int c = 0; c < packetContents.length; c++) {
-            if (c > 0) {
+        for (int cnt = 0; cnt < packetContents.length; cnt++) {
+            if (cnt > 0) {
                 builder.append(' ');
             }
-            builder.append(String.format("%02X", packetContents[c]));
+            builder.append(String.format("%02X", packetContents[cnt]));
         }
         builder.append(']');
         return builder.toString();
