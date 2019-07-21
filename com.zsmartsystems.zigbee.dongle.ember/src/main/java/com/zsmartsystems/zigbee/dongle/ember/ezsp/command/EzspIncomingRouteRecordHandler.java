@@ -187,11 +187,11 @@ public class EzspIncomingRouteRecordHandler extends EzspFrameResponse {
         builder.append(", lastHopRssi=");
         builder.append(lastHopRssi);
         builder.append(", relayList=");
-        for (int c = 0; c < relayList.length; c++) {
-            if (c > 0) {
+        for (int cnt = 0; cnt < relayList.length; cnt++) {
+            if (cnt > 0) {
                 builder.append(' ');
             }
-            builder.append(String.format("%02X", relayList[c]));
+            builder.append(String.format("%04X", relayList[cnt]));
         }
         builder.append(']');
         return builder.toString();

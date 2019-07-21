@@ -8,12 +8,13 @@
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.command;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberGpAddress;
 import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
 
 /**
- * Class to implement the Ember EZSP command <b>gpProxyTableGetEntry</b>.
+ * Class to implement the Ember EZSP command <b>gpSinkTableFindOrAllocateEntry</b>.
  * <p>
- * Retrieves the proxy table entry stored at the passed index.
+ * FFinds or allocates a sink entry.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>
@@ -21,15 +22,15 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspGpProxyTableGetEntryRequest extends EzspFrameRequest {
-    public static final int FRAME_ID = 0xC8;
+public class EzspGpSinkTableFindOrAllocateEntryRequest extends EzspFrameRequest {
+    public static final int FRAME_ID = 0xE1;
 
     /**
-     * The index of the requested proxy table entry.
+     * An EmberGpAddress struct containing a copy of the gpd address to be found.
      * <p>
-     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
+     * EZSP type is <i>EmberGpAddress</i> - Java type is {@link EmberGpAddress}
      */
-    private int proxyIndex;
+    private EmberGpAddress addr;
 
     /**
      * Serialiser used to serialise to binary line data
@@ -39,29 +40,29 @@ public class EzspGpProxyTableGetEntryRequest extends EzspFrameRequest {
     /**
      * Request constructor
      */
-    public EzspGpProxyTableGetEntryRequest() {
+    public EzspGpSinkTableFindOrAllocateEntryRequest() {
         frameId = FRAME_ID;
         serializer = new EzspSerializer();
     }
 
     /**
-     * The index of the requested proxy table entry.
+     * An EmberGpAddress struct containing a copy of the gpd address to be found.
      * <p>
-     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
+     * EZSP type is <i>EmberGpAddress</i> - Java type is {@link EmberGpAddress}
      *
-     * @return the current proxyIndex as {@link int}
+     * @return the current addr as {@link EmberGpAddress}
      */
-    public int getProxyIndex() {
-        return proxyIndex;
+    public EmberGpAddress getAddr() {
+        return addr;
     }
 
     /**
-     * The index of the requested proxy table entry.
+     * An EmberGpAddress struct containing a copy of the gpd address to be found.
      *
-     * @param proxyIndex the proxyIndex to set as {@link int}
+     * @param addr the addr to set as {@link EmberGpAddress}
      */
-    public void setProxyIndex(int proxyIndex) {
-        this.proxyIndex = proxyIndex;
+    public void setAddr(EmberGpAddress addr) {
+        this.addr = addr;
     }
 
     @Override
@@ -70,15 +71,15 @@ public class EzspGpProxyTableGetEntryRequest extends EzspFrameRequest {
         serializeHeader(serializer);
 
         // Serialize the fields
-        serializer.serializeUInt8(proxyIndex);
+        serializer.serializeEmberGpAddress(addr);
         return serializer.getPayload();
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(59);
-        builder.append("EzspGpProxyTableGetEntryRequest [proxyIndex=");
-        builder.append(proxyIndex);
+        final StringBuilder builder = new StringBuilder(69);
+        builder.append("EzspGpSinkTableFindOrAllocateEntryRequest [addr=");
+        builder.append(addr);
         builder.append(']');
         return builder.toString();
     }

@@ -216,6 +216,10 @@ public abstract class ClassGenerator {
     }
 
     protected String formatParameterString(Parameter parameter) {
+        String modifier = "";
+        if (parameter.data_type.contains("[")) {
+            modifier = "[cnt]";
+        }
         if (parameter.displayType != null) {
             switch (parameter.displayType.toLowerCase()) {
                 case "hex":
@@ -223,11 +227,13 @@ public abstract class ClassGenerator {
                     if (parameter.displayLength != 0) {
                         size = "0" + parameter.displayLength;
                     }
-                    return "String.format(\"%" + size + "X\", " + parameter.name + ")";
+                    return "String.format(\"%" + size + "X\", " + parameter.name + modifier + ")";
+                case "string":
+                    return parameter.name + modifier;
                 default:
                     break;
             }
         }
-        return parameter.name;
+        return parameter.name + modifier;
     }
 }

@@ -307,6 +307,46 @@ public enum EmberStatus {
     EMBER_ADDRESS_TABLE_ENTRY_IS_ACTIVE(0x0076),
 
     /**
+     * Security match.
+     */
+    EMBER_MATCH(0x0078),
+
+    /**
+     * Security match.
+     */
+    EMBER_DROP_FRAME(0x0079),
+
+    /**
+     * Security match.
+     */
+    EMBER_PASS_UNPROCESSED(0x007A),
+
+    /**
+     * Security match.
+     */
+    EMBER_TX_THEN_DROP(0x007B),
+
+    /**
+     * Security match.
+     */
+    EMBER_NO_SECURITY(0x007C),
+
+    /**
+     * Security match.
+     */
+    EMBER_COUNTER_FAILURE(0x007D),
+
+    /**
+     * Security match.
+     */
+    EMBER_AUTH_FAILURE(0x007E),
+
+    /**
+     * Security match.
+     */
+    EMBER_UNPROCESSED(0x007F),
+
+    /**
      * Conversion is complete.
      */
     EMBER_ADC_CONVERSION_DONE(0x0080),
