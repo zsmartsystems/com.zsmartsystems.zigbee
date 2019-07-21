@@ -66,11 +66,11 @@ public class EzspReadAndClearCountersResponse extends EzspFrameResponse {
     public String toString() {
         final StringBuilder builder = new StringBuilder(60);
         builder.append("EzspReadAndClearCountersResponse [values=");
-        for (int c = 0; c < values.length; c++) {
-            if (c > 0) {
+        for (int cnt = 0; cnt < values.length; cnt++) {
+            if (cnt > 0) {
                 builder.append(' ');
             }
-            builder.append(String.format("%02X", values[c]));
+            builder.append(String.format("%04X", values[cnt]));
         }
         builder.append(']');
         return builder.toString();

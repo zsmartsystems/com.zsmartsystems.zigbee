@@ -256,11 +256,11 @@ public class EzspDGpSendRequest extends EzspFrameRequest {
         builder.append(", gpdCommandId=");
         builder.append(gpdCommandId);
         builder.append(", gpdAsdu=");
-        for (int c = 0; c < gpdAsdu.length; c++) {
-            if (c > 0) {
+        for (int cnt = 0; cnt < gpdAsdu.length; cnt++) {
+            if (cnt > 0) {
                 builder.append(' ');
             }
-            builder.append(String.format("%02X", gpdAsdu[c]));
+            builder.append(String.format("%02X", gpdAsdu[cnt]));
         }
         builder.append(", gpepHandle=");
         builder.append(gpepHandle);

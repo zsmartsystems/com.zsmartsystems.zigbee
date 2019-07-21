@@ -137,8 +137,16 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_GET_TRANSIENT_LINK_KEY = 0xCE;
     protected static final int FRAME_ID_GET_VALUE = 0xAA;
     protected static final int FRAME_ID_GET_XNCP_INFO = 0x13;
+    protected static final int FRAME_ID_GP_PROXY_TABLE_GET_ENTRY = 0xC8;
     protected static final int FRAME_ID_GP_PROXY_TABLE_LOOKUP = 0xC0;
     protected static final int FRAME_ID_GP_PROXY_TABLE_PROCESS_GP_PAIRING = 0xC9;
+    protected static final int FRAME_ID_GP_SINK_TABLE_CLEAR_ALL = 0xE2;
+    protected static final int FRAME_ID_GP_SINK_TABLE_FIND_OR_ALLOCATE_ENTRY = 0xE1;
+    protected static final int FRAME_ID_GP_SINK_TABLE_GET_ENTRY = 0xDD;
+    protected static final int FRAME_ID_GP_SINK_TABLE_INIT = 0x70;
+    protected static final int FRAME_ID_GP_SINK_TABLE_LOOKUP = 0xDE;
+    protected static final int FRAME_ID_GP_SINK_TABLE_REMOVE_ENTRY = 0xE0;
+    protected static final int FRAME_ID_GP_SINK_TABLE_SET_ENTRY = 0xDF;
     protected static final int FRAME_ID_GPEP_INCOMING_MESSAGE_HANDLER = 0xC5;
     protected static final int FRAME_ID_ID_CONFLICT_HANDLER = 0x7C;
     protected static final int FRAME_ID_INCOMING_MANY_TO_ONE_ROUTE_REQUEST_HANDLER = 0x7D;
@@ -171,6 +179,7 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_NETWORK_INIT = 0x17;
     protected static final int FRAME_ID_NETWORK_STATE = 0x18;
     protected static final int FRAME_ID_NO_CALLBACKS = 0x07;
+    protected static final int FRAME_ID_NOP = 0x05;
     protected static final int FRAME_ID_PERMIT_JOINING = 0x22;
     protected static final int FRAME_ID_POLL_HANDLER = 0x44;
     protected static final int FRAME_ID_READ_AND_CLEAR_COUNTERS = 0x65;
@@ -274,8 +283,16 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_GET_TRANSIENT_LINK_KEY, EzspGetTransientLinkKeyResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_VALUE, EzspGetValueResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_XNCP_INFO, EzspGetXncpInfoResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GP_PROXY_TABLE_GET_ENTRY, EzspGpProxyTableGetEntryResponse.class);
         ezspHandlerMap.put(FRAME_ID_GP_PROXY_TABLE_LOOKUP, EzspGpProxyTableLookupResponse.class);
         ezspHandlerMap.put(FRAME_ID_GP_PROXY_TABLE_PROCESS_GP_PAIRING, EzspGpProxyTableProcessGpPairingResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GP_SINK_TABLE_CLEAR_ALL, EzspGpSinkTableClearAllResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GP_SINK_TABLE_FIND_OR_ALLOCATE_ENTRY, EzspGpSinkTableFindOrAllocateEntryResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GP_SINK_TABLE_GET_ENTRY, EzspGpSinkTableGetEntryResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GP_SINK_TABLE_INIT, EzspGpSinkTableInitResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GP_SINK_TABLE_LOOKUP, EzspGpSinkTableLookupResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GP_SINK_TABLE_REMOVE_ENTRY, EzspGpSinkTableRemoveEntryResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GP_SINK_TABLE_SET_ENTRY, EzspGpSinkTableSetEntryResponse.class);
         ezspHandlerMap.put(FRAME_ID_GPEP_INCOMING_MESSAGE_HANDLER, EzspGpepIncomingMessageHandler.class);
         ezspHandlerMap.put(FRAME_ID_ID_CONFLICT_HANDLER, EzspIdConflictHandler.class);
         ezspHandlerMap.put(FRAME_ID_INCOMING_MANY_TO_ONE_ROUTE_REQUEST_HANDLER, EzspIncomingManyToOneRouteRequestHandler.class);
@@ -308,6 +325,7 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_NETWORK_INIT, EzspNetworkInitResponse.class);
         ezspHandlerMap.put(FRAME_ID_NETWORK_STATE, EzspNetworkStateResponse.class);
         ezspHandlerMap.put(FRAME_ID_NO_CALLBACKS, EzspNoCallbacksResponse.class);
+        ezspHandlerMap.put(FRAME_ID_NOP, EzspNopResponse.class);
         ezspHandlerMap.put(FRAME_ID_PERMIT_JOINING, EzspPermitJoiningResponse.class);
         ezspHandlerMap.put(FRAME_ID_POLL_HANDLER, EzspPollHandler.class);
         ezspHandlerMap.put(FRAME_ID_READ_AND_CLEAR_COUNTERS, EzspReadAndClearCountersResponse.class);
@@ -391,16 +409,11 @@ public abstract class EzspFrame {
      * @return the {@link EzspFrameResponse} or null if the response can't be created.
      */
     public static EzspFrameResponse createHandler(int[] data) {
-        Class<?> ezspClass = null;
-
-        try {
-            if (data[2] != 0xFF) {
-                ezspClass = ezspHandlerMap.get(data[2]);
-            } else {
-                ezspClass = ezspHandlerMap.get(data[4]);
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            logger.debug("Error detecting the Ezsp frame type", e);
+        Class<?> ezspClass;
+        if (data[2] != 0xFF) {
+            ezspClass = ezspHandlerMap.get(data[2]);
+        } else {
+            ezspClass = ezspHandlerMap.get(data[4]);
         }
 
         if (ezspClass == null) {

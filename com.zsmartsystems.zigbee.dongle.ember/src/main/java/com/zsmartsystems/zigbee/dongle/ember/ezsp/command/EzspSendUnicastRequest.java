@@ -229,11 +229,11 @@ public class EzspSendUnicastRequest extends EzspFrameRequest {
         builder.append(", messageTag=");
         builder.append(String.format("%02X", messageTag));
         builder.append(", messageContents=");
-        for (int c = 0; c < messageContents.length; c++) {
-            if (c > 0) {
+        for (int cnt = 0; cnt < messageContents.length; cnt++) {
+            if (cnt > 0) {
                 builder.append(' ');
             }
-            builder.append(String.format("%02X", messageContents[c]));
+            builder.append(String.format("%02X", messageContents[cnt]));
         }
         builder.append(']');
         return builder.toString();

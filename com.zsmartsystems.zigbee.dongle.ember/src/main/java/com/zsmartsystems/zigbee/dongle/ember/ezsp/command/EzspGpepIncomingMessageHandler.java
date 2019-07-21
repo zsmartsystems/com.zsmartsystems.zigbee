@@ -430,11 +430,11 @@ public class EzspGpepIncomingMessageHandler extends EzspFrameResponse {
         builder.append(", proxyTableIndex=");
         builder.append(proxyTableIndex);
         builder.append(", gpdCommandPayload=");
-        for (int c = 0; c < gpdCommandPayload.length; c++) {
-            if (c > 0) {
+        for (int cnt = 0; cnt < gpdCommandPayload.length; cnt++) {
+            if (cnt > 0) {
                 builder.append(' ');
             }
-            builder.append(String.format("%02X", gpdCommandPayload[c]));
+            builder.append(String.format("%02X", gpdCommandPayload[cnt]));
         }
         builder.append(']');
         return builder.toString();

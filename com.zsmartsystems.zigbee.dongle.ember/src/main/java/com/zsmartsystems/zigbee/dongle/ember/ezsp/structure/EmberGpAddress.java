@@ -39,9 +39,9 @@ public class EmberGpAddress {
     /**
      * The GPD Application ID.
      * <p>
-     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
+     * EZSP type is <i>EmberGpApplicationId</i> - Java type is {@link EmberGpApplicationId}
      */
-    private int applicationId;
+    private EmberGpApplicationId applicationId;
 
     /**
      * The GPD endpoint.
@@ -103,20 +103,20 @@ public class EmberGpAddress {
     /**
      * The GPD Application ID.
      * <p>
-     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
+     * EZSP type is <i>EmberGpApplicationId</i> - Java type is {@link EmberGpApplicationId}
      *
-     * @return the current applicationId as {@link int}
+     * @return the current applicationId as {@link EmberGpApplicationId}
      */
-    public int getApplicationId() {
+    public EmberGpApplicationId getApplicationId() {
         return applicationId;
     }
 
     /**
      * The GPD Application ID.
      *
-     * @param applicationId the applicationId to set as {@link int}
+     * @param applicationId the applicationId to set as {@link EmberGpApplicationId}
      */
-    public void setApplicationId(int applicationId) {
+    public void setApplicationId(EmberGpApplicationId applicationId) {
         this.applicationId = applicationId;
     }
 
@@ -149,7 +149,7 @@ public class EmberGpAddress {
         // Serialize the fields
         serializer.serializeEmberEui64(gpdIeeeAddress);
         serializer.serializeUInt32(sourceId);
-        serializer.serializeUInt8(applicationId);
+        serializer.serializeEmberGpApplicationId(applicationId);
         serializer.serializeUInt8(endpoint);
         return serializer.getPayload();
     }
@@ -163,7 +163,7 @@ public class EmberGpAddress {
         // Deserialize the fields
         gpdIeeeAddress = deserializer.deserializeEmberEui64();
         sourceId = deserializer.deserializeUInt32();
-        applicationId = deserializer.deserializeUInt8();
+        applicationId = deserializer.deserializeEmberGpApplicationId();
         endpoint = deserializer.deserializeUInt8();
     }
 

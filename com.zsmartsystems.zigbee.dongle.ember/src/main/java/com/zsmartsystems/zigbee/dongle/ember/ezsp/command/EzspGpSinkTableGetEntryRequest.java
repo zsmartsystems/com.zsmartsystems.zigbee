@@ -11,9 +11,9 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
 
 /**
- * Class to implement the Ember EZSP command <b>gpProxyTableGetEntry</b>.
+ * Class to implement the Ember EZSP command <b>gpSinkTableGetEntry</b>.
  * <p>
- * Retrieves the proxy table entry stored at the passed index.
+ * Retrieves the sink table entry stored at the passed index.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>
@@ -21,15 +21,15 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspGpProxyTableGetEntryRequest extends EzspFrameRequest {
-    public static final int FRAME_ID = 0xC8;
+public class EzspGpSinkTableGetEntryRequest extends EzspFrameRequest {
+    public static final int FRAME_ID = 0xDD;
 
     /**
-     * The index of the requested proxy table entry.
+     * The index of the requested sink table entry.
      * <p>
      * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      */
-    private int proxyIndex;
+    private int sinkIndex;
 
     /**
      * Serialiser used to serialise to binary line data
@@ -39,29 +39,29 @@ public class EzspGpProxyTableGetEntryRequest extends EzspFrameRequest {
     /**
      * Request constructor
      */
-    public EzspGpProxyTableGetEntryRequest() {
+    public EzspGpSinkTableGetEntryRequest() {
         frameId = FRAME_ID;
         serializer = new EzspSerializer();
     }
 
     /**
-     * The index of the requested proxy table entry.
+     * The index of the requested sink table entry.
      * <p>
      * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      *
-     * @return the current proxyIndex as {@link int}
+     * @return the current sinkIndex as {@link int}
      */
-    public int getProxyIndex() {
-        return proxyIndex;
+    public int getSinkIndex() {
+        return sinkIndex;
     }
 
     /**
-     * The index of the requested proxy table entry.
+     * The index of the requested sink table entry.
      *
-     * @param proxyIndex the proxyIndex to set as {@link int}
+     * @param sinkIndex the sinkIndex to set as {@link int}
      */
-    public void setProxyIndex(int proxyIndex) {
-        this.proxyIndex = proxyIndex;
+    public void setSinkIndex(int sinkIndex) {
+        this.sinkIndex = sinkIndex;
     }
 
     @Override
@@ -70,15 +70,15 @@ public class EzspGpProxyTableGetEntryRequest extends EzspFrameRequest {
         serializeHeader(serializer);
 
         // Serialize the fields
-        serializer.serializeUInt8(proxyIndex);
+        serializer.serializeUInt8(sinkIndex);
         return serializer.getPayload();
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(59);
-        builder.append("EzspGpProxyTableGetEntryRequest [proxyIndex=");
-        builder.append(proxyIndex);
+        final StringBuilder builder = new StringBuilder(58);
+        builder.append("EzspGpSinkTableGetEntryRequest [sinkIndex=");
+        builder.append(sinkIndex);
         builder.append(']');
         return builder.toString();
     }

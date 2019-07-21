@@ -239,11 +239,13 @@
 				<data_type>uint16_t[]</data_type>
 				<name>inputClusterList</name>
 				<description>Input cluster IDs the endpoint will accept.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint16_t[]</data_type>
 				<name>outputClusterList</name>
 				<description>Output cluster IDs the endpoint may send.</description>
+				<display>hex[4]</display>
 			</parameter>
 		</command_parameters>
 		<response_parameters>
@@ -332,6 +334,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>value</name>
 				<description>The value.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -356,6 +359,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>value</name>
 				<description>The new value.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</command_parameters>
 		<response_parameters>
@@ -413,6 +417,7 @@
 				<data_type>uint16_t[29]</data_type>
 				<name>values</name>
 				<description>A list of all counter values ordered according to the EmberCounterType enumeration.</description>
+				<display>hex[4]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -428,6 +433,7 @@
 				<data_type>uint16_t[29]</data_type>
 				<name>values</name>
 				<description>A list of all counter values ordered according to the EmberCounterType enumeration.</description>
+				<display>hex[4]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -454,6 +460,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>tokenData</name>
 				<description>The manufacturing token data.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -1319,6 +1326,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>messageContents</name>
 				<description>Content of the message.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</command_parameters>
 		<response_parameters>
@@ -1372,6 +1380,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>messageContents</name>
 				<description>Content of the message.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</command_parameters>
 		<response_parameters>
@@ -1420,6 +1429,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>messageContents</name>
 				<description>The reply message.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</command_parameters>
 		<response_parameters>
@@ -1467,6 +1477,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>messageContents</name>
 				<description>The multicast message.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</command_parameters>
 		<response_parameters>
@@ -1528,6 +1539,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>messageContents</name>
 				<description>The unicast message supplied by the Host. The message contents are only included here if the decision for the messageContentsInCallback policy is messageTagAndContentsInCallback.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -1644,6 +1656,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>messageContents</name>
 				<description>The incoming message.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -1685,6 +1698,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>messageContents</name>
 				<description>The raw message that was received.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -1768,6 +1782,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>data</name>
 				<description>The data to hash.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</command_parameters>
 		<response_parameters>
@@ -1806,6 +1821,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>relayList</name>
 				<description>The route record. Each relay in the list is an uint16_t node ID.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -1847,6 +1863,7 @@
 				<data_type>uint16_t[]</data_type>
 				<name>relayList</name>
 				<description>The route record. Each relay in the list is an uint16_t node ID.</description>
+				<display>hex[4]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -2556,6 +2573,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>packetContents</name>
 				<description>The packet to send. The last two bytes will be replacedwith the 16-bit CRC.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</command_parameters>
 		<response_parameters>
@@ -2649,6 +2667,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>packetContents</name>
 				<description>The received packet. The last two bytes are the 16-bit CRC.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -2743,6 +2762,7 @@
 				<data_type>uint8_t[]</data_type>
 				<name>gpdAsdu</name>
 				<description>The GP command payload.</description>
+				<display>hex[2]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint8_t</data_type>
@@ -2861,35 +2881,11 @@
 				<data_type>uint8_t[]</data_type>
 				<name>gpdCommandPayload</name>
 				<description>The GPD command payload.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</response_parameters>
 	</command>
-<!--
-	<command>
-		<name>gpProxyTableGetEntry</name>
-		<id>0xC8</id>
-		<description>Retrieves the proxy table entry stored at the passed index.</description>
-		<command_parameters>
-			<parameter>
-				<data_type>uint8_t</data_type>
-				<name>proxyIndex</name>
-				<description>The index of the requested proxy table entry</description>
-			</parameter>
-		</command_parameters>
-		<response_parameters>
-			<parameter>
-				<data_type>EmberStatus</data_type>
-				<name>status</name>
-				<description>An EmberStatus value indicating success or the reason for failure.</description>
-			</parameter>
-			<parameter>
-				<data_type>EmberGpProxyTableEntry</data_type>
-				<name>entry</name>
-				<description>An EmberGpProxyTableEntry struct containing a copy of the requested proxy entry.</description>
-			</parameter>
-		</response_parameters>
-	</command>
--->
+	
 	<command>
 		<name>gpProxyTableLookup</name>
 		<id>0xC0</id>
@@ -3260,6 +3256,152 @@
 		</response_parameters>
 	</command>
 
+	<command>
+		<name>gpProxyTableGetEntry</name>
+		<id>0xC8</id>
+		<description>Retrieves the proxy table entry stored at the passed index.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>proxyIndex</name>
+				<description>The index of the requested proxy table entry.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>An EmberStatus value indicating success or the reason for failure.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberGpProxyTableEntry</data_type>
+				<name>entry</name>
+				<description>An EmberGpProxyTableEntry struct containing a copy of the requested proxy entry.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+<!-- commented to prevent erasure of necessary manual modifications -->
+	<command>
+		<name>gpSinkTableGetEntry</name>
+		<id>0xDD</id>
+		<description>Retrieves the sink table entry stored at the passed index.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>sinkIndex</name>
+				<description>The index of the requested sink table entry.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>An EmberStatus value indicating success or the reason for failure.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberGpSinkTableEntry</data_type>
+				<name>entry</name>
+				<description>An EmberGpSinkTableEntry struct containing a copy of the requested sink entry.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>gpSinkTableLookup</name>
+		<id>0xDE</id>
+		<description>Finds the index of the passed address in the gp table.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>EmberGpAddress</data_type>
+				<name>addr</name>
+				<description>The address to search for.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>index</name>
+				<description>The index or 0xFF for not found.</description>
+			</parameter>			
+		</response_parameters>
+	</command>
+<!--  commented to prevent erasure of necessary manual modifications -->
+	<command>
+		<name>gpSinkTableSetEntry</name>
+		<id>0xDF</id>
+		<description>Retrieves the sink table entry stored at the passed index.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>sinkIndex</name>
+				<description>The index of the requested sink table entry.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberGpSinkTableEntry</data_type>
+				<name>entry</name>
+				<description>An EmberGpSinkTableEntry struct containing a copy of the sink entry to be updated.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>An EmberStatus value indicating success or the reason for failure.</description>
+			</parameter>			
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>gpSinkTableRemoveEntry</name>
+		<id>0xE0</id>
+		<description>Removes the sink table entry stored at the passed index.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>sinkIndex</name>
+				<description>The index of the requested sink entry.</description>
+			</parameter>
+		</command_parameters>
+	</command>
+	
+	<command>
+		<name>gpSinkTableFindOrAllocateEntry</name>
+		<id>0xE1</id>
+		<description>FFinds or allocates a sink entry.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>EmberGpAddress</data_type>
+				<name>addr</name>
+				<description>An EmberGpAddress struct containing a copy of the gpd address to be found.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>index</name>
+				<description>An index of found or allocated sink or 0xFF if failed.</description>
+			</parameter>			
+		</response_parameters>
+	</command>
+	
+	<command>
+		<name>gpSinkTableClearAll</name>
+		<id>0xE2</id>
+		<description>Clears the entire sink table.</description>
+	</command>
+	
+	<command>
+		<name>gpSinkTableInit</name>
+		<id>0x70</id>
+		<description>Initializes the sink table.</description>
+	</command>
+	
+	<command>
+		<name>nop</name>
+		<id>0x05</id>
+		<description>A command which does nothing. The Host can use this to set the sleep mode or check the status of the NCP.</description>
+	</command>
+	
 	<structure>
 		<name>EmberCertificateData</name>
 		<description>The implicit certificate used in CBKE.</description>
@@ -3268,6 +3410,7 @@
 				<data_type>uint8_t[48]</data_type>
 				<name>contents</name>
 				<description>The certificate data.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</parameters>
 	</structure>
@@ -3307,6 +3450,7 @@
 				<data_type>uint8_t[22]</data_type>
 				<name>contents</name>
 				<description>The public key data.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</parameters>
 	</structure>
@@ -3319,6 +3463,7 @@
 				<data_type>uint8_t[21]</data_type>
 				<name>contents</name>
 				<description>The private key data.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</parameters>
 	</structure>
@@ -3331,6 +3476,7 @@
 				<data_type>uint8_t[16]</data_type>
 				<name>contents</name>
 				<description>The Shared Message Authentication Code data.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</parameters>
 	</structure>
@@ -3343,6 +3489,7 @@
 				<data_type>uint8_t[74]</data_type>
 				<name>contents</name>
 				<description>The 283k1 certificate data.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</parameters>
 	</structure>
@@ -3355,6 +3502,7 @@
 				<data_type>uint8_t[37]</data_type>
 				<name>contents</name>
 				<description>The public key data.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</parameters>
 	</structure>
@@ -3367,6 +3515,7 @@
 				<data_type>uint8_t[36]</data_type>
 				<name>contents</name>
 				<description>The private key data.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</parameters>
 	</structure>
@@ -3440,6 +3589,7 @@
 				<data_type>uint8_t[8]</data_type>
 				<name>extendedPanId</name>
 				<description>The network's extended PAN identifier.</description>
+				<display>hex[2]</display>
 			</parameter>
 			<parameter>
 				<data_type>bool</data_type>
@@ -3670,6 +3820,7 @@
 				<data_type>uint8_t[16]</data_type>
 				<name>contents</name>
 				<description>The key data.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</parameters>
 	</structure>
@@ -3682,6 +3833,7 @@
 				<data_type>uint8_t[16]</data_type>
 				<name>result</name>
 				<description>The result of ongoing the hash operation.</description>
+				<display>hex[2]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint32_t</data_type>
@@ -3748,7 +3900,7 @@
 				<description>The GPD's source ID.</description>
 			</parameter>
 			<parameter>
-				<data_type>uint8_t</data_type>
+				<data_type>EmberGpApplicationId</data_type>
 				<name>applicationId</name>
 				<description>The GPD Application ID.</description>
 			</parameter>
@@ -3781,7 +3933,7 @@
 			</parameter>
 		</parameters>
 	</structure>
-<!-- 
+
 	<structure>
 		<name>EmberGpProxyTableEntry</name>
 		<description>The internal representation of a proxy table entry.</description>
@@ -3827,9 +3979,10 @@
 				<description>The key to use for GPD.</description>
 			</parameter>
 			<parameter>
-				<data_type>EmberGpSinkListEntry</data_type>
-				<name>sinkList[]</name>
+				<data_type>EmberGpSinkListEntry[2]</data_type>
+				<name>sinkList</name>
 				<description>The list of sinks (hardcoded to 2 which is the spec minimum).</description>
+				<display>string</display>
 			</parameter>
 			<parameter>
 				<data_type>uint8_t</data_type>
@@ -3869,9 +4022,10 @@
 				<description>The device id for the GPD.</description>
 			</parameter>
 			<parameter>
-				<data_type>EmberGpSinkListEntry</data_type>
-				<name>sinkList[]</name>
+				<data_type>EmberGpSinkListEntry[2]</data_type>
+				<name>sinkList</name>
 				<description>The list of sinks (hardcoded to 2 which is the spec minimum).</description>
+				<display>string</display>
 			</parameter>
 			<parameter>
 				<data_type>EmberNodeId</data_type>
@@ -3900,7 +4054,7 @@
 			</parameter>
 		</parameters>
 	</structure>
- -->
+
 	<enum>
 		<name>EzspPolicyId</name>
 		<description></description>
@@ -4658,7 +4812,7 @@
 			</value>
 		</values>
 	</enum>
-
+	-->
 	<enum>
 		<name>EzspConfigId</name>
 		<description>Identifies which configuration value to read or change with getConfigurationValue and setConfigurationValue.</description>
@@ -5134,6 +5288,46 @@
 				<name>EMBER_ADDRESS_TABLE_ENTRY_IS_ACTIVE</name>
 				<enum_value>0x0076</enum_value>
 				<description>The application is trying to overwrite an address table entry that is in use.</description>
+			</value>
+			<value>
+				<name>EMBER_MATCH</name>
+				<enum_value>0x0078</enum_value>
+				<description>Security match.</description>
+			</value>
+			<value>
+				<name>EMBER_DROP_FRAME</name>
+				<enum_value>0x0079</enum_value>
+				<description>Security match. </description>
+			</value>
+			<value>
+				<name>EMBER_PASS_UNPROCESSED</name>
+				<enum_value>0x007A</enum_value>
+				<description>Security match. </description>
+			</value>
+			<value>
+				<name>EMBER_TX_THEN_DROP</name>
+				<enum_value>0x007B</enum_value>
+				<description>Security match. </description>
+			</value>
+			<value>
+				<name>EMBER_NO_SECURITY</name>
+				<enum_value>0x007C</enum_value>
+				<description>Security match. </description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_FAILURE</name>
+				<enum_value>0x007D</enum_value>
+				<description>Security match. </description>
+			</value>
+			<value>
+				<name>EMBER_AUTH_FAILURE</name>
+				<enum_value>0x007E</enum_value>
+				<description>Security match. </description>
+			</value>
+			<value>
+				<name>EMBER_UNPROCESSED</name>
+				<enum_value>0x007F</enum_value>
+				<description>Security match. </description>
 			</value>
 			<value>
 				<name>EMBER_ADC_CONVERSION_DONE</name>
@@ -6581,22 +6775,99 @@
 
 	<enum>
 		<name>EmberGpProxyTableEntryStatus</name>
-		<description></description>
+		<description>GP proxy table entry status.</description>
 		<values>
+			<value>
+				<name>EMBER_GP_PROXY_TABLE_ENTRY_STATUS_ACTIVE</name>
+				<enum_value>0x01</enum_value>
+				<description>The GP table entry is in use for a Proxy Table Entry.</description>
+			</value>
+			<value>
+				<name>EMBER_GP_PROXY_TABLE_ENTRY_STATUS_UNUSED</name>
+				<enum_value>0xFF</enum_value>
+				<description>The proxy table entry is not in use.</description>
+			</value>
+		</values>
+	</enum>
+	
+	<enum>
+		<name>EmberGpSinkTableEntryStatus</name>
+		<description>GP sink table entry status.</description>
+		<values>
+			<value>
+				<name>EMBER_GP_SINK_TABLE_ENTRY_STATUS_ACTIVE</name>
+				<enum_value>0x01</enum_value>
+				<description>The GP table entry is in use for a Sink Table Entry.</description>
+			</value>
+			<value>
+				<name>EMBER_GP_SINK_TABLE_ENTRY_STATUS_UNUSED</name>
+				<enum_value>0xFF</enum_value>
+				<description>The proxy table entry is not in use.</description>
+			</value>
 		</values>
 	</enum>
 
 	<enum>
 		<name>EmberGpSecurityLevel</name>
-		<description></description>
+		<description>Options to use when sending a message.</description>
 		<values>
+			<value>
+				<name>EMBER_GP_SECURITY_LEVEL_NONE</name>
+				<enum_value>0x00</enum_value>
+				<description>None.</description>
+			</value>
+			<value>
+				<name>EMBER_GP_SECURITY_LEVEL_RESERVED</name>
+				<enum_value>0x01</enum_value>
+				<description>reserved</description>
+			</value>
+			<value>
+				<name>EMBER_GP_SECURITY_LEVEL_FC_MIC</name>
+				<enum_value>0x02</enum_value>
+				<description>4 Byte Frame Counter + 4 Byte MIC</description>
+			</value>
+			<value>
+				<name>EMBER_GP_SECURITY_LEVEL_FC_MIC_ENCRYPTED</name>
+				<enum_value>0x03</enum_value>
+				<description>4 Byte Frame Counter + 4 Byte MIC + encryption</description>
+			</value>
 		</values>
 	</enum>
 
 	<enum>
 		<name>EmberGpKeyType</name>
-		<description></description>
+		<description>Options to use when sending a message.</description>
 		<values>
+			<value>
+				<name>EMBER_GP_SECURITY_KEY_NONE</name>
+				<enum_value>0x00</enum_value>
+				<description></description>
+			</value>
+			<value>
+				<name>EMBER_GP_SECURITY_KEY_NWK</name>
+				<enum_value>0x01</enum_value>
+				<description></description>
+			</value>
+			<value>
+				<name>EMBER_GP_SECURITY_KEY_GPD_GROUP</name>
+				<enum_value>0x02</enum_value>
+				<description></description>
+			</value>
+			<value>
+				<name>EMBER_GP_SECURITY_KEY_NWK_DERIVED</name>
+				<enum_value>0x03</enum_value>
+				<description></description>
+			</value>
+			<value>
+				<name>EMBER_GP_SECURITY_KEY_GPD_OOB</name>
+				<enum_value>0x04</enum_value>
+				<description></description>
+			</value>
+			<value>
+				<name>EMBER_GP_SECURITY_KEY_GPD_DERIVED</name>
+				<enum_value>0x07</enum_value>
+				<description></description>
+			</value>
 		</values>
 	</enum>
 
@@ -6725,6 +6996,22 @@
 				<name>EMBER_LIBRARY_IS_STUB</name>
 				<enum_value>0x00</enum_value>
 				<description>Library is not installed</description>
+			</value>
+		</values>
+	</enum>
+	<enum>
+		<name>EmberGpApplicationId</name>
+		<description>Options to use when sending a message.</description>
+		<values>
+			<value>
+				<name>EMBER_GP_APPLICATION_SOURCE_ID</name>
+				<enum_value>0x00</enum_value>
+				<description>Source identifier</description>
+			</value>
+			<value>
+				<name>EMBER_GP_APPLICATION_IEEE_ADDRESS</name>
+				<enum_value>0x02</enum_value>
+				<description>IEEE address</description>
 			</value>
 		</values>
 	</enum>

@@ -22,7 +22,11 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCertificateData
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberConcentratorType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCurrentSecurityBitmask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberGpAddress;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberGpApplicationId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberGpProxyTableEntryStatus;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberGpSinkListEntry;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberGpSinkTableEntry;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberGpSinkTableEntryStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurityBitmask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurityState;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberJoinMethod;
@@ -61,7 +65,7 @@ public class EzspSerializer {
     /**
      * Adds a uint8_t into the output stream
      *
-     * @param val
+     * @param val the value to serialize
      */
     public void serializeUInt8(int val) {
         buffer[length++] = val & 0xFF;
@@ -70,7 +74,7 @@ public class EzspSerializer {
     /**
      * Adds an int8s_t into the output stream
      *
-     * @param val
+     * @param val the value to serialize
      */
     public void serializeInt8S(int val) {
         buffer[length++] = val & 0xFF;
@@ -79,7 +83,7 @@ public class EzspSerializer {
     /**
      * Adds a uint16_t into the output stream
      *
-     * @param val
+     * @param val the value to serialize
      */
     public void serializeUInt16(int val) {
         buffer[length++] = val & 0xFF;
@@ -89,7 +93,7 @@ public class EzspSerializer {
     /**
      * Adds a uint32_t into the output stream
      *
-     * @param val
+     * @param val the value to serialize
      */
     public void serializeUInt32(int val) {
         buffer[length++] = val & 0xFF;
@@ -291,5 +295,23 @@ public class EzspSerializer {
 
     public void serializeEzspMfgTokenId(EzspMfgTokenId tokenId) {
         buffer[length++] = tokenId.getKey();
+    }
+
+    public void serializeEmberGpSinkListEntry(EmberGpSinkListEntry[] sinkList) {
+        for (EmberGpSinkListEntry sink : sinkList) {
+            sink.serialize(this);
+        }
+    }
+
+    public void serializeEmberGpSinkTableEntryStatus(EmberGpSinkTableEntryStatus status) {
+        buffer[length++] = status.getKey();
+    }
+
+    public void serializeEmberGpSinkTableEntry(EmberGpSinkTableEntry entry) {
+        entry.serialize(this);
+    }
+
+    public void serializeEmberGpApplicationId(EmberGpApplicationId applicationId) {
+        buffer[length++] = applicationId.getKey();
     }
 }

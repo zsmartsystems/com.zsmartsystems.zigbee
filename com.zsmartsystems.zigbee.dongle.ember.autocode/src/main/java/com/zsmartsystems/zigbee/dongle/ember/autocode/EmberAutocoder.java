@@ -146,11 +146,15 @@ public class EmberAutocoder {
                     }
                     if (nodes.item(temp).getNodeName().equals("display")) {
                         String display = nodes.item(temp).getTextContent();
-                        if (display.contains("[") && display.contains("]")) {
+                        if (display.contains("[") & display.contains("]")) {
                             parameter.displayType = display.substring(0, display.indexOf('['));
                             parameter.displayLength = Integer
                                     .parseInt(display.substring(display.indexOf('[') + 1, display.indexOf(']')));
+                        } else {
+                            parameter.displayType = display;
+                            parameter.displayLength = 0;
                         }
+                        System.out.print("XXX");
                     }
                 }
                 System.out.println("Done: Parameter - " + parameter.name);

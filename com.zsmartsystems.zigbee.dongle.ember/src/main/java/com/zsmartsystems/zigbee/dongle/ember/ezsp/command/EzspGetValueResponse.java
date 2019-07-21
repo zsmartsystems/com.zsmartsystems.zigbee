@@ -100,11 +100,11 @@ public class EzspGetValueResponse extends EzspFrameResponse {
         builder.append("EzspGetValueResponse [status=");
         builder.append(status);
         builder.append(", value=");
-        for (int c = 0; c < value.length; c++) {
-            if (c > 0) {
+        for (int cnt = 0; cnt < value.length; cnt++) {
+            if (cnt > 0) {
                 builder.append(' ');
             }
-            builder.append(String.format("%02X", value[c]));
+            builder.append(String.format("%02X", value[cnt]));
         }
         builder.append(']');
         return builder.toString();
