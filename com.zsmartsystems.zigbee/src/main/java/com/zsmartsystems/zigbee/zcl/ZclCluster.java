@@ -474,7 +474,6 @@ public abstract class ZclCluster {
      * @return and object containing the value, or null
      */
     protected Object readAttributeValue(final int attributeId) {
-        logger.debug("readSync request: {}", attributeId);
         CommandResult result;
         try {
             result = readAttribute(attributeId).get();

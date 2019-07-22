@@ -291,7 +291,7 @@
     </attribute>
     <attribute code="0x4002" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false">
         <name>Color Loop Active</name>
-        <description>The ColorLoopActive attribute specifies the current active status of the color loop. If this attribute has the value 0x00, the color loop SHALLnot be active. If this attribute has the value 0x01, the color loop SHALL be active. All other values (0x02 &#8211; 0xff) are reserved.</description>
+        <description>The ColorLoopActive attribute specifies the current active status of the color loop. If this attribute has the value 0x00, the color loop SHALL not be active. If this attribute has the value 0x01, the color loop SHALL be active. All other values (0x02 &#8211; 0xff) are reserved.</description>
     </attribute>
     <attribute code="0x4003" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false">
         <name>Color Loop Direction</name>

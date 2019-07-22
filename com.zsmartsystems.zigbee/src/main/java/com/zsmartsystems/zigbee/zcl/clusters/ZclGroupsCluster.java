@@ -62,7 +62,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-15T21:32:58Z")
 public class ZclGroupsCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -289,7 +289,6 @@ public class ZclGroupsCluster extends ZclCluster {
      * The get group membership command allows the sending device to inquire about the group
      * membership of the receiving device and endpoint in a number of ways.
      *
-     * @param groupCount {@link Integer} Group Count
      * @param groupList {@link List<Integer>} Group List
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.3.0.
@@ -302,11 +301,10 @@ public class ZclGroupsCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new getGroupMembershipCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> getGroupMembershipCommand(Integer groupCount, List<Integer> groupList) {
+    public Future<CommandResult> getGroupMembershipCommand(List<Integer> groupList) {
         GetGroupMembershipCommand command = new GetGroupMembershipCommand();
 
         // Set the fields
-        command.setGroupCount(groupCount);
         command.setGroupList(groupList);
 
         return sendCommand(command);
@@ -458,7 +456,6 @@ public class ZclGroupsCluster extends ZclCluster {
      * response to a get group membership command.
      *
      * @param capacity {@link Integer} Capacity
-     * @param groupCount {@link Integer} Group Count
      * @param groupList {@link List<Integer>} Group List
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.3.0.
@@ -471,12 +468,11 @@ public class ZclGroupsCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new getGroupMembershipResponse(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> getGroupMembershipResponse(Integer capacity, Integer groupCount, List<Integer> groupList) {
+    public Future<CommandResult> getGroupMembershipResponse(Integer capacity, List<Integer> groupList) {
         GetGroupMembershipResponse command = new GetGroupMembershipResponse();
 
         // Set the fields
         command.setCapacity(capacity);
-        command.setGroupCount(groupCount);
         command.setGroupList(groupList);
 
         return sendCommand(command);

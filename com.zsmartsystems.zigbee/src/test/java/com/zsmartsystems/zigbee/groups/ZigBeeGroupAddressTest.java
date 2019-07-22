@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
-package com.zsmartsystems.zigbee;
+package com.zsmartsystems.zigbee.groups;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -14,7 +14,7 @@ import org.junit.Test;
 
 /**
  * Tests for {@link ZigBeeGroupAddress}
- * 
+ *
  * @author Chris Jackson
  *
  */
@@ -28,20 +28,13 @@ public class ZigBeeGroupAddressTest {
         ZigBeeGroupAddress group2 = new ZigBeeGroupAddress(1);
         assertTrue(group1.equals(group2));
         assertEquals(0, group1.compareTo(group2));
-        assertEquals(1, group1.getGroupId());
-
-        // Test that label doesn't matter
-        group2 = new ZigBeeGroupAddress(1, "Test Label");
-        assertTrue(group1.equals(group2));
-        assertEquals("Test Label", group2.getLabel());
+        assertEquals(1, group1.getAddress());
 
         group2 = new ZigBeeGroupAddress();
-        group2.setGroupId(1);
-        assertEquals(1, group1.getGroupId());
-        group2.setLabel("Test Label");
-        assertEquals("Test Label", group2.getLabel());
+        group2.setAddress(1);
+        assertEquals(1, group1.getAddress());
 
-        group2.setGroupId(2);
+        group2.setAddress(2);
         assertEquals(1, group1.compareTo(group2));
 
         System.out.println(group2);

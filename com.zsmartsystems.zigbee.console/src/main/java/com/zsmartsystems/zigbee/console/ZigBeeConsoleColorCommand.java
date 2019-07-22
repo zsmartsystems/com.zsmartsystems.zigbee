@@ -15,9 +15,10 @@ import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.console.internal.Cie;
 import com.zsmartsystems.zigbee.groups.ZigBeeGroup;
-import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
-import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclColorControlCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.MoveToColorCommand;
 
 /**
  * Uses the OnOff cluster to switch a device on
@@ -25,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnCommand;
  * @author Chris Jackson
  *
  */
-public class ZigBeeConsoleSwitchOnCommand extends ZigBeeConsoleAbstractCommand {
+public class ZigBeeConsoleColorCommand extends ZigBeeConsoleAbstractCommand {
     @Override
     public String getCommand() {
         return "on";
@@ -53,11 +54,44 @@ public class ZigBeeConsoleSwitchOnCommand extends ZigBeeConsoleAbstractCommand {
             throw new IllegalArgumentException("Invalid number of arguments");
         }
 
-        List<ZclOnOffCluster> clusters = new ArrayList<>();
+        float red;
+        try {
+            red = Float.parseFloat(args[2]);
+        } catch (final NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid red value");
+        }
+        float green;
+        try {
+            green = Float.parseFloat(args[3]);
+        } catch (final NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid green value");
+        }
+        float blue;
+        try {
+            blue = Float.parseFloat(args[4]);
+        } catch (final NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid blue value");
+        }
+
+        final Cie cie = Cie.rgb2cie(red, green, blue);
+
+        int x = (int) (cie.x * 65536);
+        int y = (int) (cie.y * 65536);
+        if (x > 65279) {
+            x = 65279;
+        }
+        if (y > 65279) {
+            y = 65279;
+        }
+
+        MoveToColorCommand command = new MoveToColorCommand(x, y, 10);
+
+        List<ZclColorControlCluster> clusters = new ArrayList<>();
         if (WILDCARD.equals(args[1])) {
             for (ZigBeeNode node : networkManager.getNodes()) {
                 for (ZigBeeEndpoint endpoint : node.getEndpoints()) {
-                    ZclOnOffCluster cluster = (ZclOnOffCluster) endpoint.getInputCluster(ZclOnOffCluster.CLUSTER_ID);
+                    ZclColorControlCluster cluster = (ZclColorControlCluster) endpoint
+                            .getInputCluster(ZclColorControlCluster.CLUSTER_ID);
                     if (cluster != null) {
                         clusters.add(cluster);
                     }
@@ -66,21 +100,20 @@ public class ZigBeeConsoleSwitchOnCommand extends ZigBeeConsoleAbstractCommand {
         } else {
             ZigBeeGroup group = getGroup(networkManager, args[1]);
             if (group != null) {
-                OnCommand command = new OnCommand();
                 group.sendCommand(command);
                 return;
             }
 
             ZigBeeEndpoint endpoint = getEndpoint(networkManager, args[1]);
-            ZclOnOffCluster cluster = (ZclOnOffCluster) endpoint.getInputCluster(ZclOnOffCluster.CLUSTER_ID);
+            ZclColorControlCluster cluster = (ZclColorControlCluster) endpoint
+                    .getInputCluster(ZclColorControlCluster.CLUSTER_ID);
             if (cluster != null) {
                 clusters.add(cluster);
             }
         }
 
         CommandResult result;
-        for (ZclOnOffCluster cluster : clusters) {
-            OnCommand command = new OnCommand();
+        for (ZclColorControlCluster cluster : clusters) {
             try {
                 result = cluster.sendCommand(command).get();
             } catch (Exception e) {

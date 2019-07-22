@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
@@ -40,6 +39,10 @@ import com.zsmartsystems.zigbee.aps.ApsDataEntity;
 import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDataStore;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDatabaseManager;
+import com.zsmartsystems.zigbee.groups.ZigBeeGroup;
+import com.zsmartsystems.zigbee.groups.ZigBeeGroupAddress;
+import com.zsmartsystems.zigbee.groups.ZigBeeNetworkGroupManager;
+import com.zsmartsystems.zigbee.groups.ZigBeeNetworkGroupManager.GroupSynchronizationMethod;
 import com.zsmartsystems.zigbee.internal.ClusterMatcher;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.internal.ZigBeeCommandNotifier;
@@ -156,10 +159,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
      */
     private final Map<IeeeAddress, ZigBeeNode> networkNodes = new ConcurrentHashMap<>();
 
-    /**
-     * The groups in the ZigBee network.
-     */
-    private final Map<Integer, ZigBeeGroupAddress> networkGroups = new TreeMap<>();
+    private ZigBeeNetworkGroupManager groupManager;
 
     /**
      * The node listeners of the ZigBee network. Registered listeners will be
@@ -291,6 +291,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
      */
     public ZigBeeNetworkManager(final ZigBeeTransportTransmit transport) {
         databaseManager = new ZigBeeNetworkDatabaseManager(this);
+        groupManager = new ZigBeeNetworkGroupManager(this);
 
         Map<ZigBeeTransportState, Set<ZigBeeTransportState>> transitions = new ConcurrentHashMap<>();
         transitions.put(ZigBeeTransportState.UNINITIALISED,
@@ -331,10 +332,33 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
     public void serializeNetworkDataStore(IeeeAddress nodeAddress) {
         ZigBeeNode node = getNode(nodeAddress);
         if (node == null) {
+            logger.debug("{}: ZigBeeNetworkManager serializeNetworkDataStore: node not found", nodeAddress);
             return;
         }
 
-        databaseManager.nodeUpdated(node);
+        synchronized (this) {
+            databaseManager.nodeUpdated(node);
+        }
+    }
+
+    /**
+     * Writes a key value pair to the data store
+     *
+     * @param key
+     * @param value
+     */
+    public void writeNetworkDataStore(String key, Object value) {
+        databaseManager.writeKey(key, value);
+    }
+
+    /**
+     * Reads a key value pair from the data store
+     *
+     * @param key
+     * @return
+     */
+    public Object readNetworkDataStore(String key) {
+        return databaseManager.readKey(key);
     }
 
     /**
@@ -637,6 +661,8 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             databaseManager.clear();
         }
 
+        groupManager.initialize();
+
         // Start the transport layer
         ZigBeeStatus status = transport.startup(reinitialize);
         if (status != ZigBeeStatus.SUCCESS) {
@@ -675,7 +701,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
     public void shutdown() {
         logger.debug("ZigBeeNetworkManager shutdown: networkState={}", networkState);
 
-        // To avoid deferred writes, set the deferred write time to 0.
+        // To avoid deferred writes while we shut down, set the deferred write time to 0.
         databaseManager.setDeferredWriteTime(0);
         databaseManager.setMaxDeferredWriteTime(0);
 
@@ -684,6 +710,8 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         if (clusterMatcher != null) {
             clusterMatcher.shutdown();
         }
+
+        groupManager.shutdown();
 
         // Write out all nodes to the data store.
         for (ZigBeeNode node : networkNodes.values()) {
@@ -814,6 +842,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         } else if (command.getDestinationAddress() instanceof ZigBeeGroupAddress) {
             apsFrame.setAddressMode(ZigBeeNwkAddressMode.GROUP);
             apsFrame.setDestinationAddress(((ZigBeeGroupAddress) command.getDestinationAddress()).getAddress());
+            apsFrame.setGroupAddress(((ZigBeeGroupAddress) command.getDestinationAddress()).getAddress());
         } else {
             logger.debug("Command cannot be sent due to unknown destination address type {}", command);
             return false;
@@ -1367,7 +1396,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
      * since it allows devices to join the network without the installer knowing.
      *
      * @param duration sets the duration in seconds of the join being enabled. Setting this to 0 disables joining.
-     *                As per ZigBee 3, a value of 255 is not permitted and will be ignored.
+     *            As per ZigBee 3, a value of 255 is not permitted and will be ignored.
      * @return {@link ZigBeeStatus} with the status of function
      */
     public ZigBeeStatus permitJoin(final int duration) {
@@ -1383,7 +1412,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
      *
      * @param destination the {@link ZigBeeEndpointAddress} to send the join request to
      * @param duration sets the duration in seconds of the join being enabled. Setting this to 0 disables joining.
-     *                 As per ZigBee 3, a value of 255 is not permitted and will be ignored.
+     *            As per ZigBee 3, a value of 255 is not permitted and will be ignored.
      * @return {@link ZigBeeStatus} with the status of function
      */
     public ZigBeeStatus permitJoin(final ZigBeeEndpointAddress destination, final int duration) {
@@ -1474,34 +1503,69 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         }.start();
     }
 
-    public void addGroup(final ZigBeeGroupAddress group) {
-        synchronized (networkGroups) {
-            networkGroups.put(group.getGroupId(), group);
-        }
+    /**
+     * Returns the {@link ZigBeeNetworkGroupManager}. It should not normally be needed to directly access the
+     * {@link ZigBeeNetworkGroupManager} for most applications as the {@link #addGroup}, {@link #getGroup},
+     * {@link #removeGroup}, {@link #getGroups} and {@link #synchronizeGroups} methods can be used to manipulate groups.
+     * <p>
+     * Access to the {@link ZigBeeNetworkGroupManager} is provided for low level functionality as may be required for
+     * debugging etc.
+     *
+     * @return the {@link ZigBeeNetworkGroupManager} used by the network
+     */
+    public ZigBeeNetworkGroupManager getGroupManager() {
+        return groupManager;
     }
 
-    public void updateGroup(ZigBeeGroupAddress group) {
-        synchronized (networkGroups) {
-            networkGroups.put(group.getGroupId(), group);
-        }
+    /**
+     * Synchronises the groups across the network. The method to be used for synchronisation is defined in
+     * {@link GroupSynchronizationMethod} enumeration.
+     *
+     * @param syncMethod the {@link GroupSynchronizationMethod} to use when synchronizing the group members
+     * @return {@link Future} providing the {@link ZigBeeStatus} of the result
+     */
+    public Future<ZigBeeStatus> synchronizeGroups(GroupSynchronizationMethod syncMethod) {
+        return groupManager.synchronize(syncMethod);
     }
 
-    public ZigBeeGroupAddress getGroup(final int groupId) {
-        synchronized (networkGroups) {
-            return networkGroups.get(groupId);
-        }
+    /**
+     * Creates or returns a {@link ZigBeeGroup}. If the group already exists, the existing {@link ZigBeeGroup} is
+     * returned, otherwise a new {@link ZigBeeGroup} is created and returned.
+     *
+     * @param groupId the group ID to add or get
+     * @return the {@link ZigBeeGroup}
+     */
+    public ZigBeeGroup addGroup(final int groupId) {
+        return groupManager.add(groupId);
     }
 
-    public void removeGroup(final int groupId) {
-        synchronized (networkGroups) {
-            networkGroups.remove(groupId);
-        }
+    /**
+     * Gets a {@link ZigBeeGroup} given the group ID
+     *
+     * @param groupId the ID of the group to return
+     * @return the {@link ZigBeeGroup} or null if the group ID is not known
+     */
+    public ZigBeeGroup getGroup(final int groupId) {
+        return groupManager.get(groupId);
     }
 
-    public List<ZigBeeGroupAddress> getGroups() {
-        synchronized (networkGroups) {
-            return new ArrayList<>(networkGroups.values());
-        }
+    /**
+     * Returns the collection of {@link ZigBeeGroup} known in the network
+     *
+     * @return the Collection of {@link ZigBeeGroupAddress}
+     */
+    public Collection<ZigBeeGroup> getGroups() {
+        return groupManager.getAll();
+    }
+
+    /**
+     * Removes a group given the group ID
+     *
+     * @param groupId the ID of the group to remove
+     * @return the {@link ZigBeeGroup} that was removed, or null if the group was not gound
+     */
+    public ZigBeeGroup deleteGroup(final int groupId) {
+        return groupManager.delete(groupId);
     }
 
     /**
@@ -1941,11 +2005,23 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         command.setSourceAddress(new ZigBeeEndpointAddress(localNwkAddress));
     }
 
+    /**
+     * Sends a transaction into the ZigBee stack without waiting for a response
+     *
+     * @param command the {@link ZigBeeCommand} to send
+     */
     public void sendTransaction(ZigBeeCommand command) {
         finaliseOutgoingCommand(command);
         transactionManager.sendTransaction(command);
     }
 
+    /**
+     * Sends {@link ZigBeeCommand} command and uses the {@link ZigBeeTransactionMatcher} to match the response.
+     *
+     * @param command the {@link ZigBeeCommand} to send
+     * @param responseMatcher the {@link ZigBeeTransactionMatcher} used to match the response to the request
+     * @return the {@link CommandResult} future.
+     */
     public Future<CommandResult> sendTransaction(ZigBeeCommand command, ZigBeeTransactionMatcher responseMatcher) {
         finaliseOutgoingCommand(command);
         return transactionManager.sendTransaction(command, responseMatcher);

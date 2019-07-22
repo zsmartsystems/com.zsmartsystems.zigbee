@@ -20,6 +20,9 @@ import com.zsmartsystems.zigbee.IeeeAddress;
  * The underlying data store implementation must be able to store and retrieve node data with the
  * {@link #writeNode(ZigBeeNodeDao)} and {@link #readNode(IeeeAddress)} methods, and also provide a list of all nodes
  * currently in the store with the {@link #readNetworkNodes()} method.
+ * <p>
+ * A simple <key, value> data store is also defined to allow the system to persist system critical information between
+ * restarts.
  *
  * @author Chris Jackson
  *
@@ -60,4 +63,23 @@ public interface ZigBeeNetworkDataStore {
      * @param address the {@link IeeeAddress} of the node to remove
      */
     void removeNode(IeeeAddress address);
+
+    /**
+     * Writes an object into the data store
+     *
+     * @param key the name of the object. Users must use globally unique names to avoid clashes
+     * @param object the object value to write to the store
+     */
+    default void writeObject(String key, Object object) {
+    }
+
+    /**
+     * Reads an object from the data store
+     *
+     * @param key the name of the object. Users must use globally unique names to avoid clashes
+     * @return the object value read from the store or null if data for the requested key was not found
+     */
+    default Object readObject(String key) {
+        return null;
+    }
 }

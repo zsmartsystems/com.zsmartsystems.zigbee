@@ -16,6 +16,7 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.groups.ZigBeeGroup;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 import com.zsmartsystems.zigbee.zcl.field.ZclArrayList;
@@ -64,7 +65,7 @@ public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleComma
      * Gets {@link ZigBeeEndpoint} by device identifier.
      *
      * @param networkManager the {@link ZigBeeNetworkManager}
-     * @param endpointId the device identifier
+     * @param endpointId the endpoint identifier
      * @return the {@link ZigBeeEndpoint}
      * @throws IllegalArgumentException
      */
@@ -94,6 +95,30 @@ public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleComma
         } catch (final NumberFormatException e) {
             throw new IllegalArgumentException("Cluster ID '" + clusterId + "' uses an invalid number format.");
         }
+    }
+
+    /**
+     * Gets {@link ZigBeeGroup} by group identifier. A group ID must start with a hash (#). This method will return null
+     * if this is not a group ID starting with hash.
+     *
+     * @param networkManager the {@link ZigBeeNetworkManager}
+     * @param groupIdString the group identifier
+     * @return the {@link ZigBeeGroup} or null if this grouIdString is not a group ID starting with hash.
+     * @throws IllegalArgumentException
+     */
+    protected ZigBeeGroup getGroup(final ZigBeeNetworkManager networkManager, final String groupIdString)
+            throws IllegalArgumentException {
+        if (!groupIdString.startsWith("#")) {
+            return null;
+        }
+
+        Integer groupId = getInteger(groupIdString.substring(1));
+        ZigBeeGroup group = networkManager.getGroup(groupId);
+        if (group == null) {
+            throw new IllegalArgumentException("Group '" + groupId + "' is not found");
+        }
+
+        return group;
     }
 
     /**

@@ -27,8 +27,9 @@
         <field type="UNSIGNED_8_BIT_INTEGER">
             <name>Group Count</name>
         </field>
-        <field type="N_X_UNSIGNED_16_BIT_INTEGER">
+        <field type="UNSIGNED_16_BIT_INTEGER">
             <name>Group List</name>
+            <sizer>groupCount</sizer>
         </field>
     </command>
     <command code="0x03" source="client">
@@ -84,8 +85,9 @@
         <field type="UNSIGNED_8_BIT_INTEGER">
             <name>Group Count</name>
         </field>
-        <field type="N_X_UNSIGNED_16_BIT_INTEGER">
+        <field type="UNSIGNED_16_BIT_INTEGER">
             <name>Group List</name>
+            <sizer>groupCount</sizer>
         </field>
     </command>
     <command code="0x03" source="server">
