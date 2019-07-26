@@ -227,7 +227,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     /**
      * The rate at which we will do a status poll if we've not sent any other messages within this period
      */
-    private int pollRate = 1000;
+    private int pollRate = 2 * 60 * 1000;
 
     /**
      * The time the last command was sent from the {@link ZigBeeNetworkManager}. This is used by the dongle polling task
@@ -601,7 +601,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 // Don't wait for the response. This is running in a single thread scheduler
                 frameHandler.queueFrame(new EzspNetworkStateRequest());
             }
-        }, pollRate, pollRate, TimeUnit.MILLISECONDS);
+        }, 1000, pollRate, TimeUnit.MILLISECONDS);
     }
 
     /**

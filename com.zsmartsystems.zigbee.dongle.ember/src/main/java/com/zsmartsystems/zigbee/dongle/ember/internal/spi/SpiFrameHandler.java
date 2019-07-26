@@ -422,7 +422,12 @@ public class SpiFrameHandler implements EzspProtocolHandler {
      * here without using {@link EzspFrame} code.
      */
     private boolean isEzspNoCallbacksResponse(int[] ezspPacketData) {
-        return ezspPacketData[2] == 0x07;
+        // return ezspPacketData[2] == 0x07;
+        // check the new frame ID not the legacy one
+        if (ezspPacketData.length >= 5) {
+            return ezspPacketData[4] == 0x07;
+        }
+        return false;
     }
 
     private void processSpiEzsp(int[] packetData) {
