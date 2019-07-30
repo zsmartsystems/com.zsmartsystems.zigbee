@@ -60,7 +60,7 @@ public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
         }
 
         Collections.sort(nodeIds);
-        String tableHeader = String.format("%-7s  %-4s  %-17s  %-13s  %-3s  %-25s  %-15s  %-15s  %-15s", "Network",
+        String tableHeader = String.format("%-7s  %-4s  %-17s  %-13s  %-3s  %-25s  %-25s  %-15s  %-15s", "Network",
                 "Addr", "IEEE Address", "Logical Type", "EP", "Profile", "Device Type", "Manufacturer", "Model");
         out.println(tableHeader);
 
@@ -86,13 +86,13 @@ public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
                 profileType = ZigBeeProfileType.getByValue(endpoint.getProfileId()).toString();
             }
             String deviceType;
-            if (ZigBeeProfileType.getByValue(endpoint.getProfileId()) == null) {
+            if (ZigBeeDeviceType.getByValue(endpoint.getDeviceId()) == null) {
                 deviceType = String.format("%04X", endpoint.getDeviceId());
             } else {
                 deviceType = ZigBeeDeviceType.getByValue(endpoint.getDeviceId()).toString();
             }
             boolean showManufacturerAndModel = endpoint.getParentNode().getNetworkAddress() != 0;
-            String endpointInfo = String.format("%3d  %-25s  %-15s  %-15s  %-15s", endpoint.getEndpointId(),
+            String endpointInfo = String.format("%3d  %-25s  %-25s  %-15s  %-15s", endpoint.getEndpointId(),
                     profileType, deviceType, showManufacturerAndModel ? getManufacturer(endpoint) : "",
                     showManufacturerAndModel ? getModel(endpoint) : "");
 
