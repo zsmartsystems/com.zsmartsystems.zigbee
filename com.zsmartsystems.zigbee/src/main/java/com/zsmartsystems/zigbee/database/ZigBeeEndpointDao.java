@@ -20,9 +20,13 @@ import com.zsmartsystems.zigbee.ZigBeeEndpoint;
  *
  */
 public class ZigBeeEndpointDao {
+    private int endpointId;
+
     private Integer profileId;
 
-    private int endpointId;
+    private Integer deviceId;
+
+    private Integer deviceVersion;
 
     /**
      * Input cluster IDs
@@ -37,6 +41,14 @@ public class ZigBeeEndpointDao {
 
     private final List<ZclClusterDao> outputClusters = new ArrayList<ZclClusterDao>();
 
+    public int getEndpointId() {
+        return endpointId;
+    }
+
+    public void setEndpointId(int endpointId) {
+        this.endpointId = endpointId;
+    }
+
     public Integer getProfileId() {
         return profileId;
     }
@@ -45,12 +57,20 @@ public class ZigBeeEndpointDao {
         this.profileId = profileId;
     }
 
-    public int getEndpointId() {
-        return endpointId;
+    public Integer getDeviceId() {
+        return deviceId;
     }
 
-    public void setEndpointId(int endpointId) {
-        this.endpointId = endpointId;
+    public void setDeviceVersion(int deviceVersion) {
+        this.deviceVersion = deviceVersion;
+    }
+
+    public Integer getDeviceVersion() {
+        return deviceVersion;
+    }
+
+    public void setDeviceId(int deviceId) {
+        this.deviceId = deviceId;
     }
 
     public List<Integer> getInputClusterIds() {

@@ -474,6 +474,8 @@ public class ZigBeeEndpoint {
 
         dao.setEndpointId(endpointId);
         dao.setProfileId(profileId);
+        dao.setDeviceId(deviceId);
+        dao.setDeviceVersion(deviceVersion);
 
         List<ZclClusterDao> clusters;
 
@@ -496,6 +498,12 @@ public class ZigBeeEndpoint {
         endpointId = dao.getEndpointId();
         if (dao.getProfileId() != null) {
             profileId = dao.getProfileId();
+        }
+        if (dao.getDeviceId() != null) {
+            deviceId = dao.getDeviceId();
+        }
+        if (dao.getDeviceVersion() != null) {
+            deviceVersion = dao.getDeviceVersion();
         }
 
         if (dao.getInputClusterIds() != null) {

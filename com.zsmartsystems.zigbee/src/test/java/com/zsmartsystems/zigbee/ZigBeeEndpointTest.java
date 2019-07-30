@@ -171,7 +171,15 @@ public class ZigBeeEndpointTest {
         ZigBeeEndpoint endpoint = getEndpoint();
 
         ZigBeeEndpointDao dao = new ZigBeeEndpointDao();
+        dao.setEndpointId(1);
+        dao.setDeviceId(2);
+        dao.setDeviceVersion(3);
+        dao.setProfileId(4);
         endpoint.setDao(dao);
+        assertEquals(1, endpoint.getEndpointId());
+        assertEquals(2, endpoint.getDeviceId());
+        assertEquals(3, endpoint.getDeviceVersion());
+        assertEquals(4, endpoint.getProfileId());
     }
 
     private ZigBeeEndpoint getEndpoint() {
