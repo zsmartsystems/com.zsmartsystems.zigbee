@@ -33,7 +33,7 @@ public enum ZigBeeProfileType {
     /**
      * ZigBee Green Power
      */
-    ZIGBEE_GREEN_POWER(0xA10E),
+    ZIGBEE_GREEN_POWER(0xA1E0),
 
     /**
      * Manufacturer Telegesis
