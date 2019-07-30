@@ -30,6 +30,7 @@ import com.zsmartsystems.zigbee.console.ember.EmberConsoleMmoHashCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpChildrenCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpConfigurationCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpCountersCommand;
+import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpHandlerCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpMfglibCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpScanCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpStateCommand;
@@ -207,6 +208,7 @@ public class ZigBeeConsoleMain {
             commands.add(EmberConsoleSecurityStateCommand.class);
             commands.add(EmberConsoleNcpScanCommand.class);
             commands.add(EmberConsoleNcpMfglibCommand.class);
+            commands.add(EmberConsoleNcpHandlerCommand.class);
         } else if (dongleName.toUpperCase().equals("XBEE")) {
             dongle = new ZigBeeDongleXBee(serialPort);
         } else if (dongleName.toUpperCase().equals("CONBEE")) {
