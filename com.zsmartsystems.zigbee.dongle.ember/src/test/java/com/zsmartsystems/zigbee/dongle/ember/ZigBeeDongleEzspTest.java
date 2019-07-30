@@ -73,6 +73,8 @@ public class ZigBeeDongleEzspTest {
     @Test
     public void setZigBeePanId() {
         ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
+        dongle.setPollRate(1);
+        dongle.setPollRate(0);
 
         dongle.setZigBeePanId(0x1234);
         assertEquals(0x1234, dongle.getZigBeePanId());

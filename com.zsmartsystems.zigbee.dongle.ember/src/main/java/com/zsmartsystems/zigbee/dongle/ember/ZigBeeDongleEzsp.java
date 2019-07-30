@@ -452,6 +452,10 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             pollingTimer.cancel(true);
         }
 
+        if (pollRate == 0) {
+            return;
+        }
+
         pollingTimer = executorService.scheduleWithFixedDelay(new Runnable() {
             @Override
             public void run() {
@@ -464,6 +468,19 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 frameHandler.queueFrame(new EzspNetworkStateRequest());
             }
         }, pollRate, pollRate, TimeUnit.MILLISECONDS);
+    }
+
+    /**
+     * Set the polling rate at which the handler will poll the NCP to ensure it is still responding.
+     * If the NCP fails to respond within a fixed time the driver will be set to OFFLINE.
+     * <p>
+     * Setting the rate to 0 will disable polling
+     *
+     * @param pollRate the polling rate in milliseconds. 0 will disable polling.
+     */
+    public void setPollRate(int pollRate) {
+        this.pollRate = pollRate;
+        scheduleNetworkStatePolling();
     }
 
     @Override
