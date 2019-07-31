@@ -345,6 +345,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      */
     public ZigBeeStatus initialize() {
         logger.debug("ZigBeeNetworkManager initialize: networkState={}", networkState);
+        NotificationService.initialize();
         synchronized (this) {
             if (networkState != ZigBeeNetworkState.UNINITIALISED) {
                 return ZigBeeStatus.INVALID_STATE;

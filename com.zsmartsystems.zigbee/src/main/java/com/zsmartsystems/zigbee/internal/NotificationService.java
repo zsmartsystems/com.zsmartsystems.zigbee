@@ -30,6 +30,15 @@ public class NotificationService {
 
     private static ExecutorService executorService = Executors.newCachedThreadPool();
 
+    /**
+     * Initializes the notification service
+     */
+    public static void initialize() {
+        if (executorService.isShutdown()) {
+            executorService = Executors.newCachedThreadPool();
+        }
+    }
+
     public static void execute(Runnable command) {
         if (executorService.isShutdown()) {
             logger.debug("NotificationService is shutdown. Not scheduling {}", command.getClass().getName());
