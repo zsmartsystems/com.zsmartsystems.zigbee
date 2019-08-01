@@ -21,6 +21,8 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspClearKeyTableRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspClearKeyTableResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetEui64Request;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetEui64Response;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersRequest;
@@ -209,6 +211,18 @@ public class EmberNcpTest {
         EzspFrameRequest request = ezspTransactionCapture.getValue().getRequest();
         assertTrue(request instanceof EzspStartScanRequest);
         assertEquals(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, ((EzspStartScanRequest) request).getChannelMask());
+    }
+
+    @Test
+    public void clearKeyTable() {
+        EmberNcp ncp = getEmberNcp(Mockito.mock(EzspClearKeyTableResponse.class));
+
+        ncp.clearKeyTable();
+
+        Mockito.verify(handler, Mockito.times(1)).sendEzspTransaction(ezspTransactionCapture.capture());
+
+        EzspFrameRequest request = ezspTransactionCapture.getValue().getRequest();
+        assertTrue(request instanceof EzspClearKeyTableRequest);
     }
 
 }
