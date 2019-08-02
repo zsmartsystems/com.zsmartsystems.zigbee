@@ -27,6 +27,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddTransientLinkKe
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddTransientLinkKeyResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAesMmoHashRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAesMmoHashResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspClearKeyTableRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspClearKeyTableResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspEnergyScanResultHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetCertificate283k1Request;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetCertificate283k1Response;
@@ -330,6 +332,21 @@ public class EmberNcp {
         logger.debug(response.toString());
         lastStatus = null;
         return response.getValues();
+    }
+
+    /**
+     * Clears the key table on the NCP
+     *
+     * @return the {@link EmberStatus} or null on error
+     */
+    public EmberStatus clearKeyTable() {
+        EzspClearKeyTableRequest request = new EzspClearKeyTableRequest();
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspClearKeyTableResponse.class));
+        EzspClearKeyTableResponse response = (EzspClearKeyTableResponse) transaction.getResponse();
+        logger.debug(response.toString());
+        lastStatus = response.getStatus();
+        return lastStatus;
     }
 
     /**

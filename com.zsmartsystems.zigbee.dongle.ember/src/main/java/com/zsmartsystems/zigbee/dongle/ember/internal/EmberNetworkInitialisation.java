@@ -111,6 +111,8 @@ public class EmberNetworkInitialisation {
             ncp.leaveNetwork();
         }
 
+        ncp.clearKeyTable();
+
         // Perform an energy scan to find a clear channel
         int quietestChannel = doEnergyScan(ncp, scanDuration);
         logger.debug("Energy scan reports quietest channel is {}", quietestChannel);
