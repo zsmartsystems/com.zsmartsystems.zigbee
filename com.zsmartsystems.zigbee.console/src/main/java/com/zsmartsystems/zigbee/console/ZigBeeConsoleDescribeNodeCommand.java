@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.zsmartsystems.zigbee.ZigBeeDeviceType;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
@@ -86,7 +87,7 @@ public class ZigBeeConsoleDescribeNodeCommand extends ZigBeeConsoleAbstractComma
         out.println("Profile     " + String.format("%04X ", endpoint.getProfileId())
                 + ZigBeeProfileType.getByValue(endpoint.getProfileId()));
         out.println("                 : Device Type " + String.format("%04X ", endpoint.getDeviceId())
-                + com.zsmartsystems.zigbee.ZigBeeDeviceType.getByValue(endpoint.getDeviceId()).toString());
+                + ZigBeeDeviceType.getByValue(endpoint.getDeviceId()));
         for (Integer clusterId : endpoint.getInputClusterIds()) {
             ZclClusterType clusterType = ZclClusterType.getValueById(clusterId);
             String clusterTypeLabel = clusterType != null ? clusterType.toString() : String.format("0x%04X", clusterId);
