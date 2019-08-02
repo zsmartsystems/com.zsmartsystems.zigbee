@@ -139,9 +139,9 @@ public class SpiFrameHandlerTest {
 
     @Test
     public void testReceivePacket() {
-        int[] response = getPacket(new int[] { 0x01, 0x02, 0x03, 0x04, 0xA7 });
+        int[] response = getPacket(new int[] { 0x01, 0x02, 0xA7 });
         assertNotNull(response);
-        assertEquals(4, response.length);
+        assertEquals(2, response.length);
         assertEquals(0x01, response[0]);
     }
 
@@ -155,6 +155,15 @@ public class SpiFrameHandlerTest {
     }
 
     @Test
+    public void testReceivePacketReset() {
+        int[] response = getPacket(new int[] { 0x00, 0x02, 0xA7 });
+        assertNotNull(response);
+        assertEquals(2, response.length);
+        assertEquals(0x00, response[0]);
+        assertEquals(0x02, response[1]);
+    }
+
+    @Test
     public void testReceivePacketVersion() {
         int[] response = getPacket(new int[] { 0x82, 0xA7 });
         assertNotNull(response);
@@ -164,9 +173,9 @@ public class SpiFrameHandlerTest {
 
     @Test
     public void testReceivePacketNoData() {
-        int[] response = getPacket(new int[] { 0xFF, 0xFF, 0xA7, 0x01, 0x02, 0x03, 0x04, 0xA7 });
+        int[] response = getPacket(new int[] { 0xFF, 0xFF, 0xA7, 0x01, 0x02, 0xA7 });
         assertNotNull(response);
-        assertEquals(4, response.length);
+        assertEquals(2, response.length);
         assertEquals(0x01, response[0]);
     }
 
