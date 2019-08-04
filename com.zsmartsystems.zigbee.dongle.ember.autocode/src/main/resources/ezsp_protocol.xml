@@ -4194,6 +4194,11 @@
 				<description>Admit joins only if there is an entry in the transient key table. This corresponds to the Base Device Behavior specification where a Trust Center enforces all devices to join with an install code-derived link key.</description>
 			</value>
 			<value>
+				<name>EZSP_DEFER_JOINS_REJOINS_HAVE_LINK_KEY</name>
+				<enum_value>0x07</enum_value>
+				<description>Delay sending the network key to a new joining device.</description>
+			</value>
+			<value>
 				<name>EZSP_DISALLOW_BINDING_MODIFICATION</name>
 				<enum_value>0x10</enum_value>
 				<description>EZSP_BINDING_MODIFICATION_POLICY default decision. Do not allow the local binding table to be changed by remote nodes.</description>
@@ -4244,12 +4249,12 @@
 				<description>EZSP_TC_KEY_REQUEST_POLICY decision. When the Trust Center receives a request for a Trust Center link key, it will be ignored.</description>
 			</value>
 			<value>
-				<name>EZSP_ALLOW_TC_KEY_REQUESTS</name>
+				<name>EZSP_ALLOW_TC_KEY_REQUESTS_AND_SEND_CURRENT_KEY</name>
 				<enum_value>0x51</enum_value>
-				<description>EZSP_TC_KEY_REQUEST_POLICY decision. When the Trust Center receives a request for a Trust Center link key, it will reply to it with the corresponding key.</description>
+				<description>EZSP_TC_KEY_REQUEST_POLICY decision. When the Trust Center receives a request for a Trust Center link key, it will reply to it with the current key. If not key is currently in the key table for this device, a new key will be generated and sent to the device.</description>
 			</value>
 			<value>
-				<name>EZSP_GENERATE_NEW_TC_LINK_KEY</name>
+				<name>EZSP_ALLOW_TC_KEY_REQUEST_AND_GENERATE_NEW_KEY</name>
 				<enum_value>0x52</enum_value>
 				<description>EZSP_TC_KEY_REQUEST_POLICY decision. When the Trust Center receives a request for a Trust Center link key, it will generate a key to send to the joiner.</description>
 			</value>
@@ -6168,7 +6173,7 @@
 			</value>
 			<value>
 				<name>EMBER_TC_TIMEOUT_WAITING_FOR_SECOND_APP_KEY_REQUEST</name>
-				<enum_value>0x000C</enum_value>
+				<enum_value>0x000D</enum_value>
 				<description></description>
 			</value>
 			<value>
@@ -6451,8 +6456,38 @@
 				<description>The number of times a NWK broadcast was dropped because the the broadcast table was full.</description>
 			</value>
 			<value>
-				<name>EMBER_COUNTER_TYPE_COUNT</name>
+				<name>EMBER_COUNTER_PTA_LO_PRI_REQUESTED</name>
 				<enum_value>34</enum_value>
+				<description>The number of low priority packet traffic arbitration requests.</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_PTA_HI_PRI_REQUESTED</name>
+				<enum_value>35</enum_value>
+				<description>The number of high priority packet traffic arbitration requests.</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_PTA_LO_PRI_DENIED</name>
+				<enum_value>36</enum_value>
+				<description>The number of low priority packet traffic arbitration requests denied.</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_PTA_HI_PRI_DENIED</name>
+				<enum_value>37</enum_value>
+				<description>The number of high priority packet traffic arbitration requests denied.</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_PTA_LO_PRI_TX_ABORTED</name>
+				<enum_value>38</enum_value>
+				<description>The number of aborted low priority packet traffic arbitration transmissions.</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_PTA_HI_PRI_TX_ABORTED</name>
+				<enum_value>39</enum_value>
+				<description>The number of aborted high priority packet traffic arbitration transmissions.</description>
+			</value>
+			<value>
+				<name>EMBER_COUNTER_TYPE_COUNT</name>
+				<enum_value>40</enum_value>
 				<description>A placeholder giving the number of Ember counter types.</description>
 			</value>
 		</values>
@@ -6769,6 +6804,41 @@
 				<name>EZSP_VALUE_PTA_DIRECTIONAL_PRIORITY_PULSE_WIDTH</name>
 				<enum_value>0x36</enum_value>
 				<description>Set packet traffic arbitration directional priority pulse width in microseconds.</description>
+			</value>
+			<value>
+				<name>EZSP_VALUE_PTA_PHY_SELECT_TIMEOUT</name>
+				<enum_value>0x37</enum_value>
+				<description>Set packet traffic arbitration phy select timeout(ms).</description>
+			</value>
+			<value>
+				<name>EZSP_VALUE_ANTENNA_RX_MODE</name>
+				<enum_value>0x38</enum_value>
+				<description>Configure the RX antenna mode: (0-do not switch; 1-primary; 2-secondary; 3-RX antenna diversity).</description>
+			</value>
+			<value>
+				<name>EZSP_VALUE_NWK_KEY_TIMEOUT</name>
+				<enum_value>0x39</enum_value>
+				<description>Configure the timeout to wait for the network key before failing a join</description>
+			</value>
+			<value>
+				<name>EZSP_VALUE_FORCE_TX_AFTER_FAILED_CCA_ATTEMPTS</name>
+				<enum_value>0x3A</enum_value>
+				<description>The number of failed CSMA attempts due to failed CCA made by the MAC before continuing transmission with CCA disabled. This is the same as calling the emberForceTxAfterFailedCca(uint8_t csmaAttempts) API. A value of 0 disables the feature.</description>
+			</value>
+			<value>
+				<name>EZSP_VALUE_TRANSIENT_KEY_TIMEOUT_S</name>
+				<enum_value>0x3B</enum_value>
+				<description>The length of time, in seconds, that a trust center will store a transient link key that a device can use to join its network. A transient key is added with a call to emberAddTransientLinkKey. After the transient key is added, it will be removed once this amount of time has passed. A joining device will not be able to use that key to join until it is added again on the trust center. The default value is 300 seconds (5 minutes).</description>
+			</value>
+			<value>
+				<name>EZSP_VALUE_COULOMB_COUNTER_USAGE</name>
+				<enum_value>0x3C</enum_value>
+				<description>Cumulative energy usage metric since the last value reset of the coulomb counter plugin. Setting this value will reset the coulomb counter.</description>
+			</value>
+			<value>
+				<name>EZSP_VALUE_MAX_BEACONS_TO_STORE</name>
+				<enum_value>0x3D</enum_value>
+				<description>When scanning, configure the maximum number of beacons to store in cache. Each beacon consumes one packet buffer in RAM.</description>
 			</value>
 		</values>
 	</enum>

@@ -209,9 +209,39 @@ public enum EmberCounterType {
     EMBER_COUNTER_BROADCAST_TABLE_FULL(0x0021),
 
     /**
+     * The number of low priority packet traffic arbitration requests.
+     */
+    EMBER_COUNTER_PTA_LO_PRI_REQUESTED(0x0022),
+
+    /**
+     * The number of high priority packet traffic arbitration requests.
+     */
+    EMBER_COUNTER_PTA_HI_PRI_REQUESTED(0x0023),
+
+    /**
+     * The number of low priority packet traffic arbitration requests denied.
+     */
+    EMBER_COUNTER_PTA_LO_PRI_DENIED(0x0024),
+
+    /**
+     * The number of high priority packet traffic arbitration requests denied.
+     */
+    EMBER_COUNTER_PTA_HI_PRI_DENIED(0x0025),
+
+    /**
+     * The number of aborted low priority packet traffic arbitration transmissions.
+     */
+    EMBER_COUNTER_PTA_LO_PRI_TX_ABORTED(0x0026),
+
+    /**
+     * The number of aborted high priority packet traffic arbitration transmissions.
+     */
+    EMBER_COUNTER_PTA_HI_PRI_TX_ABORTED(0x0027),
+
+    /**
      * A placeholder giving the number of Ember counter types.
      */
-    EMBER_COUNTER_TYPE_COUNT(0x0022);
+    EMBER_COUNTER_TYPE_COUNT(0x0028);
 
     /**
      * A mapping between the integer code and its corresponding type to

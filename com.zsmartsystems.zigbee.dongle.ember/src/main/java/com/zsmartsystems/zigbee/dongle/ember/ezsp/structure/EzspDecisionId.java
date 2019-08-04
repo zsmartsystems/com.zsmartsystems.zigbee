@@ -69,6 +69,11 @@ public enum EzspDecisionId {
     EZSP_BDB_JOIN_USES_INSTALL_CODE_KEY(0x0006),
 
     /**
+     * Delay sending the network key to a new joining device.
+     */
+    EZSP_DEFER_JOINS_REJOINS_HAVE_LINK_KEY(0x0007),
+
+    /**
      * EZSP_BINDING_MODIFICATION_POLICY default decision. Do not allow the local binding table
      * to be changed by remote nodes.
      */
@@ -131,13 +136,13 @@ public enum EzspDecisionId {
      * EZSP_TC_KEY_REQUEST_POLICY decision. When the Trust Center receives a request for a Trust
      * Center link key, it will reply to it with the corresponding key.
      */
-    EZSP_ALLOW_TC_KEY_REQUESTS(0x0051),
+    EZSP_ALLOW_TC_KEY_REQUEST_AND_GENERATE_NEW_KEY(0x0051),
 
     /**
      * EZSP_TC_KEY_REQUEST_POLICY decision. When the Trust Center receives a request for a Trust
      * Center link key, it will generate a key to send to the joiner.
      */
-    EZSP_GENERATE_NEW_TC_LINK_KEY(0x0052),
+    EZSP_ALLOW_TC_KEY_REQUESTS_AND_SEND_CURRENT_KEY(0x0052),
 
     /**
      * EZSP_APP_KEY_REQUEST_POLICY decision. When the Trust Center receives a request for an

@@ -77,7 +77,7 @@ public enum EmberKeyStatus {
 
     /**
      */
-    EMBER_TC_TIMEOUT_WAITING_FOR_SECOND_APP_KEY_REQUEST(0x000C),
+    EMBER_TC_TIMEOUT_WAITING_FOR_SECOND_APP_KEY_REQUEST(0x000D),
 
     /**
      */
