@@ -12,7 +12,6 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -25,6 +24,7 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeBroadcastDestination;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
+import com.zsmartsystems.zigbee.ZigBeeExecutors;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
@@ -350,7 +350,7 @@ public class ZigBeeDongleTelegesis
      * We need to put all received events in a "pipeline" to make sure we process "SEQ/OK/ERROR" responses
      * from the dongle before "ACK/NAK" responses, or even before the command response arrives from the remote device
      */
-    private ExecutorService commandScheduler = Executors.newFixedThreadPool(1);
+    private ExecutorService commandScheduler = ZigBeeExecutors.newFixedThreadPool(1, "TelegesisCommands");
 
     /**
      * Constructor for Telegesis dongle.
@@ -360,7 +360,7 @@ public class ZigBeeDongleTelegesis
     public ZigBeeDongleTelegesis(final ZigBeePort serialPort) {
         this.serialPort = serialPort;
 
-        executorService = Executors.newScheduledThreadPool(1);
+        executorService = ZigBeeExecutors.newScheduledThreadPool(1, "TelegesisDongle");
     }
 
     /**

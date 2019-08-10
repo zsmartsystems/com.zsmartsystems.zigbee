@@ -8,11 +8,12 @@
 package com.zsmartsystems.zigbee.internal;
 
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.zsmartsystems.zigbee.ZigBeeExecutors;
 
 /**
  * {@link NotificationService} is used to provide notifications to our listeners "safely". A separate
@@ -28,14 +29,14 @@ public class NotificationService {
      */
     private static Logger logger = LoggerFactory.getLogger(NotificationService.class);
 
-    private static ExecutorService executorService = Executors.newCachedThreadPool();
+    private static ExecutorService executorService = ZigBeeExecutors.newCachedThreadPool("NotificationService");
 
     /**
      * Initializes the notification service
      */
     public static void initialize() {
         if (executorService.isShutdown()) {
-            executorService = Executors.newCachedThreadPool();
+            executorService = ZigBeeExecutors.newCachedThreadPool("NotificationService");
         }
     }
 

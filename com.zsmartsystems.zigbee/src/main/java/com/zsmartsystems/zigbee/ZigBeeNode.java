@@ -420,7 +420,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
         });
 
         // start the thread to execute it
-        new Thread(future).start();
+        new Thread(future, "UpdateBindingTable" + getIeeeAddress()).start();
         return future;
     }
 

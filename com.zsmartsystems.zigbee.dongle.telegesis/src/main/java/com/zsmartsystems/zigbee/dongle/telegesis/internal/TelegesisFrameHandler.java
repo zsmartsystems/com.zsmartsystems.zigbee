@@ -15,7 +15,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -25,6 +24,7 @@ import java.util.concurrent.TimeoutException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.ZigBeeExecutors;
 import com.zsmartsystems.zigbee.dongle.telegesis.ZigBeeDongleTelegesis;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisEvent;
@@ -49,7 +49,7 @@ public class TelegesisFrameHandler {
      */
     private final Queue<TelegesisCommand> sendQueue = new ConcurrentLinkedQueue<TelegesisCommand>();
 
-    private ExecutorService executor = Executors.newCachedThreadPool();
+    private ExecutorService executor = ZigBeeExecutors.newCachedThreadPool("TelegesisFrameExecutor");
 
     /**
      * List of listeners waiting for commands to complete
@@ -154,7 +154,7 @@ public class TelegesisFrameHandler {
 
         this.serialPort = serialPort;
 
-        timeoutScheduler = Executors.newSingleThreadScheduledExecutor();
+        timeoutScheduler = ZigBeeExecutors.newSingleThreadScheduledExecutor("TelegesisTimer");
 
         parserThread = new Thread("TelegesisFrameHandler") {
             @Override

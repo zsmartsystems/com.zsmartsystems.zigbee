@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -30,6 +29,7 @@ import com.zsmartsystems.zigbee.ZigBeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeBroadcastDestination;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
+import com.zsmartsystems.zigbee.ZigBeeExecutors;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
@@ -127,11 +127,12 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
 
     /**
      * Executor service to execute update threads for discovery or mesh updates etc.
-     * We use a {@link Executors.newScheduledThreadPool} to provide a fixed number of threads as otherwise this could
-     * result in a large number of simultaneous threads in large networks. The threads are only used to time out a
+     * We use a {@link ZigBeeExecutors.newScheduledThreadPool} to provide a fixed number of threads as otherwise this
+     * could result in a large number of simultaneous threads in large networks. The threads are only used to time out a
      * transaction which is a short running event so should not block other threads from running in any practical sense.
      */
-    private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(6);
+    private final ScheduledExecutorService executorService = ZigBeeExecutors.newScheduledThreadPool(6,
+            "TransactionManager");
 
     /**
      * A Map containing the queue for each node. This provides quick access when adding commands to queue, or performing
