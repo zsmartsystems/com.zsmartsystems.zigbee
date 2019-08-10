@@ -17,9 +17,9 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.TestUtilities;
+import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.database.ZclAttributeDao;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -30,10 +30,12 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 public class ZclAttributeTest {
     @Test
     public void testConstructor() {
-        ZclAttribute attribute = new ZclAttribute(new ZclOnOffCluster(null), 0, "Test Name",
-                ZclDataType.UNSIGNED_8_BIT_INTEGER, false, false, false, false);
+        ZclCluster cluster = new ZclOnOffCluster(Mockito.mock(ZigBeeEndpoint.class));
 
-        assertEquals(ZclClusterType.ON_OFF, attribute.getCluster());
+        ZclAttribute attribute = new ZclAttribute(cluster, 0, "Test Name", ZclDataType.UNSIGNED_8_BIT_INTEGER, false,
+                false, false, false);
+
+        assertEquals(cluster, attribute.getCluster());
         assertEquals(0, attribute.getId());
         assertEquals("Test Name", attribute.getName());
         assertEquals(ZclDataType.UNSIGNED_8_BIT_INTEGER, attribute.getDataType());

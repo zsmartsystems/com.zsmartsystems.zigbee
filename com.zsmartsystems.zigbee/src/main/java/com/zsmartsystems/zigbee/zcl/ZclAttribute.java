@@ -12,7 +12,6 @@ import java.util.concurrent.Future;
 
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.database.ZclAttributeDao;
-import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -203,12 +202,12 @@ public class ZclAttribute {
     }
 
     /**
-     * Gets the {@link ZclClusterType} to which this attribute belongs
+     * Gets the {@link ZclCluster} to which this attribute belongs
      *
-     * @return the {@link ZclClusterType} for this attribute
+     * @return the parent {@link ZclCluster} for this attribute
      */
-    public ZclClusterType getCluster() {
-        return ZclClusterType.getValueById(cluster.getClusterId());
+    public ZclCluster getCluster() {
+        return cluster;
     }
 
     /**
