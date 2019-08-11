@@ -25,6 +25,7 @@ import com.zsmartsystems.zigbee.database.ZigBeeEndpointDao;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclCustomCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
@@ -160,7 +161,8 @@ public class ZigBeeEndpoint {
      *         endpoint)
      */
     public boolean addInputCluster(ZclCluster cluster) {
-        if (inputClusters.containsKey(cluster.getClusterId())) {
+        if (inputClusters.containsKey(cluster.getClusterId())
+                && !(inputClusters.get(cluster.getClusterId()) instanceof ZclCustomCluster)) {
             return false;
         }
 
@@ -265,7 +267,8 @@ public class ZigBeeEndpoint {
      *         endpoint)
      */
     public boolean addOutputCluster(ZclCluster cluster) {
-        if (outputClusters.containsKey(cluster.getClusterId())) {
+        if (outputClusters.containsKey(cluster.getClusterId())
+                && !(outputClusters.get(cluster.getClusterId()) instanceof ZclCustomCluster)) {
             return false;
         }
 
@@ -298,8 +301,9 @@ public class ZigBeeEndpoint {
         ZclClusterType clusterType = ZclClusterType.getValueById(clusterId);
         if (clusterType == null) {
             // Unsupported cluster
-            logger.debug("{}: Unsupported cluster {}", getEndpointAddress(), clusterId);
-            return null;
+            logger.debug("{}: Unsupported cluster {} - using ZclCustomCluster", getEndpointAddress(),
+                    String.format("%04X", clusterId));
+            return new ZclCustomCluster(this, clusterId, "");
         }
 
         // Create a cluster class
@@ -319,7 +323,7 @@ public class ZigBeeEndpoint {
 
     private void updateClusters(Map<Integer, ZclCluster> clusters, List<Integer> newList, boolean isInput) {
         // Get a list any clusters that are no longer in the list
-        List<Integer> removeIds = new ArrayList<Integer>();
+        List<Integer> removeIds = new ArrayList<>();
         for (ZclCluster cluster : clusters.values()) {
             if (newList.contains(cluster.getClusterId())) {
                 // The existing cluster is in the new list, so no need to remove it
@@ -341,17 +345,17 @@ public class ZigBeeEndpoint {
                 // Get the cluster type
                 ZclCluster clusterClass = getClusterClass(id);
                 if (clusterClass == null) {
-                    logger.debug("{}: Cluster {} not found", getEndpointAddress(), String.format("%04X", id));
+                    logger.debug("{}: Cluster {} not created", getEndpointAddress(), String.format("%04X", id));
                     continue;
                 }
 
                 if (isInput) {
-                    logger.debug("{}: Setting cluster {} as server", getEndpointAddress(),
-                            ZclClusterType.getValueById(id));
+                    logger.debug("{}: Setting server cluster {} {}", getEndpointAddress(),
+                            String.format("%04X", clusterClass.getClusterId()), clusterClass.getClusterName());
                     clusterClass.setServer();
                 } else {
-                    logger.debug("{}: Setting cluster {} as client", getEndpointAddress(),
-                            ZclClusterType.getValueById(id));
+                    logger.debug("{}: Setting client cluster {} {}", getEndpointAddress(),
+                            String.format("%04X", clusterClass.getClusterId()), clusterClass.getClusterName());
                     clusterClass.setClient();
                 }
 

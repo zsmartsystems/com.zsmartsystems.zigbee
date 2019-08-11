@@ -247,7 +247,7 @@ public abstract class ZclCluster {
      * @param clusterId the 16 bit cluster identifier
      * @param clusterName the cluster name
      */
-    public ZclCluster(ZigBeeEndpoint zigbeeEndpoint, int clusterId, String clusterName) {
+    protected ZclCluster(ZigBeeEndpoint zigbeeEndpoint, int clusterId, String clusterName) {
         this.zigbeeEndpoint = zigbeeEndpoint;
         this.clusterId = clusterId;
         this.clusterName = clusterName;
