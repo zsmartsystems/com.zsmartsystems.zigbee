@@ -9,6 +9,7 @@ package com.zsmartsystems.zigbee.zdo.field;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
@@ -92,7 +93,7 @@ public class PowerDescriptor {
     }
 
     private CurrentPowerModeType currentPowerMode = CurrentPowerModeType.UNKNOWN;
-    private Set<PowerSourceType> availablePowerSources = new HashSet<PowerSourceType>();
+    private Set<PowerSourceType> availablePowerSources = new TreeSet<>();
     private PowerSourceType currentPowerSource = PowerSourceType.UNKNOWN;
     private PowerLevelType powerLevel = PowerLevelType.UNKNOWN;
 
@@ -310,6 +311,8 @@ public class PowerDescriptor {
 
     @Override
     public String toString() {
-        return currentPowerMode + ", " + availablePowerSources + ", " + currentPowerSource + ", " + powerLevel;
+        return "PowerDescriptor [currentPowerMode=" + currentPowerMode + ", availablePowerSources="
+                + availablePowerSources + ", currentPowerSource=" + currentPowerSource + ", powerLevel=" + powerLevel
+                + "]";
     }
 }

@@ -9,6 +9,7 @@ package com.zsmartsystems.zigbee.zdo.field;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
@@ -26,12 +27,12 @@ public class NodeDescriptor {
     private boolean complexDescriptorAvailable;
     private int manufacturerCode;
     private LogicalType logicalType = LogicalType.UNKNOWN;
-    private Set<ServerCapabilitiesType> serverCapabilities = new HashSet<>();
+    private Set<ServerCapabilitiesType> serverCapabilities = new TreeSet<>();
     private int incomingTransferSize;
     private int outgoingTransferSize;
     private boolean userDescriptorAvailable;
     private Set<FrequencyBandType> frequencyBands = new HashSet<FrequencyBandType>();
-    private final Set<MacCapabilitiesType> macCapabilities = new HashSet<>();
+    private final Set<MacCapabilitiesType> macCapabilities = new TreeSet<>();
     private boolean extendedEndpointListAvailable;
     private boolean extendedSimpleDescriptorListAvailable;
     private int stackCompliance;
