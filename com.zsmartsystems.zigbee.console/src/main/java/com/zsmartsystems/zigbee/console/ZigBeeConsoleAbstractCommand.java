@@ -8,6 +8,8 @@
 package com.zsmartsystems.zigbee.console;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
@@ -15,6 +17,8 @@ import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
+import com.zsmartsystems.zigbee.zcl.field.ByteArray;
+import com.zsmartsystems.zigbee.zcl.field.ZclArrayList;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -204,6 +208,28 @@ public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleComma
     }
 
     protected Object parseValue(String stringValue, ZclDataType zclDataType) {
+        if (stringValue.startsWith("[") && stringValue.endsWith("]")) {
+            switch (zclDataType) {
+                case OCTET_STRING:
+                case DATA_8_BIT:
+                    break;
+                default:
+                    throw new IllegalArgumentException("Array data type " + zclDataType + " is not supported.");
+            }
+
+            String[] stringValueArray = stringValue.substring(1, stringValue.length() - 1).split(" ");
+
+            List<Object> values = new ArrayList<>(stringValueArray.length);
+            for (String value : stringValueArray) {
+                values.add(parseValueElement(value, zclDataType));
+            }
+
+            return new ZclArrayList(zclDataType, values);
+        }
+        return parseValueElement(stringValue, zclDataType);
+    }
+
+    private Object parseValueElement(String stringValue, ZclDataType zclDataType) {
         Object value = null;
         switch (zclDataType) {
             case BITMAP_16_BIT:
@@ -231,7 +257,16 @@ public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleComma
                 value = new IeeeAddress(stringValue);
                 break;
             case OCTET_STRING:
-                value = stringValue;
+                if (stringValue.length() % 2 != 0) {
+                    throw new IllegalArgumentException("OCTET_STRING must have an even number of hex bytes.");
+                }
+
+                byte[] val = new byte[stringValue.length() / 2];
+                for (int strCnt = 0; strCnt < stringValue.length() / 2; strCnt++) {
+                    int index = strCnt * 2;
+                    val[strCnt] = (byte) Integer.parseInt(stringValue.substring(index, index + 2), 16);
+                }
+                value = new ByteArray(val);
                 break;
             case SIGNED_8_BIT_INTEGER:
                 value = Integer.parseInt(stringValue);
