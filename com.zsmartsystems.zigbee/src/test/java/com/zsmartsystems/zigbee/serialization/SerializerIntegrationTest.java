@@ -20,6 +20,7 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
+import com.zsmartsystems.zigbee.zcl.field.ZclArrayList;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 
@@ -258,6 +259,17 @@ public class SerializerIntegrationTest {
     public void testDeserialize_CHARACTER_STRING() {
         String valIn = "Hello World";
         testSerializer(valIn, ZclDataType.CHARACTER_STRING);
+    }
+
+    @Test
+    public void testDeserialize_ORDERED_SEQUENCE_ARRAY() {
+        ZclArrayList valIn = new ZclArrayList(ZclDataType.SIGNED_16_BIT_INTEGER);
+        valIn.add(Integer.valueOf(1));
+        valIn.add(Integer.valueOf(2));
+        valIn.add(Integer.valueOf(3));
+        valIn.add(Integer.valueOf(4));
+        valIn.add(Integer.valueOf(1));
+        testSerializer(valIn, ZclDataType.ORDERED_SEQUENCE_ARRAY);
     }
 
     private void testSerializer(Object objectIn, ZclDataType type) {

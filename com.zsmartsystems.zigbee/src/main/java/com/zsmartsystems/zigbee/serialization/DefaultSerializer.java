@@ -15,6 +15,7 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
+import com.zsmartsystems.zigbee.zcl.field.ZclArrayList;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 
@@ -37,7 +38,7 @@ public class DefaultSerializer implements ZigBeeSerializer {
     @Override
     public void appendZigBeeType(Object data, ZclDataType type) throws IllegalArgumentException {
         if (data == null) {
-            throw new IllegalArgumentException("You can not append null data to a stream");
+            throw new IllegalArgumentException("You cannot append null data to a stream");
         }
 
         switch (type) {
@@ -234,9 +235,19 @@ public class DefaultSerializer implements ZigBeeSerializer {
                 buffer[length++] = (float32Value >> 16) & 0xFF;
                 buffer[length++] = (float32Value >> 24) & 0xFF;
                 break;
+            case ORDERED_SEQUENCE_ARRAY:
+                ZclArrayList zclArray = (ZclArrayList) data;
+                buffer[length++] = zclArray.getDataType().getId();
+                buffer[length++] = zclArray.size();
+                buffer[length++] = 0;
+                for (Object value : zclArray) {
+                    appendZigBeeType(value, zclArray.getDataType());
+                }
+                break;
+
             default:
                 throw new IllegalArgumentException("No writer defined in " + ZigBeeDeserializer.class.getSimpleName()
-                        + " for " + type.toString() + " (" + type.getId() + ")");
+                        + " for " + type.toString() + String.format(" (0x%02X)", type.getId()));
         }
     }
 }

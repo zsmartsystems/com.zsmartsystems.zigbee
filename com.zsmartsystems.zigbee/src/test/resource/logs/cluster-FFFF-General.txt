@@ -25,3 +25,6 @@ ConfigureReportingResponse [Electrical Measurement: 0/1 -> 0/0, cluster=0B04, TI
 
 ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=0/1, profile=0104, cluster=0702, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=4C, payload=08 7A 0B 0C 01]
 DefaultResponse [Metering: 0/1 -> 0/1, cluster=0702, TID=7A, commandIdentifier=12, statusCode=FAILURE]
+
+ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=0/1, profile=0104, cluster=0702, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=2A, payload=18 3E 01 00 00 00 48 08 02 00 00 00]
+ReadAttributesResponse [Metering: 0/1 -> 0/1, cluster=0702, TID=3E, records=[ReadAttributeStatusRecord [attributeDataType=ORDERED_SEQUENCE_ARRAY, attributeIdentifier=0, status=SUCCESS, attributeValue=ZclArrayList [dataType=DATA_8_BIT, values=[0, 0]]]]]
