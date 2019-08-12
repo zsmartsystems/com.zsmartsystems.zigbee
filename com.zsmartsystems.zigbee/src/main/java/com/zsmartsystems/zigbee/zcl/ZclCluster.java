@@ -787,7 +787,7 @@ public abstract class ZclCluster {
         });
 
         // Create the thread to execute it
-        new Thread(future, "DiscoverAttributes" + zigbeeEndpoint.getIeeeAddress()).start();
+        new Thread(future, "DiscoverAttributes-" + zigbeeEndpoint.getIeeeAddress()).start();
         return future;
     }
 
@@ -897,7 +897,7 @@ public abstract class ZclCluster {
         });
 
         // start the thread to execute it
-        new Thread(future, "DiscoverCommandsReceived" + zigbeeEndpoint.getIeeeAddress()).start();
+        new Thread(future, "DiscoverCommandsReceived-" + zigbeeEndpoint.getIeeeAddress()).start();
         return future;
     }
 
@@ -1007,7 +1007,7 @@ public abstract class ZclCluster {
         });
 
         // start the thread to execute it
-        new Thread(future, "DiscoverCommandsGenerated" + zigbeeEndpoint.getIeeeAddress()).start();
+        new Thread(future, "DiscoverCommandsGenerated-" + zigbeeEndpoint.getIeeeAddress()).start();
         return future;
     }
 
