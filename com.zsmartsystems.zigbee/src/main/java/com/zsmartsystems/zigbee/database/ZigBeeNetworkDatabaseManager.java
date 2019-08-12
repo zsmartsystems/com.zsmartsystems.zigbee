@@ -10,7 +10,6 @@ package com.zsmartsystems.zigbee.database;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -19,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.ZigBeeExecutors;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
@@ -98,7 +98,7 @@ public class ZigBeeNetworkDatabaseManager implements ZigBeeNetworkNodeListener {
     /**
      * Single thread scheduler to ensure single writes within the data store
      */
-    private ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
+    private ScheduledExecutorService executorService = ZigBeeExecutors.newScheduledThreadPool(1, "DatabaseManager");
 
     /**
      * Creates the database manager

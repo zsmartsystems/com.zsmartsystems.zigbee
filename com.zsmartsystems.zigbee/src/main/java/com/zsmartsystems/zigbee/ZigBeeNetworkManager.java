@@ -22,7 +22,6 @@ import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -172,10 +171,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     /**
      * Executor service to execute update threads for discovery or mesh updates etc.
-     * We use a {@link Executors.newScheduledThreadPool} to provide a fixed number of threads as otherwise this could
-     * result in a large number of simultaneous threads in large networks.
+     * We use a {@link ZigBeeExecutors.newScheduledThreadPool} to provide a fixed number of threads as otherwise this
+     * could result in a large number of simultaneous threads in large networks.
      */
-    private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(6);
+    private final ScheduledExecutorService executorService = ZigBeeExecutors.newScheduledThreadPool(6,
+            "NetworkManager");
 
     /**
      * The {@link ZigBeeTransportTransmit} implementation. This provides the interface
@@ -1201,7 +1201,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
         // Start a thread to wait for the response
         // When we receive the response, if it's successful, we assume the device left.
-        new Thread() {
+        new Thread("NetworkLeave") {
             @Override
             public void run() {
                 try {

@@ -18,7 +18,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -28,6 +27,7 @@ import java.util.concurrent.TimeoutException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.ZigBeeExecutors;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
@@ -110,12 +110,12 @@ public class AshFrameHandler implements EzspProtocolHandler {
      */
     private final Queue<AshFrameData> sentQueue = new ConcurrentLinkedQueue<AshFrameData>();
 
-    private ScheduledExecutorService timer = Executors.newScheduledThreadPool(1);
+    private ScheduledExecutorService timer = ZigBeeExecutors.newScheduledThreadPool(1, "AshTimer");
     private ScheduledFuture<?> timerFuture;
 
     private boolean stateConnected = false;
 
-    private ExecutorService executor = Executors.newCachedThreadPool();
+    private ExecutorService executor = ZigBeeExecutors.newCachedThreadPool("AshExecutor");
     private final List<AshListener> transactionListeners = new ArrayList<AshListener>();
 
     /**

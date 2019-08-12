@@ -18,7 +18,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -29,6 +28,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.ZigBeeExecutors;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
@@ -109,7 +109,7 @@ public class SpiFrameHandler implements EzspProtocolHandler {
      */
     private int pollRate = DEFAULT_POLL_RATE;
 
-    private ScheduledExecutorService timer = Executors.newScheduledThreadPool(1);
+    private ScheduledExecutorService timer = ZigBeeExecutors.newScheduledThreadPool(1, "SpiTimer");
     private ScheduledFuture<?> timerFuture;
 
     /**
@@ -121,7 +121,7 @@ public class SpiFrameHandler implements EzspProtocolHandler {
 
     private int[] lastFrameSent = null;
 
-    private ExecutorService executor = Executors.newCachedThreadPool();
+    private ExecutorService executor = ZigBeeExecutors.newCachedThreadPool("SpiExecutor");
     private final List<SpiListener> transactionListeners = new ArrayList<SpiListener>();
 
     private final Map<Integer, String> errorMessages = new ConcurrentHashMap<Integer, String>();
@@ -192,7 +192,7 @@ public class SpiFrameHandler implements EzspProtocolHandler {
     public void start(final ZigBeePort port) {
         this.port = port;
 
-        pollingScheduler = Executors.newSingleThreadScheduledExecutor();
+        pollingScheduler = ZigBeeExecutors.newSingleThreadScheduledExecutor("SpiPollingExecutor");
 
         parserThread = new Thread("SpiFrameHandler") {
             @Override

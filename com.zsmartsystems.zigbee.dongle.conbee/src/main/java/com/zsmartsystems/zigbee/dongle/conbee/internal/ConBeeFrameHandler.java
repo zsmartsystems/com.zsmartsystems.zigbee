@@ -17,13 +17,13 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.ZigBeeExecutors;
 import com.zsmartsystems.zigbee.dongle.conbee.ZigBeeDongleConBee;
 import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeDeviceState;
 import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeDeviceStateRequest;
@@ -68,7 +68,7 @@ public class ConBeeFrameHandler {
      */
     private final BlockingQueue<ConBeeFrameRequest> sendQueue = new ArrayBlockingQueue<ConBeeFrameRequest>(20);
 
-    private ExecutorService executor = Executors.newCachedThreadPool();
+    private ExecutorService executor = ZigBeeExecutors.newCachedThreadPool("ConBeeDongle");
     private final List<ConBeeListener> transactionListeners = new ArrayList<ConBeeListener>();
 
     /**

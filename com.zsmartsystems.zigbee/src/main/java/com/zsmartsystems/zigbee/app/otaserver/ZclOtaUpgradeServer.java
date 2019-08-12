@@ -12,7 +12,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -22,6 +21,7 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
+import com.zsmartsystems.zigbee.ZigBeeExecutors;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.app.ZigBeeApplication;
 import com.zsmartsystems.zigbee.internal.NotificationService;
@@ -110,7 +110,8 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
      * spawning multiple threads. This should ensure a level of pacing if we had a lot of devices on the network that
      * suddenly wanted to upgrade using page requests at the same time.
      */
-    private static ScheduledExecutorService pageScheduledExecutor = Executors.newScheduledThreadPool(1);
+    private static ScheduledExecutorService pageScheduledExecutor = ZigBeeExecutors.newScheduledThreadPool(1,
+            "OtaUpgradeServer");
 
     /**
      * The logger.
@@ -181,7 +182,7 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
     /**
      * Timer used to handle transfer timeout
      */
-    private ScheduledExecutorService timer = Executors.newScheduledThreadPool(1);
+    private ScheduledExecutorService timer = ZigBeeExecutors.newScheduledThreadPool(1, "OtaUpgradeTimer");
 
     /**
      * Current timer task
@@ -402,7 +403,7 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
      */
     public boolean completeUpgrade() {
         // TODO: Handle the time?
-        new Thread() {
+        new Thread("OtaCompleteUpgrade") {
             @Override
             public void run() {
                 try {

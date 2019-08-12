@@ -24,8 +24,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.apache.commons.lang.StringUtils;
-
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeAddress;
@@ -114,6 +112,8 @@ public final class ZigBeeConsole {
      */
     private boolean printAttributeReports = false;
 
+    private long initialMemory;
+
     /**
      * Map of registered commands and their implementations.
      */
@@ -138,6 +138,12 @@ public final class ZigBeeConsole {
             List<Class<? extends ZigBeeConsoleCommand>> transportCommands) {
         this.dongle = dongle;
         this.networkManager = networkManager;
+
+        Runtime runtime = Runtime.getRuntime();
+        // Run the garbage collector
+        runtime.gc();
+        // Calculate the used memory
+        initialMemory = runtime.totalMemory() - runtime.freeMemory();
 
         // Add the extensions to the network
         networkManager.addExtension(new ZigBeeIasCieExtension());
@@ -183,6 +189,7 @@ public final class ZigBeeConsole {
         commands.put("rediscover", new RediscoverCommand());
 
         commands.put("stress", new StressCommand());
+        commands.put("memory", new MemoryCommand());
 
         newCommands.put("nodes", new ZigBeeConsoleNodeListCommand());
         newCommands.put("endpoint", new ZigBeeConsoleDescribeEndpointCommand());
@@ -587,7 +594,7 @@ public final class ZigBeeConsole {
         public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) {
             final List<ZigBeeGroupAddress> groups = zigbeeApi.getGroups();
             for (final ZigBeeGroupAddress group : groups) {
-                print(StringUtils.leftPad(Integer.toString(group.getGroupId()), 10) + "      " + group.getLabel(), out);
+                print(Integer.toString(group.getGroupId()) + "      " + group.getLabel(), out);
             }
             return true;
         }
@@ -1872,6 +1879,52 @@ public final class ZigBeeConsole {
                     }
                 }
             }).start();
+
+            return true;
+        }
+    }
+
+    /**
+     * Print the amount of memory in use
+     */
+    private class MemoryCommand implements ConsoleCommand {
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getDescription() {
+            return "Show memory used";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getSyntax() {
+            return "";
+        }
+
+        private static final long MEGABYTE = 1024L * 1024L;
+
+        public long bytesToMegabytes(long bytes) {
+            return bytes / MEGABYTE;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, final PrintStream out) throws Exception {
+            // Get the Java runtime
+            Runtime runtime = Runtime.getRuntime();
+            // Run the garbage collector
+            runtime.gc();
+            // Calculate the used memory
+            long memory = runtime.totalMemory() - runtime.freeMemory();
+            System.out.println("Total memory        : " + runtime.totalMemory());
+            System.out.println("Free memory         : " + runtime.freeMemory());
+            System.out.println("Used memory at start: " + initialMemory);
+            System.out.println("Used memory in bytes: " + memory);
 
             return true;
         }

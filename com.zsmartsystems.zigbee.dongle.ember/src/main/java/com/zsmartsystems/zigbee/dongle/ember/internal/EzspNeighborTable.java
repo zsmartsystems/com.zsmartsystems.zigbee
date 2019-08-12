@@ -7,13 +7,13 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember.internal;
 
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.ZigBeeExecutors;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetConfigurationValueRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetConfigurationValueResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNeighborRequest;
@@ -43,7 +43,7 @@ public class EzspNeighborTable {
     /**
      * Scheduler to run the service
      */
-    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private final ScheduledExecutorService scheduler = ZigBeeExecutors.newScheduledThreadPool(1, "EzspNeighborTable");
 
     private AshFrameHandler ashHandler;
 

@@ -15,7 +15,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -26,6 +25,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.ZigBeeExecutors;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeCommand;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeEvent;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeFrame;
@@ -49,7 +49,7 @@ public class XBeeFrameHandler {
      */
     private final Queue<XBeeCommand> sendQueue = new ConcurrentLinkedQueue<XBeeCommand>();
 
-    private ExecutorService executor = Executors.newCachedThreadPool();
+    private ExecutorService executor = ZigBeeExecutors.newCachedThreadPool("XBeeFrameExecutor");
 
     /**
      * List of listeners waiting for commands to complete
@@ -147,7 +147,7 @@ public class XBeeFrameHandler {
         frameId.set(1);
 
         this.serialPort = serialPort;
-        this.timeoutScheduler = Executors.newSingleThreadScheduledExecutor();
+        this.timeoutScheduler = ZigBeeExecutors.newSingleThreadScheduledExecutor("XBeeTimer");
 
         // Clear anything in the receive buffer before we start
         emptyRxBuffer();
