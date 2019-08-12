@@ -230,7 +230,52 @@ public enum EzspValueId {
     /**
      * Set packet traffic arbitration directional priority pulse width in microseconds.
      */
-    EZSP_VALUE_PTA_DIRECTIONAL_PRIORITY_PULSE_WIDTH(0x0036);
+    EZSP_VALUE_PTA_DIRECTIONAL_PRIORITY_PULSE_WIDTH(0x0036),
+
+    /**
+     * Set packet traffic arbitration phy select timeout(ms).
+     */
+    EZSP_VALUE_PTA_PHY_SELECT_TIMEOUT(0x0037),
+
+    /**
+     * Configure the RX antenna mode: (0-do not switch; 1-primary; 2-secondary; 3-RX antenna
+     * diversity).
+     */
+    EZSP_VALUE_ANTENNA_RX_MODE(0x0038),
+
+    /**
+     * Configure the timeout to wait for the network key before failing a join
+     */
+    EZSP_VALUE_NWK_KEY_TIMEOUT(0x0039),
+
+    /**
+     * The number of failed CSMA attempts due to failed CCA made by the MAC before continuing
+     * transmission with CCA disabled. This is the same as calling the
+     * emberForceTxAfterFailedCca(uint8_t csmaAttempts) API. A value of 0 disables the
+     * feature.
+     */
+    EZSP_VALUE_FORCE_TX_AFTER_FAILED_CCA_ATTEMPTS(0x003A),
+
+    /**
+     * The length of time, in seconds, that a trust center will store a transient link key that a
+     * device can use to join its network. A transient key is added with a call to
+     * emberAddTransientLinkKey. After the transient key is added, it will be removed once this
+     * amount of time has passed. A joining device will not be able to use that key to join until it is
+     * added again on the trust center. The default value is 300 seconds (5 minutes).
+     */
+    EZSP_VALUE_TRANSIENT_KEY_TIMEOUT_S(0x003B),
+
+    /**
+     * Cumulative energy usage metric since the last value reset of the coulomb counter plugin.
+     * Setting this value will reset the coulomb counter.
+     */
+    EZSP_VALUE_COULOMB_COUNTER_USAGE(0x003C),
+
+    /**
+     * When scanning, configure the maximum number of beacons to store in cache. Each beacon
+     * consumes one packet buffer in RAM.
+     */
+    EZSP_VALUE_MAX_BEACONS_TO_STORE(0x003D);
 
     /**
      * A mapping between the integer code and its corresponding type to
