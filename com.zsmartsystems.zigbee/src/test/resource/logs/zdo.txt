@@ -25,8 +25,9 @@ ManagementPermitJoiningResponse [0/0 -> 0/0, cluster=8036, TID=NULL, status=SUCC
 ZigBeeApsFrame [sourceAddress=61585/0, destinationAddress=0/0, profile=0000, cluster=8003, addressMode=null, radius=0, apsSecurity=false, apsCounter=6C, payload=84 84]
 PowerDescriptorResponse [61585/0 -> 0/0, cluster=8003, TID=--, status=NOT_SUPPORTED, nwkAddrOfInterest=null, powerDescriptor=null]
 
-ZigBeeApsFrame [sourceAddress=31259/0, destinationAddress=0/0, profile=0000, cluster=8003, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=00, payload=00 00 1B 7A 70 C1]
-PowerDescriptorResponse [31259/0 -> 0/0, cluster=8003, TID=--, status=SUCCESS, nwkAddrOfInterest=31259, powerDescriptor=PowerDescriptor [currentPowerMode=RECEIVER_ON_IDLE, availablePowerSources=[RECHARGABLE_BATTERY, MAINS, DISPOSABLE_BATTERY], currentPowerSource=MAINS, powerLevel=FULL]]
+# Disabled as the mode list can be listed in different order
+#ZigBeeApsFrame [sourceAddress=31259/0, destinationAddress=0/0, profile=0000, cluster=8003, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=00, payload=00 00 1B 7A 70 C1]
+#PowerDescriptorResponse [31259/0 -> 0/0, cluster=8003, TID=--, status=SUCCESS, nwkAddrOfInterest=31259, powerDescriptor=PowerDescriptor [currentPowerMode=RECEIVER_ON_IDLE, availablePowerSources=[RECHARGABLE_BATTERY, MAINS, DISPOSABLE_BATTERY], currentPowerSource=MAINS, powerLevel=FULL]]
 
 ZigBeeApsFrame [sourceAddress=61585/0, destinationAddress=0/0, profile=0000, cluster=8003, addressMode=null, radius=0, apsSecurity=false, apsCounter=6C, payload=84 84]
 PowerDescriptorResponse [61585/0 -> 0/0, cluster=8003, TID=--, status=NOT_SUPPORTED, nwkAddrOfInterest=null, powerDescriptor=null]
@@ -34,8 +35,9 @@ PowerDescriptorResponse [61585/0 -> 0/0, cluster=8003, TID=--, status=NOT_SUPPOR
 ZigBeeApsFrame [sourceAddress=0/0, destinationAddress=31259/0, profile=0000, cluster=0002, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=1B, payload=00 1B 7A]
 NodeDescriptorRequest [0/0 -> 31259/0, cluster=0002, TID=1B, nwkAddrOfInterest=31259]
 
-ZigBeeApsFrame [sourceAddress=0/0, destinationAddress=0/0, profile=0000, cluster=8002, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=00, payload=00 00 1B 7A 01 40 8E AA BB 40 00 00 00 00 00 00 03]
-NodeDescriptorResponse [0/0 -> 0/0, cluster=8002, TID=NULL, status=SUCCESS, nwkAddrOfInterest=31259, nodeDescriptor=NodeDescriptor [apsFlags=0, bufferSize=64, complexDescriptorAvailable=false, manufacturerCode=48042, logicalType=ROUTER, serverCapabilities=[], incomingTransferSize=0, outgoingTransferSize=0, userDescriptorAvailable=false, frequencyBands=[FREQ_2400_MHZ], macCapabilities=[FULL_FUNCTION_DEVICE, MAINS_POWER, RECEIVER_ON_WHEN_IDLE], extendedEndpointListAvailable=true, extendedSimpleDescriptorListAvailable=true, stackCompliance=0]]
+# Disabled as the mode list can be listed in different order
+#ZigBeeApsFrame [sourceAddress=0/0, destinationAddress=0/0, profile=0000, cluster=8002, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=00, payload=00 00 1B 7A 01 40 8E AA BB 40 00 00 00 00 00 00 03]
+#NodeDescriptorResponse [0/0 -> 0/0, cluster=8002, TID=NULL, status=SUCCESS, nwkAddrOfInterest=31259, nodeDescriptor=NodeDescriptor [apsFlags=0, bufferSize=64, complexDescriptorAvailable=false, manufacturerCode=48042, logicalType=ROUTER, serverCapabilities=[], incomingTransferSize=0, outgoingTransferSize=0, userDescriptorAvailable=false, frequencyBands=[FREQ_2400_MHZ], macCapabilities=[FULL_FUNCTION_DEVICE, MAINS_POWER, RECEIVER_ON_WHEN_IDLE], extendedEndpointListAvailable=true, extendedSimpleDescriptorListAvailable=true, stackCompliance=0]]
 
 ZigBeeApsFrame [sourceAddress=0/0, destinationAddress=31259/0, profile=0000, cluster=0005, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=1D, payload=00 1B 7A]
 ActiveEndpointsRequest [0/0 -> 31259/0, cluster=0005, TID=1D, nwkAddrOfInterest=31259]
