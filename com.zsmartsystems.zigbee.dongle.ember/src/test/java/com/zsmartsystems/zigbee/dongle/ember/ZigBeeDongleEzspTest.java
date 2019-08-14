@@ -245,10 +245,19 @@ public class ZigBeeDongleEzspTest {
 
         EzspChildJoinHandler response = Mockito.mock(EzspChildJoinHandler.class);
         Mockito.when(response.getChildId()).thenReturn(123);
+        Mockito.when(response.getJoining()).thenReturn(true);
         Mockito.when(response.getChildEui64()).thenReturn(new IeeeAddress("1234567890ABCDEF"));
         dongle.handlePacket(response);
         Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(1)).nodeStatusUpdate(ZigBeeNodeStatus.UNSECURED_JOIN,
                 123, new IeeeAddress("1234567890ABCDEF"));
+
+        response = Mockito.mock(EzspChildJoinHandler.class);
+        Mockito.when(response.getChildId()).thenReturn(123);
+        Mockito.when(response.getJoining()).thenReturn(false);
+        Mockito.when(response.getChildEui64()).thenReturn(new IeeeAddress("1234567890ABCDEF"));
+        dongle.handlePacket(response);
+        Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(1)).nodeStatusUpdate(ZigBeeNodeStatus.DEVICE_LEFT, 123,
+                new IeeeAddress("1234567890ABCDEF"));
     }
 
     @Test
