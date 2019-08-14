@@ -28,6 +28,7 @@ import com.zsmartsystems.zigbee.zcl.field.NeighborInformation;
 import com.zsmartsystems.zigbee.zcl.field.ReadAttributeStatusRecord;
 import com.zsmartsystems.zigbee.zcl.field.WriteAttributeRecord;
 import com.zsmartsystems.zigbee.zcl.field.WriteAttributeStatusRecord;
+import com.zsmartsystems.zigbee.zcl.field.ZclArrayList;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.field.BindingTable;
 import com.zsmartsystems.zigbee.zdo.field.ComplexDescriptor;
@@ -87,7 +88,7 @@ public enum ZclDataType {
     CHARACTER_STRING("Character String", String.class, 0x42, false),
     LONG_OCTET_STRING("Long Octet string", ByteArray.class, 0x43, false),
     LONG_CHARACTER_STRING("Long Character String", null, 0x44, false),
-    ORDERED_SEQUENCE_ARRAY("ARRAY", null, 0x48, false),
+    ORDERED_SEQUENCE_ARRAY("ARRAY", ZclArrayList.class, 0x48, false),
     ORDERED_SEQUENCE_STRUCTURE("ORDERED_SEQUENCE_STRUCTURE", List.class, 0x4C, false),
     COLLECTION_SET("SET", null, 0x50, false),
     COLLECTION_BAG("BAG", null, 0x51, false),

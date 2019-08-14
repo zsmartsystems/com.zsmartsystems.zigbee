@@ -17,6 +17,7 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
+import com.zsmartsystems.zigbee.zcl.field.ZclArrayList;
 import com.zsmartsystems.zigbee.zcl.field.ZclDataPair;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
@@ -300,6 +301,16 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 }
                 value[0] = structure;
                 break;
+            case ORDERED_SEQUENCE_ARRAY:
+                ZclDataType arrayType = ZclDataType.getType(payload[index++]);
+                ZclArrayList array = new ZclArrayList(arrayType);
+                int arraySize = Integer.valueOf((payload[index++] + (payload[index++] << 8)));
+                for (int cnt = 0; cnt < arraySize; cnt++) {
+                    Object arrayValue = readZigBeeType(arrayType);
+                    array.add(arrayValue);
+                }
+                value[0] = array;
+                break;
             case FLOAT_32_BIT:
                 Float float32 = Float.intBitsToFloat(payload[index++] + (payload[index++] << 8)
                         + (payload[index++] << 16) + (payload[index++] << 24));
@@ -307,7 +318,7 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 break;
             default:
                 throw new IllegalArgumentException("No reader defined in " + ZigBeeDeserializer.class.getSimpleName()
-                        + " for " + type.toString() + " (" + type.getId() + ")");
+                        + " for " + type.toString() + String.format(" (0x%02X)", type.getId()));
         }
         return value[0];
     }
