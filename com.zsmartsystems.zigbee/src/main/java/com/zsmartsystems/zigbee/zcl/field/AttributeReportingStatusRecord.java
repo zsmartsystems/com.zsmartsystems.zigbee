@@ -10,11 +10,13 @@ package com.zsmartsystems.zigbee.zcl.field;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclListItemField;
-import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingResponse;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
+import com.zsmartsystems.zigbee.zcl.clusters.general.ReadReportingConfigurationResponse;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
- * Attribute Reporting Configuration Record field. This is reported in the {@link ConfigureReportingResponse} command.
+ * Attribute Reporting Configuration Record field. This is reported in the {@link ReadReportingConfigurationResponse}
+ * command.
  * <p>
  * <b>minInterval</b>:
  * The minimum reporting interval field is 16 bits in length and shall contain the
@@ -49,7 +51,20 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  *
  * @author Chris Jackson
  */
-public class AttributeReportingConfigurationRecord implements ZclListItemField {
+public class AttributeReportingStatusRecord implements ZclListItemField {
+    /**
+     * The status
+     * <p>
+     * If the attribute is not implemented on the sender or receiver of the command, whichever is relevant (depending on
+     * direction), this field SHALL be set to UNSUPPORTED_ATTRIBUTE. If the attribute is supported, but is not capable
+     * of being reported, this field SHALL be set to UNREPORTABLE_ATTRIBUTE. If the attribute is supported and
+     * reportable, but there is no report configuration, this field SHALL be set to NOT_FOUND. Otherwise, this field
+     * SHALL be set to SUCCESS.
+     * <p>
+     * If the status field is not set to SUCCESS, all fields except the direction and attribute identifier fields SHALL
+     * be omitted.
+     */
+    private ZclStatus status;
     /**
      * The direction.
      * <p>
@@ -120,6 +135,36 @@ public class AttributeReportingConfigurationRecord implements ZclListItemField {
      * set for the attribute on the server (or client) cluster.
      */
     private int timeoutPeriod;
+
+    /**
+     * Gets the status.
+     * <p>
+     * If the attribute is not implemented on the sender or receiver of the command, whichever is relevant (depending on
+     * direction), this field SHALL be set to UNSUPPORTED_ATTRIBUTE. If the attribute is supported, but is not capable
+     * of being reported, this field SHALL be set to UNREPORTABLE_ATTRIBUTE. If the attribute is supported and
+     * reportable, but there is no report configuration, this field SHALL be set to NOT_FOUND. Otherwise, this field
+     * SHALL be set to SUCCESS.
+     *
+     * @return the status of the record
+     */
+    public ZclStatus getStatus() {
+        return status;
+    }
+
+    /**
+     * Sets the status.
+     * <p>
+     * If the attribute is not implemented on the sender or receiver of the command, whichever is relevant (depending on
+     * direction), this field SHALL be set to UNSUPPORTED_ATTRIBUTE. If the attribute is supported, but is not capable
+     * of being reported, this field SHALL be set to UNREPORTABLE_ATTRIBUTE. If the attribute is supported and
+     * reportable, but there is no report configuration, this field SHALL be set to NOT_FOUND. Otherwise, this field
+     * SHALL be set to SUCCESS.
+     *
+     * @param status the {@link ZclStatus} of the record
+     */
+    public void setStatus(ZclStatus status) {
+        this.status = status;
+    }
 
     /**
      * Gets the direction
@@ -333,6 +378,7 @@ public class AttributeReportingConfigurationRecord implements ZclListItemField {
 
     @Override
     public void serialize(final ZigBeeSerializer serializer) {
+        serializer.appendZigBeeType(status, ZclDataType.UNSIGNED_8_BIT_INTEGER);
         serializer.appendZigBeeType(direction, ZclDataType.UNSIGNED_8_BIT_INTEGER);
         serializer.appendZigBeeType(attributeIdentifier, ZclDataType.UNSIGNED_16_BIT_INTEGER);
 
@@ -365,8 +411,13 @@ public class AttributeReportingConfigurationRecord implements ZclListItemField {
 
     @Override
     public void deserialize(final ZigBeeDeserializer deserializer) {
+        status = ZclStatus.getStatus((int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER));
         direction = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         attributeIdentifier = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        if (status != ZclStatus.SUCCESS) {
+            return;
+        }
+
         if (direction == 1) {
             // If direction is set to 0x01, then the timeout period field is included in the payload,
             // and the attribute data type field, the minimum reporting interval field, the
@@ -396,26 +447,33 @@ public class AttributeReportingConfigurationRecord implements ZclListItemField {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder(220);
+        StringBuilder builder = new StringBuilder(250);
 
-        builder.append("AttributeReportingConfigurationRecord: [attributeDataType=");
-        builder.append(attributeDataType);
+        builder.append("AttributeReportingStatusRecord: [status=");
+        builder.append(status);
+
         builder.append(", attributeIdentifier=");
         builder.append(attributeIdentifier);
         builder.append(", direction=");
         builder.append(direction);
-        if (direction == 0) {
-            builder.append(", minimumReportingInterval=");
-            builder.append(minimumReportingInterval);
-            builder.append(", maximumReportingInterval=");
-            builder.append(maximumReportingInterval);
-            if (attributeDataType.isAnalog()) {
-                builder.append(", reportableChange=");
-                builder.append(reportableChange);
+
+        if (status == ZclStatus.SUCCESS) {
+            builder.append(", attributeDataType=");
+            builder.append(attributeDataType);
+
+            if (direction == 0) {
+                builder.append(", minimumReportingInterval=");
+                builder.append(minimumReportingInterval);
+                builder.append(", maximumReportingInterval=");
+                builder.append(maximumReportingInterval);
+                if (attributeDataType.isAnalog()) {
+                    builder.append(", reportableChange=");
+                    builder.append(reportableChange);
+                }
+            } else if (direction == 1) {
+                builder.append(", timeoutPeriod=");
+                builder.append(timeoutPeriod);
             }
-        } else if (direction == 1) {
-            builder.append(", timeoutPeriod=");
-            builder.append(timeoutPeriod);
         }
         builder.append(']');
 

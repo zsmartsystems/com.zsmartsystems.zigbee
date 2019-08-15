@@ -20,6 +20,7 @@ import com.zsmartsystems.zigbee.zcl.field.AttributeInformation;
 import com.zsmartsystems.zigbee.zcl.field.AttributeRecord;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReport;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReportingConfigurationRecord;
+import com.zsmartsystems.zigbee.zcl.field.AttributeReportingStatusRecord;
 import com.zsmartsystems.zigbee.zcl.field.AttributeStatusRecord;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 import com.zsmartsystems.zigbee.zcl.field.ExtendedAttributeInformation;
@@ -105,6 +106,8 @@ public enum ZclDataType {
     N_X_ATTRIBUTE_INFORMATION("N X Attribute information", AttributeInformation.class, 0x00, false),
     N_X_ATTRIBUTE_RECORD("N X Attribute record", AttributeRecord.class, 0x00, false),
     N_X_ATTRIBUTE_REPORT("N X Attribute report", AttributeReport.class, 0x00, false),
+    N_X_ATTRIBUTE_REPORTING_STATUS_RECORD("N X Attribute reporting configuration record",
+            AttributeReportingStatusRecord.class, 0x00, false),
     N_X_ATTRIBUTE_REPORTING_CONFIGURATION_RECORD("N X Attribute reporting configuration record",
             AttributeReportingConfigurationRecord.class, 0x00, false),
     N_X_ATTRIBUTE_SELECTOR("N X Attribute selector", Object.class, 0x00, false),

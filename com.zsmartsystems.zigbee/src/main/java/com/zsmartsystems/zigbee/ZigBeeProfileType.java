@@ -17,7 +17,7 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-06-15T20:20:47Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-08-15T18:28:04Z")
 public enum ZigBeeProfileType {
 
     /**
@@ -33,7 +33,7 @@ public enum ZigBeeProfileType {
     /**
      * ZigBee Green Power
      */
-    ZIGBEE_GREEN_POWER(0xA1E0),
+    ZIGBEE_GREEN_POWER(0xA10E),
 
     /**
      * Manufacturer Telegesis
