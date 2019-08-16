@@ -75,7 +75,7 @@
     <command code="0x09" source="client">
         <name>Read Reporting Configuration Response</name>
         <description>The Read Reporting Configuration Response command is used to respond to a Read Reporting Configuration command.</description>
-        <field type="N_X_ATTRIBUTE_REPORTING_CONFIGURATION_RECORD">
+        <field type="N_X_ATTRIBUTE_REPORTING_STATUS_RECORD">
             <name>Records</name>
         </field>
     </command>

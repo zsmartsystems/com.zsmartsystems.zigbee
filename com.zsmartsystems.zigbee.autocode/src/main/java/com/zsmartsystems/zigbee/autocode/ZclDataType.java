@@ -73,6 +73,8 @@ public class ZclDataType {
                 new DataTypeMap("List<WriteAttributeStatusRecord>", 0, 0, false));
         dataTypeMapping.put("N_X_ATTRIBUTE_REPORTING_CONFIGURATION_RECORD",
                 new DataTypeMap("List<AttributeReportingConfigurationRecord>", 0, 0, false));
+        dataTypeMapping.put("N_X_ATTRIBUTE_REPORTING_STATUS_RECORD",
+                new DataTypeMap("List<AttributeReportingStatusRecord>", 0, 0, false));
         dataTypeMapping.put("N_X_ATTRIBUTE_STATUS_RECORD", new DataTypeMap("List<AttributeStatusRecord>", 0, 0, false));
         dataTypeMapping.put("N_X_ATTRIBUTE_RECORD", new DataTypeMap("List<AttributeRecord>", 0, 0, false));
         dataTypeMapping.put("N_X_ATTRIBUTE_REPORT", new DataTypeMap("List<AttributeReport>", 0, 0, false));
