@@ -207,6 +207,12 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     private EmberMfglibListener mfglibListener;
 
     /**
+     * The {@link EmberNcpResetProvider} used to perform a hardware reset. If not set, no hardware reset will be
+     * attempted.
+     */
+    private EmberNcpResetProvider resetProvider;
+
+    /**
      * Create a {@link ZigBeeDongleEzsp} with the default ASH2 frame handler
      *
      * @param serialPort the {@link ZigBeePort} to use for the connection
@@ -263,6 +269,17 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
          * of responses is performed in order
          */
         executorService = ZigBeeExecutors.newScheduledThreadPool(1, "EmberDongle");
+    }
+
+    /**
+     * Sets the hardware reset provider if the dongle supports a hardware reset. If this is not set, the dongle driver
+     * will not attempt a hardware reset and will attempt to use other software methods to reset the dongle as may be
+     * available by the low level protocol.
+     *
+     * @param resetProvider the {@link EmberNcpResetProvider} to be called to perform the reset
+     */
+    public void setEmberNcpResetProvider(EmberNcpResetProvider resetProvider) {
+        this.resetProvider = resetProvider;
     }
 
     /**
@@ -940,6 +957,12 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         // Connect to the ASH handler and NCP
         frameHandler.start(serialPort);
+
+        // If possible, perform a hardware reset of the NCP
+        if (resetProvider != null) {
+            resetProvider.emberNcpReset(serialPort);
+        }
+
         frameHandler.connect();
 
         EmberNcp ncp = getEmberNcp();

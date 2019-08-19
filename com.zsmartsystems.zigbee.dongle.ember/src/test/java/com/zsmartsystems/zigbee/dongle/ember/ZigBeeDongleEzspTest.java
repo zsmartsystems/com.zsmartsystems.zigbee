@@ -63,6 +63,13 @@ public class ZigBeeDongleEzspTest {
     private static int TIMEOUT = 5000;
 
     @Test
+    public void setEmberNcpResetProvider() {
+        ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
+
+        dongle.setEmberNcpResetProvider(Mockito.mock(EmberNcpResetProvider.class));
+    }
+
+    @Test
     public void setZigBeeExtendedPanId() {
         ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
 
