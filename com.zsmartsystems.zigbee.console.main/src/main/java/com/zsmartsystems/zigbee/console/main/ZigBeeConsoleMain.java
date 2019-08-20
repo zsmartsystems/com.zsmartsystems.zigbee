@@ -209,6 +209,8 @@ public class ZigBeeConsoleMain {
             commands.add(EmberConsoleNcpScanCommand.class);
             commands.add(EmberConsoleNcpMfglibCommand.class);
             commands.add(EmberConsoleNcpHandlerCommand.class);
+
+            ((ZigBeeDongleEzsp) dongle).setEmberNcpResetProvider(new EmberNcpHardwareReset());
         } else if (dongleName.toUpperCase().equals("XBEE")) {
             dongle = new ZigBeeDongleXBee(serialPort);
         } else if (dongleName.toUpperCase().equals("CONBEE")) {

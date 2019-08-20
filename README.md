@@ -119,6 +119,10 @@ The library provide a standard set of configuration constants to configure the N
 
 The Ember dongle driver includes a public method ```getEmberNcp()``` which returns a ```EmberNcp``` class. This class provides high level methods for interacting directly with the NCP.
 
+#### Ember Reset
+
+By default the library uses the ASH Reset command to reset the NCP when the framework starts. Silabs have stated that this is not reliable due to possible communication problems between the NCP and the host. Where possible the user should implement a hardware reset to reset the NCP. Since this is application specific, the framework provides an interface for the application to implement this reset. The user should implement the ```EmberNcpResetProvider``` interface, and set this during NCP initialisation with the ```ZigBeeDongleEzsp.setEmberNcpResetProvider()``` method.
+
 #### Ember MfgLib use
 
 The library provides access to the ```mfglib``` functions in the NCP to facilitate device testing. To use this function, create the ```ZigBeeDongleEzsp``` and then call the ```getEmberMfglib(EmberMfglibListener)``` method to get the ```EmberMfglib``` class and also set the callback listener. The ```EmberMfglib``` class provides access to the ```mfglib``` functions.
