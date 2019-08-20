@@ -28,7 +28,6 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.ZigBeeNode.ZigBeeNodeState;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
-import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.command.DeviceAnnounce;
 import com.zsmartsystems.zigbee.zdo.command.IeeeAddressRequest;
@@ -177,19 +176,12 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
     }
 
     @Override
+    public void announceUnknownDevice(final Integer networkAddress) {
+        startNodeDiscovery(networkAddress);
+    }
+
+    @Override
     public void commandReceived(final ZigBeeCommand command) {
-        // ZCL command received from remote node. Perform discovery if it is not yet known.
-        if (command instanceof ZclCommand) {
-            final ZclCommand zclCommand = (ZclCommand) command;
-            if (networkManager.getNode(zclCommand.getSourceAddress().getAddress()) == null) {
-                // TODO: Protect against group address?
-                ZigBeeEndpointAddress address = (ZigBeeEndpointAddress) zclCommand.getSourceAddress();
-                startNodeDiscovery(address.getAddress());
-            }
-
-            return;
-        }
-
         // Node has been announced.
         if (command instanceof DeviceAnnounce) {
             final DeviceAnnounce announce = (DeviceAnnounce) command;

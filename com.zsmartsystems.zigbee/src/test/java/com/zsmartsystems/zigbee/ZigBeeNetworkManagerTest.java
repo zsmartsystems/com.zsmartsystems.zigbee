@@ -339,6 +339,13 @@ public class ZigBeeNetworkManagerTest
         assertEquals(0, (int) response.getCommandId());
         assertEquals(1, (int) response.getTransactionId());
         assertEquals(new ZigBeeEndpointAddress(1234, 5), response.getSourceAddress());
+
+        ZigBeeAnnounceListener announceListener = Mockito.mock(ZigBeeAnnounceListener.class);
+        networkManager.addAnnounceListener(announceListener);
+
+        apsFrame.setSourceAddress(4321);
+        networkManager.receiveCommand(apsFrame);
+        Mockito.verify(announceListener, Mockito.timeout(TIMEOUT).times(1)).announceUnknownDevice(4321);
     }
 
     @Test

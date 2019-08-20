@@ -820,7 +820,19 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
 
         if (command == null) {
-            logger.debug("Incoming message did not translate to command.");
+            logger.debug("Incoming message from node {} did not translate to command",
+                    String.format("%04X", apsFrame.getSourceAddress()));
+
+            // Notify the listeners that we have heard a device that was unknown to us
+            for (final ZigBeeAnnounceListener announceListener : announceListeners) {
+                NotificationService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        announceListener.announceUnknownDevice(apsFrame.getSourceAddress());
+                    }
+                });
+            }
+
             return;
         }
 
