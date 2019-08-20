@@ -8,10 +8,11 @@
 package com.zsmartsystems.zigbee;
 
 /**
- * Device status listener.
+ * Device status listener. This provides a notification of devices joining or leaving the network to aid discovery
+ * handlers.
  * <p>
  * Listeners are called when the device status on the network is updated. Normally this occurs when a device joins or
- * leaves.
+ * leaves. Unknown devices are also notified through this interface.
  *
  * @author Chris Jackson
  */
@@ -24,6 +25,18 @@ public interface ZigBeeAnnounceListener {
      * @param networkAddress the network address of the newly announced device
      * @param ieeeAddress the {@link IeeeAddress} of the newly announced device
      */
-    void deviceStatusUpdate(final ZigBeeNodeStatus deviceStatus, final Integer networkAddress,
-            final IeeeAddress ieeeAddress);
+    default void deviceStatusUpdate(final ZigBeeNodeStatus deviceStatus, final Integer networkAddress,
+            final IeeeAddress ieeeAddress) {
+        // Default implementation
+    }
+
+    /**
+     * Called when a device is heard that is unknown to the system. This will generally mean that the device is not
+     * known to the Network Manager, however it is joined to the network and should be rediscovered.
+     *
+     * @param networkAddress the network address of the unknown device
+     */
+    default void announceUnknownDevice(final Integer networkAddress) {
+        // Default implementation
+    }
 }
