@@ -537,6 +537,7 @@ public class ZigBeeEndpoint {
      */
     public void sendTransaction(ZigBeeCommand command) {
         command.setDestinationAddress(getEndpointAddress());
+        node.sendTransaction(command);
     }
 
     /**
