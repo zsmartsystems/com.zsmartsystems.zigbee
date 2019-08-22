@@ -21,7 +21,7 @@ import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.app.ZigBeeApplication;
 import com.zsmartsystems.zigbee.database.ZigBeeEndpointDao;
-import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
+import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclAlarmsCluster;
@@ -30,6 +30,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclColorControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclDoorLockCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclScenesCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
@@ -40,6 +41,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  *
  */
 public class ZigBeeEndpointTest {
+    private static final int TIMEOUT = 5000;
 
     @Test
     public void testOutputClusterIds() {
@@ -159,6 +161,20 @@ public class ZigBeeEndpointTest {
     }
 
     @Test
+    public void sendTransaction() {
+        ZigBeeEndpoint endpoint = getEndpoint();
+
+        ZclCommand command = mockZclCommand(DefaultResponse.class);
+        ZigBeeTransactionMatcher matcher = Mockito.mock(ZigBeeTransactionMatcher.class);
+
+        endpoint.sendTransaction(command, matcher);
+        Mockito.verify(endpoint.getParentNode(), Mockito.timeout(TIMEOUT).times(1)).sendTransaction(command, matcher);
+
+        endpoint.sendTransaction(command);
+        Mockito.verify(endpoint.getParentNode(), Mockito.timeout(TIMEOUT).times(1)).sendTransaction(command);
+    }
+
+    @Test
     public void testGetDeviceId() {
         ZigBeeEndpoint endpoint = getEndpoint();
 
@@ -183,10 +199,8 @@ public class ZigBeeEndpointTest {
     }
 
     private ZigBeeEndpoint getEndpoint() {
-        ZigBeeTransportTransmit mockedTransport = Mockito.mock(ZigBeeTransportTransmit.class);
-        ZigBeeNetworkManager networkManager = new ZigBeeNetworkManager(mockedTransport);
-        ZigBeeNode node = new ZigBeeNode(networkManager, new IeeeAddress());
-        node.setNetworkAddress(1234);
+        ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
+        Mockito.when(node.getNetworkAddress()).thenReturn(1234);
         return new ZigBeeEndpoint(node, 5);
     }
 }
