@@ -70,7 +70,7 @@ public class TestUtilities {
 
     /**
      * Gets the value of the private field
-     * 
+     *
      * @param clazz the class where the field resides
      * @param object the object where the field resides
      * @param fieldName the field name
