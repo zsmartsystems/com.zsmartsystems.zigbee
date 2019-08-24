@@ -379,7 +379,7 @@ public final class ZigBeeConsole {
             return;
         }
 
-        print("Uknown command. Use 'help' command to list available commands.", out);
+        print("Unknown command. Use 'help' command to list available commands.", out);
     }
 
     /**
