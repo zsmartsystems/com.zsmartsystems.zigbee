@@ -20,12 +20,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.CommandResult;
-import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeExecutors;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.app.ZigBeeApplication;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
+import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.ZclCommandListener;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageBlockCommand;
@@ -104,7 +105,7 @@ import com.zsmartsystems.zigbee.zcl.field.ByteArray;
  *
  * @author Chris Jackson
  */
-public class ZclOtaUpgradeServer implements ZigBeeApplication {
+public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListener {
     /**
      * A static Thread pool is used here to ensure that we don't end up with large numbers of page requests
      * spawning multiple threads. This should ensure a level of pacing if we had a lot of devices on the network that
@@ -245,6 +246,7 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
     @Override
     public ZigBeeStatus appStartup(final ZclCluster cluster) {
         this.cluster = (ZclOtaUpgradeCluster) cluster;
+        cluster.addCommandListener(this);
 
         return ZigBeeStatus.SUCCESS;
     }
@@ -596,22 +598,23 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
      * This sends information on the firmware that is currently set in this server.
      *
      * @param command the received {@link QueryNextImageCommand}
+     * @return true if the handler has, or will send a response to this command
      */
-    private void handleQueryNextImageCommand(QueryNextImageCommand command) {
+    private boolean handleQueryNextImageCommand(QueryNextImageCommand command) {
         // Ignore the request if we're not in the correct state
         if (status != ZigBeeOtaServerStatus.OTA_WAITING) {
             logger.debug("{} OTA Error: Invalid server state {} when handling QueryNextImageCommand.",
                     cluster.getZigBeeAddress(), status);
-            return;
+            cluster.sendDefaultResponse(command, ZclStatus.UNKNOWN);
+            return true;
         }
 
         // Check that the file attributes are consistent with the file we have
         if (otaFile == null || !(command.getManufacturerCode().equals(otaFile.getManufacturerCode())
                 && command.getImageType().equals(otaFile.getImageType()))) {
             logger.debug("{} OTA Error: Request is inconsistent with OTA file.", cluster.getZigBeeAddress());
-            cluster.sendDefaultResponse(command.getTransactionId(), command.getCommandId(),
-                    ZclStatus.NO_IMAGE_AVAILABLE);
-            return;
+            cluster.sendDefaultResponse(command, ZclStatus.NO_IMAGE_AVAILABLE);
+            return true;
         }
 
         // If the request contains a hardware version, and the OTA file also has the hardware restriction
@@ -620,18 +623,16 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
                 && otaFile.getMaximumHardware() != null) {
             if (command.getHardwareVersion() < otaFile.getMinimumHardware()
                     || command.getHardwareVersion() > otaFile.getMaximumHardware()) {
-                cluster.sendDefaultResponse(command.getTransactionId(), command.getCommandId(),
-                        ZclStatus.NO_IMAGE_AVAILABLE);
-                return;
+                cluster.sendDefaultResponse(command, ZclStatus.NO_IMAGE_AVAILABLE);
+                return true;
             }
         }
 
         // Some devices may make further requests for files once they have been updated
         // By default, don't resend the existing file
         if (!allowExistingFile && command.getFileVersion().equals(otaFile.getFileVersion())) {
-            cluster.sendDefaultResponse(command.getTransactionId(), command.getCommandId(),
-                    ZclStatus.NO_IMAGE_AVAILABLE);
-            return;
+            cluster.sendDefaultResponse(command, ZclStatus.NO_IMAGE_AVAILABLE);
+            return true;
         }
 
         // Update the state as we're starting
@@ -640,6 +641,8 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
 
         cluster.queryNextImageResponse(ZclStatus.SUCCESS, otaFile.getManufacturerCode(), otaFile.getImageType(),
                 otaFile.getFileVersion(), otaFile.getImageSize());
+
+        return true;
     }
 
     /**
@@ -647,21 +650,22 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
      * This will respond with a whole page (potentially a number of image blocks)
      *
      * @param command the received {@link ImagePageCommand}
+     * @return true if the handler has, or will send a response to this command
      */
-    private void handleImagePageCommand(ImagePageCommand command) {
+    private boolean handleImagePageCommand(ImagePageCommand command) {
         // Ignore the request if we're not in the correct state
         if (status != ZigBeeOtaServerStatus.OTA_TRANSFER_IN_PROGRESS) {
             logger.debug("{} OTA Error: Invalid server state {} when handling ImagePageCommand.",
                     cluster.getZigBeeAddress(), status);
-            return;
+            cluster.sendDefaultResponse(command, ZclStatus.UNKNOWN);
+            return true;
         }
 
         // No current support for device specific requests
         if ((command.getFieldControl() & IMAGE_BLOCK_FIELD_IEEE_ADDRESS) != 0) {
             logger.debug("{} OTA Error: No file is set.", cluster.getZigBeeAddress());
-            cluster.sendDefaultResponse(command.getTransactionId(), command.getCommandId(),
-                    ZclStatus.UNSUP_CLUSTER_COMMAND);
-            return;
+            cluster.sendDefaultResponse(command, ZclStatus.UNSUP_CLUSTER_COMMAND);
+            return true;
         }
 
         // Check that the file attributes are consistent with the file we have
@@ -669,22 +673,22 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
                 || !command.getFileVersion().equals(otaFile.getFileVersion())
                 || !command.getImageType().equals(otaFile.getImageType())) {
             logger.debug("{} OTA Error: Request is inconsistent with OTA file.", cluster.getZigBeeAddress());
-            cluster.sendDefaultResponse(command.getTransactionId(), command.getCommandId(),
-                    ZclStatus.NO_IMAGE_AVAILABLE);
-            return;
+            cluster.sendDefaultResponse(command, ZclStatus.NO_IMAGE_AVAILABLE);
+            return true;
         }
 
         // Check that the offset is within bounds of the image data
         if (command.getFileOffset() > otaFile.getImageSize()) {
             logger.debug("{} OTA Error: Requested offset is larger than file ({}>{})", cluster.getZigBeeAddress(),
                     command.getFileOffset(), otaFile.getImageSize());
-            cluster.sendDefaultResponse(command.getTransactionId(), command.getCommandId(),
-                    ZclStatus.MALFORMED_COMMAND);
-            return;
+            cluster.sendDefaultResponse(command, ZclStatus.MALFORMED_COMMAND);
+            return true;
         }
 
         doPageResponse(command.getFileOffset(), command.getPageSize(), command.getMaximumDataSize(),
                 command.getResponseSpacing());
+
+        return true;
     }
 
     /**
@@ -692,21 +696,22 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
      * This will respond with a single image block.
      *
      * @param command the received {@link ImageBlockCommand}
+     * @return true if the handler has, or will send a response to this command
      */
-    private void handleImageBlockCommand(ImageBlockCommand command) {
+    private boolean handleImageBlockCommand(ImageBlockCommand command) {
         // Ignore the request if we're not in the correct state
         if (status != ZigBeeOtaServerStatus.OTA_TRANSFER_IN_PROGRESS) {
             logger.debug("{} OTA Error: Invalid server state {} when handling ImageBlockCommand.",
                     cluster.getZigBeeAddress(), status);
-            return;
+            cluster.sendDefaultResponse(command, ZclStatus.UNKNOWN);
+            return true;
         }
 
         // No current support for device specific requests
         if ((command.getFieldControl() & IMAGE_BLOCK_FIELD_IEEE_ADDRESS) != 0) {
             logger.debug("{} OTA Error: No file is set.", cluster.getZigBeeAddress());
-            cluster.sendDefaultResponse(command.getTransactionId(), command.getCommandId(),
-                    ZclStatus.UNSUP_CLUSTER_COMMAND);
-            return;
+            cluster.sendDefaultResponse(command, ZclStatus.UNSUP_CLUSTER_COMMAND);
+            return true;
         }
 
         // Check that the file attributes are consistent with the file we have
@@ -714,18 +719,16 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
                 || !command.getFileVersion().equals(otaFile.getFileVersion())
                 || !command.getImageType().equals(otaFile.getImageType())) {
             logger.debug("{} OTA Error: Request is inconsistent with OTA file.", cluster.getZigBeeAddress());
-            cluster.sendDefaultResponse(command.getTransactionId(), command.getCommandId(),
-                    ZclStatus.NO_IMAGE_AVAILABLE);
-            return;
+            cluster.sendDefaultResponse(command, ZclStatus.NO_IMAGE_AVAILABLE);
+            return true;
         }
 
         // Check that the offset is within bounds of the image data
         if (command.getFileOffset() > otaFile.getImageSize()) {
             logger.debug("{} OTA Error: Requested offset is larger than file ({}>{})", cluster.getZigBeeAddress(),
                     command.getFileOffset(), otaFile.getImageSize());
-            cluster.sendDefaultResponse(command.getTransactionId(), command.getCommandId(),
-                    ZclStatus.MALFORMED_COMMAND);
-            return;
+            cluster.sendDefaultResponse(command, ZclStatus.MALFORMED_COMMAND);
+            return true;
         }
 
         // Restart the timer
@@ -742,6 +745,7 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
 
         // Send the block response
         sendImageBlock(command.getFileOffset(), command.getMaximumDataSize());
+        return true;
     }
 
     /**
@@ -749,14 +753,16 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
      * If autoUpgrade is set, then we immediately send the {@link UpgradeEndResponse}
      *
      * @param command the received {@link UpgradeEndCommand}
+     * @return true if the handler has, or will send a response to this command
      */
-    private void handleUpgradeEndCommand(UpgradeEndCommand command) {
+    private boolean handleUpgradeEndCommand(UpgradeEndCommand command) {
         // Ignore the request if we're not in the correct state
         if (status != ZigBeeOtaServerStatus.OTA_TRANSFER_IN_PROGRESS
                 && status != ZigBeeOtaServerStatus.OTA_TRANSFER_COMPLETE) {
             logger.debug("{} OTA Error: Invalid server state {} when handling UpgradeEndCommand.",
                     cluster.getZigBeeAddress(), status);
-            return;
+            cluster.sendDefaultResponse(command, ZclStatus.UNKNOWN);
+            return true;
         }
 
         // Check that the file attributes are consistent with the file we have
@@ -764,9 +770,8 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
                 || !command.getFileVersion().equals(otaFile.getFileVersion())
                 || !command.getImageType().equals(otaFile.getImageType())) {
             logger.debug("{} OTA Error: Request is inconsistent with OTA file.", cluster.getZigBeeAddress());
-            cluster.sendDefaultResponse(command.getTransactionId(), command.getCommandId(),
-                    ZclStatus.NO_IMAGE_AVAILABLE);
-            return;
+            cluster.sendDefaultResponse(command, ZclStatus.NO_IMAGE_AVAILABLE);
+            return true;
         }
 
         // Stop the transfer timer
@@ -778,10 +783,10 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
         switch (command.getStatus()) {
             case INVALID_IMAGE:
                 updateStatus(ZigBeeOtaServerStatus.OTA_UPGRADE_FAILED);
-                return;
+                break;
             case REQUIRE_MORE_IMAGE:
                 updateStatus(ZigBeeOtaServerStatus.OTA_WAITING);
-                return;
+                break;
             default:
                 updateStatus(ZigBeeOtaServerStatus.OTA_TRANSFER_COMPLETE);
                 if (autoUpgrade) {
@@ -789,6 +794,9 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
                 }
                 break;
         }
+
+        cluster.sendDefaultResponse(command, ZclStatus.SUCCESS);
+        return true;
     }
 
     /**
@@ -823,26 +831,24 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
     }
 
     @Override
-    public void commandReceived(final ZigBeeCommand command) {
+    public boolean commandReceived(final ZclCommand command) {
         if (command instanceof QueryNextImageCommand) {
-            handleQueryNextImageCommand((QueryNextImageCommand) command);
-            return;
+            return handleQueryNextImageCommand((QueryNextImageCommand) command);
         }
 
         if (command instanceof ImageBlockCommand) {
-            handleImageBlockCommand((ImageBlockCommand) command);
-            return;
+            return handleImageBlockCommand((ImageBlockCommand) command);
         }
 
         if (command instanceof ImagePageCommand) {
-            handleImagePageCommand((ImagePageCommand) command);
-            return;
+            return handleImagePageCommand((ImagePageCommand) command);
         }
 
         if (command instanceof UpgradeEndCommand) {
-            handleUpgradeEndCommand((UpgradeEndCommand) command);
-            return;
+            return handleUpgradeEndCommand((UpgradeEndCommand) command);
         }
+
+        return false;
     }
 
     @Override

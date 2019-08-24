@@ -13,7 +13,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -40,6 +39,7 @@ import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
@@ -63,8 +63,9 @@ import com.zsmartsystems.zigbee.zdo.command.UnbindRequest;
  *
  */
 public class ZclClusterTest {
+    private static final int TIMEOUT = 5000;
     private ZigBeeNode node;
-    ZigBeeEndpoint endpoint;
+    private ZigBeeEndpoint endpoint;
     private ArgumentCaptor<ZigBeeCommand> commandCapture;
     private ArgumentCaptor<ZigBeeTransactionMatcher> matcherCapture;
 
@@ -178,19 +179,23 @@ public class ZclClusterTest {
     }
 
     @Test
-    public void handleAttributeReport() throws NoSuchMethodException, SecurityException, IllegalAccessException,
-            IllegalArgumentException, InvocationTargetException {
+    public void handleAttributeReport() throws Exception {
         createEndpoint();
 
         ZclCluster cluster = new ZclOnOffCluster(endpoint);
+        Set<ZclAttributeListener> attributeListeners = (Set<ZclAttributeListener>) TestUtilities
+                .getField(ZclCluster.class, cluster, "attributeListeners");
+        assertEquals(0, attributeListeners.size());
 
         // This reports an incorrect type which is changed through the normalisation
         ZclAttributeListener listenerMock = Mockito.mock(ZclAttributeListener.class);
         ArgumentCaptor<ZclAttribute> attributeCapture = ArgumentCaptor.forClass(ZclAttribute.class);
         ArgumentCaptor<Object> valueCaptor = ArgumentCaptor.forClass(Object.class);
         cluster.addAttributeListener(listenerMock);
+        assertEquals(1, attributeListeners.size());
         cluster.addAttributeListener(listenerMock);
-        List<AttributeReport> attributeList = new ArrayList<>();
+        assertEquals(1, attributeListeners.size());
+        List<AttributeReport> attributeList = new ArrayList<AttributeReport>();
         AttributeReport report1;
         report1 = new AttributeReport();
         report1.setAttributeDataType(ZclDataType.SIGNED_8_BIT_INTEGER);
@@ -200,14 +205,23 @@ public class ZclClusterTest {
         attributeList.add(report1);
 
         ReportAttributesCommand attributeReport = new ReportAttributesCommand();
+        attributeReport.setTransactionId(123);
         attributeReport.setReports(attributeList);
 
-        TestUtilities.invokeMethod(ZclCluster.class, cluster, "handleAttributeReport", ReportAttributesCommand.class,
-                attributeReport);
+        cluster.handleCommand(attributeReport);
+        Mockito.verify(endpoint, Mockito.timeout(TIMEOUT).times(1)).sendTransaction(commandCapture.capture());
+        ZigBeeCommand command = commandCapture.getValue();
+        assertTrue(command instanceof DefaultResponse);
+        System.out.println(command);
+        DefaultResponse defaultResponse = (DefaultResponse) command;
+        assertEquals(Integer.valueOf(ReportAttributesCommand.COMMAND_ID), defaultResponse.getCommandIdentifier());
+        assertEquals(ZclStatus.SUCCESS, defaultResponse.getStatusCode());
+        assertEquals(Integer.valueOf(123), defaultResponse.getTransactionId());
+
         ZclAttribute attribute = cluster.getAttribute(0);
         assertTrue(attribute.getLastValue() instanceof Boolean);
 
-        Mockito.verify(listenerMock, Mockito.timeout(1000).times(1)).attributeUpdated(attributeCapture.capture(),
+        Mockito.verify(listenerMock, Mockito.timeout(TIMEOUT).times(1)).attributeUpdated(attributeCapture.capture(),
                 valueCaptor.capture());
 
         List<ZclAttribute> updatedAttributes = attributeCapture.getAllValues();
@@ -220,11 +234,11 @@ public class ZclClusterTest {
         assertEquals(true, attribute.getLastValue());
 
         cluster.removeAttributeListener(listenerMock);
+        assertEquals(0, attributeListeners.size());
     }
 
     @Test
-    public void handleAttributeStatus() throws NoSuchMethodException, SecurityException, IllegalAccessException,
-            IllegalArgumentException, InvocationTargetException {
+    public void handleAttributeStatus() {
         createEndpoint();
 
         ZclCluster cluster = new ZclOnOffCluster(endpoint);
@@ -245,24 +259,24 @@ public class ZclClusterTest {
         System.out.println(report1);
         attributeList.add(report1);
 
-        ReadAttributeStatusRecord report2;
-        report2 = new ReadAttributeStatusRecord();
-        report2.setStatus(ZclStatus.FAILURE);
-        report2.setAttributeDataType(ZclDataType.SIGNED_8_BIT_INTEGER);
-        report2.setAttributeIdentifier(0);
-        report2.setAttributeValue(0);
-        System.out.println(report2);
-        attributeList.add(report2);
-
         ReadAttributesResponse attributeReport = new ReadAttributesResponse();
+        attributeReport.setTransactionId(56);
         attributeReport.setRecords(attributeList);
 
-        TestUtilities.invokeMethod(ZclCluster.class, cluster, "handleAttributeStatus", ReadAttributesResponse.class,
-                attributeReport);
+        cluster.handleCommand(attributeReport);
+        Mockito.verify(endpoint, Mockito.timeout(TIMEOUT).times(1)).sendTransaction(commandCapture.capture());
+        ZigBeeCommand command = commandCapture.getValue();
+        assertTrue(command instanceof DefaultResponse);
+        System.out.println(command);
+        DefaultResponse defaultResponse = (DefaultResponse) command;
+        assertEquals(Integer.valueOf(ReadAttributesResponse.COMMAND_ID), defaultResponse.getCommandIdentifier());
+        assertEquals(ZclStatus.SUCCESS, defaultResponse.getStatusCode());
+        assertEquals(Integer.valueOf(56), defaultResponse.getTransactionId());
+
         ZclAttribute attribute = cluster.getAttribute(0);
         assertTrue(attribute.getLastValue() instanceof Boolean);
 
-        Mockito.verify(listenerMock, Mockito.timeout(1000).times(1)).attributeUpdated(attributeCapture.capture(),
+        Mockito.verify(listenerMock, Mockito.timeout(TIMEOUT).times(1)).attributeUpdated(attributeCapture.capture(),
                 valueCaptor.capture());
 
         List<ZclAttribute> updatedAttributes = attributeCapture.getAllValues();
@@ -283,20 +297,75 @@ public class ZclClusterTest {
     }
 
     @Test
-    public void handleCommandReport() {
+    public void handleCommandReport() throws Exception {
         createEndpoint();
 
         ZclCluster cluster = new ZclOnOffCluster(endpoint);
 
+        Set<ZclCommandListener> commandListeners = (Set<ZclCommandListener>) TestUtilities.getField(ZclCluster.class,
+                cluster, "commandListeners");
+        assertEquals(0, commandListeners.size());
         ZclCommand command = Mockito.mock(ZclCommand.class);
+        Mockito.when(command.getTransactionId()).thenReturn(123);
+        Mockito.when(command.getCommandId()).thenReturn(45);
+        Mockito.when(command.isGenericCommand()).thenReturn(false);
+        Mockito.when(command.isManufacturerSpecific()).thenReturn(false);
+
         ZclCommandListener listenerMock = Mockito.mock(ZclCommandListener.class);
         cluster.addCommandListener(listenerMock);
+        assertEquals(1, commandListeners.size());
         cluster.addCommandListener(listenerMock);
+        assertEquals(1, commandListeners.size());
         cluster.handleCommand(command);
 
-        Mockito.verify(listenerMock, Mockito.timeout(1000).times(1)).commandReceived(command);
+        Mockito.verify(endpoint, Mockito.timeout(TIMEOUT).times(1)).sendTransaction(commandCapture.capture());
+        ZigBeeCommand response = commandCapture.getValue();
+        assertTrue(response instanceof DefaultResponse);
+        System.out.println(response);
+        DefaultResponse defaultResponse = (DefaultResponse) response;
+        assertEquals(Integer.valueOf(45), defaultResponse.getCommandIdentifier());
+        assertEquals(ZclStatus.UNSUP_CLUSTER_COMMAND, defaultResponse.getStatusCode());
+        assertEquals(Integer.valueOf(123), defaultResponse.getTransactionId());
+
+        Mockito.verify(listenerMock, Mockito.timeout(TIMEOUT).times(1)).commandReceived(command);
+
+        Mockito.when(command.isGenericCommand()).thenReturn(true);
+        cluster.handleCommand(command);
+        Mockito.verify(endpoint, Mockito.timeout(TIMEOUT).times(2)).sendTransaction(commandCapture.capture());
+        response = commandCapture.getValue();
+        assertTrue(response instanceof DefaultResponse);
+        System.out.println(response);
+        defaultResponse = (DefaultResponse) response;
+        assertEquals(Integer.valueOf(45), defaultResponse.getCommandIdentifier());
+        assertEquals(ZclStatus.UNSUP_GENERAL_COMMAND, defaultResponse.getStatusCode());
+        assertEquals(Integer.valueOf(123), defaultResponse.getTransactionId());
+
+        Mockito.when(command.isManufacturerSpecific()).thenReturn(true);
+
+        Mockito.when(command.isGenericCommand()).thenReturn(true);
+        cluster.handleCommand(command);
+        Mockito.verify(endpoint, Mockito.timeout(TIMEOUT).times(3)).sendTransaction(commandCapture.capture());
+        response = commandCapture.getValue();
+        assertTrue(response instanceof DefaultResponse);
+        System.out.println(response);
+        defaultResponse = (DefaultResponse) response;
+        assertEquals(Integer.valueOf(45), defaultResponse.getCommandIdentifier());
+        assertEquals(ZclStatus.UNSUP_MANUF_GENERAL_COMMAND, defaultResponse.getStatusCode());
+        assertEquals(Integer.valueOf(123), defaultResponse.getTransactionId());
+
+        Mockito.when(command.isGenericCommand()).thenReturn(false);
+        cluster.handleCommand(command);
+        Mockito.verify(endpoint, Mockito.timeout(TIMEOUT).times(4)).sendTransaction(commandCapture.capture());
+        response = commandCapture.getValue();
+        assertTrue(response instanceof DefaultResponse);
+        System.out.println(response);
+        defaultResponse = (DefaultResponse) response;
+        assertEquals(Integer.valueOf(45), defaultResponse.getCommandIdentifier());
+        assertEquals(ZclStatus.UNSUP_MANUF_CLUSTER_COMMAND, defaultResponse.getStatusCode());
+        assertEquals(Integer.valueOf(123), defaultResponse.getTransactionId());
 
         cluster.removeCommandListener(listenerMock);
+        assertEquals(0, commandListeners.size());
     }
 
     @Test

@@ -13,12 +13,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
-import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.app.ZigBeeApplication;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
+import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.ZclCommandListener;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclIasZoneCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.EnrollResponseCodeEnum;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneEnrollRequestCommand;
@@ -93,7 +94,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneTypeEnum;
  * @author Chris Jackson
  *
  */
-public class ZclIasZoneClient implements ZigBeeApplication {
+public class ZclIasZoneClient implements ZigBeeApplication, ZclCommandListener {
     /**
      * The default number of milliseconds to wait for a {@link ZoneEnrollRequestCommand} before sending the
      * {@link ZoneEnrollResponse}
@@ -186,6 +187,7 @@ public class ZclIasZoneClient implements ZigBeeApplication {
     @Override
     public ZigBeeStatus appStartup(ZclCluster cluster) {
         iasZoneCluster = (ZclIasZoneCluster) cluster;
+        iasZoneCluster.addCommandListener(this);
 
         initialise();
 
@@ -261,14 +263,16 @@ public class ZclIasZoneClient implements ZigBeeApplication {
      * the zone number specified in the constructor {@link #ZigBeeIasCieApp}.
      *
      * @param command the received {@link ZoneEnrollRequestCommand}
+     * @param the {@link ZclCommand} to send as the response
      */
-    private void handleZoneEnrollRequestCommand(ZoneEnrollRequestCommand command) {
+    private boolean handleZoneEnrollRequestCommand(ZoneEnrollRequestCommand command) {
         if (autoEnrollmentTask != null) {
             autoEnrollmentTask.cancel(true);
         }
 
         zoneType = command.getZoneType();
         iasZoneCluster.zoneEnrollResponse(EnrollResponseCodeEnum.SUCCESS.getKey(), zoneId);
+        return true;
     }
 
     /**
@@ -283,11 +287,12 @@ public class ZclIasZoneClient implements ZigBeeApplication {
     }
 
     @Override
-    public void commandReceived(ZigBeeCommand command) {
+    public boolean commandReceived(ZclCommand command) {
         if (command instanceof ZoneEnrollRequestCommand) {
-            handleZoneEnrollRequestCommand((ZoneEnrollRequestCommand) command);
-            return;
+            return handleZoneEnrollRequestCommand((ZoneEnrollRequestCommand) command);
         }
+
+        return false;
     }
 
     private class AutoEnrollmentTask implements Runnable {

@@ -203,6 +203,8 @@ Currently implemented extensions include -:
 
 These provide basic functionality and can be extended as required to meet the application needs.
 
+It should be noted that extensions to the framework should be performed by linking to the ```ZclCluster``` through the ```ZclCommandListener``` notifications. This ensures that processing of ```DefaultResponse``` commands is handled correctly as the framework will automatically handle sending of these responses if there is no response sent. Responses to incoming commands must be returned from the ```handleCommand``` method to ensure that the framework correctly handles the ```DefaultResponse``` notifications. If not handler returns a response, then the framework will return a ```DefaultResponse``` with ```UNSUP_CLUSTER_COMMAND```, ```UNSUP_GENERAL_COMMAND```, ```UNSUP_MANUF_CLUSTER_COMMAND``` or ```UNSUP_MANUF_GENERAL_COMMAND```, as appropriate.
+
 ## Overview
 
 Extensions may provide different levels of functionality - an extension may be as simple as configuring the framework to work with a specific feature, or could provide a detailed application.

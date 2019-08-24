@@ -924,6 +924,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         command.deserialize(fieldDeserializer);
         command.setClusterId(apsFrame.getCluster());
         command.setTransactionId(zclHeader.getSequenceNumber());
+        command.setDisableDefaultResponse(zclHeader.isDisableDefaultResponse());
 
         return command;
     }

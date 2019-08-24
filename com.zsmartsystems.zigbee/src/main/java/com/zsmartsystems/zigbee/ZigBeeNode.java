@@ -28,7 +28,10 @@ import com.zsmartsystems.zigbee.database.ZigBeeEndpointDao;
 import com.zsmartsystems.zigbee.database.ZigBeeNodeDao;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
+import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
+import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.command.ManagementBindRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementBindResponse;
@@ -682,9 +685,17 @@ public class ZigBeeNode implements ZigBeeCommandListener {
         ZigBeeEndpointAddress endpointAddress = (ZigBeeEndpointAddress) zclCommand.getSourceAddress();
 
         ZigBeeEndpoint endpoint = endpoints.get(endpointAddress.getEndpoint());
-        if (endpoint != null) {
-            endpoint.commandReceived(zclCommand);
+        if (endpoint == null) {
+            logger.debug("{}: Endpoint {} not found for received node command", ieeeAddress,
+                    endpointAddress.getEndpoint());
+            DefaultResponse response = ZclCluster.createDefaultResponse(zclCommand, ZclStatus.UNSUPPORTED_CLUSTER);
+            if (response != null) {
+                sendTransaction(response);
+            }
+            return;
         }
+
+        endpoint.commandReceived(zclCommand);
     }
 
     /**

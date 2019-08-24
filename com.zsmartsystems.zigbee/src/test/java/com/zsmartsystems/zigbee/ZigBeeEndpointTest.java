@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
@@ -24,6 +25,7 @@ import com.zsmartsystems.zigbee.database.ZigBeeEndpointDao;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclAlarmsCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclColorControlCluster;
@@ -32,7 +34,6 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclDoorLockCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclScenesCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
-import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 
@@ -43,6 +44,9 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  */
 public class ZigBeeEndpointTest {
     private static final int TIMEOUT = 5000;
+
+    private ZigBeeNode node;
+    private ArgumentCaptor<ZigBeeCommand> commandCapture;
 
     @Test
     public void testOutputClusterIds() {
@@ -140,24 +144,36 @@ public class ZigBeeEndpointTest {
         ZigBeeEndpoint endpoint = getEndpoint();
 
         ZclCommand command = mockZclCommand(ZclCommand.class);
+        Mockito.when(command.getClusterId()).thenReturn(0);
+
+        ZclCluster cluster = Mockito.mock(ZclCluster.class);
+        Mockito.when(cluster.getClusterId()).thenReturn(0);
+        endpoint.addInputCluster(cluster);
         endpoint.commandReceived(command);
 
-        List<Integer> clusterIds = new ArrayList<>();
-        clusterIds.add(0);
-        endpoint.setInputClusterIds(clusterIds);
-        endpoint.commandReceived(command);
+        Mockito.verify(cluster, Mockito.timeout(TIMEOUT).times(1)).handleCommand(command);
+        Mockito.verify(node, Mockito.timeout(TIMEOUT).times(0))
+                .sendTransaction(ArgumentMatchers.any(ZigBeeCommand.class));
 
         command = mockZclCommand(ReportAttributesCommand.class);
+        Mockito.when(command.getClusterId()).thenReturn(1);
+        Mockito.when(command.getTransactionId()).thenReturn(123);
+        Mockito.when(command.getCommandId()).thenReturn(99);
         endpoint.commandReceived(command);
+
+        Mockito.verify(node, Mockito.timeout(TIMEOUT).times(1)).sendTransaction(commandCapture.capture());
+        ZigBeeCommand response = commandCapture.getValue();
+        assertTrue(response instanceof DefaultResponse);
+        System.out.println(response);
+        DefaultResponse defaultResponse = (DefaultResponse) response;
+        assertEquals(Integer.valueOf(99), defaultResponse.getCommandIdentifier());
+        assertEquals(ZclStatus.UNSUPPORTED_CLUSTER, defaultResponse.getStatusCode());
+        assertEquals(Integer.valueOf(123), defaultResponse.getTransactionId());
 
         ZigBeeApplication application = Mockito.mock(ZigBeeApplication.class);
         Mockito.when(application.getClusterId()).thenReturn(0);
         endpoint.addApplication(application);
         Mockito.verify(application, Mockito.times(1)).appStartup(ArgumentMatchers.any(ZclCluster.class));
-
-        command = mockZclCommand(ReadAttributesResponse.class);
-        endpoint.commandReceived(command);
-        Mockito.verify(application, Mockito.times(1)).commandReceived(ArgumentMatchers.any(ZclCommand.class));
     }
 
     private ZclCommand mockZclCommand(Class<?> clazz) {
@@ -209,8 +225,10 @@ public class ZigBeeEndpointTest {
     }
 
     private ZigBeeEndpoint getEndpoint() {
-        ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
+        node = Mockito.mock(ZigBeeNode.class);
         Mockito.when(node.getNetworkAddress()).thenReturn(1234);
+        commandCapture = ArgumentCaptor.forClass(ZigBeeCommand.class);
+
         return new ZigBeeEndpoint(node, 5);
     }
 }

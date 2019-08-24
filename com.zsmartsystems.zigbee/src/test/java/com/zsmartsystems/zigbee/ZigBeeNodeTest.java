@@ -24,6 +24,7 @@ import java.util.concurrent.Future;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
@@ -35,6 +36,8 @@ import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionFuture;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
+import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
 import com.zsmartsystems.zigbee.zdo.ZdoCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoCommandType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
@@ -475,7 +478,8 @@ public class ZigBeeNodeTest {
 
     @Test
     public void commandReceived() {
-        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress("1234567890"));
+        ZigBeeNetworkManager networkManager = Mockito.mock(ZigBeeNetworkManager.class);
+        ZigBeeNode node = new ZigBeeNode(networkManager, new IeeeAddress("1234567890"));
         assertTrue(node.setNetworkAddress(12345));
 
         ZigBeeEndpoint endpoint1 = Mockito.mock(ZigBeeEndpoint.class);
@@ -513,10 +517,26 @@ public class ZigBeeNodeTest {
         Mockito.when(unicastDestination.getEndpoint()).thenReturn(1);
         Mockito.when(unicast.getSourceAddress()).thenReturn(sourceAddress);
         Mockito.when(unicast.getDestinationAddress()).thenReturn(unicastDestination);
+        Mockito.when(unicast.getClusterId()).thenReturn(1);
+        Mockito.when(unicast.getTransactionId()).thenReturn(123);
+        Mockito.when(unicast.getCommandId()).thenReturn(99);
 
         node.commandReceived(unicast);
         Mockito.verify(endpoint1, Mockito.times(1)).commandReceived(unicast);
         Mockito.verify(endpoint2, Mockito.times(0)).commandReceived(unicast);
+
+        Mockito.when(sourceAddress.getEndpoint()).thenReturn(10);
+        node.commandReceived(unicast);
+        ArgumentCaptor<ZigBeeCommand> commandCapture = ArgumentCaptor.forClass(ZigBeeCommand.class);
+        Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).times(1)).sendTransaction(commandCapture.capture());
+        ZigBeeCommand response = commandCapture.getValue();
+        assertTrue(response instanceof DefaultResponse);
+        System.out.println(response);
+        DefaultResponse defaultResponse = (DefaultResponse) response;
+        assertEquals(Integer.valueOf(1), defaultResponse.getClusterId());
+        assertEquals(Integer.valueOf(99), defaultResponse.getCommandIdentifier());
+        assertEquals(ZclStatus.UNSUPPORTED_CLUSTER, defaultResponse.getStatusCode());
+        assertEquals(Integer.valueOf(123), defaultResponse.getTransactionId());
 
         ZdoCommand zdoCommand = Mockito.mock(ZdoCommand.class);
         ZigBeeAddress zdoSource = Mockito.mock(ZigBeeAddress.class);

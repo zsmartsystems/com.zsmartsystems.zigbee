@@ -25,7 +25,9 @@ import com.zsmartsystems.zigbee.database.ZigBeeEndpointDao;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclCustomCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 
@@ -429,18 +431,15 @@ public class ZigBeeEndpoint {
         }
         logger.trace("{}: ZigBeeEndpoint.commandReceived({})", getEndpointAddress(), command);
 
-        // Pass all commands received from this endpoint to any registered applications
-        synchronized (applications) {
-            for (ZigBeeApplication application : applications.values()) {
-                application.commandReceived(command);
-            }
-        }
-
         // Get the cluster
         ZclCluster cluster = getReceiveCluster(command.getClusterId(), command.getCommandDirection());
         if (cluster == null) {
             logger.debug("{}: Cluster {} not found for received endpoint command", getEndpointAddress(),
                     command.getClusterId());
+            DefaultResponse response = ZclCluster.createDefaultResponse(command, ZclStatus.UNSUPPORTED_CLUSTER);
+            if (response != null) {
+                sendTransaction(response);
+            }
             return;
         }
 
