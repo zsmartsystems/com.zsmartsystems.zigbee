@@ -27,6 +27,7 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclAlarmsCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclColorControlCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclCustomCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclDoorLockCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclScenesCluster;
@@ -90,9 +91,10 @@ public class ZigBeeEndpointTest {
         clusterIdList.add(ZclColorControlCluster.CLUSTER_ID);
         clusterIdList.add(ZclDoorLockCluster.CLUSTER_ID);
         clusterIdList.add(ZclLevelControlCluster.CLUSTER_ID);
+        clusterIdList.add(0xEEEE);
         endpoint.setInputClusterIds(clusterIdList);
 
-        assertEquals(5, endpoint.getInputClusterIds().size());
+        assertEquals(6, endpoint.getInputClusterIds().size());
 
         assertNotNull(endpoint.getInputCluster(ZclAlarmsCluster.CLUSTER_ID));
         assertFalse(endpoint.getInputCluster(ZclAlarmsCluster.CLUSTER_ID).isClient());
@@ -105,6 +107,14 @@ public class ZigBeeEndpointTest {
         assertTrue(endpoint.addInputCluster(new ZclScenesCluster(endpoint)));
         assertFalse(endpoint.addInputCluster(new ZclScenesCluster(endpoint)));
         assertTrue(endpoint.getInputClusterIds().contains(ZclScenesCluster.CLUSTER_ID));
+
+        // Here we check that we can add a cluster if the current cluster is the
+        assertNotNull(endpoint.getInputCluster(0xEEEE));
+        assertTrue(endpoint.getInputCluster(0xEEEE) instanceof ZclCustomCluster);
+        ZclCluster cluster = Mockito.mock(ZclCluster.class);
+        Mockito.when(cluster.getClusterId()).thenReturn(0xEEEE);
+        assertTrue(endpoint.addInputCluster(cluster));
+        assertEquals(cluster, endpoint.getInputCluster(0xEEEE));
 
         assertTrue(endpoint.getOutputClusterIds().isEmpty());
     }
