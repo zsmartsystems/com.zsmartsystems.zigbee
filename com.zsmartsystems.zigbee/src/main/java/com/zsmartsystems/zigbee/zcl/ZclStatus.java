@@ -77,7 +77,17 @@ public enum ZclStatus {
     NOT_FOUND(0x8b, "The requested information (e.g. table entry) could not be found."),
     UNREPORTABLE_ATTRIBUTE(0x8c, "Periodic reports cannot be issued for this attribute."),
     INVALID_DATA_TYPE(0x8d, "The data type given for an attribute is incorrect. Command not carried out."),
-    RESERVED_02(0x8e, "Value is reserved."),
+    INVALID_SELECTOR(0x8e, "The selector for an attribute is incorrect."),
+    WRITE_ONLY(0x8f,
+            "A request has been made to read an attribute that the requestor is not authorized to read. No action taken"),
+    INCONSISTENT_STARTUP_STATE(0x90,
+            "Setting the requested values would put the device in an inconsistent state on startup. No action taken."),
+    DEFINED_OUT_OF_BAND(0x91,
+            "An attempt has been made to write an attribute that is present but is defined using an out-of-band method and not over the air."),
+    INCONSISTENT(0x92, "The supplied values (e.g., contents of table cells) are inconsistent."),
+    ACTION_DENIED(0x93,
+            "The credentials presented by the device sending the command are not sufficient to perform this action."),
+    TIMEOUT(0x94, "The exchange was aborted due to excessive response time."),
     ABORT(0x95, "Failed case when a client or a server decides to abort the upgrade process."),
     INVALID_IMAGE(0x96, "Invalid OTA upgrade image."),
     WAIT_FOR_DATA(0x97, "Server does not have data block available yet"),
@@ -86,7 +96,8 @@ public enum ZclStatus {
     NOTIFICATION_PENDING(0x9A, "The command has been received and is being processed."),
     HARDWARE_FAILURE(0xc0, "An operation was unsuccessful due to a hardware failure."),
     SOFTWARE_FAILURE(0xc1, "An operation was unsuccessful due to a software failure."),
-    CALIBRATION_ERROR(0xc2, "An error occurred during calibration.");
+    CALIBRATION_ERROR(0xc2, "An error occurred during calibration."),
+    UNSUPPORTED_CLUSTER(0xc3, "The cluster is not supported");
 
     private final int statusId;
     private final String description;
