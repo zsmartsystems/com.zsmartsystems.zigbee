@@ -17,6 +17,7 @@ import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesResponse;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  *
@@ -36,7 +37,7 @@ public class ZigBeeConsoleAttributeWriteCommand extends ZigBeeConsoleAbstractCom
 
     @Override
     public String getSyntax() {
-        return "ENDPOINT CLUSTER ATTRIBUTE VALUE";
+        return "ENDPOINT CLUSTER ATTRIBUTEID VALUE [TYPE]";
     }
 
     @Override
@@ -47,7 +48,7 @@ public class ZigBeeConsoleAttributeWriteCommand extends ZigBeeConsoleAbstractCom
     @Override
     public void process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out)
             throws IllegalArgumentException, InterruptedException, ExecutionException {
-        if (args.length != 5) {
+        if (args.length < 5) {
             throw new IllegalArgumentException("Invalid number of arguments");
         }
 
@@ -55,19 +56,51 @@ public class ZigBeeConsoleAttributeWriteCommand extends ZigBeeConsoleAbstractCom
         String clusterIdParam = args[2];
         String attributeIdParam = args[3];
         String attributeValueParam = args[4];
+        String attributeTypeParam = null;
+
+        if (attributeValueParam.startsWith("[")) {
+            int cnt = 5;
+            for (; cnt < args.length; cnt++) {
+                attributeValueParam += " " + args[cnt];
+                if (attributeValueParam.endsWith("]")) {
+                    break;
+                }
+            }
+            if (!attributeValueParam.endsWith("]")) {
+                throw new IllegalArgumentException("Value defined as an array must be terminated with ']'");
+            }
+            if (args.length == cnt + 2) {
+                attributeTypeParam = args[cnt + 1];
+            } else {
+                throw new IllegalArgumentException("Invalid number of arguments");
+            }
+        } else if (args.length == 6) {
+            attributeTypeParam = args[5];
+        } else {
+            throw new IllegalArgumentException("Invalid number of arguments");
+        }
 
         final ZigBeeEndpoint endpoint = getEndpoint(networkManager, endpointIdParam);
         final ZclCluster cluster = getCluster(endpoint, clusterIdParam);
+        final Integer attributeId = parseAttribute(attributeIdParam);
 
-        final int attributeId = parseAttribute(attributeIdParam);
-
-        final ZclAttribute attribute = cluster.getAttribute(attributeId);
-        if (attribute == null) {
-            throw new IllegalArgumentException("Could not find attribute with ID " + attributeId);
+        ZclDataType dataType = null;
+        if (attributeTypeParam == null) {
+            final ZclAttribute attribute = cluster.getAttribute(attributeId);
+            if (attribute == null) {
+                throw new IllegalArgumentException("Could not find attribute with ID " + attributeId);
+            }
+            dataType = attribute.getDataType();
+        } else {
+            dataType = ZclDataType.valueOf(attributeTypeParam);
+            if (dataType == null) {
+                dataType = ZclDataType.getType(parseInteger(attributeTypeParam));
+            }
         }
 
-        final Object value = parseValue(attributeValueParam, attribute.getDataType());
-        final CommandResult result = cluster.write(attribute, value).get();
+        final Object value = parseValue(attributeValueParam, dataType);
+        final CommandResult result = cluster.writeAttribute(attributeId, ZclDataType.ORDERED_SEQUENCE_ARRAY, value)
+                .get();
         if (result.isSuccess()) {
             final WriteAttributesResponse response = result.getResponse();
             final int statusCode = response.getRecords().get(0).getStatus();
