@@ -33,7 +33,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-05-02T20:51:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-08-26T11:20:05Z")
 public class ZclOnOffCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -84,6 +84,7 @@ public class ZclOnOffCluster extends ZclCluster {
      * set to 0x0000, the device shall remain in its current state.
      */
     public static final int ATTR_OFFWAITTIME = 0x4002;
+    public static final int ATTR_STARTUPONOFF = 0x4003;
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
@@ -94,12 +95,13 @@ public class ZclOnOffCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(4);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(5);
 
         attributeMap.put(ATTR_ONOFF, new ZclAttribute(this, ATTR_ONOFF, "On Off", ZclDataType.BOOLEAN, true, true, false, true));
         attributeMap.put(ATTR_GLOBALSCENECONTROL, new ZclAttribute(this, ATTR_GLOBALSCENECONTROL, "Global Scene Control", ZclDataType.BOOLEAN, true, true, false, false));
         attributeMap.put(ATTR_ONTIME, new ZclAttribute(this, ATTR_ONTIME, "On Time", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, true, false));
         attributeMap.put(ATTR_OFFWAITTIME, new ZclAttribute(this, ATTR_OFFWAITTIME, "Off Wait Time", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, true, false));
+        attributeMap.put(ATTR_STARTUPONOFF, new ZclAttribute(this, ATTR_STARTUPONOFF, "Start Up On Off", ZclDataType.ENUMERATION_8_BIT, false, true, true, false));
 
         return attributeMap;
     }
@@ -496,6 +498,64 @@ public class ZclOnOffCluster extends ZclCluster {
     @Deprecated
     public Future<CommandResult> setOffWaitTimeReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
         return setReporting(serverAttributes.get(ATTR_OFFWAITTIME), minInterval, maxInterval, reportableChange);
+    }
+
+    /**
+     * Set the <i>Start Up On Off</i> attribute [attribute ID <b>0x4003</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param startUpOnOff the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setStartUpOnOff(final Integer value) {
+        return write(serverAttributes.get(ATTR_STARTUPONOFF), value);
+    }
+
+    /**
+     * Get the <i>Start Up On Off</i> attribute [attribute ID <b>0x4003</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getStartUpOnOffAsync() {
+        return read(serverAttributes.get(ATTR_STARTUPONOFF));
+    }
+
+    /**
+     * Synchronously get the <i>Start Up On Off</i> attribute [attribute ID <b>0x4003</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getStartUpOnOff(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_STARTUPONOFF).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_STARTUPONOFF).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_STARTUPONOFF));
     }
 
     /**

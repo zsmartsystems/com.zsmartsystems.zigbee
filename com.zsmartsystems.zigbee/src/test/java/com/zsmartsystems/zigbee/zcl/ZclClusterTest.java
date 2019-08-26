@@ -259,7 +259,7 @@ public class ZclClusterTest {
         createEndpoint();
 
         ZclCluster cluster = new ZclOnOffCluster(endpoint);
-        assertEquals(4, cluster.getSupportedAttributes().size());
+        assertEquals(5, cluster.getSupportedAttributes().size());
 
         Set<Integer> supportedAttributes = new HashSet<Integer>();
         supportedAttributes.add(1);
@@ -269,7 +269,7 @@ public class ZclClusterTest {
 
         assertNull(cluster.getDao().getSupportedAttributes());
 
-        assertEquals(4, cluster.getSupportedAttributes().size());
+        assertEquals(5, cluster.getSupportedAttributes().size());
 
         TestUtilities.setField(ZclCluster.class, cluster, "supportedAttributesKnown", true);
         assertEquals(3, cluster.getSupportedAttributes().size());
@@ -360,7 +360,7 @@ public class ZclClusterTest {
         // Cluster initialisation - returns default
         ZclOnOffCluster cluster = new ZclOnOffCluster(endpoint);
         assertFalse(cluster.getSupportedAttributes().isEmpty());
-        assertEquals(4, cluster.getSupportedAttributes().size());
+        assertEquals(5, cluster.getSupportedAttributes().size());
 
         // DAO returns null as the real list of supported attributes is unknown
         ZclClusterDao clusterDaoNull = cluster.getDao();
@@ -374,7 +374,7 @@ public class ZclClusterTest {
 
         // Setting the DAO with a null should also return the default
         cluster.setDao(clusterDaoNull);
-        assertEquals(4, cluster.getSupportedAttributes().size());
+        assertEquals(5, cluster.getSupportedAttributes().size());
 
         cluster.setDao(clusterDaoEmpty);
         assertEquals(0, cluster.getSupportedAttributes().size());
