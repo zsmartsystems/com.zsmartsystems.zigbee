@@ -65,5 +65,9 @@
         <name>Off Wait Time</name>
         <description>The OffWaitTime attribute specifies the length of time (in 1/10ths second) that the &#8220;off&#8221; state SHALL be guarded to prevent an on command turning the device back to its &#8220;on&#8221; state (e.g., when leaving a room, the lights are turned off but an occupancy sensor detects the leaving person and attempts to turn the lights back on). If this attribute is set to 0x0000, the device SHALL remain in its current state.</description>
     </attribute>
+    <attribute code="0x4003" type="ENUMERATION_8_BIT" side="server" optional="true" writable="true" reportable="false">
+        <name>Start Up On Off</name>
+        <description></description>
+    </attribute>
 
 </cluster>

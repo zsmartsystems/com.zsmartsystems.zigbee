@@ -30,7 +30,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-05-02T20:51:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-08-26T11:20:05Z")
 public class ZclBasicCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -89,6 +89,10 @@ public class ZclBasicCluster extends ZclCluster {
      * in the form of a battery backup.
      */
     public static final int ATTR_POWERSOURCE = 0x0007;
+    public static final int ATTR_GENERICDEVICECLASS = 0x0008;
+    public static final int ATTR_GENERICDEVICETYPE = 0x0009;
+    public static final int ATTR_PRODUCTCODE = 0x000A;
+    public static final int ATTR_PRODUCTURL = 0x000B;
     /**
      * The LocationDescription attribute is a maximum of 16 bytes in length and describes the
      * physical location of the device as a ZigBee character string.
@@ -133,7 +137,7 @@ public class ZclBasicCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(14);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(18);
 
         attributeMap.put(ATTR_ZCLVERSION, new ZclAttribute(this, ATTR_ZCLVERSION, "ZCL Version", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
         attributeMap.put(ATTR_APPLICATIONVERSION, new ZclAttribute(this, ATTR_APPLICATIONVERSION, "Application Version", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
@@ -143,6 +147,10 @@ public class ZclBasicCluster extends ZclCluster {
         attributeMap.put(ATTR_MODELIDENTIFIER, new ZclAttribute(this, ATTR_MODELIDENTIFIER, "Model Identifier", ZclDataType.CHARACTER_STRING, true, true, false, false));
         attributeMap.put(ATTR_DATECODE, new ZclAttribute(this, ATTR_DATECODE, "Date Code", ZclDataType.CHARACTER_STRING, true, true, false, false));
         attributeMap.put(ATTR_POWERSOURCE, new ZclAttribute(this, ATTR_POWERSOURCE, "Power Source", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_GENERICDEVICECLASS, new ZclAttribute(this, ATTR_GENERICDEVICECLASS, "Generic Device Class", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
+        attributeMap.put(ATTR_GENERICDEVICETYPE, new ZclAttribute(this, ATTR_GENERICDEVICETYPE, "Generic Device Type", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
+        attributeMap.put(ATTR_PRODUCTCODE, new ZclAttribute(this, ATTR_PRODUCTCODE, "Product Code", ZclDataType.CHARACTER_STRING, false, true, false, false));
+        attributeMap.put(ATTR_PRODUCTURL, new ZclAttribute(this, ATTR_PRODUCTURL, "Product URL", ZclDataType.CHARACTER_STRING, false, true, false, false));
         attributeMap.put(ATTR_LOCATIONDESCRIPTION, new ZclAttribute(this, ATTR_LOCATIONDESCRIPTION, "Location Description", ZclDataType.CHARACTER_STRING, true, true, true, false));
         attributeMap.put(ATTR_PHYSICALENVIRONMENT, new ZclAttribute(this, ATTR_PHYSICALENVIRONMENT, "Physical Environment", ZclDataType.ENUMERATION_8_BIT, true, true, true, false));
         attributeMap.put(ATTR_DEVICEENABLED, new ZclAttribute(this, ATTR_DEVICEENABLED, "Device Enabled", ZclDataType.BOOLEAN, true, true, true, false));
@@ -735,6 +743,174 @@ public class ZclBasicCluster extends ZclCluster {
     @Deprecated
     public Future<CommandResult> setPowerSourceReporting(final int minInterval, final int maxInterval) {
         return setReporting(serverAttributes.get(ATTR_POWERSOURCE), minInterval, maxInterval);
+    }
+
+    /**
+     * Get the <i>Generic Device Class</i> attribute [attribute ID <b>0x0008</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getGenericDeviceClassAsync() {
+        return read(serverAttributes.get(ATTR_GENERICDEVICECLASS));
+    }
+
+    /**
+     * Synchronously get the <i>Generic Device Class</i> attribute [attribute ID <b>0x0008</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getGenericDeviceClass(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_GENERICDEVICECLASS).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_GENERICDEVICECLASS).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_GENERICDEVICECLASS));
+    }
+
+    /**
+     * Get the <i>Generic Device Type</i> attribute [attribute ID <b>0x0009</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getGenericDeviceTypeAsync() {
+        return read(serverAttributes.get(ATTR_GENERICDEVICETYPE));
+    }
+
+    /**
+     * Synchronously get the <i>Generic Device Type</i> attribute [attribute ID <b>0x0009</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getGenericDeviceType(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_GENERICDEVICETYPE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_GENERICDEVICETYPE).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_GENERICDEVICETYPE));
+    }
+
+    /**
+     * Get the <i>Product Code</i> attribute [attribute ID <b>0x000A</b>].
+     * <p>
+     * The attribute is of type {@link String}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getProductCodeAsync() {
+        return read(serverAttributes.get(ATTR_PRODUCTCODE));
+    }
+
+    /**
+     * Synchronously get the <i>Product Code</i> attribute [attribute ID <b>0x000A</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link String}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link String} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public String getProductCode(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_PRODUCTCODE).isLastValueCurrent(refreshPeriod)) {
+            return (String) serverAttributes.get(ATTR_PRODUCTCODE).getLastValue();
+        }
+
+        return (String) readSync(serverAttributes.get(ATTR_PRODUCTCODE));
+    }
+
+    /**
+     * Get the <i>Product URL</i> attribute [attribute ID <b>0x000B</b>].
+     * <p>
+     * The attribute is of type {@link String}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getProductUrlAsync() {
+        return read(serverAttributes.get(ATTR_PRODUCTURL));
+    }
+
+    /**
+     * Synchronously get the <i>Product URL</i> attribute [attribute ID <b>0x000B</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link String}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link String} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public String getProductUrl(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_PRODUCTURL).isLastValueCurrent(refreshPeriod)) {
+            return (String) serverAttributes.get(ATTR_PRODUCTURL).getLastValue();
+        }
+
+        return (String) readSync(serverAttributes.get(ATTR_PRODUCTURL));
     }
 
     /**

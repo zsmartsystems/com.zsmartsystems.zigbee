@@ -51,7 +51,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-05-02T20:51:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-08-26T11:20:05Z")
 public class ZclLevelControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -74,6 +74,7 @@ public class ZclLevelControlCluster extends ZclCluster {
      * is complete - it is specified in 1/10ths of a second.
      */
     public static final int ATTR_REMAININGTIME = 0x0001;
+    public static final int ATTR_OPTIONS = 0x000F;
     /**
      * The OnOffTransitionTime attribute represents the time taken to move to or from the
      * target level when On of Off commands are received by an On/Off cluster on the same
@@ -111,6 +112,7 @@ public class ZclLevelControlCluster extends ZclCluster {
      * a Move command is received with a Rate parameter of 0xFF.
      */
     public static final int ATTR_DEFAULTMOVERATE = 0x0014;
+    public static final int ATTR_STARTUPCURRENTLEVEL = 0x4000;
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
@@ -121,15 +123,17 @@ public class ZclLevelControlCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(7);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(9);
 
         attributeMap.put(ATTR_CURRENTLEVEL, new ZclAttribute(this, ATTR_CURRENTLEVEL, "Current Level", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, true));
         attributeMap.put(ATTR_REMAININGTIME, new ZclAttribute(this, ATTR_REMAININGTIME, "Remaining Time", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_OPTIONS, new ZclAttribute(this, ATTR_OPTIONS, "Options", ZclDataType.BITMAP_8_BIT, false, true, false, false));
         attributeMap.put(ATTR_ONOFFTRANSITIONTIME, new ZclAttribute(this, ATTR_ONOFFTRANSITIONTIME, "On Off Transition Time", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
         attributeMap.put(ATTR_ONLEVEL, new ZclAttribute(this, ATTR_ONLEVEL, "On Level", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
         attributeMap.put(ATTR_ONTRANSITIONTIME, new ZclAttribute(this, ATTR_ONTRANSITIONTIME, "On Transition Time", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
         attributeMap.put(ATTR_OFFTRANSITIONTIME, new ZclAttribute(this, ATTR_OFFTRANSITIONTIME, "Off Transition Time", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
         attributeMap.put(ATTR_DEFAULTMOVERATE, new ZclAttribute(this, ATTR_DEFAULTMOVERATE, "Default Move Rate", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_STARTUPCURRENTLEVEL, new ZclAttribute(this, ATTR_STARTUPCURRENTLEVEL, "Start Up Current Level", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
 
         return attributeMap;
     }
@@ -274,6 +278,48 @@ public class ZclLevelControlCluster extends ZclCluster {
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_REMAININGTIME));
+    }
+
+    /**
+     * Get the <i>Options</i> attribute [attribute ID <b>0x000F</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getOptionsAsync() {
+        return read(serverAttributes.get(ATTR_OPTIONS));
+    }
+
+    /**
+     * Synchronously get the <i>Options</i> attribute [attribute ID <b>0x000F</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getOptions(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_OPTIONS).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_OPTIONS).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_OPTIONS));
     }
 
     /**
@@ -645,6 +691,64 @@ public class ZclLevelControlCluster extends ZclCluster {
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_DEFAULTMOVERATE));
+    }
+
+    /**
+     * Set the <i>Start Up Current Level</i> attribute [attribute ID <b>0x4000</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param startUpCurrentLevel the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setStartUpCurrentLevel(final Integer value) {
+        return write(serverAttributes.get(ATTR_STARTUPCURRENTLEVEL), value);
+    }
+
+    /**
+     * Get the <i>Start Up Current Level</i> attribute [attribute ID <b>0x4000</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getStartUpCurrentLevelAsync() {
+        return read(serverAttributes.get(ATTR_STARTUPCURRENTLEVEL));
+    }
+
+    /**
+     * Synchronously get the <i>Start Up Current Level</i> attribute [attribute ID <b>0x4000</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getStartUpCurrentLevel(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_STARTUPCURRENTLEVEL).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_STARTUPCURRENTLEVEL).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_STARTUPCURRENTLEVEL));
     }
 
     /**

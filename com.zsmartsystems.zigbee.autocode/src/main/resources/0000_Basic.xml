@@ -46,6 +46,22 @@
 		<name>Power Source</name>
 		<description>The PowerSource attribute is 8 bits in length and specifies the source(s) of power available to the device. Bits b0&#8211;b6 of this attribute represent the primary power source of the device and bit b7 indicates whether the device has a secondary power source in the form of a battery backup.</description>
 	</attribute>
+	<attribute code="0x0008" type="ENUMERATION_8_BIT" side="server" optional="true" writable="false" reportable="false">
+		<name>Generic Device Class</name>
+		<description></description>
+	</attribute>
+	<attribute code="0x0009" type="ENUMERATION_8_BIT" side="server" optional="true" writable="false" reportable="false">
+		<name>Generic Device Type</name>
+		<description></description>
+	</attribute>
+	<attribute code="0x000A" type="CHARACTER_STRING" side="server" optional="true" writable="false" reportable="false">
+		<name>Product Code</name>
+		<description></description>
+	</attribute>
+	<attribute code="0x000B" type="CHARACTER_STRING" side="server" optional="true" writable="false" reportable="false">
+		<name>Product URL</name>
+		<description></description>
+	</attribute>
 	<attribute code="0x0010" type="CHARACTER_STRING" side="server" optional="false" writable="true"
 		reportable="false">
 		<name>Location Description</name>
