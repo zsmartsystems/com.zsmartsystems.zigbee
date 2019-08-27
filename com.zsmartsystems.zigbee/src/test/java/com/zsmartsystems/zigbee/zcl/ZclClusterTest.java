@@ -13,6 +13,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -41,12 +42,15 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadReportingConfigurationCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnCommand;
 import com.zsmartsystems.zigbee.zcl.field.AttributeRecord;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReport;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReportingConfigurationRecord;
+import com.zsmartsystems.zigbee.zcl.field.ReadAttributeStatusRecord;
 import com.zsmartsystems.zigbee.zcl.field.WriteAttributeRecord;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
@@ -174,7 +178,8 @@ public class ZclClusterTest {
     }
 
     @Test
-    public void handleAttributeReport() {
+    public void handleAttributeReport() throws NoSuchMethodException, SecurityException, IllegalAccessException,
+            IllegalArgumentException, InvocationTargetException {
         createEndpoint();
 
         ZclCluster cluster = new ZclOnOffCluster(endpoint);
@@ -185,7 +190,7 @@ public class ZclClusterTest {
         ArgumentCaptor<Object> valueCaptor = ArgumentCaptor.forClass(Object.class);
         cluster.addAttributeListener(listenerMock);
         cluster.addAttributeListener(listenerMock);
-        List<AttributeReport> attributeList = new ArrayList<AttributeReport>();
+        List<AttributeReport> attributeList = new ArrayList<>();
         AttributeReport report1;
         report1 = new AttributeReport();
         report1.setAttributeDataType(ZclDataType.SIGNED_8_BIT_INTEGER);
@@ -194,40 +199,80 @@ public class ZclClusterTest {
         System.out.println(report1);
         attributeList.add(report1);
 
-        AttributeReport report2;
-        report2 = new AttributeReport();
-        report2.setAttributeDataType(ZclDataType.SIGNED_8_BIT_INTEGER);
-        report2.setAttributeIdentifier(0);
-        report2.setAttributeValue(0);
-        System.out.println(report2);
-        attributeList.add(report2);
-        cluster.handleAttributeReport(attributeList);
+        ReportAttributesCommand attributeReport = new ReportAttributesCommand();
+        attributeReport.setReports(attributeList);
+
+        TestUtilities.invokeMethod(ZclCluster.class, cluster, "handleAttributeReport", ReportAttributesCommand.class,
+                attributeReport);
         ZclAttribute attribute = cluster.getAttribute(0);
         assertTrue(attribute.getLastValue() instanceof Boolean);
 
-        Mockito.verify(listenerMock, Mockito.timeout(1000).times(2)).attributeUpdated(attributeCapture.capture(),
+        Mockito.verify(listenerMock, Mockito.timeout(1000).times(1)).attributeUpdated(attributeCapture.capture(),
                 valueCaptor.capture());
 
         List<ZclAttribute> updatedAttributes = attributeCapture.getAllValues();
-        assertEquals(2, updatedAttributes.size());
-        List<Object> values = valueCaptor.getAllValues();
+        assertEquals(1, updatedAttributes.size());
 
         attribute = updatedAttributes.get(0);
         assertTrue(attribute.getLastValue() instanceof Boolean);
         assertEquals(ZclDataType.BOOLEAN, attribute.getDataType());
         assertEquals(0, attribute.getId());
-        assertEquals(false, attribute.getLastValue());
-        // assertEquals(false, values.get(0));
+        assertEquals(true, attribute.getLastValue());
 
-        attribute = updatedAttributes.get(1);
+        cluster.removeAttributeListener(listenerMock);
+    }
+
+    @Test
+    public void handleAttributeStatus() throws NoSuchMethodException, SecurityException, IllegalAccessException,
+            IllegalArgumentException, InvocationTargetException {
+        createEndpoint();
+
+        ZclCluster cluster = new ZclOnOffCluster(endpoint);
+
+        // This reports an incorrect type which is changed through the normalisation
+        ZclAttributeListener listenerMock = Mockito.mock(ZclAttributeListener.class);
+        ArgumentCaptor<ZclAttribute> attributeCapture = ArgumentCaptor.forClass(ZclAttribute.class);
+        ArgumentCaptor<Object> valueCaptor = ArgumentCaptor.forClass(Object.class);
+        cluster.addAttributeListener(listenerMock);
+        cluster.addAttributeListener(listenerMock);
+        List<ReadAttributeStatusRecord> attributeList = new ArrayList<>();
+        ReadAttributeStatusRecord report1;
+        report1 = new ReadAttributeStatusRecord();
+        report1.setStatus(ZclStatus.SUCCESS);
+        report1.setAttributeDataType(ZclDataType.SIGNED_8_BIT_INTEGER);
+        report1.setAttributeIdentifier(0);
+        report1.setAttributeValue(Integer.valueOf(1));
+        System.out.println(report1);
+        attributeList.add(report1);
+
+        ReadAttributeStatusRecord report2;
+        report2 = new ReadAttributeStatusRecord();
+        report2.setStatus(ZclStatus.FAILURE);
+        report2.setAttributeDataType(ZclDataType.SIGNED_8_BIT_INTEGER);
+        report2.setAttributeIdentifier(0);
+        report2.setAttributeValue(0);
+        System.out.println(report2);
+        attributeList.add(report2);
+
+        ReadAttributesResponse attributeReport = new ReadAttributesResponse();
+        attributeReport.setRecords(attributeList);
+
+        TestUtilities.invokeMethod(ZclCluster.class, cluster, "handleAttributeStatus", ReadAttributesResponse.class,
+                attributeReport);
+        ZclAttribute attribute = cluster.getAttribute(0);
+        assertTrue(attribute.getLastValue() instanceof Boolean);
+
+        Mockito.verify(listenerMock, Mockito.timeout(1000).times(1)).attributeUpdated(attributeCapture.capture(),
+                valueCaptor.capture());
+
+        List<ZclAttribute> updatedAttributes = attributeCapture.getAllValues();
+        assertEquals(1, updatedAttributes.size());
+
+        attribute = updatedAttributes.get(0);
         assertTrue(attribute.getLastValue() instanceof Boolean);
         assertEquals(ZclDataType.BOOLEAN, attribute.getDataType());
         assertEquals(0, attribute.getId());
-        assertEquals(false, attribute.getLastValue());
-        // assertEquals(true, values.get(1));
-
-        // Attribute report ordering is not guaranteed, so let's just check they are different!
-        assertNotEqual(values.get(0), values.get(1));
+        assertEquals(true, attribute.getLastValue());
 
         cluster.removeAttributeListener(listenerMock);
     }

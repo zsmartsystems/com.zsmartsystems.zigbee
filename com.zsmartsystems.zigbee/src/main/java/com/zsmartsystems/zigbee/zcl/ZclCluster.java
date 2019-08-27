@@ -1104,11 +1104,12 @@ public abstract class ZclCluster {
     /**
      * Processes a list of attribute reports for this cluster
      *
-     * @param reports List of {@link AttributeReport}
+     * @param command the received {@link ReportAttributesCommand}
      */
-    public void handleAttributeReport(List<AttributeReport> reports) {
-        logger.trace("{}: ZclCluster.handleAttributeReport({})", zigbeeEndpoint.getEndpointAddress(), reports);
-        for (AttributeReport report : reports) {
+    private void handleAttributeReport(ReportAttributesCommand command) {
+        logger.trace("{}: ZclCluster.handleAttributeReport({})", zigbeeEndpoint.getEndpointAddress(),
+                command.getReports());
+        for (AttributeReport report : command.getReports()) {
             updateAttribute(report.getAttributeIdentifier(), report.getAttributeValue());
         }
     }
@@ -1116,11 +1117,12 @@ public abstract class ZclCluster {
     /**
      * Processes a list of attribute status reports for this cluster
      *
-     * @param records List of {@link ReadAttributeStatusRecord}
+     * @param command the received {@link ReadAttributesResponse}
      */
-    public void handleAttributeStatus(List<ReadAttributeStatusRecord> records) {
-        logger.trace("{}: ZclCluster.handleAttributeStatus({})", zigbeeEndpoint.getEndpointAddress(), records);
-        for (ReadAttributeStatusRecord record : records) {
+    private void handleAttributeStatus(ReadAttributesResponse command) {
+        logger.trace("{}: ZclCluster.handleAttributeStatus({})", zigbeeEndpoint.getEndpointAddress(),
+                command.getRecords());
+        for (ReadAttributeStatusRecord record : command.getRecords()) {
             if (record.getStatus() != ZclStatus.SUCCESS) {
                 logger.debug("{}: Error reading attribute {} in {} cluster {} - {}",
                         zigbeeEndpoint.getEndpointAddress(), (isClient ? "Client" : "Server"),
@@ -1154,7 +1156,22 @@ public abstract class ZclCluster {
      */
     public void handleCommand(ZclCommand command) {
         logger.trace("{}: ZclCluster.handleCommand({})", zigbeeEndpoint.getEndpointAddress(), command);
-        notifyCommandListener(command);
+        if (command instanceof ReportAttributesCommand) {
+            // Pass the reports to the cluster
+            handleAttributeReport((ReportAttributesCommand) command);
+            return;
+        }
+
+        if (command instanceof ReadAttributesResponse) {
+            // Pass the reports to the cluster
+            handleAttributeStatus((ReadAttributesResponse) command);
+            return;
+        }
+
+        // If this is a specific cluster command, pass the command to the cluster command handler
+        if (!command.isGenericCommand()) {
+            notifyCommandListener(command);
+        }
     }
 
     /**

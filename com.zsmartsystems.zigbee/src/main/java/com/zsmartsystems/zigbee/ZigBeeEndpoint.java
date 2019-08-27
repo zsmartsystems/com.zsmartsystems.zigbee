@@ -26,8 +26,6 @@ import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclCustomCluster;
-import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
-import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 
@@ -446,26 +444,7 @@ public class ZigBeeEndpoint {
             return;
         }
 
-        if (command instanceof ReportAttributesCommand) {
-            ReportAttributesCommand attributeCommand = (ReportAttributesCommand) command;
-
-            // Pass the reports to the cluster
-            cluster.handleAttributeReport(attributeCommand.getReports());
-            return;
-        }
-
-        if (command instanceof ReadAttributesResponse) {
-            ReadAttributesResponse attributeCommand = (ReadAttributesResponse) command;
-
-            // Pass the reports to the cluster
-            cluster.handleAttributeStatus(attributeCommand.getRecords());
-            return;
-        }
-
-        // If this is a specific cluster command, pass the command to the cluster command handler
-        if (!command.isGenericCommand()) {
-            cluster.handleCommand(command);
-        }
+        cluster.handleCommand(command);
     }
 
     /**
