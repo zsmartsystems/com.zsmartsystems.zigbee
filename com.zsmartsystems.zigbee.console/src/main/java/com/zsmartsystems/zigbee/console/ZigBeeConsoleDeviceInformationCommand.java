@@ -8,12 +8,15 @@
 package com.zsmartsystems.zigbee.console;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
 
 /**
@@ -35,7 +38,7 @@ public class ZigBeeConsoleDeviceInformationCommand extends ZigBeeConsoleAbstract
 
     @Override
     public String getSyntax() {
-        return "ENDPOINT [MANUFACTURER|APPVERSION|MODEL|APPVERSION|STKVERSION|HWVERSION|ZCLVERSION|DATE] [REFRESH]";
+        return "ENDPOINT [MANUFACTURER|MODEL|APPVERSION|STKVERSION|HWVERSION|ZCLVERSION|DATE] [REFRESH]";
     }
 
     @Override
@@ -49,7 +52,7 @@ public class ZigBeeConsoleDeviceInformationCommand extends ZigBeeConsoleAbstract
         if (args.length < 2) {
             throw new IllegalArgumentException("Invalid number of arguments");
         }
-        Map<String, String> commands = new TreeMap<>();
+        List<Integer> commands = new ArrayList<>();
         long refresh = Long.MAX_VALUE;
 
         for (int cnt = 2; cnt < args.length; cnt++) {
@@ -59,17 +62,32 @@ public class ZigBeeConsoleDeviceInformationCommand extends ZigBeeConsoleAbstract
                 refresh = 0;
                 continue;
             }
-            commands.put(upperArg, "");
-        }
 
-        if (commands.isEmpty()) {
-            commands.put("MANUFACTURER", "");
-            commands.put("MODEL", "");
-            commands.put("APPVERSION", "");
-            commands.put("STKVERSION", "");
-            commands.put("ZCLVERSION", "");
-            commands.put("HWVERSION", "");
-            commands.put("DATE", "");
+            switch (upperArg) {
+                case "MANUFACTURER":
+                    commands.add(ZclBasicCluster.ATTR_MANUFACTURERNAME);
+                    break;
+                case "MODEL":
+                    commands.add(ZclBasicCluster.ATTR_MODELIDENTIFIER);
+                    break;
+                case "APPVERSION":
+                    commands.add(ZclBasicCluster.ATTR_APPLICATIONVERSION);
+                    break;
+                case "STKVERSION":
+                    commands.add(ZclBasicCluster.ATTR_STACKVERSION);
+                    break;
+                case "ZCLVERSION":
+                    commands.add(ZclBasicCluster.ATTR_ZCLVERSION);
+                    break;
+                case "HWVERSION":
+                    commands.add(ZclBasicCluster.ATTR_HWVERSION);
+                    break;
+                case "DATE":
+                    commands.add(ZclBasicCluster.ATTR_DATECODE);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid argument " + upperArg);
+            }
         }
 
         final ZigBeeEndpoint endpoint = getEndpoint(networkManager, args[1]);
@@ -82,44 +100,26 @@ public class ZigBeeConsoleDeviceInformationCommand extends ZigBeeConsoleAbstract
             throw new IllegalArgumentException("Can't find basic cluster for " + endpoint.getEndpointAddress());
         }
 
-        for (String command : commands.keySet()) {
-            out.println("Requesting " + command);
-            Object response = null;
-            switch (command) {
-                case "MANUFACTURER":
-                    response = basicCluster.getManufacturerName(refresh);
-                    break;
-                case "MODEL":
-                    response = basicCluster.getModelIdentifier(refresh);
-                    break;
-                case "APPVERSION":
-                    response = basicCluster.getApplicationVersion(refresh);
-                    break;
-                case "STKVERSION":
-                    response = basicCluster.getStackVersion(refresh);
-                    break;
-                case "ZCLVERSION":
-                    response = basicCluster.getZclVersion(refresh);
-                    break;
-                case "HWVERSION":
-                    response = basicCluster.getHwVersion(refresh);
-                    break;
-                case "DATE":
-                    response = basicCluster.getDateCode(refresh);
-                    break;
-                default:
-                    out.println("Unknown info type: " + command);
-                    break;
-            }
-
-            if (response != null) {
-                commands.put(command, response.toString());
+        if (commands.isEmpty()) {
+            for (ZclAttribute attribute : basicCluster.getAttributes()) {
+                commands.add(attribute.getId());
             }
         }
 
-        out.println("Node Info     Value");
-        for (Entry<String, String> command : commands.entrySet()) {
-            out.println(String.format("%-12s  ", command.getKey()) + command.getValue());
+        Map<String, String> responses = new TreeMap<>();
+        for (Integer attributeId : commands) {
+            ZclAttribute attribute = basicCluster.getAttribute(attributeId);
+            out.println("Requesting " + attribute.getName());
+            Object response = attribute.readValue(refresh);
+
+            if (response != null) {
+                responses.put(attribute.getName(), response.toString());
+            }
+        }
+
+        out.println("Node Info             Value");
+        for (Entry<String, String> command : responses.entrySet()) {
+            out.println(String.format("%-20s  ", command.getKey()) + command.getValue());
         }
     }
 
