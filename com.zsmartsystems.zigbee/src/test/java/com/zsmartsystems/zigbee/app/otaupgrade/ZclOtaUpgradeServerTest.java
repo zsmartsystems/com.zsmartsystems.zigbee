@@ -61,8 +61,7 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
 
     @Before
     public void resetNotificationService() throws Exception {
-        TestUtilities.setField(NotificationService.class, NotificationService.class, "executorService",
-                Executors.newCachedThreadPool());
+    	NotificationService.initialize();
     }
 
     @Test
@@ -119,6 +118,7 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
 
         ZclOtaUpgradeServer server = new ZclOtaUpgradeServer();
         assertEquals(ZigBeeStatus.SUCCESS, server.appStartup(cluster));
+        server.addListener(this);
         server.addListener(this);
 
         ZigBeeOtaFile otaFile = Mockito.mock(ZigBeeOtaFile.class);
