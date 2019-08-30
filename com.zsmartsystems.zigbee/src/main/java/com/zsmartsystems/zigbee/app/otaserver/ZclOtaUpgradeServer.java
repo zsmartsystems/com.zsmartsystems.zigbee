@@ -291,10 +291,10 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication {
      * @param listener the {@link ZigBeeOtaStatusCallback} to receive the status
      */
     public void addListener(final ZigBeeOtaStatusCallback listener) {
-        if (listener == null) {
-            return;
-        }
         synchronized (this) {
+            if (listener == null || statusListeners.contains(listener)) {
+                return;
+            }
             final List<ZigBeeOtaStatusCallback> modifiedListeners = new ArrayList<ZigBeeOtaStatusCallback>(
                     statusListeners);
             modifiedListeners.add(listener);
