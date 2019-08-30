@@ -16,6 +16,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.ZigBeeBroadcastDestination;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeCommandListener;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
@@ -80,6 +81,10 @@ public class ClusterMatcher implements ZigBeeCommandListener {
                 // TODO: Do we need to restrict the profile? Remove this check?
                 return;
             }
+            if (matchRequest.getNwkAddrOfInterest() != networkManager.getLocalNwkAddress()
+                    && !ZigBeeBroadcastDestination.isBroadcast(matchRequest.getNwkAddrOfInterest())) {
+                return;
+            }
 
             // We want to match any of our local servers (ie our input clusters) with any
             // requested clusters in the requests cluster list
@@ -96,7 +101,7 @@ public class ClusterMatcher implements ZigBeeCommandListener {
             matchResponse.setMatchList(matchList);
 
             matchResponse.setDestinationAddress(command.getSourceAddress());
-            matchResponse.setNwkAddrOfInterest(matchRequest.getNwkAddrOfInterest());
+            matchResponse.setNwkAddrOfInterest(networkManager.getLocalNwkAddress());
             logger.debug("{}: ClusterMatcher sending match {}", networkManager.getZigBeeExtendedPanId(), matchResponse);
             networkManager.sendTransaction(matchResponse);
         }
