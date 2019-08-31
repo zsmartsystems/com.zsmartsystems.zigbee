@@ -10,7 +10,8 @@ package com.zsmartsystems.zigbee.internal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +45,7 @@ public class ClusterMatcher implements ZigBeeCommandListener {
     /**
      * List of clusters supported by the manager. This is used to respond to the {@link MatchDescriptorRequest}
      */
-    private List<Integer> clusters = new CopyOnWriteArrayList<Integer>();
+    private Set<Integer> clusters = new CopyOnWriteArraySet<>();
 
     /**
      * Constructor
