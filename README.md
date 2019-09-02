@@ -203,7 +203,7 @@ Currently implemented extensions include -:
 
 These provide basic functionality and can be extended as required to meet the application needs.
 
-It should be noted that extensions to the framework should be performed by linking to the ```ZclCluster``` through the ```ZclCommandListener``` notifications. This ensures that processing of ```DefaultResponse``` commands is handled correctly as the framework will automatically handle sending of these responses if there is no response sent. Responses to incoming commands must be returned from the ```handleCommand``` method to ensure that the framework correctly handles the ```DefaultResponse``` notifications. If not handler returns a response, then the framework will return a ```DefaultResponse``` with ```UNSUP_CLUSTER_COMMAND```, ```UNSUP_GENERAL_COMMAND```, ```UNSUP_MANUF_CLUSTER_COMMAND``` or ```UNSUP_MANUF_GENERAL_COMMAND```, as appropriate.
+It should be noted that extensions to the framework should be performed by linking to the ```ZclCluster``` through the ```ZclCommandListener``` notifications. This ensures that processing of ```DefaultResponse``` commands is handled correctly as the framework will automatically handle sending of these responses if there is no response sent. Calls to the ```handleCommand``` method must return ```true``` if the method has sent a response, or ```false``` if no response is sent to ensure that the framework correctly handles the ```DefaultResponse``` notifications. If all handlers return a ```false``` response, then the framework will send a ```DefaultResponse``` with ```UNSUP_CLUSTER_COMMAND```, ```UNSUP_GENERAL_COMMAND```, ```UNSUP_MANUF_CLUSTER_COMMAND``` or ```UNSUP_MANUF_GENERAL_COMMAND```, as appropriate.
 
 ## Overview
 
