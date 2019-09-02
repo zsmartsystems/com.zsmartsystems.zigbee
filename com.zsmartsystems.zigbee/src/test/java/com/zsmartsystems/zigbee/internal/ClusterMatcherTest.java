@@ -54,6 +54,7 @@ public class ClusterMatcherTest {
         List<Integer> clusterListIn = new ArrayList<Integer>();
         List<Integer> clusterListOut = new ArrayList<Integer>();
         MatchDescriptorRequest request = new MatchDescriptorRequest();
+        request.setNwkAddrOfInterest(0);
         request.setSourceAddress(new ZigBeeEndpointAddress(1234, 5));
         request.setProfileId(0x104);
         request.setInClusterList(clusterListIn);
@@ -61,6 +62,45 @@ public class ClusterMatcherTest {
 
         matcher.commandReceived(request);
         assertEquals(0, mockedCommandCaptor.getAllValues().size());
+    }
+
+    @Test
+    public void testMatcherNoAddressMatch() {
+        ClusterMatcher matcher = getMatcher();
+        matcher.addCluster(0x500);
+
+        List<Integer> clusterListIn = new ArrayList<Integer>();
+        List<Integer> clusterListOut = new ArrayList<Integer>();
+        MatchDescriptorRequest request = new MatchDescriptorRequest();
+        request.setNwkAddrOfInterest(1);
+        request.setSourceAddress(new ZigBeeEndpointAddress(1234, 5));
+        request.setProfileId(0x104);
+        request.setInClusterList(clusterListIn);
+        request.setOutClusterList(clusterListOut);
+
+        matcher.commandReceived(request);
+        assertEquals(0, mockedCommandCaptor.getAllValues().size());
+    }
+
+    @Test
+    public void testMatcherBroadcast() {
+        ClusterMatcher matcher = getMatcher();
+        matcher.addCluster(0x500);
+
+        List<Integer> clusterListIn = new ArrayList<Integer>();
+        List<Integer> clusterListOut = new ArrayList<Integer>();
+        clusterListIn.add(0x500);
+        MatchDescriptorRequest request = new MatchDescriptorRequest();
+        request.setNwkAddrOfInterest(0xFFFF);
+        request.setSourceAddress(new ZigBeeEndpointAddress(1234, 5));
+        request.setProfileId(0x104);
+        request.setInClusterList(clusterListIn);
+        request.setOutClusterList(clusterListOut);
+
+        matcher.commandReceived(request);
+        assertEquals(1, mockedCommandCaptor.getAllValues().size());
+        MatchDescriptorResponse response = (MatchDescriptorResponse) mockedCommandCaptor.getValue();
+        assertEquals(1234, response.getDestinationAddress().getAddress());
     }
 
     @Test
@@ -73,6 +113,7 @@ public class ClusterMatcherTest {
         List<Integer> clusterListOut = new ArrayList<Integer>();
         clusterListIn.add(0x500);
         MatchDescriptorRequest request = new MatchDescriptorRequest();
+        request.setNwkAddrOfInterest(0);
         request.setSourceAddress(new ZigBeeEndpointAddress(1234, 5));
         request.setProfileId(0x104);
         request.setInClusterList(clusterListIn);
@@ -92,6 +133,7 @@ public class ClusterMatcherTest {
         List<Integer> clusterListOut = new ArrayList<Integer>();
         clusterListOut.add(0x500);
         MatchDescriptorRequest request = new MatchDescriptorRequest();
+        request.setNwkAddrOfInterest(0);
         request.setSourceAddress(new ZigBeeEndpointAddress(1234, 5));
         request.setProfileId(0x104);
         request.setInClusterList(clusterListIn);
@@ -112,8 +154,8 @@ public class ClusterMatcherTest {
         clusterListIn.add(0x500);
         clusterListOut.add(0x500);
         MatchDescriptorRequest request = new MatchDescriptorRequest();
+        request.setNwkAddrOfInterest(0);
         request.setSourceAddress(new ZigBeeEndpointAddress(1234, 5));
-        request.setNwkAddrOfInterest(4321);
         request.setProfileId(0x104);
         request.setInClusterList(clusterListIn);
         request.setOutClusterList(clusterListOut);
@@ -122,6 +164,6 @@ public class ClusterMatcherTest {
         assertEquals(1, mockedCommandCaptor.getAllValues().size());
         MatchDescriptorResponse response = (MatchDescriptorResponse) mockedCommandCaptor.getValue();
         assertEquals(1234, response.getDestinationAddress().getAddress());
-        assertEquals(Integer.valueOf(4321), response.getNwkAddrOfInterest());
+        assertEquals(Integer.valueOf(0), response.getNwkAddrOfInterest());
     }
 }
