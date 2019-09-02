@@ -20,7 +20,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import org.junit.Before;
@@ -56,8 +55,7 @@ public class ZigBeeNodeTest {
 
     @Before
     public void resetNotificationService() throws Exception {
-        TestUtilities.setField(NotificationService.class, NotificationService.class, "executorService",
-                Executors.newCachedThreadPool());
+        NotificationService.initialize();
     }
 
     @Test

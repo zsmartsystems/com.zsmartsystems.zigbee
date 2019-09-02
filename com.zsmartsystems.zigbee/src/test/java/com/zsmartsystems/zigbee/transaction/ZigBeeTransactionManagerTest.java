@@ -57,8 +57,7 @@ public class ZigBeeTransactionManagerTest {
 
     @Before
     public void resetNotificationService() throws Exception {
-        TestUtilities.setField(NotificationService.class, NotificationService.class, "executorService",
-                Executors.newCachedThreadPool());
+        NotificationService.initialize();
     }
 
     @Test

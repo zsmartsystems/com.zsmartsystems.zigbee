@@ -1372,6 +1372,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 return;
             }
             networkNodes.remove(node.getIeeeAddress());
+            removeCommandListener(node);
         }
 
         synchronized (this) {
@@ -1415,6 +1416,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 return;
             }
             networkNodes.put(node.getIeeeAddress(), node);
+            addCommandListener(node);
         }
 
         synchronized (this) {
