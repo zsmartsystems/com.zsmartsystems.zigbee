@@ -92,8 +92,7 @@ public class ZigBeeNetworkManagerTest
 
     @Before
     public void resetNotificationService() throws Exception {
-        TestUtilities.setField(NotificationService.class, NotificationService.class, "executorService",
-                Executors.newCachedThreadPool());
+        NotificationService.initialize();
     }
 
     @Test
@@ -626,6 +625,7 @@ public class ZigBeeNetworkManagerTest
 
         TestUtilities.setField(ZigBeeNetworkManager.class, networkManager, "networkState", ZigBeeNetworkState.ONLINE);
         networkManager.receiveCommand(apsFrame);
+        Mockito.verify(node, Mockito.timeout(TIMEOUT).times(1)).commandReceived(Mockito.any(ZigBeeCommand.class));
         Awaitility.await().until(() -> commandListenerUpdated());
         if (commandListenerCapture.size() == 0) {
             return null;

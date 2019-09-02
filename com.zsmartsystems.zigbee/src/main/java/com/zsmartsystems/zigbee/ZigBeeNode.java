@@ -154,8 +154,6 @@ public class ZigBeeNode implements ZigBeeCommandListener {
 
         this.network = network;
         this.ieeeAddress = ieeeAddress;
-
-        network.addCommandListener(this);
     }
 
     /**
