@@ -253,6 +253,7 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
 
     @Override
     public void appShutdown() {
+        cluster.removeCommandListener(this);
         stopTransferTimer();
         timer.shutdownNow();
     }

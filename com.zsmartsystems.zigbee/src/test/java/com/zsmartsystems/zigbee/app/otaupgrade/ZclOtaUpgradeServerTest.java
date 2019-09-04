@@ -17,8 +17,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import org.awaitility.Awaitility;
@@ -30,9 +28,7 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
-import com.zsmartsystems.zigbee.TestUtilities;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
@@ -44,10 +40,8 @@ import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaFile;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaServerStatus;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaStatusCallback;
 import com.zsmartsystems.zigbee.internal.NotificationService;
-import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
-import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageNotifyCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QueryNextImageCommand;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
 
@@ -61,7 +55,7 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
 
     @Before
     public void resetNotificationService() throws Exception {
-    	NotificationService.initialize();
+        NotificationService.initialize();
     }
 
     @Test
@@ -106,18 +100,11 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
             }
         }).when(mockedNetworkManager).sendCommand(mockedCommandCaptor.capture());
 
-        Mockito.doAnswer(new Answer<Future<CommandResult>>() {
-            @Override
-            public Future<CommandResult> answer(InvocationOnMock invocation) {
-                return null;
-            }
-        }).when(mockedNetworkManager).sendTransaction(mockedCommandCaptor.capture(),
-                (ZigBeeTransactionMatcher) ArgumentMatchers.anyObject());
-
-        ZclOtaUpgradeCluster cluster = new ZclOtaUpgradeCluster(endpoint);
+        ZclOtaUpgradeCluster cluster = Mockito.mock(ZclOtaUpgradeCluster.class);
 
         ZclOtaUpgradeServer server = new ZclOtaUpgradeServer();
         assertEquals(ZigBeeStatus.SUCCESS, server.appStartup(cluster));
+        Mockito.verify(cluster, Mockito.times(1)).addCommandListener(server);
         server.addListener(this);
         server.addListener(this);
 
@@ -125,8 +112,8 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
 
         // Set the firmware and send notification
         server.setFirmware(otaFile);
-
-        assertEquals(1, mockedCommandCaptor.getAllValues().size());
+        Mockito.verify(cluster, Mockito.times(1)).imageNotifyCommand(Mockito.any(), Mockito.any(), Mockito.any(),
+                Mockito.any(), Mockito.any());
 
         Awaitility.await().atMost(1000, TimeUnit.MILLISECONDS).until(() -> otaListenerUpdated());
 
@@ -134,16 +121,10 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
         ZigBeeOtaServerStatus status = otaStatusCapture.get(0);
         assertEquals(ZigBeeOtaServerStatus.OTA_WAITING, status);
 
-        ZigBeeCommand command = mockedCommandCaptor.getValue();
-
-        assertEquals(Integer.valueOf(0x19), command.getClusterId());
-        assertTrue(command instanceof ImageNotifyCommand);
-
-        ImageNotifyCommand notifyCommand = (ImageNotifyCommand) command;
-        assertEquals(new ZigBeeEndpointAddress(1234, 56), notifyCommand.getDestinationAddress());
-        assertTrue(notifyCommand.getQueryJitter() >= 1 && notifyCommand.getQueryJitter() <= 100);
-
         server.removeListener(this);
+
+        server.appShutdown();
+        Mockito.verify(cluster, Mockito.times(1)).removeCommandListener(server);
 
         System.out.println(server.toString());
     }
