@@ -398,29 +398,34 @@ public class ZigBeeEndpoint {
      * {@link ZclApplication#serverStartup()) method to start the application.
      *
      * @param application the new {@link ZigBeeApplication}
+     * @return the {@link ZigBeeStatus} of the call. {@link ZigBeeStatus.SUCCESS} if the application was registered and
+     *         started, and {@link ZigBeeStatus.INVALID_STATE} if an application is already registered to the cluster
      */
-    public void addApplication(ZigBeeApplication application) {
+    public ZigBeeStatus addApplication(ZigBeeApplication application) {
+        if (applications.get(application.getClusterId()) != null) {
+            return ZigBeeStatus.INVALID_STATE;
+        }
         applications.put(application.getClusterId(), application);
         ZclCluster cluster = outputClusters.get(application.getClusterId());
         if (cluster == null) {
             cluster = inputClusters.get(application.getClusterId());
         }
-        application.appStartup(cluster);
+        return application.appStartup(cluster);
     }
 
     /**
      * Gets the application associated with the clusterId. Returns null if there is no server linked to the requested
      * cluster
      *
-     * @param clusterId
-     * @return the {@link ZigBeeApplication}
+     * @param clusterId the cluster ID of the application to retrieve
+     * @return the {@link ZigBeeApplication} registered to the clusterId or null if no application is registered
      */
     public ZigBeeApplication getApplication(int clusterId) {
         return applications.get(clusterId);
     }
 
     /**
-     * Incoming command handler. The endpoint will process any commands addressed to this endpoint ID and pass o
+     * Incoming command handler. The endpoint will process any commands addressed to this endpoint ID and pass to
      * clusters and applications
      *
      * @param command the {@link ZclCommand} received
