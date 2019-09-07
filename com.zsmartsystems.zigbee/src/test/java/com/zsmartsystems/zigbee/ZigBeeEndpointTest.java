@@ -171,9 +171,12 @@ public class ZigBeeEndpointTest {
         assertEquals(Integer.valueOf(123), defaultResponse.getTransactionId());
 
         ZigBeeApplication application = Mockito.mock(ZigBeeApplication.class);
+        Mockito.when(application.appStartup(cluster)).thenReturn(ZigBeeStatus.SUCCESS);
         Mockito.when(application.getClusterId()).thenReturn(0);
-        endpoint.addApplication(application);
+        assertEquals(ZigBeeStatus.SUCCESS, endpoint.addApplication(application));
+        assertEquals(ZigBeeStatus.INVALID_STATE, endpoint.addApplication(application));
         Mockito.verify(application, Mockito.times(1)).appStartup(ArgumentMatchers.any(ZclCluster.class));
+        assertEquals(application, endpoint.getApplication(0));
     }
 
     private ZclCommand mockZclCommand(Class<?> clazz) {
