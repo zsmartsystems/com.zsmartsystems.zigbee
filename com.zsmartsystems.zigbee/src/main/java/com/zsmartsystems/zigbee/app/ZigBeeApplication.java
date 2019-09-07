@@ -7,9 +7,7 @@
  */
 package com.zsmartsystems.zigbee.app;
 
-import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
-import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 
@@ -48,12 +46,4 @@ public interface ZigBeeApplication {
      * @return the cluster ID
      */
     public int getClusterId();
-
-    /**
-     * Called when a command has been received. This is called by the {@link ZigBeeNode} when a command for this node is
-     * received.
-     *
-     * @param command the received {@link ZigBeeCommand}
-     */
-    void commandReceived(final ZigBeeCommand command);
 }

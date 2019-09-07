@@ -14,7 +14,6 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 /**
  * Base class for value object classes holding ZCL commands, extended from {@link ZigBeeCommand}.
  *
- * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
 public abstract class ZclCommand extends ZigBeeCommand {
@@ -28,6 +27,11 @@ public abstract class ZclCommand extends ZigBeeCommand {
      * The command ID
      */
     protected int commandId;
+
+    /**
+     * True if the default response is disabled
+     */
+    protected boolean disableDefaultResponse;
 
     /**
      * The command direction for this command.
@@ -49,10 +53,6 @@ public abstract class ZclCommand extends ZigBeeCommand {
      * </ul>
      */
     private Integer manufacturerCode = null;
-
-    protected void setManufacturerCode(int manufacturerCode) {
-        this.manufacturerCode = manufacturerCode;
-    }
 
     /**
      * Sets the cluster ID for <i>generic</i> commands.
@@ -122,10 +122,37 @@ public abstract class ZclCommand extends ZigBeeCommand {
         return manufacturerCode;
     }
 
+    /**
+     * Sets the manufacturer code
+     *
+     * @param manufacturerCode the manufacturer code
+     */
+    protected void setManufacturerCode(int manufacturerCode) {
+        this.manufacturerCode = manufacturerCode;
+    }
+
+    /**
+     * When set to true, the default response message will not be generated
+     * 
+     * @return the disableDefaultResponse flag - when set to true, the default response message will not be generated
+     */
+    public boolean isDisableDefaultResponse() {
+        return disableDefaultResponse;
+    }
+
+    /**
+     * When set to true, the default response message will not be generated
+     *
+     * @param disableDefaultResponse true if the default response is not required
+     */
+    public void setDisableDefaultResponse(boolean disableDefaultResponse) {
+        this.disableDefaultResponse = disableDefaultResponse;
+    }
+
     @Override
     public String toString() {
         Integer resolvedClusterId = getClusterId();
-        final StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder(50);
         ZclClusterType clusterType = ZclClusterType.getValueById(resolvedClusterId);
         builder.append(clusterType != null ? clusterType.getLabel() : Integer.toHexString(resolvedClusterId));
         builder.append(": ");

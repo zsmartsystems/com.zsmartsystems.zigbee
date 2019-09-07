@@ -18,7 +18,7 @@ public interface ZclCommandListener {
      * Called when a {@link ZclCommand} is received for this cluster
      *
      * @param command the {@link ZclCommand} that has been received
+     * @return true if the handler has, or will send a response to this command
      */
-    void commandReceived(ZclCommand command);
-
+    boolean commandReceived(ZclCommand command);
 }

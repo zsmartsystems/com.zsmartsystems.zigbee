@@ -18,10 +18,13 @@ import java.util.TreeSet;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.RunnableFuture;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -635,7 +638,9 @@ public abstract class ZclCluster {
      * @param status the {@link ZclStatus} to send in the response
      * @param manufacturerCode the manufacturer code to set in the response (or null, if the command is not
      *            manufacturer-specific, or if the cluster is itself manufacturer-specific)
+     * @deprecated use sendDefaultResponse(ZclCommand command, ZclStatus status)
      */
+    @Deprecated
     public void sendDefaultResponse(Integer transactionId, Integer commandIdentifier, ZclStatus status,
             Integer manufacturerCode) {
         DefaultResponse defaultResponse = new DefaultResponse();
@@ -651,7 +656,7 @@ public abstract class ZclCluster {
             defaultResponse.setManufacturerCode(manufacturerCode);
         }
 
-        zigbeeEndpoint.sendTransaction(defaultResponse);
+        send(defaultResponse);
     }
 
     /**
@@ -660,9 +665,30 @@ public abstract class ZclCluster {
      * @param transactionId the transaction ID to use in the response
      * @param commandIdentifier the command identifier to which this is a response
      * @param status the {@link ZclStatus} to send in the response
+     * @deprecated use sendDefaultResponse(ZclCommand command, ZclStatus status)
      */
+    @Deprecated
     public void sendDefaultResponse(Integer transactionId, Integer commandIdentifier, ZclStatus status) {
         sendDefaultResponse(transactionId, commandIdentifier, status, null);
+    }
+
+    /**
+     * Sends a default response to the client
+     *
+     * @param command the {@link ZclCommand} to which we are responding
+     * @param status the {@link ZclStatus} to send in the response
+     */
+    public void sendDefaultResponse(ZclCommand command, ZclStatus status) {
+        ZclCommand response = createDefaultResponse(command, status);
+        if (response == null) {
+            return;
+        }
+        if (isManufacturerSpecific()) {
+            response.setManufacturerCode(getManufacturerCode());
+        }
+
+        // Default response will not solicit a response
+        zigbeeEndpoint.sendTransaction(response);
     }
 
     /**
@@ -1017,12 +1043,6 @@ public abstract class ZclCluster {
      * @param listener the {@link ZclAttributeListener} to add
      */
     public void addAttributeListener(ZclAttributeListener listener) {
-        // Don't add more than once.
-        if (attributeListeners.contains(listener)) {
-            logger.trace("{}: ZclCluster.addAttributeListener already contains {}", zigbeeEndpoint.getEndpointAddress(),
-                    listener);
-            return;
-        }
         logger.trace("{}: ZclCluster.addAttributeListener adding {}", zigbeeEndpoint.getEndpointAddress(), listener);
         attributeListeners.add(listener);
     }
@@ -1065,10 +1085,6 @@ public abstract class ZclCluster {
      */
     public void addCommandListener(ZclCommandListener listener) {
         logger.trace("{}: ZclCluster.addCommandListener({})", zigbeeEndpoint.getEndpointAddress(), listener);
-        // Don't add more than once.
-        if (commandListeners.contains(listener)) {
-            return;
-        }
         commandListeners.add(listener);
     }
 
@@ -1086,8 +1102,11 @@ public abstract class ZclCluster {
      * Notify command listeners of an received {@link ZclCommand}.
      *
      * @param command the {@link ZclCommand} to notify
+     * @return true if at least one of the command handlers has responded to the command
      */
-    private void notifyCommandListener(final ZclCommand command) {
+    private boolean notifyCommandListener(final ZclCommand command) {
+        final AtomicBoolean response = new AtomicBoolean();
+        CountDownLatch latch = new CountDownLatch(commandListeners.size());
         for (final ZclCommandListener listener : commandListeners) {
             NotificationService.execute(new Runnable() {
                 @Override
@@ -1095,9 +1114,27 @@ public abstract class ZclCluster {
                     logger.trace("{}: ZclCluster.notifyCommandListener {} of {}", zigbeeEndpoint.getEndpointAddress(),
                             listener, command);
 
-                    listener.commandReceived(command);
+                    if (listener.commandReceived(command)) {
+                        // A thread is responding - we don't need to wait around
+                        for (long cnt = latch.getCount(); cnt > 0; cnt--) {
+                            latch.countDown();
+                            response.set(true);
+                        }
+                        latch.notifyAll();
+                    }
+                    latch.countDown();
                 }
             });
+        }
+
+        try
+
+        {
+            // TODO: Set the timer properly
+            latch.await(1, TimeUnit.SECONDS);
+            return response.get();
+        } catch (InterruptedException e) {
+            return false;
         }
     }
 
@@ -1112,6 +1149,8 @@ public abstract class ZclCluster {
         for (AttributeReport report : command.getReports()) {
             updateAttribute(report.getAttributeIdentifier(), report.getAttributeValue());
         }
+
+        sendDefaultResponse(command, ZclStatus.SUCCESS);
     }
 
     /**
@@ -1132,6 +1171,8 @@ public abstract class ZclCluster {
 
             updateAttribute(record.getAttributeIdentifier(), record.getAttributeValue());
         }
+
+        sendDefaultResponse(command, ZclStatus.SUCCESS);
     }
 
     private void updateAttribute(int attributeId, Object attributeValue) {
@@ -1170,8 +1211,28 @@ public abstract class ZclCluster {
 
         // If this is a specific cluster command, pass the command to the cluster command handler
         if (!command.isGenericCommand()) {
-            notifyCommandListener(command);
+            if (notifyCommandListener(command)) {
+                return;
+            }
         }
+
+        ZclStatus responseStatus;
+
+        if (command.isManufacturerSpecific()) {
+            if (command.isGenericCommand()) {
+                responseStatus = ZclStatus.UNSUP_MANUF_GENERAL_COMMAND;
+            } else {
+                responseStatus = ZclStatus.UNSUP_MANUF_CLUSTER_COMMAND;
+            }
+        } else {
+            if (command.isGenericCommand()) {
+                responseStatus = ZclStatus.UNSUP_GENERAL_COMMAND;
+            } else {
+                responseStatus = ZclStatus.UNSUP_CLUSTER_COMMAND;
+            }
+        }
+
+        sendDefaultResponse(command, responseStatus);
     }
 
     /**
@@ -1551,6 +1612,32 @@ public abstract class ZclCluster {
             }
         }
         return true;
+    }
+
+    /**
+     * Generates a {@link DefaultResponse} to the supplied {@link ZclCommand} with the requested {@link ZclStatus} code.
+     * If the {@link ZclCommand} does not require a response, this method will return null.
+     *
+     * @param command the received {@link ZclCommand} to which the response is being generated
+     * @param status the {@link ZclStatus} to return in the response
+     * @return the {@link DefaultResponse} ready to send or null if it is not required
+     */
+    public static DefaultResponse createDefaultResponse(ZclCommand command, ZclStatus status) {
+        if (command.isDisableDefaultResponse()) {
+            return null;
+        }
+        DefaultResponse defaultResponse = new DefaultResponse();
+        defaultResponse.setTransactionId(command.getTransactionId());
+        defaultResponse.setCommandIdentifier(command.getCommandId());
+        defaultResponse.setDestinationAddress(command.getDestinationAddress());
+        defaultResponse.setClusterId(command.getClusterId());
+        defaultResponse.setStatusCode(status);
+
+        if (command.isManufacturerSpecific()) {
+            defaultResponse.setManufacturerCode(command.getManufacturerCode());
+        }
+
+        return defaultResponse;
     }
 
 }
