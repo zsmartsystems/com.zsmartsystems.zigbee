@@ -48,6 +48,23 @@ public class ZigBeeOtaUpgradeExtension implements ZigBeeNetworkExtension, ZigBee
 
     @Override
     public void nodeAdded(ZigBeeNode node) {
+        /*
+         * This method needs to register the ZclOtaUpgradeServer to an endpoint on the node. Only one endpoint should be
+         * registered with the ZclOtaUpgradeServer.
+         * It should be noted that the nodeAdded method can be called more than once if the endpoint or cluster
+         * information is updated. As such we need to take
+         * care not to register multiple servers to the same or other endpoints.
+         */
+        for (ZigBeeEndpoint endpoint : node.getEndpoints()) {
+            if (endpoint.getApplication(ZclOtaUpgradeCluster.CLUSTER_ID) != null) {
+                return;
+            }
+        }
+
+        /*
+         * We've confirmed there is no current application registered, so register the ZclOtaUpgradeServer to the first
+         * endpoint supplorting OTA upgrades
+         */
         for (ZigBeeEndpoint endpoint : node.getEndpoints()) {
             if (endpoint.getOutputCluster(ZclOtaUpgradeCluster.CLUSTER_ID) != null) {
                 endpoint.addApplication(new ZclOtaUpgradeServer());
