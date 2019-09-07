@@ -128,10 +128,14 @@ public class ZclIasZoneClientTest {
         Mockito.when(cluster.getAttribute(ZclIasZoneCluster.ATTR_ZONETYPE)).thenReturn(attributeZoneType);
 
         assertEquals(ZigBeeStatus.SUCCESS, client.appStartup(cluster));
+        Mockito.verify(cluster, Mockito.times(1)).addCommandListener(client);
 
         Mockito.verify(attributeIasCieAddress, Mockito.timeout(TIMEOUT).times(0)).writeValue(ieeeAddress);
         Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).times(1)).scheduleTask(ArgumentMatchers.any(),
                 ArgumentMatchers.anyLong());
+
+        client.appShutdown();
+        Mockito.verify(cluster, Mockito.times(1)).removeCommandListener(client);
     }
 
     @Test
