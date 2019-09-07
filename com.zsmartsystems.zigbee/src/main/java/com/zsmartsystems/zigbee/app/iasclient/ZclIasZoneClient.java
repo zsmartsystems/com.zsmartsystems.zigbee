@@ -251,6 +251,7 @@ public class ZclIasZoneClient implements ZigBeeApplication, ZclCommandListener {
         if (autoEnrollmentTask != null) {
             autoEnrollmentTask.cancel(true);
         }
+        iasZoneCluster.removeCommandListener(this);
     }
 
     @Override
