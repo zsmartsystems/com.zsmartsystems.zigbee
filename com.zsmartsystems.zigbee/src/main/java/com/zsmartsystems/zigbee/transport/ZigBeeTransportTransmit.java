@@ -74,7 +74,8 @@ public interface ZigBeeTransportTransmit {
     String getVersionString();
 
     /**
-     * Returns the {@link IeeeAddress} of the local device
+     * Returns the {@link IeeeAddress} of the local device. Implementations must ensure that this is known after
+     * {@link #initialize()} is called.
      *
      * @return the {@link IeeeAddress} of the local device. May return null if the address is not known.
      */
