@@ -8,7 +8,6 @@
 package com.zsmartsystems.zigbee;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -275,19 +274,29 @@ public class ZigBeeNetworkManagerTest
         cmd.setClusterId(6);
         cmd.setDestinationAddress(deviceAddress);
         cmd.setTransactionId(22);
+        assertTrue(networkManager.sendCommand(cmd));
 
-        boolean error = false;
-        networkManager.sendCommand(cmd);
+        networkManager.setDefaultProfileId(ZigBeeProfileType.ZIGBEE_SMART_ENERGY.getKey());
+        assertTrue(networkManager.sendCommand(cmd));
 
-        assertFalse(error);
-        assertEquals(1, mockedApsFrameListener.getAllValues().size());
+        List<ZigBeeApsFrame> sentFrames = mockedApsFrameListener.getAllValues();
+        assertEquals(2, sentFrames.size());
 
-        ZigBeeApsFrame apsFrame = mockedApsFrameListener.getValue();
+        ZigBeeApsFrame apsFrame = sentFrames.get(0);
         assertEquals(ZigBeeNwkAddressMode.DEVICE, apsFrame.getAddressMode());
         assertEquals(1234, apsFrame.getDestinationAddress());
         assertEquals(0, apsFrame.getSourceAddress());
 
         assertEquals(0x104, apsFrame.getProfile());
+        assertEquals(6, apsFrame.getCluster());
+        assertEquals(56, apsFrame.getDestinationEndpoint());
+
+        apsFrame = sentFrames.get(1);
+        assertEquals(ZigBeeNwkAddressMode.DEVICE, apsFrame.getAddressMode());
+        assertEquals(1234, apsFrame.getDestinationAddress());
+        assertEquals(0, apsFrame.getSourceAddress());
+
+        assertEquals(0x109, apsFrame.getProfile());
         assertEquals(6, apsFrame.getCluster());
         assertEquals(56, apsFrame.getDestinationEndpoint());
     }
@@ -625,7 +634,8 @@ public class ZigBeeNetworkManagerTest
 
         TestUtilities.setField(ZigBeeNetworkManager.class, networkManager, "networkState", ZigBeeNetworkState.ONLINE);
         networkManager.receiveCommand(apsFrame);
-        Mockito.verify(node, Mockito.timeout(TIMEOUT).times(1)).commandReceived(Mockito.any(ZigBeeCommand.class));
+        Mockito.verify(node, Mockito.timeout(TIMEOUT).times(1))
+                .commandReceived(ArgumentMatchers.any(ZigBeeCommand.class));
         Awaitility.await().until(() -> commandListenerUpdated());
         if (commandListenerCapture.size() == 0) {
             return null;

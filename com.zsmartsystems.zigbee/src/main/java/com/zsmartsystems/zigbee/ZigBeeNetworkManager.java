@@ -256,6 +256,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     private int localNwkAddress = 0;
 
     /**
+     * The default profile used for sending frames when no other profile can be determined
+     */
+    private int defaultProfileId = ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getKey();
+
+    /**
      * Constructor which configures serial port and ZigBee network.
      *
      * @param transport the dongle providing the {@link ZigBeeTransportTransmit}
@@ -461,6 +466,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      */
     public ZigBeeStatus setZigBeeExtendedPanId(ExtendedPanId panId) {
         return transport.setZigBeeExtendedPanId(panId);
+    }
+
+    public void setDefaultProfileId(int defaultProfileId) {
+        logger.debug("Defuault profile set to {} [{}]", String.format("%04X", defaultProfileId),
+                ZigBeeProfileType.getByValue(defaultProfileId));
+        this.defaultProfileId = defaultProfileId;
     }
 
     /**
@@ -738,8 +749,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
             apsFrame.setSourceEndpoint(1);
 
-            // TODO set the profile properly
-            apsFrame.setProfile(0x104);
+            // Set the profile properly
+            apsFrame.setProfile(defaultProfileId);
 
             // Create the cluster library header
             ZclHeader zclHeader = new ZclHeader();
