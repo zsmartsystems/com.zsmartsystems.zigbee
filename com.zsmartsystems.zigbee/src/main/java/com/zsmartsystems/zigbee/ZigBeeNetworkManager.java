@@ -362,6 +362,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
         setNetworkState(ZigBeeNetworkState.INITIALISING);
 
+        localIeeeAddress = transport.getIeeeAddress();
+
         addLocalNode();
 
         return ZigBeeStatus.SUCCESS;
@@ -1565,7 +1567,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Gets the network address of the local node.
+     * Gets the network address of the local node. This is only valid once the network state is
+     * {@link ZigBeeNetworkState.ONLINE}.
      *
      * @return the network address of the local node.
      */
