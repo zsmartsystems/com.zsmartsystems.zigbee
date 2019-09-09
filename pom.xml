@@ -9,6 +9,36 @@
 	<version>1.2.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
+    <name>ZssBee</name>
+    <description>Open Source ZigBee Framework</description>
+    <url>https://github.com/zsmartsystems/com.zsmartsystems.zigbee</url>
+    <licenses>
+      <license>
+        <name>Eclipse Public License, Version 1.0</name>
+        <url>https://www.eclipse.org/legal/epl-v10.html</url>
+        <distribution>repo</distribution>
+        <comments>A business-friendly OSS license</comments>
+      </license>
+    </licenses>
+    <organization>
+      <name>Z-Smart Systems</name>
+      <url>http://www.zsmartsystems.com</url>
+    </organization>
+    <developers>
+      <developer>
+        <id>cdjackson</id>
+        <name>Chris Jackson</name>
+        <email>chris@zsmartsystems.com</email>
+        <url>http://www.zsmartsystems.com</url>
+        <organization>Z-Smart Systems</organization>
+        <organizationUrl>http://www.zsmartsystems.com</organizationUrl>
+        <roles>
+          <role>architect</role>
+          <role>developer</role>
+        </roles>
+      </developer>
+    </developers>
+
 	<properties>
 		<license.year>2019</license.year>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
