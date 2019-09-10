@@ -1120,16 +1120,13 @@ public abstract class ZclCluster {
                             latch.countDown();
                             response.set(true);
                         }
-                        latch.notifyAll();
                     }
                     latch.countDown();
                 }
             });
         }
 
-        try
-
-        {
+        try {
             // TODO: Set the timer properly
             latch.await(1, TimeUnit.SECONDS);
             return response.get();
