@@ -122,19 +122,18 @@ public class TelegesisFrameHandlerTest {
         // Initialise mock
         ZigBeeDongleTelegesis dongle = Mockito.mock(ZigBeeDongleTelegesis.class);
         TelegesisFrameHandler frameHandler = new TelegesisFrameHandler(dongle);
-        frameHandler.setCommandTimeout(10);
+        frameHandler.setCommandTimeout(500);
 
         // Accept calls and monitor the time, when the call has been made
-        long[] lastSendCommandTime = new long[] { System.currentTimeMillis() };
         ZigBeePort serialPort = Mockito.mock(ZigBeePort.class);
 
-        // Repeat whenever processed[0] == false, delay the response till given time int waitTime[0] has passed
+        // Repeat whenever processed[0] == false, only give response if respond[0] == true
         boolean[] processed = new boolean[] { false };
-        long[] waitTime = new long[1];
+        boolean[] respond = new boolean[] { false };
         int[] call = new int[] { 0 };
         String response = "OK" + CRLF;
         Mockito.when(serialPort.read()).thenAnswer(invocationCall -> {
-            if (System.currentTimeMillis() - lastSendCommandTime[0] < waitTime[0] || processed[0]) {
+            if (!respond[0] || processed[0]) {
                 return -1;
             }
             processed[0] |= call[0] % response.length() == response.length() - 1;
@@ -144,9 +143,11 @@ public class TelegesisFrameHandlerTest {
         frameHandler.start(serialPort);
 
         // Repeat the task four times, with timeouts after every second. Retries should be reset after each round
-        for (int i = 0; i < 4; i++) {
-            sendCommandAndWait(frameHandler, lastSendCommandTime, processed, waitTime, 30);
-            sendCommandAndWait(frameHandler, lastSendCommandTime, processed, waitTime, 0);
+        for (int i = 0; i < 3; i++) {
+            respond[0] = false;
+            sendCommandAndWait(frameHandler, processed);
+            respond[0] = true;
+            sendCommandAndWait(frameHandler, processed);
         }
 
         Mockito.verify(dongle, Mockito.times(0)).notifyStateUpdate(false);
@@ -164,27 +165,18 @@ public class TelegesisFrameHandlerTest {
         frameHandler.setCommandTimeout(10);
 
         // Accept calls and monitor the time, when the call has been made
-        long[] lastSendCommandTime = new long[] { System.currentTimeMillis() };
         ZigBeePort serialPort = Mockito.mock(ZigBeePort.class);
 
         // Repeat whenever processed[0] == false, delay the response till given time int waitTime[0] has passed
         boolean[] processed = new boolean[] { false };
-        long[] waitTime = new long[1];
-        int[] call = new int[] { 0 };
-        String response = "OK" + CRLF;
-        Mockito.when(serialPort.read()).thenAnswer(invocationCall -> {
-            if (System.currentTimeMillis() - lastSendCommandTime[0] < waitTime[0] || processed[0]) {
-                return -1;
-            }
-            processed[0] |= call[0] % response.length() == response.length() - 1;
-            return (int) response.getBytes()[call[0]++ % response.length()];
-        });
+        Mockito.when(serialPort.read()).thenAnswer(invocationCall -> -1);
+        Mockito.doAnswer(mi -> processed[0] = true).when(dongle).notifyStateUpdate(false);
 
         frameHandler.start(serialPort);
 
         // Repeat the task four times, with timeouts after every second. Retries should NOT be reset
-        for (int i = 0; i < 5; i++) {
-            sendCommandAndWait(frameHandler, lastSendCommandTime, processed, waitTime, 30);
+        for (int i = 0; i < 3; i++) {
+            sendCommandAndWait(frameHandler, processed);
         }
 
         Mockito.verify(dongle, Mockito.atLeast(1)).notifyStateUpdate(false);
@@ -252,26 +244,27 @@ public class TelegesisFrameHandlerTest {
      * Helper Method to send a command to the frameHandler and wait, till the getPacket() method may have read it
      * 
      * @param frameHandler the frame handler to send the command to
-     * @param lastSendCommandTime time when the last command was send
      * @param processed holder for the boolean to check, whether the message is already processed
-     * @param waitTime holder for the time to wait after message has been send
-     * @param time how long the serial port should wait before sending the response
      */
-    private void sendCommandAndWait(TelegesisFrameHandler frameHandler, long[] lastSendCommandTime, boolean[] processed, long[] waitTime,
-            long time) {
+    private void sendCommandAndWait(TelegesisFrameHandler frameHandler, boolean[] processed) {
         TelegesisSetRegisterBitCommand command = new TelegesisSetRegisterBitCommand();
         command.setBit(0);
         command.setRegister(0);
         command.setPassword("password");
         command.setState(false);
 
-        waitTime[0] = time;
-        lastSendCommandTime[0] = System.currentTimeMillis();
         processed[0] = false;
         frameHandler.queueFrame(command);
-        long timeout = System.currentTimeMillis();
-        while (!processed[0] && System.currentTimeMillis() - timeout < 200) {
-            Thread.yield();
+        try {
+            Field sentCommandField = TelegesisFrameHandler.class.getDeclaredField("sentCommand");
+            sentCommandField.setAccessible(true);
+            long time = System.currentTimeMillis();
+            while (!processed[0] && sentCommandField.get(frameHandler) != null
+                    && System.currentTimeMillis() - time < 2000) {
+                Thread.yield();
+            }
+        } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+            e.printStackTrace();
         }
     }
 
