@@ -145,9 +145,9 @@ public class TelegesisFrameHandlerTest {
         // Repeat the task four times, with timeouts after every second. Retries should be reset after each round
         for (int i = 0; i < 3; i++) {
             respond[0] = false;
-            sendCommandAndWait(frameHandler, processed);
+            sendCommandAndWait(frameHandler, processed, respond);
             respond[0] = true;
-            sendCommandAndWait(frameHandler, processed);
+            sendCommandAndWait(frameHandler, processed, respond);
         }
 
         Mockito.verify(dongle, Mockito.times(0)).notifyStateUpdate(false);
@@ -162,7 +162,7 @@ public class TelegesisFrameHandlerTest {
         // Initialise mock
         ZigBeeDongleTelegesis dongle = Mockito.mock(ZigBeeDongleTelegesis.class);
         TelegesisFrameHandler frameHandler = new TelegesisFrameHandler(dongle);
-        frameHandler.setCommandTimeout(10);
+        frameHandler.setCommandTimeout(50);
 
         // Accept calls and monitor the time, when the call has been made
         ZigBeePort serialPort = Mockito.mock(ZigBeePort.class);
@@ -176,7 +176,7 @@ public class TelegesisFrameHandlerTest {
 
         // Repeat the task four times, with timeouts after every second. Retries should NOT be reset
         for (int i = 0; i < 3; i++) {
-            sendCommandAndWait(frameHandler, processed);
+            sendCommandAndWait(frameHandler, processed, new boolean[1]);
         }
 
         Mockito.verify(dongle, Mockito.atLeast(1)).notifyStateUpdate(false);
@@ -245,16 +245,22 @@ public class TelegesisFrameHandlerTest {
      * 
      * @param frameHandler the frame handler to send the command to
      * @param processed holder for the boolean to check, whether the message is already processed
+     * @param resond holder to pause message responses until message is sent
      */
-    private void sendCommandAndWait(TelegesisFrameHandler frameHandler, boolean[] processed) {
+    private void sendCommandAndWait(TelegesisFrameHandler frameHandler, boolean[] processed, boolean[] respond) {
         TelegesisSetRegisterBitCommand command = new TelegesisSetRegisterBitCommand();
         command.setBit(0);
         command.setRegister(0);
         command.setPassword("password");
         command.setState(false);
 
+        // We need to make sure the response is not send before the message is send
+        boolean tempResponse = respond[0];
+        respond[0] = false;
         processed[0] = false;
         frameHandler.queueFrame(command);
+        // Now the response may be send
+        respond[0] = tempResponse;
         try {
             Field sentCommandField = TelegesisFrameHandler.class.getDeclaredField("sentCommand");
             sentCommandField.setAccessible(true);
