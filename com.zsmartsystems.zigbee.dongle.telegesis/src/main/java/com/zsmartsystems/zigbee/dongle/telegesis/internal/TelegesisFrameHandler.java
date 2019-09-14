@@ -124,11 +124,6 @@ public class TelegesisFrameHandler {
     private int retries = 0;
 
     /**
-     * The rate at which we will do a status poll if we've not sent any other messages within this period
-     */
-    private int pollRate = 1000;
-
-    /**
      * The dongle instance to receive notifications
      */
     private final ZigBeeDongleTelegesis zigBeeDongleTelegesis;
