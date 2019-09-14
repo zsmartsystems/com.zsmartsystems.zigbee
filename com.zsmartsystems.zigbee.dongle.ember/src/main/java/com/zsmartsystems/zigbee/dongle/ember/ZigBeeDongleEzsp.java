@@ -533,6 +533,15 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         return new EmberNcp(frameHandler);
     }
 
+    /**
+     * Returns an instance of the {@link EmberCbkeProvider}
+     *
+     * @return an instance of the {@link EmberCbkeProvider}
+     */
+    public EmberCbkeProvider getEmberCbkeProvider() {
+        return new EmberCbkeProvider(this);
+    }
+
     @Override
     public IeeeAddress getIeeeAddress() {
         return ieeeAddress;
