@@ -117,6 +117,7 @@ public class TelegesisFrameHandlerTest {
         assertFalse(frameHandler.isAlive());
     }
 
+    @Ignore
     @Test
     public void testRetriesReset() {
         // Initialise mock
@@ -242,7 +243,7 @@ public class TelegesisFrameHandlerTest {
 
     /**
      * Helper Method to send a command to the frameHandler and wait, till the getPacket() method may have read it
-     * 
+     *
      * @param frameHandler the frame handler to send the command to
      * @param processed holder for the boolean to check, whether the message is already processed
      * @param resond holder to pause message responses until message is sent
