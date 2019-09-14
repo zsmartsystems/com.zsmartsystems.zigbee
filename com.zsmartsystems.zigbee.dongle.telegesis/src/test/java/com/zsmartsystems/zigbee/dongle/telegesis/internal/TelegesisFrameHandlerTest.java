@@ -24,9 +24,12 @@ import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.mockito.Mockito;
 
+import com.zsmartsystems.zigbee.dongle.telegesis.ZigBeeDongleTelegesis;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisNetworkLostEvent;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSetRegisterBitCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisSleepyDeviceAnnounceEvent;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 
@@ -115,6 +118,75 @@ public class TelegesisFrameHandlerTest {
     }
 
     @Test
+    public void testRetriesReset() {
+        // Initialise mock
+        ZigBeeDongleTelegesis dongle = Mockito.mock(ZigBeeDongleTelegesis.class);
+        TelegesisFrameHandler frameHandler = new TelegesisFrameHandler(dongle);
+        frameHandler.setCommandTimeout(500);
+
+        // Accept calls and monitor the time, when the call has been made
+        ZigBeePort serialPort = Mockito.mock(ZigBeePort.class);
+
+        // Repeat whenever processed[0] == false, only give response if respond[0] == true
+        boolean[] processed = new boolean[] { false };
+        boolean[] respond = new boolean[] { false };
+        int[] call = new int[] { 0 };
+        String response = "OK" + CRLF;
+        Mockito.when(serialPort.read()).thenAnswer(invocationCall -> {
+            if (!respond[0] || processed[0]) {
+                return -1;
+            }
+            processed[0] |= call[0] % response.length() == response.length() - 1;
+            return (int) response.getBytes()[call[0]++ % response.length()];
+        });
+
+        frameHandler.start(serialPort);
+
+        // Repeat the task four times, with timeouts after every second. Retries should be reset after each round
+        for (int i = 0; i < 3; i++) {
+            respond[0] = false;
+            sendCommandAndWait(frameHandler, processed, respond);
+            respond[0] = true;
+            sendCommandAndWait(frameHandler, processed, respond);
+        }
+
+        Mockito.verify(dongle, Mockito.times(0)).notifyStateUpdate(false);
+
+        assertTrue(frameHandler.isAlive());
+        frameHandler.close();
+        assertFalse(frameHandler.isAlive());
+    }
+
+    @Test
+    public void testRetriesExceeded() {
+        // Initialise mock
+        ZigBeeDongleTelegesis dongle = Mockito.mock(ZigBeeDongleTelegesis.class);
+        TelegesisFrameHandler frameHandler = new TelegesisFrameHandler(dongle);
+        frameHandler.setCommandTimeout(50);
+
+        // Accept calls and monitor the time, when the call has been made
+        ZigBeePort serialPort = Mockito.mock(ZigBeePort.class);
+
+        // Repeat whenever processed[0] == false, delay the response till given time int waitTime[0] has passed
+        boolean[] processed = new boolean[] { false };
+        Mockito.when(serialPort.read()).thenAnswer(invocationCall -> -1);
+        Mockito.doAnswer(mi -> processed[0] = true).when(dongle).notifyStateUpdate(false);
+
+        frameHandler.start(serialPort);
+
+        // Repeat the task four times, with timeouts after every second. Retries should NOT be reset
+        for (int i = 0; i < 3; i++) {
+            sendCommandAndWait(frameHandler, processed, new boolean[1]);
+        }
+
+        Mockito.verify(dongle, Mockito.atLeast(1)).notifyStateUpdate(false);
+
+        assertTrue(frameHandler.isAlive());
+        frameHandler.close();
+        assertFalse(frameHandler.isAlive());
+    }
+
+    @Test
     public void testReceivePacket_SReg_Binary_Issue() {
         int[] response = getPacket(CR + "ATS0A=0000" + CR + CR + LF + "ERROR:20" + CRLF);
         assertNotNull(response);
@@ -166,6 +238,40 @@ public class TelegesisFrameHandlerTest {
         }
 
         assertEquals(1, eventCapture.size());
+    }
+
+    /**
+     * Helper Method to send a command to the frameHandler and wait, till the getPacket() method may have read it
+     * 
+     * @param frameHandler the frame handler to send the command to
+     * @param processed holder for the boolean to check, whether the message is already processed
+     * @param resond holder to pause message responses until message is sent
+     */
+    private void sendCommandAndWait(TelegesisFrameHandler frameHandler, boolean[] processed, boolean[] respond) {
+        TelegesisSetRegisterBitCommand command = new TelegesisSetRegisterBitCommand();
+        command.setBit(0);
+        command.setRegister(0);
+        command.setPassword("password");
+        command.setState(false);
+
+        // We need to make sure the response is not send before the message is send
+        boolean tempResponse = respond[0];
+        respond[0] = false;
+        processed[0] = false;
+        frameHandler.queueFrame(command);
+        // Now the response may be send
+        respond[0] = tempResponse;
+        try {
+            Field sentCommandField = TelegesisFrameHandler.class.getDeclaredField("sentCommand");
+            sentCommandField.setAccessible(true);
+            long time = System.currentTimeMillis();
+            while (!processed[0] && sentCommandField.get(frameHandler) != null
+                    && System.currentTimeMillis() - time < 2000) {
+                Thread.yield();
+            }
+        } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+            e.printStackTrace();
+        }
     }
 
     class TestPort implements ZigBeePort {

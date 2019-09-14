@@ -672,6 +672,7 @@ public class TelegesisFrameHandler {
             logger.trace("TELEGESIS Timer: Stop");
             timeoutTimer.cancel(false);
             timeoutTimer = null;
+            retries = 0;
         }
     }
 
