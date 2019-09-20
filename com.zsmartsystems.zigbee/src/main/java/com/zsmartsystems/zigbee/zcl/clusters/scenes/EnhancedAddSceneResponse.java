@@ -7,8 +7,6 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.scenes;
 
-import java.util.List;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
@@ -18,15 +16,15 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
- * Get Scene Membership Response value object class.
+ * Enhanced Add Scene Response value object class.
  * <p>
- * Cluster: <b>Scenes</b>. Command ID 0x06 is sent <b>FROM</b> the server.
+ * Cluster: <b>Scenes</b>. Command ID 0x00 is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the Scenes cluster.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 @Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-09-20T08:23:22Z")
-public class GetSceneMembershipResponse extends ZclCommand {
+public class EnhancedAddSceneResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
      */
@@ -35,7 +33,7 @@ public class GetSceneMembershipResponse extends ZclCommand {
     /**
      * The command ID.
      */
-    public static int COMMAND_ID = 0x06;
+    public static int COMMAND_ID = 0x00;
 
     /**
      * Status command message field.
@@ -43,29 +41,19 @@ public class GetSceneMembershipResponse extends ZclCommand {
     private Integer status;
 
     /**
-     * Capacity command message field.
-     */
-    private Integer capacity;
-
-    /**
      * Group ID command message field.
      */
     private Integer groupId;
 
     /**
-     * Scene Count command message field.
+     * Scene ID command message field.
      */
-    private Integer sceneCount;
-
-    /**
-     * Scene List command message field.
-     */
-    private List<Integer> sceneList;
+    private Integer sceneId;
 
     /**
      * Default constructor.
      */
-    public GetSceneMembershipResponse() {
+    public EnhancedAddSceneResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
@@ -91,24 +79,6 @@ public class GetSceneMembershipResponse extends ZclCommand {
     }
 
     /**
-     * Gets Capacity.
-     *
-     * @return the Capacity
-     */
-    public Integer getCapacity() {
-        return capacity;
-    }
-
-    /**
-     * Sets Capacity.
-     *
-     * @param capacity the Capacity
-     */
-    public void setCapacity(final Integer capacity) {
-        this.capacity = capacity;
-    }
-
-    /**
      * Gets Group ID.
      *
      * @return the Group ID
@@ -127,74 +97,48 @@ public class GetSceneMembershipResponse extends ZclCommand {
     }
 
     /**
-     * Gets Scene Count.
+     * Gets Scene ID.
      *
-     * @return the Scene Count
+     * @return the Scene ID
      */
-    public Integer getSceneCount() {
-        return sceneCount;
+    public Integer getSceneId() {
+        return sceneId;
     }
 
     /**
-     * Sets Scene Count.
+     * Sets Scene ID.
      *
-     * @param sceneCount the Scene Count
+     * @param sceneId the Scene ID
      */
-    public void setSceneCount(final Integer sceneCount) {
-        this.sceneCount = sceneCount;
-    }
-
-    /**
-     * Gets Scene List.
-     *
-     * @return the Scene List
-     */
-    public List<Integer> getSceneList() {
-        return sceneList;
-    }
-
-    /**
-     * Sets Scene List.
-     *
-     * @param sceneList the Scene List
-     */
-    public void setSceneList(final List<Integer> sceneList) {
-        this.sceneList = sceneList;
+    public void setSceneId(final Integer sceneId) {
+        this.sceneId = sceneId;
     }
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
         serializer.serialize(status, ZclDataType.ENUMERATION_8_BIT);
-        serializer.serialize(capacity, ZclDataType.UNSIGNED_8_BIT_INTEGER);
         serializer.serialize(groupId, ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        serializer.serialize(sceneCount, ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        serializer.serialize(sceneList, ZclDataType.N_X_UNSIGNED_8_BIT_INTEGER);
+        serializer.serialize(sceneId, ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
         status = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        capacity = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         groupId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        sceneCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        sceneList = (List<Integer>) deserializer.deserialize(ZclDataType.N_X_UNSIGNED_8_BIT_INTEGER);
+        sceneId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(169);
-        builder.append("GetSceneMembershipResponse [");
+        final StringBuilder builder = new StringBuilder(107);
+        builder.append("EnhancedAddSceneResponse [");
         builder.append(super.toString());
         builder.append(", status=");
         builder.append(status);
-        builder.append(", capacity=");
-        builder.append(capacity);
         builder.append(", groupId=");
         builder.append(groupId);
-        builder.append(", sceneCount=");
-        builder.append(sceneCount);
-        builder.append(", sceneList=");
-        builder.append(sceneList);
+        builder.append(", sceneId=");
+        builder.append(sceneId);
         builder.append(']');
         return builder.toString();
     }
