@@ -76,6 +76,35 @@
             <name>Group ID</name>
         </field>
     </command>
+    <command code="0x40" source="client">
+        <name>Enhanced Add Scene Command</name>
+        <description>The Enhanced Add Scene command allows a scene to be added using a finer scene transition time than the Add Scene command.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Group ID</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Scene ID</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Transition Time</name>
+        </field>
+        <field type="CHARACTER_STRING">
+            <name>Scene Name</name>
+        </field>
+        <field type="N_X_EXTENSION_FIELD_SET">
+            <name>Extension Field Sets</name>
+        </field>
+    </command>
+    <command code="0x41" source="client">
+        <name>Enhanced View Scene Command</name>
+        <description>The Enhanced View Scene command allows a scene to be retrieved using a finer scene transition time than the View Scene command.</description>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Group ID</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Scene ID</name>
+        </field>
+    </command>
     <command code="0x00" source="server">
         <name>Add Scene Response</name>
         <field type="ENUMERATION_8_BIT">
@@ -142,7 +171,7 @@
             <name>Scene ID</name>
         </field>
     </command>
-    <command code="0x05" source="server">
+    <command code="0x06" source="server">
         <name>Get Scene Membership Response</name>
         <field type="ENUMERATION_8_BIT">
             <name>Status</name>
@@ -160,7 +189,40 @@
             <name>Scene List</name>
         </field>
     </command>
-    
+       <command code="0x00" source="server">
+        <name>Enhanced Add Scene Response</name>
+        <field type="ENUMERATION_8_BIT">
+            <name>Status</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Group ID</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Scene ID</name>
+        </field>
+    </command>
+    <command code="0x01" source="server">
+        <name>Ehanced View Scene Response</name>
+        <field type="ENUMERATION_8_BIT">
+            <name>Status</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Group ID</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Scene ID</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Transition Time</name>
+        </field>
+        <field type="CHARACTER_STRING">
+            <name>Scene Name</name>
+        </field>
+        <field type="N_X_EXTENSION_FIELD_SET">
+            <name>Extension Field Sets</name>
+        </field>
+    </command>
+
     <attribute code="0x0000" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false">
         <name>Scene Count</name>
         <description>The SceneCount attribute specifies the number of scenes currently in the device&apos;s scene table.</description>

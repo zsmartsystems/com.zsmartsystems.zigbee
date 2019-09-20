@@ -22,6 +22,10 @@ import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.scenes.AddSceneCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.scenes.AddSceneResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.scenes.EhancedViewSceneResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.scenes.EnhancedAddSceneCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.scenes.EnhancedAddSceneResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.scenes.EnhancedViewSceneCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.scenes.GetSceneMembershipCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.scenes.GetSceneMembershipResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.scenes.RecallSceneCommand;
@@ -50,7 +54,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-05-02T20:51:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-09-20T08:23:22Z")
 public class ZclScenesCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -125,21 +129,23 @@ public class ZclScenesCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {
-        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(6);
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(8);
 
         commandMap.put(0x0000, AddSceneResponse.class);
         commandMap.put(0x0001, ViewSceneResponse.class);
         commandMap.put(0x0002, RemoveSceneResponse.class);
         commandMap.put(0x0003, RemoveAllScenesResponse.class);
         commandMap.put(0x0004, StoreSceneResponse.class);
-        commandMap.put(0x0005, GetSceneMembershipResponse.class);
+        commandMap.put(0x0006, GetSceneMembershipResponse.class);
+        commandMap.put(0x0000, EnhancedAddSceneResponse.class);
+        commandMap.put(0x0001, EhancedViewSceneResponse.class);
 
         return commandMap;
     }
 
     @Override
     protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
-        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(7);
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(9);
 
         commandMap.put(0x0000, AddSceneCommand.class);
         commandMap.put(0x0001, ViewSceneCommand.class);
@@ -148,6 +154,8 @@ public class ZclScenesCluster extends ZclCluster {
         commandMap.put(0x0004, StoreSceneCommand.class);
         commandMap.put(0x0005, RecallSceneCommand.class);
         commandMap.put(0x0006, GetSceneMembershipCommand.class);
+        commandMap.put(0x0040, EnhancedAddSceneCommand.class);
+        commandMap.put(0x0041, EnhancedViewSceneCommand.class);
 
         return commandMap;
     }
@@ -711,6 +719,52 @@ public class ZclScenesCluster extends ZclCluster {
     }
 
     /**
+     * The Enhanced Add Scene Command
+     * <p>
+     * The Enhanced Add Scene command allows a scene to be added using a finer scene transition
+     * time than the Add Scene command.
+     *
+     * @param groupId {@link Integer} Group ID
+     * @param sceneId {@link Integer} Scene ID
+     * @param transitionTime {@link Integer} Transition Time
+     * @param sceneName {@link String} Scene Name
+     * @param extensionFieldSets {@link List<ExtensionFieldSet>} Extension Field Sets
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> enhancedAddSceneCommand(Integer groupId, Integer sceneId, Integer transitionTime, String sceneName, List<ExtensionFieldSet> extensionFieldSets) {
+        EnhancedAddSceneCommand command = new EnhancedAddSceneCommand();
+
+        // Set the fields
+        command.setGroupId(groupId);
+        command.setSceneId(sceneId);
+        command.setTransitionTime(transitionTime);
+        command.setSceneName(sceneName);
+        command.setExtensionFieldSets(extensionFieldSets);
+
+        return send(command);
+    }
+
+    /**
+     * The Enhanced View Scene Command
+     * <p>
+     * The Enhanced View Scene command allows a scene to be retrieved using a finer scene
+     * transition time than the View Scene command.
+     *
+     * @param groupId {@link Integer} Group ID
+     * @param sceneId {@link Integer} Scene ID
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> enhancedViewSceneCommand(Integer groupId, Integer sceneId) {
+        EnhancedViewSceneCommand command = new EnhancedViewSceneCommand();
+
+        // Set the fields
+        command.setGroupId(groupId);
+        command.setSceneId(sceneId);
+
+        return send(command);
+    }
+
+    /**
      * The Add Scene Response
      *
      * @param status {@link Integer} Status
@@ -828,6 +882,50 @@ public class ZclScenesCluster extends ZclCluster {
         command.setGroupId(groupId);
         command.setSceneCount(sceneCount);
         command.setSceneList(sceneList);
+
+        return send(command);
+    }
+
+    /**
+     * The Enhanced Add Scene Response
+     *
+     * @param status {@link Integer} Status
+     * @param groupId {@link Integer} Group ID
+     * @param sceneId {@link Integer} Scene ID
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> enhancedAddSceneResponse(Integer status, Integer groupId, Integer sceneId) {
+        EnhancedAddSceneResponse command = new EnhancedAddSceneResponse();
+
+        // Set the fields
+        command.setStatus(status);
+        command.setGroupId(groupId);
+        command.setSceneId(sceneId);
+
+        return send(command);
+    }
+
+    /**
+     * The Ehanced View Scene Response
+     *
+     * @param status {@link Integer} Status
+     * @param groupId {@link Integer} Group ID
+     * @param sceneId {@link Integer} Scene ID
+     * @param transitionTime {@link Integer} Transition Time
+     * @param sceneName {@link String} Scene Name
+     * @param extensionFieldSets {@link List<ExtensionFieldSet>} Extension Field Sets
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> ehancedViewSceneResponse(Integer status, Integer groupId, Integer sceneId, Integer transitionTime, String sceneName, List<ExtensionFieldSet> extensionFieldSets) {
+        EhancedViewSceneResponse command = new EhancedViewSceneResponse();
+
+        // Set the fields
+        command.setStatus(status);
+        command.setGroupId(groupId);
+        command.setSceneId(sceneId);
+        command.setTransitionTime(transitionTime);
+        command.setSceneName(sceneName);
+        command.setExtensionFieldSets(extensionFieldSets);
 
         return send(command);
     }
