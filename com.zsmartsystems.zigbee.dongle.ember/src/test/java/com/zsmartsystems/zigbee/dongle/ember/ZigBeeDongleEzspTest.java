@@ -34,11 +34,14 @@ import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspChildJoinHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIncomingMessageHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMessageSentHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStackStatusHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspTrustCenterJoinHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberDeviceUpdate;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberIncomingMessageType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspPolicyId;
@@ -421,5 +424,80 @@ public class ZigBeeDongleEzspTest {
         TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "frameHandler", Mockito.mock(EzspProtocolHandler.class));
 
         dongle.shutdown();
+    }
+
+    @Test
+    public void testEzspIncomingMessageHandler() throws Exception {
+        ZigBeeTransportReceive zigbeeTransportReceive = Mockito.mock(ZigBeeTransportReceive.class);
+        ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
+        dongle.setZigBeeTransportReceive(zigbeeTransportReceive);
+
+        EmberApsFrame apsFrame = Mockito.mock(EmberApsFrame.class);
+        EzspIncomingMessageHandler response = Mockito.mock(EzspIncomingMessageHandler.class);
+        Mockito.when(response.getApsFrame()).thenReturn(apsFrame);
+
+        // First frame ignored due to network address unknown (so still initialising)
+        dongle.handlePacket(response);
+        Mockito.verify(zigbeeTransportReceive, Mockito.never())
+                .receiveCommand(ArgumentMatchers.any(ZigBeeApsFrame.class));
+
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "nwkAddress", Integer.valueOf(1));
+
+        dongle.passLoopbackMessages(false);
+
+        // Test ignored frames
+        Mockito.when(response.getType()).thenReturn(EmberIncomingMessageType.EMBER_INCOMING_MULTICAST_LOOPBACK);
+        dongle.handlePacket(response);
+        Mockito.verify(zigbeeTransportReceive, Mockito.never())
+                .receiveCommand(ArgumentMatchers.any(ZigBeeApsFrame.class));
+
+        Mockito.when(response.getType()).thenReturn(EmberIncomingMessageType.EMBER_INCOMING_BROADCAST_LOOPBACK);
+        dongle.handlePacket(response);
+        Mockito.verify(zigbeeTransportReceive, Mockito.never())
+                .receiveCommand(ArgumentMatchers.any(ZigBeeApsFrame.class));
+
+        Mockito.when(response.getType()).thenReturn(EmberIncomingMessageType.EMBER_INCOMING_MANY_TO_ONE_ROUTE_REQUEST);
+        dongle.handlePacket(response);
+        Mockito.verify(zigbeeTransportReceive, Mockito.never())
+                .receiveCommand(ArgumentMatchers.any(ZigBeeApsFrame.class));
+
+        Mockito.when(response.getType()).thenReturn(EmberIncomingMessageType.UNKNOWN);
+        dongle.handlePacket(response);
+        Mockito.verify(zigbeeTransportReceive, Mockito.never())
+                .receiveCommand(ArgumentMatchers.any(ZigBeeApsFrame.class));
+
+        dongle.passLoopbackMessages(true);
+
+        // Test frames
+        Mockito.when(response.getType()).thenReturn(EmberIncomingMessageType.EMBER_INCOMING_MULTICAST_LOOPBACK);
+        dongle.handlePacket(response);
+        Mockito.verify(zigbeeTransportReceive, Mockito.times(1))
+                .receiveCommand(ArgumentMatchers.any(ZigBeeApsFrame.class));
+
+        Mockito.when(response.getType()).thenReturn(EmberIncomingMessageType.EMBER_INCOMING_BROADCAST_LOOPBACK);
+        dongle.handlePacket(response);
+        Mockito.verify(zigbeeTransportReceive, Mockito.times(2))
+                .receiveCommand(ArgumentMatchers.any(ZigBeeApsFrame.class));
+
+        Mockito.when(response.getType()).thenReturn(EmberIncomingMessageType.EMBER_INCOMING_UNICAST);
+        dongle.handlePacket(response);
+        Mockito.verify(zigbeeTransportReceive, Mockito.times(3))
+                .receiveCommand(ArgumentMatchers.any(ZigBeeApsFrame.class));
+
+        Mockito.when(response.getType()).thenReturn(EmberIncomingMessageType.EMBER_INCOMING_UNICAST_REPLY);
+        dongle.handlePacket(response);
+        Mockito.verify(zigbeeTransportReceive, Mockito.times(4))
+                .receiveCommand(ArgumentMatchers.any(ZigBeeApsFrame.class));
+
+        Mockito.when(response.getType()).thenReturn(EmberIncomingMessageType.EMBER_INCOMING_MULTICAST);
+        dongle.handlePacket(response);
+        Mockito.verify(zigbeeTransportReceive, Mockito.times(5))
+                .receiveCommand(ArgumentMatchers.any(ZigBeeApsFrame.class));
+
+        Mockito.when(response.getType()).thenReturn(EmberIncomingMessageType.EMBER_INCOMING_BROADCAST);
+        dongle.handlePacket(response);
+        Mockito.verify(zigbeeTransportReceive, Mockito.times(6))
+                .receiveCommand(ArgumentMatchers.any(ZigBeeApsFrame.class));
+
     }
 }

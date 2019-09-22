@@ -186,6 +186,12 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
      */
     private boolean initialised = false;
 
+    /**
+     * Flag to indicate if the framework should pass multicast and broadcast messages sent by the framework, and
+     * returned from the NCP, back to the framework as a received frame.
+     */
+    private boolean passLoopbackMessages = true;
+
     private ScheduledExecutorService executorService;
     private ScheduledFuture<?> pollingTimer = null;
 
@@ -525,6 +531,18 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     }
 
     /**
+     * Configures the driver to pass or drop loopback messages received from the NCP. These are MUTICAST or BROADCAST
+     * messages that were sent by the framework, and retransmitted by the NCP.
+     * <p>
+     * This defaults to passing the loopback frames back to the framework
+     *
+     * @param passLoopbackMessages true if the driver should pass loopback messages back as a received frame
+     */
+    public void passLoopbackMessages(boolean passLoopbackMessages) {
+        this.passLoopbackMessages = passLoopbackMessages;
+    }
+
+    /**
      * Returns an instance of the {@link EmberNcp}
      *
      * @return an instance of the {@link EmberNcp}
@@ -664,8 +682,32 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             }
             EzspIncomingMessageHandler incomingMessage = (EzspIncomingMessageHandler) response;
             EmberApsFrame emberApsFrame = incomingMessage.getApsFrame();
-
             ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
+
+            switch (incomingMessage.getType()) {
+                case EMBER_INCOMING_BROADCAST_LOOPBACK:
+                    if (!passLoopbackMessages) {
+                        return;
+                    }
+                case EMBER_INCOMING_BROADCAST:
+                case EMBER_INCOMING_UNICAST:
+                case EMBER_INCOMING_UNICAST_REPLY:
+                    apsFrame.setAddressMode(ZigBeeNwkAddressMode.DEVICE);
+                    break;
+                case EMBER_INCOMING_MULTICAST_LOOPBACK:
+                    if (!passLoopbackMessages) {
+                        return;
+                    }
+                case EMBER_INCOMING_MULTICAST:
+                    apsFrame.setAddressMode(ZigBeeNwkAddressMode.GROUP);
+                    break;
+                case EMBER_INCOMING_MANY_TO_ONE_ROUTE_REQUEST:
+                    return;
+                case UNKNOWN:
+                    logger.info("Ignoring unknown EZSP incoming message type");
+                    return;
+            }
+
             apsFrame.setApsCounter(emberApsFrame.getSequence());
             apsFrame.setCluster(emberApsFrame.getClusterId());
             apsFrame.setProfile(emberApsFrame.getProfileId());
