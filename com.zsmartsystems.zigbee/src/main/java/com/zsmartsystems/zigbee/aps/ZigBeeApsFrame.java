@@ -12,6 +12,7 @@ import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 
 /**
  * Defines the APS layer frame along with some network layer elements that may be needed by the application.
+ * Fundamentally this defines the NLDE-DATA.request interface with some local extensions for internal use.
  * <p>
  * The APS frame format is composed of an APS header and an APS payload. The fields of the APS header appear in a fixed
  * order, however, the addressing fields may not be included in all frames.
