@@ -24,8 +24,8 @@ import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.MoveToLevelWithOnOffCo
 import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.MoveWithOnOffCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.StepCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.StepWithOnOffCommand;
-import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.Stop2Command;
 import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.StopCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.StopWithOnOffCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -51,7 +51,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T17:34:01Z")
 public class ZclLevelControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -149,7 +149,7 @@ public class ZclLevelControlCluster extends ZclCluster {
         commandMap.put(0x0004, MoveToLevelWithOnOffCommand.class);
         commandMap.put(0x0005, MoveWithOnOffCommand.class);
         commandMap.put(0x0006, StepWithOnOffCommand.class);
-        commandMap.put(0x0007, Stop2Command.class);
+        commandMap.put(0x0007, StopWithOnOffCommand.class);
 
         return commandMap;
     }
@@ -892,11 +892,11 @@ public class ZclLevelControlCluster extends ZclCluster {
     }
 
     /**
-     * The Stop 2 Command
+     * The Stop (with On/Off) Command
      *
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> stop2Command() {
-        return send(new Stop2Command());
+    public Future<CommandResult> stopWithOnOffCommand() {
+        return send(new StopWithOnOffCommand());
     }
 }

@@ -6,7 +6,7 @@ ZigBeeApsFrame [sourceAddress=0000/1, destinationAddress=0000/1, profile=0104, c
 MoveToLevelWithOnOffCommand [Level Control: 0000/1 -> 0000/1, cluster=0008, TID=71, level=254, transitionTime=10]
 
 ZigBeeApsFrame [sourceAddress=0000/1, destinationAddress=0000/1, profile=0104, cluster=0008, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=7E, payload=01 21 07]
-Stop2Command [Level Control: 0000/1 -> 0000/1, cluster=0008, TID=21]
+StopWithOnOffCommand [Level Control: 0000/1 -> 0000/1, cluster=0008, TID=21]
 
 ZigBeeApsFrame [sourceAddress=0000/1, destinationAddress=0000/1, profile=0104, cluster=0008, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=7D, payload=01 20 05 01 C8]
 MoveWithOnOffCommand [Level Control: 0000/1 -> 0000/1, cluster=0008, TID=20, moveMode=1, rate=200]
