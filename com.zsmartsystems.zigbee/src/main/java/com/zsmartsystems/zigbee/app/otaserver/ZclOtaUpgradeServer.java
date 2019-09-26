@@ -602,6 +602,14 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
      * @return true if the handler has, or will send a response to this command
      */
     private boolean handleQueryNextImageCommand(QueryNextImageCommand command) {
+
+	if(otaFile == null) {
+	    logger.debug("{} QueryNextImageCommand received, no file available",cluster.getZigBeeAddress());
+            cluster.sendDefaultResponse(command, ZclStatus.NO_IMAGE_AVAILABLE);
+	    return true;
+	}
+
+	
         // Ignore the request if we're not in the correct state
         if (status != ZigBeeOtaServerStatus.OTA_WAITING) {
             logger.debug("{} OTA Error: Invalid server state {} when handling QueryNextImageCommand.",
@@ -611,7 +619,7 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
         }
 
         // Check that the file attributes are consistent with the file we have
-        if (otaFile == null || !(command.getManufacturerCode().equals(otaFile.getManufacturerCode())
+        if (!(command.getManufacturerCode().equals(otaFile.getManufacturerCode())
                 && command.getImageType().equals(otaFile.getImageType()))) {
             logger.debug("{} OTA Error: Request is inconsistent with OTA file.", cluster.getZigBeeAddress());
             cluster.sendDefaultResponse(command, ZclStatus.NO_IMAGE_AVAILABLE);
