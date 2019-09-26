@@ -265,6 +265,18 @@ public class ZigBeeNetworkManagerTest
     }
 
     @Test
+    public void setDefaults() throws Exception {
+        ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
+
+        networkManager.setDefaultProfileId(ZigBeeProfileType.ZIGBEE_SMART_ENERGY.getKey());
+        Mockito.verify(mockedTransport, Mockito.times(1))
+                .setDefaultProfileId(ZigBeeProfileType.ZIGBEE_SMART_ENERGY.getKey());
+
+        networkManager.setDefaultDeviceId(ZigBeeDeviceType.IN_HOME_DISPLAY.getKey());
+        Mockito.verify(mockedTransport, Mockito.times(1)).setDefaultDeviceId(ZigBeeDeviceType.IN_HOME_DISPLAY.getKey());
+    }
+
+    @Test
     public void testSendCommandZCL() throws Exception {
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
         networkManager.setSerializer(DefaultSerializer.class, DefaultDeserializer.class);

@@ -201,4 +201,24 @@ public interface ZigBeeTransportTransmit {
      * @return {@link Map} of {@link TransportConfigOption} and {@link TransportConfigResult} values with the result
      */
     void updateTransportConfig(TransportConfig configuration);
+
+    /**
+     * Sets the default profile ID to use.
+     * <p>
+     * This should be set before calling the {@link #initialize} method.
+     *
+     * @param defaultProfileId the profile ID
+     */
+    default void setDefaultProfileId(int defaultProfileId) {
+    }
+
+    /**
+     * Sets the default device ID.
+     * <p>
+     * This should be set before calling the {@link #initialize} method.
+     *
+     * @param defaultDeviceId the device ID.
+     */
+    default void setDefaultDeviceId(int defaultDeviceId) {
+    }
 }

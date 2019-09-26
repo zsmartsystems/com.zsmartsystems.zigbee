@@ -25,6 +25,7 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeBroadcastDestination;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
+import com.zsmartsystems.zigbee.ZigBeeDeviceType;
 import com.zsmartsystems.zigbee.ZigBeeExecutors;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
@@ -192,6 +193,16 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
      */
     private boolean passLoopbackMessages = true;
 
+    /**
+     * The default ProfileID to use
+     */
+    private int defaultProfileId = ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getKey();
+
+    /**
+     * The default DeviceID to use
+     */
+    private int defaultDeviceId = ZigBeeDeviceType.HOME_GATEWAY.getKey();
+
     private ScheduledExecutorService executorService;
     private ScheduledFuture<?> pollingTimer = null;
 
@@ -342,6 +353,16 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     }
 
     @Override
+    public void setDefaultProfileId(int defaultProfileId) {
+        this.defaultProfileId = defaultProfileId;
+    }
+
+    @Override
+    public void setDefaultDeviceId(int defaultDeviceId) {
+        this.defaultDeviceId = defaultDeviceId;
+    }
+
+    @Override
     public ZigBeeStatus initialize() {
         logger.debug("EZSP dongle initialize with protocol {}.", protocol);
 
@@ -382,7 +403,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         ncp.getNetworkParameters();
 
         // Add the endpoint
-        ncp.addEndpoint(1, 0, ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getKey(), new int[] { 0 }, new int[] { 0 });
+        ncp.addEndpoint(1, defaultDeviceId, defaultProfileId, new int[] { 0 }, new int[] { 0 });
 
         // Now initialise the network
         EmberStatus initResponse = ncp.networkInit();
