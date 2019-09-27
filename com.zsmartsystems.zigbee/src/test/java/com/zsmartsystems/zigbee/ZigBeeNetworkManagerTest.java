@@ -369,6 +369,49 @@ public class ZigBeeNetworkManagerTest
     }
 
     @Test
+    public void testReceiveDefaultCommand() throws Exception {
+        ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
+        ZigBeeCommandListener listener = Mockito.mock(ZigBeeCommandListener.class);
+        networkManager.addCommandListener(listener);
+        networkManager.setSerializer(DefaultSerializer.class, DefaultDeserializer.class);
+
+        ZigBeeEndpoint endpoint = Mockito.mock(ZigBeeEndpoint.class);
+        ZclCluster cluster = new ZclOnOffCluster(endpoint);
+        Mockito.when(endpoint.getOutputCluster(6)).thenReturn(cluster);
+
+        ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
+        Mockito.when(node.getIeeeAddress()).thenReturn(new IeeeAddress("1111111111111111"));
+        Mockito.when(node.getNetworkAddress()).thenReturn(1234);
+        Mockito.when(node.getEndpoint(5)).thenReturn(endpoint);
+
+        networkManager.updateNode(node);
+
+        ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
+        apsFrame.setSourceAddress(1234);
+        apsFrame.setDestinationAddress(0);
+        apsFrame.setApsCounter(1);
+
+        apsFrame.setCluster(6);
+        apsFrame.setDestinationEndpoint(2);
+        apsFrame.setProfile(0x104);
+        apsFrame.setSourceEndpoint(5);
+
+        ZclHeader zclHeader = new ZclHeader();
+        zclHeader.setCommandId(11);
+        zclHeader.setFrameType(ZclFrameType.ENTIRE_PROFILE_COMMAND);
+        zclHeader.setSequenceNumber(1);
+
+        DefaultSerializer serializer = new DefaultSerializer();
+        ZclFieldSerializer fieldSerializer = new ZclFieldSerializer(serializer);
+
+        apsFrame.setPayload(zclHeader.serialize(fieldSerializer, new int[] {}));
+
+        TestUtilities.setField(ZigBeeNetworkManager.class, networkManager, "networkState", ZigBeeNetworkState.ONLINE);
+        networkManager.receiveCommand(apsFrame);
+        Mockito.verify(listener, Mockito.never()).commandReceived(ArgumentMatchers.any(ZigBeeCommand.class));
+    }
+
+    @Test
     public void testNetworkStateListener() throws Exception {
         ZigBeeNetworkManager manager = mockZigBeeNetworkManager();
         ZigBeeTransactionManager transactionManager = Mockito.mock(ZigBeeTransactionManager.class);
