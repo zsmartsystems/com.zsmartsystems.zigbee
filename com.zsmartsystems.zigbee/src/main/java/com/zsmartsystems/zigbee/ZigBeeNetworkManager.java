@@ -468,10 +468,31 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         return transport.setZigBeeExtendedPanId(panId);
     }
 
+    /**
+     * Sets the default profile ID to use. Standard profile IDs are defined in {@link ZigBeeProfileType}.
+     * <p>
+     * This should be set before calling the {@link #initialize} method.
+     *
+     * @param defaultProfileId the profile ID
+     */
     public void setDefaultProfileId(int defaultProfileId) {
-        logger.debug("Defuault profile set to {} [{}]", String.format("%04X", defaultProfileId),
+        logger.debug("Default profile ID set to {} [{}]", String.format("%04X", defaultProfileId),
                 ZigBeeProfileType.getByValue(defaultProfileId));
         this.defaultProfileId = defaultProfileId;
+        transport.setDefaultProfileId(defaultProfileId);
+    }
+
+    /**
+     * Sets the default device ID to use. Standard device IDs are defined in {@link ZigBeeDeviceType}.
+     * <p>
+     * This should be set before calling the {@link #initialize} method.
+     *
+     * @param defaultDeviceId the device ID
+     */
+    public void setDefaultDeviceId(int defaultDeviceId) {
+        logger.debug("Default device ID set to {} [{}]", String.format("%04X", defaultDeviceId),
+                ZigBeeDeviceType.getByValue(defaultDeviceId));
+        transport.setDefaultDeviceId(defaultDeviceId);
     }
 
     /**
