@@ -112,7 +112,7 @@
 	</constant>
 	<constant class="PhysicalEnvironmentEnum">
 		<name>Physical Environment</name>
-		<value code="0x00" name="Unknown">
+		<value code="0x00" name="Unspecified">
         </value>
 		<value code="0x01" name="Atrium">
         </value>
@@ -123,6 +123,208 @@
 		<value code="0x04" name="Bathroom">
         </value>
 		<value code="0x05" name="Bedroom">
+        </value>
+		<value code="0x06" name="Billiard Room">
+        </value>
+		<value code="0x07" name="Utility Room">
+        </value>
+		<value code="0x08" name="Cellar">
+        </value>
+		<value code="0x09" name="Storage Closet">
+        </value>
+		<value code="0x0A" name="Theater">
+        </value>
+		<value code="0x0B" name="Office">
+        </value>
+		<value code="0x0C" name="Deck">
+        </value>
+		<value code="0x0D" name="Den">
+        </value>
+		<value code="0x0E" name="Dining Room">
+        </value>
+		<value code="0x0F" name="Electrical Room">
+        </value>
+		<value code="0x10" name="Elevator">
+        </value>
+		<value code="0x11" name="Entry">
+        </value>
+		<value code="0x12" name="Family Room">
+        </value>
+		<value code="0x13" name="Main Floor">
+        </value>
+		<value code="0x14" name="Upstairs">
+        </value>
+		<value code="0x15" name="Downstairs">
+        </value>
+		<value code="0x16" name="Basement">
+        </value>
+		<value code="0x17" name="Gallery">
+        </value>
+		<value code="0x18" name="Game Room">
+        </value>
+		<value code="0x19" name="Garage">
+        </value>
+		<value code="0x1A" name="Gym">
+        </value>
+		<value code="0x1B" name="Hallway">
+        </value>
+		<value code="0x1C" name="House">
+        </value>
+		<value code="0x1D" name="Kitchen">
+        </value>
+		<value code="0x1E" name="Laundry Room">
+        </value>
+		<value code="0x1F" name="Library">
+        </value>
+		<value code="0x20" name="Master Bedroom">
+        </value>
+		<value code="0x21" name="Mud Room">
+        </value>
+		<value code="0x22" name="Nursery">
+        </value>
+		<value code="0x23" name="Pantry">
+        </value>
+		<value code="0x24" name="Office 2">
+        </value>
+		<value code="0x25" name="Outside">
+        </value>
+		<value code="0x26" name="Pool">
+        </value>
+		<value code="0x27" name="Porch">
+        </value>
+		<value code="0x28" name="Sewing Room">
+        </value>
+		<value code="0x29" name="Sitting Room">
+        </value>
+		<value code="0x2A" name="Stairway">
+        </value>
+		<value code="0x2B" name="Yard">
+        </value>
+		<value code="0x2C" name="Attic">
+        </value>
+		<value code="0x2D" name="Hot Tub">
+        </value>
+		<value code="0x2E" name="Living Room">
+        </value>
+		<value code="0x2F" name="Sauna">
+        </value>
+		<value code="0x30" name="Shop/Workshop">
+        </value>
+		<value code="0x31" name="Guest Bedroom">
+        </value>
+		<value code="0x32" name="Guest Bath">
+        </value>
+		<value code="0x33" name="Powder Room">
+        </value>
+		<value code="0x34" name="Back Yard">
+        </value>
+		<value code="0x35" name="Front Yard">
+        </value>
+		<value code="0x36" name="Patio">
+        </value>
+		<value code="0x37" name="Driveway">
+        </value>
+		<value code="0x38" name="Sun Room">
+        </value>
+		<value code="0x39" name="Living Room 2">
+        </value>
+		<value code="0x3A" name="Spa">
+        </value>
+		<value code="0x3B" name="Whirlpool">
+        </value>
+		<value code="0x3C" name="Shed">
+        </value>
+		<value code="0x3D" name="Equipment Storage">
+        </value>
+		<value code="0x3E" name="Hobby/Craft Room">
+        </value>
+		<value code="0x3F" name="Fountain">
+        </value>
+		<value code="0x40" name="Pond">
+        </value>
+		<value code="0x41" name="Reception Room">
+        </value>
+		<value code="0x42" name="Breakfast Room">
+        </value>
+		<value code="0x43" name="Nook">
+        </value>
+		<value code="0x44" name="Garden">
+        </value>
+		<value code="0x45" name="Balcony">
+        </value>
+		<value code="0x46" name="Panic Room">
+        </value>
+		<value code="0x47" name="Terrace">
+        </value>
+		<value code="0x48" name="Roof">
+        </value>
+		<value code="0x49" name="Toilet">
+        </value>
+		<value code="0x4A" name="Toilet Main">
+        </value>
+		<value code="0x4B" name="Outside Toilet">
+        </value>
+		<value code="0x4C" name="Shower room">
+        </value>
+		<value code="0x4D" name="Study">
+        </value>
+		<value code="0x4E" name="Front Garden">
+        </value>
+		<value code="0x4F" name="Back Garden">
+        </value>
+		<value code="0x50" name="Kettle">
+        </value>
+		<value code="0x51" name="Television">
+        </value>
+		<value code="0x52" name="Stove">
+        </value>
+		<value code="0x53" name="Microwave">
+        </value>
+		<value code="0x54" name="Toaster">
+        </value>
+		<value code="0x55" name="Vacuum">
+        </value>
+		<value code="0x56" name="Appliance">
+        </value>
+		<value code="0x57" name="Front Door">
+        </value>
+		<value code="0x58" name="Back Door">
+        </value>
+		<value code="0x59" name="Fridge Door">
+        </value>
+		<value code="0x60" name="Medication Cabinet Door">
+        </value>
+		<value code="0x61" name="Wardrobe Door">
+        </value>
+		<value code="0x62" name="Front Cupboard Door">
+        </value>
+		<value code="0x63" name="Other Door">
+        </value>
+		<value code="0x64" name="Waiting Room">
+        </value>
+		<value code="0x65" name="Triage Room">
+        </value>
+		<value code="0x66" name="Doctors Office">
+        </value>
+		<value code="0x67" name="Patients Private Room">
+        </value>
+		<value code="0x68" name="Consultation Room">
+        </value>
+		<value code="0x69" name="Nurse Station">
+        </value>
+		<value code="0x6A" name="Ward">
+        </value>
+		<value code="0x6B" name="Corridor">
+        </value>
+		<value code="0x6C" name="Operating Theatre">
+        </value>
+		<value code="0x6D" name="Dental Surgery Room">
+        </value>
+		<value code="0x6E" name="Medical Imaging Room">
+        </value>
+		<value code="0x6F" name="Decontamination Room">
+        </value>
+		<value code="0xFF" name="Unknown">
         </value>
 	</constant>
 </cluster>
