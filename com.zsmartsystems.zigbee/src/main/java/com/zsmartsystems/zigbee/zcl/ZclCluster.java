@@ -1160,8 +1160,6 @@ public abstract class ZclCluster {
         for (AttributeReport report : command.getReports()) {
             updateAttribute(report.getAttributeIdentifier(), report.getAttributeValue());
         }
-
-        sendDefaultResponse(command, ZclStatus.SUCCESS);
     }
 
     /**
@@ -1182,8 +1180,6 @@ public abstract class ZclCluster {
 
             updateAttribute(record.getAttributeIdentifier(), record.getAttributeValue());
         }
-
-        sendDefaultResponse(command, ZclStatus.SUCCESS);
     }
 
     private void updateAttribute(int attributeId, Object attributeValue) {
@@ -1211,19 +1207,17 @@ public abstract class ZclCluster {
         if (command instanceof ReportAttributesCommand) {
             // Pass the reports to the cluster
             handleAttributeReport((ReportAttributesCommand) command);
-            return;
         }
 
         if (command instanceof ReadAttributesResponse) {
             // Pass the reports to the cluster
             handleAttributeStatus((ReadAttributesResponse) command);
-            return;
         }
 
         ZclStatus responseStatus;
 
         // If this is a specific cluster command, pass the command to the cluster command handler
-        if (!command.isGenericCommand() && notifyCommandListener(command)) {
+        if (notifyCommandListener(command)) {
             return;
         } else if (supportedGenericCommands.contains(command.getClass())) {
             responseStatus = ZclStatus.SUCCESS;

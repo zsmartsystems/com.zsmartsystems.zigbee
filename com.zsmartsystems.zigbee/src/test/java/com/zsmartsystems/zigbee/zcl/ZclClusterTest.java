@@ -370,13 +370,22 @@ public class ZclClusterTest {
         command.setDestinationAddress(new ZigBeeEndpointAddress(0, 0));
         command.setClusterId(0x0000);
 
+        ArgumentCaptor<ZclCommand> zclCommandCapture = ArgumentCaptor.forClass(ZclCommand.class);
+
         cluster.handleCommand(command);
+        Mockito.verify(listenerMock, Mockito.timeout(TIMEOUT).times(5)).commandReceived(zclCommandCapture.capture());
+        assertEquals(command, zclCommandCapture.getValue());
         Mockito.verify(endpoint, Mockito.timeout(TIMEOUT).times(5)).sendTransaction(commandCapture.capture());
         response = commandCapture.getValue();
         assertTrue(response instanceof DefaultResponse);
         System.out.println(response);
         defaultResponse = (DefaultResponse) response;
         assertEquals(ZclStatus.SUCCESS, defaultResponse.getStatusCode());
+
+        Mockito.when(listenerMock.commandReceived(command)).thenReturn(true);
+        cluster.handleCommand(command);
+        assertEquals(command, zclCommandCapture.getValue());
+        Mockito.verify(endpoint, Mockito.timeout(TIMEOUT).times(5)).sendTransaction(commandCapture.capture());
 
         cluster.removeCommandListener(listenerMock);
         assertEquals(0, commandListeners.size());
