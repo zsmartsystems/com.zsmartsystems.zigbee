@@ -10,16 +10,20 @@ package com.zsmartsystems.zigbee.app.basic;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.TreeMap;
 
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeCommandListener;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
+import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
+import com.zsmartsystems.zigbee.zcl.field.AttributeInformation;
 import com.zsmartsystems.zigbee.zcl.field.ReadAttributeStatusRecord;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 
@@ -35,7 +39,7 @@ public class ZclBasicServer implements ZigBeeCommandListener {
     private final static int DEFAULT_ZCLVERSION = 2;
     private final static int DEFAULT_STACKVERSION = 2;
 
-    private final Map<Integer, ZclAttribute> attributes = new ConcurrentHashMap<>();
+    private final Map<Integer, ZclAttribute> attributes = new TreeMap<>();
 
     protected ZclBasicServer(ZigBeeNetworkManager networkManager) {
         ZclBasicCluster cluster = new ZclBasicCluster(null);
@@ -56,29 +60,66 @@ public class ZclBasicServer implements ZigBeeCommandListener {
 
     @Override
     public void commandReceived(ZigBeeCommand command) {
-        // We are only interested in READ ATTRIBUTE commands
-        if (!(command instanceof ReadAttributesCommand)) {
+        if (!(command instanceof ZclCommand)) {
             return;
         }
 
-        ReadAttributesCommand readCommand = (ReadAttributesCommand) command;
-        if (readCommand.getClusterId() != ZclBasicCluster.CLUSTER_ID
-                && readCommand.getCommandDirection() != ZclCommandDirection.SERVER_TO_CLIENT) {
+        ZclCommand zclCommand = (ZclCommand) command;
+        if (zclCommand.getClusterId() != ZclBasicCluster.CLUSTER_ID
+                || zclCommand.getCommandDirection() != ZclCommandDirection.CLIENT_TO_SERVER) {
             return;
         }
 
+        if (command instanceof ReadAttributesCommand) {
+            handleReadAttributes((ReadAttributesCommand) command);
+            return;
+        }
+
+        if (command instanceof DiscoverAttributesCommand) {
+            handleDiscoverAttributes((DiscoverAttributesCommand) command);
+            return;
+        }
+    }
+
+    private void handleReadAttributes(ReadAttributesCommand readCommand) {
         List<ReadAttributeStatusRecord> attributeRecords = new ArrayList<>();
         for (int attributeId : readCommand.getIdentifiers()) {
             attributeRecords.add(getAttributeRecord(attributeId));
         }
 
         ReadAttributesResponse readResponse = new ReadAttributesResponse();
-
         readResponse.setRecords(attributeRecords);
         readResponse.setDestinationAddress(readCommand.getSourceAddress());
-        readResponse.setCommandDirection(ZclCommandDirection.CLIENT_TO_SERVER);
-        readResponse.setTransactionId(command.getTransactionId());
+        readResponse.setCommandDirection(ZclCommandDirection.SERVER_TO_CLIENT);
+        readResponse.setTransactionId(readCommand.getTransactionId());
         networkManager.sendCommand(readResponse);
+    }
+
+    private void handleDiscoverAttributes(DiscoverAttributesCommand discoverCommand) {
+        List<AttributeInformation> attributeInformation = new ArrayList<>();
+        for (ZclAttribute attribute : attributes.values()) {
+            if (attribute.getId() < discoverCommand.getStartAttributeIdentifier()) {
+                continue;
+            }
+
+            if (attribute.getLastValue() != null) {
+                AttributeInformation attributeInfo = new AttributeInformation();
+                attributeInfo.setIdentifier(attribute.getId());
+                attributeInfo.setDataType(attribute.getDataType());
+                attributeInformation.add(attributeInfo);
+            }
+
+            if (attributeInformation.size() >= discoverCommand.getMaximumAttributeIdentifiers()) {
+                break;
+            }
+        }
+
+        DiscoverAttributesResponse discoverResponse = new DiscoverAttributesResponse();
+        discoverResponse.setAttributeInformation(attributeInformation);
+        discoverResponse.setDestinationAddress(discoverCommand.getSourceAddress());
+        discoverResponse.setCommandDirection(ZclCommandDirection.SERVER_TO_CLIENT);
+        discoverResponse.setTransactionId(discoverCommand.getTransactionId());
+        networkManager.sendCommand(discoverResponse);
     }
 
     /**
@@ -100,7 +141,8 @@ public class ZclBasicServer implements ZigBeeCommandListener {
         ReadAttributeStatusRecord record = new ReadAttributeStatusRecord();
         record.setAttributeIdentifier(attributeId);
 
-        if (attributes.containsKey(attributeId) && attributes.get(attributeId) != null) {
+        if (attributes.containsKey(attributeId) && attributes.get(attributeId) != null
+                && attributes.get(attributeId).getLastValue() != null) {
             record.setStatus(ZclStatus.SUCCESS);
             record.setAttributeDataType(attributes.get(attributeId).getDataType());
             record.setAttributeValue(attributes.get(attributeId).getLastValue());

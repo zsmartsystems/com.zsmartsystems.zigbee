@@ -83,7 +83,7 @@ public class AttributeInformation implements ZclListItemField, Comparable<Attrib
 
     @Override
     public String toString() {
-        return "Attribute Information [dataType=" + dataType + ", identifier=" + identifier + "]";
+        return "AttributeInformation [dataType=" + dataType + ", identifier=" + identifier + "]";
     }
 
 }
