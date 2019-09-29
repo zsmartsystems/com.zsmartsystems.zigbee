@@ -39,6 +39,7 @@ import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
@@ -297,7 +298,7 @@ public class ZclClusterTest {
     }
 
     @Test
-    public void handleCommandReport() throws Exception {
+    public void handleCommand() throws Exception {
         createEndpoint();
 
         ZclCluster cluster = new ZclOnOffCluster(endpoint);
@@ -363,6 +364,19 @@ public class ZclClusterTest {
         assertEquals(Integer.valueOf(45), defaultResponse.getCommandIdentifier());
         assertEquals(ZclStatus.UNSUP_MANUF_CLUSTER_COMMAND, defaultResponse.getStatusCode());
         assertEquals(Integer.valueOf(123), defaultResponse.getTransactionId());
+
+        command = new ConfigureReportingResponse();
+        command.setTransactionId(0);
+        command.setDestinationAddress(new ZigBeeEndpointAddress(0, 0));
+        command.setClusterId(0x0000);
+
+        cluster.handleCommand(command);
+        Mockito.verify(endpoint, Mockito.timeout(TIMEOUT).times(5)).sendTransaction(commandCapture.capture());
+        response = commandCapture.getValue();
+        assertTrue(response instanceof DefaultResponse);
+        System.out.println(response);
+        defaultResponse = (DefaultResponse) response;
+        assertEquals(ZclStatus.SUCCESS, defaultResponse.getStatusCode());
 
         cluster.removeCommandListener(listenerMock);
         assertEquals(0, commandListeners.size());
