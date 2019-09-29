@@ -169,6 +169,11 @@ public abstract class ZclCluster {
     protected static Map<Integer, Class<? extends ZclCommand>> genericCommands = new HashMap<>();
 
     /**
+     * Set of generic commands internally handled by this class
+     */
+    private static Set<Class<? extends ZclCommand>> supportedGenericCommands = new HashSet<>();
+
+    /**
      * The {@link ZclAttributeNormalizer} is used to normalize attribute data types to ensure that data types are
      * consistent with the ZCL definition. This ensures that the application can rely on consistent and deterministic
      * data type when listening to attribute updates.
@@ -205,6 +210,15 @@ public abstract class ZclCluster {
         genericCommands.put(0x0014, DiscoverCommandsGeneratedResponse.class);
         genericCommands.put(0x0015, DiscoverAttributesExtended.class);
         genericCommands.put(0x0016, DiscoverAttributesExtendedResponse.class);
+
+        supportedGenericCommands.add(ReadAttributesResponse.class);
+        supportedGenericCommands.add(WriteAttributesResponse.class);
+        supportedGenericCommands.add(ConfigureReportingResponse.class);
+        supportedGenericCommands.add(ReadReportingConfigurationResponse.class);
+        supportedGenericCommands.add(ReportAttributesCommand.class);
+        supportedGenericCommands.add(DiscoverAttributesResponse.class);
+        supportedGenericCommands.add(DiscoverCommandsReceivedResponse.class);
+        supportedGenericCommands.add(DiscoverCommandsGeneratedResponse.class);
     }
 
     /**
@@ -1206,16 +1220,14 @@ public abstract class ZclCluster {
             return;
         }
 
-        // If this is a specific cluster command, pass the command to the cluster command handler
-        if (!command.isGenericCommand()) {
-            if (notifyCommandListener(command)) {
-                return;
-            }
-        }
-
         ZclStatus responseStatus;
 
-        if (command.isManufacturerSpecific()) {
+        // If this is a specific cluster command, pass the command to the cluster command handler
+        if (!command.isGenericCommand() && notifyCommandListener(command)) {
+            return;
+        } else if (supportedGenericCommands.contains(command.getClass())) {
+            responseStatus = ZclStatus.SUCCESS;
+        } else if (command.isManufacturerSpecific()) {
             if (command.isGenericCommand()) {
                 responseStatus = ZclStatus.UNSUP_MANUF_GENERAL_COMMAND;
             } else {
