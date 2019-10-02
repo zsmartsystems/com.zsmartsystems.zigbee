@@ -235,16 +235,26 @@ public class EmberCbkeProvider implements ZigBeeCbkeProvider {
                     break;
                 }
 
-                responderMac = new ByteArray(response163k1.getResponderSmac().getContents());
-                return new ByteArray(response163k1.getInitiatorSmac().getContents());
+                if (amInitiator) {
+                    responderMac = new ByteArray(response163k1.getResponderSmac().getContents());
+                    return new ByteArray(response163k1.getInitiatorSmac().getContents());
+                } else {
+                    responderMac = new ByteArray(response163k1.getInitiatorSmac().getContents());
+                    return new ByteArray(response163k1.getResponderSmac().getContents());
+                }
             case ECC_283K1:
                 EzspCalculateSmacs283k1Handler response283k1 = ezspCalculateSmacs283k1();
                 if (response283k1 == null || response283k1.getStatus() != EmberStatus.EMBER_SUCCESS) {
                     break;
                 }
 
-                responderMac = new ByteArray(response283k1.getResponderSmac().getContents());
-                return new ByteArray(response283k1.getInitiatorSmac().getContents());
+                if (amInitiator) {
+                    responderMac = new ByteArray(response283k1.getResponderSmac().getContents());
+                    return new ByteArray(response283k1.getInitiatorSmac().getContents());
+                } else {
+                    responderMac = new ByteArray(response283k1.getInitiatorSmac().getContents());
+                    return new ByteArray(response283k1.getResponderSmac().getContents());
+                }
             default:
                 break;
         }
