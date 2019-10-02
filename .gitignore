@@ -1,6 +1,5 @@
 target/
 bin/
-*.iml
 *.log
 *.log.*
 *.json
@@ -15,6 +14,10 @@ pom.xml.releaseBackup
 .settings
 .recommenders
 RemoteSystemsTempFiles/
+
+# IntelliJ project specific
+.idea/
+*.iml
 
 # Temporary
 travis.yml
