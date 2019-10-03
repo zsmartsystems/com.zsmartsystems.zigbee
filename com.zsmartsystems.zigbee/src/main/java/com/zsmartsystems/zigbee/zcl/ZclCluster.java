@@ -1130,7 +1130,7 @@ public abstract class ZclCluster {
 
                     if (listener.commandReceived(command)) {
                         response.set(true);
-                        while( latch.getCount() > 0) {
+                        while (latch.getCount() > 0) {
                             latch.countDown();
                         }
                     } else {
@@ -1142,18 +1142,18 @@ public abstract class ZclCluster {
 
         try {
             // TODO: Set the timer properly
-            if(latch.await(1, TimeUnit.SECONDS)) {
+            if (latch.await(1, TimeUnit.SECONDS)) {
                 final boolean b = response.get();
-                logger.trace(" LATCH done - {}" , b);
+                logger.trace(" LATCH done - {}", b);
                 return b;
-            }else {
+            } else {
                 long cnt = latch.getCount();
-                logger.trace("LATCH TIME OUT, cnt = {}" ,cnt);
+                logger.trace("LATCH TIME OUT, cnt = {}", cnt);
                 return response.get();
             }
         } catch (InterruptedException e) {
             long cnt = latch.getCount();
-            logger.trace("LATCH Interrupted, cnt = {}" ,cnt);
+            logger.trace("LATCH Interrupted, cnt = {}", cnt);
             return response.get();
         }
     }
