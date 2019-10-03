@@ -74,7 +74,7 @@ public class ZclClusterTest {
 
     private void createEndpoint() {
         node = Mockito.mock(ZigBeeNode.class);
-        endpoint = Mockito.mock(ZigBeeEndpoint.class, MOCK_SETTINGS_VERBOSE);
+        endpoint = Mockito.mock(ZigBeeEndpoint.class);
         Mockito.when(endpoint.getEndpointId()).thenReturn(5);
         Mockito.when(endpoint.getEndpointAddress()).thenReturn(new ZigBeeEndpointAddress(1234, 5));
         commandCapture = ArgumentCaptor.forClass(ZigBeeCommand.class);
@@ -315,7 +315,7 @@ public class ZclClusterTest {
         Mockito.when(command.isGenericCommand()).thenReturn(false);
         Mockito.when(command.isManufacturerSpecific()).thenReturn(false);
 
-        ZclCommandListener listenerMock = Mockito.mock(ZclCommandListener.class,MOCK_SETTINGS_VERBOSE);
+        ZclCommandListener listenerMock = Mockito.mock(ZclCommandListener.class);
         cluster.addCommandListener(listenerMock);
         assertEquals(1, commandListeners.size());
         cluster.addCommandListener(listenerMock);

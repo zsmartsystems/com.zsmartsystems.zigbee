@@ -1129,23 +1129,32 @@ public abstract class ZclCluster {
                             listener, command);
 
                     if (listener.commandReceived(command)) {
-                        // A thread is responding - we don't need to wait around
-                        for (long cnt = latch.getCount(); cnt > 0; cnt--) {
+                        response.set(true);
+                        while( latch.getCount() > 0) {
                             latch.countDown();
-                            response.set(true);
                         }
+                    } else {
+                        latch.countDown();
                     }
-                    latch.countDown();
                 }
             });
         }
 
         try {
             // TODO: Set the timer properly
-            latch.await(1, TimeUnit.SECONDS);
-            return response.get();
+            if(latch.await(1, TimeUnit.SECONDS)) {
+                final boolean b = response.get();
+                logger.trace(" LATCH done - {}" , b);
+                return b;
+            }else {
+                long cnt = latch.getCount();
+                logger.trace("LATCH TIME OUT, cnt = {}" ,cnt);
+                return response.get();
+            }
         } catch (InterruptedException e) {
-            return false;
+            long cnt = latch.getCount();
+            logger.trace("LATCH Interrupted, cnt = {}" ,cnt);
+            return response.get();
         }
     }
 
