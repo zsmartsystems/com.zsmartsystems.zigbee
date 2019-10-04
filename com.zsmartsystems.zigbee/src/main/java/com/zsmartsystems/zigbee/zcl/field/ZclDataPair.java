@@ -16,23 +16,36 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  *
  */
 public class ZclDataPair {
+    /**
+     * The data type
+     */
     private ZclDataType dataType;
+
+    /**
+     * The data value
+     */
     private Object value;
 
+    /**
+     * Instantiates a data pair
+     * 
+     * @param dataType the {@link ZclDataType}
+     * @param value the value object
+     */
     public ZclDataPair(ZclDataType dataType, Object value) {
         this.dataType = dataType;
         this.value = value;
     }
 
     /**
-     * @return the dataType
+     * @return the {@link ZclDataType}
      */
     public ZclDataType getDataType() {
         return dataType;
     }
 
     /**
-     * @param dataType the dataType to set
+     * @param dataType the {@link ZclDataType} to set
      */
     public void setDataType(ZclDataType dataType) {
         this.dataType = dataType;

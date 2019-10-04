@@ -15,7 +15,6 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Read Attribute Status Record field.
  *
- * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
 public class AttributeReport implements ZclListItemField {
@@ -23,10 +22,12 @@ public class AttributeReport implements ZclListItemField {
      * The attribute identifier.
      */
     private int attributeIdentifier;
+
     /**
      * The attribute data type.
      */
     private ZclDataType attributeDataType;
+
     /**
      * The attribute data type.
      */
@@ -35,7 +36,7 @@ public class AttributeReport implements ZclListItemField {
     /**
      * Gets attribute data type.
      *
-     * @return the attribute data type.
+     * @return the attribute {@link ZclDataType}.
      */
     public ZclDataType getAttributeDataType() {
         return attributeDataType;
@@ -44,7 +45,7 @@ public class AttributeReport implements ZclListItemField {
     /**
      * Sets attribute data type.
      *
-     * @param attributeDataType the attribute data type
+     * @param attributeDataType the attribute {@link ZclDataType}
      */
     public void setAttributeDataType(ZclDataType attributeDataType) {
         this.attributeDataType = attributeDataType;
@@ -102,7 +103,7 @@ public class AttributeReport implements ZclListItemField {
 
     @Override
     public String toString() {
-        return "Attribute Report: attributeDataType=" + attributeDataType + ", attributeIdentifier="
-                + attributeIdentifier + ", attributeValue=" + attributeValue;
+        return "AttributeReport [attributeDataType=" + attributeDataType + ", attributeIdentifier="
+                + attributeIdentifier + ", attributeValue=" + attributeValue + "]";
     }
 }

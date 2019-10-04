@@ -15,7 +15,6 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Write Attribute Record field.
  *
- * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
 public class WriteAttributeRecord implements ZclListItemField {
@@ -23,29 +22,30 @@ public class WriteAttributeRecord implements ZclListItemField {
      * The attribute identifier.
      */
     private int attributeIdentifier;
+
     /**
-     * The attribute data type.
+     * The attribute {@link ZclDataType}.
      */
     private ZclDataType attributeDataType;
 
     /**
-     * The attribute data type.
+     * The attribute data value.
      */
     private Object attributeValue;
 
     /**
-     * Gets attribute data type.
+     * Gets attribute {@link ZclDataType}.
      *
-     * @return the attribute data type
+     * @return the attribute {@link ZclDataType}
      */
     public ZclDataType getAttributeDataType() {
         return attributeDataType;
     }
 
     /**
-     * Sets attribute data type
+     * Sets attribute {@link ZclDataType}
      *
-     * @param attributeDataType the attribute data type
+     * @param attributeDataType the attribute {@link ZclDataType}
      */
     public void setAttributeDataType(ZclDataType attributeDataType) {
         this.attributeDataType = attributeDataType;
@@ -103,7 +103,7 @@ public class WriteAttributeRecord implements ZclListItemField {
 
     @Override
     public String toString() {
-        return "Write Attribute Record: attributeDataType=" + attributeDataType + ", attributeIdentifier="
-                + attributeIdentifier + ", attributeValue=" + attributeValue;
+        return "WriteAttributeRecord [attributeDataType=" + attributeDataType + ", attributeIdentifier="
+                + attributeIdentifier + ", attributeValue=" + attributeValue + "]";
     }
 }

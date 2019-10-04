@@ -16,4 +16,13 @@ package com.zsmartsystems.zigbee.zcl.protocol;
 public enum ZclCommandDirection {
     CLIENT_TO_SERVER,
     SERVER_TO_CLIENT;
+
+    /**
+     * Returns the {@link ZclCommandDirection} for the response frame
+     *
+     * @return the {@link ZclCommandDirection} for the response frame
+     */
+    public ZclCommandDirection getResponseDirection() {
+        return this == CLIENT_TO_SERVER ? SERVER_TO_CLIENT : CLIENT_TO_SERVER;
+    }
 }

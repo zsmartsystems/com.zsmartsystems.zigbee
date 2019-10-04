@@ -23,22 +23,27 @@ public class NeighborInformation implements ZclListItemField {
      * The neighbor address.
      */
     private long neighborAddress;
+
     /**
      * The coordinate 1
      */
     private int coordinate1;
+
     /**
      * The coordinate 2
      */
     private int coordinate2;
+
     /**
      * The coordinate 3
      */
     private int coordinate3;
+
     /**
      * The RSSI.
      */
     private int rssi;
+
     /**
      * The RSSI measurement count.
      */
@@ -174,8 +179,8 @@ public class NeighborInformation implements ZclListItemField {
 
     @Override
     public String toString() {
-        return "Neighbor Information: coordinate1=" + coordinate1 + ", neighborAddress=" + neighborAddress
+        return "NeighborInformation [coordinate1=" + coordinate1 + ", neighborAddress=" + neighborAddress
                 + ", coordinate2=" + coordinate2 + ", coordinate3=" + coordinate3 + ", rssi=" + rssi
-                + ", measurementCount=" + measurementCount;
+                + ", measurementCount=" + measurementCount + "]";
     }
 }

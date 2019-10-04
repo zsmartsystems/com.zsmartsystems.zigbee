@@ -97,11 +97,16 @@ public class ZclOnOffCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
 
-        attributeMap.put(ATTR_ONOFF, new ZclAttribute(this, ATTR_ONOFF, "On Off", ZclDataType.BOOLEAN, true, true, false, true));
-        attributeMap.put(ATTR_GLOBALSCENECONTROL, new ZclAttribute(this, ATTR_GLOBALSCENECONTROL, "Global Scene Control", ZclDataType.BOOLEAN, true, true, false, false));
-        attributeMap.put(ATTR_ONTIME, new ZclAttribute(this, ATTR_ONTIME, "On Time", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, true, false));
-        attributeMap.put(ATTR_OFFWAITTIME, new ZclAttribute(this, ATTR_OFFWAITTIME, "Off Wait Time", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, true, false));
-        attributeMap.put(ATTR_STARTUPONOFF, new ZclAttribute(this, ATTR_STARTUPONOFF, "Start Up On Off", ZclDataType.ENUMERATION_8_BIT, false, true, true, false));
+        attributeMap.put(ATTR_ONOFF,
+                new ZclAttribute(this, ATTR_ONOFF, "On Off", ZclDataType.BOOLEAN, true, true, false, true));
+        attributeMap.put(ATTR_GLOBALSCENECONTROL, new ZclAttribute(this, ATTR_GLOBALSCENECONTROL,
+                "Global Scene Control", ZclDataType.BOOLEAN, true, true, false, false));
+        attributeMap.put(ATTR_ONTIME, new ZclAttribute(this, ATTR_ONTIME, "On Time",
+                ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, true, false));
+        attributeMap.put(ATTR_OFFWAITTIME, new ZclAttribute(this, ATTR_OFFWAITTIME, "Off Wait Time",
+                ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, true, false));
+        attributeMap.put(ATTR_STARTUPONOFF, new ZclAttribute(this, ATTR_STARTUPONOFF, "Start Up On Off",
+                ZclDataType.ENUMERATION_8_BIT, false, true, true, false));
 
         return attributeMap;
     }
@@ -187,7 +192,8 @@ public class ZclOnOffCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
     public Future<CommandResult> setOnOffReporting(final int minInterval, final int maxInterval) {
@@ -297,7 +303,8 @@ public class ZclOnOffCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
     public Future<CommandResult> setGlobalSceneControlReporting(final int minInterval, final int maxInterval) {
@@ -393,10 +400,12 @@ public class ZclOnOffCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setOnTimeReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+    public Future<CommandResult> setOnTimeReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
         return setReporting(serverAttributes.get(ATTR_ONTIME), minInterval, maxInterval, reportableChange);
     }
 
@@ -493,10 +502,12 @@ public class ZclOnOffCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setOffWaitTimeReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+    public Future<CommandResult> setOffWaitTimeReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
         return setReporting(serverAttributes.get(ATTR_OFFWAITTIME), minInterval, maxInterval, reportableChange);
     }
 

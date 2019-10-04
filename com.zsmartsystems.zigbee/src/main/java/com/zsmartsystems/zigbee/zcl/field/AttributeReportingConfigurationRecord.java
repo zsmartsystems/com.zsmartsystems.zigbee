@@ -398,7 +398,7 @@ public class AttributeReportingConfigurationRecord implements ZclListItemField {
     public String toString() {
         StringBuilder builder = new StringBuilder(220);
 
-        builder.append("AttributeReportingConfigurationRecord: [attributeDataType=");
+        builder.append("AttributeReportingConfigurationRecord [attributeDataType=");
         builder.append(attributeDataType);
         builder.append(", attributeIdentifier=");
         builder.append(attributeIdentifier);

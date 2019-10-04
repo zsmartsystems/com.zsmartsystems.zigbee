@@ -10,19 +10,20 @@ package com.zsmartsystems.zigbee.zcl.field;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclListItemField;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
  * Write Attribute Status Record field.
  *
- * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
 public class WriteAttributeStatusRecord implements ZclListItemField {
     /**
      * The status.
      */
-    private int status;
+    private ZclStatus status;
+
     /**
      * The attribute identifier.
      */
@@ -47,39 +48,39 @@ public class WriteAttributeStatusRecord implements ZclListItemField {
     }
 
     /**
-     * Gets status.
+     * Gets the {@link ZclStatus}.
      *
-     * @return the status
+     * @return the {@link ZclStatus}
      */
-    public int getStatus() {
+    public ZclStatus getStatus() {
         return status;
     }
 
     /**
      * Sets status
      *
-     * @param status the status
+     * @param status the {@link ZclStatus}
      */
-    public void setStatus(int status) {
+    public void setStatus(ZclStatus status) {
         this.status = status;
     }
 
     @Override
     public void serialize(final ZigBeeSerializer serializer) {
-        serializer.appendZigBeeType(status, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        serializer.appendZigBeeType(status, ZclDataType.ZCL_STATUS);
         serializer.appendZigBeeType(attributeIdentifier, ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override
     public void deserialize(final ZigBeeDeserializer deserializer) {
-        status = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        if (status != 0) {
+        status = (ZclStatus) deserializer.readZigBeeType(ZclDataType.ZCL_STATUS);
+        if (status != ZclStatus.SUCCESS) {
             attributeIdentifier = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         }
     }
 
     @Override
     public String toString() {
-        return "Write Attribute Status Record: status=" + status + ", attributeIdentifier=" + attributeIdentifier;
+        return "WriteAttributeStatusRecord [status=" + status + ", attributeIdentifier=" + attributeIdentifier + "]";
     }
 }

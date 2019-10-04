@@ -272,6 +272,7 @@ public class ZigBeeEndpoint {
             return false;
         }
 
+        cluster.setClient();
         outputClusters.put(cluster.getClusterId(), cluster);
         return true;
     }
