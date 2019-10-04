@@ -9,7 +9,7 @@ package com.zsmartsystems.zigbee.zcl.clusters;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.Future;
 
 import javax.annotation.Generated;
@@ -47,7 +47,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-05-02T20:51:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
 public class ZclRssiLocationCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -163,14 +163,14 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
 
         return attributeMap;
     }
 
     @Override
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(13);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
 
         attributeMap.put(ATTR_LOCATIONTYPE, new ZclAttribute(this, ATTR_LOCATIONTYPE, "Location Type", ZclDataType.DATA_8_BIT, true, true, false, false));
         attributeMap.put(ATTR_LOCATIONMETHOD, new ZclAttribute(this, ATTR_LOCATIONMETHOD, "Location Method", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
@@ -191,7 +191,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {
-        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(8);
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentSkipListMap<>();
 
         commandMap.put(0x0000, DeviceConfigurationResponse.class);
         commandMap.put(0x0001, LocationDataResponse.class);
@@ -207,7 +207,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
-        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(7);
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentSkipListMap<>();
 
         commandMap.put(0x0000, SetAbsoluteLocationCommand.class);
         commandMap.put(0x0001, SetDeviceConfigurationCommand.class);

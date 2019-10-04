@@ -8,7 +8,7 @@
 package com.zsmartsystems.zigbee.zcl.clusters;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.Future;
 
 import javax.annotation.Generated;
@@ -65,7 +65,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-05-02T20:51:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
 public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -88,14 +88,14 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
 
         return attributeMap;
     }
 
     @Override
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(1);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
 
         attributeMap.put(ATTR_CLOSETUNNELTIMEOUT, new ZclAttribute(this, ATTR_CLOSETUNNELTIMEOUT, "Close Tunnel Timeout", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
 
@@ -104,7 +104,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {
-        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(7);
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentSkipListMap<>();
 
         commandMap.put(0x0000, RequestTunnelResponse.class);
         commandMap.put(0x0001, TransferDataServerToClient.class);
@@ -119,7 +119,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
-        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(7);
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentSkipListMap<>();
 
         commandMap.put(0x0000, RequestTunnel.class);
         commandMap.put(0x0001, CloseTunnel.class);

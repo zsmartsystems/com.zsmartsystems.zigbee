@@ -9,7 +9,7 @@ package com.zsmartsystems.zigbee.zcl.clusters;
 
 import java.util.Calendar;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.Future;
 
 import javax.annotation.Generated;
@@ -30,7 +30,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-05-02T20:51:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
 public class ZclTimeCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -124,14 +124,14 @@ public class ZclTimeCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
 
         return attributeMap;
     }
 
     @Override
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(10);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
 
         attributeMap.put(ATTR_TIME, new ZclAttribute(this, ATTR_TIME, "Time", ZclDataType.UTCTIME, true, true, true, false));
         attributeMap.put(ATTR_TIMESTATUS, new ZclAttribute(this, ATTR_TIMESTATUS, "Time Status", ZclDataType.BITMAP_8_BIT, false, true, true, false));

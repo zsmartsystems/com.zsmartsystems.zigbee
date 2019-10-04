@@ -8,7 +8,7 @@
 package com.zsmartsystems.zigbee.zcl.clusters;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.Future;
 
 import javax.annotation.Generated;
@@ -63,7 +63,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-05-15T10:07:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
 public class ZclOtaUpgradeCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -161,7 +161,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(11);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
 
         attributeMap.put(ATTR_UPGRADESERVERID, new ZclAttribute(this, ATTR_UPGRADESERVERID, "Upgrade Server ID", ZclDataType.IEEE_ADDRESS, true, true, false, false));
         attributeMap.put(ATTR_FILEOFFSET, new ZclAttribute(this, ATTR_FILEOFFSET, "File Offset", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
@@ -180,14 +180,14 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
 
         return attributeMap;
     }
 
     @Override
     protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {
-        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(5);
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentSkipListMap<>();
 
         commandMap.put(0x0000, ImageNotifyCommand.class);
         commandMap.put(0x0002, QueryNextImageResponse.class);
@@ -200,7 +200,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
-        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(5);
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentSkipListMap<>();
 
         commandMap.put(0x0001, QueryNextImageCommand.class);
         commandMap.put(0x0003, ImageBlockCommand.class);

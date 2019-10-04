@@ -9,7 +9,7 @@ package com.zsmartsystems.zigbee.zcl.clusters;
 
 import java.util.Calendar;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.Future;
 
 import javax.annotation.Generated;
@@ -66,7 +66,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-05-15T10:07:42Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
 public class ZclMeteringCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -2649,7 +2649,7 @@ public class ZclMeteringCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(2);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
 
         attributeMap.put(ATTR_FUNCTIONALNOTIFICATIONFLAGS, new ZclAttribute(this, ATTR_FUNCTIONALNOTIFICATIONFLAGS, "Functional Notification Flags", ZclDataType.BITMAP_32_BIT, true, true, false, false));
         attributeMap.put(ATTR_NOTIFICATIONFLAGS2, new ZclAttribute(this, ATTR_NOTIFICATIONFLAGS2, "Notification Flags 2", ZclDataType.BITMAP_32_BIT, true, true, false, false));
@@ -2665,7 +2665,7 @@ public class ZclMeteringCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(198);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
 
         attributeMap.put(ATTR_CURRENTSUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTSUMMATIONDELIVERED, "Current Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
         attributeMap.put(ATTR_CURRENTSUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTSUMMATIONRECEIVED, "Current Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, false, true, false, false));
@@ -3533,7 +3533,7 @@ public class ZclMeteringCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {
-        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(14);
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentSkipListMap<>();
 
         commandMap.put(0x0000, GetProfileResponse.class);
         commandMap.put(0x0001, RequestMirror.class);
@@ -3555,7 +3555,7 @@ public class ZclMeteringCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
-        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(15);
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentSkipListMap<>();
 
         commandMap.put(0x0000, GetProfile.class);
         commandMap.put(0x0001, RequestMirrorResponse.class);

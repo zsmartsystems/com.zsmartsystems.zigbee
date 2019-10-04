@@ -9,7 +9,7 @@ package com.zsmartsystems.zigbee.zcl.clusters;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.Future;
 
 import javax.annotation.Generated;
@@ -49,7 +49,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.iasace.ZoneStatusChangedCommand;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T14:56:52Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
 public class ZclIasAceCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -63,21 +63,21 @@ public class ZclIasAceCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
 
         return attributeMap;
     }
 
     @Override
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(0);
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
 
         return attributeMap;
     }
 
     @Override
     protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {
-        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(9);
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentSkipListMap<>();
 
         commandMap.put(0x0000, ArmResponse.class);
         commandMap.put(0x0001, GetZoneIdMapResponse.class);
@@ -94,7 +94,7 @@ public class ZclIasAceCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {
-        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>(10);
+        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentSkipListMap<>();
 
         commandMap.put(0x0000, ArmCommand.class);
         commandMap.put(0x0001, BypassCommand.class);

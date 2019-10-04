@@ -128,7 +128,7 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
         // imports.add(packageRoot + ".ZigBeeEndpoint");
         importsAdd(packageRoot + packageZcl + ".ZclAttribute");
         importsAdd("java.util.Map");
-        importsAdd("java.util.concurrent.ConcurrentHashMap");
+        importsAdd("java.util.concurrent.ConcurrentSkipListMap");
 
         outputImports(out);
 
@@ -205,8 +205,8 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
         if (commandsServer != 0) {
             out.println("    @Override");
             out.println("    protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {");
-            out.println("        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>("
-                    + commandsServer + ");");
+            out.println(
+                    "        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentSkipListMap<>();");
             out.println();
             for (final ZigBeeXmlCommand command : cluster.commands) {
                 if (command.source.equalsIgnoreCase("server")) {
@@ -224,8 +224,8 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
         if (commandsClient != 0) {
             out.println("    @Override");
             out.println("    protected Map<Integer, Class<? extends ZclCommand>> initializeClientCommands() {");
-            out.println("        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentHashMap<>("
-                    + commandsClient + ");");
+            out.println(
+                    "        Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentSkipListMap<>();");
             out.println();
             for (final ZigBeeXmlCommand command : cluster.commands) {
                 if (command.source.equalsIgnoreCase("client")) {
@@ -434,8 +434,7 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
     }
 
     private void createInitializeAttributes(PrintWriter out, String clusterName, List<ZigBeeXmlAttribute> attributes) {
-        out.println("        Map<Integer, ZclAttribute> attributeMap = new ConcurrentHashMap<>(" + attributes.size()
-                + ");");
+        out.println("        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();");
 
         if (attributes.size() != 0) {
             out.println();
