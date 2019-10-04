@@ -1093,13 +1093,19 @@ public abstract class ZclCluster {
     }
 
     /**
-     * Adds a {@link ZclCommandListener} to receive commands
+     * Adds a {@link ZclCommandListener} to receive commands.
+     * <p>
+     * Command listeners are expected to return promptly when called - if there is significant processing to perform
+     * then this should be handled in a separate thread.
      *
      * @param listener the {@link ZclCommandListener} to add
      */
     public void addCommandListener(ZclCommandListener listener) {
         logger.trace("{}: ZclCluster.addCommandListener({})", zigbeeEndpoint.getEndpointAddress(), listener);
-        commandListeners.add(listener);
+
+        synchronized (commandListeners) {
+            commandListeners.add(listener);
+        }
     }
 
     /**
@@ -1109,7 +1115,10 @@ public abstract class ZclCluster {
      */
     public void removeCommandListener(final ZclCommandListener listener) {
         logger.trace("{}: ZclCluster.removeCommandListener({})", zigbeeEndpoint.getEndpointAddress(), listener);
-        commandListeners.remove(listener);
+
+        synchronized (commandListeners) {
+            commandListeners.remove(listener);
+        }
     }
 
     /**
@@ -1120,40 +1129,43 @@ public abstract class ZclCluster {
      */
     private boolean notifyCommandListener(final ZclCommand command) {
         final AtomicBoolean response = new AtomicBoolean();
-        CountDownLatch latch = new CountDownLatch(commandListeners.size());
-        for (final ZclCommandListener listener : commandListeners) {
-            NotificationService.execute(new Runnable() {
-                @Override
-                public void run() {
-                    logger.trace("{}: ZclCluster.notifyCommandListener {} of {}", zigbeeEndpoint.getEndpointAddress(),
-                            listener, command);
+        CountDownLatch latch;
+        synchronized (commandListeners) {
+            latch = new CountDownLatch(commandListeners.size());
+            for (final ZclCommandListener listener : commandListeners) {
+                NotificationService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        logger.trace("{}: ZclCluster.notifyCommandListener {} of {}",
+                                zigbeeEndpoint.getEndpointAddress(), listener, command);
 
-                    if (listener.commandReceived(command)) {
-                        response.set(true);
-                        while (latch.getCount() > 0) {
+                        if (listener.commandReceived(command)) {
+                            response.set(true);
+                            while (latch.getCount() > 0) {
+                                latch.countDown();
+                            }
+                        } else {
                             latch.countDown();
                         }
-                    } else {
-                        latch.countDown();
                     }
-                }
-            });
+                });
+            }
         }
 
         try {
             // TODO: Set the timer properly
             if (latch.await(1, TimeUnit.SECONDS)) {
-                final boolean b = response.get();
-                logger.trace(" LATCH done - {}", b);
-                return b;
+                logger.trace("{}: ZclCluster.notifyCommandListener LATCH Done - {}",
+                        zigbeeEndpoint.getEndpointAddress(), response.get());
+                return response.get();
             } else {
-                long cnt = latch.getCount();
-                logger.trace("LATCH TIME OUT, cnt = {}", cnt);
+                logger.trace("{}: ZclCluster.notifyCommandListener LATCH Timeout, remaining = {}",
+                        zigbeeEndpoint.getEndpointAddress(), latch.getCount());
                 return response.get();
             }
         } catch (InterruptedException e) {
-            long cnt = latch.getCount();
-            logger.trace("LATCH Interrupted, cnt = {}", cnt);
+            logger.trace("{}: ZclCluster.notifyCommandListener LATCH Interrupted, remaining = {}",
+                    zigbeeEndpoint.getEndpointAddress(), latch.getCount());
             return response.get();
         }
     }
