@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.dongle.ember;
 
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -231,6 +232,16 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     private EmberNcpResetProvider resetProvider;
 
     /**
+     * List of input clusters supported - this will be added to the endpoint definition
+     */
+    private int[] inputClusters = new int[] { 0 };
+
+    /**
+     * List of output clusters supported - this will be added to the endpoint definition
+     */
+    private int[] outputClusters = new int[] { 0 };
+
+    /**
      * Create a {@link ZigBeeDongleEzsp} with the default ASH2 frame handler
      *
      * @param serialPort the {@link ZigBeePort} to use for the connection
@@ -404,19 +415,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         ncp.getNetworkParameters();
 
-        // Add the endpoint
-        ncp.addEndpoint(1, defaultDeviceId, defaultProfileId, new int[] { 0 }, new int[] { 0 });
-
-        // Now initialise the network
-        EmberStatus initResponse = ncp.networkInit();
-
-        networkParameters = ncp.getNetworkParameters().getParameters();
-        // print current security state to debug logs
-        ncp.getCurrentSecurityState();
-
-        scheduleNetworkStatePolling();
-
-        logger.debug("EZSP dongle initialize done: Initialised {}", initResponse != EmberStatus.EMBER_NOT_JOINED);
+        logger.debug("EZSP dongle initialize done");
 
         return ZigBeeStatus.SUCCESS;
     }
@@ -432,6 +431,22 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         }
 
         EmberNcp ncp = getEmberNcp();
+
+        // Add the endpoint
+        ncp.addEndpoint(1, defaultDeviceId, defaultProfileId, inputClusters, outputClusters);
+
+        // Now initialise the network
+        EmberStatus initResponse = ncp.networkInit();
+        if (initResponse == EmberStatus.EMBER_NOT_JOINED) {
+            logger.debug("EZSP dongle initialize done - response {}", initResponse);
+        }
+
+        networkParameters = ncp.getNetworkParameters().getParameters();
+
+        // print current security state to debug logs
+        ncp.getCurrentSecurityState();
+
+        scheduleNetworkStatePolling();
 
         // Check if the network is initialised
         EmberNetworkStatus networkState = ncp.getNetworkState();
@@ -970,6 +985,16 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                                 setTcJoinMode((TrustCentreJoinMode) configuration.getValue(option)));
                         break;
 
+                    case SUPPORTED_INPUT_CLUSTERS:
+                        configuration.setResult(option,
+                                setSupportedInputClusters((Collection<Integer>) configuration.getValue(option)));
+                        break;
+
+                    case SUPPORTED_OUTPUT_CLUSTERS:
+                        configuration.setResult(option,
+                                setSupportedOutputClusters((Collection<Integer>) configuration.getValue(option)));
+                        break;
+
                     default:
                         configuration.setResult(option, ZigBeeStatus.UNSUPPORTED);
                         logger.debug("Unsupported configuration option \"{}\" in EZSP dongle", option);
@@ -979,6 +1004,31 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 configuration.setResult(option, ZigBeeStatus.INVALID_ARGUMENTS);
             }
         }
+    }
+
+    private int[] copyClusters(Collection<Integer> clusterList) {
+        int[] clusters = new int[clusterList.size()];
+        int cnt = 0;
+        for (int value : clusterList) {
+            clusters[cnt++] = value;
+        }
+        return clusters;
+    }
+
+    private ZigBeeStatus setSupportedInputClusters(Collection<Integer> supportedClusters) {
+        if (initialised) {
+            return ZigBeeStatus.INVALID_STATE;
+        }
+        inputClusters = copyClusters(supportedClusters);
+        return ZigBeeStatus.SUCCESS;
+    }
+
+    private ZigBeeStatus setSupportedOutputClusters(Collection<Integer> supportedClusters) {
+        if (initialised) {
+            return ZigBeeStatus.INVALID_STATE;
+        }
+        outputClusters = copyClusters(supportedClusters);
+        return ZigBeeStatus.SUCCESS;
     }
 
     private ZigBeeStatus setTcJoinMode(TrustCentreJoinMode joinMode) {

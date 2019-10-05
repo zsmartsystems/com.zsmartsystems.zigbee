@@ -12,6 +12,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -147,6 +149,46 @@ public class ZigBeeDongleEzspTest {
         dongle.updateTransportConfig(configuration);
         assertEquals(ZigBeeStatus.INVALID_ARGUMENTS,
                 configuration.getResult(TransportConfigOption.TRUST_CENTRE_JOIN_MODE));
+    }
+
+    @Test
+    public void setClusters() throws Exception {
+        ArgumentCaptor<EzspPolicyId> policyId = ArgumentCaptor.forClass(EzspPolicyId.class);
+        ArgumentCaptor<EzspDecisionId> decisionId = ArgumentCaptor.forClass(EzspDecisionId.class);
+
+        final EmberNcp ncp = Mockito.mock(EmberNcp.class);
+        Mockito.when(ncp.setPolicy(policyId.capture(), decisionId.capture())).thenReturn(EzspStatus.EZSP_SUCCESS);
+        ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null) {
+            @Override
+            public EmberNcp getEmberNcp() {
+                return ncp;
+            }
+        };
+
+        TransportConfig configuration = new TransportConfig();
+
+        Collection<Integer> clusters = new ArrayList<>();
+        clusters.add(1);
+        clusters.add(2);
+        clusters.add(4);
+        configuration = new TransportConfig();
+        configuration.addOption(TransportConfigOption.SUPPORTED_INPUT_CLUSTERS, clusters);
+        configuration.addOption(TransportConfigOption.SUPPORTED_OUTPUT_CLUSTERS, clusters);
+        dongle.updateTransportConfig(configuration);
+        assertEquals(ZigBeeStatus.SUCCESS, configuration.getResult(TransportConfigOption.SUPPORTED_INPUT_CLUSTERS));
+        assertEquals(ZigBeeStatus.SUCCESS, configuration.getResult(TransportConfigOption.SUPPORTED_OUTPUT_CLUSTERS));
+
+        clusters.add(10);
+        clusters.add(20);
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "initialised", true);
+        configuration = new TransportConfig();
+        configuration.addOption(TransportConfigOption.SUPPORTED_INPUT_CLUSTERS, clusters);
+        configuration.addOption(TransportConfigOption.SUPPORTED_OUTPUT_CLUSTERS, clusters);
+        dongle.updateTransportConfig(configuration);
+        assertEquals(ZigBeeStatus.INVALID_STATE,
+                configuration.getResult(TransportConfigOption.SUPPORTED_INPUT_CLUSTERS));
+        assertEquals(ZigBeeStatus.INVALID_STATE,
+                configuration.getResult(TransportConfigOption.SUPPORTED_OUTPUT_CLUSTERS));
     }
 
     @Test
