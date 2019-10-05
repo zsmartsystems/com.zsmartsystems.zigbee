@@ -25,6 +25,20 @@ public class EzspSetSourceRouteRequest extends EzspFrameRequest {
     public static final int FRAME_ID = 0x5A;
 
     /**
+     * The destination of the source route.
+     * <p>
+     * EZSP type is <i>EmberNodeId</i> - Java type is {@link int}
+     */
+    private int destination;
+
+    /**
+     * The route record. Each relay in the list is an uint16_t node ID.
+     * <p>
+     * EZSP type is <i>uint16_t[]</i> - Java type is {@link int[]}
+     */
+    private int[] relayList;
+
+    /**
      * Serialiser used to serialise to binary line data
      */
     private EzspSerializer serializer;
@@ -37,17 +51,71 @@ public class EzspSetSourceRouteRequest extends EzspFrameRequest {
         serializer = new EzspSerializer();
     }
 
+    /**
+     * The destination of the source route.
+     * <p>
+     * EZSP type is <i>EmberNodeId</i> - Java type is {@link int}
+     *
+     * @return the current destination as {@link int}
+     */
+    public int getDestination() {
+        return destination;
+    }
+
+    /**
+     * The destination of the source route.
+     *
+     * @param destination the destination to set as {@link int}
+     */
+    public void setDestination(int destination) {
+        this.destination = destination;
+    }
+
+    /**
+     * The route record. Each relay in the list is an uint16_t node ID.
+     * <p>
+     * EZSP type is <i>uint16_t[]</i> - Java type is {@link int[]}
+     *
+     * @return the current relayList as {@link int[]}
+     */
+    public int[] getRelayList() {
+        return relayList;
+    }
+
+    /**
+     * The route record. Each relay in the list is an uint16_t node ID.
+     *
+     * @param relayList the relayList to set as {@link int[]}
+     */
+    public void setRelayList(int[] relayList) {
+        this.relayList = relayList;
+    }
+
     @Override
     public int[] serialize() {
         // Serialize the header
         serializeHeader(serializer);
 
         // Serialize the fields
+        serializer.serializeUInt16(destination);
+        serializer.serializeUInt8(relayList.length);
+        serializer.serializeUInt16Array(relayList);
         return serializer.getPayload();
     }
 
     @Override
     public String toString() {
-        return "EzspSetSourceRouteRequest []";
+        final StringBuilder builder = new StringBuilder(103);
+        builder.append("EzspSetSourceRouteRequest [destination=");
+        builder.append(destination);
+        builder.append(", relayList=");
+        for (int cnt = 0; cnt < relayList.length; cnt++) {
+            if (cnt > 0) {
+                builder.append(' ');
+            }
+            builder.append(String.format("%04X", relayList[cnt]));
+        }
+        builder.append(']');
+        return builder.toString();
     }
 }

@@ -203,7 +203,9 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_SET_EXTENDED_TIMEOUT = 0x7E;
     protected static final int FRAME_ID_SET_INITIAL_SECURITY_STATE = 0x68;
     protected static final int FRAME_ID_SET_KEY_TABLE_ENTRY = 0x72;
+    protected static final int FRAME_ID_SET_MANUFACTURER_CODE = 0x15;
     protected static final int FRAME_ID_SET_POLICY = 0x55;
+    protected static final int FRAME_ID_SET_POWER_DESCRIPTOR = 0x16;
     protected static final int FRAME_ID_SET_PREINSTALLED_CBKE_DATA = 0xA2;
     protected static final int FRAME_ID_SET_PREINSTALLED_CBKE_DATA283K1 = 0xED;
     protected static final int FRAME_ID_SET_RADIO_CHANNEL = 0x9A;
@@ -349,7 +351,9 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_SET_EXTENDED_TIMEOUT, EzspSetExtendedTimeoutResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_INITIAL_SECURITY_STATE, EzspSetInitialSecurityStateResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_KEY_TABLE_ENTRY, EzspSetKeyTableEntryResponse.class);
+        ezspHandlerMap.put(FRAME_ID_SET_MANUFACTURER_CODE, EzspSetManufacturerCodeResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_POLICY, EzspSetPolicyResponse.class);
+        ezspHandlerMap.put(FRAME_ID_SET_POWER_DESCRIPTOR, EzspSetPowerDescriptorResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_PREINSTALLED_CBKE_DATA, EzspSetPreinstalledCbkeDataResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_PREINSTALLED_CBKE_DATA283K1, EzspSetPreinstalledCbkeData283k1Response.class);
         ezspHandlerMap.put(FRAME_ID_SET_RADIO_CHANNEL, EzspSetRadioChannelResponse.class);
