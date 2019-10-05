@@ -134,15 +134,16 @@ public enum EzspDecisionId {
 
     /**
      * EZSP_TC_KEY_REQUEST_POLICY decision. When the Trust Center receives a request for a Trust
-     * Center link key, it will reply to it with the corresponding key.
+     * Center link key, it will reply to it with the current key. If not key is currently in the key
+     * table for this device, a new key will be generated and sent to the device.
      */
-    EZSP_ALLOW_TC_KEY_REQUEST_AND_GENERATE_NEW_KEY(0x0051),
+    EZSP_ALLOW_TC_KEY_REQUESTS_AND_SEND_CURRENT_KEY(0x0051),
 
     /**
      * EZSP_TC_KEY_REQUEST_POLICY decision. When the Trust Center receives a request for a Trust
      * Center link key, it will generate a key to send to the joiner.
      */
-    EZSP_ALLOW_TC_KEY_REQUESTS_AND_SEND_CURRENT_KEY(0x0052),
+    EZSP_ALLOW_TC_KEY_REQUEST_AND_GENERATE_NEW_KEY(0x0052),
 
     /**
      * EZSP_APP_KEY_REQUEST_POLICY decision. When the Trust Center receives a request for an

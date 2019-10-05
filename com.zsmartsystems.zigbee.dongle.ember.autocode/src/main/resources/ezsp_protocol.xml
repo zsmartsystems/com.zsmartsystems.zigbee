@@ -616,6 +616,36 @@
 	</command>
 											
 	<command>
+		<name>setManufacturerCode</name>
+		<id>0x15</id>
+		<description>Sets the manufacturer code to the specified value. The manufacturer code is one of the fields of the node descriptor.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint16_t</data_type>
+				<name>code</name>
+				<description>The manufacturer code for the local node.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>setPowerDescriptor</name>
+		<id>0x16</id>
+		<description>Sets the power descriptor to the specified value. The power descriptor is a dynamic value, therefore you should call this function whenever the value changes.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint16_t</data_type>
+				<name>descriptor</name>
+				<description>The new power descriptor for the local node.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+		</response_parameters>
+	</command>
+														
+	<command>
 		<name>networkInit</name>
 		<id>0x17</id>
 		<description>Resume network operation after a reboot. The node retains its original type. This should be called on startup whether or not the node was previously part of a network. EMBER_NOT_JOINED is returned if the node is not part of a network.</description>
@@ -1804,8 +1834,6 @@
 		<id>0x5A</id>
 		<description>Supply a source route for the next outgoing message.</description>
 		<command_parameters>
-		</command_parameters>
-		<response_parameters>
 			<parameter>
 				<data_type>EmberNodeId</data_type>
 				<name>destination</name>
@@ -1818,10 +1846,17 @@
 				<auto_size>relayList</auto_size>
 			</parameter>
 			<parameter>
-				<data_type>uint8_t[]</data_type>
+				<data_type>uint16_t[]</data_type>
 				<name>relayList</name>
 				<description>The route record. Each relay in the list is an uint16_t node ID.</description>
-				<display>hex[2]</display>
+				<display>hex[4]</display>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>EMBER_SUCCESS if the source route was successfully stored, and EMBER_NO_BUFFERS otherwise.</description>
 			</parameter>
 		</response_parameters>
 	</command>

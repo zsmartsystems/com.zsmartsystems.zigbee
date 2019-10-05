@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.command;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 
 /**
  * Class to implement the Ember EZSP command <b>setSourceRoute</b>.
@@ -24,18 +25,12 @@ public class EzspSetSourceRouteResponse extends EzspFrameResponse {
     public static final int FRAME_ID = 0x5A;
 
     /**
-     * The destination of the source route.
+     * EMBER_SUCCESS if the source route was successfully stored, and EMBER_NO_BUFFERS
+     * otherwise.
      * <p>
-     * EZSP type is <i>EmberNodeId</i> - Java type is {@link int}
+     * EZSP type is <i>EmberStatus</i> - Java type is {@link EmberStatus}
      */
-    private int destination;
-
-    /**
-     * The route record. Each relay in the list is an uint16_t node ID.
-     * <p>
-     * EZSP type is <i>uint8_t[]</i> - Java type is {@link int[]}
-     */
-    private int[] relayList;
+    private EmberStatus status;
 
     /**
      * Response and Handler constructor
@@ -45,63 +40,36 @@ public class EzspSetSourceRouteResponse extends EzspFrameResponse {
         super(inputBuffer);
 
         // Deserialize the fields
-        destination = deserializer.deserializeUInt16();
-        int relayCount = deserializer.deserializeUInt8();
-        relayList= deserializer.deserializeUInt8Array(relayCount);
+        status = deserializer.deserializeEmberStatus();
     }
 
     /**
-     * The destination of the source route.
+     * EMBER_SUCCESS if the source route was successfully stored, and EMBER_NO_BUFFERS
+     * otherwise.
      * <p>
-     * EZSP type is <i>EmberNodeId</i> - Java type is {@link int}
+     * EZSP type is <i>EmberStatus</i> - Java type is {@link EmberStatus}
      *
-     * @return the current destination as {@link int}
+     * @return the current status as {@link EmberStatus}
      */
-    public int getDestination() {
-        return destination;
+    public EmberStatus getStatus() {
+        return status;
     }
 
     /**
-     * The destination of the source route.
+     * EMBER_SUCCESS if the source route was successfully stored, and EMBER_NO_BUFFERS
+     * otherwise.
      *
-     * @param destination the destination to set as {@link int}
+     * @param status the status to set as {@link EmberStatus}
      */
-    public void setDestination(int destination) {
-        this.destination = destination;
-    }
-
-    /**
-     * The route record. Each relay in the list is an uint16_t node ID.
-     * <p>
-     * EZSP type is <i>uint8_t[]</i> - Java type is {@link int[]}
-     *
-     * @return the current relayList as {@link int[]}
-     */
-    public int[] getRelayList() {
-        return relayList;
-    }
-
-    /**
-     * The route record. Each relay in the list is an uint16_t node ID.
-     *
-     * @param relayList the relayList to set as {@link int[]}
-     */
-    public void setRelayList(int[] relayList) {
-        this.relayList = relayList;
+    public void setStatus(EmberStatus status) {
+        this.status = status;
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(104);
-        builder.append("EzspSetSourceRouteResponse [destination=");
-        builder.append(destination);
-        builder.append(", relayList=");
-        for (int cnt = 0; cnt < relayList.length; cnt++) {
-            if (cnt > 0) {
-                builder.append(' ');
-            }
-            builder.append(String.format("%02X", relayList[cnt]));
-        }
+        final StringBuilder builder = new StringBuilder(54);
+        builder.append("EzspSetSourceRouteResponse [status=");
+        builder.append(status);
         builder.append(']');
         return builder.toString();
     }

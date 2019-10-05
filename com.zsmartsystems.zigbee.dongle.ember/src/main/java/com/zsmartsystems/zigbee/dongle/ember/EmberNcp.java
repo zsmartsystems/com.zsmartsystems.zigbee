@@ -72,8 +72,12 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspReadCountersRespon
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspScanCompleteHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetConfigurationValueRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetConfigurationValueResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetManufacturerCodeRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetManufacturerCodeResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPolicyRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPolicyResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPowerDescriptorRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPowerDescriptorResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetRadioPowerRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetRadioPowerResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetValueRequest;
@@ -702,6 +706,34 @@ public class EmberNcp {
         EzspAddOrUpdateKeyTableEntryResponse response = (EzspAddOrUpdateKeyTableEntryResponse) transaction
                 .getResponse();
         return response.getStatus();
+    }
+
+    /**
+     * Sets the power descriptor to the specified value. The power descriptor is a dynamic value, therefore you should
+     * call this function whenever the value changes.
+     *
+     * @param descriptor the descriptor to set as int
+     */
+    public void setPowerDescriptor(int descriptor) {
+        EzspSetPowerDescriptorRequest request = new EzspSetPowerDescriptorRequest();
+        request.setDescriptor(descriptor);
+        protocolHandler.queueFrame(request);
+        protocolHandler
+                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspSetPowerDescriptorResponse.class));
+    }
+
+    /**
+     * Sets the manufacturer code to the specified value. The manufacturer code is one of the fields of the node
+     * descriptor.
+     *
+     * @param code the code to set as int
+     */
+    public void setManufacturerCode(int code) {
+        EzspSetManufacturerCodeRequest request = new EzspSetManufacturerCodeRequest();
+        request.setCode(code);
+        protocolHandler.queueFrame(request);
+        protocolHandler
+                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspSetManufacturerCodeResponse.class));
     }
 
     /**
