@@ -178,8 +178,9 @@ public class ZclAttribute {
     }
 
     /**
-     * Returns the value of the attribute. If the current value is newer than refreshPeriod (in milliseconds) then the
-     * current value will be returned, otherwise the value will be requested from the remote device.
+     * Returns the value of the attribute from the remote attribute. If the current value is newer than refreshPeriod
+     * (in milliseconds) then the current value will be returned, otherwise the value will be requested from the remote
+     * device.
      *
      * @param refreshPeriod the number of milliseconds to consider the value current
      * @return an Object with the attribute value, or null on error
@@ -193,13 +194,22 @@ public class ZclAttribute {
     }
 
     /**
-     * Write the attribute value
+     * Write the attribute value to the remote cluster.
      *
      * @param value the value to set (as {@link Object})
      * @return command future {@link CommandResult}
      */
     public Future<CommandResult> writeValue(Object value) {
         return cluster.writeAttribute(id, dataType, value);
+    }
+
+    /**
+     * Sets the attribute value to the attribute.
+     *
+     * @param value the value to set (as {@link Object})
+     */
+    public void setValue(Object value) {
+        lastValue = value;
     }
 
     /**
@@ -267,6 +277,15 @@ public class ZclAttribute {
      */
     public boolean isReportable() {
         return reportable;
+    }
+
+    /**
+     * Sets the attributed as implemented or not.
+     *
+     * @param implemented true if the attribute is implemented
+     */
+    public void setImplemented(boolean implemented) {
+        this.implemented = implemented;
     }
 
     /**

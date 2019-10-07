@@ -37,23 +37,27 @@ import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.database.ZclAttributeDao;
 import com.zsmartsystems.zigbee.database.ZclClusterDao;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DiscoverAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadReportingConfigurationCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnCommand;
 import com.zsmartsystems.zigbee.zcl.field.AttributeRecord;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReport;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReportingConfigurationRecord;
 import com.zsmartsystems.zigbee.zcl.field.ReadAttributeStatusRecord;
 import com.zsmartsystems.zigbee.zcl.field.WriteAttributeRecord;
+import com.zsmartsystems.zigbee.zcl.field.WriteAttributeStatusRecord;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.command.BindRequest;
@@ -81,8 +85,10 @@ public class ZclClusterTest {
         matcherCapture = ArgumentCaptor.forClass(ZigBeeTransactionMatcher.class);
         Mockito.when(node.sendTransaction(commandCapture.capture(), matcherCapture.capture()))
                 .thenReturn(Mockito.mock(Future.class));
+        Mockito.doNothing().when(node).sendTransaction(commandCapture.capture());
         Mockito.when(endpoint.getParentNode()).thenReturn(node);
         Mockito.when(endpoint.sendTransaction(commandCapture.capture(), matcherCapture.capture())).thenReturn(null);
+        Mockito.doNothing().when(endpoint).sendTransaction(commandCapture.capture());
     }
 
     @Test
@@ -214,8 +220,8 @@ public class ZclClusterTest {
         cluster.handleCommand(attributeReport);
         Mockito.verify(endpoint, Mockito.timeout(TIMEOUT).times(1)).sendTransaction(commandCapture.capture());
         ZigBeeCommand command = commandCapture.getValue();
-        assertTrue(command instanceof DefaultResponse);
         System.out.println(command);
+        assertTrue(command instanceof DefaultResponse);
         DefaultResponse defaultResponse = (DefaultResponse) command;
         assertEquals(Integer.valueOf(ReportAttributesCommand.COMMAND_ID), defaultResponse.getCommandIdentifier());
         assertEquals(ZclStatus.SUCCESS, defaultResponse.getStatusCode());
@@ -269,8 +275,8 @@ public class ZclClusterTest {
         cluster.handleCommand(attributeReport);
         Mockito.verify(endpoint, Mockito.timeout(TIMEOUT).times(1)).sendTransaction(commandCapture.capture());
         ZigBeeCommand command = commandCapture.getValue();
-        assertTrue(command instanceof DefaultResponse);
         System.out.println(command);
+        assertTrue(command instanceof DefaultResponse);
         DefaultResponse defaultResponse = (DefaultResponse) command;
         assertEquals(Integer.valueOf(ReadAttributesResponse.COMMAND_ID), defaultResponse.getCommandIdentifier());
         assertEquals(ZclStatus.SUCCESS, defaultResponse.getStatusCode());
@@ -314,6 +320,7 @@ public class ZclClusterTest {
         Mockito.when(command.getCommandId()).thenReturn(45);
         Mockito.when(command.isGenericCommand()).thenReturn(false);
         Mockito.when(command.isManufacturerSpecific()).thenReturn(false);
+        Mockito.when(command.getCommandDirection()).thenReturn(ZclCommandDirection.CLIENT_TO_SERVER);
 
         ZclCommandListener listenerMock = Mockito.mock(ZclCommandListener.class);
         cluster.addCommandListener(listenerMock);
@@ -602,5 +609,231 @@ public class ZclClusterTest {
         cluster.setDao(clusterDao);
         assertEquals(1, cluster.getAttributes().size());
         assertEquals(Integer.class, cluster.getAttributes().iterator().next().getLastValue().getClass());
+    }
+
+    @Test
+    public void handleDiscoverAttributes() {
+        createEndpoint();
+
+        ZclOnOffCluster cluster = new ZclOnOffCluster(endpoint);
+
+        Set<ZclAttribute> attributes = new HashSet<>();
+        attributes.add(new ZclAttribute(cluster, 1, "Attribute-1", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true,
+                false, true));
+        attributes.add(new ZclAttribute(cluster, 2, "Attribute-2", ZclDataType.BOOLEAN, true, true, false, true));
+        attributes.add(
+                new ZclAttribute(cluster, 10, "Attribute-10", ZclDataType.CHARACTER_STRING, true, true, false, true));
+        attributes.add(new ZclAttribute(cluster, 11, "Attribute-11", ZclDataType.BOOLEAN, true, true, false, true));
+        attributes.add(new ZclAttribute(cluster, 13, "Attribute-13", ZclDataType.BOOLEAN, true, true, false, true));
+
+        assertFalse(attributes.iterator().next().isImplemented());
+        cluster.addLocalAttributes(attributes);
+        assertTrue(attributes.iterator().next().isImplemented());
+
+        DiscoverAttributesCommand discoverCommand = new DiscoverAttributesCommand();
+        discoverCommand.setClusterId(ZclBasicCluster.CLUSTER_ID);
+        discoverCommand.setSourceAddress(new ZigBeeEndpointAddress(1234));
+        discoverCommand.setDestinationAddress(new ZigBeeEndpointAddress(5678));
+        discoverCommand.setCommandDirection(ZclCommandDirection.CLIENT_TO_SERVER);
+        discoverCommand.setTransactionId(55);
+        discoverCommand.setStartAttributeIdentifier(0);
+        discoverCommand.setMaximumAttributeIdentifiers(10);
+
+        cluster.handleCommand(discoverCommand);
+        assertEquals(1, commandCapture.getAllValues().size());
+        DiscoverAttributesResponse discoverResponse = (DiscoverAttributesResponse) commandCapture.getValue();
+        System.out.println(discoverResponse);
+        assertEquals(5, discoverResponse.getAttributeInformation().size());
+        assertEquals(1, discoverResponse.getAttributeInformation().get(0).getIdentifier());
+        assertEquals(ZclDataType.UNSIGNED_8_BIT_INTEGER,
+                discoverResponse.getAttributeInformation().get(0).getDataType());
+
+        cluster.getLocalAttribute(1).setImplemented(false);
+        cluster.handleCommand(discoverCommand);
+        assertEquals(2, commandCapture.getAllValues().size());
+        discoverResponse = (DiscoverAttributesResponse) commandCapture.getValue();
+        System.out.println(discoverResponse);
+        assertEquals(4, discoverResponse.getAttributeInformation().size());
+        assertEquals(2, discoverResponse.getAttributeInformation().get(0).getIdentifier());
+        assertEquals(ZclDataType.BOOLEAN, discoverResponse.getAttributeInformation().get(0).getDataType());
+
+        discoverCommand = new DiscoverAttributesCommand();
+        discoverCommand.setClusterId(ZclBasicCluster.CLUSTER_ID);
+        discoverCommand.setSourceAddress(new ZigBeeEndpointAddress(1234));
+        discoverCommand.setDestinationAddress(new ZigBeeEndpointAddress(5678));
+        discoverCommand.setCommandDirection(ZclCommandDirection.CLIENT_TO_SERVER);
+        discoverCommand.setTransactionId(55);
+        discoverCommand.setStartAttributeIdentifier(3);
+        discoverCommand.setMaximumAttributeIdentifiers(2);
+
+        cluster.handleCommand(discoverCommand);
+        assertEquals(3, commandCapture.getAllValues().size());
+        discoverResponse = (DiscoverAttributesResponse) commandCapture.getValue();
+        System.out.println(discoverResponse);
+        assertEquals(2, discoverResponse.getAttributeInformation().size());
+        assertEquals(10, discoverResponse.getAttributeInformation().get(0).getIdentifier());
+        assertEquals(ZclDataType.CHARACTER_STRING, discoverResponse.getAttributeInformation().get(0).getDataType());
+    }
+
+    @Test
+    public void handleReadAttributes() {
+        createEndpoint();
+
+        ZclOnOffCluster cluster = new ZclOnOffCluster(endpoint);
+
+        Set<ZclAttribute> attributes = new HashSet<>();
+        attributes.add(new ZclAttribute(cluster, 1, "Attribute-1", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true,
+                false, true));
+        attributes.add(new ZclAttribute(cluster, 2, "Attribute-2", ZclDataType.BOOLEAN, true, true, false, true));
+        attributes.add(
+                new ZclAttribute(cluster, 10, "Attribute-10", ZclDataType.CHARACTER_STRING, true, true, false, true));
+        attributes.add(new ZclAttribute(cluster, 11, "Attribute-11", ZclDataType.BOOLEAN, true, true, false, true));
+        attributes.add(new ZclAttribute(cluster, 13, "Attribute-13", ZclDataType.BOOLEAN, true, true, false, true));
+        cluster.addLocalAttributes(attributes);
+
+        List<Integer> identifiers = new ArrayList<>();
+        identifiers.add(2);
+
+        ReadAttributesCommand readCommand = new ReadAttributesCommand();
+        readCommand.setClusterId(ZclBasicCluster.CLUSTER_ID);
+        readCommand.setSourceAddress(new ZigBeeEndpointAddress(1234));
+        readCommand.setDestinationAddress(new ZigBeeEndpointAddress(5678));
+        readCommand.setCommandDirection(ZclCommandDirection.CLIENT_TO_SERVER);
+        readCommand.setTransactionId(55);
+        readCommand.setIdentifiers(identifiers);
+
+        cluster.handleCommand(readCommand);
+        assertEquals(1, commandCapture.getAllValues().size());
+        ReadAttributesResponse readResponse = (ReadAttributesResponse) commandCapture.getValue();
+        System.out.println(readResponse);
+        assertEquals(Integer.valueOf(ZclBasicCluster.CLUSTER_ID), readResponse.getClusterId());
+        assertEquals(ZclCommandDirection.SERVER_TO_CLIENT, readResponse.getCommandDirection());
+        assertEquals(1, readResponse.getRecords().size());
+        assertEquals(Integer.valueOf(55), readResponse.getTransactionId());
+        List<ReadAttributeStatusRecord> records = readResponse.getRecords();
+        assertEquals(2, records.get(0).getAttributeIdentifier());
+        assertNull(records.get(0).getAttributeValue());
+        assertEquals(ZclStatus.INVALID_VALUE, records.get(0).getStatus());
+
+        cluster.getLocalAttribute(2).setValue(false);
+
+        cluster.handleCommand(readCommand);
+        assertEquals(2, commandCapture.getAllValues().size());
+        readResponse = (ReadAttributesResponse) commandCapture.getValue();
+        System.out.println(readResponse);
+        records = readResponse.getRecords();
+        assertEquals(2, records.get(0).getAttributeIdentifier());
+        assertEquals(false, records.get(0).getAttributeValue());
+        assertEquals(ZclStatus.SUCCESS, records.get(0).getStatus());
+
+        cluster.getLocalAttribute(13).setValue(true);
+
+        identifiers = new ArrayList<>();
+        identifiers.add(2);
+        identifiers.add(13);
+        identifiers.add(55);
+        readCommand.setIdentifiers(identifiers);
+
+        cluster.handleCommand(readCommand);
+        assertEquals(3, commandCapture.getAllValues().size());
+        readResponse = (ReadAttributesResponse) commandCapture.getValue();
+        System.out.println(readResponse);
+        records = readResponse.getRecords();
+        assertEquals(3, records.size());
+        assertEquals(2, records.get(0).getAttributeIdentifier());
+        assertEquals(false, records.get(0).getAttributeValue());
+        assertEquals(ZclStatus.SUCCESS, records.get(0).getStatus());
+        assertEquals(13, records.get(1).getAttributeIdentifier());
+        assertEquals(true, records.get(1).getAttributeValue());
+        assertEquals(ZclStatus.SUCCESS, records.get(1).getStatus());
+        assertEquals(55, records.get(2).getAttributeIdentifier());
+        assertEquals(ZclStatus.UNSUPPORTED_ATTRIBUTE, records.get(2).getStatus());
+    }
+
+    @Test
+    public void handleWriteAttributesCommand() {
+        createEndpoint();
+
+        ZclOnOffCluster cluster = new ZclOnOffCluster(endpoint);
+
+        Set<ZclAttribute> attributes = new HashSet<>();
+        attributes.add(new ZclAttribute(cluster, 1, "Attribute-1", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true,
+                false, true));
+        attributes.add(new ZclAttribute(cluster, 2, "Attribute-2", ZclDataType.BOOLEAN, true, true, false, true));
+        attributes.add(
+                new ZclAttribute(cluster, 10, "Attribute-10", ZclDataType.CHARACTER_STRING, true, true, false, true));
+        attributes.add(new ZclAttribute(cluster, 11, "Attribute-11", ZclDataType.BOOLEAN, true, true, false, true));
+        attributes.add(new ZclAttribute(cluster, 13, "Attribute-13", ZclDataType.BOOLEAN, true, true, false, true));
+        cluster.addLocalAttributes(attributes);
+
+        List<WriteAttributeRecord> records = new ArrayList<>();
+        WriteAttributeRecord record = new WriteAttributeRecord();
+        record.setAttributeIdentifier(1);
+        record.setAttributeDataType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        record.setAttributeValue(Integer.valueOf(123));
+        records.add(record);
+        WriteAttributesCommand command = new WriteAttributesCommand();
+        command.setClusterId(ZclBasicCluster.CLUSTER_ID);
+        command.setSourceAddress(new ZigBeeEndpointAddress(1234));
+        command.setDestinationAddress(new ZigBeeEndpointAddress(5678));
+        command.setCommandDirection(ZclCommandDirection.CLIENT_TO_SERVER);
+        command.setTransactionId(55);
+        command.setRecords(records);
+
+        cluster.handleCommand(command);
+        assertEquals(1, commandCapture.getAllValues().size());
+        WriteAttributesResponse response = (WriteAttributesResponse) commandCapture.getValue();
+        System.out.println(response);
+
+        assertEquals(Integer.valueOf(ZclBasicCluster.CLUSTER_ID), response.getClusterId());
+        assertEquals(ZclCommandDirection.SERVER_TO_CLIENT, response.getCommandDirection());
+        assertEquals(1, response.getRecords().size());
+        assertEquals(Integer.valueOf(55), response.getTransactionId());
+        List<WriteAttributeStatusRecord> responseRecords = response.getRecords();
+        assertEquals(1, responseRecords.size());
+        assertEquals(ZclStatus.SUCCESS, responseRecords.get(0).getStatus());
+
+        record = new WriteAttributeRecord();
+        record.setAttributeIdentifier(2);
+        record.setAttributeDataType(ZclDataType.BOOLEAN);
+        record.setAttributeValue(false);
+        records.add(record);
+
+        cluster.handleCommand(command);
+        assertEquals(2, commandCapture.getAllValues().size());
+        response = (WriteAttributesResponse) commandCapture.getValue();
+        System.out.println(response);
+        responseRecords = response.getRecords();
+        assertEquals(1, responseRecords.size());
+        assertEquals(ZclStatus.SUCCESS, responseRecords.get(0).getStatus());
+
+        record = new WriteAttributeRecord();
+        record.setAttributeIdentifier(3);
+        record.setAttributeDataType(ZclDataType.BOOLEAN);
+        record.setAttributeValue(false);
+        records.add(record);
+
+        record = new WriteAttributeRecord();
+        record.setAttributeIdentifier(10);
+        record.setAttributeDataType(ZclDataType.BOOLEAN);
+        record.setAttributeValue(true);
+        records.add(record);
+
+        cluster.handleCommand(command);
+        assertEquals(3, commandCapture.getAllValues().size());
+        response = (WriteAttributesResponse) commandCapture.getValue();
+        System.out.println(response);
+        responseRecords = response.getRecords();
+        assertEquals(4, responseRecords.size());
+
+        assertEquals(1, responseRecords.get(0).getAttributeIdentifier());
+        assertEquals(2, responseRecords.get(1).getAttributeIdentifier());
+        assertEquals(3, responseRecords.get(2).getAttributeIdentifier());
+        assertEquals(10, responseRecords.get(3).getAttributeIdentifier());
+
+        assertEquals(ZclStatus.SUCCESS, responseRecords.get(0).getStatus());
+        assertEquals(ZclStatus.SUCCESS, responseRecords.get(1).getStatus());
+        assertEquals(ZclStatus.UNSUPPORTED_ATTRIBUTE, responseRecords.get(2).getStatus());
+        assertEquals(ZclStatus.INVALID_DATA_TYPE, responseRecords.get(3).getStatus());
     }
 }

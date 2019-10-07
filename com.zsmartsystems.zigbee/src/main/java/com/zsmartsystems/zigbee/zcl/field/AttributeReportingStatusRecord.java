@@ -449,7 +449,7 @@ public class AttributeReportingStatusRecord implements ZclListItemField {
     public String toString() {
         StringBuilder builder = new StringBuilder(250);
 
-        builder.append("AttributeReportingStatusRecord: [status=");
+        builder.append("AttributeReportingStatusRecord [status=");
         builder.append(status);
 
         builder.append(", attributeIdentifier=");

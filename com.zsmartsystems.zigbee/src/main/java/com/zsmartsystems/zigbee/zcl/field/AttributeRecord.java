@@ -88,6 +88,6 @@ public class AttributeRecord implements ZclListItemField {
 
     @Override
     public String toString() {
-        return "Attribute Record[ direction=" + direction + ", attributeIdentifier=" + attributeIdentifier + "]";
+        return "AttributeRecord [ direction=" + direction + ", attributeIdentifier=" + attributeIdentifier + "]";
     }
 }

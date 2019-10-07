@@ -103,12 +103,11 @@ public class ZigBeeConsoleAttributeWriteCommand extends ZigBeeConsoleAbstractCom
                 .get();
         if (result.isSuccess()) {
             final WriteAttributesResponse response = result.getResponse();
-            final int statusCode = response.getRecords().get(0).getStatus();
-            if (statusCode == 0) {
+            final ZclStatus statusCode = response.getRecords().get(0).getStatus();
+            if (statusCode == ZclStatus.SUCCESS) {
                 out.println("Attribute value write success.");
             } else {
-                final ZclStatus status = ZclStatus.getStatus((byte) statusCode);
-                out.println("Attribute value write error: " + status);
+                out.println("Attribute value write error: " + statusCode);
             }
         } else {
             out.println("Error executing command: " + result);

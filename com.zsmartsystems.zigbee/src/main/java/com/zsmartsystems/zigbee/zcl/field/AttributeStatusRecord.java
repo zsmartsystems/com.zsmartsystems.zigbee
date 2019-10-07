@@ -24,10 +24,12 @@ public class AttributeStatusRecord implements ZclListItemField {
      * The status.
      */
     private ZclStatus status;
+
     /**
      * The direction.
      */
     private boolean direction;
+
     /**
      * The attribute identifier.
      */
@@ -105,7 +107,7 @@ public class AttributeStatusRecord implements ZclListItemField {
 
     @Override
     public String toString() {
-        return "Attribute Status Record: status=" + status + ", direction=" + direction + ", attributeIdentifier="
-                + attributeIdentifier;
+        return "Attribute Status Record [status=" + status + ", direction=" + direction + ", attributeIdentifier="
+                + attributeIdentifier + "]";
     }
 }

@@ -135,7 +135,8 @@ public class ExtendedAttributeInformation implements ZclListItemField {
 
     @Override
     public String toString() {
-        return "Extended Attribute Information: attributeDataType=" + attributeDataType + ", attributeIdentifier="
-                + attributeIdentifier + ", readable=" + readable + ", writable=" + writable + ", reportable";
+        return "ExtendedAttributeInformation [attributeDataType=" + attributeDataType + ", attributeIdentifier="
+                + attributeIdentifier + ", readable=" + readable + ", writable=" + writable + ", reportable="
+                + reportable + "]";
     }
 }

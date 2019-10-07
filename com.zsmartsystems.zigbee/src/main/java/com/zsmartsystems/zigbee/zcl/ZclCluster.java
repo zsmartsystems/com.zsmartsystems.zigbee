@@ -7,6 +7,7 @@
  */
 package com.zsmartsystems.zigbee.zcl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -65,6 +66,7 @@ import com.zsmartsystems.zigbee.zcl.field.AttributeReport;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReportingConfigurationRecord;
 import com.zsmartsystems.zigbee.zcl.field.ReadAttributeStatusRecord;
 import com.zsmartsystems.zigbee.zcl.field.WriteAttributeRecord;
+import com.zsmartsystems.zigbee.zcl.field.WriteAttributeStatusRecord;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.command.BindRequest;
@@ -211,11 +213,13 @@ public abstract class ZclCluster {
         genericCommands.put(0x0015, DiscoverAttributesExtended.class);
         genericCommands.put(0x0016, DiscoverAttributesExtendedResponse.class);
 
+        supportedGenericCommands.add(ReadAttributesCommand.class);
         supportedGenericCommands.add(ReadAttributesResponse.class);
         supportedGenericCommands.add(WriteAttributesResponse.class);
         supportedGenericCommands.add(ConfigureReportingResponse.class);
         supportedGenericCommands.add(ReadReportingConfigurationResponse.class);
         supportedGenericCommands.add(ReportAttributesCommand.class);
+        supportedGenericCommands.add(DiscoverAttributesCommand.class);
         supportedGenericCommands.add(DiscoverAttributesResponse.class);
         supportedGenericCommands.add(DiscoverCommandsReceivedResponse.class);
         supportedGenericCommands.add(DiscoverCommandsGeneratedResponse.class);
@@ -285,6 +289,89 @@ public abstract class ZclCluster {
         command.setApsSecurity(apsSecurityRequired);
 
         return zigbeeEndpoint.sendTransaction(command, new ZclTransactionMatcher());
+    }
+
+    /**
+     * Sends a response to the command. This method sets all the common elements of the response based on the command -
+     * eg transactionId, direction, address...
+     *
+     * @param command the {@link ZclCommand} to which the response is being sent
+     * @param response the {@link ZclCommand} to send
+     */
+    protected void sendResponse(ZclCommand command, ZclCommand response) {
+        response.setDestinationAddress(command.getSourceAddress());
+        response.setCommandDirection(command.getCommandDirection().getResponseDirection());
+        response.setTransactionId(command.getTransactionId());
+        response.setDisableDefaultResponse(true);
+
+        if (isManufacturerSpecific()) {
+            response.setManufacturerCode(getManufacturerCode());
+        }
+
+        if (isClient()) {
+            response.setCommandDirection(ZclCommandDirection.SERVER_TO_CLIENT);
+        }
+
+        response.setApsSecurity(apsSecurityRequired);
+
+        zigbeeEndpoint.sendTransaction(response);
+    }
+
+    /**
+     * Sends a default response to the client
+     *
+     * @param command the {@link ZclCommand} to which we are responding
+     * @param status the {@link ZclStatus} to send in the response
+     */
+    public void sendDefaultResponse(ZclCommand command, ZclStatus status) {
+        ZclCommand response = createDefaultResponse(command, status);
+        if (response == null) {
+            return;
+        }
+
+        sendResponse(command, response);
+    }
+
+    /**
+     * Sends a default response to the client
+     *
+     * @param transactionId the transaction ID to use in the response
+     * @param commandIdentifier the command identifier to which this is a response
+     * @param status the {@link ZclStatus} to send in the response
+     * @param manufacturerCode the manufacturer code to set in the response (or null, if the command is not
+     *            manufacturer-specific, or if the cluster is itself manufacturer-specific)
+     * @deprecated use sendDefaultResponse(ZclCommand command, ZclStatus status)
+     */
+    @Deprecated
+    public void sendDefaultResponse(Integer transactionId, Integer commandIdentifier, ZclStatus status,
+            Integer manufacturerCode) {
+        DefaultResponse defaultResponse = new DefaultResponse();
+        defaultResponse.setTransactionId(transactionId);
+        defaultResponse.setCommandIdentifier(commandIdentifier);
+        defaultResponse.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
+        defaultResponse.setClusterId(clusterId);
+        defaultResponse.setStatusCode(status);
+
+        if (isManufacturerSpecific()) {
+            defaultResponse.setManufacturerCode(getManufacturerCode());
+        } else if (manufacturerCode != null) {
+            defaultResponse.setManufacturerCode(manufacturerCode);
+        }
+
+        send(defaultResponse);
+    }
+
+    /**
+     * Sends a default response to the client
+     *
+     * @param transactionId the transaction ID to use in the response
+     * @param commandIdentifier the command identifier to which this is a response
+     * @param status the {@link ZclStatus} to send in the response
+     * @deprecated use sendDefaultResponse(ZclCommand command, ZclStatus status)
+     */
+    @Deprecated
+    public void sendDefaultResponse(Integer transactionId, Integer commandIdentifier, ZclStatus status) {
+        sendDefaultResponse(transactionId, commandIdentifier, status, null);
     }
 
     /**
@@ -373,7 +460,7 @@ public abstract class ZclCluster {
     }
 
     /**
-     * Read an attribute
+     * Read an attribute from the remote cluster
      *
      * @param attributeId the attribute id to read
      * @return and object containing the value, or null
@@ -510,7 +597,7 @@ public abstract class ZclCluster {
     }
 
     /**
-     * Gets an attribute from the attribute ID
+     * Gets an attribute given the attribute ID
      *
      * @param attributeId the attribute ID
      * @return the {@link ZclAttribute}
@@ -520,6 +607,36 @@ public abstract class ZclCluster {
             return clientAttributes.get(attributeId);
         } else {
             return serverAttributes.get(attributeId);
+        }
+    }
+
+    /**
+     * Gets a local attribute given the attribute ID
+     *
+     * @param attributeId the attribute ID
+     * @return the {@link ZclAttribute}
+     */
+    public ZclAttribute getLocalAttribute(int attributeId) {
+        if (isClient) {
+            return serverAttributes.get(attributeId);
+        } else {
+            return clientAttributes.get(attributeId);
+        }
+    }
+
+    /**
+     * Gets all the local attributes supported by this cluster This will return all attributes, even if they are not
+     * actually supported by the device. The user should check to see if this is implemented.
+     * <p>
+     * This will return either the list of client or server attributes, depending on the cluster.
+     *
+     * @return {@link Set} containing all local {@link ZclAttributes} available in this cluster
+     */
+    public Collection<ZclAttribute> getLocalAttributes() {
+        if (isClient) {
+            return Collections.unmodifiableCollection(serverAttributes.values());
+        } else {
+            return Collections.unmodifiableCollection(clientAttributes.values());
         }
     }
 
@@ -645,67 +762,6 @@ public abstract class ZclCluster {
     }
 
     /**
-     * Sends a default response to the client
-     *
-     * @param transactionId the transaction ID to use in the response
-     * @param commandIdentifier the command identifier to which this is a response
-     * @param status the {@link ZclStatus} to send in the response
-     * @param manufacturerCode the manufacturer code to set in the response (or null, if the command is not
-     *            manufacturer-specific, or if the cluster is itself manufacturer-specific)
-     * @deprecated use sendDefaultResponse(ZclCommand command, ZclStatus status)
-     */
-    @Deprecated
-    public void sendDefaultResponse(Integer transactionId, Integer commandIdentifier, ZclStatus status,
-            Integer manufacturerCode) {
-        DefaultResponse defaultResponse = new DefaultResponse();
-        defaultResponse.setTransactionId(transactionId);
-        defaultResponse.setCommandIdentifier(commandIdentifier);
-        defaultResponse.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
-        defaultResponse.setClusterId(clusterId);
-        defaultResponse.setStatusCode(status);
-
-        if (isManufacturerSpecific()) {
-            defaultResponse.setManufacturerCode(getManufacturerCode());
-        } else if (manufacturerCode != null) {
-            defaultResponse.setManufacturerCode(manufacturerCode);
-        }
-
-        send(defaultResponse);
-    }
-
-    /**
-     * Sends a default response to the client
-     *
-     * @param transactionId the transaction ID to use in the response
-     * @param commandIdentifier the command identifier to which this is a response
-     * @param status the {@link ZclStatus} to send in the response
-     * @deprecated use sendDefaultResponse(ZclCommand command, ZclStatus status)
-     */
-    @Deprecated
-    public void sendDefaultResponse(Integer transactionId, Integer commandIdentifier, ZclStatus status) {
-        sendDefaultResponse(transactionId, commandIdentifier, status, null);
-    }
-
-    /**
-     * Sends a default response to the client
-     *
-     * @param command the {@link ZclCommand} to which we are responding
-     * @param status the {@link ZclStatus} to send in the response
-     */
-    public void sendDefaultResponse(ZclCommand command, ZclStatus status) {
-        ZclCommand response = createDefaultResponse(command, status);
-        if (response == null) {
-            return;
-        }
-        if (isManufacturerSpecific()) {
-            response.setManufacturerCode(getManufacturerCode());
-        }
-
-        // Default response will not solicit a response
-        zigbeeEndpoint.sendTransaction(response);
-    }
-
-    /**
      * Gets the list of attributes supported by this device.
      * After initialisation, the list will contain all standard attributes defined by ZCL, so is not customised to the
      * specific device. Once a successful call to {@link #discoverAttributes()} has been made, the list will reflect the
@@ -817,8 +873,17 @@ public abstract class ZclCluster {
                     } while (!complete);
 
                     supportedAttributes.clear();
-                    for (AttributeInformation attribute : attributes) {
-                        supportedAttributes.add(attribute.getIdentifier());
+                    for (ZclAttribute attribute : getAttributes()) {
+                        // Set all remote attributes as unimplemented
+                        attribute.setImplemented(false);
+                    }
+                    for (AttributeInformation attributeInfo : attributes) {
+                        // Set the remote attribute as implemented
+                        ZclAttribute attribute = getAttribute(attributeInfo.getIdentifier());
+                        if (attribute != null) {
+                            attribute.setImplemented(true);
+                        }
+                        supportedAttributes.add(attributeInfo.getIdentifier());
                     }
                 }
                 supportedAttributesKnown = true;
@@ -1052,7 +1117,7 @@ public abstract class ZclCluster {
     }
 
     /**
-     * Adds a {@link ZclAttributeListener} to receive reports when an attribute is updated
+     * Adds a {@link ZclAttributeListener} to receive reports when a remote attribute is updated
      *
      * @param listener the {@link ZclAttributeListener} to add
      */
@@ -1073,7 +1138,7 @@ public abstract class ZclCluster {
     }
 
     /**
-     * Notify attribute listeners of an updated {@link ZclAttribute}.
+     * Notify attribute listeners of an updated remote {@link ZclAttribute}.
      *
      * @param attribute the {@link ZclAttribute} to notify
      * @param value the current value of the attribute
@@ -1171,6 +1236,73 @@ public abstract class ZclCluster {
     }
 
     /**
+     * Process the {@link ReadAttributesCommand} to read a local attribute.
+     *
+     * @param command the {@link ReadAttributesCommand}
+     */
+    private void handleReadAttributes(ReadAttributesCommand command) {
+        Map<Integer, ZclAttribute> localAttributes;
+        if (isClient) {
+            localAttributes = serverAttributes;
+        } else {
+            localAttributes = clientAttributes;
+        }
+
+        List<ReadAttributeStatusRecord> attributeRecords = new ArrayList<>();
+        for (int attributeId : command.getIdentifiers()) {
+            ReadAttributeStatusRecord record = new ReadAttributeStatusRecord();
+            record.setAttributeIdentifier(attributeId);
+
+            if (localAttributes.containsKey(attributeId) && localAttributes.get(attributeId) != null
+                    && localAttributes.get(attributeId).isImplemented()) {
+                if (localAttributes.get(attributeId).getLastValue() != null) {
+                    record.setStatus(ZclStatus.SUCCESS);
+                    record.setAttributeDataType(localAttributes.get(attributeId).getDataType());
+                    record.setAttributeValue(localAttributes.get(attributeId).getLastValue());
+                } else {
+                    record.setStatus(ZclStatus.INVALID_VALUE);
+                }
+            } else {
+                record.setStatus(ZclStatus.UNSUPPORTED_ATTRIBUTE);
+            }
+
+            attributeRecords.add(record);
+        }
+
+        ReadAttributesResponse response = new ReadAttributesResponse();
+        response.setRecords(attributeRecords);
+        sendResponse(command, response);
+    }
+
+    /**
+     * Process the {@link DiscoverAttributesCommand} to discover supported local attributes.
+     * This will return all local attributes that are marked as implemented.
+     *
+     * @param command the {@link DiscoverAttributesCommand} to respond to
+     */
+    private void handleDiscoverAttributes(DiscoverAttributesCommand command) {
+        List<AttributeInformation> attributeInformation = new ArrayList<>();
+        for (ZclAttribute attribute : getLocalAttributes()) {
+            if (!attribute.isImplemented() || attribute.getId() < command.getStartAttributeIdentifier()) {
+                continue;
+            }
+
+            AttributeInformation attributeInfo = new AttributeInformation();
+            attributeInfo.setIdentifier(attribute.getId());
+            attributeInfo.setDataType(attribute.getDataType());
+            attributeInformation.add(attributeInfo);
+
+            if (attributeInformation.size() >= command.getMaximumAttributeIdentifiers()) {
+                break;
+            }
+        }
+
+        DiscoverAttributesResponse response = new DiscoverAttributesResponse();
+        response.setAttributeInformation(attributeInformation);
+        sendResponse(command, response);
+    }
+
+    /**
      * Processes a list of attribute reports for this cluster
      *
      * @param command the received {@link ReportAttributesCommand}
@@ -1181,6 +1313,7 @@ public abstract class ZclCluster {
         for (AttributeReport report : command.getReports()) {
             updateAttribute(report.getAttributeIdentifier(), report.getAttributeValue());
         }
+        sendDefaultResponse(command, ZclStatus.SUCCESS);
     }
 
     /**
@@ -1201,6 +1334,51 @@ public abstract class ZclCluster {
 
             updateAttribute(record.getAttributeIdentifier(), record.getAttributeValue());
         }
+        sendDefaultResponse(command, ZclStatus.SUCCESS);
+    }
+
+    /**
+     * Processes a list of attribute reports for this cluster
+     *
+     * @param command the received {@link WriteAttributesCommand}
+     */
+    private void handleWriteAttributesCommand(WriteAttributesCommand command) {
+        logger.trace("{}: ZclCluster.handleWriteAttributesCommand({})", zigbeeEndpoint.getEndpointAddress(),
+                command.getRecords());
+        boolean success = true;
+        List<WriteAttributeStatusRecord> attributeStatus = new ArrayList<>();
+        for (WriteAttributeRecord requestRecord : command.getRecords()) {
+            ZclAttribute attribute = getLocalAttribute(requestRecord.getAttributeIdentifier());
+            WriteAttributeStatusRecord responseRecord = new WriteAttributeStatusRecord();
+            responseRecord.setAttributeIdentifier(requestRecord.getAttributeIdentifier());
+
+            if (attribute == null || !attribute.isImplemented()) {
+                responseRecord.setStatus(ZclStatus.UNSUPPORTED_ATTRIBUTE);
+                success = false;
+            } else if (attribute.getDataType() != requestRecord.getAttributeDataType()) {
+                responseRecord.setStatus(ZclStatus.INVALID_DATA_TYPE);
+                success = false;
+            } else {
+                attribute.setValue(
+                        normalizer.normalizeZclData(attribute.getDataType(), requestRecord.getAttributeValue()));
+                responseRecord.setStatus(ZclStatus.SUCCESS);
+                logger.debug("{}: Local attribute {} updated to {} for cluster {}", zigbeeEndpoint.getEndpointAddress(),
+                        attribute.getId(), attribute.getLastValue(), clusterId);
+            }
+
+            attributeStatus.add(responseRecord);
+        }
+
+        WriteAttributesResponse response = new WriteAttributesResponse();
+        if (success) {
+            // If all attributes are written successfully, then we only need to return SUCCESS
+            WriteAttributeStatusRecord responseRecord = new WriteAttributeStatusRecord();
+            responseRecord.setStatus(ZclStatus.SUCCESS);
+            attributeStatus.clear();
+            attributeStatus.add(responseRecord);
+        }
+        response.setRecords(attributeStatus);
+        sendResponse(command, response);
     }
 
     private void updateAttribute(int attributeId, Object attributeValue) {
@@ -1226,13 +1404,28 @@ public abstract class ZclCluster {
     public void handleCommand(ZclCommand command) {
         logger.trace("{}: ZclCluster.handleCommand({})", zigbeeEndpoint.getEndpointAddress(), command);
         if (command instanceof ReportAttributesCommand) {
-            // Pass the reports to the cluster
             handleAttributeReport((ReportAttributesCommand) command);
+            return;
         }
 
         if (command instanceof ReadAttributesResponse) {
-            // Pass the reports to the cluster
             handleAttributeStatus((ReadAttributesResponse) command);
+            return;
+        }
+
+        if (command instanceof ReadAttributesCommand) {
+            handleReadAttributes((ReadAttributesCommand) command);
+            return;
+        }
+
+        if (command instanceof DiscoverAttributesCommand) {
+            handleDiscoverAttributes((DiscoverAttributesCommand) command);
+            return;
+        }
+
+        if (command instanceof WriteAttributesCommand) {
+            handleWriteAttributesCommand((WriteAttributesCommand) command);
+            return;
         }
 
         ZclStatus responseStatus;
@@ -1592,15 +1785,36 @@ public abstract class ZclCluster {
 
     /**
      * Adds additional attributes to the cluster (like, e.g., manufacturer-specific attributes).
+     * <p>
+     * Any attributes added here will be marked as implemented.
      *
      * @param attributes the attributes which should be added to the cluster
      */
     public void addAttributes(Set<ZclAttribute> attributes) {
         for (ZclAttribute attribute : attributes) {
+            attribute.setImplemented(true);
             if (isClient) {
-                this.clientAttributes.put(attribute.getId(), attribute);
+                clientAttributes.put(attribute.getId(), attribute);
             } else {
-                this.serverAttributes.put(attribute.getId(), attribute);
+                serverAttributes.put(attribute.getId(), attribute);
+            }
+        }
+    }
+
+    /**
+     * Adds additional attributes to the local cluster (like, e.g., manufacturer-specific attributes).
+     * <p>
+     * Any attributes added here will be marked as implemented.
+     *
+     * @param attributes the attributes which should be added to the cluster
+     */
+    public void addLocalAttributes(Set<ZclAttribute> attributes) {
+        for (ZclAttribute attribute : attributes) {
+            attribute.setImplemented(true);
+            if (isClient) {
+                serverAttributes.put(attribute.getId(), attribute);
+            } else {
+                clientAttributes.put(attribute.getId(), attribute);
             }
         }
     }
@@ -1611,7 +1825,7 @@ public abstract class ZclCluster {
      * @param commands the client commands which should be added to the cluster
      */
     public void addClientCommands(Map<Integer, Class<? extends ZclCommand>> commands) {
-        this.clientCommands.putAll(commands);
+        clientCommands.putAll(commands);
     }
 
     /**
@@ -1620,7 +1834,7 @@ public abstract class ZclCluster {
      * @param commands the server commands which should be added to the cluster
      */
     public void addServerCommands(Map<Integer, Class<? extends ZclCommand>> commands) {
-        this.serverCommands.putAll(commands);
+        serverCommands.putAll(commands);
     }
 
     /**
