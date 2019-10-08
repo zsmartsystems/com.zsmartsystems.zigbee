@@ -298,7 +298,7 @@ public abstract class ZclCluster {
      * @param command the {@link ZclCommand} to which the response is being sent
      * @param response the {@link ZclCommand} to send
      */
-    protected void sendResponse(ZclCommand command, ZclCommand response) {
+    public void sendResponse(ZclCommand command, ZclCommand response) {
         response.setDestinationAddress(command.getSourceAddress());
         response.setCommandDirection(command.getCommandDirection().getResponseDirection());
         response.setTransactionId(command.getTransactionId());
@@ -306,10 +306,6 @@ public abstract class ZclCluster {
 
         if (isManufacturerSpecific()) {
             response.setManufacturerCode(getManufacturerCode());
-        }
-
-        if (isClient()) {
-            response.setCommandDirection(ZclCommandDirection.SERVER_TO_CLIENT);
         }
 
         response.setApsSecurity(apsSecurityRequired);
