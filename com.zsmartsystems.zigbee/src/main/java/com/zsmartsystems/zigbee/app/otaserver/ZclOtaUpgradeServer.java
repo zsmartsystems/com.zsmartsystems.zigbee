@@ -16,6 +16,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QueryNextImageResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -602,6 +603,11 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
      * @return true if the handler has, or will send a response to this command
      */
     private boolean handleQueryNextImageCommand(QueryNextImageCommand command) {
+
+        if(otaFile == null) {
+            sendNoImageAvailableResponse(command);
+            return true;
+        }
         // Ignore the request if we're not in the correct state
         if (status != ZigBeeOtaServerStatus.OTA_WAITING) {
             logger.debug("{} OTA Error: Invalid server state {} when handling QueryNextImageCommand.",
@@ -611,10 +617,10 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
         }
 
         // Check that the file attributes are consistent with the file we have
-        if (otaFile == null || !(command.getManufacturerCode().equals(otaFile.getManufacturerCode())
-                && command.getImageType().equals(otaFile.getImageType()))) {
+        if (!(command.getManufacturerCode().equals(otaFile.getManufacturerCode()) && command.getImageType().equals(
+                otaFile.getImageType()))) {
             logger.debug("{} OTA Error: Request is inconsistent with OTA file.", cluster.getZigBeeAddress());
-            cluster.sendDefaultResponse(command, ZclStatus.NO_IMAGE_AVAILABLE);
+            sendNoImageAvailableResponse(command);
             return true;
         }
 
@@ -624,7 +630,7 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
                 && otaFile.getMaximumHardware() != null) {
             if (command.getHardwareVersion() < otaFile.getMinimumHardware()
                     || command.getHardwareVersion() > otaFile.getMaximumHardware()) {
-                cluster.sendDefaultResponse(command, ZclStatus.NO_IMAGE_AVAILABLE);
+                sendNoImageAvailableResponse(command);
                 return true;
             }
         }
@@ -632,7 +638,7 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
         // Some devices may make further requests for files once they have been updated
         // By default, don't resend the existing file
         if (!allowExistingFile && command.getFileVersion().equals(otaFile.getFileVersion())) {
-            cluster.sendDefaultResponse(command, ZclStatus.NO_IMAGE_AVAILABLE);
+            sendNoImageAvailableResponse(command);
             return true;
         }
 
@@ -644,6 +650,12 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
                 otaFile.getFileVersion(), otaFile.getImageSize());
 
         return true;
+    }
+
+    private void sendNoImageAvailableResponse(QueryNextImageCommand command) {
+        QueryNextImageResponse response = new QueryNextImageResponse();
+        response.setStatus(ZclStatus.NO_IMAGE_AVAILABLE);
+        cluster.sendResponse(command,response);
     }
 
     /**
