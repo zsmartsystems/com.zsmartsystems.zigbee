@@ -44,6 +44,10 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<slf4j.version>1.7.2</slf4j.version>
 		<log4j.version>1.2.17</log4j.version>
+		<bnd.baseline.continueOnError>true</bnd.baseline.continueOnError>
+		<bnd.baseline.failOnMissing>false</bnd.baseline.failOnMissing>
+		<bnd.baseline.fullReport>false</bnd.baseline.fullReport>
+		<bnd.baseline.base.version>(,${project.version})</bnd.baseline.base.version>
 	</properties>
 
 	<scm>
@@ -66,6 +70,18 @@
 		</snapshotRepository>
 	</distributionManagement>
 
+	<repositories>
+		<repository>
+			<id>zsmartsystems</id>
+			<url>https://dl.bintray.com/zsmartsystems/com.zsmartsystems/</url>
+			<releases/>
+		</repository>
+		<repository>
+			<id>jcenter</id>
+			<url>https://jcenter.bintray.com/</url>
+			<releases/>
+		</repository>
+	</repositories>
 	<modules>
 		<module>com.zsmartsystems.zigbee</module>
 		<module>com.zsmartsystems.zigbee.autocode</module>
@@ -215,11 +231,10 @@
 					</archive>
 				</configuration>
 			</plugin>
-
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
-				<version>3.5.0</version>
+				<version>4.2.1</version>
 				<executions>
 					<execution>
 						<id>bundle-manifest</id>
@@ -227,17 +242,38 @@
 						<goals>
 							<goal>manifest</goal>
 						</goals>
+						<configuration>
+							<instructions>
+								<Bundle-Name>${project.artifactId}</Bundle-Name>
+								<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+								<Bundle-Description>${pom.name}</Bundle-Description>
+							</instructions>
+						</configuration>
 					</execution>
 				</executions>
-				<configuration>
-					<instructions>
-						<Bundle-Name>${project.artifactId}</Bundle-Name>
-						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-						<Bundle-Description>${pom.name}</Bundle-Description>
-					</instructions>
-				</configuration>
 			</plugin>
-
+			<plugin>
+				<groupId>biz.aQute.bnd</groupId>
+				<artifactId>bnd-baseline-maven-plugin</artifactId>
+				<version>4.2.0</version>
+				<executions>
+					<execution>
+						<id>baseline</id>
+						<goals>
+							<goal>baseline</goal>
+						</goals>
+						<configuration>
+							<base>
+								<version>${bnd.baseline.base.version}</version>
+							</base>
+							<includeDistributionManagement>false</includeDistributionManagement>
+							<continueOnError>${bnd.baseline.continueOnError}</continueOnError>
+							<failOnMissing>${bnd.baseline.failOnMissing}</failOnMissing>
+							<fullReport>${bnd.baseline.fullReport}</fullReport>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 
 		<pluginManagement>
