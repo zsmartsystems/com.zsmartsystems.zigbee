@@ -282,7 +282,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
         transport.setZigBeeTransportReceive(this);
 
-        apsDataEntity = new ApsDataEntity();
+        apsDataEntity = new ApsDataEntity(transport);
         transactionManager = new ZigBeeTransactionManager(this);
     }
 
@@ -797,7 +797,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
         logger.debug("TX APS: {}", apsFrame);
 
-        transport.sendCommand(command.getTransactionId(), apsFrame);
+        apsDataEntity.send(command.getTransactionId(), apsFrame);
         return true;
     }
 
@@ -1643,6 +1643,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     @Override
     public void receiveCommandState(int msgTag, ZigBeeTransportProgressState state) {
         logger.debug("RX STA: msgTag={} state={}", String.format("%02X", msgTag), state);
+        if (apsDataEntity.receiveCommandState(msgTag, state) == false) {
+            return;
+        }
         transactionManager.receiveCommandState(msgTag, state);
     }
 }

@@ -9,6 +9,7 @@ package com.zsmartsystems.zigbee.dongle.ember;
 
 import java.io.InputStream;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -34,6 +35,7 @@ import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.ZigBeeProfileType;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
+import com.zsmartsystems.zigbee.aps.ZigBeeApsFrameFragment;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspChildJoinHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIncomingMessageHandler;
@@ -46,6 +48,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendBroadcastReque
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendBroadcastResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendMulticastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendMulticastResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendReplyRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendUnicastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendUnicastResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetConcentratorRequest;
@@ -94,7 +97,7 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
 
 /**
- * Implementation of the Silabs Ember NCP (Network Co Processor) EZSP dongle implementation.
+ * Implementation of the Silabs Ember NCP (Network Co-Processor) EZSP dongle implementation.
  *
  * @author Chris Jackson
  *
@@ -242,6 +245,13 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     private int[] outputClusters = new int[] { 0 };
 
     /**
+     * We need to retain the transaction ID returned by the NCP when we're sending fragments so that we can use this in
+     * the sendReply message and also pass the ACK to the application. This maps the NCP transaction IDs to the
+     * framework IDs.
+     */
+    Map<Integer, Integer> fragmentationApsCounters = new HashMap<>();
+
+    /**
      * Create a {@link ZigBeeDongleEzsp} with the default ASH2 frame handler
      *
      * @param serialPort the {@link ZigBeePort} to use for the connection
@@ -278,6 +288,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_APS_UNICAST_MESSAGE_COUNT, 10);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_BROADCAST_TABLE_SIZE, 15);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_NEIGHBOR_TABLE_SIZE, 16);
+        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_FRAGMENT_WINDOW_SIZE, 1);
+        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_FRAGMENT_DELAY_MS, 50);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_PACKET_BUFFER_COUNT, 255);
 
         // Define the default policies
@@ -288,7 +300,6 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 EzspDecisionId.EZSP_MESSAGE_TAG_ONLY_IN_CALLBACK);
         stackPolicies.put(EzspPolicyId.EZSP_APP_KEY_REQUEST_POLICY, EzspDecisionId.EZSP_DENY_APP_KEY_REQUESTS);
 
-        // stackPolicies.put(EzspPolicyId.EZSP_POLL_HANDLER_POLICY, EzspDecisionId.EZSP_POLL_HANDLER_CALLBACK);
         stackPolicies.put(EzspPolicyId.EZSP_BINDING_MODIFICATION_POLICY,
                 EzspDecisionId.EZSP_CHECK_BINDING_MODIFICATIONS_ARE_VALID_ENDPOINT_CLUSTERS);
 
@@ -641,6 +652,18 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             emberUnicast.setApsFrame(emberApsFrame);
             emberUnicast.setMessageContents(apsFrame.getPayload());
 
+            if (apsFrame instanceof ZigBeeApsFrameFragment) {
+                ZigBeeApsFrameFragment fragment = (ZigBeeApsFrameFragment) apsFrame;
+                emberApsFrame.addOptions(EmberApsOption.EMBER_APS_OPTION_FRAGMENT);
+                emberApsFrame.setGroupId(fragment.getFragmentNumber() + (fragment.getFragmentTotal() << 8));
+                if (fragment.getFragmentNumber() != 0) {
+                    emberApsFrame.setSequence(fragmentationApsCounters.get(msgTag));
+                }
+                if (fragment.getFragmentNumber() == fragment.getFragmentTotal() - 1) {
+                    fragmentationApsCounters.remove(msgTag);
+                }
+            }
+
             transaction = new EzspSingleResponseTransaction(emberUnicast, EzspSendUnicastResponse.class);
         } else if (apsFrame.getAddressMode() == ZigBeeNwkAddressMode.DEVICE
                 && ZigBeeBroadcastDestination.isBroadcast(apsFrame.getDestinationAddress())) {
@@ -681,6 +704,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
                 EmberStatus status = null;
                 if (transaction.getResponse() instanceof EzspSendUnicastResponse) {
+                    fragmentationApsCounters.put(msgTag,
+                            ((EzspSendUnicastResponse) transaction.getResponse()).getSequence());
                     status = ((EzspSendUnicastResponse) transaction.getResponse()).getStatus();
                 } else if (transaction.getResponse() instanceof EzspSendBroadcastResponse) {
                     status = ((EzspSendBroadcastResponse) transaction.getResponse()).getStatus();
@@ -720,7 +745,23 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             }
             EzspIncomingMessageHandler incomingMessage = (EzspIncomingMessageHandler) response;
             EmberApsFrame emberApsFrame = incomingMessage.getApsFrame();
-            ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
+            ZigBeeApsFrame apsFrame;
+            if (emberApsFrame.getOptions().contains(EmberApsOption.EMBER_APS_OPTION_FRAGMENT)) {
+                ZigBeeApsFrameFragment fragment = new ZigBeeApsFrameFragment(emberApsFrame.getGroupId() & 0xFF);
+                if ((emberApsFrame.getGroupId() & 0xFF) == 0) {
+                    fragment.setFragmentTotal((emberApsFrame.getGroupId() & 0xFF00) >> 8);
+                }
+                // We must respond to a fragment with a sendReply command
+                EzspSendReplyRequest sendReply = new EzspSendReplyRequest();
+                emberApsFrame.setGroupId(emberApsFrame.getGroupId() | 0xFF00);
+                sendReply.setApsFrame(emberApsFrame);
+                sendReply.setSender(incomingMessage.getSender());
+                sendReply.setMessageContents(new int[] {});
+                frameHandler.queueFrame(sendReply);
+                apsFrame = fragment;
+            } else {
+                apsFrame = new ZigBeeApsFrame();
+            }
 
             switch (incomingMessage.getType()) {
                 case EMBER_INCOMING_BROADCAST_LOOPBACK:
