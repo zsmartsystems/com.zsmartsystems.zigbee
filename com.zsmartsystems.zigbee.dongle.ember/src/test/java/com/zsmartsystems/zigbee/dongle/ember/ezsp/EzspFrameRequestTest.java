@@ -19,8 +19,12 @@ public class EzspFrameRequestTest {
 
     @Test
     public void testSequenceNumbers() {
-        TestRequestFrame frame;
-
+        TestRequestFrame frame = new TestRequestFrame();
+        int k = 255;
+        do {
+            frame = new TestRequestFrame();
+        } while(frame.sequenceNumber != 254 && --k>0);
+        assertNotEquals("k",0,k);
         for (int i = 1; i < 255; i++) {
             frame = new TestRequestFrame();
             assertEquals("sequenceNumber", i, frame.getSequenceNumber());
