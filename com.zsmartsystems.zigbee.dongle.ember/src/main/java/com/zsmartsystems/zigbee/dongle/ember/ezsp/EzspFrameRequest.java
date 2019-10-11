@@ -40,18 +40,6 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
  *
  */
 public abstract class EzspFrameRequest extends EzspFrame {
-    private final static AtomicLong sequence = new AtomicLong(1);
-
-    /**
-     * Constructor used to create an outgoing frame
-     */
-    protected EzspFrameRequest() {
-        sequenceNumber = (int) sequence.getAndIncrement();
-        if (sequenceNumber == 254) {
-            sequence.set(1);
-        }
-    }
-
     protected void serializeHeader(final EzspSerializer serializer) {
         // Output sequence number
         serializer.serializeUInt8(sequenceNumber);
