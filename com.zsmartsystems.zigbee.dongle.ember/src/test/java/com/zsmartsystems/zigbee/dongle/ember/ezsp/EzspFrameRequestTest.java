@@ -20,18 +20,19 @@ public class EzspFrameRequestTest {
     @Test
     public void testSequenceNumbers() {
         TestRequestFrame frame = new TestRequestFrame();
-        int k = 255;
+        int k = 256;
         do {
             frame = new TestRequestFrame();
         } while(frame.sequenceNumber != 254 && --k>0);
         assertNotEquals("k",0,k);
+        assertEquals("after init loop, frame number is 254",254,frame.getSequenceNumber());
         for (int i = 1; i < 255; i++) {
             frame = new TestRequestFrame();
-            assertEquals("sequenceNumber", i, frame.getSequenceNumber());
+            assertEquals("first loop,sequenceNumber", i, frame.getSequenceNumber());
         }
         for (int i = 1; i < 255; i++) {
             frame = new TestRequestFrame();
-            assertEquals("sequenceNumber", i, frame.getSequenceNumber());
+            assertEquals("second loop, sequenceNumber", i, frame.getSequenceNumber());
         }
 
     }
