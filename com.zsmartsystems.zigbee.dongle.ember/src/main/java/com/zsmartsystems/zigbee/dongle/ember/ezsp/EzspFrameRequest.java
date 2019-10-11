@@ -46,7 +46,7 @@ public abstract class EzspFrameRequest extends EzspFrame {
      * Constructor used to create an outgoing frame
      */
     protected EzspFrameRequest() {
-        sequenceNumber = sequence.getAndUpdate(n -> n <254 ? n+1 : 1);
+        sequenceNumber = sequence.getAndUpdate(n -> n < 254 ? n + 1 : 1);
     }
 
     protected void serializeHeader(final EzspSerializer serializer) {
