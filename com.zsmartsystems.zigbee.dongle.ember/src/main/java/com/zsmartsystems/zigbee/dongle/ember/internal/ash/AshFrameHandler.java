@@ -23,6 +23,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -99,6 +100,8 @@ public class AshFrameHandler implements EzspProtocolHandler {
     private long statsRxNaks = 0;
     private long statsRxData = 0;
     private long statsRxErrs = 0;
+
+    private AtomicInteger nextEzspSequenceNumber = new AtomicInteger(0);
 
     /**
      * The queue of {@link EzspFrameRequest} frames waiting to be sent
@@ -429,6 +432,8 @@ public class AshFrameHandler implements EzspProtocolHandler {
             // Nothing to send
             return false;
         }
+        int sequenceNumber = nextEzspSequenceNumber.getAndIncrement() & 0xff;
+        nextFrame.setSequenceNumber(sequenceNumber);
 
         // Encapsulate the EZSP frame into the ASH packet
         logger.trace("TX ASH EZSP: {}", nextFrame);

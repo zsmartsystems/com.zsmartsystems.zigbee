@@ -24,6 +24,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -99,6 +100,7 @@ public class SpiFrameHandler implements EzspProtocolHandler {
 
     private Object outputFrameSynchronisation = new Object();
 
+    private AtomicInteger nextEzspSequenceNumber = new AtomicInteger(0);
     /**
      * Response timeout. The number of milliseconds to wait for a response before timing out.
      */
@@ -522,7 +524,8 @@ public class SpiFrameHandler implements EzspProtocolHandler {
                 return false;
             }
         }
-
+        int sequenceNumber = nextEzspSequenceNumber.getAndIncrement() & 0xff;
+        nextFrame.setSequenceNumber(sequenceNumber);
         // Only trace-log for callback requests (which occur due to polling)
         String logMessage = String.format("TX EZSP: %s", nextFrame.toString());
         if (isCallbackRequest) {

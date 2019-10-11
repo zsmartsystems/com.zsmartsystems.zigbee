@@ -21,6 +21,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -277,10 +278,13 @@ public class SpiFrameHandlerTest {
     }
 
     @Test
-    public void testSendEzspFrame() {
+    public void testSendEzspFrame() throws NoSuchFieldException, IllegalAccessException {
         portOutData = new ArrayList<>();
         SpiFrameHandler handler = new SpiFrameHandler(Mockito.mock(EzspFrameHandler.class));
         handler.start(new TestPort(Mockito.mock(InputStream.class), Mockito.mock(OutputStream.class)));
+
+        final int sequenceNumber = 15;
+        setNextSequenceNumber(handler, sequenceNumber);
 
         EzspVersionRequest command = new EzspVersionRequest();
         command.setDesiredProtocolVersion(4);
@@ -289,11 +293,19 @@ public class SpiFrameHandlerTest {
         assertEquals(7, portOutData.size());
         assertEquals(Integer.valueOf(0xFE), portOutData.get(0));
         assertEquals(Integer.valueOf(0x04), portOutData.get(1));
-        assertEquals(Integer.valueOf(0x01), portOutData.get(2));
+        assertEquals(Integer.valueOf(sequenceNumber), portOutData.get(2));
         assertEquals(Integer.valueOf(0x00), portOutData.get(3));
         assertEquals(Integer.valueOf(0x00), portOutData.get(4));
         assertEquals(Integer.valueOf(0x04), portOutData.get(5));
         assertEquals(Integer.valueOf(0xA7), portOutData.get(6));
+    }
+
+    private void setNextSequenceNumber(SpiFrameHandler handler, int nextSequenceNumber)
+            throws NoSuchFieldException, IllegalAccessException {
+        final Field field = handler.getClass().getDeclaredField("nextEzspSequenceNumber");
+        field.setAccessible(true);
+        final AtomicInteger seq = (AtomicInteger) field.get(handler);
+        seq.set(nextSequenceNumber);
     }
 
     class TestPort implements ZigBeePort {
