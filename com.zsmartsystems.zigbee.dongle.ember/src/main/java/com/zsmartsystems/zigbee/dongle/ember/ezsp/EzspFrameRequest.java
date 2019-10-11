@@ -7,7 +7,7 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember.ezsp;
 
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
 
@@ -40,16 +40,13 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
  *
  */
 public abstract class EzspFrameRequest extends EzspFrame {
-    private final static AtomicLong sequence = new AtomicLong(1);
+    private final static AtomicInteger sequence = new AtomicInteger(1);
 
     /**
      * Constructor used to create an outgoing frame
      */
     protected EzspFrameRequest() {
-        sequenceNumber = (int) sequence.getAndIncrement();
-        if (sequenceNumber == 254) {
-            sequence.set(1);
-        }
+        sequenceNumber = sequence.getAndUpdate(n -> n <254 ? n+1 : 1);
     }
 
     protected void serializeHeader(final EzspSerializer serializer) {
