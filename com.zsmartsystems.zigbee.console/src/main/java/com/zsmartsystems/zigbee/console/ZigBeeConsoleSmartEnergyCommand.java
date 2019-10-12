@@ -123,7 +123,7 @@ public class ZigBeeConsoleSmartEnergyCommand extends ZigBeeConsoleAbstractComman
 
         try {
             for (int cnt = 0; cnt < repeatCycles; cnt++) {
-                CommandResult result = cluster.getProfile(0, new Calendar.Builder().setInstant(0).build(), 1).get();
+                CommandResult result = cluster.getProfile(0, Calendar.getInstance(), 1).get();
                 GetProfileResponse response = (GetProfileResponse) result.getResponse();
                 if (response.getStatus() != 0) {
                     out.println(
