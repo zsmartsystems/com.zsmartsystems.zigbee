@@ -83,8 +83,16 @@ public class ZigBeeConsoleAttributeReadCommand extends ZigBeeConsoleAbstractComm
                     attribute != null ? attribute.getName() : String.format("Attribute %d", attributeId));
         }
 
+        StringBuilder strAttributes = new StringBuilder();
+        for (String value : attributes.values()) {
+            if (strAttributes.length() != 0) {
+                strAttributes.append(", ");
+            }
+            strAttributes.append(value);
+        }
+
         out.println("Reading endpoint " + endpoint.getEndpointAddress() + ", cluster " + printCluster(cluster)
-                + ", attributes " + String.join(", ", attributes.values())
+                + ", attributes " + strAttributes.toString()
                 + (repeatPeriod == 0 ? "" : (" @period = " + repeatPeriod + " sec")));
 
         for (int cnt = 0; cnt < repeatCycles; cnt++) {
