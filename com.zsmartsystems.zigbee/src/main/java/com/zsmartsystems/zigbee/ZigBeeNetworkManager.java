@@ -281,7 +281,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         this.transport = transport;
 
         transport.setZigBeeTransportReceive(this);
-
+        transport.setZigBeeNetworkManager(this);
         apsDataEntity = new ApsDataEntity(transport);
         transactionManager = new ZigBeeTransactionManager(this);
     }

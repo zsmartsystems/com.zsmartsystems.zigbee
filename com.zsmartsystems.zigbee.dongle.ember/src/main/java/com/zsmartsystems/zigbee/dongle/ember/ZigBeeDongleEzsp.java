@@ -15,10 +15,17 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetExtendedTimeoutResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetExtendedTimeoutRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetExtendedTimeoutResponse;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.MacCapabilitiesType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -250,6 +257,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
      * framework IDs.
      */
     Map<Integer, Integer> fragmentationApsCounters = new HashMap<>();
+    private ZigBeeNetworkManager networkManager;
 
     /**
      * Create a {@link ZigBeeDongleEzsp} with the default ASH2 frame handler
@@ -384,6 +392,11 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     @Override
     public void setDefaultDeviceId(int defaultDeviceId) {
         this.defaultDeviceId = defaultDeviceId;
+    }
+
+    @Override
+    public void setZigBeeNetworkManager(ZigBeeNetworkManager manager) {
+        this.networkManager = manager;
     }
 
     @Override
@@ -644,8 +657,14 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             emberApsFrame.addOptions(EmberApsOption.EMBER_APS_OPTION_ENCRYPTION);
         }
 
+        ZigBeeNode node = null;
         if (apsFrame.getAddressMode() == ZigBeeNwkAddressMode.DEVICE
                 && !ZigBeeBroadcastDestination.isBroadcast(apsFrame.getDestinationAddress())) {
+
+            if (networkManager != null) {
+                node = networkManager.getNode(apsFrame.getDestinationAddress());
+                logger.trace("for dest addr {}, node = {}", apsFrame.getDestinationAddress(), node);
+            }
             EzspSendUnicastRequest emberUnicast = new EzspSendUnicastRequest();
             emberUnicast.setIndexOrDestination(apsFrame.getDestinationAddress());
             emberUnicast.setMessageTag(msgTag);
@@ -699,9 +718,27 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         // The response from the SendXxxcast messages returns the network layer sequence number
         // We need to correlate this with the messageTag
+        ZigBeeNode finalNode = node;
         executorService.execute(new Runnable() {
             @Override
             public void run() {
+                if (finalNode != null) {
+                    if (finalNode.getIeeeAddress() != null) {
+                        final NodeDescriptor descriptor = finalNode.getNodeDescriptor();
+                        if (descriptor != null && !descriptor.getMacCapabilities().contains(
+                                MacCapabilitiesType.RECEIVER_ON_WHEN_IDLE)) {
+                            EzspSetExtendedTimeoutRequest request = new EzspSetExtendedTimeoutRequest();
+                            request.setRemoteEui64(finalNode.getIeeeAddress());
+                            request.setExtendedTimeout(true);
+                            logger.trace("trying to set extended timeout: {}", request);
+                            EzspTransaction timeoutTrans = new EzspSingleResponseTransaction(request,
+                                    EzspSetExtendedTimeoutResponse.class);
+                            frameHandler.sendEzspRequestAsync(timeoutTrans);
+                        }
+                    }
+                } else {
+                    logger.trace("have no node");
+                }
                 frameHandler.sendEzspTransaction(transaction);
 
                 EmberStatus status = null;
@@ -886,6 +923,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             }
             return;
         }
+        logger.debug("Unhandled incoming EZSP packet: {} ", response);
     }
 
     @Override
