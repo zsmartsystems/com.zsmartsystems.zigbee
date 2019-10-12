@@ -3571,6 +3571,7 @@
 				<data_type>uint16_t</data_type>
 				<name>panId</name>
 				<description>The network's PAN identifier.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint8_t</data_type>
@@ -3619,12 +3620,12 @@
 				<data_type>uint16_t</data_type>
 				<name>panId</name>
 				<description>The network's PAN identifier</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
-				<data_type>uint8_t[8]</data_type>
+				<data_type>ExtendedPanId</data_type>
 				<name>extendedPanId</name>
 				<description>The network's extended PAN identifier.</description>
-				<display>hex[2]</display>
 			</parameter>
 			<parameter>
 				<data_type>bool</data_type>

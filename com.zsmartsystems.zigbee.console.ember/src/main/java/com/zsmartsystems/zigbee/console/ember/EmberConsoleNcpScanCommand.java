@@ -76,7 +76,7 @@ public class EmberConsoleNcpScanCommand extends EmberConsoleAbstractCommand {
         out.println("CH  PAN   Extended PAN      Stk  Join   Upd");
         for (EzspNetworkFoundHandler network : networksFound) {
             EmberZigbeeNetwork params = network.getNetworkFound();
-            ExtendedPanId epanId = new ExtendedPanId(params.getExtendedPanId());
+            ExtendedPanId epanId = params.getExtendedPanId();
             out.println(String.format("%-2d  %04X  %s  %d    %s  %d", params.getChannel(), params.getPanId(), epanId,
                     params.getStackProfile(), params.getAllowingJoin() ? "True " : "False", params.getNwkUpdateId()));
         }

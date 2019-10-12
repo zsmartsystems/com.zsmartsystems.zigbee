@@ -10,10 +10,9 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.command;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Arrays;
-
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
 
@@ -39,8 +38,8 @@ public class EzspNetworkFoundHandlerTest extends EzspFrameTest {
         assertEquals(2, handler.getNetworkFound().getStackProfile());
         assertEquals(1, handler.getNetworkFound().getNwkUpdateId());
         assertEquals(55691, handler.getNetworkFound().getPanId());
-        assertTrue(Arrays.equals(new int[] { 0x63, 0x08, 0x1D, 0xDC, 0x2D, 0xC4, 0xF2, 0x46 },
-                handler.getNetworkFound().getExtendedPanId()));
+        assertEquals(new ExtendedPanId(new int[] { 0x63, 0x08, 0x1D, 0xDC, 0x2D, 0xC4, 0xF2, 0x46 }),
+                handler.getNetworkFound().getExtendedPanId());
     }
 
 }
