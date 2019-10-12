@@ -421,6 +421,10 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         EmberNcp ncp = getEmberNcp();
 
+        // Get the current network parameters so that any configuration updates start from here
+        networkParameters = ncp.getNetworkParameters().getParameters();
+        logger.debug("Ember initial network parameters are {}", networkParameters);
+
         ieeeAddress = ncp.getIeeeAddress();
         logger.debug("Ember local IEEE Address is {}", ieeeAddress);
 
@@ -433,7 +437,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     @Override
     public ZigBeeStatus startup(boolean reinitialize) {
-        logger.debug("EZSP dongle startup.");
+        logger.debug("EZSP dongle startup. reinitialize={}", reinitialize);
 
         // If ashHandler is null then the serial port didn't initialise
         if (frameHandler == null) {
@@ -452,8 +456,6 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             logger.debug("EZSP dongle initialize done - response {}", initResponse);
         }
 
-        networkParameters = ncp.getNetworkParameters().getParameters();
-
         // print current security state to debug logs
         ncp.getCurrentSecurityState();
 
@@ -466,7 +468,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         // If we want to reinitialize the network, then go...
         EmberNetworkInitialisation netInitialiser = new EmberNetworkInitialisation(frameHandler);
         if (reinitialize) {
-            logger.debug("Reinitialising Ember NCP network.");
+            logger.debug("Reinitialising Ember NCP network as {}", deviceType);
             if (deviceType == DeviceType.COORDINATOR) {
                 netInitialiser.formNetwork(networkParameters, linkKey, networkKey);
             } else {
