@@ -221,10 +221,6 @@ public class EmberNcp {
         EzspGetCurrentSecurityStateResponse response = (EzspGetCurrentSecurityStateResponse) transaction.getResponse();
         logger.debug(response.toString());
         lastStatus = response.getStatus();
-        if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
-            logger.debug("Error during retrieval of security parameters: {}", response);
-            return null;
-        }
         return response.getState();
     }
 

@@ -304,7 +304,7 @@ public class EmberNetworkParameters {
         builder.append("EmberNetworkParameters [extendedPanId=");
         builder.append(extendedPanId);
         builder.append(", panId=");
-        builder.append(panId);
+        builder.append(String.format("%04X", panId));
         builder.append(", radioTxPower=");
         builder.append(radioTxPower);
         builder.append(", radioChannel=");

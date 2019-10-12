@@ -7,6 +7,7 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.structure;
 
+import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspDeserializer;
 import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
 
@@ -38,9 +39,9 @@ public class EmberZigbeeNetwork {
     /**
      * The network's extended PAN identifier.
      * <p>
-     * EZSP type is <i>uint8_t[8]</i> - Java type is {@link int[]}
+     * EZSP type is <i>ExtendedPanId</i> - Java type is {@link ExtendedPanId}
      */
-    private int[] extendedPanId;
+    private ExtendedPanId extendedPanId;
 
     /**
      * Whether the network is allowing MAC associations.
@@ -116,20 +117,20 @@ public class EmberZigbeeNetwork {
     /**
      * The network's extended PAN identifier.
      * <p>
-     * EZSP type is <i>uint8_t[8]</i> - Java type is {@link int[]}
+     * EZSP type is <i>ExtendedPanId</i> - Java type is {@link ExtendedPanId}
      *
-     * @return the current extendedPanId as {@link int[]}
+     * @return the current extendedPanId as {@link ExtendedPanId}
      */
-    public int[] getExtendedPanId() {
+    public ExtendedPanId getExtendedPanId() {
         return extendedPanId;
     }
 
     /**
      * The network's extended PAN identifier.
      *
-     * @param extendedPanId the extendedPanId to set as {@link int[]}
+     * @param extendedPanId the extendedPanId to set as {@link ExtendedPanId}
      */
-    public void setExtendedPanId(int[] extendedPanId) {
+    public void setExtendedPanId(ExtendedPanId extendedPanId) {
         this.extendedPanId = extendedPanId;
     }
 
@@ -202,7 +203,7 @@ public class EmberZigbeeNetwork {
         // Serialize the fields
         serializer.serializeUInt8(channel);
         serializer.serializeUInt16(panId);
-        serializer.serializeUInt8Array(extendedPanId);
+        serializer.serializeExtendedPanId(extendedPanId);
         serializer.serializeBool(allowingJoin);
         serializer.serializeUInt8(stackProfile);
         serializer.serializeUInt8(nwkUpdateId);
@@ -218,7 +219,7 @@ public class EmberZigbeeNetwork {
         // Deserialize the fields
         channel = deserializer.deserializeUInt8();
         panId = deserializer.deserializeUInt16();
-        extendedPanId = deserializer.deserializeUInt8Array(8);
+        extendedPanId = deserializer.deserializeExtendedPanId();
         allowingJoin = deserializer.deserializeBool();
         stackProfile = deserializer.deserializeUInt8();
         nwkUpdateId = deserializer.deserializeUInt8();
@@ -230,20 +231,9 @@ public class EmberZigbeeNetwork {
         builder.append("EmberZigbeeNetwork [channel=");
         builder.append(channel);
         builder.append(", panId=");
-        builder.append(panId);
+        builder.append(String.format("%04X", panId));
         builder.append(", extendedPanId=");
-        builder.append('{');
-        if (extendedPanId == null) {
-            builder.append("null");
-        } else {
-            for (int cnt = 0; cnt < extendedPanId.length; cnt++) {
-                if (cnt != 0) {
-                    builder.append(' ');
-                }
-                builder.append(String.format("%02X", extendedPanId[cnt]));
-            }
-        }
-        builder.append('}');
+        builder.append(extendedPanId);
         builder.append(", allowingJoin=");
         builder.append(allowingJoin);
         builder.append(", stackProfile=");
