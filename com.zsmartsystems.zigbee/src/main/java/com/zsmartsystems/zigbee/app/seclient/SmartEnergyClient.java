@@ -350,6 +350,7 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
 
         // Check if we are already authorised and don't perform key establishment again
         ZigBeeNode trustCentre = networkManager.getNode(0);
+        logger.debug("SEP Client Extension: Trust Centre={}", trustCentre);
         if (trustCentre != null && cbkeProvider.isAuthorised(trustCentre.getIeeeAddress())) {
             logger.debug("SEP Client Extension: startup TC is authorised");
             setProfileSecurity(trustCentre);
