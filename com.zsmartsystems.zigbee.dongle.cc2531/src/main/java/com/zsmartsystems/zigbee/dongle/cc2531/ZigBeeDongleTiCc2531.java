@@ -226,12 +226,20 @@ public class ZigBeeDongleTiCc2531
     }
 
     private ZigBeeStatus setSupportedInputClusters(ArrayList<Integer> supportedClusters) {
-        supportedInputClusters = supportedClusters.stream().mapToInt(Integer::intValue).toArray();
+        supportedInputClusters = new int[supportedClusters.size()];
+        int cnt = 0;
+        for (int cluster : supportedClusters) {
+            supportedInputClusters[cnt++] = cluster;
+        }
         return ZigBeeStatus.SUCCESS;
     }
 
     private ZigBeeStatus setSupportedOutputClusters(ArrayList<Integer> supportedClusters) {
-        supportedOutputClusters = supportedClusters.stream().mapToInt(Integer::intValue).toArray();
+        supportedOutputClusters = new int[supportedClusters.size()];
+        int cnt = 0;
+        for (int cluster : supportedClusters) {
+            supportedOutputClusters[cnt++] = cluster;
+        }
         return ZigBeeStatus.SUCCESS;
     }
 
