@@ -269,9 +269,9 @@ public class EmberApsFrame {
     public String toString() {
         final StringBuilder builder = new StringBuilder(191);
         builder.append("EmberApsFrame [profileId=");
-        builder.append(profileId);
+        builder.append(String.format("%04X", profileId));
         builder.append(", clusterId=");
-        builder.append(clusterId);
+        builder.append(String.format("%04X", clusterId));
         builder.append(", sourceEndpoint=");
         builder.append(sourceEndpoint);
         builder.append(", destinationEndpoint=");
