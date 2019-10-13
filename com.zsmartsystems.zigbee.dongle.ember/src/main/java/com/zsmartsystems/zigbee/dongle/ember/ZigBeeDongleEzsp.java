@@ -924,6 +924,13 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             }
             return;
         }
+        if (response.isCallback()) {
+            logger.debug("handlePacket: Discarding unhandled EZSP callback: {}", response);
+        } else if (!response.isResponse()) {
+            logger.debug("handlePacket: Discarding unhandled EZSP request: {}", response);
+        } else {
+            logger.warn("handlePacket: Discarding unhandled EZSP response: {}", response);
+        }
     }
 
     @Override

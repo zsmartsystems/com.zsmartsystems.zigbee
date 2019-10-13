@@ -33,7 +33,12 @@ public class EzspSingleResponseTransaction implements EzspTransaction {
     }
 
     @Override
-    public boolean isMatch(EzspFrameResponse response) {
+    public boolean isComplete() {
+        return response != null;
+    }
+
+    @Override
+    public boolean handleResponse(EzspFrameResponse response) {
         if (response.getClass() == requiredResponse && request.getSequenceNumber() == response.getSequenceNumber()) {
             this.response = response;
             return true;

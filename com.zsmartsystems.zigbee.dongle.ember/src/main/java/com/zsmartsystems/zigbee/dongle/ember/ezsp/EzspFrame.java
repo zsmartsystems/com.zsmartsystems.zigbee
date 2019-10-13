@@ -398,6 +398,21 @@ public abstract class EzspFrame {
     }
 
     /**
+     * Is this frame is a callback.
+     *
+     * @return true if this frame is a callback
+     */
+    public boolean isCallback() {
+        if (!isResponse) {
+            return false;
+        } else {
+            final int callbackTypeOffset = 3;
+            final int callbackTypeMask = 0b11 << callbackTypeOffset;
+            return (frameControl & callbackTypeMask) >> callbackTypeOffset != 0;
+        }
+    }
+
+    /**
      * Gets the Ember frame ID for this frame
      *
      * @return the Ember frame Id
@@ -465,4 +480,5 @@ public abstract class EzspFrame {
     public static int getEzspVersion() {
         return EzspFrame.ezspVersion;
     }
+
 }
