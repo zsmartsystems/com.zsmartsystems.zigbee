@@ -218,6 +218,7 @@
 				<data_type>uint16_t</data_type>
 				<name>deviceId</name>
 				<description>The endpoint's device ID within the application profile.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint8_t</data_type>
@@ -690,6 +691,7 @@
 				<data_type>uint32_t</data_type>
 				<name>channelMask</name>
 				<description>Bits set as 1 indicate that this particular channel should be scanned. Bits set to 0 indicate that this particular channel should not be scanned. For example, a channelMask value of 0x00000001 would indicate that only channel 0 should be scanned. Valid channels range from 11 to 26 inclusive. This translates to a channel mask value of 0x07FFF800. As a convenience, a value of 0 is reinterpreted as the mask for the current channel.</description>
+				<display>hex[8]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint8_t</data_type>
@@ -1983,6 +1985,7 @@
 				<data_type>uint32_t</data_type>
 				<name>channelMask</name>
 				<description>A mask indicating the channels to be scanned. See emberStartScan for format details. A value of 0 is reinterpreted as the mask for the current channel.</description>
+				<display>hex[8]</display>
 			</parameter>
 		</command_parameters>
 		<response_parameters>
@@ -4060,6 +4063,7 @@
 				<data_type>uint8_t</data_type>
 				<name>deviceId</name>
 				<description>The device id for the GPD.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>EmberGpSinkListEntry[2]</data_type>

@@ -227,7 +227,7 @@ public class EzspAddEndpointRequest extends EzspFrameRequest {
         builder.append(", profileId=");
         builder.append(String.format("%04X", profileId));
         builder.append(", deviceId=");
-        builder.append(deviceId);
+        builder.append(String.format("%04X", deviceId));
         builder.append(", appFlags=");
         builder.append(appFlags);
         builder.append(", inputClusterList=");
