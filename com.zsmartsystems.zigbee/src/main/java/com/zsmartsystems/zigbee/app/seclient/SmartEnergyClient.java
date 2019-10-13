@@ -633,6 +633,7 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
                         // Add it. This may happen if Metering is in a different endpoint than KeyExchange
                         meteringEndpoint = new ZigBeeEndpoint(node, endpointId);
                         meteringEndpoint.setProfileId(ZigBeeProfileType.ZIGBEE_SMART_ENERGY.getKey());
+                        node.addEndpoint(meteringEndpoint);
                     }
                     ZclMeteringCluster meteringCluster = (ZclMeteringCluster) meteringEndpoint
                             .getInputCluster(ZclMeteringCluster.CLUSTER_ID);
