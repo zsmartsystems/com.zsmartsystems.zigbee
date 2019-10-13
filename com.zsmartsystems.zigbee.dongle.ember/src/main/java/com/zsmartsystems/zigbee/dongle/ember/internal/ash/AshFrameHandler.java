@@ -202,8 +202,10 @@ public class AshFrameHandler implements EzspProtocolHandler {
                                         if (response == null) {
                                             logger.debug("ASH: No frame handler created for {}", packet);
                                         } else {
-                                            notifyTransactionComplete(response);
-                                            handleIncomingFrame(response);
+                                            if (!notifyTransactionComplete(response)) {
+                                                logger.trace("ASH: no EZSP transaction match for {}", response);
+                                                handleIncomingFrame(response);
+                                            }
                                         }
                                     } else if (!dataPacket.getReTx()) {
                                         // Send a NAK - this is out of sequence and not a retransmission

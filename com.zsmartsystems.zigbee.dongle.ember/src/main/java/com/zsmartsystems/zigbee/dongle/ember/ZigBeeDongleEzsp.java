@@ -886,6 +886,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             }
             return;
         }
+        logger.warn("Unhandled EZSP response received: {}", response);
     }
 
     @Override
