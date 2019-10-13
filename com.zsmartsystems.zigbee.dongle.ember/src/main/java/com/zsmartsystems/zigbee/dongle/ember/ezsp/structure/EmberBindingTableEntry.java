@@ -248,7 +248,7 @@ public class EmberBindingTableEntry {
         builder.append(", local=");
         builder.append(local);
         builder.append(", clusterId=");
-        builder.append(clusterId);
+        builder.append(String.format("%04X", clusterId));
         builder.append(", remote=");
         builder.append(remote);
         builder.append(", identifier=");

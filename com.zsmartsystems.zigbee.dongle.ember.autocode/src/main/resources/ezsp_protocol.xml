@@ -212,6 +212,7 @@
 				<data_type>uint16_t</data_type>
 				<name>profileId</name>
 				<description>The endpoint's application profile.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint16_t</data_type>
@@ -3653,11 +3654,13 @@
 				<data_type>uint16_t</data_type>
 				<name>profileId</name>
 				<description>The application profile ID that describes the format of the message.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint16_t</data_type>
 				<name>clusterId</name>
 				<description>The cluster ID for this message</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint8_t</data_type>
@@ -3812,6 +3815,7 @@
 				<data_type>uint16_t</data_type>
 				<name>clusterId</name>
 				<description>A cluster ID that matches one from the local endpoint's simple descriptor. This cluster ID is set by the provisioning application to indicate which part an endpoint's functionality is bound to this particular remote node and is used to distinguish between unicast and multicast bindings. Note that a binding can be used to send messages with any cluster ID, not just that listed in the binding.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint8_t</data_type>
