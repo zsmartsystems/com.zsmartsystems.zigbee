@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.dongle.ember.internal.transaction;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
@@ -60,19 +61,27 @@ public class EzspMultiResponseTransaction implements EzspTransaction {
         this.relatedResponses = relatedResponses;
     }
 
+    private AtomicBoolean complete = new AtomicBoolean();
+
     @Override
-    public synchronized boolean isMatch(EzspFrameResponse response) {
+    public boolean isComplete() {
+        return complete.get();
+    }
+
+    @Override
+    public synchronized boolean handleResponse(EzspFrameResponse response) {
         // Check if this response is related to this transaction
         if (relatedResponses.contains(response.getClass())) {
             // TODO: Check for a failure
 
             // Add the response to our responses received list
             responses.add(response);
-            return false;
+            return true;
         }
 
         // Check if this response completes the transaction
         if (response.getClass() == requiredResponse) {
+            complete.set(true);
             responses.add(response);
             return true;
         } else {

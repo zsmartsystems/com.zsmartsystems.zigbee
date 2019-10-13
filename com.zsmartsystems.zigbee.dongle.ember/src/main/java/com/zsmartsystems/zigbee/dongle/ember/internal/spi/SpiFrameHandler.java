@@ -719,17 +719,17 @@ public class SpiFrameHandler implements EzspProtocolHandler {
 
             @Override
             public boolean transactionEvent(EzspFrameResponse ezspResponse) {
-                // Check if this response completes our transaction
-                if (!ezspTransaction.isMatch(ezspResponse)) {
+                // Check if this response was handled
+                if (!ezspTransaction.handleResponse(ezspResponse)) {
                     return false;
                 }
 
-                // response = request;
-                synchronized (this) {
-                    complete = true;
-                    notify();
+                if (ezspTransaction.isComplete()) {
+                    synchronized (this) {
+                        complete = true;
+                        notify();
+                    }
                 }
-
                 return true;
             }
 

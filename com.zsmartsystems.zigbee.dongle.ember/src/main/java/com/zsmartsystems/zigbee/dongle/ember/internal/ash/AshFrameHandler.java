@@ -704,14 +704,14 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
             @Override
             public boolean transactionEvent(EzspFrameResponse ezspResponse) {
-                // Check if this response completes our transaction
-                if (!ezspTransaction.isMatch(ezspResponse)) {
+                // Check to see if response was processed
+                if (!ezspTransaction.handleResponse(ezspResponse)) {
                     return false;
                 }
-
-                transactionComplete();
-                // response = request;
-
+                // check to see if transaction was completed
+                if (ezspTransaction.isComplete()) {
+                    transactionComplete();
+                }
                 return true;
             }
 

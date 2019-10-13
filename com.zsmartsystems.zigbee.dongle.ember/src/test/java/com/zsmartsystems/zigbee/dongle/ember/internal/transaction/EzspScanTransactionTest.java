@@ -27,7 +27,6 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStartScanRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStartScanResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspNetworkScanType;
-import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspMultiResponseTransaction;
 
 /**
  *
@@ -43,8 +42,9 @@ public class EzspScanTransactionTest extends EzspFrameTest {
         energyScan.setSequenceNumber(3);
         energyScan.setScanType(EzspNetworkScanType.EZSP_ENERGY_SCAN);
 
-        Set<Class<?>> relatedResponses = new HashSet<Class<?>>(Arrays.asList(EzspStartScanResponse.class,
-                EzspNetworkFoundHandler.class, EzspEnergyScanResultHandler.class));
+        Set<Class<?>> relatedResponses = new HashSet<Class<?>>(
+                Arrays.asList(EzspStartScanResponse.class, EzspNetworkFoundHandler.class,
+                        EzspEnergyScanResultHandler.class));
         EzspMultiResponseTransaction scanTransaction = new EzspMultiResponseTransaction(energyScan,
                 EzspScanCompleteHandler.class, relatedResponses);
 
@@ -52,27 +52,33 @@ public class EzspScanTransactionTest extends EzspFrameTest {
 
         // Start Scan Response
         response = new EzspStartScanResponse(getPacketData("03 80 1A 00"));
-        assertFalse(scanTransaction.isMatch(response));
+        assertTrue(scanTransaction.handleResponse(response));
+        assertFalse(scanTransaction.isComplete());
 
         response = new EzspEnergyScanResultHandler(getPacketData("03 90 48 0B 9D"));
         assertEquals(11, ((EzspEnergyScanResultHandler) response).getChannel());
         assertEquals(-99, ((EzspEnergyScanResultHandler) response).getMaxRssiValue());
-        assertFalse(scanTransaction.isMatch(response));
+        assertTrue(scanTransaction.handleResponse(response));
+        assertFalse(scanTransaction.isComplete());
 
         response = new EzspEnergyScanResultHandler(getPacketData("03 90 48 0C 9D"));
-        assertFalse(scanTransaction.isMatch(response));
+        assertTrue(scanTransaction.handleResponse(response));
+        assertFalse(scanTransaction.isComplete());
 
         response = new EzspEnergyScanResultHandler(getPacketData("03 90 48 0D AB"));
         assertEquals(13, ((EzspEnergyScanResultHandler) response).getChannel());
         assertEquals(-85, ((EzspEnergyScanResultHandler) response).getMaxRssiValue());
-        assertFalse(scanTransaction.isMatch(response));
+        assertTrue(scanTransaction.handleResponse(response));
+        assertFalse(scanTransaction.isComplete());
 
         response = new EzspEnergyScanResultHandler(getPacketData("03 90 48 0E 9D"));
-        assertFalse(scanTransaction.isMatch(response));
+        assertTrue(scanTransaction.handleResponse(response));
+        assertFalse(scanTransaction.isComplete());
 
         response = new EzspScanCompleteHandler(getPacketData("03 90 1C 0B 00"));
         assertEquals(EmberStatus.EMBER_SUCCESS, ((EzspScanCompleteHandler) response).getStatus());
-        assertTrue(scanTransaction.isMatch(response));
+        assertTrue(scanTransaction.handleResponse(response));
+        assertTrue(scanTransaction.isComplete());
 
         assertEquals(6, scanTransaction.getResponses().size());
         assertTrue(scanTransaction.getResponses().get(0) instanceof EzspStartScanResponse);

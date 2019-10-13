@@ -16,20 +16,26 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 /**
  * Interface for EZSP protocol transaction.
  * <p>
- * The transaction looks for a {@link EzspFrameResponse} that matches the {@link EzspFrameRequest}.
- * The {@link EzspFrameResponse} and {@link EzspFrameRequest} classes are provided when the transaction is created.
+ * The transaction looks for a {@link EzspFrameResponse} that matches the {@link EzspFrameRequest}. The {@link
+ * EzspFrameResponse} and {@link EzspFrameRequest} classes are provided when the transaction is created.
  *
  * @author Chris Jackson
- *
  */
 public interface EzspTransaction {
+
+    /**
+     * Check transaction completion status
+     * @return
+     */
+    boolean isComplete();
+
     /**
      * Matches request and response.
      *
      * @param response the response {@link EzspFrameResponse}
      * @return true if response matches the request
      */
-    boolean isMatch(EzspFrameResponse response);
+    boolean handleResponse(EzspFrameResponse response);
 
     /**
      * Gets the {@link EzspFrameRequest} associated with this transaction

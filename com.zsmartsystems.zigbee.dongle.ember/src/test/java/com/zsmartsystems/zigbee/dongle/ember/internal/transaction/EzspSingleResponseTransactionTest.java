@@ -18,8 +18,6 @@ import org.junit.Test;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
-import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspSingleResponseTransaction;
-import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransaction;
 
 /**
  *
@@ -37,7 +35,7 @@ public class EzspSingleResponseTransactionTest extends EzspFrameTest {
 
         EzspVersionResponse versionResponse = new EzspVersionResponse(getPacketData("03 80 00 04 02 00 58"));
 
-        assertTrue(versionTransaction.isMatch(versionResponse));
+        assertTrue(versionTransaction.handleResponse(versionResponse));
 
         versionTransaction.getRequest();
         assertEquals(1, versionTransaction.getResponses().size());
@@ -55,7 +53,7 @@ public class EzspSingleResponseTransactionTest extends EzspFrameTest {
 
         EzspVersionResponse versionResponse = new EzspVersionResponse(getPacketData("03 80 00 04 02 00 58"));
 
-        assertFalse(versionTransaction.isMatch(versionResponse));
+        assertFalse(versionTransaction.handleResponse(versionResponse));
         assertNull(versionTransaction.getResponse());
         assertNull(versionTransaction.getResponses());
     }
