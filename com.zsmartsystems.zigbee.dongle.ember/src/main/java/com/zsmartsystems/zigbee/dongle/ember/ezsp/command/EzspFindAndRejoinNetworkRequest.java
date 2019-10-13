@@ -132,7 +132,7 @@ public class EzspFindAndRejoinNetworkRequest extends EzspFrameRequest {
         builder.append("EzspFindAndRejoinNetworkRequest [haveCurrentNetworkKey=");
         builder.append(haveCurrentNetworkKey);
         builder.append(", channelMask=");
-        builder.append(channelMask);
+        builder.append(String.format("%08X", channelMask));
         builder.append(']');
         return builder.toString();
     }

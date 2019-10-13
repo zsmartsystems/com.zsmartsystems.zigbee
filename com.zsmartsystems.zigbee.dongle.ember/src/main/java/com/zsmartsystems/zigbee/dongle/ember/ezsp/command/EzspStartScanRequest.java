@@ -161,7 +161,7 @@ public class EzspStartScanRequest extends EzspFrameRequest {
         builder.append("EzspStartScanRequest [scanType=");
         builder.append(scanType);
         builder.append(", channelMask=");
-        builder.append(channelMask);
+        builder.append(String.format("%08X", channelMask));
         builder.append(", duration=");
         builder.append(duration);
         builder.append(']');

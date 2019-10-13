@@ -353,7 +353,7 @@ public class EmberGpSinkTableEntry {
         builder.append(", gpd=");
         builder.append(gpd);
         builder.append(", deviceId=");
-        builder.append(deviceId);
+        builder.append(String.format("%04X", deviceId));
         builder.append(", sinkList=");
         builder.append('{');
         if (sinkList == null) {
