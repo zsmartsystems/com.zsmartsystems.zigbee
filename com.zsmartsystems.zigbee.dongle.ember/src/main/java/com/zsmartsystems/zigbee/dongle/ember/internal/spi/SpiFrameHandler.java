@@ -524,8 +524,7 @@ public class SpiFrameHandler implements EzspProtocolHandler {
                 return false;
             }
         }
-        int sequenceNumber = nextEzspSequenceNumber.getAndIncrement() & 0xff;
-        nextFrame.setSequenceNumber(sequenceNumber);
+        nextFrame.setSequenceNumber(nextEzspSequenceNumber.getAndIncrement() & 0xff);
         // Only trace-log for callback requests (which occur due to polling)
         String logMessage = String.format("TX EZSP: %s", nextFrame.toString());
         if (isCallbackRequest) {

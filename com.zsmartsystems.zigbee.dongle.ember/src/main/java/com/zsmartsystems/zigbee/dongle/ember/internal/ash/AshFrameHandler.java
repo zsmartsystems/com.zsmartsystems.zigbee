@@ -432,8 +432,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
             // Nothing to send
             return false;
         }
-        int sequenceNumber = nextEzspSequenceNumber.getAndIncrement() & 0xff;
-        nextFrame.setSequenceNumber(sequenceNumber);
+        nextFrame.setSequenceNumber(nextEzspSequenceNumber.getAndIncrement() & 0xff);
 
         // Encapsulate the EZSP frame into the ASH packet
         logger.trace("TX ASH EZSP: {}", nextFrame);
