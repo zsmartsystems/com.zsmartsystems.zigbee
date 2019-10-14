@@ -12,6 +12,7 @@ import java.util.Map;
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
+import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
@@ -220,5 +221,11 @@ public interface ZigBeeTransportTransmit {
      * @param defaultDeviceId the device ID.
      */
     default void setDefaultDeviceId(int defaultDeviceId) {
+    }
+
+    /**
+     * Provides the transport with a {@link ZigBeeNetworkManager} instance.
+     */
+    default void setZigBeeNetworkManager(ZigBeeNetworkManager manager) {
     }
 }
