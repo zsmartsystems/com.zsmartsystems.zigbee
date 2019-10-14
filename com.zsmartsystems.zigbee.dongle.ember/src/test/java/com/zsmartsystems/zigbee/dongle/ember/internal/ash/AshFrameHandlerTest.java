@@ -234,8 +234,8 @@ public class AshFrameHandlerTest {
         request.setSequenceNumber(3);
         request.setDesiredProtocolVersion(4);
 
-        EzspTransaction transaction = frameHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspVersionResponse.class));
+        EzspTransaction<EzspVersionResponse> transaction = frameHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspVersionResponse.class));
 
         assertNull(transaction.getResponse());
 

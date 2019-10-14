@@ -19,13 +19,14 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
  * The transaction looks for a {@link EzspFrameResponse} that matches the {@link EzspFrameRequest}. The {@link
  * EzspFrameResponse} and {@link EzspFrameRequest} classes are provided when the transaction is created.
  *
+ * @param <R> The type of the final response to the message.
+ *
  * @author Chris Jackson
  */
-public interface EzspTransaction {
+public interface EzspTransaction<R extends EzspFrameResponse> {
 
     /**
      * Check transaction completion status
-     * @return
      */
     boolean isComplete();
 
@@ -50,7 +51,7 @@ public interface EzspTransaction {
      *
      * @return {@link EzspFrameResponse} to complete the transaction or null if no response received
      */
-    EzspFrameResponse getResponse();
+    R getResponse();
 
     /**
      * Gets a {@link List} of the {@link EzspFrameResponse}s received for the transaction. This is used for transactions
@@ -58,7 +59,7 @@ public interface EzspTransaction {
      *
      * @return {@link EzspFrameResponse} to complete the transaction or null if no response received
      */
-    List<EzspFrameResponse> getResponses();
+    List<? extends EzspFrameResponse> getResponses();
 
     /**
      * Get the {@link EmberStatus} of the transaction. If multiple responses are returned, this will return the last

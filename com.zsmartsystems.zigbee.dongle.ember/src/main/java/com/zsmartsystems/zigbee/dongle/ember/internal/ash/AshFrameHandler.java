@@ -449,7 +449,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
             case DATA:
                 statsTxData++;
                 // Set the frame number
-                ((AshFrameData) ashFrame).setFrmNum(frmNum);
+                ashFrame.setFrmNum(frmNum);
                 frmNum = (frmNum + 1) & 0x07;
 
                 // DATA frames need to go into a sent queue so we can retry if needed
@@ -667,18 +667,18 @@ public class AshFrameHandler implements EzspProtocolHandler {
     }
 
     @Override
-    public Future<EzspFrame> sendEzspRequestAsync(final EzspTransaction ezspTransaction) {
+    public <T extends EzspFrameResponse> Future<T> sendEzspRequestAsync(final EzspTransaction<T> ezspTransaction) {
         if (closeHandler) {
             logger.debug("ASH: Handler is closed");
             return null;
         }
 
-        class TransactionWaiter implements Callable<EzspFrame>, AshListener {
+        class TransactionWaiter implements Callable<T>, AshListener {
             // private EzspFrame response = null;
             private boolean complete = false;
 
             @Override
-            public EzspFrame call() {
+            public T call() {
                 // Register a listener
                 addTransactionListener(this);
 
@@ -699,7 +699,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
                 // Remove the listener
                 removeTransactionListener(this);
 
-                return null;// response;
+                return ezspTransaction.getResponse();
             }
 
             @Override
@@ -724,15 +724,15 @@ public class AshFrameHandler implements EzspProtocolHandler {
             }
         }
 
-        Callable<EzspFrame> worker = new TransactionWaiter();
+        Callable<T> worker = new TransactionWaiter();
         return executor.submit(worker);
     }
 
     @Override
-    public EzspTransaction sendEzspTransaction(EzspTransaction ezspTransaction) {
+    public <T extends EzspFrameResponse> EzspTransaction<T> sendEzspTransaction(EzspTransaction<T> ezspTransaction) {
         logger.debug("TX EZSP: {}", ezspTransaction.getRequest());
 
-        Future<EzspFrame> futureResponse = sendEzspRequestAsync(ezspTransaction);
+        Future<T> futureResponse = sendEzspRequestAsync(ezspTransaction);
         if (futureResponse == null) {
             logger.debug("ASH: Error sending EZSP transaction: Future is null");
             return null;
@@ -744,9 +744,8 @@ public class AshFrameHandler implements EzspProtocolHandler {
         } catch (InterruptedException | ExecutionException e) {
             futureResponse.cancel(true);
             logger.debug("ASH interrupted in sendRequest: ", e);
+            return null;
         }
-
-        return null;
     }
 
     /**

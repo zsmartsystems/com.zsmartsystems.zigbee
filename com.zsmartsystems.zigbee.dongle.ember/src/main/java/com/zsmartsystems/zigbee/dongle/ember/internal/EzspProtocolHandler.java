@@ -67,18 +67,20 @@ public interface EzspProtocolHandler {
      * Sends an EZSP request to the NCP without waiting for the response.
      *
      * @param ezspTransaction Request {@link EzspTransaction}
+     *
      * @return response {@link Future} {@link EzspFrame}
      */
-    public Future<EzspFrame> sendEzspRequestAsync(final EzspTransaction ezspTransaction);
+    public <T extends EzspFrameResponse> Future<T> sendEzspRequestAsync(final EzspTransaction<T> ezspTransaction);
 
     /**
      * Sends an EZSP request to the NCP and waits for the response. The response is correlated with the request and the
      * returned {@link EzspTransaction} contains the request and response data.
      *
      * @param ezspTransaction Request {@link EzspTransaction}
+     *
      * @return response {@link EzspTransaction}
      */
-    public EzspTransaction sendEzspTransaction(EzspTransaction ezspTransaction);
+    public <T extends EzspFrameResponse> EzspTransaction<T> sendEzspTransaction(EzspTransaction<T> ezspTransaction);
 
     /**
      * Wait for the requested {@link EzspFrameResponse} to be received

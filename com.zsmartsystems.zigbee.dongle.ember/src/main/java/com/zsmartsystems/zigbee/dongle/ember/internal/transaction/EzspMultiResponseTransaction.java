@@ -33,7 +33,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
  * @author Chris Jackson
  *
  */
-public class EzspMultiResponseTransaction implements EzspTransaction {
+public class EzspMultiResponseTransaction<R extends EzspFrameResponse> implements EzspTransaction<R> {
     /**
      * The request we sent
      */
@@ -47,15 +47,15 @@ public class EzspMultiResponseTransaction implements EzspTransaction {
     /**
      * The response required to complete the transaction
      */
-    private Class<?> requiredResponse;
+    private Class<R> requiredResponse;
 
     /**
      * The response required to complete the transaction
      */
-    private Set<Class<?>> relatedResponses;
+    private Set<Class<? extends EzspFrameResponse>> relatedResponses;
 
-    public EzspMultiResponseTransaction(EzspFrameRequest request, Class<?> requiredResponse,
-            Set<Class<?>> relatedResponses) {
+    public EzspMultiResponseTransaction(EzspFrameRequest request, Class<R> requiredResponse,
+            Set<Class<? extends EzspFrameResponse>> relatedResponses) {
         this.request = request;
         this.requiredResponse = requiredResponse;
         this.relatedResponses = relatedResponses;
@@ -108,9 +108,9 @@ public class EzspMultiResponseTransaction implements EzspTransaction {
     }
 
     @Override
-    public synchronized EzspFrameResponse getResponse() {
+    public synchronized R getResponse() {
         if (!responses.isEmpty()) {
-            return responses.get(responses.size() - 1);
+            return (R) responses.get(responses.size() - 1);
         }
         return null;
     }

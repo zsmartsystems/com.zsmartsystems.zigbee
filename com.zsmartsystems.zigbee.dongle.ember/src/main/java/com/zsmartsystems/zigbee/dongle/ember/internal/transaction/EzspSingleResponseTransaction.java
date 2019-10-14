@@ -16,18 +16,17 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 
 /**
- * Single EZSP transaction response handling. This matches a {@link EzspFrameRequest} with a single
- * {@link EzspFrameResponse}. {@link EzspFrame#frameId} must also match.
+ * Single EZSP transaction response handling. This matches a {@link EzspFrameRequest} with a single {@link
+ * EzspFrameResponse}. {@link EzspFrame#frameId} must also match.
  *
  * @author Chris Jackson
- *
  */
-public class EzspSingleResponseTransaction implements EzspTransaction {
+public class EzspSingleResponseTransaction<T extends EzspFrameResponse> implements EzspTransaction<T> {
     private EzspFrameRequest request;
-    private EzspFrameResponse response;
-    private Class<?> requiredResponse;
+    private T response;
+    private Class<T> requiredResponse;
 
-    public EzspSingleResponseTransaction(EzspFrameRequest request, Class<?> requiredResponse) {
+    public EzspSingleResponseTransaction(EzspFrameRequest request, Class<T> requiredResponse) {
         this.request = request;
         this.requiredResponse = requiredResponse;
     }
@@ -39,9 +38,13 @@ public class EzspSingleResponseTransaction implements EzspTransaction {
 
     @Override
     public boolean handleResponse(EzspFrameResponse response) {
-        if (response.getClass() == requiredResponse && request.getSequenceNumber() == response.getSequenceNumber()) {
-            this.response = response;
-            return true;
+        if (request.getSequenceNumber() == response.getSequenceNumber()) {
+            if (requiredResponse.isInstance(response)) {
+                this.response = (T) response;
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
@@ -63,7 +66,7 @@ public class EzspSingleResponseTransaction implements EzspTransaction {
     }
 
     @Override
-    public EzspFrameResponse getResponse() {
+    public T getResponse() {
         return response;
     }
 

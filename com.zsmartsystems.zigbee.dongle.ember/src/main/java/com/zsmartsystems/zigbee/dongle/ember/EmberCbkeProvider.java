@@ -290,9 +290,9 @@ public class EmberCbkeProvider implements ZigBeeCbkeProvider {
         request.setMyKey(myKey);
         request.setMyCert(myCert);
         request.setCaCert(caCert);
-        EzspTransaction transaction = protocolHandler.sendEzspTransaction(
-                new EzspSingleResponseTransaction(request, EzspSetPreinstalledCbkeDataResponse.class));
-        EzspSetPreinstalledCbkeDataResponse response = (EzspSetPreinstalledCbkeDataResponse) transaction.getResponse();
+        EzspTransaction<EzspSetPreinstalledCbkeDataResponse> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspSetPreinstalledCbkeDataResponse.class));
+        EzspSetPreinstalledCbkeDataResponse response = transaction.getResponse();
         logger.debug(response.toString());
 
         return response.getStatus();
@@ -328,29 +328,28 @@ public class EmberCbkeProvider implements ZigBeeCbkeProvider {
         EzspSetValueRequest setMyCert = new EzspSetValueRequest();
         setMyCert.setValueId(EzspValueId.EZSP_VALUE_CERTIFICATE_283K1);
         setMyCert.setValue(certificate.getCertificate());
-        EzspTransaction transaction = protocolHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(setMyCert, EzspSetValueResponse.class));
-        EzspSetValueResponse response = (EzspSetValueResponse) transaction.getResponse();
+        EzspTransaction<EzspSetValueResponse> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(setMyCert, EzspSetValueResponse.class));
+        EzspSetValueResponse response = transaction.getResponse();
 
         EzspSetValueRequest setCaKey = new EzspSetValueRequest();
         setCaKey.setValueId(EzspValueId.EZSP_VALUE_PUBLIC_KEY_283K1);
         setCaKey.setValue(certificate.getCaPublicKey());
-        transaction = protocolHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(setCaKey, EzspSetValueResponse.class));
-        response = (EzspSetValueResponse) transaction.getResponse();
+        transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(setCaKey, EzspSetValueResponse.class));
+        response = transaction.getResponse();
 
         EzspSetValueRequest setMyKey = new EzspSetValueRequest();
         setMyKey.setValueId(EzspValueId.EZSP_VALUE_PRIVATE_KEY_283K1);
         setMyKey.setValue(certificate.getPrivateKey());
-        transaction = protocolHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(setMyKey, EzspSetValueResponse.class));
-        response = (EzspSetValueResponse) transaction.getResponse();
+        transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(setMyKey, EzspSetValueResponse.class));
+        response = transaction.getResponse();
 
         EzspSetPreinstalledCbkeData283k1Request request = new EzspSetPreinstalledCbkeData283k1Request();
-        transaction = protocolHandler.sendEzspTransaction(
-                new EzspSingleResponseTransaction(request, EzspSetPreinstalledCbkeData283k1Response.class));
-        EzspSetPreinstalledCbkeData283k1Response setCbkeResponse = (EzspSetPreinstalledCbkeData283k1Response) transaction
-                .getResponse();
+        EzspTransaction<EzspSetPreinstalledCbkeData283k1Response> t2 = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspSetPreinstalledCbkeData283k1Response.class));
+        EzspSetPreinstalledCbkeData283k1Response setCbkeResponse = t2.getResponse();
         logger.debug(response.toString());
 
         return setCbkeResponse.getStatus();

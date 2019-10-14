@@ -163,9 +163,9 @@ public class EmberNcp {
     public EzspVersionResponse getVersion(int desiredVersion) {
         EzspVersionRequest request = new EzspVersionRequest();
         request.setDesiredProtocolVersion(EzspFrame.getEzspVersion());
-        EzspTransaction transaction = protocolHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspVersionResponse.class));
-        EzspVersionResponse response = (EzspVersionResponse) transaction.getResponse();
+        EzspTransaction<EzspVersionResponse> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspVersionResponse.class));
+        EzspVersionResponse response = transaction.getResponse();
         if (response == null) {
             logger.debug("No response from ezspVersion command");
             return null;
@@ -185,9 +185,9 @@ public class EmberNcp {
      */
     public EmberStatus networkInit() {
         EzspNetworkInitRequest request = new EzspNetworkInitRequest();
-        EzspTransaction transaction = protocolHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspNetworkInitResponse.class));
-        EzspNetworkInitResponse response = (EzspNetworkInitResponse) transaction.getResponse();
+        EzspTransaction<EzspNetworkInitResponse> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspNetworkInitResponse.class));
+        EzspNetworkInitResponse response = transaction.getResponse();
         logger.debug(response.toString());
 
         return response.getStatus();
@@ -201,9 +201,9 @@ public class EmberNcp {
      */
     public EmberStatus leaveNetwork() {
         EzspLeaveNetworkRequest request = new EzspLeaveNetworkRequest();
-        EzspTransaction transaction = protocolHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspLeaveNetworkResponse.class));
-        EzspLeaveNetworkResponse response = (EzspLeaveNetworkResponse) transaction.getResponse();
+        EzspTransaction<EzspLeaveNetworkResponse> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspLeaveNetworkResponse.class));
+        EzspLeaveNetworkResponse response = transaction.getResponse();
         logger.debug(response.toString());
 
         return response.getStatus();
@@ -216,9 +216,9 @@ public class EmberNcp {
      */
     public EmberCurrentSecurityState getCurrentSecurityState() {
         EzspGetCurrentSecurityStateRequest request = new EzspGetCurrentSecurityStateRequest();
-        EzspTransaction transaction = protocolHandler.sendEzspTransaction(
-                new EzspSingleResponseTransaction(request, EzspGetCurrentSecurityStateResponse.class));
-        EzspGetCurrentSecurityStateResponse response = (EzspGetCurrentSecurityStateResponse) transaction.getResponse();
+        EzspTransaction<EzspGetCurrentSecurityStateResponse> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspGetCurrentSecurityStateResponse.class));
+        EzspGetCurrentSecurityStateResponse response = transaction.getResponse();
         logger.debug(response.toString());
         lastStatus = response.getStatus();
         return response.getState();
@@ -231,9 +231,9 @@ public class EmberNcp {
      */
     public EzspGetNetworkParametersResponse getNetworkParameters() {
         EzspGetNetworkParametersRequest request = new EzspGetNetworkParametersRequest();
-        EzspTransaction transaction = protocolHandler.sendEzspTransaction(
-                new EzspSingleResponseTransaction(request, EzspGetNetworkParametersResponse.class));
-        return (EzspGetNetworkParametersResponse) transaction.getResponse();
+        EzspTransaction<EzspGetNetworkParametersResponse> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspGetNetworkParametersResponse.class));
+        return transaction.getResponse();
     }
 
     /**
@@ -243,9 +243,9 @@ public class EmberNcp {
      */
     public EmberNetworkStatus getNetworkState() {
         EzspNetworkStateRequest request = new EzspNetworkStateRequest();
-        EzspTransaction transaction = protocolHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspNetworkStateResponse.class));
-        EzspNetworkStateResponse response = (EzspNetworkStateResponse) transaction.getResponse();
+        EzspTransaction<EzspNetworkStateResponse> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspNetworkStateResponse.class));
+        EzspNetworkStateResponse response = transaction.getResponse();
         logger.debug(response.toString());
         lastStatus = null;
 
@@ -259,10 +259,9 @@ public class EmberNcp {
      */
     public EzspGetParentChildParametersResponse getChildParameters() {
         EzspGetParentChildParametersRequest request = new EzspGetParentChildParametersRequest();
-        EzspTransaction transaction = protocolHandler.sendEzspTransaction(
-                new EzspSingleResponseTransaction(request, EzspGetParentChildParametersResponse.class));
-        EzspGetParentChildParametersResponse response = (EzspGetParentChildParametersResponse) transaction
-                .getResponse();
+        EzspTransaction<EzspGetParentChildParametersResponse> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspGetParentChildParametersResponse.class));
+        EzspGetParentChildParametersResponse response = transaction.getResponse();
         lastStatus = null;
 
         return response;
@@ -277,9 +276,9 @@ public class EmberNcp {
     public EzspGetChildDataResponse getChildInformation(int childId) {
         EzspGetChildDataRequest request = new EzspGetChildDataRequest();
         request.setIndex(childId);
-        EzspTransaction transaction = protocolHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetChildDataResponse.class));
-        EzspGetChildDataResponse response = (EzspGetChildDataResponse) transaction.getResponse();
+        EzspTransaction<EzspGetChildDataResponse> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspGetChildDataResponse.class));
+        EzspGetChildDataResponse response = transaction.getResponse();
         logger.debug(response.toString());
         lastStatus = response.getStatus();
         if (lastStatus != EmberStatus.EMBER_SUCCESS) {
@@ -309,9 +308,9 @@ public class EmberNcp {
         request.setProfileId(profileId);
         request.setInputClusterList(new int[] { 0 });
         request.setOutputClusterList(new int[] { 0 });
-        EzspTransaction transaction = protocolHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspAddEndpointResponse.class));
-        EzspAddEndpointResponse response = (EzspAddEndpointResponse) transaction.getResponse();
+        EzspTransaction<EzspAddEndpointResponse> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspAddEndpointResponse.class));
+        EzspAddEndpointResponse response = transaction.getResponse();
 
         logger.debug(response.toString());
         lastStatus = null;
@@ -326,9 +325,9 @@ public class EmberNcp {
      */
     public int[] getCounters() {
         EzspReadCountersRequest request = new EzspReadCountersRequest();
-        EzspTransaction transaction = protocolHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspReadCountersResponse.class));
-        EzspReadCountersResponse response = (EzspReadCountersResponse) transaction.getResponse();
+        EzspTransaction<EzspReadCountersResponse> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspReadCountersResponse.class));
+        EzspReadCountersResponse response = transaction.getResponse();
         logger.debug(response.toString());
         lastStatus = null;
         return response.getValues();
@@ -341,9 +340,9 @@ public class EmberNcp {
      */
     public EmberStatus clearKeyTable() {
         EzspClearKeyTableRequest request = new EzspClearKeyTableRequest();
-        EzspTransaction transaction = protocolHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspClearKeyTableResponse.class));
-        EzspClearKeyTableResponse response = (EzspClearKeyTableResponse) transaction.getResponse();
+        EzspTransaction<EzspClearKeyTableResponse> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspClearKeyTableResponse.class));
+        EzspClearKeyTableResponse response = transaction.getResponse();
         logger.debug(response.toString());
         lastStatus = response.getStatus();
         return lastStatus;
@@ -358,9 +357,9 @@ public class EmberNcp {
     public EmberKeyStruct getKey(EmberKeyType keyType) {
         EzspGetKeyRequest request = new EzspGetKeyRequest();
         request.setKeyType(keyType);
-        EzspTransaction transaction = protocolHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetKeyResponse.class));
-        EzspGetKeyResponse response = (EzspGetKeyResponse) transaction.getResponse();
+        EzspTransaction<EzspGetKeyResponse> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspGetKeyResponse.class));
+        EzspGetKeyResponse response = transaction.getResponse();
         logger.debug(response.toString());
         lastStatus = response.getStatus();
         if (lastStatus != EmberStatus.EMBER_SUCCESS) {
@@ -378,9 +377,9 @@ public class EmberNcp {
     public EmberKeyStruct getKeyTableEntry(int index) {
         EzspGetKeyTableEntryRequest request = new EzspGetKeyTableEntryRequest();
         request.setIndex(index);
-        EzspTransaction transaction = protocolHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetKeyTableEntryResponse.class));
-        EzspGetKeyTableEntryResponse response = (EzspGetKeyTableEntryResponse) transaction.getResponse();
+        EzspTransaction<EzspGetKeyTableEntryResponse> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspGetKeyTableEntryResponse.class));
+        EzspGetKeyTableEntryResponse response = transaction.getResponse();
         logger.debug(response.toString());
         lastStatus = response.getStatus();
         if (lastStatus != EmberStatus.EMBER_SUCCESS) {
@@ -399,9 +398,9 @@ public class EmberNcp {
         EzspGetConfigurationValueRequest request = new EzspGetConfigurationValueRequest();
         request.setConfigId(configId);
 
-        EzspTransaction transaction = protocolHandler.sendEzspTransaction(
-                new EzspSingleResponseTransaction(request, EzspGetConfigurationValueResponse.class));
-        EzspGetConfigurationValueResponse response = (EzspGetConfigurationValueResponse) transaction.getResponse();
+        EzspTransaction<EzspGetConfigurationValueResponse> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspGetConfigurationValueResponse.class));
+        EzspGetConfigurationValueResponse response = transaction.getResponse();
         lastStatus = null;
         logger.debug(response.toString());
 
@@ -425,9 +424,9 @@ public class EmberNcp {
         request.setValue(value);
         logger.debug(request.toString());
 
-        EzspTransaction transaction = protocolHandler.sendEzspTransaction(
-                new EzspSingleResponseTransaction(request, EzspSetConfigurationValueResponse.class));
-        EzspSetConfigurationValueResponse response = (EzspSetConfigurationValueResponse) transaction.getResponse();
+        EzspTransaction<EzspSetConfigurationValueResponse> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspSetConfigurationValueResponse.class));
+        EzspSetConfigurationValueResponse response = transaction.getResponse();
         lastStatus = null;
         logger.debug(response.toString());
 
@@ -445,9 +444,9 @@ public class EmberNcp {
         EzspSetPolicyRequest setPolicyRequest = new EzspSetPolicyRequest();
         setPolicyRequest.setPolicyId(policyId);
         setPolicyRequest.setDecisionId(decisionId);
-        EzspTransaction transaction = protocolHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(setPolicyRequest, EzspSetPolicyResponse.class));
-        EzspSetPolicyResponse setPolicyResponse = (EzspSetPolicyResponse) transaction.getResponse();
+        EzspTransaction<EzspSetPolicyResponse> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(setPolicyRequest, EzspSetPolicyResponse.class));
+        EzspSetPolicyResponse setPolicyResponse = transaction.getResponse();
         lastStatus = null;
         logger.debug(setPolicyResponse.toString());
         if (setPolicyResponse.getStatus() != EzspStatus.EZSP_SUCCESS) {
@@ -467,9 +466,9 @@ public class EmberNcp {
     public EzspDecisionId getPolicy(EzspPolicyId policyId) {
         EzspGetPolicyRequest getPolicyRequest = new EzspGetPolicyRequest();
         getPolicyRequest.setPolicyId(policyId);
-        EzspTransaction transaction = protocolHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(getPolicyRequest, EzspGetPolicyResponse.class));
-        EzspGetPolicyResponse getPolicyResponse = (EzspGetPolicyResponse) transaction.getResponse();
+        EzspTransaction<EzspGetPolicyResponse> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(getPolicyRequest, EzspGetPolicyResponse.class));
+        EzspGetPolicyResponse getPolicyResponse = transaction.getResponse();
         lastStatus = null;
         logger.debug(getPolicyResponse.toString());
         if (getPolicyResponse.getStatus() != EzspStatus.EZSP_SUCCESS) {
@@ -491,9 +490,9 @@ public class EmberNcp {
         EzspSetValueRequest request = new EzspSetValueRequest();
         request.setValueId(valueId);
         request.setValue(value);
-        EzspTransaction transaction = protocolHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspSetValueResponse.class));
-        EzspSetValueResponse response = (EzspSetValueResponse) transaction.getResponse();
+        EzspTransaction<EzspSetValueResponse> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspSetValueResponse.class));
+        EzspSetValueResponse response = transaction.getResponse();
         lastStatus = null;
         logger.debug(response.toString());
         if (response.getStatus() != EzspStatus.EZSP_SUCCESS) {
@@ -512,9 +511,9 @@ public class EmberNcp {
     public int[] getValue(EzspValueId valueId) {
         EzspGetValueRequest request = new EzspGetValueRequest();
         request.setValueId(valueId);
-        EzspTransaction transaction = protocolHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetValueResponse.class));
-        EzspGetValueResponse response = (EzspGetValueResponse) transaction.getResponse();
+        EzspTransaction<EzspGetValueResponse> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspGetValueResponse.class));
+        EzspGetValueResponse response = transaction.getResponse();
         lastStatus = null;
         logger.debug(response.toString());
         if (response.getStatus() != EzspStatus.EZSP_SUCCESS) {
@@ -538,9 +537,9 @@ public class EmberNcp {
         EzspAddTransientLinkKeyRequest request = new EzspAddTransientLinkKeyRequest();
         request.setPartner(partner);
         request.setTransientKey(emberKey);
-        EzspTransaction transaction = protocolHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspAddTransientLinkKeyResponse.class));
-        EzspAddTransientLinkKeyResponse response = (EzspAddTransientLinkKeyResponse) transaction.getResponse();
+        EzspTransaction<EzspAddTransientLinkKeyResponse> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspAddTransientLinkKeyResponse.class));
+        EzspAddTransientLinkKeyResponse response = transaction.getResponse();
         lastStatus = response.getStatus();
         logger.debug(response.toString());
         if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
@@ -559,9 +558,9 @@ public class EmberNcp {
      */
     public EmberCertificateData getCertificateData() {
         EzspGetCertificateRequest request = new EzspGetCertificateRequest();
-        EzspTransaction transaction = protocolHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetCertificateResponse.class));
-        EzspGetCertificateResponse response = (EzspGetCertificateResponse) transaction.getResponse();
+        EzspTransaction<EzspGetCertificateResponse> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspGetCertificateResponse.class));
+        EzspGetCertificateResponse response = transaction.getResponse();
         lastStatus = response.getStatus();
         if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
             logger.debug("Error getting 163k1 certificate: {}", response);
@@ -578,9 +577,9 @@ public class EmberNcp {
      */
     public EmberCertificate283k1Data getCertificate283k1Data() {
         EzspGetCertificate283k1Request request = new EzspGetCertificate283k1Request();
-        EzspTransaction transaction = protocolHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetCertificate283k1Response.class));
-        EzspGetCertificate283k1Response response = (EzspGetCertificate283k1Response) transaction.getResponse();
+        EzspTransaction<EzspGetCertificate283k1Response> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspGetCertificate283k1Response.class));
+        EzspGetCertificate283k1Response response = transaction.getResponse();
         lastStatus = response.getStatus();
         if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
             logger.debug("Error getting 283k1 certificate: {}", response);
@@ -607,9 +606,9 @@ public class EmberNcp {
         request.setData(code);
         request.setFinalize(true);
         request.setLength(code.length);
-        EzspTransaction transaction = protocolHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspAesMmoHashResponse.class));
-        EzspAesMmoHashResponse response = (EzspAesMmoHashResponse) transaction.getResponse();
+        EzspTransaction<EzspAesMmoHashResponse> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspAesMmoHashResponse.class));
+        EzspAesMmoHashResponse response = transaction.getResponse();
         lastStatus = response.getStatus();
         logger.debug(response.toString());
         if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
@@ -626,9 +625,9 @@ public class EmberNcp {
      */
     public IeeeAddress getIeeeAddress() {
         EzspGetEui64Request request = new EzspGetEui64Request();
-        EzspTransaction transaction = protocolHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetEui64Response.class));
-        EzspGetEui64Response response = (EzspGetEui64Response) transaction.getResponse();
+        EzspTransaction<EzspGetEui64Response> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspGetEui64Response.class));
+        EzspGetEui64Response response = transaction.getResponse();
         return response.getEui64();
     }
 
@@ -639,9 +638,9 @@ public class EmberNcp {
      */
     public int getNwkAddress() {
         EzspGetNodeIdRequest request = new EzspGetNodeIdRequest();
-        EzspTransaction transaction = protocolHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetNodeIdResponse.class));
-        EzspGetNodeIdResponse response = (EzspGetNodeIdResponse) transaction.getResponse();
+        EzspTransaction<EzspGetNodeIdResponse> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspGetNodeIdResponse.class));
+        EzspGetNodeIdResponse response = transaction.getResponse();
         return response.getNodeId();
     }
 
@@ -658,9 +657,9 @@ public class EmberNcp {
     public EmberStatus setRadioPower(int power) {
         EzspSetRadioPowerRequest request = new EzspSetRadioPowerRequest();
         request.setPower(power);
-        EzspTransaction transaction = protocolHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspSetRadioPowerResponse.class));
-        EzspSetRadioPowerResponse response = (EzspSetRadioPowerResponse) transaction.getResponse();
+        EzspTransaction<EzspSetRadioPowerResponse> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspSetRadioPowerResponse.class));
+        EzspSetRadioPowerResponse response = transaction.getResponse();
         return response.getStatus();
     }
 
@@ -672,9 +671,9 @@ public class EmberNcp {
     public EmberLibraryStatus getLibraryStatus(EmberLibraryId libraryId) {
         EzspGetLibraryStatusRequest request = new EzspGetLibraryStatusRequest();
         request.setLibraryId(libraryId);
-        EzspTransaction transaction = protocolHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetLibraryStatusResponse.class));
-        EzspGetLibraryStatusResponse response = (EzspGetLibraryStatusResponse) transaction.getResponse();
+        EzspTransaction<EzspGetLibraryStatusResponse> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspGetLibraryStatusResponse.class));
+        EzspGetLibraryStatusResponse response = transaction.getResponse();
         return response.getStatus();
     }
 
@@ -697,10 +696,9 @@ public class EmberNcp {
         request.setAddress(address);
         request.setKeyData(keyData);
         request.setLinkKey(linkKey);
-        EzspTransaction transaction = protocolHandler.sendEzspTransaction(
-                new EzspSingleResponseTransaction(request, EzspAddOrUpdateKeyTableEntryResponse.class));
-        EzspAddOrUpdateKeyTableEntryResponse response = (EzspAddOrUpdateKeyTableEntryResponse) transaction
-                .getResponse();
+        EzspTransaction<EzspAddOrUpdateKeyTableEntryResponse> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspAddOrUpdateKeyTableEntryResponse.class));
+        EzspAddOrUpdateKeyTableEntryResponse response = transaction.getResponse();
         return response.getStatus();
     }
 
@@ -714,8 +712,8 @@ public class EmberNcp {
         EzspSetPowerDescriptorRequest request = new EzspSetPowerDescriptorRequest();
         request.setDescriptor(descriptor);
         protocolHandler.queueFrame(request);
-        protocolHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspSetPowerDescriptorResponse.class));
+        protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspSetPowerDescriptorResponse.class));
     }
 
     /**
@@ -728,8 +726,8 @@ public class EmberNcp {
         EzspSetManufacturerCodeRequest request = new EzspSetManufacturerCodeRequest();
         request.setCode(code);
         protocolHandler.queueFrame(request);
-        protocolHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspSetManufacturerCodeResponse.class));
+        protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspSetManufacturerCodeResponse.class));
     }
 
     /**
@@ -814,11 +812,11 @@ public class EmberNcp {
         activeScan.setDuration(scanDuration);
         activeScan.setScanType(EzspNetworkScanType.EZSP_ACTIVE_SCAN);
 
-        Set<Class<?>> relatedResponses = new HashSet<Class<?>>(
+        Set<Class<? extends EzspFrameResponse>> relatedResponses = new HashSet<>(
                 Arrays.asList(EzspStartScanResponse.class, EzspNetworkFoundHandler.class));
-        EzspTransaction transaction = protocolHandler.sendEzspTransaction(
-                new EzspMultiResponseTransaction(activeScan, EzspScanCompleteHandler.class, relatedResponses));
-        EzspScanCompleteHandler activeScanCompleteResponse = (EzspScanCompleteHandler) transaction.getResponse();
+        EzspTransaction<EzspScanCompleteHandler> transaction = protocolHandler.sendEzspTransaction(
+                new EzspMultiResponseTransaction<>(activeScan, EzspScanCompleteHandler.class, relatedResponses));
+        EzspScanCompleteHandler activeScanCompleteResponse = transaction.getResponse();
         logger.debug(activeScanCompleteResponse.toString());
 
         if (activeScanCompleteResponse.getStatus() != EmberStatus.EMBER_SUCCESS) {
@@ -852,12 +850,13 @@ public class EmberNcp {
         energyScan.setDuration(scanDuration);
         energyScan.setScanType(EzspNetworkScanType.EZSP_ENERGY_SCAN);
 
-        Set<Class<?>> relatedResponses = new HashSet<Class<?>>(
+        Set<Class<? extends EzspFrameResponse>> relatedResponses = new HashSet<>(
                 Arrays.asList(EzspStartScanResponse.class, EzspEnergyScanResultHandler.class));
-        EzspTransaction transaction = protocolHandler.sendEzspTransaction(
-                new EzspMultiResponseTransaction(energyScan, EzspScanCompleteHandler.class, relatedResponses));
 
-        EzspScanCompleteHandler scanCompleteResponse = (EzspScanCompleteHandler) transaction.getResponse();
+        EzspTransaction<EzspScanCompleteHandler> transaction = protocolHandler.sendEzspTransaction(
+                new EzspMultiResponseTransaction<>(energyScan, EzspScanCompleteHandler.class, relatedResponses));
+
+        EzspScanCompleteHandler scanCompleteResponse = transaction.getResponse();
         logger.debug(scanCompleteResponse.toString());
 
         List<EzspEnergyScanResultHandler> channels = new ArrayList<>();
@@ -885,9 +884,9 @@ public class EmberNcp {
     private int[] getMfgToken(EzspMfgTokenId tokenId) {
         EzspGetMfgTokenRequest request = new EzspGetMfgTokenRequest();
         request.setTokenId(tokenId);
-        EzspTransaction transaction = protocolHandler
-                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetMfgTokenResponse.class));
-        EzspGetMfgTokenResponse response = (EzspGetMfgTokenResponse) transaction.getResponse();
+        EzspTransaction<EzspGetMfgTokenResponse> transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction<>(request, EzspGetMfgTokenResponse.class));
+        EzspGetMfgTokenResponse response = transaction.getResponse();
         return response.getTokenData();
     }
 }

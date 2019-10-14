@@ -687,13 +687,13 @@ public class SpiFrameHandler implements EzspProtocolHandler {
     }
 
     @Override
-    public Future<EzspFrame> sendEzspRequestAsync(final EzspTransaction ezspTransaction) {
-        class TransactionWaiter implements Callable<EzspFrame>, SpiListener {
+    public <T extends EzspFrameResponse> Future<T> sendEzspRequestAsync(final EzspTransaction<T> ezspTransaction) {
+        class TransactionWaiter implements Callable<T>, SpiListener {
             // private EzspFrame response = null;
             private boolean complete = false;
 
             @Override
-            public EzspFrame call() {
+            public T call() {
                 // Register a listener
                 addTransactionListener(this);
 
@@ -714,7 +714,7 @@ public class SpiFrameHandler implements EzspProtocolHandler {
                 // Remove the listener
                 removeTransactionListener(this);
 
-                return null;// response;
+                return ezspTransaction.getResponse();// response;
             }
 
             @Override
@@ -742,8 +742,7 @@ public class SpiFrameHandler implements EzspProtocolHandler {
             }
         }
 
-        Callable<EzspFrame> worker = new TransactionWaiter();
-        return executor.submit(worker);
+        return executor.submit(new TransactionWaiter());
     }
 
     @Override
