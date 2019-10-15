@@ -275,7 +275,13 @@ public class ZigBeeNodeServiceDiscovererTest {
 
         NodeDescriptor initialNodeDescriptor = Mockito.mock(NodeDescriptor.class);
         Mockito.when(initialNodeDescriptor.getLogicalType()).thenReturn(LogicalType.END_DEVICE);
-        Mockito.when(node.getNodeDescriptor()).thenReturn(initialNodeDescriptor);
+        Mockito.when(node.getLogicalType()).thenAnswer(x -> {
+            if (node.getNodeDescriptor() == null) {
+                return LogicalType.UNKNOWN;
+            } else {
+                return node.getNodeDescriptor().getLogicalType();
+            }
+        });
 
         PowerDescriptor initialPowerDescriptor = Mockito.mock(PowerDescriptor.class);
         Mockito.when(initialPowerDescriptor.getCurrentPowerMode()).thenReturn(CurrentPowerModeType.UNKNOWN);
@@ -288,8 +294,16 @@ public class ZigBeeNodeServiceDiscovererTest {
         TestUtilities.setField(ZigBeeNodeServiceDiscoverer.class, discoverer, "futureTask", futureTask);
 
         discoverer.updateMesh();
+        assertEquals(LogicalType.UNKNOWN, discoverer.getNode().getLogicalType());
         assertFalse(discoverer.getTasks().contains(NodeDiscoveryTask.ROUTES));
-        assertTrue(discoverer.getTasks().contains(NodeDiscoveryTask.NEIGHBORS));
+        assertFalse(discoverer.getTasks().contains(NodeDiscoveryTask.NEIGHBORS));
+
+        Mockito.when(node.getNodeDescriptor()).thenReturn(initialNodeDescriptor);
+
+        discoverer.updateMesh();
+        assertEquals(LogicalType.END_DEVICE, discoverer.getNode().getLogicalType());
+        assertFalse(discoverer.getTasks().contains(NodeDiscoveryTask.ROUTES));
+        assertFalse(discoverer.getTasks().contains(NodeDiscoveryTask.NEIGHBORS));
 
         Mockito.when(initialNodeDescriptor.getLogicalType()).thenReturn(LogicalType.ROUTER);
         discoverer.updateMesh();

@@ -733,12 +733,10 @@ public class ZigBeeNodeServiceDiscoverer {
      * @return true if the device is not known to not be an end-device
      */
     private boolean isPossibleEndDevice() {
-        if (node.getNodeDescriptor() != null) {
-            switch (node.getLogicalType()) {
-                case ROUTER:
-                case COORDINATOR:
-                    return false;
-            }
+        switch (node.getLogicalType()) {
+            case ROUTER:
+            case COORDINATOR:
+                return false;
         }
         return true;
     }
