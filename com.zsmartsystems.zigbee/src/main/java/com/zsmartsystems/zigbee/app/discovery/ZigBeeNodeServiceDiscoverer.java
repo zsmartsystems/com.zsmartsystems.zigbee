@@ -203,16 +203,12 @@ public class ZigBeeNodeServiceDiscoverer {
         synchronized (discoveryTasks) {
             logger.debug("{}: Node SVC Discovery: starting new tasks {}", node.getIeeeAddress(), newTasks);
 
-            // Remove any tasks that we know are not supported by this device
-            if ((!supportsManagementLqi || node.getNodeDescriptor() != null
-                    && node.getNodeDescriptor().getLogicalType() == LogicalType.UNKNOWN)
-                    && newTasks.contains(NodeDiscoveryTask.NEIGHBORS)) {
+            // Remove router/coordinator-only tasks if the device is possibly an end node.
+            final boolean isPossibleEndDevice = isPossibleEndDevice();
+            if ((!supportsManagementLqi || isPossibleEndDevice)) {
                 newTasks.remove(NodeDiscoveryTask.NEIGHBORS);
             }
-            if ((!supportsManagementRouting || node.getNodeDescriptor() != null
-                    && (node.getNodeDescriptor().getLogicalType() == LogicalType.UNKNOWN
-                            || node.getNodeDescriptor().getLogicalType() == LogicalType.END_DEVICE))
-                    && newTasks.contains(NodeDiscoveryTask.ROUTES)) {
+            if ((!supportsManagementRouting || isPossibleEndDevice)) {
                 newTasks.remove(NodeDiscoveryTask.ROUTES);
             }
 
@@ -461,6 +457,9 @@ public class ZigBeeNodeServiceDiscoverer {
      * @throws InterruptedException
      */
     private boolean requestNeighborTable() throws InterruptedException, ExecutionException {
+        if (!supportsManagementLqi) {
+            return true;
+        }
         // Start index for the list is 0
         int startIndex = 0;
         int totalNeighbors = 0;
@@ -515,6 +514,9 @@ public class ZigBeeNodeServiceDiscoverer {
      * @throws InterruptedException
      */
     private boolean requestRoutingTable() throws InterruptedException, ExecutionException {
+        if (!supportsManagementRouting) {
+            return true;
+        }
         // Start index for the list is 0
         int startIndex = 0;
         int totalRoutes = 0;
@@ -533,11 +535,11 @@ public class ZigBeeNodeServiceDiscoverer {
             }
 
             if (routingResponse.getStatus() == ZdoStatus.NOT_SUPPORTED) {
-                logger.debug("{}: Node SVC Discovery ManagementLqiRequest not supported", node.getIeeeAddress());
+                logger.debug("{}: Node SVC Discovery ManagementRoutingRequest not supported", node.getIeeeAddress());
                 supportsManagementRouting = false;
                 return true;
             } else if (routingResponse.getStatus() != ZdoStatus.SUCCESS) {
-                logger.debug("{}: Node SVC Discovery: ManagementLqiRequest failed", node.getIeeeAddress());
+                logger.debug("{}: Node SVC Discovery: ManagementRoutingRequest failed", node.getIeeeAddress());
                 return false;
             }
 
@@ -711,17 +713,34 @@ public class ZigBeeNodeServiceDiscoverer {
     }
 
     /**
-     * Starts service discovery for the node in order to update the mesh. This adds the
+     * Starts service discovery to update the mesh. If the node is known to be a router or a coordinator, this adds the
      * {@link NodeDiscoveryTask#NEIGHBORS} and {@link NodeDiscoveryTask#ROUTES} tasks to the task list.
-     * <p>
-     * Note that {@link NodeDiscoveryTask#ROUTES} is not added for end devices.
      */
     public void updateMesh() {
-        logger.debug("{}: Node SVC Discovery: Update mesh", node.getIeeeAddress());
-        Set<NodeDiscoveryTask> tasks = new HashSet<NodeDiscoveryTask>();
-        tasks.addAll(meshUpdateTasks);
+        if (isPossibleEndDevice()) {
+            logger.debug("{}: Node SVC Discovery: Update mesh not performed for possible end device",
+                    node.getIeeeAddress());
 
-        startDiscovery(tasks);
+        } else {
+            logger.debug("{}: Node SVC Discovery: Update mesh", node.getIeeeAddress());
+            startDiscovery(new HashSet<>(meshUpdateTasks));
+        }
+    }
+
+    /**
+     * Is the node possibly an endNode?
+     *
+     * @return true if the device is not known to not be an end-device
+     */
+    private boolean isPossibleEndDevice() {
+        if (node.getNodeDescriptor() != null) {
+            switch (node.getLogicalType()) {
+                case ROUTER:
+                case COORDINATOR:
+                    return false;
+            }
+        }
+        return true;
     }
 
     /**
