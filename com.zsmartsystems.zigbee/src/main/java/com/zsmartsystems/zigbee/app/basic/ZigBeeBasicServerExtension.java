@@ -57,12 +57,14 @@ public class ZigBeeBasicServerExtension implements ZigBeeNetworkExtension, ZigBe
 
     @Override
     public ZigBeeStatus extensionStartup() {
+        logger.debug("Basic Server Extension: Startup");
         networkManager.addNetworkNodeListener(this);
         return ZigBeeStatus.SUCCESS;
     }
 
     @Override
     public void extensionShutdown() {
+        logger.debug("Basic Server Extension: Shutdown");
     }
 
     @Override
@@ -83,6 +85,7 @@ public class ZigBeeBasicServerExtension implements ZigBeeNetworkExtension, ZigBe
             ZclBasicCluster cluster = new ZclBasicCluster(null);
             ZclAttribute attribute = cluster.getAttribute(attributeId);
             if (attribute == null) {
+                logger.debug("Basic Server Extension: Attribute {} not found", attributeId);
                 return false;
             }
             attributes.put(attributeId, attribute);
