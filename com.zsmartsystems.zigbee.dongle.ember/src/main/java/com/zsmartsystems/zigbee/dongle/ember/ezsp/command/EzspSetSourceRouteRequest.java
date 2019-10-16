@@ -107,7 +107,7 @@ public class EzspSetSourceRouteRequest extends EzspFrameRequest {
     public String toString() {
         final StringBuilder builder = new StringBuilder(103);
         builder.append("EzspSetSourceRouteRequest [destination=");
-        builder.append(destination);
+        builder.append(String.format("%04X", destination));
         builder.append(", relayList=");
         for (int cnt = 0; cnt < relayList.length; cnt++) {
             if (cnt > 0) {

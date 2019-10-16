@@ -312,7 +312,7 @@ public class EmberNetworkParameters {
         builder.append(", joinMethod=");
         builder.append(joinMethod);
         builder.append(", nwkManagerId=");
-        builder.append(nwkManagerId);
+        builder.append(String.format("%04X", nwkManagerId));
         builder.append(", nwkUpdateId=");
         builder.append(nwkUpdateId);
         builder.append(", channels=");

@@ -508,11 +508,13 @@
 				<data_type>EmberNodeId</data_type>
 				<name>newChildId</name>
 				<description>The source/neighbor for which the source route entry is changed.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>EmberNodeId</data_type>
 				<name>newParentId</name>
 				<description>The parent of the source/neighbor for which the source route entry is changed.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>bool</data_type>
@@ -533,6 +535,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>source</name>
 				<description>The short id of the concentrator.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>EmberEUI64</data_type>
@@ -613,6 +616,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>nodeId</name>
 				<description>The 16-bit ID.</description>
+				<display>hex[4]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -717,11 +721,13 @@
 				<data_type>EmberNodeId</data_type>
 				<name>target</name>
 				<description>The network address of the node to perform the scan.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint32_t</data_type>
 				<name>scanChannels</name>
 				<description>A mask of the channels to be scanned.</description>
+				<display>hex[8]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint8_t</data_type>
@@ -872,6 +878,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>destShort</name>
 				<description>The node ID of the device that will receive the message</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>EmberEUI64</data_type>
@@ -929,6 +936,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>childId</name>
 				<description>The node ID of the child.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>EmberEUI64</data_type>
@@ -989,6 +997,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>parentNodeId</name>
 				<description>The parent's node ID. The value is undefined for nodes without parents (coordinators and nodes that are not joined to a network).</description>
+				<display>hex[4]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -1014,6 +1023,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>childId</name>
 				<description>The node ID of the child.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>EmberEUI64</data_type>
@@ -1254,6 +1264,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>nodeId</name>
 				<description>The short ID of the destination node or EMBER_NULL_NODE_ID if no destination is known.</description>
+				<display>hex[4]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -1272,6 +1283,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>nodeId</name>
 				<description>The short ID of the destination node.</description>
+				<display>hex[4]</display>
 			</parameter>
 		</command_parameters>
 		<response_parameters>
@@ -1337,6 +1349,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>indexOrDestination</name>
 				<description>Depending on the type of addressing used, this is either the EmberNodeId of the destination, an index into the address table, or an index into the binding table.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>EmberApsFrame</data_type>
@@ -1386,6 +1399,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>destination</name>
 				<description>The destination to which to send the broadcast. This must be one of the three ZigBee broadcast addresses.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>EmberApsFrame</data_type>
@@ -1440,6 +1454,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>sender</name>
 				<description>Value supplied by incoming unicast.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>EmberApsFrame</data_type>
@@ -1633,6 +1648,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>target</name>
 				<description>The short id of the remote node.</description>
+				<display>hex[4]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -1668,6 +1684,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>sender</name>
 				<description>The sender of the message.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint8_t</data_type>
@@ -1747,6 +1764,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>newNodeId</name>
 				<description>The Node Id of the node whose status changed.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>EmberEUI64</data_type>
@@ -1767,6 +1785,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>parentOfNewNodeId</name>
 				<description>The parent of the node whose status has changed.</description>
+				<display>hex[4]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -1841,6 +1860,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>destination</name>
 				<description>The destination of the source route.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint8_t</data_type>
@@ -1875,6 +1895,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>source</name>
 				<description>The source of the route record.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>EmberEUI64</data_type>
@@ -1922,6 +1943,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>target</name>
 				<description>The short id of the remote node.</description>
+				<display>hex[4]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -2068,6 +2090,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>nodeId</name>
 				<description>The short ID of the node or EMBER_NULL_NODE_ID if the short ID is not known.</description>
+				<display>hex[4]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -2081,6 +2104,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>nodeId</name>
 				<description>The short ID of the node or EMBER_NULL_NODE_ID if the short ID is not known.</description>
+				<display>hex[4]</display>
 			</parameter>
 		</command_parameters>
 		<response_parameters>
@@ -2423,6 +2447,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>id</name>
 				<description>The short id for which a conflict was detected.</description>
+				<display>hex[4]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -3279,6 +3304,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>destinationNodeId</name>
 				<description>The short address of the node to which this command will be sent</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>EmberEUI64</data_type>
@@ -3596,6 +3622,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>nwkManagerId</name>
 				<description>NWK Manager ID. The ID of the network manager in the current network. This may only be set at joining when using EMBER_USE_NWK_COMMISSIONING as the join method.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint8_t</data_type>
@@ -3973,6 +4000,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>sinkNodeId</name>
 				<description>The short address of the target sink.</description>
+				<display>hex[4]</display>
 			</parameter>
 		</parameters>
 	</structure>
@@ -4005,6 +4033,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>assignedAlias</name>
 				<description>The assigned alias for the GPD.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint8_t</data_type>
@@ -4075,6 +4104,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>assignedAlias</name>
 				<description>The assigned alias for the GPD.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint8_t</data_type>

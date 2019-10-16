@@ -65,7 +65,7 @@ public class EzspGetNodeIdResponse extends EzspFrameResponse {
     public String toString() {
         final StringBuilder builder = new StringBuilder(49);
         builder.append("EzspGetNodeIdResponse [nodeId=");
-        builder.append(nodeId);
+        builder.append(String.format("%04X", nodeId));
         builder.append(']');
         return builder.toString();
     }

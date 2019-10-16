@@ -497,7 +497,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         // Get the security state - mainly for information
         EmberCurrentSecurityState currentSecurityState = ncp.getCurrentSecurityState();
-        logger.debug("Current Security State = {}", currentSecurityState);
+        logger.debug("EZSP Current Security State = {}", currentSecurityState);
 
         EmberStatus txPowerResponse = ncp.setRadioPower(networkParameters.getRadioTxPower());
         if (txPowerResponse != EmberStatus.EMBER_SUCCESS) {
@@ -508,6 +508,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         if (address != 0xFFFE) {
             nwkAddress = address;
         }
+        logger.debug("EZSP Initialisation complete. NWK Address = {}, State = {}", String.format("%04X", nwkAddress),
+                networkState);
 
         initialised = true;
 

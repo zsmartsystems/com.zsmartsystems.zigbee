@@ -109,7 +109,7 @@ public class EzspSendTrustCenterLinkKeyRequest extends EzspFrameRequest {
     public String toString() {
         final StringBuilder builder = new StringBuilder(86);
         builder.append("EzspSendTrustCenterLinkKeyRequest [destinationNodeId=");
-        builder.append(destinationNodeId);
+        builder.append(String.format("%04X", destinationNodeId));
         builder.append(", destinationEui64=");
         builder.append(destinationEui64);
         builder.append(']');

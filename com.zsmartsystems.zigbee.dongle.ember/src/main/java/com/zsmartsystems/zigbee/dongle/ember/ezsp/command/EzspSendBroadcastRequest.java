@@ -201,7 +201,7 @@ public class EzspSendBroadcastRequest extends EzspFrameRequest {
     public String toString() {
         final StringBuilder builder = new StringBuilder(177);
         builder.append("EzspSendBroadcastRequest [destination=");
-        builder.append(destination);
+        builder.append(String.format("%04X", destination));
         builder.append(", apsFrame=");
         builder.append(apsFrame);
         builder.append(", radius=");

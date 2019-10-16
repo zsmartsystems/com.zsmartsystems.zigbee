@@ -146,7 +146,7 @@ public class EmberGpSinkListEntry {
         builder.append(", sinkEui=");
         builder.append(sinkEui);
         builder.append(", sinkNodeId=");
-        builder.append(sinkNodeId);
+        builder.append(String.format("%04X", sinkNodeId));
         builder.append(']');
         return builder.toString();
     }

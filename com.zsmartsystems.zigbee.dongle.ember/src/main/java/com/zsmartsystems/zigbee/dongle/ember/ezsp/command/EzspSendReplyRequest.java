@@ -168,7 +168,7 @@ public class EzspSendReplyRequest extends EzspFrameRequest {
     public String toString() {
         final StringBuilder builder = new StringBuilder(148);
         builder.append("EzspSendReplyRequest [sender=");
-        builder.append(sender);
+        builder.append(String.format("%04X", sender));
         builder.append(", apsFrame=");
         builder.append(apsFrame);
         builder.append(", messageTag=");

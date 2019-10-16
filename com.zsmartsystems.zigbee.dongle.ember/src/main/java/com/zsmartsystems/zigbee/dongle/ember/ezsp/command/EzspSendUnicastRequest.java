@@ -223,7 +223,7 @@ public class EzspSendUnicastRequest extends EzspFrameRequest {
         builder.append("EzspSendUnicastRequest [type=");
         builder.append(type);
         builder.append(", indexOrDestination=");
-        builder.append(indexOrDestination);
+        builder.append(String.format("%04X", indexOrDestination));
         builder.append(", apsFrame=");
         builder.append(apsFrame);
         builder.append(", messageTag=");

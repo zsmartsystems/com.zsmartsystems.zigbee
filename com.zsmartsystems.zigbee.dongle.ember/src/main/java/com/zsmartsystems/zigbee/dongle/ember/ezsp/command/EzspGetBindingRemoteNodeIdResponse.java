@@ -70,7 +70,7 @@ public class EzspGetBindingRemoteNodeIdResponse extends EzspFrameResponse {
     public String toString() {
         final StringBuilder builder = new StringBuilder(62);
         builder.append("EzspGetBindingRemoteNodeIdResponse [nodeId=");
-        builder.append(nodeId);
+        builder.append(String.format("%04X", nodeId));
         builder.append(']');
         return builder.toString();
     }

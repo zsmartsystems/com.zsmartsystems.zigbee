@@ -132,7 +132,7 @@ public class EzspGetParentChildParametersResponse extends EzspFrameResponse {
         builder.append(", parentEui64=");
         builder.append(parentEui64);
         builder.append(", parentNodeId=");
-        builder.append(parentNodeId);
+        builder.append(String.format("%04X", parentNodeId));
         builder.append(']');
         return builder.toString();
     }

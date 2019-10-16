@@ -97,7 +97,7 @@ public class EzspIncomingRouteErrorHandler extends EzspFrameResponse {
         builder.append("EzspIncomingRouteErrorHandler [status=");
         builder.append(status);
         builder.append(", target=");
-        builder.append(target);
+        builder.append(String.format("%04X", target));
         builder.append(']');
         return builder.toString();
     }

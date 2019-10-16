@@ -284,7 +284,7 @@ public class EzspIncomingMessageHandler extends EzspFrameResponse {
         builder.append(", lastHopRssi=");
         builder.append(lastHopRssi);
         builder.append(", sender=");
-        builder.append(sender);
+        builder.append(String.format("%04X", sender));
         builder.append(", bindingIndex=");
         builder.append(bindingIndex);
         builder.append(", addressIndex=");
