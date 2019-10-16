@@ -21,11 +21,15 @@ public abstract class ZdoCommand extends ZigBeeCommand {
 
     @Override
     public void serialize(ZclFieldSerializer serializer) {
-        serializer.serialize(0, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        if (getTransactionId() == null) {
+            setTransactionId(0);
+        }
+        serializer.serialize(getTransactionId(), ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        Integer sequenceNumber = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        setTransactionId(sequenceNumber);
     }
 }
