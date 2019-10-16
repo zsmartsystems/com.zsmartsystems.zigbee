@@ -121,9 +121,9 @@ public class EzspChangeSourceRouteHandler extends EzspFrameResponse {
     public String toString() {
         final StringBuilder builder = new StringBuilder(106);
         builder.append("EzspChangeSourceRouteHandler [newChildId=");
-        builder.append(newChildId);
+        builder.append(String.format("%04X", newChildId));
         builder.append(", newParentId=");
-        builder.append(newParentId);
+        builder.append(String.format("%04X", newParentId));
         builder.append(", ourChild=");
         builder.append(ourChild);
         builder.append(']');

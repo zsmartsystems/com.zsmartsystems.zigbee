@@ -384,7 +384,7 @@ public class EmberGpProxyTableEntry {
         builder.append(", gpd=");
         builder.append(gpd);
         builder.append(", assignedAlias=");
-        builder.append(assignedAlias);
+        builder.append(String.format("%04X", assignedAlias));
         builder.append(", securityOptions=");
         builder.append(securityOptions);
         builder.append(", gpdSecurityFrameCounter=");

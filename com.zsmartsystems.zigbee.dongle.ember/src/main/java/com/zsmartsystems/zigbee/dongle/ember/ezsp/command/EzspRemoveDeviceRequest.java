@@ -136,7 +136,7 @@ public class EzspRemoveDeviceRequest extends EzspFrameRequest {
     public String toString() {
         final StringBuilder builder = new StringBuilder(101);
         builder.append("EzspRemoveDeviceRequest [destShort=");
-        builder.append(destShort);
+        builder.append(String.format("%04X", destShort));
         builder.append(", destLong=");
         builder.append(destLong);
         builder.append(", targetLong=");

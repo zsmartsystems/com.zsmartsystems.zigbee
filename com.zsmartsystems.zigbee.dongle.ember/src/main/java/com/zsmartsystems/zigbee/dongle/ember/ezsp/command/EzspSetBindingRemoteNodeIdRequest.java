@@ -109,7 +109,7 @@ public class EzspSetBindingRemoteNodeIdRequest extends EzspFrameRequest {
         builder.append("EzspSetBindingRemoteNodeIdRequest [index=");
         builder.append(index);
         builder.append(", nodeId=");
-        builder.append(nodeId);
+        builder.append(String.format("%04X", nodeId));
         builder.append(']');
         return builder.toString();
     }

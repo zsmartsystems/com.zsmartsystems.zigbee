@@ -368,7 +368,7 @@ public class EmberGpSinkTableEntry {
         }
         builder.append('}');
         builder.append(", assignedAlias=");
-        builder.append(assignedAlias);
+        builder.append(String.format("%04X", assignedAlias));
         builder.append(", groupcastRadius=");
         builder.append(groupcastRadius);
         builder.append(", securityOptions=");

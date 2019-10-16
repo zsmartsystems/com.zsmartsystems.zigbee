@@ -182,7 +182,7 @@ public class EzspTrustCenterJoinHandler extends EzspFrameResponse {
     public String toString() {
         final StringBuilder builder = new StringBuilder(154);
         builder.append("EzspTrustCenterJoinHandler [newNodeId=");
-        builder.append(newNodeId);
+        builder.append(String.format("%04X", newNodeId));
         builder.append(", newNodeEui64=");
         builder.append(newNodeEui64);
         builder.append(", status=");
@@ -190,7 +190,7 @@ public class EzspTrustCenterJoinHandler extends EzspFrameResponse {
         builder.append(", policyDecision=");
         builder.append(policyDecision);
         builder.append(", parentOfNewNodeId=");
-        builder.append(parentOfNewNodeId);
+        builder.append(String.format("%04X", parentOfNewNodeId));
         builder.append(']');
         return builder.toString();
     }

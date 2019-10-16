@@ -183,7 +183,7 @@ public class EzspChildJoinHandler extends EzspFrameResponse {
         builder.append(", joining=");
         builder.append(joining);
         builder.append(", childId=");
-        builder.append(childId);
+        builder.append(String.format("%04X", childId));
         builder.append(", childEui64=");
         builder.append(childEui64);
         builder.append(", childType=");

@@ -167,9 +167,9 @@ public class EzspEnergyScanRequestRequest extends EzspFrameRequest {
     public String toString() {
         final StringBuilder builder = new StringBuilder(131);
         builder.append("EzspEnergyScanRequestRequest [target=");
-        builder.append(target);
+        builder.append(String.format("%04X", target));
         builder.append(", scanChannels=");
-        builder.append(scanChannels);
+        builder.append(String.format("%08X", scanChannels));
         builder.append(", scanDuration=");
         builder.append(scanDuration);
         builder.append(", scanCount=");

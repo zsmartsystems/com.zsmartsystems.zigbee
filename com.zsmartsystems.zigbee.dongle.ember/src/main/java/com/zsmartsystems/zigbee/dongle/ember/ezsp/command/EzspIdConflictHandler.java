@@ -69,7 +69,7 @@ public class EzspIdConflictHandler extends EzspFrameResponse {
     public String toString() {
         final StringBuilder builder = new StringBuilder(49);
         builder.append("EzspIdConflictHandler [id=");
-        builder.append(id);
+        builder.append(String.format("%04X", id));
         builder.append(']');
         return builder.toString();
     }

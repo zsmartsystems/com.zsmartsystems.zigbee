@@ -179,7 +179,7 @@ public class EzspIncomingRouteRecordHandler extends EzspFrameResponse {
     public String toString() {
         final StringBuilder builder = new StringBuilder(183);
         builder.append("EzspIncomingRouteRecordHandler [source=");
-        builder.append(source);
+        builder.append(String.format("%04X", source));
         builder.append(", sourceEui=");
         builder.append(sourceEui);
         builder.append(", lastHopLqi=");
