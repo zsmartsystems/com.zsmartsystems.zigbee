@@ -1102,7 +1102,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             NotificationService.execute(new Runnable() {
                 @Override
                 public void run() {
-                    setNetworkStateRunnable(state);
+                    setNetworkStateOnline();
                 }
             });
 
@@ -1119,20 +1119,15 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
     }
 
-    private void setNetworkStateRunnable(final ZigBeeNetworkState state) {
+    private void setNetworkStateOnline() {
         synchronized (this) {
-            networkState = state;
-
-            logger.debug("Network state is updated to {}", state);
+            logger.debug("Network state ONLINE process running");
 
             localNwkAddress = transport.getNwkAddress();
             localIeeeAddress = transport.getIeeeAddress();
 
             // Make sure that we know the local node, and that the network address is correct.
             addLocalNode();
-
-            // Globally update the state
-            networkState = state;
 
             // Disable JOIN mode if we are the coordinator.
             // This should be disabled by default (at least in ZigBee 3.0) but some older stacks may
@@ -1163,7 +1158,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             NotificationService.execute(new Runnable() {
                 @Override
                 public void run() {
-                    stateListener.networkStateUpdated(state);
+                    stateListener.networkStateUpdated(ZigBeeNetworkState.ONLINE);
                 }
             });
         }
