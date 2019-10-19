@@ -490,7 +490,7 @@ public class ZclAttribute {
         StringBuilder builder = new StringBuilder(80);
 
         builder.append("ZclAttribute [cluster=");
-        builder.append(cluster);
+        builder.append(cluster.getClusterName());
         builder.append(", id=");
         builder.append(id);
         builder.append(", name=");
@@ -503,6 +503,8 @@ public class ZclAttribute {
             builder.append(", lastReportTime=");
             builder.append(lastReportTime.getTime());
         }
+        builder.append(", implemented=");
+        builder.append(implemented);
         builder.append(']');
 
         return builder.toString();

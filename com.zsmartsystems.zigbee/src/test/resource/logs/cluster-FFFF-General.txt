@@ -24,7 +24,7 @@ ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=0/0, profile=0104, cluster
 ConfigureReportingResponse [Electrical Measurement: 0/1 -> 0/0, cluster=0B04, TID=28, status=SUCCESS, records=null]
 
 ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=0/1, profile=0104, cluster=0702, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=2A, payload=18 3E 01 00 00 00 48 08 02 00 00 00]
-ReadAttributesResponse [Metering: 0/1 -> 0/1, cluster=0702, TID=3E, records=[ReadAttributeStatusRecord [attributeDataType=ORDERED_SEQUENCE_ARRAY, attributeIdentifier=0, status=SUCCESS, attributeValue=ZclArrayList [dataType=DATA_8_BIT, values=[0, 0]]]]]
+ReadAttributesResponse [Metering: 0/1 -> 0/1, cluster=0702, TID=3E, records=[ReadAttributeStatusRecord [status=SUCCESS, attributeIdentifier=0, attributeDataType=ORDERED_SEQUENCE_ARRAY, attributeValue=ZclArrayList [dataType=DATA_8_BIT, values=[0, 0]]]]]
 
 ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=0/1, profile=0104, cluster=0006, addressMode=null, radius=0, apsSecurity=false, apsCounter=17, payload=08 25 09 00 00 00 00 10 01 00 2C 01]
 ReadReportingConfigurationResponse [On/Off: 0/1 -> 0/1, cluster=0006, TID=25, records=[AttributeReportingStatusRecord [status=SUCCESS, attributeIdentifier=0, direction=0, attributeDataType=BOOLEAN, minimumReportingInterval=1, maximumReportingInterval=300]]]

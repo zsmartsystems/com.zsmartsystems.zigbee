@@ -16,8 +16,8 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Read Attribute Status Record field.
  *
- * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
+ * @author Tommi S.E. Laukkanen
  */
 public class ReadAttributeStatusRecord implements ZclListItemField {
     /**
@@ -116,8 +116,10 @@ public class ReadAttributeStatusRecord implements ZclListItemField {
     public void serialize(final ZigBeeSerializer serializer) {
         serializer.appendZigBeeType((short) attributeIdentifier, ZclDataType.UNSIGNED_16_BIT_INTEGER);
         serializer.appendZigBeeType(status, ZclDataType.ZCL_STATUS);
-        serializer.appendZigBeeType((byte) attributeDataType.getId(), ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        serializer.appendZigBeeType(attributeValue, attributeDataType);
+        if (status == ZclStatus.SUCCESS) {
+            serializer.appendZigBeeType((byte) attributeDataType.getId(), ZclDataType.UNSIGNED_8_BIT_INTEGER);
+            serializer.appendZigBeeType(attributeValue, attributeDataType);
+        }
     }
 
     @Override
@@ -133,7 +135,7 @@ public class ReadAttributeStatusRecord implements ZclListItemField {
 
     @Override
     public String toString() {
-        return "ReadAttributeStatusRecord [attributeDataType=" + attributeDataType + ", attributeIdentifier="
-                + attributeIdentifier + ", status=" + status + ", attributeValue=" + attributeValue + "]";
+        return "ReadAttributeStatusRecord [status=" + status + ", attributeIdentifier=" + attributeIdentifier
+                + ", attributeDataType=" + attributeDataType + ", attributeValue=" + attributeValue + "]";
     }
 }
