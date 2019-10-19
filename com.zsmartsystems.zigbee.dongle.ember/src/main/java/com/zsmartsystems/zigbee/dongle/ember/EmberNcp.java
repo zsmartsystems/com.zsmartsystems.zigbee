@@ -306,8 +306,8 @@ public class EmberNcp {
         request.setEndpoint(endpointId);
         request.setDeviceId(deviceId);
         request.setProfileId(profileId);
-        request.setInputClusterList(new int[] { 0 });
-        request.setOutputClusterList(new int[] { 0 });
+        request.setInputClusterList(inputClusters);
+        request.setOutputClusterList(outputClusters);
         EzspTransaction transaction = protocolHandler
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspAddEndpointResponse.class));
         EzspAddEndpointResponse response = (EzspAddEndpointResponse) transaction.getResponse();

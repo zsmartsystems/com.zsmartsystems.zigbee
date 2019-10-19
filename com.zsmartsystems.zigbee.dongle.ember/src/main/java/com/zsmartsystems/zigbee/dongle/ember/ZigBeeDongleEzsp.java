@@ -448,6 +448,10 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         EmberNcp ncp = getEmberNcp();
 
         // Add the endpoint
+        logger.debug("EZSP Adding Endpoint: ProfileID={}, DeviceID={}", String.format("%04X", defaultProfileId),
+                String.format("%04X", defaultDeviceId));
+        logger.debug("EZSP Adding Endpoint: Input Clusters   {}", inputClusters);
+        logger.debug("EZSP Adding Endpoint: Output Clusters  {}", outputClusters);
         ncp.addEndpoint(1, defaultDeviceId, defaultProfileId, inputClusters, outputClusters);
 
         // Now initialise the network
