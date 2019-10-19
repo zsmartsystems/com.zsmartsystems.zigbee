@@ -148,12 +148,28 @@ public class ZigBeeNetworkDatabaseManager implements ZigBeeNetworkNodeListener {
     }
 
     /**
+     * Clears all data from the data store. This may be used when initialising a network to remove any previous data.
+     */
+    public void clear() {
+        if (dataStore == null) {
+            logger.debug("Data store: Undefined so network is not cleared.");
+            return;
+        }
+
+        logger.debug("Data store:  Clearing all nodes.");
+        Set<IeeeAddress> nodes = dataStore.readNetworkNodes();
+        for (IeeeAddress nodeAddress : nodes) {
+            dataStore.removeNode(nodeAddress);
+        }
+    }
+
+    /**
      * Starts the database manager. This will call the {@link ZigBeeNetworkDataStore} to retrieve the list of nodes, and
      * then read all the nodes from the store, adding them to the {@link ZigBeeNetworkManager}.
      */
     public void startup() {
         if (dataStore == null) {
-            logger.debug("Data store: undefined so no network is restored.");
+            logger.debug("Data store: Undefined so network is not restored.");
             return;
         }
 
@@ -178,13 +194,13 @@ public class ZigBeeNetworkDatabaseManager implements ZigBeeNetworkNodeListener {
      * the network is saved.
      */
     public void shutdown() {
-        logger.debug("Data store: shutting down.");
+        logger.debug("Data store: Shutting down.");
         networkManager.removeNetworkNodeListener(this);
         executorService.shutdown();
         try {
             executorService.awaitTermination(SHUTDOWN_TIMEOUT, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
-            logger.debug("Data store: shutdown did not complete all tasks.");
+            logger.debug("Data store: Shutdown did not complete all tasks.");
         }
         executorService.shutdownNow();
     }
