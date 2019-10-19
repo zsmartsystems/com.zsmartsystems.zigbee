@@ -5,4 +5,4 @@
 # This file contains test definitions for the BASIC cluster - manufacturer specific extensions
 
 ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=28592/1, profile=0104, cluster=0000, addressMode=null, radius=0, apsSecurity=false, apsCounter=03, payload=18 35 01 05 00 00 42 1F 4D 61 65 73 74 72 6F 53 74 61 74 00 00 00 CC 6D 00 00 CC 86 8B B8 01 00 FF 00 00 03 00 00 00]
-ReadAttributesResponse [Basic: 0/1 -> 28592/1, cluster=0000, TID=35, records=[ReadAttributeStatusRecord [attributeDataType=CHARACTER_STRING, attributeIdentifier=5, status=SUCCESS, attributeValue=MaestroStat]]]
+ReadAttributesResponse [Basic: 0/1 -> 28592/1, cluster=0000, TID=35, records=[ReadAttributeStatusRecord [status=SUCCESS, attributeIdentifier=5, attributeDataType=CHARACTER_STRING, attributeValue=MaestroStat]]]
