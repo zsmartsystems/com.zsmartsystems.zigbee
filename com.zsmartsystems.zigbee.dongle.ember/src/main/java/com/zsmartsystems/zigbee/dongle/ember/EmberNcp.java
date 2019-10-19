@@ -246,7 +246,6 @@ public class EmberNcp {
         EzspTransaction transaction = protocolHandler
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspNetworkStateResponse.class));
         EzspNetworkStateResponse response = (EzspNetworkStateResponse) transaction.getResponse();
-        logger.debug(response.toString());
         lastStatus = null;
 
         return response.getStatus();
