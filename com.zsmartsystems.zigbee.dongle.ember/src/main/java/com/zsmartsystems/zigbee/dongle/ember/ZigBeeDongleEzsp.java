@@ -480,19 +480,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         ncp.getNetworkParameters();
 
         // Wait for the network to come up
-        long timer = System.currentTimeMillis() + WAIT_FOR_ONLINE;
-        do {
-            networkState = ncp.getNetworkState();
-            if (networkState == EmberNetworkStatus.EMBER_JOINED_NETWORK) {
-                break;
-            }
-
-            try {
-                Thread.sleep(250);
-            } catch (InterruptedException e) {
-                break;
-            }
-        } while (timer > System.currentTimeMillis());
+        networkState = waitNetworkStartup(ncp);
         logger.debug("EZSP networkState after online wait {}", networkState);
 
         // Get the security state - mainly for information
@@ -515,6 +503,49 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         return (networkState == EmberNetworkStatus.EMBER_JOINED_NETWORK) ? ZigBeeStatus.SUCCESS
                 : ZigBeeStatus.BAD_RESPONSE;
+    }
+
+    /**
+     * Waits for the network to start. This periodically polls the network state waiting for the network to come online.
+     * If a terminal state is observed (eg EMBER_JOINED_NETWORK or EMBER_LEAVING_NETWORK) whereby the network cannot
+     * start, then this method will return.
+     * <p>
+     * If the network start starts to join, but then shows EMBER_NO_NETWORK, it will return. Otherwise it will wait for
+     * the timeout.
+     *
+     * @param ncp
+     * @return
+     */
+    private EmberNetworkStatus waitNetworkStartup(EmberNcp ncp) {
+        EmberNetworkStatus networkState;
+        boolean joinStarted = false;
+        long timer = System.currentTimeMillis() + WAIT_FOR_ONLINE;
+        do {
+            networkState = ncp.getNetworkState();
+            switch (networkState) {
+                case EMBER_JOINING_NETWORK:
+                    joinStarted = true;
+                    break;
+                case EMBER_NO_NETWORK:
+                    if (!joinStarted) {
+                        break;
+                    }
+                case EMBER_JOINED_NETWORK:
+                case EMBER_JOINED_NETWORK_NO_PARENT:
+                case EMBER_LEAVING_NETWORK:
+                    return networkState;
+                default:
+                    break;
+            }
+
+            try {
+                Thread.sleep(250);
+            } catch (InterruptedException e) {
+                break;
+            }
+        } while (timer > System.currentTimeMillis());
+
+        return networkState;
     }
 
     /**
@@ -831,6 +862,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             switch (((EzspStackStatusHandler) response).getStatus()) {
                 case EMBER_NETWORK_BUSY:
                     break;
+                case EMBER_PRECONFIGURED_KEY_REQUIRED:
                 case EMBER_NETWORK_DOWN:
                     handleLinkStateChange(false);
                     break;
