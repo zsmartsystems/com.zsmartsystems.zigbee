@@ -457,9 +457,6 @@ public class ZigBeeNodeServiceDiscoverer {
      * @throws InterruptedException
      */
     private boolean requestNeighborTable() throws InterruptedException, ExecutionException {
-        if (!supportsManagementLqi) {
-            return true;
-        }
         // Start index for the list is 0
         int startIndex = 0;
         int totalNeighbors = 0;
@@ -514,9 +511,6 @@ public class ZigBeeNodeServiceDiscoverer {
      * @throws InterruptedException
      */
     private boolean requestRoutingTable() throws InterruptedException, ExecutionException {
-        if (!supportsManagementRouting) {
-            return true;
-        }
         // Start index for the list is 0
         int startIndex = 0;
         int totalRoutes = 0;
