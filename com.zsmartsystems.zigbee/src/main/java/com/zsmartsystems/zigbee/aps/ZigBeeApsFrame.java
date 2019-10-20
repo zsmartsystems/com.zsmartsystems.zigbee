@@ -248,7 +248,7 @@ public class ZigBeeApsFrame {
      * @param fragmentOutstanding the current number of fragments outstanding
      */
     public void setFragmentOutstanding(int fragmentOutstanding) {
-        if (fragmentOutstanding == 0 || fragmentOutstanding > fragmentTotal) {
+        if (fragmentOutstanding < 0 || fragmentOutstanding > fragmentTotal) {
             return;
         }
         this.fragmentOutstanding = fragmentOutstanding;

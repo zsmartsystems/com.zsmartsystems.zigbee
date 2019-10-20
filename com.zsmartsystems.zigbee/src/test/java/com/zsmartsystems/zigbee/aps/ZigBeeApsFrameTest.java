@@ -67,4 +67,21 @@ public class ZigBeeApsFrameTest {
         assertEquals(1, frame.getGroupAddress());
     }
 
+    @Test
+    public void testFragment() {
+        ZigBeeApsFrame frame = new ZigBeeApsFrame();
+
+        frame.setFragmentBase(0);
+        frame.setFragmentTotal(2);
+        frame.setFragmentOutstanding(1);
+        assertEquals(0, frame.getFragmentBase());
+        assertEquals(1, frame.getFragmentOutstanding());
+        frame.setFragmentOutstanding(-1);
+        assertEquals(1, frame.getFragmentOutstanding());
+        frame.setFragmentOutstanding(2);
+        assertEquals(2, frame.getFragmentOutstanding());
+        frame.setFragmentOutstanding(3);
+        assertEquals(2, frame.getFragmentOutstanding());
+    }
+
 }
