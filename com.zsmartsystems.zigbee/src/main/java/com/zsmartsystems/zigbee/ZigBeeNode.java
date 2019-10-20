@@ -782,17 +782,19 @@ public class ZigBeeNode implements ZigBeeCommandListener {
             }
         }
 
-        // Endpoints are only copied over if they don't exist in the node
-        // The assumption here is that endpoints are only set once, and not changed.
-        // This should be valid as they are set through the SimpleDescriptor.
+        // Update endpoints.
+        // We need to remember that with some discovery systems, clusters may be added over multiple updates.
+        // This requires that we work through the endpoints and update clusters as required.
         for (ZigBeeEndpoint endpoint : node.getEndpoints()) {
-            if (endpoints.containsKey(endpoint.getEndpointId())) {
-                continue;
+            ZigBeeEndpoint currentEndpoint = endpoints.get(endpoint.getEndpointId());
+            if (currentEndpoint == null) {
+                endpoints.put(endpoint.getEndpointId(), endpoint);
+                logger.debug("{}: Endpoint {} added", ieeeAddress, endpoint.getEndpointId());
+                updated = true;
+            } else if (currentEndpoint.updateEndpoint(endpoint)) {
+                logger.debug("{}: Endpoint {} updated", ieeeAddress, endpoint.getEndpointId());
+                updated = true;
             }
-
-            logger.debug("{}: Endpoint {} added", ieeeAddress, endpoint.getEndpointId());
-            updated = true;
-            endpoints.put(endpoint.getEndpointId(), endpoint);
         }
 
         return updated;
@@ -889,7 +891,11 @@ public class ZigBeeNode implements ZigBeeCommandListener {
         builder.append(nodeState);
         builder.append(", IEEE=");
         builder.append(ieeeAddress);
-        builder.append(String.format(", NWK=%04X", networkAddress));
+        if (networkAddress == null) {
+            builder.append("NWK=----");
+        } else {
+            builder.append(String.format(", NWK=%04X", networkAddress));
+        }
 
         if (nodeDescriptor != null) {
             builder.append(", Type=");

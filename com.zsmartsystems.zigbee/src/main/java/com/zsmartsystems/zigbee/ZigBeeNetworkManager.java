@@ -1444,7 +1444,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             return;
         }
 
-        logger.debug("{}: Updating node NWK={}", node.getIeeeAddress(), node.getNetworkAddress());
+        logger.debug("{}: Updating node NWK={}", node.getIeeeAddress(),
+                String.format("%04X", node.getNetworkAddress()));
 
         synchronized (networkNodes) {
             // Don't add if the node is already known
@@ -1509,7 +1510,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             sendNodeAdded = true;
         } else if (!currentNode.isDiscovered() && !currentNode.getIeeeAddress().equals(localIeeeAddress)) {
             logger.debug("{}: Node {} discovery is not complete - not sending nodeUpdated notification",
-                    node.getIeeeAddress(), node.getNetworkAddress());
+                    node.getIeeeAddress(), String.format("%04X", node.getNetworkAddress()));
             return;
         } else {
             sendNodeAdded = false;

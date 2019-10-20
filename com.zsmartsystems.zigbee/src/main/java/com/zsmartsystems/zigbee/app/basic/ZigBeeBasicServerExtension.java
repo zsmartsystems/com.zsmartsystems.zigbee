@@ -10,6 +10,9 @@ package com.zsmartsystems.zigbee.app.basic;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
@@ -28,6 +31,11 @@ import com.zsmartsystems.zigbee.zcl.clusters.basic.PowerSourceEnum;
  *
  */
 public class ZigBeeBasicServerExtension implements ZigBeeNetworkExtension, ZigBeeNetworkNodeListener {
+    /**
+     * The logger.
+     */
+    private final Logger logger = LoggerFactory.getLogger(ZigBeeBasicServerExtension.class);
+
     // Note that ZclVersion and PowerSource are defined as MANDATORY
     private final static int DEFAULT_ZCLVERSION = 2;
     private final static int DEFAULT_STACKVERSION = 2;
@@ -59,6 +67,7 @@ public class ZigBeeBasicServerExtension implements ZigBeeNetworkExtension, ZigBe
 
     @Override
     public void nodeAdded(final ZigBeeNode node) {
+        logger.debug("{}: Basic Server Extension: Updating attributes", node.getIeeeAddress());
         updateAttributes();
     }
 
@@ -81,13 +90,22 @@ public class ZigBeeBasicServerExtension implements ZigBeeNetworkExtension, ZigBe
         attributes.get(attributeId).updateValue(attributeValue);
 
         for (ZigBeeNode node : networkManager.getNodes()) {
+            logger.debug("Basic Server Extension: Updating attribute {} on {} {}", attributeId, node.getIeeeAddress(),
+                    String.format("%04X", node.getNetworkAddress()));
             for (ZigBeeEndpoint endpoint : node.getEndpoints()) {
                 ZclBasicCluster cluster = (ZclBasicCluster) endpoint.getOutputCluster(ZclBasicCluster.CLUSTER_ID);
                 if (cluster != null) {
+                    logger.debug("Basic Server Extension: Updating {} on {} {}, Endpoint {}", attributeId,
+                            node.getIeeeAddress(), String.format("%04X", node.getNetworkAddress()),
+                            endpoint.getEndpointId());
                     ZclAttribute attribute = cluster.getLocalAttribute(attributeId);
-                    if (attribute != null) {
-                        attribute.setValue(attributeValue);
+                    if (attribute == null) {
+                        logger.debug("Basic Server Extension: Updating {} on {} {}, Endpoint {} UNSUPPORTED",
+                                attributeId, node.getIeeeAddress(), String.format("%04X", node.getNetworkAddress()),
+                                endpoint.getEndpointId());
+                        continue;
                     }
+                    attribute.setValue(attributeValue);
 
                     // Go through and mark attributes we support as implemented
                     for (ZclAttribute localAttribute : cluster.getLocalAttributes()) {
@@ -101,6 +119,7 @@ public class ZigBeeBasicServerExtension implements ZigBeeNetworkExtension, ZigBe
     }
 
     private void updateAttributes() {
+        logger.debug("Basic Server Extension: Updating attributes");
         for (ZclAttribute attribute : attributes.values()) {
             setAttribute(attribute.getId(), attribute.getLastValue());
         }
