@@ -170,6 +170,8 @@ public class ApsDataEntity {
         }
 
         int totalFragments = ((apsFrame.getPayload().length + fragmentationLength - 1) / fragmentationLength);
+        logger.debug("Fragmenting APS Frame: frameLength={}, totalFragments={}, fragmentationLength={}",
+                apsFrame.getPayload().length, totalFragments, fragmentationLength);
 
         apsFrame.setMsgTag(msgTag);
         apsFrame.setFragmentBase(0);
@@ -186,7 +188,7 @@ public class ApsDataEntity {
     }
 
     private void sendNextFragments(final ZigBeeApsFrame apsFrame) {
-        logger.debug("sendNextFragments {}: {}", apsFrame.getMsgTag(), apsFrame);
+        logger.debug("sendNextFragments tag={}: frame={}", apsFrame.getMsgTag(), apsFrame);
 
         boolean first = true;
         for (int fragmentNumber = apsFrame.getFragmentBase()
@@ -219,11 +221,13 @@ public class ApsDataEntity {
             int end = offset + ((offset + fragmentationLength < apsFrame.getPayload().length) ? fragmentationLength
                     : (apsFrame.getPayload().length - offset));
 
+            logger.debug("Fragmenting APS Frame: fragment={}, offset={}, end={}", fragmentNumber, offset, end);
+
             fragment.setPayload(Arrays.copyOfRange(apsFrame.getPayload(), offset, end));
 
-            logger.debug("Sending APS Frame Fragment: {}", fragment);
-
             apsFrame.setFragmentOutstanding(apsFrame.getFragmentOutstanding() + 1);
+            logger.debug("Sending APS Frame Fragment: outstanding={} {}", apsFrame.getFragmentOutstanding(), fragment);
+
             transport.sendCommand(apsFrame.getMsgTag(), fragment);
         }
     }
@@ -243,7 +247,7 @@ public class ApsDataEntity {
             // Not a fragmented packet
             return true;
         }
-        logger.debug("receiveCommandState {}-{}: Fragment APS Frame: {}", msgTag, state, outgoingFrame);
+        logger.debug("receiveCommandState tag={}-{}: Fragment APS Frame: {}", msgTag, state, outgoingFrame);
 
         // Handle a failed transmission by aborting the sequence and passing the error up the stack
         if (state == ZigBeeTransportProgressState.RX_NAK || state == ZigBeeTransportProgressState.TX_NAK) {
@@ -251,12 +255,17 @@ public class ApsDataEntity {
             return true;
         }
 
+        logger.debug("receiveCommandState tag={}, fragmentBase={}, fragmentOutstanding={}", msgTag,
+                outgoingFrame.getFragmentBase(), outgoingFrame.getFragmentOutstanding());
+
         outgoingFrame.setFragmentBase(outgoingFrame.getFragmentBase() + 1);
         outgoingFrame.setFragmentOutstanding(outgoingFrame.getFragmentOutstanding() - 1);
         if (outgoingFrame.getFragmentBase() == outgoingFrame.getFragmentTotal()) {
             logger.debug("Completed Sending Fragment APS Frame: {}", outgoingFrame);
             return true;
         }
+        logger.debug("receiveCommandState tag={}, fragmentBase={}, fragmentOutstanding={}", msgTag,
+                outgoingFrame.getFragmentBase(), outgoingFrame.getFragmentOutstanding());
 
         sendNextFragments(outgoingFrame);
         logger.debug("receiveCommandState DONE");
