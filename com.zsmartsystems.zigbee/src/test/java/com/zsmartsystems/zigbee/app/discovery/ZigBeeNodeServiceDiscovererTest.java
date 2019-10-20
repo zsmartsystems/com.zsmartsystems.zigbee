@@ -119,7 +119,13 @@ public class ZigBeeNodeServiceDiscovererTest {
         NodeDescriptor initialNodeDescriptor = Mockito.mock(NodeDescriptor.class);
         Mockito.when(initialNodeDescriptor.getLogicalType()).thenReturn(LogicalType.UNKNOWN);
         Mockito.when(node.getNodeDescriptor()).thenReturn(initialNodeDescriptor);
-
+        Mockito.when(node.getLogicalType()).thenAnswer(x -> {
+            if (node.getNodeDescriptor() == null) {
+                return LogicalType.UNKNOWN;
+            } else {
+                return node.getNodeDescriptor().getLogicalType();
+            }
+        });
         PowerDescriptor initialPowerDescriptor = Mockito.mock(PowerDescriptor.class);
         Mockito.when(initialPowerDescriptor.getCurrentPowerMode()).thenReturn(CurrentPowerModeType.UNKNOWN);
         Mockito.when(node.getPowerDescriptor()).thenReturn(initialPowerDescriptor);
@@ -235,7 +241,13 @@ public class ZigBeeNodeServiceDiscovererTest {
         NodeDescriptor initialNodeDescriptor = Mockito.mock(NodeDescriptor.class);
         Mockito.when(initialNodeDescriptor.getLogicalType()).thenReturn(LogicalType.UNKNOWN);
         Mockito.when(node.getNodeDescriptor()).thenReturn(initialNodeDescriptor);
-
+        Mockito.when(node.getLogicalType()).thenAnswer(x -> {
+            if (node.getNodeDescriptor() == null) {
+                return LogicalType.UNKNOWN;
+            } else {
+                return node.getNodeDescriptor().getLogicalType();
+            }
+        });
         PowerDescriptor initialPowerDescriptor = Mockito.mock(PowerDescriptor.class);
         Mockito.when(initialPowerDescriptor.getCurrentPowerMode()).thenReturn(CurrentPowerModeType.UNKNOWN);
         Mockito.when(node.getPowerDescriptor()).thenReturn(initialPowerDescriptor);
