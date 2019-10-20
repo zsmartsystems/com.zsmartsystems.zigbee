@@ -212,6 +212,30 @@ public class ZigBeeEndpointTest {
     }
 
     @Test
+    public void updateEndpoint() {
+        ZigBeeEndpoint endpoint1 = getEndpoint();
+        ZigBeeEndpoint endpoint2 = new ZigBeeEndpoint(node, 5);
+
+        assertFalse(endpoint1.updateEndpoint(endpoint2));
+
+        List<Integer> clusterIds = new ArrayList<>();
+        clusterIds.add(1);
+        clusterIds.add(2);
+        endpoint2.setInputClusterIds(clusterIds);
+        assertTrue(endpoint1.updateEndpoint(endpoint2));
+        assertEquals(endpoint1.getInputClusterIds().size(), 2);
+        assertTrue(endpoint1.getInputClusterIds().contains(1));
+        assertTrue(endpoint1.getInputClusterIds().contains(2));
+
+        endpoint2.setOutputClusterIds(clusterIds);
+        assertTrue(endpoint1.updateEndpoint(endpoint2));
+        assertEquals(endpoint1.getOutputClusterIds().size(), 2);
+        assertTrue(endpoint1.getOutputClusterIds().contains(1));
+        assertTrue(endpoint1.getOutputClusterIds().contains(2));
+
+    }
+
+    @Test
     public void setDao() {
         ZigBeeEndpoint endpoint = getEndpoint();
 
@@ -229,6 +253,7 @@ public class ZigBeeEndpointTest {
 
     private ZigBeeEndpoint getEndpoint() {
         node = Mockito.mock(ZigBeeNode.class);
+        Mockito.when(node.getIeeeAddress()).thenReturn(new IeeeAddress("1234567890ABCDEF"));
         Mockito.when(node.getNetworkAddress()).thenReturn(1234);
         commandCapture = ArgumentCaptor.forClass(ZigBeeCommand.class);
 
