@@ -559,6 +559,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     /**
      * Starts up ZigBee manager components, and starts the transport layer to bring the network ONLINE.
+     * <p>
+     * If the network is reinitialized (by setting the reinitialize parameter to true) the network will be cleared. All
+     * nodes other than the local node are removed prior to the initialisation of the transport layer.
      *
      * @param reinitialize true if the provider is to reinitialise the network with the parameters configured since the
      *            {@link #initialize} method was called.
@@ -568,6 +571,17 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         logger.debug("ZigBeeNetworkManager startup: reinitialize={}, networkState={}", reinitialize, networkState);
         if (networkState == ZigBeeNetworkState.UNINITIALISED) {
             return ZigBeeStatus.INVALID_STATE;
+        }
+
+        if (reinitialize) {
+            // Remove all nodes other than the local node
+            for (ZigBeeNode node : networkNodes.values()) {
+                if (node.getIeeeAddress().equals(localIeeeAddress)) {
+                    continue;
+                }
+                removeNode(node);
+            }
+            databaseManager.clear();
         }
 
         ZigBeeStatus status = transport.startup(reinitialize);
@@ -1399,7 +1413,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             return;
         }
 
-        logger.debug("{}: Node {} is removed from the network", node.getIeeeAddress(), node.getNetworkAddress());
+        logger.debug("{}: Node {} is removed from the network", node.getIeeeAddress(),
+                String.format("%04X", node.getNetworkAddress()));
 
         nodeDiscoveryComplete.remove(node.getIeeeAddress());
 
@@ -1492,13 +1507,14 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             // Return if we don't know this node
             if (currentNode == null) {
                 logger.debug("{}: Node {} is not known - can't be updated", node.getIeeeAddress(),
-                        node.getNetworkAddress());
+                        String.format("%04X", node.getNetworkAddress()));
                 return;
             }
 
             // Return if there were no updates
             if (!currentNode.updateNode(node)) {
-                logger.debug("{}: Node {} is not updated", node.getIeeeAddress(), node.getNetworkAddress());
+                logger.debug("{}: Node {} is not updated", node.getIeeeAddress(),
+                        String.format("%04X", node.getNetworkAddress()));
                 return;
             }
         }
