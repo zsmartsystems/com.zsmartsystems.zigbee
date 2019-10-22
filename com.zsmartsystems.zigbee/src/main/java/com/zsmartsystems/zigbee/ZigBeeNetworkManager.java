@@ -58,6 +58,7 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFrameType;
 import com.zsmartsystems.zigbee.zcl.ZclHeader;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zdo.ZdoCommand;
@@ -874,7 +875,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             logger.debug("Incoming message from node {} did not translate to command",
                     String.format("%04X", apsFrame.getSourceAddress()));
 
-            // Notify the listeners that we have heard a device that was unknown to us
+            // Notify the listeners that we have heard a command that was unknown to us
             for (final ZigBeeAnnounceListener announceListener : announceListeners) {
                 NotificationService.execute(new Runnable() {
                     @Override
@@ -945,13 +946,15 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
         ZigBeeNode node = getNode(apsFrame.getSourceAddress());
         if (node == null) {
-            logger.debug("Unknown node {}", apsFrame.getSourceAddress());
+            logger.debug("Unknown node {}", String.format("%04X", apsFrame.getSourceAddress()));
+            createDefaultResponse(apsFrame, zclHeader, ZclStatus.FAILURE);
             return null;
         }
 
         ZigBeeEndpoint endpoint = node.getEndpoint(apsFrame.getSourceEndpoint());
         if (endpoint == null) {
             logger.debug("Unknown endpoint {}", apsFrame.getSourceEndpoint());
+            createDefaultResponse(apsFrame, zclHeader, ZclStatus.FAILURE);
             return null;
         }
 
@@ -959,20 +962,23 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         if (zclHeader.getDirection() == ZclCommandDirection.SERVER_TO_CLIENT) {
             ZclCluster cluster = endpoint.getInputCluster(apsFrame.getCluster());
             if (cluster == null) {
-                logger.debug("Unknown input cluster {}", apsFrame.getCluster());
+                logger.debug("Unknown input cluster {}", String.format("%04X", apsFrame.getCluster()));
+                createDefaultResponse(apsFrame, zclHeader, ZclStatus.UNSUPPORTED_CLUSTER);
                 return null;
             }
             command = cluster.getResponseFromId(zclHeader.getFrameType(), zclHeader.getCommandId());
         } else {
             ZclCluster cluster = endpoint.getOutputCluster(apsFrame.getCluster());
             if (cluster == null) {
-                logger.debug("Unknown output cluster {}", apsFrame.getCluster());
+                logger.debug("Unknown output cluster {}", String.format("%04X", apsFrame.getCluster()));
+                createDefaultResponse(apsFrame, zclHeader, ZclStatus.UNSUPPORTED_CLUSTER);
                 return null;
             }
             command = cluster.getCommandFromId(zclHeader.getFrameType(), zclHeader.getCommandId());
         }
         if (command == null) {
             logger.debug("Unknown command {}", zclHeader.getCommandId());
+            createDefaultResponse(apsFrame, zclHeader, ZclStatus.UNSUP_CLUSTER_COMMAND);
             return null;
         }
 
@@ -983,6 +989,29 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         command.setDisableDefaultResponse(zclHeader.isDisableDefaultResponse());
 
         return command;
+    }
+
+    /**
+     * Generates a {@link DefaultResponse} with the requested {@link ZclStatus} code.
+     * If the command does not require a response, this method will return null.
+     *
+     * @param apsFrame the received {@link ZigBeeApsFrame} of the frame to which the response is being generated
+     * @param zclHeader the received {@link ZclHeader} of the frame to which the response is being generated
+     * @param status the {@link ZclStatus} to return in the response
+     */
+    public void createDefaultResponse(ZigBeeApsFrame apsFrame, ZclHeader zclHeader, ZclStatus status) {
+        if (zclHeader.isDisableDefaultResponse()) {
+            return;
+        }
+        DefaultResponse defaultResponse = new DefaultResponse();
+        defaultResponse.setTransactionId(zclHeader.getSequenceNumber());
+        defaultResponse.setCommandIdentifier(zclHeader.getCommandId());
+        defaultResponse.setDestinationAddress(
+                new ZigBeeEndpointAddress(apsFrame.getDestinationAddress(), apsFrame.getSourceEndpoint()));
+        defaultResponse.setClusterId(apsFrame.getCluster());
+        defaultResponse.setStatusCode(status);
+
+        sendTransaction(defaultResponse);
     }
 
     /**

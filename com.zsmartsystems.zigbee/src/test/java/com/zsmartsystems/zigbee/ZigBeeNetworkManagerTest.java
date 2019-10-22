@@ -56,6 +56,7 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.ZclFrameType;
 import com.zsmartsystems.zigbee.zcl.ZclHeader;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclColorControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclElectricalMeasurementCluster;
@@ -366,6 +367,24 @@ public class ZigBeeNetworkManagerTest
         apsFrame.setSourceAddress(4321);
         networkManager.receiveCommand(apsFrame);
         Mockito.verify(announceListener, Mockito.timeout(TIMEOUT).times(1)).announceUnknownDevice(4321);
+
+        // Test that sending unsupported commands provides a default response
+        ArgumentCaptor<Integer> msgTagCaptor = ArgumentCaptor.forClass(Integer.class);
+        ArgumentCaptor<ZigBeeApsFrame> apsFrameCaptor = ArgumentCaptor.forClass(ZigBeeApsFrame.class);
+
+        serializer = new DefaultSerializer();
+        fieldSerializer = new ZclFieldSerializer(serializer);
+
+        apsFrame.setSourceAddress(4321);
+
+        networkManager.receiveCommand(apsFrame);
+
+        Mockito.verify(mockedTransport, Mockito.timeout(TIMEOUT).times(1)).sendCommand(msgTagCaptor.capture(),
+                apsFrameCaptor.capture());
+        ZigBeeApsFrame apsResponse = apsFrameCaptor.getValue();
+        int[] defaultResponsePayload = apsResponse.getPayload();
+        assertEquals(5, defaultResponsePayload.length);
+        assertEquals(ZclStatus.FAILURE.getId(), defaultResponsePayload[4]);
     }
 
     @Test

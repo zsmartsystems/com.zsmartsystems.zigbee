@@ -182,10 +182,20 @@ public class ZigBeeApsFrame {
         this.destinationIeeeAddress = destinationIeeeAddress;
     }
 
+    /**
+     * Gets the source address for the frame
+     * 
+     * @return the source network address for the frame
+     */
     public int getSourceAddress() {
         return sourceAddress;
     }
 
+    /**
+     * Sets the source address for the frame
+     * 
+     * @param sourceAddress the source network address
+     */
     public void setSourceAddress(int sourceAddress) {
         this.sourceAddress = sourceAddress;
     }
