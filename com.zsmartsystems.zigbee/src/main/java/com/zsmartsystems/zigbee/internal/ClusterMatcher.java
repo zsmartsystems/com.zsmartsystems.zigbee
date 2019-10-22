@@ -20,7 +20,6 @@ import com.zsmartsystems.zigbee.ZigBeeBroadcastDestination;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeCommandListener;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
-import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.command.MatchDescriptorRequest;
 import com.zsmartsystems.zigbee.zdo.command.MatchDescriptorResponse;
@@ -36,7 +35,7 @@ public class ClusterMatcher implements ZigBeeCommandListener {
     /**
      * The {@link Logger}.
      */
-    private final Logger logger = LoggerFactory.getLogger(ZigBeeNode.class);
+    private final Logger logger = LoggerFactory.getLogger(ClusterMatcher.class);
 
     /**
      * The network manager
