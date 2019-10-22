@@ -1007,9 +1007,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         defaultResponse.setTransactionId(zclHeader.getSequenceNumber());
         defaultResponse.setCommandIdentifier(zclHeader.getCommandId());
         defaultResponse.setDestinationAddress(
-                new ZigBeeEndpointAddress(apsFrame.getDestinationAddress(), apsFrame.getSourceEndpoint()));
+                new ZigBeeEndpointAddress(apsFrame.getSourceAddress(), apsFrame.getSourceEndpoint()));
         defaultResponse.setClusterId(apsFrame.getCluster());
         defaultResponse.setStatusCode(status);
+        defaultResponse.setDisableDefaultResponse(true);
+        defaultResponse.setCommandDirection(zclHeader.getDirection().getResponseDirection());
 
         sendTransaction(defaultResponse);
     }
