@@ -115,7 +115,7 @@ public class ZigBeeEndpointAddressTest {
     public void testToString() {
         String stringAddress = "25000/44";
         ZigBeeEndpointAddress address = new ZigBeeEndpointAddress(stringAddress);
-        assertEquals(stringAddress, address.toString());
+        assertEquals("61A8/44", address.toString());
     }
 
     @Test

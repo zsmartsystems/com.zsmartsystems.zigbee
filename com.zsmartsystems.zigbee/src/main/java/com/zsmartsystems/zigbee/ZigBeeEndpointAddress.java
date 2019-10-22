@@ -132,7 +132,7 @@ public class ZigBeeEndpointAddress extends ZigBeeAddress {
 
     @Override
     public String toString() {
-        return address + "/" + endpoint;
+        return String.format("%04X/%d", address, endpoint);
     }
 
 }
