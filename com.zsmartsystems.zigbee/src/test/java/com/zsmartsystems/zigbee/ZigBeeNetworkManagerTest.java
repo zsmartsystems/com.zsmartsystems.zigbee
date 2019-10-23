@@ -68,6 +68,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclThermostatCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnCommand;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningRequest;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.LogicalType;
@@ -318,6 +319,7 @@ public class ZigBeeNetworkManagerTest
     public void testReceiveZclCommand() throws Exception {
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
         networkManager.setSerializer(DefaultSerializer.class, DefaultDeserializer.class);
+        networkManager.addSupportedServerCluster(6);
 
         ZigBeeEndpoint endpoint = Mockito.mock(ZigBeeEndpoint.class);
         ZclCluster cluster = new ZclOnOffCluster(endpoint);
@@ -344,6 +346,7 @@ public class ZigBeeNetworkManagerTest
         zclHeader.setCommandId(0);
         zclHeader.setFrameType(ZclFrameType.ENTIRE_PROFILE_COMMAND);
         zclHeader.setSequenceNumber(1);
+        zclHeader.setDirection(ZclCommandDirection.CLIENT_TO_SERVER);
 
         DefaultSerializer serializer = new DefaultSerializer();
         ZclFieldSerializer fieldSerializer = new ZclFieldSerializer(serializer);
@@ -382,6 +385,7 @@ public class ZigBeeNetworkManagerTest
         Mockito.verify(mockedTransport, Mockito.timeout(TIMEOUT).times(1)).sendCommand(msgTagCaptor.capture(),
                 apsFrameCaptor.capture());
         ZigBeeApsFrame apsResponse = apsFrameCaptor.getValue();
+        assertEquals(4321, apsResponse.getDestinationAddress());
         int[] defaultResponsePayload = apsResponse.getPayload();
         assertEquals(5, defaultResponsePayload.length);
         assertEquals(ZclStatus.FAILURE.getId(), defaultResponsePayload[4]);
@@ -1134,6 +1138,14 @@ public class ZigBeeNetworkManagerTest
         networkManager.rescheduleTask(Mockito.mock(ScheduledFuture.class), Mockito.mock(Runnable.class), 0);
         Mockito.verify(scheduler, Mockito.times(4)).schedule(ArgumentMatchers.any(Runnable.class),
                 ArgumentMatchers.anyLong(), ArgumentMatchers.any(TimeUnit.class));
+    }
+
+    @Test
+    public void addSupportedCluster() throws Exception {
+        ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
+
+        networkManager.addSupportedClientCluster(123);
+        networkManager.addSupportedServerCluster(456);
     }
 
 }

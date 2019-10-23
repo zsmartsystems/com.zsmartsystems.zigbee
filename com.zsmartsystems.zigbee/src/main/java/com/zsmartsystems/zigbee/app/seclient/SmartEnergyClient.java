@@ -776,6 +776,7 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
             logger.debug("{}: SEP node is not authorised", node.getIeeeAddress());
             return;
         }
+        logger.debug("{}: SEP node is authorised", node.getIeeeAddress());
 
         for (ZigBeeEndpoint endpoint : node.getEndpoints()) {
             if (endpoint.getProfileId() != ZigBeeProfileType.ZIGBEE_SMART_ENERGY.getKey()) {

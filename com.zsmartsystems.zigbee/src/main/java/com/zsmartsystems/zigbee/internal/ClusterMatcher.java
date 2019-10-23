@@ -43,9 +43,14 @@ public class ClusterMatcher implements ZigBeeCommandListener {
     private ZigBeeNetworkManager networkManager;
 
     /**
-     * List of clusters supported by the manager. This is used to respond to the {@link MatchDescriptorRequest}
+     * List of client clusters supported by the manager. This is used to respond to the {@link MatchDescriptorRequest}
      */
-    private Set<Integer> clusters = new CopyOnWriteArraySet<>();
+    private Set<Integer> clientClusters = new CopyOnWriteArraySet<>();
+
+    /**
+     * List of client clusters supported by the manager. This is used to respond to the {@link MatchDescriptorRequest}
+     */
+    private Set<Integer> serverClusters = new CopyOnWriteArraySet<>();
 
     /**
      * Constructor
@@ -60,13 +65,43 @@ public class ClusterMatcher implements ZigBeeCommandListener {
     }
 
     /**
-     * Adds a cluster to the list of clusters we will match
+     * Adds a cluster to the list of client clusters we will match
      *
-     * @param cluster the cluster to match
+     * @param cluster the client cluster to match
      */
-    public void addCluster(int cluster) {
-        logger.debug("ClusterMatcher adding cluster {}", cluster);
-        clusters.add(cluster);
+    public void addClientCluster(int cluster) {
+        logger.debug("ClusterMatcher adding client cluster {}", String.format("%04X", cluster));
+        clientClusters.add(cluster);
+    }
+
+    /**
+     * Adds a cluster to the list of server clusters we will match
+     *
+     * @param cluster the server cluster to match
+     */
+    public void addServerCluster(int cluster) {
+        logger.debug("ClusterMatcher adding server cluster {}", String.format("%04X", cluster));
+        serverClusters.add(cluster);
+    }
+
+    /**
+     * Returns true if the requested cluster is supported as a client
+     *
+     * @param cluster the cluster to test
+     * @return true if the requested cluster is supported as a client
+     */
+    public boolean isClientSupported(int cluster) {
+        return clientClusters.contains(cluster);
+    }
+
+    /**
+     * Returns true if the requested cluster is supported as a server
+     *
+     * @param cluster the cluster to test
+     * @return true if the requested cluster is supported as a server
+     */
+    public boolean isServerSupported(int cluster) {
+        return serverClusters.contains(cluster);
     }
 
     @Override
@@ -87,8 +122,8 @@ public class ClusterMatcher implements ZigBeeCommandListener {
 
             // We want to match any of our local servers (ie our input clusters) with any
             // requested clusters in the requests cluster list
-            if (Collections.disjoint(matchRequest.getInClusterList(), clusters)
-                    && Collections.disjoint(matchRequest.getOutClusterList(), clusters)) {
+            if (Collections.disjoint(matchRequest.getInClusterList(), serverClusters)
+                    && Collections.disjoint(matchRequest.getOutClusterList(), clientClusters)) {
                 logger.debug("{}: ClusterMatcher no match", networkManager.getZigBeeExtendedPanId());
                 return;
             }
