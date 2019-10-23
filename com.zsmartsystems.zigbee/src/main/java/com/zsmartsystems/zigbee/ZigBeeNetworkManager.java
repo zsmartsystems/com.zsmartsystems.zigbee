@@ -960,25 +960,35 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
         ZclCommand command;
         if (zclHeader.getDirection() == ZclCommandDirection.SERVER_TO_CLIENT) {
+            if (clusterMatcher != null && !clusterMatcher.isClientSupported(apsFrame.getCluster())) {
+                logger.debug("Unsupported local client cluster {}", String.format("%04X", apsFrame.getCluster()));
+                createDefaultResponse(apsFrame, zclHeader, ZclStatus.FAILURE);
+                return null;
+            }
             ZclCluster cluster = endpoint.getInputCluster(apsFrame.getCluster());
             if (cluster == null) {
                 logger.debug("Unknown input cluster {}", String.format("%04X", apsFrame.getCluster()));
-                createDefaultResponse(apsFrame, zclHeader, ZclStatus.UNSUPPORTED_CLUSTER);
+                createDefaultResponse(apsFrame, zclHeader, ZclStatus.FAILURE);
                 return null;
             }
             command = cluster.getResponseFromId(zclHeader.getFrameType(), zclHeader.getCommandId());
         } else {
+            if (clusterMatcher != null && !clusterMatcher.isServerSupported(apsFrame.getCluster())) {
+                logger.debug("Unsupported local server cluster {}", String.format("%04X", apsFrame.getCluster()));
+                createDefaultResponse(apsFrame, zclHeader, ZclStatus.FAILURE);
+                return null;
+            }
             ZclCluster cluster = endpoint.getOutputCluster(apsFrame.getCluster());
             if (cluster == null) {
                 logger.debug("Unknown output cluster {}", String.format("%04X", apsFrame.getCluster()));
-                createDefaultResponse(apsFrame, zclHeader, ZclStatus.UNSUPPORTED_CLUSTER);
+                createDefaultResponse(apsFrame, zclHeader, ZclStatus.FAILURE);
                 return null;
             }
             command = cluster.getCommandFromId(zclHeader.getFrameType(), zclHeader.getCommandId());
         }
         if (command == null) {
             logger.debug("Unknown command {}", zclHeader.getCommandId());
-            createDefaultResponse(apsFrame, zclHeader, ZclStatus.UNSUP_CLUSTER_COMMAND);
+            createDefaultResponse(apsFrame, zclHeader, ZclStatus.FAILURE);
             return null;
         }
 
@@ -1589,14 +1599,40 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * further support for such clusters.
      *
      * @param cluster the supported cluster ID
+     * @deprecated use addSupportedClientCluster or addSupportedServerCluster
      */
+    @Deprecated
     public void addSupportedCluster(int cluster) {
-        logger.debug("Adding supported cluster {}", cluster);
+        logger.debug("Adding supported cluster {}", String.format("%04X", cluster));
+        addSupportedClientCluster(cluster);
+    }
+
+    /**
+     * Adds a client cluster to the list of clusters we support.
+     * We will respond to with the {@link MatchDescriptorRequest} and process any received client commands received.
+     *
+     * @param cluster the supported client cluster ID
+     */
+    public void addSupportedClientCluster(int cluster) {
+        logger.debug("Adding supported client cluster {}", String.format("%04X", cluster));
         if (clusterMatcher == null) {
             clusterMatcher = new ClusterMatcher(this);
         }
+        clusterMatcher.addClientCluster(cluster);
+    }
 
-        clusterMatcher.addCluster(cluster);
+    /**
+     * Adds a server cluster to the list of clusters we support.
+     * We will respond to with the {@link MatchDescriptorRequest} and process any received server commands received.
+     *
+     * @param cluster the supported server cluster ID
+     */
+    public void addSupportedServerCluster(int cluster) {
+        logger.debug("Adding supported server cluster {}", String.format("%04X", cluster));
+        if (clusterMatcher == null) {
+            clusterMatcher = new ClusterMatcher(this);
+        }
+        clusterMatcher.addServerCluster(cluster);
     }
 
     /**

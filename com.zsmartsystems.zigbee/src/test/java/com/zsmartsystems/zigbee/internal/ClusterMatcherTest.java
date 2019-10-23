@@ -8,6 +8,8 @@
 package com.zsmartsystems.zigbee.internal;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +51,7 @@ public class ClusterMatcherTest {
     @Test
     public void testMatcherNoMatch() {
         ClusterMatcher matcher = getMatcher();
-        matcher.addCluster(0x500);
+        matcher.addClientCluster(0x500);
 
         List<Integer> clusterListIn = new ArrayList<Integer>();
         List<Integer> clusterListOut = new ArrayList<Integer>();
@@ -67,7 +69,7 @@ public class ClusterMatcherTest {
     @Test
     public void testMatcherNoAddressMatch() {
         ClusterMatcher matcher = getMatcher();
-        matcher.addCluster(0x500);
+        matcher.addClientCluster(0x500);
 
         List<Integer> clusterListIn = new ArrayList<Integer>();
         List<Integer> clusterListOut = new ArrayList<Integer>();
@@ -85,7 +87,9 @@ public class ClusterMatcherTest {
     @Test
     public void testMatcherBroadcast() {
         ClusterMatcher matcher = getMatcher();
-        matcher.addCluster(0x500);
+        matcher.addServerCluster(0x500);
+        assertTrue(matcher.isServerSupported(0x500));
+        assertFalse(matcher.isClientSupported(0x500));
 
         List<Integer> clusterListIn = new ArrayList<Integer>();
         List<Integer> clusterListOut = new ArrayList<Integer>();
@@ -106,12 +110,14 @@ public class ClusterMatcherTest {
     @Test
     public void testMatcherMatchIn() {
         ClusterMatcher matcher = getMatcher();
-        matcher.addCluster(0x500);
-        matcher.addCluster(0x600);
+        matcher.addClientCluster(0x500);
+        matcher.addServerCluster(0x600);
+        assertTrue(matcher.isServerSupported(0x600));
+        assertTrue(matcher.isClientSupported(0x500));
 
         List<Integer> clusterListIn = new ArrayList<Integer>();
         List<Integer> clusterListOut = new ArrayList<Integer>();
-        clusterListIn.add(0x500);
+        clusterListIn.add(0x600);
         MatchDescriptorRequest request = new MatchDescriptorRequest();
         request.setNwkAddrOfInterest(0);
         request.setSourceAddress(new ZigBeeEndpointAddress(1234, 5));
@@ -126,8 +132,8 @@ public class ClusterMatcherTest {
     @Test
     public void testMatcherMatchOut() {
         ClusterMatcher matcher = getMatcher();
-        matcher.addCluster(0x500);
-        matcher.addCluster(0x600);
+        matcher.addClientCluster(0x500);
+        matcher.addServerCluster(0x600);
 
         List<Integer> clusterListIn = new ArrayList<Integer>();
         List<Integer> clusterListOut = new ArrayList<Integer>();
@@ -146,8 +152,8 @@ public class ClusterMatcherTest {
     @Test
     public void testMatcherMatchInOut() {
         ClusterMatcher matcher = getMatcher();
-        matcher.addCluster(0x500);
-        matcher.addCluster(0x600);
+        matcher.addClientCluster(0x500);
+        matcher.addServerCluster(0x600);
 
         List<Integer> clusterListIn = new ArrayList<Integer>();
         List<Integer> clusterListOut = new ArrayList<Integer>();
