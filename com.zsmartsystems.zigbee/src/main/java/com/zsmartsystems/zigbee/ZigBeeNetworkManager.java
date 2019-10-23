@@ -1022,6 +1022,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         defaultResponse.setStatusCode(status);
         defaultResponse.setDisableDefaultResponse(true);
         defaultResponse.setCommandDirection(zclHeader.getDirection().getResponseDirection());
+        defaultResponse.setApsSecurity(apsFrame.getSecurityEnabled());
 
         sendTransaction(defaultResponse);
     }

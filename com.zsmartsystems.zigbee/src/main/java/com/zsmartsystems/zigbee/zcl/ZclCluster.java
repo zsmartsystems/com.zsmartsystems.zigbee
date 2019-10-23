@@ -1866,6 +1866,7 @@ public abstract class ZclCluster {
         defaultResponse.setDestinationAddress(command.getDestinationAddress());
         defaultResponse.setClusterId(command.getClusterId());
         defaultResponse.setStatusCode(status);
+        defaultResponse.setApsSecurity(command.getApsSecurity());
 
         if (command.isManufacturerSpecific()) {
             defaultResponse.setManufacturerCode(command.getManufacturerCode());
