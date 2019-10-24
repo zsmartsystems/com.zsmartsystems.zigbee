@@ -408,7 +408,7 @@ public abstract class EzspFrame {
         } else {
             final int callbackTypeOffset = 3;
             final int callbackTypeMask = 0b11 << callbackTypeOffset;
-            return (frameControl & callbackTypeMask) >> callbackTypeOffset != 0;
+            return (frameControl & callbackTypeMask) != 0;
         }
     }
 
