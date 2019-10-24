@@ -2,6 +2,6 @@
 # The format must be two lines, with a ZigBeeApsFrame frame followed by the ZigBeeCommand it translates to
 # Comments can be added with the # on the first character and empty lines are allowed
 
-ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=28592/3, profile=0104, cluster=0300, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=3C, payload=00 3C 00 00 00]
-ReadAttributesCommand [Color Control: 0/0 -> 28592/3, cluster=0300, TID=3C, identifiers=[0]]
+ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=28592/1, profile=0104, cluster=0300, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=3C, payload=00 3C 00 00 00]
+ReadAttributesCommand [Color Control: 0/0 -> 28592/1, cluster=0300, TID=3C, identifiers=[0]]
 

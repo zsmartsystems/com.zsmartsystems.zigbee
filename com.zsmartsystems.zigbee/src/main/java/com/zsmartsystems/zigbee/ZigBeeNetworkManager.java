@@ -914,6 +914,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     private ZigBeeCommand receiveZdoCommand(final ZclFieldDeserializer fieldDeserializer,
             final ZigBeeApsFrame apsFrame) {
+        if (apsFrame.getSourceEndpoint() != 0 || apsFrame.getDestinationEndpoint() != 0) {
+            logger.debug(
+                    "Error instantiating ZDO command: Source or destination endpoints are not 0 (source={}, destination={})",
+                    apsFrame.getSourceEndpoint(), apsFrame.getDestinationEndpoint());
+            return null;
+        }
         ZdoCommandType commandType = ZdoCommandType.getValueById(apsFrame.getCluster());
         if (commandType == null) {
             logger.debug("Error instantiating ZDO command: Unknown cluster {}",
@@ -940,21 +946,24 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     private ZigBeeCommand receiveZclCommand(final ZclFieldDeserializer fieldDeserializer,
             final ZigBeeApsFrame apsFrame) {
+        if (apsFrame.getDestinationEndpoint() != 1) {
+            logger.debug("Unknown local endpoint {}", apsFrame.getSourceEndpoint());
+            return null;
+        }
         // Process the ZCL header
         ZclHeader zclHeader = new ZclHeader(fieldDeserializer);
         logger.debug("RX ZCL: {}", zclHeader);
 
         ZigBeeNode node = getNode(apsFrame.getSourceAddress());
         if (node == null) {
-            logger.debug("Unknown node {}", String.format("%04X", apsFrame.getSourceAddress()));
-            createDefaultResponse(apsFrame, zclHeader, ZclStatus.FAILURE);
+            logger.debug("Unknown remote node {}", String.format("%04X", apsFrame.getSourceAddress()));
             return null;
         }
 
         ZigBeeEndpoint endpoint = node.getEndpoint(apsFrame.getSourceEndpoint());
         if (endpoint == null) {
-            logger.debug("Unknown endpoint {}", apsFrame.getSourceEndpoint());
-            createDefaultResponse(apsFrame, zclHeader, ZclStatus.FAILURE);
+            logger.debug("Unknown remote endpoint {}/{}", String.format("%04X", apsFrame.getSourceAddress()),
+                    apsFrame.getSourceEndpoint());
             return null;
         }
 
