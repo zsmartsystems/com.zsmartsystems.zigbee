@@ -2,8 +2,8 @@
 # The format must be two lines, with a ZigBeeApsFrame frame followed by the ZigBeeCommand it translates to
 # Comments can be added with the # on the first character and empty lines are allowed
 
-ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=18314/3, profile=0104, cluster=0006, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=20, payload=01 20 00]
-OffCommand [On/Off: 0/1 -> 18314/3, cluster=0006, TID=20]
+ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=18314/1, profile=0104, cluster=0006, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=20, payload=01 20 00]
+OffCommand [On/Off: 0/1 -> 18314/1, cluster=0006, TID=20]
 
-ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=18314/3, profile=0104, cluster=0006, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=20, payload=01 45 42 00 08 07 00 00]
-OnWithTimedOffCommand [On/Off: 0/1 -> DEVICE, cluster=0006, TID=45, onOffControl=0, onTime=1800, offWaitTime=0]
+ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=18314/1, profile=0104, cluster=0006, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=20, payload=01 45 42 00 08 07 00 00]
+OnWithTimedOffCommand [On/Off: 0/1 -> 18314/1, cluster=0006, TID=45, onOffControl=0, onTime=1800, offWaitTime=0]
