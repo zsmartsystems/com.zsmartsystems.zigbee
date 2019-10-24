@@ -697,7 +697,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
                 // Remove the listener
                 removeTransactionListener(this);
 
-                return null;// response;
+                return ezspTransaction.getResponse();// response;
             }
 
             @Override
