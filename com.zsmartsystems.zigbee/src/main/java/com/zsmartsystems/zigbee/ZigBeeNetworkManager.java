@@ -367,7 +367,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             setNetworkState(ZigBeeNetworkState.OFFLINE);
             return transportResponse;
         }
-        setNetworkState(ZigBeeNetworkState.INITIALISING);
 
         localIeeeAddress = transport.getIeeeAddress();
 
