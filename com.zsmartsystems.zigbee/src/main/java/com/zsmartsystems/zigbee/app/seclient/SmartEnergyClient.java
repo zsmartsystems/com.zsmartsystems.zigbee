@@ -38,6 +38,7 @@ import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.app.ZigBeeNetworkExtension;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.security.ZigBeeCbkeProvider;
+import com.zsmartsystems.zigbee.security.ZigBeeCryptoSuites;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclKeyEstablishmentCluster;
@@ -48,6 +49,12 @@ import com.zsmartsystems.zigbee.zdo.command.IeeeAddressRequest;
 import com.zsmartsystems.zigbee.zdo.command.IeeeAddressResponse;
 import com.zsmartsystems.zigbee.zdo.command.MatchDescriptorRequest;
 import com.zsmartsystems.zigbee.zdo.command.MatchDescriptorResponse;
+import com.zsmartsystems.zigbee.zdo.command.NodeDescriptorRequest;
+import com.zsmartsystems.zigbee.zdo.command.NodeDescriptorResponse;
+import com.zsmartsystems.zigbee.zdo.command.SimpleDescriptorRequest;
+import com.zsmartsystems.zigbee.zdo.command.SimpleDescriptorResponse;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.LogicalType;
+import com.zsmartsystems.zigbee.zdo.field.SimpleDescriptor;
 
 /**
  * Implements the smart energy client. The client will wait for the network to be joined, then search for the key
@@ -146,6 +153,12 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
     private int keepaliveTimeout = KEEPALIVE_TIMER_DEFAULT;
     private Calendar lastKeepAliveTime = null;
 
+    /**
+     * Used to fix the crypto suite. May be set by the application to limit the crypto suite to a known value rather
+     * than let the system choose the highest usable suite.
+     */
+    private ZigBeeCryptoSuites forceCryptoSuite;
+
     private boolean extensionStarted = false;
 
     private final static Set<ZclClusterType> secureClusters = new HashSet<>();
@@ -223,6 +236,21 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
      */
     public ZigBeeCbkeProvider getCbkeProvider() {
         return cbkeProvider;
+    }
+
+    /**
+     * Set the crypto suite to a fixed value. May be set by the application to limit the crypto suite to a known value
+     * rather than let the system choose the highest usable suite.
+     * <p>
+     * Once the crypto suite has been manually selected the system will not request the supported suites on the remote
+     * device. If the remote device does not support the manually selected crypto suite, then the CBKE will fail.
+     *
+     * @param requestedCryptoSuite the {@link ZigBeeCryptoSuites} to use
+     * @return true if the {@link ZigBeeCryptoSuites} was set
+     */
+    public boolean setCryptoSuite(ZigBeeCryptoSuites requestedCryptoSuite) {
+        forceCryptoSuite = requestedCryptoSuite;
+        return true;
     }
 
     /**
@@ -352,7 +380,7 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
         ZigBeeNode trustCentre = networkManager.getNode(0);
         logger.debug("SEP Client Extension: Trust Centre={}", trustCentre);
         if (trustCentre != null && cbkeProvider.isAuthorised(trustCentre.getIeeeAddress())) {
-            logger.debug("SEP Client Extension: startup TC is authorised");
+            logger.debug("SEP Client Extension: Startup TC is authorised");
             setProfileSecurity(trustCentre);
 
             // Check if we know the metering cluster
@@ -360,7 +388,9 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
             for (ZigBeeEndpoint endpoint : trustCentre.getEndpoints()) {
                 meteringFound |= (endpoint.getInputCluster(ZclMeteringCluster.CLUSTER_ID) != null);
             }
-            if (meteringFound) {
+            if (trustCentre.getLogicalType() == LogicalType.UNKNOWN) {
+                updateClientState(SmartEnergyClientState.DISCOVER_TRUST_CENTRE);
+            } else if (meteringFound) {
                 updateClientState(SmartEnergyClientState.DISCOVER_KEEP_ALIVE);
             } else {
                 updateClientState(SmartEnergyClientState.DISCOVER_METERING_SERVERS);
@@ -407,21 +437,33 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
 
                 switch (seState) {
                     case DISCOVER_TRUST_CENTRE:
-                        if (networkManager.getNode(0) != null) {
+                        if (networkManager.getNode(0) != null
+                                && networkManager.getNode(0).getLogicalType() != LogicalType.UNKNOWN) {
                             logger.debug("SEP Client Extension: Trust centre already known");
                             updateClientState(SmartEnergyClientState.DISCOVER_KEY_ESTABLISHMENT_CLUSTER);
                             break;
                         }
-                        IeeeAddress ieeeAddress = requestIeeeAddress(0);
-                        if (ieeeAddress == null) {
-                            logger.debug("SEP Client Extension: SEP discovery did not find TC IEEE address");
-                            break;
-                        }
-                        logger.debug("SEP Client Extension: SEP discovery found TC IEEE address - {}", ieeeAddress);
+                        ZigBeeNode trustCentre = networkManager.getNode(0);
+                        if (trustCentre == null) {
+                            IeeeAddress ieeeAddress = requestIeeeAddress(0);
+                            if (ieeeAddress == null) {
+                                logger.debug("SEP Client Extension: SEP discovery did not find TC IEEE address");
+                                break;
+                            }
+                            logger.debug("SEP Client Extension: SEP discovery found TC IEEE address - {}", ieeeAddress);
 
-                        ZigBeeNode trustCentre = new ZigBeeNode(networkManager, ieeeAddress);
-                        trustCentre.setNetworkAddress(0);
+                            trustCentre = new ZigBeeNode(networkManager, ieeeAddress);
+                            trustCentre.setNetworkAddress(0);
+                        }
+                        try {
+                            if (requestNodeDescriptor(trustCentre)) {
+                            }
+                        } catch (InterruptedException | ExecutionException e) {
+                            logger.debug("SEP Client Extension: Exception getting node descriptor for address - {}",
+                                    trustCentre.getIeeeAddress());
+                        }
                         networkManager.updateNode(trustCentre);
+
                         updateClientState(SmartEnergyClientState.DISCOVER_KEY_ESTABLISHMENT_CLUSTER);
                         timerStart(TIMER_IMMEDIATE);
                         break;
@@ -525,8 +567,79 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
 
         keClient = new ZclKeyEstablishmentClient(this, keCluster);
         keClient.setCbkeProvider(cbkeProvider);
+        if (forceCryptoSuite != null) {
+            keClient.setCryptoSuite(forceCryptoSuite);
+        }
 
         keClient.start();
+    }
+
+    /**
+     * Get node descriptor
+     *
+     * @return true if the message was processed ok
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    private boolean requestNodeDescriptor(ZigBeeNode node) throws InterruptedException, ExecutionException {
+        final NodeDescriptorRequest nodeDescriptorRequest = new NodeDescriptorRequest();
+        nodeDescriptorRequest.setDestinationAddress(new ZigBeeEndpointAddress(node.getNetworkAddress()));
+        nodeDescriptorRequest.setNwkAddrOfInterest(node.getNetworkAddress());
+
+        CommandResult response = networkManager.sendTransaction(nodeDescriptorRequest, nodeDescriptorRequest).get();
+        final NodeDescriptorResponse nodeDescriptorResponse = (NodeDescriptorResponse) response.getResponse();
+        logger.debug("{}: SEP Client Extension: NodeDescriptorResponse returned {}", node.getIeeeAddress(),
+                nodeDescriptorResponse);
+        if (nodeDescriptorResponse == null) {
+            return false;
+        }
+
+        if (nodeDescriptorResponse.getStatus() == ZdoStatus.SUCCESS) {
+            node.setNodeDescriptor(nodeDescriptorResponse.getNodeDescriptor());
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Get the simple descriptor for an endpoint and create the {@link ZigBeeEndpoint}
+     *
+     * @param endpoint the {@link ZigBeeEndpoint} to request the descriptor
+     * @return the {@link ZigBeeStatus}
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    private ZigBeeStatus requestSimpleDescriptor(final ZigBeeEndpoint endpoint)
+            throws InterruptedException, ExecutionException {
+        final SimpleDescriptorRequest simpleDescriptorRequest = new SimpleDescriptorRequest();
+        simpleDescriptorRequest
+                .setDestinationAddress(new ZigBeeEndpointAddress(endpoint.getParentNode().getNetworkAddress()));
+        simpleDescriptorRequest.setNwkAddrOfInterest(endpoint.getParentNode().getNetworkAddress());
+        simpleDescriptorRequest.setEndpoint(endpoint.getEndpointId());
+
+        CommandResult response = networkManager.sendTransaction(simpleDescriptorRequest, simpleDescriptorRequest).get();
+
+        final SimpleDescriptorResponse simpleDescriptorResponse = (SimpleDescriptorResponse) response.getResponse();
+        logger.debug("{}: SEP Client Extension: SimpleDescriptorResponse returned {}", endpoint.getIeeeAddress(),
+                simpleDescriptorResponse);
+        if (simpleDescriptorResponse == null) {
+            return ZigBeeStatus.FAILURE;
+        }
+
+        if (simpleDescriptorResponse.getStatus() == ZdoStatus.SUCCESS) {
+            SimpleDescriptor simpleDescriptor = simpleDescriptorResponse.getSimpleDescriptor();
+            endpoint.setProfileId(simpleDescriptor.getProfileId());
+            endpoint.setDeviceId(simpleDescriptor.getDeviceId());
+            endpoint.setDeviceVersion(simpleDescriptor.getDeviceVersion());
+            endpoint.setInputClusterIds(simpleDescriptor.getInputClusterList());
+            endpoint.setOutputClusterIds(simpleDescriptor.getOutputClusterList());
+
+            return ZigBeeStatus.SUCCESS;
+        }
+
+        return ZigBeeStatus.FAILURE;
     }
 
     /**
@@ -626,29 +739,23 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
                     networkManager.updateNode(node);
                 }
 
+                ZigBeeNode updatedNode = new ZigBeeNode(networkManager, node.getIeeeAddress(),
+                        node.getNetworkAddress());
                 for (Integer endpointId : response.getMatchList()) {
-                    ZigBeeEndpoint meteringEndpoint = node.getEndpoint(endpointId);
-                    if (meteringEndpoint == null) {
-                        logger.debug("SEP Client Extension: Metering endpoint not found");
-                        // Add it. This may happen if Metering is in a different endpoint than KeyExchange
-                        meteringEndpoint = new ZigBeeEndpoint(node, endpointId);
-                        meteringEndpoint.setProfileId(ZigBeeProfileType.ZIGBEE_SMART_ENERGY.getKey());
-                        node.addEndpoint(meteringEndpoint);
+                    ZigBeeEndpoint endpoint = new ZigBeeEndpoint(updatedNode, endpointId);
+                    logger.debug("SEP Client Extension: Metering endpoint {} being added/updated",
+                            endpoint.getEndpointAddress());
+
+                    try {
+                        requestSimpleDescriptor(endpoint);
+                    } catch (InterruptedException | ExecutionException e) {
+                        logger.debug("SEP Client Extension: Exception getting simple descriptor from endpoint {}",
+                                endpoint.getEndpointAddress());
                     }
-                    ZclMeteringCluster meteringCluster = (ZclMeteringCluster) meteringEndpoint
-                            .getInputCluster(ZclMeteringCluster.CLUSTER_ID);
-                    if (meteringCluster != null) {
-                        logger.debug("SEP Client Extension: Metering cluster already supported in endpoint {}/{}",
-                                response.getSourceAddress().getAddress(), endpointId);
-                    } else {
-                        logger.debug("SEP Client Extension: Adding metering cluster to endpoint {}/{}",
-                                response.getSourceAddress().getAddress(), endpointId);
-                        meteringCluster = new ZclMeteringCluster(meteringEndpoint);
-                        meteringCluster.setApsSecurityRequired(true);
-                        meteringEndpoint.addInputCluster(meteringCluster);
-                    }
+                    updatedNode.addEndpoint(endpoint);
                 }
-                networkManager.updateNode(node);
+                setProfileSecurity(updatedNode);
+                networkManager.updateNode(updatedNode);
 
                 discoveryComplete();
                 break;
@@ -844,15 +951,5 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
     @Override
     public void nodeAdded(ZigBeeNode node) {
         setProfileSecurity(node);
-    }
-
-    @Override
-    public void nodeUpdated(ZigBeeNode node) {
-        // Nothing to do
-    }
-
-    @Override
-    public void nodeRemoved(ZigBeeNode node) {
-        // Nothing to do
     }
 }

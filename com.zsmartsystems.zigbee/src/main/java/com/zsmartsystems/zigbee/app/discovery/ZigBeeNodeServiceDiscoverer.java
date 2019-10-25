@@ -433,7 +433,7 @@ public class ZigBeeNodeServiceDiscoverer {
         // Get the simple descriptors for all endpoints
         List<ZigBeeEndpoint> endpoints = new ArrayList<ZigBeeEndpoint>();
         for (final int endpointId : activeEndpointsResponse.getActiveEpList()) {
-            ZigBeeEndpoint endpoint = getSimpleDescriptor(endpointId);
+            ZigBeeEndpoint endpoint = requestSimpleDescriptor(endpointId);
             if (endpoint == null) {
                 return false;
             }
@@ -560,7 +560,7 @@ public class ZigBeeNodeServiceDiscoverer {
      * @throws ExecutionException
      * @throws InterruptedException
      */
-    private ZigBeeEndpoint getSimpleDescriptor(final int endpointId) throws InterruptedException, ExecutionException {
+    private ZigBeeEndpoint requestSimpleDescriptor(final int endpointId) throws InterruptedException, ExecutionException {
         final SimpleDescriptorRequest simpleDescriptorRequest = new SimpleDescriptorRequest();
         simpleDescriptorRequest.setDestinationAddress(new ZigBeeEndpointAddress(node.getNetworkAddress()));
         simpleDescriptorRequest.setNwkAddrOfInterest(node.getNetworkAddress());
