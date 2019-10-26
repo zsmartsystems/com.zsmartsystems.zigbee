@@ -719,7 +719,7 @@
         <name>Historical Consumption Formatting</name>
         <description>HistoricalConsumptionFormatting provides a method to properly decipher the number of digits and the decimal location of the values found in the Historical Consumption Set of attributes.</description>
     </attribute>
-    <attribute code="0x0306" type="BITMAP_8_BIT" side="server" optional="false" writable="false" reportable="false">
+    <attribute code="0x0306" type="BITMAP_8_BIT" class="MeteringDeviceTypeEnum" side="server" optional="false" writable="false" reportable="false">
         <name>Metering Device Type</name>
         <description>MeteringDeviceType provides a label for identifying the type of metering device present. The attribute are values representing Energy, Gas, Water, Thermal, Heat, Cooling, and mirrored metering devices.</description>
     </attribute>
@@ -743,7 +743,7 @@
         <name>Energy Carrier Demand Formatting</name>
         <description>EnergyCarrierDemandFormatting provides a method to properly decipher the number of digits and the decimal location of the values found in the Demand-related attributes.</description>
     </attribute>
-    <attribute code="0x030C" type="ENUMERATION_8_BIT" side="server" optional="false" writable="false" reportable="false">
+    <attribute code="0x030C" type="ENUMERATION_8_BIT" class="TemperatureUnitOfMeasureEnum" side="server" optional="false" writable="false" reportable="false">
         <name>Temperature Unit Of Measure</name>
         <description>TemperatureFormatting provides a method to properly decipher the number of digits and the decimal location of the values found in the Temperature-related attributes.</description>
     </attribute>
@@ -1461,7 +1461,51 @@
         <value code="0x03" name="Supply Unchanged">
         </value>
     </constant>
-    
+    <constant type="BITMAP_8_BIT" class="MeteringDeviceTypeEnum">
+        <name>Metering Device Type</name>
+        <value code="0x00" name="Electric Metering">
+        </value>
+        <value code="0x01" name="Gas Metering">
+        </value>
+        <value code="0x02" name="Water Metering">
+        </value>
+        <value code="0x03" name="Thermal Metering">
+        </value>
+        <value code="0x04" name="Pressure Metering">
+        </value>
+        <value code="0x05" name="Heat Metering">
+        </value>
+        <value code="0x06" name="Cooling Metering">
+        </value>
+        <value code="0x80" name="Mirrored Gas Metering">
+        </value>
+        <value code="0x81" name="Mirrored Water Metering">
+        </value>
+        <value code="0x82" name="Mirrored Thermal Metering">
+        </value>
+        <value code="0x83" name="Mirrored Pressure Metering">
+        </value>
+        <value code="0x84" name="Mirrored Heat Metering">
+        </value>
+        <value code="0x85" name="Mirrored Cooling Metering">
+        </value>
+    </constant>
+    <constant type="ENUMERATION_8_BIT" class="TemperatureUnitOfMeasureEnum">
+        <name>Temperature Unit Of Measure</name>
+        <value code="0x00" name="Degrees Kelvin">
+        </value>
+        <value code="0x01" name="Degrees Celsius">
+        </value>
+        <value code="0x02" name="Degrees Fahrenheit">
+        </value>
+        <value code="0x80" name="Degrees Kelvin BCD">
+        </value>
+        <value code="0x81" name="Degrees Celsius BCD">
+        </value>
+        <value code="0x82" name="Degrees Fahrenheit BCD">
+        </value>
+    </constant>
+
     <struct class="SnapshotResponsePayload">
         <name>Snapshot Response Payload</name>
         <field type="UNSIGNED_8_BIT_INTEGER">
