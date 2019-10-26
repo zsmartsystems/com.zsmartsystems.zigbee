@@ -970,6 +970,23 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         if (zclHeader.getDirection() == ZclCommandDirection.SERVER_TO_CLIENT) {
             if (clusterMatcher != null && !clusterMatcher.isClientSupported(apsFrame.getCluster())) {
                 logger.debug("Unsupported local client cluster {}", String.format("%04X", apsFrame.getCluster()));
+                if (clustersWeHaveSentTo.contains(apsFrame.getCluster())) {
+                    logger.error(
+                            "Rejecting incoming message for cluster {}, but we have sent outgoing non-default-response to it",
+                            String.format("0x%04x", apsFrame.getCluster()));
+                }
+                try {
+                    ZclCluster cluster = endpoint.getInputCluster(apsFrame.getCluster());
+                    command = cluster.getResponseFromId(zclHeader.getFrameType(), zclHeader.getCommandId());
+                    command.setCommandDirection(zclHeader.getDirection());
+                    command.deserialize(fieldDeserializer);
+                    command.setClusterId(apsFrame.getCluster());
+                    command.setTransactionId(zclHeader.getSequenceNumber());
+                    command.setDisableDefaultResponse(zclHeader.isDisableDefaultResponse());
+                    logger.info("rejected command was {}", command);
+                } catch (Exception e) {
+                    logger.error("Failed to parse rejected command", e);
+                }
                 createDefaultResponse(apsFrame, zclHeader, ZclStatus.FAILURE);
                 return null;
             }
@@ -1716,14 +1733,21 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         command.setSourceAddress(new ZigBeeEndpointAddress(localNwkAddress));
     }
 
+    private Set<Integer> clustersWeHaveSentTo = new HashSet<>();
     @Override
     public void sendTransaction(ZigBeeCommand command) {
+        if (!(command instanceof DefaultResponse)) {
+            clustersWeHaveSentTo.add(command.getClusterId());
+        }
         finaliseOutgoingCommand(command);
         transactionManager.sendTransaction(command);
     }
 
     @Override
     public Future<CommandResult> sendTransaction(ZigBeeCommand command, ZigBeeTransactionMatcher responseMatcher) {
+        if (!(command instanceof DefaultResponse)) {
+            clustersWeHaveSentTo.add(command.getClusterId());
+        }
         finaliseOutgoingCommand(command);
         return transactionManager.sendTransaction(command, responseMatcher);
     }
