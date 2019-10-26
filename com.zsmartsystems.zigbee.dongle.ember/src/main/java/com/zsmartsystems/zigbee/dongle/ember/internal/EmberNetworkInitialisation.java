@@ -167,10 +167,11 @@ public class EmberNetworkInitialisation {
         logger.debug("Joining Ember network with configuration {}", networkParameters);
 
         // Leave the current network so we can initialise a new network
+        EmberNcp ncp = new EmberNcp(protocolHandler);
         if (checkNetworkJoined()) {
-            EmberNcp ncp = new EmberNcp(protocolHandler);
             ncp.leaveNetwork();
         }
+        ncp.clearKeyTable();
 
         // Initialise security - no network key as we'll get that from the coordinator
         setSecurityState(linkKey, null);
