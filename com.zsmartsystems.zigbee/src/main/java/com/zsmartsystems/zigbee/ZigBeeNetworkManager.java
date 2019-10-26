@@ -968,11 +968,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
         ZclCommand command;
         if (zclHeader.getDirection() == ZclCommandDirection.SERVER_TO_CLIENT) {
-            if (clusterMatcher != null && !clusterMatcher.isClientSupported(apsFrame.getCluster())) {
-                logger.debug("Unsupported local client cluster {}", String.format("%04X", apsFrame.getCluster()));
-                createDefaultResponse(apsFrame, zclHeader, ZclStatus.FAILURE);
-                return null;
-            }
             ZclCluster cluster = endpoint.getInputCluster(apsFrame.getCluster());
             if (cluster == null) {
                 logger.debug("Unknown input cluster {}", String.format("%04X", apsFrame.getCluster()));
