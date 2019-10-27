@@ -103,6 +103,12 @@ A log viewer to decode the logs and present them in a usable format is available
 
 ## ZigBee Stack
 
+The framework implements a ZigBee stack, currently employing a single endpoint. The default profile, device type and supported clusters can all be configured.
+
+The supported clusters must be configured or the framework will not process any received frames. Likewise, the framework will not respond to messages sent to any endpoints other than endpoint 1.
+
+To add support for local clusters, use the ```ZigBeeNetworkManager``` methods ```addSupportedClientCluster``` and ```addSupportedServerCluster```. Note that any configuration required in the transport layer (dongle dependant) will also need to be configured consistently.
+
 ## Dongles
 
 ### Silicon Labs Ember EM35x / EFR32
@@ -221,7 +227,7 @@ The lifecycle of an extension is as follows -:
 
 Extensions should normally register as a ```ZigBeeNetworkNodeListener``` to get notified when a node is discovered or removed from the network so that they can add support to the node. The extension will then register a client or server application with the endpoint. The client/server application may register for callbacks with the endpoint (or node).
 
-Extension may want to register a supported cluster with the ```ZigBeeNetworkManager.addSupportedCluster()``` method so that the services provided are discoverable.
+Extension may want to register a supported cluster with the ```ZigBeeNetworkManager.addSupportedServerCluster()``` and  ```ZigBeeNetworkManager.addSupportedClientCluster()``` methods so that the services provided are discoverable.
 
 Client/Server implementations will normally be linked to a specific cluster and provide the application logic for the cluster. The client/server implementation class should be named with the same name as the cluster, but exchanging ```Cluster``` for ```Client``` or ```Server``` (eg a server supporting the ```ZclOtaUpgradeCluster``` would be named ```ZclOtaUpgradeServer```).
 
