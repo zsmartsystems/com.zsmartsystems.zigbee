@@ -41,5 +41,8 @@ public class ByteArrayTest {
         assertEquals(new ByteArray(new byte[] { 2, 3, 4, 5, 6, 7 }), array);
 
         assertTrue(Arrays.equals(new int[] { 2, 3, 4, 5, 6, 7 }, array.getAsIntArray()));
+
+        array = new ByteArray(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 });
+        assertTrue(Arrays.equals(new int[] { 2, 3, 4, 5, 6, 7 }, array.getAsIntArray(1, 7)));
     }
 }

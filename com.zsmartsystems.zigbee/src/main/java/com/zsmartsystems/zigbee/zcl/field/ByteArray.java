@@ -75,6 +75,23 @@ public class ByteArray {
     }
 
     /**
+     * Gets a segment of the byte array as an array of integers
+     *
+     * @param start the start offset of the range to return (inclusive)
+     * @param finish the end offset of the range to return (exclusive)
+     * @return the integer array containing the requested segment
+     */
+    public int[] getAsIntArray(int start, int finish) {
+        int intArray[] = new int[finish - start];
+        int outCnt = 0;
+        for (int cnt = start; cnt < finish; cnt++) {
+            intArray[outCnt++] = value[cnt] & 0xFF;
+        }
+
+        return intArray;
+    }
+
+    /**
      * Get the length of the underlying byte array
      *
      * @return the length of the data in the array
