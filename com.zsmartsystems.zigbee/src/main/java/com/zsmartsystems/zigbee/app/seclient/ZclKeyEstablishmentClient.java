@@ -13,6 +13,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,6 +60,11 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
     private final Logger logger = LoggerFactory.getLogger(ZclKeyEstablishmentClient.class);
 
     /**
+     * Number of seconds from initial request to first response from server
+     */
+    private final int STARTUP_TIMER = 5;
+
+    /**
      * The KeyEstablishmentCluster used to communicate with the remote device
      */
     private ZclKeyEstablishmentCluster keCluster;
@@ -93,6 +101,14 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
     private SmartEnergyClient smartEnergyClient;
 
     private ExecutorService executorService;
+    private ScheduledExecutorService timerService;
+
+    private ScheduledFuture<?> timer;
+
+    /**
+     * Stores the number of seconds the server will take to generate the confirm key message
+     */
+    private int confirmKeyGenerateTime;
 
     private Map<ZigBeeCryptoSuites, KeyEstablishmentSuiteBitmap> cryptoSuiteTranslation = new HashMap<>();
 
@@ -120,6 +136,7 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
 
         keCluster.addCommandListener(this);
 
+        timerService = ZigBeeExecutors.newScheduledThreadPool(1, "ZclKeyEstablishmentClient-Timeout");
         executorService = ZigBeeExecutors.newSingleThreadScheduledExecutor("ZclKeyEstablishmentClient");
     }
 
@@ -230,6 +247,7 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
 
         keCluster.initiateKeyEstablishmentRequestCommand(cryptoSuiteTranslation.get(requestedCryptoSuite).getKey(),
                 cbkeProvider.getEphemeralDataGenerateTime(), cbkeProvider.getConfirmKeyGenerateTime(), certificate);
+        startTerminationTimer(STARTUP_TIMER);
 
         return true;
     }
@@ -259,6 +277,8 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
         @Override
         public void run() {
             logger.debug("CBKE handleInitiateKeyEstablishmentResponse {}", response);
+            stopTerminationTimer();
+
             // Check the state and terminate if we're not expecting this response
             if (state != KeyEstablishmentState.INITIATE_REQUEST) {
                 logger.debug("CBKE Invalid InitiateKeyEstablishmentResponse packet with state {}", state);
@@ -343,7 +363,9 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
             cbkeProvider.addPartnerCertificate(cryptoSuite, response.getIdentity());
             keCluster.ephemeralDataRequestCommand(ephemeralData);
 
+            confirmKeyGenerateTime = response.getConfirmKeyGenerateTime();
             setState(KeyEstablishmentState.EPHEMERAL_DATA_REQUEST);
+            startTerminationTimer(response.getEphemeralDataGenerateTime());
         }
     }
 
@@ -357,6 +379,7 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
         @Override
         public void run() {
             logger.debug("CBKE handleEphemeralDataResponse {}", response);
+            stopTerminationTimer();
 
             // Check the state and terminate if we're not expecting this response
             if (state != KeyEstablishmentState.EPHEMERAL_DATA_REQUEST) {
@@ -373,6 +396,7 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
             keCluster.confirmKeyDataRequestCommand(initiatorMac);
 
             setState(KeyEstablishmentState.CONFIRM_KEY_REQUEST);
+            startTerminationTimer(confirmKeyGenerateTime);
         }
     }
 
@@ -386,6 +410,7 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
         @Override
         public void run() {
             logger.debug("CBKE handleConfirmKeyResponse {}", response);
+            stopTerminationTimer();
 
             // Check the state and terminate if we're not expecting this response
             if (state != KeyEstablishmentState.CONFIRM_KEY_REQUEST) {
@@ -427,13 +452,49 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
         @Override
         public void run() {
             logger.debug("CBKE handleTerminateKeyEstablishment {}", response);
+            stopTerminationTimer();
 
             Integer suite = response.getKeyEstablishmentSuite();
             KeyEstablishmentStatusEnum status = KeyEstablishmentStatusEnum.getByValue(response.getStatusCode());
             Integer waitTime = response.getWaitTime();
+            if (response.getStatusCode() == KeyEstablishmentStatusEnum.UNKNOWN_ISSUER.getKey()) {
+                // TODO: If UNSUPPORTED_SUITE is received then we should signal to leave the network
+            }
             setState(KeyEstablishmentState.FAILED);
             logger.debug("CBKE Terminate Key establishment {}, suite {}, wait {} seconds", status, suite, waitTime);
             shutdown(waitTime);
+        }
+    }
+
+    /**
+     * Starts a timer, after which the CBKE will be terminated
+     *
+     * @param delay the number of seconds to wait
+     */
+    private void startTerminationTimer(int delay) {
+        stopTerminationTimer();
+        logger.debug("CBKE Key establishment timer: Started for {} seconds at {}", delay, state);
+
+        timer = timerService.schedule(new Runnable() {
+            @Override
+            public void run() {
+                timer = null;
+                logger.debug("CBKE Key establishment timer: Timeout waiting for message");
+                // Note that no TerminateKeyEstablishment message should be sent.
+                setState(KeyEstablishmentState.FAILED);
+                shutdown(0);
+            }
+        }, delay, TimeUnit.SECONDS);
+    }
+
+    /**
+     * Stops a currently running termination timer.
+     */
+    private void stopTerminationTimer() {
+        if (timer != null) {
+            logger.debug("CBKE Key establishment timer: Stopped");
+            timer.cancel(true);
+            timer = null;
         }
     }
 
@@ -463,6 +524,10 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
     }
 
     private void shutdown(int waitTime) {
+        logger.debug("CBKE Key establishment shutdown");
+        stopTerminationTimer();
+
+        timerService.shutdown();
         executorService.shutdown();
 
         keCluster.removeCommandListener(this);
