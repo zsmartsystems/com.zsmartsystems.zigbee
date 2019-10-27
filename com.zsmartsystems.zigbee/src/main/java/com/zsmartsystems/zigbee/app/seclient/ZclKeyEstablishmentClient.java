@@ -497,7 +497,7 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
             @Override
             public void run() {
                 timer = null;
-                logger.debug("CBKE Key establishment timer: Timeout waiting for message");
+                logger.debug("CBKE Key establishment timer: Timeout waiting for message in state{}", state);
                 // Note that no TerminateKeyEstablishment message should be sent.
                 setState(KeyEstablishmentState.FAILED);
                 shutdown(0);
