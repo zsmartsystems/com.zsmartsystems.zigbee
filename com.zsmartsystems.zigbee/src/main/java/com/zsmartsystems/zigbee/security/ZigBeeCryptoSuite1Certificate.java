@@ -17,6 +17,8 @@ import com.zsmartsystems.zigbee.zcl.field.ByteArray;
  *
  */
 public class ZigBeeCryptoSuite1Certificate extends ZigBeeCertificate {
+    private static final int CERTIFICATE_LENGTH = 48;
+
     private final ByteArray keyData;
 
     /**
@@ -38,7 +40,12 @@ public class ZigBeeCryptoSuite1Certificate extends ZigBeeCertificate {
      *
      * @param keyData
      */
-    public ZigBeeCryptoSuite1Certificate(ByteArray keyData) {
+    public ZigBeeCryptoSuite1Certificate(ByteArray keyData) throws IllegalArgumentException {
+        if (keyData.size() != CERTIFICATE_LENGTH) {
+            throw new IllegalArgumentException(
+                    "Crypto Suite 1 certificate length must be 48 bytes - passed " + keyData.size() + " bytes");
+        }
+
         cryptoSuite = ZigBeeCryptoSuites.ECC_163K1;
         this.keyData = keyData;
     }
