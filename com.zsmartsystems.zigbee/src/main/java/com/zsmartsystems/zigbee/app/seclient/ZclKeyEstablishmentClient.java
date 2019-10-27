@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 
 import org.slf4j.Logger;
@@ -18,6 +19,8 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ZigBeeExecutors;
 import com.zsmartsystems.zigbee.security.ZigBeeCbkeProvider;
+import com.zsmartsystems.zigbee.security.ZigBeeCertificate;
+import com.zsmartsystems.zigbee.security.ZigBeeCryptoSuite1Certificate;
 import com.zsmartsystems.zigbee.security.ZigBeeCryptoSuites;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
@@ -293,11 +296,43 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
                 shutdown(0);
             }
 
+            ZigBeeCertificate localCertificate = null;
+            ZigBeeCertificate remoteCertificate = null;
+            switch (cryptoSuite) {
+                case ECC_163K1:
+                    localCertificate = new ZigBeeCryptoSuite1Certificate(
+                            cbkeProvider.getCertificate(ZigBeeCryptoSuites.ECC_163K1));
+                    remoteCertificate = new ZigBeeCryptoSuite1Certificate(response.getIdentity());
+                    break;
+                case ECC_283K1:
+                    break;
+                default:
+                    break;
+            }
+
+            logger.debug("CBKE Local  Certificate is {}", localCertificate);
+            logger.debug("CBKE Remote Certificate is {}", remoteCertificate);
+
+            if (localCertificate == null || remoteCertificate == null) {
+                logger.debug("CBKE Certificates not found");
+                keCluster.terminateKeyEstablishment(KeyEstablishmentStatusEnum.UNSUPPORTED_SUITE.getKey(),
+                        DELAY_BEFORE_RETRY, KeyEstablishmentSuiteBitmap.CRYPTO_SUITE_1.getKey());
+                setState(KeyEstablishmentState.FAILED);
+                shutdown(0);
+            } else if (!Objects.equals(localCertificate.getIssuer(), remoteCertificate.getIssuer())) {
+                logger.debug("CBKE Issuer is not known - expected={}, received={}", localCertificate.getIssuer(),
+                        remoteCertificate.getIssuer());
+                keCluster.terminateKeyEstablishment(KeyEstablishmentStatusEnum.UNKNOWN_ISSUER.getKey(),
+                        DELAY_BEFORE_RETRY, KeyEstablishmentSuiteBitmap.CRYPTO_SUITE_1.getKey());
+                setState(KeyEstablishmentState.FAILED);
+                shutdown(0);
+            }
+
             ByteArray ephemeralData = cbkeProvider.getCbkeEphemeralData(requestedSuite);
 
             // Make sure we have a certificate for the requested crypto suite
             if (ephemeralData == null) {
-                logger.debug("CBKE Unable to get certificate for requested security suite {}", requestedSuite);
+                logger.debug("CBKE Unable to get ephemeral data for requested security suite {}", requestedSuite);
                 keCluster.terminateKeyEstablishment(KeyEstablishmentStatusEnum.UNSUPPORTED_SUITE.getKey(),
                         DELAY_BEFORE_RETRY, KeyEstablishmentSuiteBitmap.CRYPTO_SUITE_1.getKey());
                 setState(KeyEstablishmentState.FAILED);
