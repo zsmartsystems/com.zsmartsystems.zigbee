@@ -283,11 +283,11 @@ public class EzspGpProxyTableProcessGpPairingRequest extends EzspFrameRequest {
         builder.append(", commMode=");
         builder.append(commMode);
         builder.append(", sinkNetworkAddress=");
-        builder.append(sinkNetworkAddress);
+        builder.append(String.format("%04X", sinkNetworkAddress));
         builder.append(", sinkGroupId=");
-        builder.append(sinkGroupId);
+        builder.append(String.format("%04X", sinkGroupId));
         builder.append(", assignedAlias=");
-        builder.append(assignedAlias);
+        builder.append(String.format("%04X", assignedAlias));
         builder.append(", sinkIeeeAddress=");
         builder.append(sinkIeeeAddress);
         builder.append(", gpdKey=");

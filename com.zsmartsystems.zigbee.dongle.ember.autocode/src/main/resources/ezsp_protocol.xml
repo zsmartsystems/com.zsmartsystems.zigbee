@@ -2760,16 +2760,19 @@
 				<data_type>uint16_t</data_type>
 				<name>sinkNetworkAddress</name>
 				<description>The network address of the GP Sink.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint16_t</data_type>
 				<name>sinkGroupId</name>
 				<description>The group ID of the GP Sink.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint16_t</data_type>
 				<name>assignedAlias</name>
 				<description>The alias assigned to the GPD.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>EmberEUI64</data_type>
@@ -3936,16 +3939,19 @@
 				<data_type>uint32_t</data_type>
 				<name>outgoingFrameCounter</name>
 				<description>The outgoing frame counter associated with the key.</description>
+				<display>hex[8]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint32_t</data_type>
 				<name>incomingFrameCounter</name>
 				<description>The frame counter of the partner device associated with the key.</description>
+				<display>hex[8]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint8_t</data_type>
 				<name>sequenceNumber</name>
 				<description>The sequence number associated with the key.</description>
+				<display>hex[2]</display>
 			</parameter>
 			<parameter>
 				<data_type>EmberEUI64</data_type>
@@ -3968,6 +3974,7 @@
 				<data_type>uint32_t</data_type>
 				<name>sourceId</name>
 				<description>The GPD's source ID.</description>
+				<display>hex[8]</display>
 			</parameter>
 			<parameter>
 				<data_type>EmberGpApplicationId</data_type>

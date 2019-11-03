@@ -173,7 +173,7 @@ public class EmberGpAddress {
         builder.append("EmberGpAddress [gpdIeeeAddress=");
         builder.append(gpdIeeeAddress);
         builder.append(", sourceId=");
-        builder.append(sourceId);
+        builder.append(String.format("%08X", sourceId));
         builder.append(", applicationId=");
         builder.append(applicationId);
         builder.append(", endpoint=");
