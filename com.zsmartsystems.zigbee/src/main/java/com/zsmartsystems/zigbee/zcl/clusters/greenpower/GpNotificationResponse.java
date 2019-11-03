@@ -22,11 +22,13 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * Cluster: <b>Green Power</b>. Command ID 0x00 is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the Green Power cluster.
  * <p>
- * From GPS to GPP to acknowledge GP Notification received in unicast mode.
+ * This command is generated when the sink acknowledges the reception of full unicast GP
+ * Notification command. The GP Notification Response command is sent in unicast to the
+ * originating proxy.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T21:54:11Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-03T12:48:45Z")
 public class GpNotificationResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.

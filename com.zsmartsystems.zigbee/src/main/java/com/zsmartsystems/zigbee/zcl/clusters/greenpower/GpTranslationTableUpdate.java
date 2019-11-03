@@ -23,11 +23,11 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * Cluster: <b>Green Power</b>. Command ID 0x07 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Green Power cluster.
  * <p>
- * To configure GPD Command Translation Table.
+ * This command is generated to configure the GPD Command Translation Table.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T21:54:11Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-03T12:48:45Z")
 public class GpTranslationTableUpdate extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.

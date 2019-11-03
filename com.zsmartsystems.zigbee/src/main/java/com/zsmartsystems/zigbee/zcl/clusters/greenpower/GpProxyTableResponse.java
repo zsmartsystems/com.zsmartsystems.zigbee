@@ -23,9 +23,14 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * To reply with read-out Proxy Table entries, by index or by GPD ID.
  * <p>
+ * Upon reception of the GP Proxy Table Request command, the device shall check if it implements
+ * a Proxy Table. If not, it shall generate a ZCL Default Response command, with the Status code
+ * field carrying UNSUP_CLUSTER_COMMAND. If the device implements the Proxy Table, it shall
+ * prepare a GP Proxy Table Response.
+ * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T21:54:11Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-03T12:48:45Z")
 public class GpProxyTableResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.

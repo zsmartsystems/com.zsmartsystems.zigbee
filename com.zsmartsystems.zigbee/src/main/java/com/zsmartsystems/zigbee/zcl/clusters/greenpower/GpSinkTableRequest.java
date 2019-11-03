@@ -22,11 +22,12 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * Cluster: <b>Green Power</b>. Command ID 0x0A is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Green Power cluster.
  * <p>
- * To read out selected Sink Table Entries, by index or by GPD ID.
+ * The GP Sink Table Request command is generated to read out selected Sink Table entry(s), by
+ * index or by GPD ID
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T22:00:57Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-03T12:48:45Z")
 public class GpSinkTableRequest extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.

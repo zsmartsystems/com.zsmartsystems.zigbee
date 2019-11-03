@@ -24,11 +24,17 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * Cluster: <b>Green Power</b>. Command ID 0x09 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Green Power cluster.
  * <p>
- * To configure Sink Table.
+ * The command is generated to configure the Sink Table of a sink, to
+ * create/update/replace/remove a pairing to a GPD and/or trigger the sending of GP Pairing
+ * command.
+ * <p>
+ * In the current version of the specification, a device shall only send GP Pairing
+ * Configuration command with the Number of paired endpoints field set to 0xfe, if the
+ * CommunicationMode is equal to Pre-Commissioned Groupcast.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T22:13:40Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-03T12:48:45Z")
 public class GpPairingConfiguration extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.

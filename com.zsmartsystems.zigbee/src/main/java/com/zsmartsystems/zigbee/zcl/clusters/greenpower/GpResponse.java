@@ -23,11 +23,12 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * Cluster: <b>Green Power</b>. Command ID 0x06 is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the Green Power cluster.
  * <p>
- * From GPS to selected GPP, to provide data to be transmitted to Rx-capable GPD.
+ * This command is generated when sink requests to send any information to a specific GPD with Rx
+ * capability.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T21:54:11Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-03T12:48:45Z")
 public class GpResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
