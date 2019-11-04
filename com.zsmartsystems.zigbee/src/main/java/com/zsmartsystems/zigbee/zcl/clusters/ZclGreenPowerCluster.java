@@ -48,7 +48,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-03T12:48:45Z")
 public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -61,27 +61,142 @@ public class ZclGreenPowerCluster extends ZclCluster {
     public static final String CLUSTER_NAME = "Green Power";
 
     // Attribute constants
+    /**
+     * Maximum number of Proxy Table entries this node can hold. Any proxy type shall support at
+     * least five Proxy Table entries. The recommended number of the Proxy Table entries for a
+     * Basic Proxy is twenty.
+     */
     public static final int ATTR_GPPMAXPROXYTABLEENTRIES = 0x0010;
+    /**
+     * The Proxy Table attribute contains the information on GPDs active in the system and the
+     * corresponding sinks. Proxy Table is a read-only attribute. Generic ZCL commands
+     * cannot be used to create/modify or remove Proxy Table entries. If required, e.g. for
+     * CT-based commissioning, the GP Pairing command of the Green Power cluster can be used
+     * for that purpose.
+     * <p>
+     * The Proxy Table shall be persistently stored across restarts, OTA upgrades and power
+     * cycles.
+     */
     public static final int ATTR_PROXYTABLE = 0x0011;
+    /**
+     * This attribute defines the maximum number of retransmissions in case a GP Notification
+     * Response command is not received from a particular sink for full unicast GP
+     * Notification command.
+     */
     public static final int ATTR_GPPNOTIFICATIONRETRYNUMBER = 0x0012;
+    /**
+     * This attribute defines the time to wait for GP Notification Response command after
+     * sending full unicast GP Notification command.
+     */
     public static final int ATTR_GPPNOTIFICATIONRETRYTIMER = 0x0013;
+    /**
+     * This attribute defines the maximum value the Search Counter can take, before it rolls
+     * over.
+     */
     public static final int ATTR_GPPMAXSEARCHCOUNTER = 0x0014;
+    /**
+     * The gppBlockedGPDID attribute contains the information on GPDs active in the vicinity
+     * of the network node, but not belonging to the system.
+     */
     public static final int ATTR_GPPBLOCKEDGPDID = 0x0015;
+    /**
+     * The gppFunctionality attribute indicates support of the GP functionality by this
+     * device. Any 1-bit sub-field set to 0b1 indicates that this functionality is supported;
+     * set to 0b0 indicates that this functionality is not implemented. The reserved
+     * sub-fields and sub-fields for any non-applicable functionality shall also be set to
+     * 0b0.
+     */
     public static final int ATTR_GPPFUNCTIONALITY = 0x0016;
+    /**
+     * The gppActiveFunctionality attribute indicates which GP functionality supported by
+     * this device is currently enabled. Any 1-bit sub-field set to 0b1 indicates that this
+     * functionality is supported and enabled; set to 0b0 indicates that this functionality
+     * is disabled or not implemented.
+     */
     public static final int ATTR_GPPACTIVEFUNCTIONALITY = 0x0017;
+    /**
+     * The gpSharedSecurityKeyType attribute stores the key type of the shared security key.
+     * The gpSharedSecurityKeyType attribute can take the following values: 0b000 (no key),
+     * 0b001 (NWK key), 0b010 (GP group key), 0b011 (NWK-key derived GP group key) and 0b111
+     * (Derived individual GPD key).
+     */
     public static final int ATTR_GPCLIENTSHAREDSECURITYKEYTYPE = 0x0020;
+    /**
+     * The gpSharedSecurityKey attribute stores the shared security key of the key type as
+     * indicated in the gpSecurityKeyType attribute. It can take any value.
+     */
     public static final int ATTR_GPCLIENTSHAREDSECURITYKEY = 0x0021;
+    /**
+     * The gpLinkKey attribute stores the Link Key, used to encrypt the key transmitted in the
+     * Commissioning GPDF and Commissioning Reply GPDF. By default, it has the value of the
+     * default ZigBee Trust Center Link Key (TC-LK), 'ZigbeeAlliance09'. Then, storing of
+     * the gpLinkKey may be omitted.
+     */
     public static final int ATTR_GPCLIENTLINKKEY = 0x0022;
+    /**
+     * The gpsMaxSinkTableEntries attribute is one octet in length, and it contains the
+     * maximum number of Sink Table entries that can be stored by this sink.
+     */
     public static final int ATTR_GPSMAXSINKTABLEENTRIES = 0x0000;
+    /**
+     * The Sink Table attribute contains the pairings configured for this sink. Sink Table is a
+     * read-only attribute. Generic ZCL commands cannot be used to create/modify or remove
+     * Sink Table entries. If required, e.g. for CT-based commissioning, the GP Pairing
+     * Configuration command of the Green Power cluster can be used for that purpose.
+     */
     public static final int ATTR_SINKTABLE = 0x0001;
+    /**
+     * The gpsCommunicationMode attribute contains the communication mode required by this
+     * sink.
+     */
     public static final int ATTR_GPSCOMMUNICATIONMODE = 0x0002;
+    /**
+     * The gpsCommissioningExitMode attribute contains the information on commissioning
+     * mode exit requirements of this sink.
+     */
     public static final int ATTR_GPSCOMMISSIONINGEXITMODE = 0x0003;
+    /**
+     * The gpsCommissioningWindow attribute contains the information on the time, in
+     * seconds, during which this sink accepts pairing changes (additions/removals). The
+     * default value is 180 seconds.
+     */
     public static final int ATTR_GPSCOMMISSIONINGWINDOW = 0x0004;
+    /**
+     * The gpsSecurityLevel attribute contains the minimum security level this sink
+     * requires the paired GPDs to support.
+     */
     public static final int ATTR_GPSSECURITYLEVEL = 0x0005;
+    /**
+     * The gpsFunctionality attribute indicates support of the GP functionality by this
+     * device. Any 1-bit subfield set to 0b1 indicates that this functionality is supported;
+     * set to 0b0 indicates that this functionality is not implemented.
+     */
     public static final int ATTR_GPSFUNCTIONALITY = 0x0006;
+    /**
+     * The gpsActiveFunctionality attribute indicates which GP functionality supported by
+     * this device is currently enabled. Any 1-bit sub-field set to 0b1 indicates that this
+     * functionality is supported and enabled; set to 0b0 indicates that this functionality
+     * is disabled or not implemented.
+     */
     public static final int ATTR_GPSACTIVEFUNCTIONALITY = 0x0007;
+    /**
+     * The gpSharedSecurityKeyType attribute stores the key type of the shared security key.
+     * The gpSharedSecurityKeyType attribute can take the following values: 0b000 (no key),
+     * 0b001 (NWK key), 0b010 (GP group key), 0b011 (NWK-key derived GP group key) and 0b111
+     * (Derived individual GPD key).
+     */
     public static final int ATTR_GPSERVERSHAREDSECURITYKEYTYPE = 0x0020;
+    /**
+     * The gpSharedSecurityKey attribute stores the shared security key of the key type as
+     * indicated in the gpSecurityKeyType attribute. It can take any value.
+     */
     public static final int ATTR_GPSERVERSHAREDSECURITYKEY = 0x0021;
+    /**
+     * The gpLinkKey attribute stores the Link Key, used to encrypt the key transmitted in the
+     * Commissioning GPDF and Commissioning Reply GPDF. By default, it has the value of the
+     * default ZigBee Trust Center Link Key (TC-LK), 'ZigbeeAlliance09'. Then, storing of
+     * the gpLinkKey may be omitted.
+     */
     public static final int ATTR_GPSERVERLINKKEY = 0x0022;
 
     @Override
@@ -166,6 +281,9 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * Get the <i>Gps Max Sink Table Entries</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
+     * The gpsMaxSinkTableEntries attribute is one octet in length, and it contains the
+     * maximum number of Sink Table entries that can be stored by this sink.
+     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
@@ -180,6 +298,9 @@ public class ZclGreenPowerCluster extends ZclCluster {
 
     /**
      * Synchronously get the <i>Gps Max Sink Table Entries</i> attribute [attribute ID <b>0x0000</b>].
+     * <p>
+     * The gpsMaxSinkTableEntries attribute is one octet in length, and it contains the
+     * maximum number of Sink Table entries that can be stored by this sink.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -208,6 +329,9 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * Set reporting for the <i>Gps Max Sink Table Entries</i> attribute [attribute ID <b>0x0000</b>].
      * <p>
+     * The gpsMaxSinkTableEntries attribute is one octet in length, and it contains the
+     * maximum number of Sink Table entries that can be stored by this sink.
+     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
@@ -226,6 +350,11 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * Get the <i>Sink Table</i> attribute [attribute ID <b>0x0001</b>].
      * <p>
+     * The Sink Table attribute contains the pairings configured for this sink. Sink Table is a
+     * read-only attribute. Generic ZCL commands cannot be used to create/modify or remove
+     * Sink Table entries. If required, e.g. for CT-based commissioning, the GP Pairing
+     * Configuration command of the Green Power cluster can be used for that purpose.
+     * <p>
      * The attribute is of type {@link ByteArray}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
@@ -240,6 +369,11 @@ public class ZclGreenPowerCluster extends ZclCluster {
 
     /**
      * Synchronously get the <i>Sink Table</i> attribute [attribute ID <b>0x0001</b>].
+     * <p>
+     * The Sink Table attribute contains the pairings configured for this sink. Sink Table is a
+     * read-only attribute. Generic ZCL commands cannot be used to create/modify or remove
+     * Sink Table entries. If required, e.g. for CT-based commissioning, the GP Pairing
+     * Configuration command of the Green Power cluster can be used for that purpose.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -268,6 +402,11 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * Set reporting for the <i>Sink Table</i> attribute [attribute ID <b>0x0001</b>].
      * <p>
+     * The Sink Table attribute contains the pairings configured for this sink. Sink Table is a
+     * read-only attribute. Generic ZCL commands cannot be used to create/modify or remove
+     * Sink Table entries. If required, e.g. for CT-based commissioning, the GP Pairing
+     * Configuration command of the Green Power cluster can be used for that purpose.
+     * <p>
      * The attribute is of type {@link ByteArray}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
@@ -285,6 +424,9 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * Set the <i>Gps Communication Mode</i> attribute [attribute ID <b>0x0002</b>].
      * <p>
+     * The gpsCommunicationMode attribute contains the communication mode required by this
+     * sink.
+     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
@@ -301,6 +443,9 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * Get the <i>Gps Communication Mode</i> attribute [attribute ID <b>0x0002</b>].
      * <p>
+     * The gpsCommunicationMode attribute contains the communication mode required by this
+     * sink.
+     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
@@ -315,6 +460,9 @@ public class ZclGreenPowerCluster extends ZclCluster {
 
     /**
      * Synchronously get the <i>Gps Communication Mode</i> attribute [attribute ID <b>0x0002</b>].
+     * <p>
+     * The gpsCommunicationMode attribute contains the communication mode required by this
+     * sink.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -343,6 +491,9 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * Set the <i>Gps Commissioning Exit Mode</i> attribute [attribute ID <b>0x0003</b>].
      * <p>
+     * The gpsCommissioningExitMode attribute contains the information on commissioning
+     * mode exit requirements of this sink.
+     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
@@ -359,6 +510,9 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * Get the <i>Gps Commissioning Exit Mode</i> attribute [attribute ID <b>0x0003</b>].
      * <p>
+     * The gpsCommissioningExitMode attribute contains the information on commissioning
+     * mode exit requirements of this sink.
+     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
@@ -373,6 +527,9 @@ public class ZclGreenPowerCluster extends ZclCluster {
 
     /**
      * Synchronously get the <i>Gps Commissioning Exit Mode</i> attribute [attribute ID <b>0x0003</b>].
+     * <p>
+     * The gpsCommissioningExitMode attribute contains the information on commissioning
+     * mode exit requirements of this sink.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -401,6 +558,10 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * Set the <i>Gps Commissioning Window</i> attribute [attribute ID <b>0x0004</b>].
      * <p>
+     * The gpsCommissioningWindow attribute contains the information on the time, in
+     * seconds, during which this sink accepts pairing changes (additions/removals). The
+     * default value is 180 seconds.
+     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
@@ -417,6 +578,10 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * Get the <i>Gps Commissioning Window</i> attribute [attribute ID <b>0x0004</b>].
      * <p>
+     * The gpsCommissioningWindow attribute contains the information on the time, in
+     * seconds, during which this sink accepts pairing changes (additions/removals). The
+     * default value is 180 seconds.
+     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
@@ -431,6 +596,10 @@ public class ZclGreenPowerCluster extends ZclCluster {
 
     /**
      * Synchronously get the <i>Gps Commissioning Window</i> attribute [attribute ID <b>0x0004</b>].
+     * <p>
+     * The gpsCommissioningWindow attribute contains the information on the time, in
+     * seconds, during which this sink accepts pairing changes (additions/removals). The
+     * default value is 180 seconds.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -459,6 +628,9 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * Set the <i>Gps Security Level</i> attribute [attribute ID <b>0x0005</b>].
      * <p>
+     * The gpsSecurityLevel attribute contains the minimum security level this sink
+     * requires the paired GPDs to support.
+     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
@@ -475,6 +647,9 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * Get the <i>Gps Security Level</i> attribute [attribute ID <b>0x0005</b>].
      * <p>
+     * The gpsSecurityLevel attribute contains the minimum security level this sink
+     * requires the paired GPDs to support.
+     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
@@ -489,6 +664,9 @@ public class ZclGreenPowerCluster extends ZclCluster {
 
     /**
      * Synchronously get the <i>Gps Security Level</i> attribute [attribute ID <b>0x0005</b>].
+     * <p>
+     * The gpsSecurityLevel attribute contains the minimum security level this sink
+     * requires the paired GPDs to support.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -517,6 +695,10 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * Get the <i>Gps Functionality</i> attribute [attribute ID <b>0x0006</b>].
      * <p>
+     * The gpsFunctionality attribute indicates support of the GP functionality by this
+     * device. Any 1-bit subfield set to 0b1 indicates that this functionality is supported;
+     * set to 0b0 indicates that this functionality is not implemented.
+     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
@@ -531,6 +713,10 @@ public class ZclGreenPowerCluster extends ZclCluster {
 
     /**
      * Synchronously get the <i>Gps Functionality</i> attribute [attribute ID <b>0x0006</b>].
+     * <p>
+     * The gpsFunctionality attribute indicates support of the GP functionality by this
+     * device. Any 1-bit subfield set to 0b1 indicates that this functionality is supported;
+     * set to 0b0 indicates that this functionality is not implemented.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -559,6 +745,10 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * Set reporting for the <i>Gps Functionality</i> attribute [attribute ID <b>0x0006</b>].
      * <p>
+     * The gpsFunctionality attribute indicates support of the GP functionality by this
+     * device. Any 1-bit subfield set to 0b1 indicates that this functionality is supported;
+     * set to 0b0 indicates that this functionality is not implemented.
+     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
@@ -576,6 +766,11 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * Get the <i>Gps Active Functionality</i> attribute [attribute ID <b>0x0007</b>].
      * <p>
+     * The gpsActiveFunctionality attribute indicates which GP functionality supported by
+     * this device is currently enabled. Any 1-bit sub-field set to 0b1 indicates that this
+     * functionality is supported and enabled; set to 0b0 indicates that this functionality
+     * is disabled or not implemented.
+     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
@@ -590,6 +785,11 @@ public class ZclGreenPowerCluster extends ZclCluster {
 
     /**
      * Synchronously get the <i>Gps Active Functionality</i> attribute [attribute ID <b>0x0007</b>].
+     * <p>
+     * The gpsActiveFunctionality attribute indicates which GP functionality supported by
+     * this device is currently enabled. Any 1-bit sub-field set to 0b1 indicates that this
+     * functionality is supported and enabled; set to 0b0 indicates that this functionality
+     * is disabled or not implemented.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -618,6 +818,11 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * Set reporting for the <i>Gps Active Functionality</i> attribute [attribute ID <b>0x0007</b>].
      * <p>
+     * The gpsActiveFunctionality attribute indicates which GP functionality supported by
+     * this device is currently enabled. Any 1-bit sub-field set to 0b1 indicates that this
+     * functionality is supported and enabled; set to 0b0 indicates that this functionality
+     * is disabled or not implemented.
+     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is MANDATORY
@@ -635,6 +840,11 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * Set the <i>Gp Server Shared Security Key Type</i> attribute [attribute ID <b>0x0020</b>].
      * <p>
+     * The gpSharedSecurityKeyType attribute stores the key type of the shared security key.
+     * The gpSharedSecurityKeyType attribute can take the following values: 0b000 (no key),
+     * 0b001 (NWK key), 0b010 (GP group key), 0b011 (NWK-key derived GP group key) and 0b111
+     * (Derived individual GPD key).
+     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
@@ -651,6 +861,11 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * Get the <i>Gp Server Shared Security Key Type</i> attribute [attribute ID <b>0x0020</b>].
      * <p>
+     * The gpSharedSecurityKeyType attribute stores the key type of the shared security key.
+     * The gpSharedSecurityKeyType attribute can take the following values: 0b000 (no key),
+     * 0b001 (NWK key), 0b010 (GP group key), 0b011 (NWK-key derived GP group key) and 0b111
+     * (Derived individual GPD key).
+     * <p>
      * The attribute is of type {@link Integer}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
@@ -665,6 +880,11 @@ public class ZclGreenPowerCluster extends ZclCluster {
 
     /**
      * Synchronously get the <i>Gp Server Shared Security Key Type</i> attribute [attribute ID <b>0x0020</b>].
+     * <p>
+     * The gpSharedSecurityKeyType attribute stores the key type of the shared security key.
+     * The gpSharedSecurityKeyType attribute can take the following values: 0b000 (no key),
+     * 0b001 (NWK key), 0b010 (GP group key), 0b011 (NWK-key derived GP group key) and 0b111
+     * (Derived individual GPD key).
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -693,6 +913,9 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * Set the <i>Gp server Shared Security Key</i> attribute [attribute ID <b>0x0021</b>].
      * <p>
+     * The gpSharedSecurityKey attribute stores the shared security key of the key type as
+     * indicated in the gpSecurityKeyType attribute. It can take any value.
+     * <p>
      * The attribute is of type {@link ZigBeeKey}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
@@ -709,6 +932,9 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * Get the <i>Gp server Shared Security Key</i> attribute [attribute ID <b>0x0021</b>].
      * <p>
+     * The gpSharedSecurityKey attribute stores the shared security key of the key type as
+     * indicated in the gpSecurityKeyType attribute. It can take any value.
+     * <p>
      * The attribute is of type {@link ZigBeeKey}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
@@ -723,6 +949,9 @@ public class ZclGreenPowerCluster extends ZclCluster {
 
     /**
      * Synchronously get the <i>Gp server Shared Security Key</i> attribute [attribute ID <b>0x0021</b>].
+     * <p>
+     * The gpSharedSecurityKey attribute stores the shared security key of the key type as
+     * indicated in the gpSecurityKeyType attribute. It can take any value.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -751,6 +980,11 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * Set the <i>Gp Server Link Key</i> attribute [attribute ID <b>0x0022</b>].
      * <p>
+     * The gpLinkKey attribute stores the Link Key, used to encrypt the key transmitted in the
+     * Commissioning GPDF and Commissioning Reply GPDF. By default, it has the value of the
+     * default ZigBee Trust Center Link Key (TC-LK), 'ZigbeeAlliance09'. Then, storing of
+     * the gpLinkKey may be omitted.
+     * <p>
      * The attribute is of type {@link ZigBeeKey}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
@@ -767,6 +1001,11 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * Get the <i>Gp Server Link Key</i> attribute [attribute ID <b>0x0022</b>].
      * <p>
+     * The gpLinkKey attribute stores the Link Key, used to encrypt the key transmitted in the
+     * Commissioning GPDF and Commissioning Reply GPDF. By default, it has the value of the
+     * default ZigBee Trust Center Link Key (TC-LK), 'ZigbeeAlliance09'. Then, storing of
+     * the gpLinkKey may be omitted.
+     * <p>
      * The attribute is of type {@link ZigBeeKey}.
      * <p>
      * The implementation of this attribute by a device is OPTIONAL
@@ -781,6 +1020,11 @@ public class ZclGreenPowerCluster extends ZclCluster {
 
     /**
      * Synchronously get the <i>Gp Server Link Key</i> attribute [attribute ID <b>0x0022</b>].
+     * <p>
+     * The gpLinkKey attribute stores the Link Key, used to encrypt the key transmitted in the
+     * Commissioning GPDF and Commissioning Reply GPDF. By default, it has the value of the
+     * default ZigBee Trust Center Link Key (TC-LK), 'ZigbeeAlliance09'. Then, storing of
+     * the gpLinkKey may be omitted.
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -809,7 +1053,12 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * The Gp Notification
      * <p>
-     * From GPP to GPS to tunnel GP frame.
+     * The GP Notification command is generated by the proxy (or a sink capable of Sink
+     * Table-based forwarding) to forward the received Data GPDF to the paired sinks.
+     * <p>
+     * On receipt of the GP Notification command, a device is informed about a GPDF forwarded by
+     * a proxy. Also the device which received this frame is informed of bidirectional
+     * communication capability of the sender.
      *
      * @param options {@link Integer} Options
      * @param gpdSrcId {@link Integer} Gpd Src ID
@@ -842,8 +1091,11 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * The Gp Pairing Search
      * <p>
-     * From GPP to GPSs in entire network to get pairing indication related to GPD for Proxy
-     * Table update.
+     * The GP Pairing Search command is generated when the proxy needs to discover pairing
+     * information for a particular GPD.
+     * <p>
+     * On receipt of this command, the device is informed about a proxy requesting pairing
+     * information on particular GPD.
      *
      * @param options {@link Integer} Options
      * @param gpdSrcId {@link Integer} Gpd Src ID
@@ -866,7 +1118,8 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * The Gp Tunneling Stop
      * <p>
-     * From GPP to neighbor GPPs to indicate GP Notification sent in unicast mode.
+     * This command is sent to prevent other proxies from also forwarding GP Notifications to
+     * the sinks requiring full unicast communication mode.
      *
      * @param options {@link Integer} Options
      * @param gpdSrcId {@link Integer} Gpd Src ID
@@ -895,7 +1148,12 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * The Gp Commissioning Notification
      * <p>
-     * From GPP to GPS to tunnel GPD commissioning data.
+     * The GP Commissioning Notification command is used by the proxy in commissioning mode to
+     * forward commissioning data to the sink(s).
+     * <p>
+     * On receipt of the GP Commissioning Notification command, a device is informed about a
+     * GPD device seeking to manage a pairing. Also the device which received this frame is
+     * informed of bidirectional commissioning capability of the sender.
      *
      * @param options {@link Integer} Options
      * @param gpdSrcId {@link Integer} Gpd Src ID
@@ -930,7 +1188,9 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * The Gp Sink Commissioning Mode
      * <p>
-     * To enable commissioning mode of the sink, over the air
+     * The GP Sink Commissioning Mode command is generated by a remote device, e.g. a
+     * Commissioning Tool, to request a sink to perform a commissioning action in a particular
+     * way.
      *
      * @param options {@link Integer} Options
      * @param gpmAddrForSecurity {@link Integer} Gpm Addr For Security
@@ -953,7 +1213,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * The Gp Translation Table Update
      * <p>
-     * To configure GPD Command Translation Table.
+     * This command is generated to configure the GPD Command Translation Table.
      *
      * @param options {@link Integer} Options
      * @param gpdSrcId {@link Integer} Gpd Src ID
@@ -978,7 +1238,8 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * The Gp Translation Table Request
      * <p>
-     * To provide GPD Command Translation Table content.
+     * The GP Translation Table Request is generated to request information from the GPD
+     * Command Translation Table of remote device(s).
      *
      * @param startIndex {@link Integer} Start Index
      * @return the {@link Future<CommandResult>} command result future
@@ -995,7 +1256,13 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * The Gp Pairing Configuration
      * <p>
-     * To configure Sink Table.
+     * The command is generated to configure the Sink Table of a sink, to
+     * create/update/replace/remove a pairing to a GPD and/or trigger the sending of GP
+     * Pairing command.
+     * <p>
+     * In the current version of the specification, a device shall only send GP Pairing
+     * Configuration command with the Number of paired endpoints field set to 0xfe, if the
+     * CommunicationMode is equal to Pre-Commissioned Groupcast.
      *
      * @param actions {@link Integer} Actions
      * @param options {@link Integer} Options
@@ -1056,7 +1323,8 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * The Gp Sink Table Request
      * <p>
-     * To read out selected Sink Table Entries, by index or by GPD ID.
+     * The GP Sink Table Request command is generated to read out selected Sink Table entry(s),
+     * by index or by GPD ID
      *
      * @param options {@link Integer} Options
      * @param gpdSrcId {@link Integer} Gpd Src ID
@@ -1082,6 +1350,11 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * The Gp Proxy Table Response
      * <p>
      * To reply with read-out Proxy Table entries, by index or by GPD ID.
+     * <p>
+     * Upon reception of the GP Proxy Table Request command, the device shall check if it
+     * implements a Proxy Table. If not, it shall generate a ZCL Default Response command, with
+     * the Status code field carrying UNSUP_CLUSTER_COMMAND. If the device implements the
+     * Proxy Table, it shall prepare a GP Proxy Table Response.
      *
      * @param status {@link Integer} Status
      * @param totalNumberOfNonEmptyProxyTableEntries {@link Integer} Total Number Of Non Empty Proxy Table Entries
@@ -1106,7 +1379,9 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * The Gp Notification Response
      * <p>
-     * From GPS to GPP to acknowledge GP Notification received in unicast mode.
+     * This command is generated when the sink acknowledges the reception of full unicast GP
+     * Notification command. The GP Notification Response command is sent in unicast to the
+     * originating proxy.
      *
      * @param options {@link Integer} Options
      * @param gpdSrcId {@link Integer} Gpd Src ID
@@ -1129,8 +1404,10 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * The Gp Pairing
      * <p>
-     * From GPS to the entire network to (de)register for tunneling service, or for removing
-     * GPD from the network.
+     * The GP Pairing command is generated by the sink to manage pairing information. The GP
+     * Pairing command is typically sent using network-wide broadcast. If the
+     * CommunicationMode sub-field is set to 0b11, GP Pairing command may be sent in unicast to
+     * the selected proxy.
      *
      * @param options {@link Integer} Options
      * @param gpdSrcId {@link Integer} Gpd Src ID
@@ -1169,7 +1446,9 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * The Gp Proxy Commissioning Mode
      * <p>
-     * From GPS to GPPs in the whole network to indicate commissioning mode.
+     * This command is generated when the sink wishes to instruct the proxies to enter/exit
+     * commissioning mode. The GP Proxy Commissioning Mode command is typically sent using
+     * network-wide broadcast.
      *
      * @param options {@link Integer} Options
      * @param commissioningWindow {@link Integer} Commissioning Window
@@ -1190,7 +1469,8 @@ public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * The Gp Response
      * <p>
-     * From GPS to selected GPP, to provide data to be transmitted to Rx-capable GPD.
+     * This command is generated when sink requests to send any information to a specific GPD
+     * with Rx capability.
      *
      * @param options {@link Integer} Options
      * @param tempMasterShortAddress {@link Integer} Temp Master Short Address

@@ -23,11 +23,16 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * Cluster: <b>Green Power</b>. Command ID 0x04 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Green Power cluster.
  * <p>
- * From GPP to GPS to tunnel GPD commissioning data.
+ * The GP Commissioning Notification command is used by the proxy in commissioning mode to
+ * forward commissioning data to the sink(s).
+ * <p>
+ * On receipt of the GP Commissioning Notification command, a device is informed about a GPD
+ * device seeking to manage a pairing. Also the device which received this frame is informed of
+ * bidirectional commissioning capability of the sender.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T21:54:11Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-03T12:48:45Z")
 public class GpCommissioningNotification extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.

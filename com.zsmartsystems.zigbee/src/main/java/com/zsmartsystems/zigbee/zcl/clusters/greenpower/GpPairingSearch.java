@@ -22,12 +22,15 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * Cluster: <b>Green Power</b>. Command ID 0x01 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Green Power cluster.
  * <p>
- * From GPP to GPSs in entire network to get pairing indication related to GPD for Proxy Table
- * update.
+ * The GP Pairing Search command is generated when the proxy needs to discover pairing
+ * information for a particular GPD.
+ * <p>
+ * On receipt of this command, the device is informed about a proxy requesting pairing
+ * information on particular GPD.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T21:54:11Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-03T12:48:45Z")
 public class GpPairingSearch extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
