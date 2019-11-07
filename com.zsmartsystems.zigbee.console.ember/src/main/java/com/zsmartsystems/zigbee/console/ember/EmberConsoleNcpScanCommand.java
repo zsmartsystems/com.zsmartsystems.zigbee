@@ -13,6 +13,7 @@ import java.util.List;
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleArgument;
 import com.zsmartsystems.zigbee.dongle.ember.EmberNcp;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspEnergyScanResultHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkFoundHandler;
@@ -25,6 +26,11 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberZigbeeNetwork;
  *
  */
 public class EmberConsoleNcpScanCommand extends EmberConsoleAbstractCommand {
+    @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        return null;
+    }
+
     @Override
     public String getCommand() {
         return "ncpscan";
@@ -88,4 +94,5 @@ public class EmberConsoleNcpScanCommand extends EmberConsoleAbstractCommand {
             out.println(String.format("%-2d  %d", channel.getChannel(), channel.getMaxRssiValue()));
         }
     }
+
 }

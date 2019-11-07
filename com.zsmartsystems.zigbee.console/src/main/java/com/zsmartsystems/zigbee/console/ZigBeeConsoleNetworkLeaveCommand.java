@@ -19,6 +19,11 @@ import com.zsmartsystems.zigbee.ZigBeeNode;
  */
 public class ZigBeeConsoleNetworkLeaveCommand extends ZigBeeConsoleAbstractCommand {
     @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        return null;
+    }
+
+    @Override
     public String getCommand() {
         return "leave";
     }

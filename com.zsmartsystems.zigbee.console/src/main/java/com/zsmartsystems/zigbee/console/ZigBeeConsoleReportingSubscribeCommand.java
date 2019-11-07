@@ -25,6 +25,13 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingResponse;
  */
 public class ZigBeeConsoleReportingSubscribeCommand extends ZigBeeConsoleAbstractCommand {
     @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        ZigBeeConsoleArgument arguments = ZigBeeConsoleArgumentBuilder.create(ZigBeeConsoleArgumentType.ROOT).build();
+
+        return arguments;
+    }
+
+    @Override
     public String getCommand() {
         return "subscribe";
     }

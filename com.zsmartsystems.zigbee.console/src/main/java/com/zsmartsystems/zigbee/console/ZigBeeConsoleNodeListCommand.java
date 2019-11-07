@@ -31,6 +31,11 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
 public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
 
     @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        return null;
+    }
+
+    @Override
     public String getCommand() {
         return "nodes";
     }

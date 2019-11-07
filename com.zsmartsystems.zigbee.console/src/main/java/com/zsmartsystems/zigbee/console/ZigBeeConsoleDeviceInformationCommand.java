@@ -27,6 +27,11 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
  */
 public class ZigBeeConsoleDeviceInformationCommand extends ZigBeeConsoleAbstractCommand {
     @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        return null;
+    }
+
+    @Override
     public String getCommand() {
         return "info";
     }

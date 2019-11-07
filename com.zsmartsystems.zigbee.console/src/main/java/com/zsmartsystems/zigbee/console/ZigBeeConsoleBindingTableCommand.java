@@ -25,6 +25,11 @@ import com.zsmartsystems.zigbee.zdo.field.BindingTable;
  */
 public class ZigBeeConsoleBindingTableCommand extends ZigBeeConsoleAbstractCommand {
     @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        return null;
+    }
+
+    @Override
     public String getCommand() {
         return "bindtable";
     }

@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.console.ember;
 import java.io.PrintStream;
 
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleArgument;
 import com.zsmartsystems.zigbee.dongle.ember.EmberNcp;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberAesMmoHashContext;
 
@@ -21,6 +22,11 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberAesMmoHashConte
  */
 public class EmberConsoleMmoHashCommand extends EmberConsoleAbstractCommand {
     @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        return null;
+    }
+
+    @Override
     public String getCommand() {
         return "ncpmmohash";
     }
@@ -28,11 +34,6 @@ public class EmberConsoleMmoHashCommand extends EmberConsoleAbstractCommand {
     @Override
     public String getDescription() {
         return "Passes an install code to the NCP and receives the MMO hash key";
-    }
-
-    @Override
-    public String getSyntax() {
-        return "INSTALLCODE";
     }
 
     @Override
@@ -75,5 +76,11 @@ public class EmberConsoleMmoHashCommand extends EmberConsoleAbstractCommand {
         }
 
         return builder.toString();
+    }
+
+    @Override
+    public ZigBeeConsoleArgument getArguments() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

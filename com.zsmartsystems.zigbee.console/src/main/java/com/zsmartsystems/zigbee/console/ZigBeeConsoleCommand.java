@@ -41,6 +41,14 @@ public interface ZigBeeConsoleCommand {
     public String getSyntax();
 
     /**
+     * Gets the list of arguments that are applicable for this command. This is defined in a prescriptive way such that
+     * it can be machine interpreted.
+     *
+     * @return the {@link ZigBeeConsoleArgument} defining the possible arguments for this command
+     */
+    public ZigBeeConsoleArgument getArguments();
+
+    /**
      * Get detailed command help.
      *
      * @return the command help

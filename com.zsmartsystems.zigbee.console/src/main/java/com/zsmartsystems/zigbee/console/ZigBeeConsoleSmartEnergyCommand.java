@@ -38,6 +38,12 @@ public class ZigBeeConsoleSmartEnergyCommand extends ZigBeeConsoleAbstractComman
     }
 
     @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
     public String getDescription() {
         return "Provides detailed information about Smart Energy system.";
     }

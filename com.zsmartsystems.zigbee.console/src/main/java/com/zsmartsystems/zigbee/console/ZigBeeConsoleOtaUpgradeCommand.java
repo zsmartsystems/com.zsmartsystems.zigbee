@@ -25,6 +25,11 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
  */
 public class ZigBeeConsoleOtaUpgradeCommand extends ZigBeeConsoleAbstractCommand {
     @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        return null;
+    }
+
+    @Override
     public String getCommand() {
         return "otaupgrade";
     }

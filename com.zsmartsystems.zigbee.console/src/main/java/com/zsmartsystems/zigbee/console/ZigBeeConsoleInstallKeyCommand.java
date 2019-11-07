@@ -23,6 +23,11 @@ import com.zsmartsystems.zigbee.security.ZigBeeKey;
  */
 public class ZigBeeConsoleInstallKeyCommand extends ZigBeeConsoleAbstractCommand {
     @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        return null;
+    }
+
+    @Override
     public String getCommand() {
         return "installkey";
     }

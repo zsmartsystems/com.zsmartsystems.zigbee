@@ -23,6 +23,11 @@ import com.zsmartsystems.zigbee.transport.TransportConfigOption;
  */
 public class ZigBeeConsoleNetworkStartCommand extends ZigBeeConsoleAbstractCommand {
     @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        return null;
+    }
+
+    @Override
     public String getCommand() {
         return "netstart";
     }

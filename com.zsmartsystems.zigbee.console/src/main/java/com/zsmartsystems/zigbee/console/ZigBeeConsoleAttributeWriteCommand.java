@@ -26,6 +26,11 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  */
 public class ZigBeeConsoleAttributeWriteCommand extends ZigBeeConsoleAbstractCommand {
     @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        return null;
+    }
+
+    @Override
     public String getCommand() {
         return "write";
     }

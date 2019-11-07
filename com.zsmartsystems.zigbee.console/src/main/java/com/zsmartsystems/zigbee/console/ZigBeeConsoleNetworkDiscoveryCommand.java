@@ -33,6 +33,11 @@ public class ZigBeeConsoleNetworkDiscoveryCommand extends ZigBeeConsoleAbstractC
     private static final DateFormat dfIso8601 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
     @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        return null;
+    }
+
+    @Override
     public String getCommand() {
         return "discovery";
     }

@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.console.telegesis;
 import java.io.PrintStream;
 
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleArgument;
 import com.zsmartsystems.zigbee.dongle.telegesis.TelegesisNcp;
 
 /**
@@ -19,6 +20,10 @@ import com.zsmartsystems.zigbee.dongle.telegesis.TelegesisNcp;
  *
  */
 public class TelegesisConsoleSecurityStateCommand extends TelegesisConsoleAbstractCommand {
+    protected ZigBeeConsoleArgument initializeArguments() {
+        return null;
+    }
+
     @Override
     public String getCommand() {
         return "ncpsecuritystate";

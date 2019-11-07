@@ -26,6 +26,11 @@ import com.zsmartsystems.zigbee.zcl.ZclCluster;
  */
 public class ZigBeeConsoleDescribeEndpointCommand extends ZigBeeConsoleAbstractCommand {
     @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        return null;
+    }
+
+    @Override
     public String getCommand() {
         return "endpoint";
     }

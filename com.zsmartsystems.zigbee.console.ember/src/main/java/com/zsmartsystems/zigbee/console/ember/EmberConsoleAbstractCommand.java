@@ -8,7 +8,7 @@
 package com.zsmartsystems.zigbee.console.ember;
 
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
-import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleAbstractCommand;
 import com.zsmartsystems.zigbee.dongle.ember.EmberNcp;
 import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
 
@@ -17,7 +17,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
  * @author Chris Jackson - Initial Contribution
  *
  */
-public abstract class EmberConsoleAbstractCommand implements ZigBeeConsoleCommand {
+public abstract class EmberConsoleAbstractCommand extends ZigBeeConsoleAbstractCommand {
 
     protected EmberNcp getEmberNcp(ZigBeeNetworkManager networkManager)
             throws IllegalArgumentException, IllegalStateException {

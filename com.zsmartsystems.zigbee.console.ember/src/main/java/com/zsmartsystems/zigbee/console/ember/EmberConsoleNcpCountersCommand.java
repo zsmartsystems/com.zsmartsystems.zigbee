@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.console.ember;
 import java.io.PrintStream;
 
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleArgument;
 import com.zsmartsystems.zigbee.dongle.ember.EmberNcp;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCounterType;
 
@@ -19,6 +20,11 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCounterType;
  *
  */
 public class EmberConsoleNcpCountersCommand extends EmberConsoleAbstractCommand {
+    @Override
+    protected ZigBeeConsoleArgument initializeArguments() {
+        return null;
+    }
+
     @Override
     public String getCommand() {
         return "ncpcounters";

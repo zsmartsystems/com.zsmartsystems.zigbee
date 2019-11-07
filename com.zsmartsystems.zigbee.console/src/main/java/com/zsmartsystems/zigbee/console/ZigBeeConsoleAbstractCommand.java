@@ -28,6 +28,63 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  *
  */
 public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleCommand {
+    protected ZigBeeConsoleArgument arguments = initializeArguments();
+
+    protected abstract ZigBeeConsoleArgument initializeArguments();
+
+    @Override
+    public ZigBeeConsoleArgument getArguments() {
+        return arguments;
+    }
+
+    /**
+     * Gets a human readable syntax for this command
+     *
+     * @return a {@link String} defining the possible options
+     */
+    @Override
+    public String getSyntax() {
+        if (arguments == null) {
+            return "";
+        }
+        return getSyntax("", arguments);
+    }
+
+    private String getSyntax(String indent, ZigBeeConsoleArgument argument) {
+        StringBuilder builder = new StringBuilder();
+        do {
+            if (argument.hasSuboptions()) {
+                int len = 0;
+                for (ZigBeeConsoleArgument suboption : argument.getSuboptions()) {
+                    if (suboption.getConstant().length() > len) {
+                        len = suboption.getConstant().length();
+                    }
+                }
+                for (ZigBeeConsoleArgument suboption : argument.getSuboptions()) {
+                    builder.append(getSyntax(indent, suboption));
+                }
+            } else {
+                if (argument.isOptional()) {
+                    builder.append('[');
+                }
+                if (argument.getConstant() != null) {
+                    builder.append(argument.getConstant());
+                } else {
+                    builder.append(argument.getType());
+                }
+
+                if (argument.isOptional()) {
+                    builder.append(']');
+                }
+            }
+            argument = argument.getNext();
+            if (argument != null) {
+                builder.append(' ');
+            }
+        } while (argument != null);
+        builder.append('\n');
+        return builder.toString();
+    }
 
     /**
      * Gets a {@link ZigBeeNode}

@@ -8,7 +8,7 @@
 package com.zsmartsystems.zigbee.console.telegesis;
 
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
-import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleAbstractCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.TelegesisNcp;
 import com.zsmartsystems.zigbee.dongle.telegesis.ZigBeeDongleTelegesis;
 
@@ -17,12 +17,12 @@ import com.zsmartsystems.zigbee.dongle.telegesis.ZigBeeDongleTelegesis;
  * @author Chris Jackson - Initial Contribution
  *
  */
-public abstract class TelegesisConsoleAbstractCommand implements ZigBeeConsoleCommand {
+public abstract class TelegesisConsoleAbstractCommand extends ZigBeeConsoleAbstractCommand {
 
     protected TelegesisNcp getTelegesisNcp(ZigBeeNetworkManager networkManager)
             throws IllegalArgumentException, IllegalStateException {
         if (!(networkManager.getZigBeeTransport() instanceof ZigBeeDongleTelegesis)) {
-            throw new IllegalArgumentException("Dongle is not an Ember NCP.");
+            throw new IllegalArgumentException("Dongle is not an Telegesis NCP.");
         }
         ZigBeeDongleTelegesis dongle = (ZigBeeDongleTelegesis) networkManager.getZigBeeTransport();
         if (dongle == null) {
