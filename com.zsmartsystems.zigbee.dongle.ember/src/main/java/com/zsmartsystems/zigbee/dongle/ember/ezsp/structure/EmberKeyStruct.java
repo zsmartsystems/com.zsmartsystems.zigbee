@@ -278,11 +278,11 @@ public class EmberKeyStruct {
         builder.append(", key=");
         builder.append(key);
         builder.append(", outgoingFrameCounter=");
-        builder.append(outgoingFrameCounter);
+        builder.append(String.format("%08X", outgoingFrameCounter));
         builder.append(", incomingFrameCounter=");
-        builder.append(incomingFrameCounter);
+        builder.append(String.format("%08X", incomingFrameCounter));
         builder.append(", sequenceNumber=");
-        builder.append(sequenceNumber);
+        builder.append(String.format("%02X", sequenceNumber));
         builder.append(", partnerEUI64=");
         builder.append(partnerEUI64);
         builder.append(']');
