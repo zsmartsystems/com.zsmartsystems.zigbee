@@ -99,7 +99,7 @@ public class EmberConsoleNcpStateCommand extends EmberConsoleAbstractCommand {
         out.println("Ember NCP state    : " + status);
         out.println("Local Node Type    : " + nwkParameterResponse.getNodeType());
         out.println("IEEE Address       : " + ieeeAddress);
-        out.println("NWK Address        : " + nwkAddress);
+        out.println("NWK Address        : " + String.format("%04X", nwkAddress));
         out.println("Network PAN Id     : " + String.format("%04X", nwkParameters.getPanId()));
         out.println("Network EPAN Id    : " + nwkParameters.getExtendedPanId());
         out.println("Radio Channel      : " + nwkParameters.getRadioChannel());

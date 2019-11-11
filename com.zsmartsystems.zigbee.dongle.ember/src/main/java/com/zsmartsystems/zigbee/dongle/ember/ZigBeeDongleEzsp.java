@@ -95,6 +95,8 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportProgressState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.MacCapabilitiesType;
 
 /**
  * Implementation of the Silabs Ember NCP (Network Co-Processor) EZSP dongle implementation.
@@ -772,6 +774,17 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     }
 
     @Override
+    public void setNodeDescriptor(IeeeAddress ieeeAddress, NodeDescriptor nodeDescriptor) {
+        // Update the extendedTimeout flag in the address table.
+        // Users should ensure the address table is large enough to hold all nodes on the network.
+        logger.debug("{}: NodeDescriptor passed to Ember NCP {}", ieeeAddress, nodeDescriptor);
+        if (!nodeDescriptor.getMacCapabilities().contains(MacCapabilitiesType.RECEIVER_ON_WHEN_IDLE)) {
+            EmberNcp ncp = getEmberNcp();
+            ncp.setExtendedTimeout(ieeeAddress, true);
+        }
+    }
+
+    @Override
     public void handlePacket(EzspFrame response) {
         if (response.getFrameId() != POLL_FRAME_ID) {
             logger.debug("RX EZSP: {}", response);
@@ -779,7 +792,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         if (response instanceof EzspIncomingMessageHandler) {
             if (nwkAddress == null) {
-                logger.debug("Ignoring received frame as stack still initialising");
+                logger.debug("Ignoring received frame as stack is still initialising");
                 return;
             }
             EzspIncomingMessageHandler incomingMessage = (EzspIncomingMessageHandler) response;
