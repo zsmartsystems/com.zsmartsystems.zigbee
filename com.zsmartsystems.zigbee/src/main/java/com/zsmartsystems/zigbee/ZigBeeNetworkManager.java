@@ -748,9 +748,12 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             if (node != null) {
                 apsFrame.setDestinationIeeeAddress(node.getIeeeAddress());
             }
-        } else {
+        } else if (command.getDestinationAddress() instanceof ZigBeeGroupAddress) {
             apsFrame.setAddressMode(ZigBeeNwkAddressMode.GROUP);
-            // TODO: Handle multicast
+            apsFrame.setDestinationAddress(((ZigBeeGroupAddress) command.getDestinationAddress()).getAddress());
+        } else {
+            logger.debug("Command cannot be sent due to unknown destination address type {}", command);
+            return false;
         }
 
         final ZclFieldSerializer fieldSerializer;
