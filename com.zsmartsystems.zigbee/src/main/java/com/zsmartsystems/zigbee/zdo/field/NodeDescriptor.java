@@ -16,25 +16,104 @@ import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
- * Describes the node descriptor
+ * Describes the node descriptor. The node descriptor contains information about the capabilities of the ZigBee node and
+ * is mandatory for each node. There shall be only one node descriptor in a node.
  *
  * @author Chris Jackson
  *
  */
 public class NodeDescriptor {
+    /**
+     * The APS flags field of the node descriptor is three bits in length and specifies the application support
+     * sub-layer capabilities of the node.
+     * This field is currently not supported and shall be set to zero.
+     */
     private int apsFlags;
+
+    /**
+     * The maximum buffer size field of the node descriptor is eight bits in length, with a valid range of 0x00-0x7f.
+     * This field specifies the maximum size, in octets, of the network sub-layer data unit (NSDU) for this node. This
+     * is the maximum size of data or commands passed to or from the application by the application support sublayer,
+     * before any fragmentation or re-assembly.
+     * This field can be used as a high-level indication for network management.
+     */
     private int bufferSize;
+
+    /**
+     * The complex descriptor available field of the node descriptor is one bit in length and specifies whether a
+     * complex descriptor is available on this device. If this field is set to 1, a complex descriptor is available. If
+     * this field is set to 0, a complex descriptor is not available.
+     */
     private boolean complexDescriptorAvailable;
+
+    /**
+     * The manufacturer code field of the node descriptor is sixteen bits in length and specifies a manufacturer code
+     * that is allocated by the ZigBee Alliance, relating the manufacturer to the device.
+     */
     private int manufacturerCode;
+
+    /**
+     * The logical type field of the node descriptor is three bits in length and specifies the device type of theZigBee
+     * node.
+     */
     private LogicalType logicalType = LogicalType.UNKNOWN;
+
+    /**
+     * The server mask field of the node descriptor is sixteen bits in length, with bit settings signifying the system
+     * server capabilities of this node. It is used to facilitate discovery of particular system servers by other nodes
+     * on the system.
+     */
     private Set<ServerCapabilitiesType> serverCapabilities = new TreeSet<>();
+
+    /**
+     * The maximum transfer size field of the node descriptor is sixteen bits in length, with a valid range of
+     * 0x0000-0x7fff. This field specifies the maximum size, in octets, of the application sub-layer data unit (ASDU)
+     * that can be transferred to this node in one single message transfer. This value can exceed the value of the node
+     * maximum buffer size field through the use of fragmentation.
+     */
     private int incomingTransferSize;
+
+    /**
+     * The maximum transfer size field of the node descriptor is sixteen bits in length, with a valid range of
+     * 0x0000-0x7fff. This field specifies the maximum size, in octets, of the application sub-layer data unit
+     * (ASDU) that can be transferred from this node in one single message transfer. This value can exceed the
+     * value of the node maximum buffer size field through the use of fragmentation.
+     */
     private int outgoingTransferSize;
+
+    /**
+     * The user descriptor available field of the node descriptor is one bit in length and specifies whether a user
+     * descriptor is available on this device. If this field is set to 1, a user descriptor is available. If this field
+     * is set to 0, a user descriptor is not available.
+     */
     private boolean userDescriptorAvailable;
+
+    /**
+     * The frequency band field of the node descriptor is five bits in length and specifies the frequency bands that
+     * are supported by the underlying IEEE 802.15.4 radio utilized by the node.
+     */
     private Set<FrequencyBandType> frequencyBands = new HashSet<FrequencyBandType>();
+
+    /**
+     * The MAC capability flags field is eight bits in length and specifies the node capabilities, as required by the
+     * IEEE 802.15.4-2003 MAC sub-layer.
+     */
     private final Set<MacCapabilitiesType> macCapabilities = new TreeSet<>();
+
+    /**
+     * Extended Active Endpoint List Available
+     */
     private boolean extendedEndpointListAvailable;
+
+    /**
+     * Extended Simple Descriptor List Available
+     */
     private boolean extendedSimpleDescriptorListAvailable;
+
+    /**
+     * These bits indicate the revision of the ZigBee Pro Core specification that the running stack is implemented to.
+     * Prior to revision 21 of the specification these bits were reserved and thus set to 0.
+     */
     private int stackCompliance;
 
     private final static int R21_BITMASK = 0xFE00;
@@ -99,10 +178,26 @@ public class NodeDescriptor {
         this.apsFlags = apsFlags;
     }
 
+    /**
+     * The APS flags field of the node descriptor is three bits in length and specifies the application support
+     * sub-layer capabilities of the node.
+     * This field is currently not supported and shall be set to zero.
+     *
+     * @return the APS flags
+     */
     public int getApsFlags() {
         return apsFlags;
     }
 
+    /**
+     * The maximum buffer size field of the node descriptor is eight bits in length, with a valid range of 0x00-0x7f.
+     * This field specifies the maximum size, in octets, of the network sub-layer data unit (NSDU) for this node. This
+     * is the maximum size of data or commands passed to or from the application by the application support sublayer,
+     * before any fragmentation or re-assembly.
+     * This field can be used as a high-level indication for network management.
+     *
+     * @return the maximum buffer size
+     */
     public int getBufferSize() {
         return bufferSize;
     }
@@ -132,6 +227,12 @@ public class NodeDescriptor {
         return macCapabilities;
     }
 
+    /**
+     * The manufacturer code field of the node descriptor is sixteen bits in length and specifies a manufacturer code
+     * that is allocated by the ZigBee Alliance, relating the manufacturer to the device.
+     *
+     * @return the 16 bit manufacturer code
+     */
     public int getManufacturerCode() {
         return manufacturerCode;
     }
@@ -148,6 +249,12 @@ public class NodeDescriptor {
         return extendedSimpleDescriptorListAvailable;
     }
 
+    /**
+     * The logical type field of the node descriptor is three bits in length and specifies the device type of the ZigBee
+     * node.
+     *
+     * @param logicalType the logical type of the node from the descriptor
+     */
     private void setLogicalType(int logicalType) {
         switch (logicalType) {
             case 0:
@@ -165,6 +272,12 @@ public class NodeDescriptor {
         }
     }
 
+    /**
+     * The logical type field of the node descriptor is three bits in length and specifies the device type of the ZigBee
+     * node.
+     *
+     * @return the {@link LogicalType} of the node
+     */
     public LogicalType getLogicalType() {
         return logicalType;
     }
@@ -200,14 +313,35 @@ public class NodeDescriptor {
         return serverCapabilities;
     }
 
+    /**
+     * The maximum transfer size field of the node descriptor is sixteen bits in length, with a valid range of
+     * 0x0000-0x7fff. This field specifies the maximum size, in octets, of the application sub-layer data unit
+     * (ASDU) that can be transferred from this node in one single message transfer. This value can exceed the
+     * value of the node maximum buffer size field through the use of fragmentation.
+     *
+     * @return the maximum outgoing transfer size
+     */
     public int getOutGoingTransferSize() {
         return outgoingTransferSize;
     }
 
+    /**
+     * The maximum transfer size field of the node descriptor is sixteen bits in length, with a valid range of
+     * 0x0000-0x7fff. This field specifies the maximum size, in octets, of the application sub-layer data unit
+     * (ASDU) that can be transferred from this node in one single message transfer. This value can exceed the
+     * value of the node maximum buffer size field through the use of fragmentation.
+     *
+     * @return the maximum incoming transfer size
+     */
     public int getIncomingTransferSize() {
         return incomingTransferSize;
     }
 
+    /**
+     * Gets the flag indicating if the node provides a {@link UserDescriptor}
+     * 
+     * @return true if a user descriptor is available
+     */
     public boolean isUserDescriptorAvailable() {
         return userDescriptorAvailable;
     }
@@ -225,6 +359,12 @@ public class NodeDescriptor {
         }
     }
 
+    /**
+     * The frequency band field of the node descriptor is five bits in length and specifies the frequency bands that
+     * are supported by the underlying IEEE 802.15.4 radio utilized by the node.
+     *
+     * @return a Set of the supported frequency bands
+     */
     public Set<FrequencyBandType> getFrequencyBands() {
         return frequencyBands;
     }
@@ -254,7 +394,6 @@ public class NodeDescriptor {
      */
     public void deserialize(ZigBeeDeserializer deserializer) {
         // Deserialize the fields
-        // logicalType = (LogicalType) deserializer.deserialize(ZclDataType.SIGNED_8_BIT_INTEGER);
 
         // Some flags...
         int value1 = (int) deserializer.readZigBeeType(ZclDataType.DATA_8_BIT);
@@ -265,11 +404,10 @@ public class NodeDescriptor {
         complexDescriptorAvailable = (value1 & 0x08) != 0;
         userDescriptorAvailable = (value1 & 0x10) != 0;
 
+        apsFlags = value2 & 0x07;
         setFrequencyBands((value2 & 0xf8) >> 3);
         setMacCapabilities(value3);
 
-        // complexDescriptorAvailable = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
-        // userDescriptorAvailable = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
         manufacturerCode = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         bufferSize = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         incomingTransferSize = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
@@ -378,13 +516,13 @@ public class NodeDescriptor {
     @Override
     public String toString() {
         return "NodeDescriptor [apsFlags=" + apsFlags + ", bufferSize=" + bufferSize + ", complexDescriptorAvailable="
-                + complexDescriptorAvailable + ", manufacturerCode=" + manufacturerCode + ", logicalType=" + logicalType
-                + ", serverCapabilities=" + serverCapabilities + ", incomingTransferSize=" + incomingTransferSize
-                + ", outgoingTransferSize=" + outgoingTransferSize + ", userDescriptorAvailable="
-                + userDescriptorAvailable + ", frequencyBands=" + frequencyBands + ", macCapabilities="
-                + macCapabilities + ", extendedEndpointListAvailable=" + extendedEndpointListAvailable
-                + ", extendedSimpleDescriptorListAvailable=" + extendedSimpleDescriptorListAvailable
-                + ", stackCompliance=" + stackCompliance + "]";
+                + complexDescriptorAvailable + ", manufacturerCode=" + String.format("%04X", manufacturerCode)
+                + ", logicalType=" + logicalType + ", serverCapabilities=" + serverCapabilities
+                + ", incomingTransferSize=" + incomingTransferSize + ", outgoingTransferSize=" + outgoingTransferSize
+                + ", userDescriptorAvailable=" + userDescriptorAvailable + ", frequencyBands=" + frequencyBands
+                + ", macCapabilities=" + macCapabilities + ", extendedEndpointListAvailable="
+                + extendedEndpointListAvailable + ", extendedSimpleDescriptorListAvailable="
+                + extendedSimpleDescriptorListAvailable + ", stackCompliance=" + stackCompliance + "]";
     }
 
 }
