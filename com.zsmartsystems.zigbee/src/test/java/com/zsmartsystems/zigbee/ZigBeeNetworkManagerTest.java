@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -286,8 +287,10 @@ public class ZigBeeNetworkManagerTest
         ZigBeeEndpointAddress deviceAddress = new ZigBeeEndpointAddress(1234, 56);
         OnCommand cmd = new OnCommand();
         cmd.setClusterId(6);
-        cmd.setDestinationAddress(deviceAddress);
         cmd.setTransactionId(22);
+        assertFalse(networkManager.sendCommand(cmd));
+
+        cmd.setDestinationAddress(deviceAddress);
         assertTrue(networkManager.sendCommand(cmd));
 
         networkManager.setDefaultProfileId(ZigBeeProfileType.ZIGBEE_SMART_ENERGY.getKey());
