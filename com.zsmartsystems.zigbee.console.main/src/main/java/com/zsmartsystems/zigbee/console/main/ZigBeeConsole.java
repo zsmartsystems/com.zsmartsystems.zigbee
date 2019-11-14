@@ -76,12 +76,9 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareCallback;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareStatus;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareUpdate;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
-import com.zsmartsystems.zigbee.zcl.ZclAttribute;
-import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
-import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.GetGroupMembershipResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.ViewGroupResponse;
@@ -340,10 +337,6 @@ public final class ZigBeeConsole {
             print("Exception in command execution: ", out);
             e.printStackTrace(out);
         }
-    }
-
-    public ZigBeeApi getZigBeeApi() {
-        return zigBeeApi;
     }
 
     /**
@@ -996,171 +989,6 @@ public final class ZigBeeConsole {
             out.println("Ignoring received attribute reports.");
 
             return true;
-        }
-    }
-
-    /**
-     * Subscribes to reports of given attribute.
-     */
-    private class SubscribeCommand implements ConsoleCommand {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getDescription() {
-            return "Subscribe to attribute reports.";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getSyntax() {
-            return "subscribe [DEVICE] [CLUSTER] [ATTRIBUTE] [MIN-INTERVAL] [MAX-INTERVAL] [REPORTABLE-CHANGE]";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length != 6 && args.length != 7) {
-                return false;
-            }
-
-            final ZigBeeEndpoint device = getDevice(zigbeeApi, args[1]);
-            if (device == null) {
-                print("Device not found.", out);
-                return false;
-            }
-
-            final int clusterId;
-            try {
-                clusterId = Integer.parseInt(args[2]);
-            } catch (final NumberFormatException e) {
-                return false;
-            }
-            final int attributeId;
-            try {
-                attributeId = Integer.parseInt(args[3]);
-            } catch (final NumberFormatException e) {
-                return false;
-            }
-            final int minInterval;
-            try {
-                minInterval = Integer.parseInt(args[4]);
-            } catch (final NumberFormatException e) {
-                return false;
-            }
-            final int maxInterval;
-            try {
-                maxInterval = Integer.parseInt(args[5]);
-            } catch (final NumberFormatException e) {
-                return false;
-            }
-
-            final ZclCluster cluster = device.getCluster(clusterId);
-            final ZclAttribute attribute = cluster.getAttribute(attributeId);
-            Object reportableChange = null;
-            if (args.length > 6) {
-                reportableChange = parseValue(args[6], attribute.getDataType());
-            }
-
-            ZclAttribute zclAttribute = cluster.getAttribute(attributeId);
-            if (zclAttribute == null) {
-                out.println("Attribute not known.");
-                return false;
-            }
-
-            final CommandResult result = cluster.setReporting(zclAttribute, minInterval, maxInterval, reportableChange)
-                    .get();
-            if (result.isSuccess()) {
-                final ConfigureReportingResponse response = result.getResponse();
-                final ZclStatus statusCode = response.getRecords().get(0).getStatus();
-                if (statusCode == ZclStatus.SUCCESS) {
-                    out.println("Attribute value configure reporting success.");
-                } else {
-                    out.println("Attribute value configure reporting error: " + statusCode);
-                }
-                return true;
-            } else {
-                out.println("Error executing command: " + result);
-                return true;
-            }
-        }
-    }
-
-    /**
-     * Unsubscribes from reports of given attribute.
-     */
-    private class UnsubscribeCommand implements ConsoleCommand {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getDescription() {
-            return "Unsubscribe from attribute reports.";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getSyntax() {
-            return "unsubscribe [DEVICE] [CLUSTER] [ATTRIBUTE] [REPORTABLE-CHANGE]";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length != 4 && args.length != 5) {
-                return false;
-            }
-
-            final ZigBeeEndpoint device = getDevice(zigbeeApi, args[1]);
-            final int clusterId;
-            try {
-                clusterId = Integer.parseInt(args[2]);
-            } catch (final NumberFormatException e) {
-                return false;
-            }
-            final int attributeId;
-            try {
-                attributeId = Integer.parseInt(args[3]);
-            } catch (final NumberFormatException e) {
-                return false;
-            }
-
-            final ZclCluster cluster = device.getCluster(clusterId);
-            final ZclAttribute attribute = cluster.getAttribute(attributeId);
-            Object reportableChange = null;
-            if (args.length > 4) {
-                reportableChange = parseValue(args[4], attribute.getDataType());
-            }
-
-            ZclAttribute zclAttribute = cluster.getAttribute(attributeId);
-            if (zclAttribute == null) {
-                out.println("Attribute not known.");
-                return false;
-            }
-
-            final CommandResult result = cluster.setReporting(zclAttribute, 0, 0xffff, reportableChange).get();
-            if (result.isSuccess()) {
-                final ConfigureReportingResponse response = result.getResponse();
-                final ZclStatus statusCode = response.getRecords().get(0).getStatus();
-                if (statusCode == ZclStatus.SUCCESS) {
-                    out.println("Attribute value configure reporting success.");
-                } else {
-                    out.println("Attribute value configure reporting error: " + statusCode);
-                }
-                return true;
-            } else {
-                out.println("Error executing command: " + result);
-                return true;
-            }
-
         }
     }
 

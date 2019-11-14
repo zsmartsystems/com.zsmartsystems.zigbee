@@ -171,19 +171,7 @@ public class ZigBeeEndpoint {
     }
 
     /**
-     * Gets an input cluster
-     *
-     * @deprecated Use {@link #getInputCluster}
-     * @param clusterId the cluster number
-     * @return the cluster or null if cluster is not found
-     */
-    @Deprecated
-    public ZclCluster getCluster(int clusterId) {
-        return getInputCluster(clusterId);
-    }
-
-    /**
-     * Gets an input cluster
+     * Gets an input cluster (server) on the endpoint
      *
      * @param clusterId the cluster number
      * @return the {@link ZclCluster} or null if cluster is not found
@@ -193,7 +181,7 @@ public class ZigBeeEndpoint {
     }
 
     /**
-     * Gets an output cluster
+     * Gets an output cluster (client) on the endpoint
      *
      * @param clusterId the cluster number
      * @return the {@link ZclCluster} or null if cluster is not found
