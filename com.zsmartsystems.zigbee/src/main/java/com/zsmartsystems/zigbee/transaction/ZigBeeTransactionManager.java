@@ -253,7 +253,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     }
 
     /**
-     * Sets the default {@link ZigBeeTransactionProfile} for the node queues
+     * Sets the default {@link ZigBeeTransactionProfile} for the node queues.
      *
      * @param profile the {@link ZigBeeTransactionProfile}
      */
@@ -262,7 +262,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     }
 
     /**
-     * Gets the default {@link ZigBeeTransactionProfile} for the node queues
+     * Gets the default {@link ZigBeeTransactionProfile} for the node queues.
      *
      * return the {@link ZigBeeTransactionProfile}
      */
@@ -271,7 +271,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     }
 
     /**
-     * Sets the {@link ZigBeeTransactionProfile} for the sleepy node queues
+     * Sets the {@link ZigBeeTransactionProfile} for the sleepy node queues.
      *
      * @param profile the {@link ZigBeeTransactionProfile}
      */
@@ -280,7 +280,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     }
 
     /**
-     * Gets the {@link ZigBeeTransactionProfile} for the sleepy node queues
+     * Gets the {@link ZigBeeTransactionProfile} for the sleepy node queues.
      *
      * return the {@link ZigBeeTransactionProfile}
      */
@@ -289,7 +289,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     }
 
     /**
-     * Sets the {@link ZigBeeTransactionProfile} for the multicast queue
+     * Sets the {@link ZigBeeTransactionProfile} for the multicast queue.
      *
      * @param profile the {@link ZigBeeTransactionProfile}
      */
@@ -298,7 +298,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     }
 
     /**
-     * Gets the {@link ZigBeeTransactionProfile} for the multicast queue
+     * Gets the {@link ZigBeeTransactionProfile} for the multicast queue.
      *
      * return the {@link ZigBeeTransactionProfile}
      */
@@ -307,7 +307,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     }
 
     /**
-     * Sets the {@link ZigBeeTransactionProfile} for the broadcast queue
+     * Sets the {@link ZigBeeTransactionProfile} for the broadcast queue.
      *
      * @param profile the {@link ZigBeeTransactionProfile}
      */
@@ -316,7 +316,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     }
 
     /**
-     * Gets the {@link ZigBeeTransactionProfile} for the broadcast queue
+     * Gets the {@link ZigBeeTransactionProfile} for the broadcast queue.
      *
      * return the {@link ZigBeeTransactionProfile}
      */
@@ -325,7 +325,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     }
 
     /**
-     * Sends a command without waiting for a response
+     * Sends a command without waiting for a response. No retry mechanism will be implemented at application level.
      *
      * @param command the {@link ZigBeeCommand} to send
      */
@@ -357,7 +357,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     }
 
     /**
-     * Adds a {@link ZigBeeTransaction} to the respective {@link ZigBeeTransactionQueue}
+     * Adds a {@link ZigBeeTransaction} to the respective {@link ZigBeeTransactionQueue}.
      *
      * @param transaction the {@link ZigBeeTransaction} to add to the queue. Not null.
      * @return the future {@link CommandResult}
@@ -468,7 +468,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
 
     /**
      * Adds a transaction to the list of outstanding transactions. Transactions will receive notifications when a
-     * command is received, or when the status is updated
+     * command is received, or when the status is updated.
      *
      * @param transaction the {@link ZigBeeTransaction} that will receive the notifications
      */
