@@ -140,6 +140,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     private static final int LOCAL_ENDPOINT_ID = 1;
 
     /**
+     * The broadcast endpoint
+     */
+    private static final int BROADCAST_ENDPOINT_ID = 255;
+
+    /**
      * The logger.
      */
     private final Logger logger = LoggerFactory.getLogger(ZigBeeNetworkManager.class);
@@ -957,8 +962,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     private ZigBeeCommand receiveZclCommand(final ZclFieldDeserializer fieldDeserializer,
             final ZigBeeApsFrame apsFrame) {
-        if (apsFrame.getDestinationEndpoint() != LOCAL_ENDPOINT_ID) {
-            logger.debug("Unknown local endpoint {}", apsFrame.getSourceEndpoint());
+        if (apsFrame.getDestinationEndpoint() != LOCAL_ENDPOINT_ID
+                && apsFrame.getDestinationEndpoint() != BROADCAST_ENDPOINT_ID) {
+            logger.debug("Unknown local endpoint for APS frame {}", apsFrame);
             return null;
         }
         // Process the ZCL header
