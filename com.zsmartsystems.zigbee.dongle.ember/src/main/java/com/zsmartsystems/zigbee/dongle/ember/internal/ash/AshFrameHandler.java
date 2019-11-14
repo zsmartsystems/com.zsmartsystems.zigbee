@@ -715,7 +715,6 @@ public class AshFrameHandler implements EzspProtocolHandler {
                 }
 
                 transactionComplete();
-                // response = request;
 
                 return true;
             }

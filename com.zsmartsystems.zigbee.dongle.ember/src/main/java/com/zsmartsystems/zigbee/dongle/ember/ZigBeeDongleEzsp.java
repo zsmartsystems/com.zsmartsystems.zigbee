@@ -460,7 +460,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             logger.debug("EZSP dongle initialize done - response {}", initResponse);
         }
 
-        // print current security state to debug logs
+        // Print current security state to debug logs
         ncp.getCurrentSecurityState();
 
         scheduleNetworkStatePolling();
@@ -728,9 +728,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
             transaction = new EzspSingleResponseTransaction(emberMulticast, EzspSendMulticastResponse.class);
         } else {
-            logger.debug("EZSP message not sent: {}", apsFrame);
-            // ZigBeeGroupAddress groupAddress = (ZigBeeGroupAddress) zclCommand.getDestinationAddress();
-            // apsFrame.setGroupId(groupAddress.getGroupId());
+            logger.debug("EZSP message not sent as unknown address mode: {}", apsFrame);
             return;
         }
 
@@ -774,7 +772,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     @Override
     public void handlePacket(EzspFrame response) {
         if (response.getFrameId() != POLL_FRAME_ID) {
-            logger.debug("RX EZSP: " + response.toString());
+            logger.debug("RX EZSP: {}", response);
         }
 
         if (response instanceof EzspIncomingMessageHandler) {
