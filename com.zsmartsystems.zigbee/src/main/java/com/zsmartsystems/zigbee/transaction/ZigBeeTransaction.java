@@ -16,6 +16,7 @@ import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportProgressState;
+import com.zsmartsystems.zigbee.zcl.ZclCommand;
 
 /**
  * Transaction class to handle the sending of commands and timeout in the event there is no response.
@@ -437,8 +438,9 @@ public class ZigBeeTransaction {
                     }
                     break;
                 case RX_ACK:
-                    // The remote device confirmed receipt of the command
-                    if (responseMatcher == null || state == TransactionState.RESPONDED) {
+                    // The remote device confirmed receipt of the command (ie APS ACK received)
+                    if (responseMatcher == null || state == TransactionState.RESPONDED
+                            || (command instanceof ZclCommand && ((ZclCommand) command).isDisableDefaultResponse())) {
                         // We've already received a response that completed the application level transaction,
                         // or we weren't waiting for a response - either way, we're done.
                         completeTransaction(completionCommand);
