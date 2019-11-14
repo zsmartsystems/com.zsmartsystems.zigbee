@@ -257,8 +257,6 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
                         if (exceptionCnt++ > 10) {
                             logger.error("AshFrameHandler exception count exceeded");
-                            // if (!close) {
-                            // frameHandler.error(e);
                             closeHandler = true;
                         }
                     } catch (final Exception e) {
@@ -697,7 +695,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
                 // Remove the listener
                 removeTransactionListener(this);
 
-                return ezspTransaction.getResponse();// response;
+                return ezspTransaction.getResponse();
             }
 
             @Override
@@ -715,7 +713,6 @@ public class AshFrameHandler implements EzspProtocolHandler {
                 }
 
                 transactionComplete();
-                // response = request;
 
                 return true;
             }

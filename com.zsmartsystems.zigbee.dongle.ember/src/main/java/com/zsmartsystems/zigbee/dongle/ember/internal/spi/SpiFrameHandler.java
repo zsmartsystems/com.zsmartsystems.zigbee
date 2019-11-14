@@ -689,7 +689,6 @@ public class SpiFrameHandler implements EzspProtocolHandler {
     @Override
     public Future<EzspFrame> sendEzspRequestAsync(final EzspTransaction ezspTransaction) {
         class TransactionWaiter implements Callable<EzspFrame>, SpiListener {
-            // private EzspFrame response = null;
             private boolean complete = false;
 
             @Override
@@ -787,7 +786,7 @@ public class SpiFrameHandler implements EzspProtocolHandler {
     }
 
     /**
-     * Wait for the requested {@link EzspFrameResponse} to be received
+     * Wait for the requested {@link EzspFrameResponse} to be received.
      *
      * @param eventClass Request {@link EzspFrameResponse} to wait for
      * @return response {@link Future} {@link EzspFrameResponse}
