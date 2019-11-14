@@ -141,7 +141,8 @@ public class ZigBeeSerialPort implements ZigBeePort, SerialPortEventListener {
                             jssc.SerialPort.FLOWCONTROL_RTSCTS_IN | jssc.SerialPort.FLOWCONTROL_RTSCTS_OUT);
                     break;
                 case FLOWCONTROL_OUT_XONOFF:
-                    serialPort.setFlowControlMode(jssc.SerialPort.FLOWCONTROL_XONXOFF_OUT);
+                    serialPort.setFlowControlMode(
+                            jssc.SerialPort.FLOWCONTROL_XONXOFF_OUT | jssc.SerialPort.FLOWCONTROL_XONXOFF_IN);
                     break;
                 default:
                     break;
