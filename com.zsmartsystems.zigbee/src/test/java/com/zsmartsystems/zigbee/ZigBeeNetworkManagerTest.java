@@ -440,7 +440,7 @@ public class ZigBeeNetworkManagerTest
         apsFrame.setApsCounter(4);
         apsFrame.setSourceEndpoint(5);
         apsFrame.setCluster(666);
-        apsFrame.setDestinationEndpoint(1);
+        apsFrame.setDestinationEndpoint(255);
         networkManager.receiveCommand(apsFrame);
 
         Mockito.verify(transactionManager, Mockito.timeout(TIMEOUT).times(1)).sendTransaction(commandCaptor.capture());
