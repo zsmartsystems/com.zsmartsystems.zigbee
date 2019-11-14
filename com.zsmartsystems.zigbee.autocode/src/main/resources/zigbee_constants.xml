@@ -16,10 +16,30 @@
 		<value code="0x000B" name="Door Lock Controller" />
 		<value code="0x000C" name="Simple Sensor" />
 		<value code="0x000D" name="Consumption Awareness Device" />
+		<value code="0x0010" name="Data Collection Unit" />
+		<value code="0x0020" name="ZigBee SIM Card" />
+		<value code="0x0021" name="ZigBee Mobile Terminal" />
+		<value code="0x0026" name="ZigBee Global Platform Card" />
+		<value code="0x0030" name="Customer Handheld Device" />
+		<value code="0x0031" name="Retail Associate Handheld Device " />
+		<value code="0x0032" name="Intelligent Shopping Cart" />
+		<value code="0x0033" name="Electronic Shelf Label" />
+		<value code="0x0034" name="Customer Information Point" />
+		<value code="0x0035" name="Customer Card" />
+		<value code="0x004A" name="Constructed BACnet Device" />
+		<value code="0x004B" name="BACnet Tunneled Device" />
 		<value code="0x0050" name="Home Gateway" />
 		<value code="0x0051" name="Smart Plug" />
 		<value code="0x0052" name="White Goods" />
 		<value code="0x0053" name="Meter Interface" />
+		<value code="0x0060" name="ZGP Proxy" />
+		<value code="0x0061" name="ZGP Proxy Basic" />
+		<value code="0x0062" name="ZGP Target Plus" />
+		<value code="0x0063" name="ZGP Target" />
+		<value code="0x0064" name="ZGP Commissioning Tool" />
+		<value code="0x0065" name="ZGP Combo" />
+		<value code="0x0066" name="ZGP Combo Basic" />
+		<value code="0x0067" name="Environmental Sensor" />
 		<value code="0x0100" name="On/Off Light" />
 		<value code="0x0101" name="Dimmable Light" />
 		<value code="0x0102" name="Color Dimmable Light" />
@@ -28,12 +48,27 @@
 		<value code="0x0105" name="Color Dimmer Switch" />
 		<value code="0x0106" name="Light Sensor" />
 		<value code="0x0107" name="Occupancy Sensor" />
+		<value code="0x0108" name="On/Off Ballast" />
+		<value code="0x0109" name="Dimmable Ballast" />
+		<value code="0x010A" name="On/off plug-in unit" />
+		<value code="0x010B" name="Dimmable plug-in unit" />
+		<value code="0x010C" name="Color temperature light" />
+		<value code="0x010D" name="Extended color light" />
+		<value code="0x010E" name="Light level sensor" />
+		<value code="0x0120" name="ZigBee Access Point" />
+		<value code="0x0121" name="ZigBee Information node" />
+		<value code="0x0122" name="ZigBee Information Terminal" />
 		<value code="0x0200" name="Shade" />
 		<value code="0x0201" name="Shade Controller" />
 		<value code="0x0202" name="Window Covering Device" />
 		<value code="0x0203" name="Window Covering Controller" />
-		<value code="0x0210" name="Extended Color Light" />
-		<value code="0x0220" name="Color Temperature Light" />
+		<value code="0x0204" name="Barrier Device" />
+		<value code="0x0205" name="Barrier Device Controller" />
+		<value code="0x0220" name="Point of sale" />
+		<value code="0x0221" name="Ticketing machine" />
+		<value code="0x0222" name="Pay controller" />
+		<value code="0x0223" name="Billing unit" />
+		<value code="0x0224" name="Charging unit" />
 		<value code="0x0300" name="Heating/Cooling Unit" />
 		<value code="0x0301" name="Thermostat" />
 		<value code="0x0302" name="Temperature Sensor" />
@@ -55,6 +90,15 @@
 		<value code="0x0506" name="Prepayment Terminal" />
 		<value code="0x0507" name="Physical Device" />
 		<value code="0x0508" name="Remote Communications Device" />
+		<value code="0x0509" name="ERL Interface" />
+		<value code="0x050A" name="Electric Vehicle Station Equipment" />
+		<value code="0x0800" name="Color controller" />
+		<value code="0x0810" name="Color scene controller" />
+		<value code="0x0820" name="Non-color controller" />
+		<value code="0x0830" name="Non-color scene controller" />
+		<value code="0x0840" name="Control bridge" />
+		<value code="0x0850" name="On/off sensor" />
+		<value code="0x0F00" name="Generic Multifunction Healthcare Device" />
 	</constant>
 	<constant class="ZigBeeProfileType">
 		<name>ZigBee Profile Type</name>
