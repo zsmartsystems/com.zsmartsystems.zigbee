@@ -31,6 +31,7 @@ import com.zsmartsystems.zigbee.ZigBeeExecutors;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspInvalidCommandResponse;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EzspFrameHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EzspProtocolHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransaction;
@@ -131,7 +132,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
     /**
      * The parser parserThread.
      */
-    private Thread parserThread = null;
+    private Thread parserThread;
 
     /**
      * Flag reflecting that parser has been closed and parser parserThread
@@ -672,7 +673,6 @@ public class AshFrameHandler implements EzspProtocolHandler {
         }
 
         class TransactionWaiter implements Callable<EzspFrame>, AshListener {
-            // private EzspFrame response = null;
             private boolean complete = false;
 
             @Override
@@ -702,6 +702,13 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
             @Override
             public boolean transactionEvent(EzspFrameResponse ezspResponse) {
+                if (ezspResponse.getSequenceNumber() == ezspTransaction.getRequest().getSequenceNumber()
+                        && ezspResponse instanceof EzspInvalidCommandResponse) {
+                    // NCP doesn't support this command!
+                    transactionComplete();
+                    return true;
+                }
+
                 // Check if this response completes our transaction
                 if (!ezspTransaction.isMatch(ezspResponse)) {
                     return false;
@@ -722,8 +729,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
             }
         }
 
-        Callable<EzspFrame> worker = new TransactionWaiter();
-        return executor.submit(worker);
+        return executor.submit(new TransactionWaiter());
     }
 
     @Override
@@ -738,13 +744,12 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
         try {
             futureResponse.get();
-            return ezspTransaction;
         } catch (InterruptedException | ExecutionException e) {
             futureResponse.cancel(true);
             logger.debug("ASH interrupted in sendRequest: ", e);
         }
 
-        return null;
+        return ezspTransaction;
     }
 
     /**
@@ -806,8 +811,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
             }
         }
 
-        Callable<EzspFrameResponse> worker = new TransactionWaiter();
-        return executor.submit(worker);
+        return executor.submit(new TransactionWaiter());
     }
 
     /**
