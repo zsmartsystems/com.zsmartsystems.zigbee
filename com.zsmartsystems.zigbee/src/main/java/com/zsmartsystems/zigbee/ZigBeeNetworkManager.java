@@ -135,6 +135,11 @@ import com.zsmartsystems.zigbee.zdo.command.NetworkAddressRequest;
  */
 public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportReceive {
     /**
+     * The local endpoint ID used for all ZCL commands
+     */
+    private static final int LOCAL_ENDPOINT_ID = 1;
+
+    /**
      * The logger.
      */
     private final Logger logger = LoggerFactory.getLogger(ZigBeeNetworkManager.class);
@@ -230,7 +235,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     /**
      * A ClusterMatcher used to respond to the {@link MatchDescriptorRequest} command.
      */
-    private ClusterMatcher clusterMatcher = null;
+    private ClusterMatcher clusterMatcher;
 
     /**
      * The current {@link ZigBeeNetworkState}
@@ -623,6 +628,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
         setNetworkState(ZigBeeNetworkState.SHUTDOWN);
 
+        if (clusterMatcher != null) {
+            clusterMatcher.shutdown();
+        }
+
         synchronized (this) {
             for (ZigBeeNode node : networkNodes.values()) {
                 node.shutdown();
@@ -948,7 +957,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     private ZigBeeCommand receiveZclCommand(final ZclFieldDeserializer fieldDeserializer,
             final ZigBeeApsFrame apsFrame) {
-        if (apsFrame.getDestinationEndpoint() != 1) {
+        if (apsFrame.getDestinationEndpoint() != LOCAL_ENDPOINT_ID) {
             logger.debug("Unknown local endpoint {}", apsFrame.getSourceEndpoint());
             return null;
         }
@@ -1628,7 +1637,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     public void addSupportedClientCluster(int cluster) {
         logger.debug("Adding supported client cluster {}", String.format("%04X", cluster));
         if (clusterMatcher == null) {
-            clusterMatcher = new ClusterMatcher(this);
+            clusterMatcher = new ClusterMatcher(this, LOCAL_ENDPOINT_ID, defaultProfileId);
         }
         clusterMatcher.addClientCluster(cluster);
     }
@@ -1642,7 +1651,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     public void addSupportedServerCluster(int cluster) {
         logger.debug("Adding supported server cluster {}", String.format("%04X", cluster));
         if (clusterMatcher == null) {
-            clusterMatcher = new ClusterMatcher(this);
+            clusterMatcher = new ClusterMatcher(this, LOCAL_ENDPOINT_ID, defaultProfileId);
         }
         clusterMatcher.addServerCluster(cluster);
     }

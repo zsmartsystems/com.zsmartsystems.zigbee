@@ -33,9 +33,10 @@ import com.zsmartsystems.zigbee.zdo.command.MatchDescriptorResponse;
  */
 public class ClusterMatcherTest {
     ArgumentCaptor<ZigBeeCommand> mockedCommandCaptor = ArgumentCaptor.forClass(ZigBeeCommand.class);
+    ZigBeeNetworkManager mockedNetworkManager;
 
     private ClusterMatcher getMatcher() {
-        ZigBeeNetworkManager mockedNetworkManager = Mockito.mock(ZigBeeNetworkManager.class);
+        mockedNetworkManager = Mockito.mock(ZigBeeNetworkManager.class);
         Mockito.doAnswer(new Answer<Integer>() {
             @Override
             public Integer answer(InvocationOnMock invocation) {
@@ -43,7 +44,9 @@ public class ClusterMatcherTest {
             }
         }).when(mockedNetworkManager).sendTransaction(mockedCommandCaptor.capture());
 
-        ClusterMatcher matcher = new ClusterMatcher(mockedNetworkManager);
+        ClusterMatcher matcher = new ClusterMatcher(mockedNetworkManager, 1, 0x104);
+
+        Mockito.verify(mockedNetworkManager, Mockito.atLeastOnce()).addCommandListener(matcher);
 
         return matcher;
     }
@@ -64,6 +67,9 @@ public class ClusterMatcherTest {
 
         matcher.commandReceived(request);
         assertEquals(0, mockedCommandCaptor.getAllValues().size());
+
+        matcher.shutdown();
+        Mockito.verify(mockedNetworkManager, Mockito.atLeastOnce()).removeCommandListener(matcher);
     }
 
     @Test
