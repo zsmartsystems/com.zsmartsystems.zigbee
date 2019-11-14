@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -56,7 +59,12 @@ import com.zsmartsystems.zigbee.transport.TransportConfigOption;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 import com.zsmartsystems.zigbee.transport.ZigBeePort.FlowControl;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclColorControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclIasZoneCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclPressureMeasurementCluster;
 
 /**
  * The ZigBee test console. Simple console used for testing the framework.
@@ -81,6 +89,18 @@ public class ZigBeeConsoleMain {
         final String serialPortName;
         final String dongleName;
         final Integer serialBaud;
+
+        final Set<Integer> supportedClientClusters = new TreeSet<>();
+        supportedClientClusters.addAll(Stream
+                .of(ZclBasicCluster.CLUSTER_ID, ZclOnOffCluster.CLUSTER_ID, ZclLevelControlCluster.CLUSTER_ID,
+                        ZclColorControlCluster.CLUSTER_ID, ZclPressureMeasurementCluster.CLUSTER_ID)
+                .collect(Collectors.toSet()));
+
+        final Set<Integer> supportedServerClusters = new TreeSet<>();
+        supportedServerClusters.addAll(Stream
+                .of(ZclBasicCluster.CLUSTER_ID, ZclOnOffCluster.CLUSTER_ID, ZclLevelControlCluster.CLUSTER_ID,
+                        ZclColorControlCluster.CLUSTER_ID, ZclPressureMeasurementCluster.CLUSTER_ID)
+                .collect(Collectors.toSet()));
 
         final TransportConfig transportOptions = new TransportConfig();
         boolean resetNetwork;
@@ -334,7 +354,8 @@ public class ZigBeeConsoleMain {
             System.out.println("ZigBee console starting up ... [OK]");
         }
 
-        networkManager.addSupportedCluster(ZclIasZoneCluster.CLUSTER_ID);
+        supportedClientClusters.stream().forEach(clusterId -> networkManager.addSupportedClientCluster(clusterId));
+        supportedServerClusters.stream().forEach(clusterId -> networkManager.addSupportedServerCluster(clusterId));
 
         if (dongleName.toUpperCase().equals("CC2531")) {
             ZigBeeDongleTiCc2531 tiDongle = (ZigBeeDongleTiCc2531) dongle;
