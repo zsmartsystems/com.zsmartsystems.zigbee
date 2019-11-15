@@ -19,15 +19,15 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
- * Ehanced View Scene Response value object class.
+ * Enhanced View Scene Response value object class.
  * <p>
- * Cluster: <b>Scenes</b>. Command ID 0x01 is sent <b>FROM</b> the server.
+ * Cluster: <b>Scenes</b>. Command ID 0x41 is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the Scenes cluster.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-09-20T08:23:22Z")
-public class EhancedViewSceneResponse extends ZclCommand {
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-15T22:10:14Z")
+public class EnhancedViewSceneResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
      */
@@ -36,7 +36,7 @@ public class EhancedViewSceneResponse extends ZclCommand {
     /**
      * The command ID.
      */
-    public static int COMMAND_ID = 0x01;
+    public static int COMMAND_ID = 0x41;
 
     /**
      * Status command message field.
@@ -71,7 +71,7 @@ public class EhancedViewSceneResponse extends ZclCommand {
     /**
      * Default constructor.
      */
-    public EhancedViewSceneResponse() {
+    public EnhancedViewSceneResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
@@ -208,8 +208,8 @@ public class EhancedViewSceneResponse extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(208);
-        builder.append("EhancedViewSceneResponse [");
+        final StringBuilder builder = new StringBuilder(209);
+        builder.append("EnhancedViewSceneResponse [");
         builder.append(super.toString());
         builder.append(", status=");
         builder.append(status);

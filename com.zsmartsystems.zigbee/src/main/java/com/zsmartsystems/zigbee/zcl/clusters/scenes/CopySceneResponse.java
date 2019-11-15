@@ -16,15 +16,15 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
- * Enhanced Add Scene Response value object class.
+ * Copy Scene Response value object class.
  * <p>
- * Cluster: <b>Scenes</b>. Command ID 0x40 is sent <b>FROM</b> the server.
+ * Cluster: <b>Scenes</b>. Command ID 0x42 is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the Scenes cluster.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
 @Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-15T22:10:14Z")
-public class EnhancedAddSceneResponse extends ZclCommand {
+public class CopySceneResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
      */
@@ -33,7 +33,7 @@ public class EnhancedAddSceneResponse extends ZclCommand {
     /**
      * The command ID.
      */
-    public static int COMMAND_ID = 0x40;
+    public static int COMMAND_ID = 0x42;
 
     /**
      * Status command message field.
@@ -53,7 +53,7 @@ public class EnhancedAddSceneResponse extends ZclCommand {
     /**
      * Default constructor.
      */
-    public EnhancedAddSceneResponse() {
+    public CopySceneResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
@@ -130,8 +130,8 @@ public class EnhancedAddSceneResponse extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(107);
-        builder.append("EnhancedAddSceneResponse [");
+        final StringBuilder builder = new StringBuilder(100);
+        builder.append("CopySceneResponse [");
         builder.append(super.toString());
         builder.append(", status=");
         builder.append(status);
