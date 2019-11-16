@@ -56,7 +56,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-15T22:10:14Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-16T08:52:33Z")
 public class ZclScenesCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -133,7 +133,6 @@ public class ZclScenesCluster extends ZclCluster {
     protected Map<Integer, Class<? extends ZclCommand>> initializeServerCommands() {
         Map<Integer, Class<? extends ZclCommand>> commandMap = new ConcurrentSkipListMap<>();
 
-        commandMap.put(0x0042, CopySceneCommand.class);
         commandMap.put(0x0000, AddSceneResponse.class);
         commandMap.put(0x0001, ViewSceneResponse.class);
         commandMap.put(0x0002, RemoveSceneResponse.class);
@@ -160,6 +159,7 @@ public class ZclScenesCluster extends ZclCluster {
         commandMap.put(0x0006, GetSceneMembershipCommand.class);
         commandMap.put(0x0040, EnhancedAddSceneCommand.class);
         commandMap.put(0x0041, EnhancedViewSceneCommand.class);
+        commandMap.put(0x0042, CopySceneCommand.class);
 
         return commandMap;
     }

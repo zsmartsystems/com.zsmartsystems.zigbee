@@ -18,7 +18,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Copy Scene Command value object class.
  * <p>
- * Cluster: <b>Scenes</b>. Command ID 0x42 is sent <b>FROM</b> the server.
+ * Cluster: <b>Scenes</b>. Command ID 0x42 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Scenes cluster.
  * <p>
  * The Copy Scene command allows a device to efficiently copy scenes from one group/scene
@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-15T22:10:14Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-16T08:52:33Z")
 public class CopySceneCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -70,7 +70,7 @@ public class CopySceneCommand extends ZclCommand {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
-        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
 
     /**
