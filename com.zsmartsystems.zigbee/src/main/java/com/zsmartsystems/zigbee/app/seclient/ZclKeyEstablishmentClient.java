@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ZigBeeExecutors;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.security.ZigBeeCbkeProvider;
 import com.zsmartsystems.zigbee.security.ZigBeeCertificate;
 import com.zsmartsystems.zigbee.security.ZigBeeCryptoSuite1Certificate;
@@ -113,13 +114,38 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
     private Map<ZigBeeCryptoSuites, KeyEstablishmentSuiteBitmap> cryptoSuiteTranslation = new HashMap<>();
 
     private enum KeyEstablishmentState {
+        /**
+         * Key estblishment has not started
+         */
         UNINITIALISED,
+        /**
+         * Currently checking the remote server for the list of supported curves
+         */
         CHECK_CURVES,
+        /**
+         * We've sent the initiate request, and are waiting for the response
+         */
         INITIATE_REQUEST,
+        /**
+         * We've sent the ephemeral data request, and are waiting for the response
+         */
         EPHEMERAL_DATA_REQUEST,
+        /**
+         * We've sent the confirm key request, and are waiting for the response
+         */
         CONFIRM_KEY_REQUEST,
+        /**
+         * Key establishment completed successfully
+         */
         COMPLETE,
-        FAILED
+        /**
+         * Key establishment failed but can be retried after the required delay
+         */
+        FAILED,
+        /**
+         * Key establishment failed and cannot be retried. The application should now leave the network
+         */
+        FATAL
     }
 
     /**
@@ -477,8 +503,10 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
             Integer waitTime = response.getWaitTime();
             if (response.getStatusCode() == KeyEstablishmentStatusEnum.UNKNOWN_ISSUER.getKey()) {
                 // TODO: If UNSUPPORTED_SUITE is received then we should signal to leave the network
+                setState(KeyEstablishmentState.FATAL);
+            } else {
+                setState(KeyEstablishmentState.FAILED);
             }
-            setState(KeyEstablishmentState.FAILED);
             logger.debug("CBKE Terminate Key establishment {}, suite {}, wait {} seconds", status, suite, waitTime);
             shutdown(waitTime);
         }
@@ -550,7 +578,20 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
 
         keCluster.removeCommandListener(this);
 
-        smartEnergyClient.keyEstablishmentCallback(state == KeyEstablishmentState.COMPLETE, waitTime);
+        ZigBeeStatus returnState;
+        switch (state) {
+            case COMPLETE:
+                returnState = ZigBeeStatus.SUCCESS;
+                break;
+            case FATAL:
+                returnState = ZigBeeStatus.FATAL_ERROR;
+                break;
+            default:
+                returnState = ZigBeeStatus.FAILURE;
+                break;
+        }
+
+        smartEnergyClient.keyEstablishmentCallback(returnState, waitTime);
     }
 
     private KeyEstablishmentSuiteBitmap getPreferredCryptoSuite() {

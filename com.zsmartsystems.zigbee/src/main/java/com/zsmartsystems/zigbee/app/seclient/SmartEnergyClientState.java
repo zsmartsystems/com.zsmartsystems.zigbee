@@ -21,5 +21,6 @@ public enum SmartEnergyClientState {
     DISCOVER_METERING_SERVERS,
     DISCOVER_KEEP_ALIVE,
     DISCOVER_KEEP_ALIVE_TIMEOUT,
-    KEEP_ALIVE
+    KEEP_ALIVE,
+    FATAL
 }
