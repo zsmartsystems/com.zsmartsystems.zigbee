@@ -14,7 +14,20 @@ package com.zsmartsystems.zigbee.app.seclient;
  *
  */
 public enum ZigBeeSepClientStatus {
+    /**
+     * The Smart Energy client is initialising and performing any key exchange required.
+     */
     INITIALIZING,
+    /**
+     * The Smart Energy client is connected to the server and operating normally.
+     */
     CONNECTED,
+    /**
+     * The Smart Energy client is disconnected from the server.
+     */
     DISCONNECTED,
+    /**
+     * The Smart Energy client is disconnected from the server and the application should leave the network.
+     */
+    FATAL_ERROR
 }

@@ -16,17 +16,17 @@ package com.zsmartsystems.zigbee;
  */
 public enum ZigBeeStatus {
     /**
-     * The operation completed successfully
+     * The operation completed successfully.
      */
     SUCCESS,
 
     /**
-     * The operation failed and no further information on the reason is available
+     * The operation failed and no further information on the reason is available.
      */
     FAILURE,
 
     /**
-     * The caller provided invalid arguments for the requested function
+     * The caller provided invalid arguments for the requested function.
      */
     INVALID_ARGUMENTS,
 
@@ -36,12 +36,12 @@ public enum ZigBeeStatus {
     NO_RESPONSE,
 
     /**
-     * The system was not in the correct state to process the request
+     * The system was not in the correct state to process the request.
      */
     INVALID_STATE,
 
     /**
-     * A request was made that is not supported by the function
+     * A request was made that is not supported by the function.
      */
     UNSUPPORTED,
 
@@ -58,5 +58,10 @@ public enum ZigBeeStatus {
     /**
      * An unexpected response was received
      */
-    BAD_RESPONSE
+    BAD_RESPONSE,
+
+    /**
+     * A fatal error occurred that cannot be recovered from.
+     */
+    FATAL_ERROR
 }

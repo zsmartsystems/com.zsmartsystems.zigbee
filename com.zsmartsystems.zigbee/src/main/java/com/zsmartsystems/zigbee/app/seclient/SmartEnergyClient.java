@@ -340,6 +340,9 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
             case IDLE:
                 updatedStatus = ZigBeeSepClientStatus.DISCONNECTED;
                 break;
+            case FATAL:
+                updatedStatus = ZigBeeSepClientStatus.FATAL_ERROR;
+                break;
             default:
                 updatedStatus = null;
                 break;
@@ -781,21 +784,31 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
     }
 
     /**
-     * Callback from the {@link KeyEstablishmentClient} when the key establishment completes or terminates
+     * Callback from the {@link KeyEstablishmentClient} when the key establishment completes or terminates.
+     * <p>
+     * If the returnState is {@link ZigBeeStatus#FATAL_ERROR} the application should leave the network.
      *
-     * @param state true if the key establishment completed successfully
+     * @param returnState a {@link ZigBeeStatus} indicating if the key establishment completed successfully
      * @param waitTime a time in seconds to wait before retrying any key establishment if the key establishment failed
      */
-    protected void keyEstablishmentCallback(boolean state, Integer waitTime) {
-        updateClientState(state ? SmartEnergyClientState.DISCOVER_METERING_SERVERS
-                : SmartEnergyClientState.PERFORM_KEY_ESTABLISHMENT);
-        logger.debug("SEP Client Extension: keyEstablishmentCallback state {}", seState);
+    protected void keyEstablishmentCallback(ZigBeeStatus returnState, Integer waitTime) {
+        logger.debug("SEP Client Extension: keyEstablishmentCallback state={}", returnState);
 
-        keClient.stop();
-        keClient = null;
+        if (keClient != null) {
+            keClient.stop();
+            keClient = null;
+        }
+
+        if (returnState == ZigBeeStatus.FATAL_ERROR) {
+            updateClientState(SmartEnergyClientState.FATAL);
+            return;
+        } else {
+            updateClientState(returnState == ZigBeeStatus.SUCCESS ? SmartEnergyClientState.DISCOVER_METERING_SERVERS
+                    : SmartEnergyClientState.PERFORM_KEY_ESTABLISHMENT);
+        }
 
         int time = TIMER_IMMEDIATE;
-        if (state == false) {
+        if (returnState == ZigBeeStatus.FAILURE) {
             if (waitTime == 0) {
                 time = TIMER_RESTART_KEY_ESTABLISHMENT;
             } else {
