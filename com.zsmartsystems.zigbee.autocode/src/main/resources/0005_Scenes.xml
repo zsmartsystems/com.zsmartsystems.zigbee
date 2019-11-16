@@ -105,7 +105,7 @@
             <name>Scene ID</name>
         </field>
     </command>
-    <command code="0x42" source="server">
+    <command code="0x42" source="client">
         <name>Copy Scene Command</name>
         <description>The Copy Scene command allows a device to efficiently copy scenes from one group/scene identifier pair to another group/scene identifier pair.</description>
         <field type="ENUMERATION_8_BIT">
