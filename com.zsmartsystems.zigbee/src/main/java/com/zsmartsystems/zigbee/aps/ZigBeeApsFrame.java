@@ -184,7 +184,7 @@ public class ZigBeeApsFrame {
 
     /**
      * Gets the source address for the frame
-     * 
+     *
      * @return the source network address for the frame
      */
     public int getSourceAddress() {
@@ -193,7 +193,7 @@ public class ZigBeeApsFrame {
 
     /**
      * Sets the source address for the frame
-     * 
+     *
      * @param sourceAddress the source network address
      */
     public void setSourceAddress(int sourceAddress) {
@@ -397,14 +397,8 @@ public class ZigBeeApsFrame {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder(164);
-        builder.append("ZigBeeApsFrame [sourceAddress=");
-        builder.append(sourceAddress);
-        builder.append('/');
-        builder.append(sourceEndpoint);
-        builder.append(", destinationAddress=");
-        builder.append(destinationAddress);
-        builder.append('/');
-        builder.append(destinationEndpoint);
+        builder.append(String.format("ZigBeeApsFrame [sourceAddress=%04X/%d", sourceAddress, sourceEndpoint));
+        builder.append(String.format(", destinationAddress=%04X/%d", destinationAddress, destinationEndpoint));
         builder.append(String.format(", profile=%04X", profile));
         builder.append(String.format(", cluster=%04X", cluster));
         builder.append(", addressMode=");
