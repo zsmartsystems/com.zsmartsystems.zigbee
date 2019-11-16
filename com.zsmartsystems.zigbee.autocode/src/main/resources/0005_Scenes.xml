@@ -105,6 +105,26 @@
             <name>Scene ID</name>
         </field>
     </command>
+    <command code="0x42" source="server">
+        <name>Copy Scene Command</name>
+        <description>The Copy Scene command allows a device to efficiently copy scenes from one group/scene identifier pair to another group/scene identifier pair.</description>
+        <field type="ENUMERATION_8_BIT">
+            <name>Mode</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Group ID From</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Scene ID From</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Group ID To</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Scene ID To</name>
+        </field>
+    </command>
+
     <command code="0x00" source="server">
         <name>Add Scene Response</name>
         <field type="ENUMERATION_8_BIT">
@@ -189,7 +209,7 @@
             <name>Scene List</name>
         </field>
     </command>
-       <command code="0x00" source="server">
+       <command code="0x40" source="server">
         <name>Enhanced Add Scene Response</name>
         <field type="ENUMERATION_8_BIT">
             <name>Status</name>
@@ -201,8 +221,8 @@
             <name>Scene ID</name>
         </field>
     </command>
-    <command code="0x01" source="server">
-        <name>Ehanced View Scene Response</name>
+    <command code="0x41" source="server">
+        <name>Enhanced View Scene Response</name>
         <field type="ENUMERATION_8_BIT">
             <name>Status</name>
         </field>
@@ -220,6 +240,18 @@
         </field>
         <field type="N_X_EXTENSION_FIELD_SET">
             <name>Extension Field Sets</name>
+        </field>
+    </command>
+    <command code="0x42" source="server">
+        <name>Copy Scene Response</name>
+        <field type="ENUMERATION_8_BIT">
+            <name>Status</name>
+        </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Group ID</name>
+        </field>
+        <field type="UNSIGNED_8_BIT_INTEGER">
+            <name>Scene ID</name>
         </field>
     </command>
 
