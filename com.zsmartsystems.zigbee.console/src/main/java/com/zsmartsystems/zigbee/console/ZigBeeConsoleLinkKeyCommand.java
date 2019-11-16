@@ -64,7 +64,7 @@ public class ZigBeeConsoleLinkKeyCommand extends ZigBeeConsoleAbstractCommand {
         }
 
         ZigBeeStatus result = networkManager.setZigBeeLinkKey(key);
-        out.println("Link key " + key.toString() + " was " + (result == ZigBeeStatus.SUCCESS ? "" : "not") + " set.");
+        out.println("Link key set to " + key.toString() + " completed with state " + result);
     }
 
 }
