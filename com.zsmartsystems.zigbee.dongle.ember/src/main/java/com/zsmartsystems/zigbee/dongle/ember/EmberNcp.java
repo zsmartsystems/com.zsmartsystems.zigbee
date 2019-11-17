@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddEndpointRequest;
@@ -72,6 +73,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspReadCountersRespon
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspScanCompleteHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetConfigurationValueRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetConfigurationValueResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetExtendedTimeoutRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetExtendedTimeoutResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetManufacturerCodeRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetManufacturerCodeResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPolicyRequest;
@@ -869,6 +872,32 @@ public class EmberNcp {
         lastStatus = scanCompleteResponse.getStatus();
 
         return channels;
+    }
+
+    /**
+     * Tells the stack whether or not the normal interval between retransmissions of a retried unicast message should be
+     * increased by EMBER_INDIRECT_TRANSMISSION_TIMEOUT. The interval needs to be increased when sending to a sleepy
+     * node so that the message is not retransmitted until the destination has had time to wake up and poll its parent.
+     * The stack will automatically extend the timeout:
+     * <ul>
+     * <li>For our own sleepy children.
+     * <li>When an address response is received from a parent on behalf of its child.
+     * <li>When an indirect transaction expiry route error is received.
+     * <li>When an end device announcement is received from a sleepy node.
+     * </ul>
+     *
+     * @param remoteEui64 the {@link IeeeAddress} of the remote node
+     * @param extendedTimeout true if the node should be set with an extended timeout
+     * @return the {@link ZigBeeStatus} of the request
+     */
+    public ZigBeeStatus setExtendedTimeout(IeeeAddress remoteEui64, boolean extendedTimeout) {
+        EzspSetExtendedTimeoutRequest request = new EzspSetExtendedTimeoutRequest();
+        request.setRemoteEui64(remoteEui64);
+        request.setExtendedTimeout(extendedTimeout);
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspSetExtendedTimeoutResponse.class));
+        EzspSetExtendedTimeoutResponse response = (EzspSetExtendedTimeoutResponse) transaction.getResponse();
+        return (response == null) ? ZigBeeStatus.FAILURE : ZigBeeStatus.SUCCESS;
     }
 
     private String intArrayToString(int[] payload) {
