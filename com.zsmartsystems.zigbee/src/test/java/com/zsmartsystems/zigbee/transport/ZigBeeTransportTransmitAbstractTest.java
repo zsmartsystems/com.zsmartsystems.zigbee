@@ -11,6 +11,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 
@@ -30,6 +31,7 @@ public abstract class ZigBeeTransportTransmitAbstractTest {
      */
     @Test
     public void getIeeeAddress() {
+        transport.setZigBeeTransportReceive(Mockito.mock(ZigBeeTransportReceive.class));
         assertEquals(ZigBeeStatus.SUCCESS, transport.initialize());
         assertNotNull(transport.getIeeeAddress());
     }
@@ -40,6 +42,7 @@ public abstract class ZigBeeTransportTransmitAbstractTest {
      */
     @Test
     public void getNwkAddress() {
+        transport.setZigBeeTransportReceive(Mockito.mock(ZigBeeTransportReceive.class));
         assertEquals(ZigBeeStatus.SUCCESS, transport.initialize());
         assertEquals(ZigBeeStatus.SUCCESS, transport.startup(false));
         assertNotNull(transport.getNwkAddress());

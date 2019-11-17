@@ -389,6 +389,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     @Override
     public ZigBeeStatus initialize() {
         logger.debug("EZSP dongle initialize with protocol {}.", protocol);
+        zigbeeTransportReceive.setTransportState(ZigBeeTransportState.INITIALISING);
 
         if (protocol != EmberSerialProtocol.NONE && !initialiseEzspProtocol()) {
             return ZigBeeStatus.COMMUNICATION_ERROR;
@@ -439,7 +440,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     public ZigBeeStatus startup(boolean reinitialize) {
         logger.debug("EZSP dongle startup. reinitialize={}", reinitialize);
 
-        // If ashHandler is null then the serial port didn't initialise
+        // If frameHandler is null then the serial port didn't initialise or startup has not been called
         if (frameHandler == null) {
             logger.error("Initialising Ember Dongle but low level handler is not initialised.");
             return ZigBeeStatus.INVALID_STATE;
@@ -500,13 +501,14 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         if (address != 0xFFFE) {
             nwkAddress = address;
         }
-        logger.debug("EZSP Initialisation complete. NWK Address = {}, State = {}", String.format("%04X", nwkAddress),
+        logger.debug("EZSP Startup complete. NWK Address = {}, State = {}", String.format("%04X", nwkAddress),
                 networkState);
 
         initialised = true;
 
-        return (networkState == EmberNetworkStatus.EMBER_JOINED_NETWORK) ? ZigBeeStatus.SUCCESS
-                : ZigBeeStatus.BAD_RESPONSE;
+        return (networkState == EmberNetworkStatus.EMBER_JOINED_NETWORK
+                || networkState == EmberNetworkStatus.EMBER_JOINED_NETWORK_NO_PARENT) ? ZigBeeStatus.SUCCESS
+                        : ZigBeeStatus.BAD_RESPONSE;
     }
 
     /**
