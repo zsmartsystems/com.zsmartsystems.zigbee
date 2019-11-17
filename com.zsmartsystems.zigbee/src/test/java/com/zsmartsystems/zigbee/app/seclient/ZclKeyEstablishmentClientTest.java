@@ -25,6 +25,7 @@ public class ZclKeyEstablishmentClientTest {
 
     @Test
     public void test() {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         SmartEnergyClient seClient = Mockito.mock(SmartEnergyClient.class);
         ZclKeyEstablishmentCluster keCluster = Mockito.mock(ZclKeyEstablishmentCluster.class);
 
@@ -36,6 +37,8 @@ public class ZclKeyEstablishmentClientTest {
         assertFalse(keClient.commandReceived(Mockito.mock(ZclCommand.class)));
 
         keClient.stop();
+
+        keClient.shutdown();
         Mockito.verify(keCluster, Mockito.times(1)).removeCommandListener(keClient);
     }
 }

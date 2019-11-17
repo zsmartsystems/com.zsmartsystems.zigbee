@@ -1156,7 +1156,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         // Filter out unwanted transport state changes
         synchronized (validTransportStateTransitions) {
             if (!validTransportStateTransitions.get(transportState).contains(state)) {
-                logger.debug("Ignoring invalid transport state transition in {} to {}", transportState, state);
+                logger.debug("Ignoring invalid transport state transition from {} to {}", transportState, state);
                 return;
             }
             transportState = state;
@@ -1566,7 +1566,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         if (node == null) {
             return;
         }
-        logger.debug("{}: Node {} update", node.getIeeeAddress(), node.getNetworkAddress());
+        logger.debug("{}: Node {} update", node.getIeeeAddress(), String.format("%04X", node.getNetworkAddress()));
 
         final ZigBeeNode currentNode;
         synchronized (networkNodes) {
