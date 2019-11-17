@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
@@ -1203,7 +1204,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
     private void setNetworkStateOnline() {
         synchronized (this) {
-            logger.debug("Network state ONLINE process running");
+            logger.debug("Network state ONLINE process running. {} Nodes in network.", networkNodes.size());
 
             localNwkAddress = transport.getNwkAddress();
             localIeeeAddress = transport.getIeeeAddress();
@@ -1223,7 +1224,20 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 extension.extensionStartup();
             }
 
+            // Notify all listeners of the nodes in the network,
+            // and provide all known NodeDescriptors to the transport layer
             for (final ZigBeeNode node : networkNodes.values()) {
+                logger.debug("Network state ONLINE: Notifying node {} [{}]", node.getIeeeAddress(),
+                        String.format("%04X", node.getNetworkAddress()));
+                if (node.getNodeDescriptor() != null) {
+                    NotificationService.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            transport.setNodeDescriptor(node.getIeeeAddress(), node.getNodeDescriptor());
+                        }
+                    });
+                }
+
                 for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
                     NotificationService.execute(new Runnable() {
                         @Override
@@ -1547,6 +1561,15 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             }
         }
 
+        if (node.getNodeDescriptor() != null) {
+            NotificationService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    transport.setNodeDescriptor(node.getIeeeAddress(), node.getNodeDescriptor());
+                }
+            });
+        }
+
         for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
             NotificationService.execute(new Runnable() {
                 @Override
@@ -1585,6 +1608,16 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                         String.format("%04X", node.getNetworkAddress()));
                 return;
             }
+        }
+
+        if (node.getNodeDescriptor() != null && networkNodes.get(node.getIeeeAddress()) != null && Objects
+                .equals(networkNodes.get(node.getIeeeAddress()).getNodeDescriptor(), node.getNodeDescriptor())) {
+            NotificationService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    transport.setNodeDescriptor(node.getIeeeAddress(), node.getNodeDescriptor());
+                }
+            });
         }
 
         final boolean sendNodeAdded;
