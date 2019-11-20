@@ -671,7 +671,7 @@ public class ZigBeeDongleTelegesis
             TelegesisSendUnicastCommand unicastCommand = new TelegesisSendUnicastCommand();
             unicastCommand.setAddress(apsFrame.getDestinationAddress());
             unicastCommand.setDestEp(apsFrame.getDestinationEndpoint());
-            unicastCommand.setSourceEp(0);
+            unicastCommand.setSourceEp(apsFrame.getSourceEndpoint());
             unicastCommand.setProfileId(apsFrame.getProfile());
             unicastCommand.setClusterId(apsFrame.getCluster());
             unicastCommand.setMessageData(apsFrame.getPayload());
