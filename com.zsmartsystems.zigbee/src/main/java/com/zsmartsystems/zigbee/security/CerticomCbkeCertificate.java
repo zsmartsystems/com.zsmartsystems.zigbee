@@ -46,9 +46,10 @@ public class CerticomCbkeCertificate extends ZigBeeCbkeCertificate {
      * <p>
      * https://www.certicom.com/content/certicom/en/products-and-services/managed-certificate-service/smart-energy-device-certificate-service/zigbee-registration.html
      *
-     * @param stringCertificate
+     * @param stringCertificate the certificate input
+     * @throws IllegalArgumentException
      */
-    public CerticomCbkeCertificate(String stringCertificate) {
+    public CerticomCbkeCertificate(String stringCertificate) throws IllegalArgumentException {
         String localString = stringCertificate.replaceAll("\\s", "").toUpperCase();
 
         String caPublicKeyString = getString(localString, DELIM_CA_PUBLIC_KEY);
