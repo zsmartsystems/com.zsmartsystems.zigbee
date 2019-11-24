@@ -422,7 +422,7 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
                 stopCbke(0);
                 return;
             }
-            logger.debug("CBKE Key establishment client: Sertificate for requested security suite {} is {}",
+            logger.debug("CBKE Key establishment client: Certificate for requested security suite {} is {}",
                     requestedSuite, ephemeralData);
 
             cbkeProvider.addPartnerCertificate(cryptoSuite, response.getIdentity());
