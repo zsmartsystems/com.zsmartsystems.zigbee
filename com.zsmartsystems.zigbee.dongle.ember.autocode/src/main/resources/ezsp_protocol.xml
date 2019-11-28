@@ -129,6 +129,7 @@
 				<data_type>uint16_t</data_type>
 				<name>bootloaderVersion</name>
 				<description>BOOTLOADER_INVALID_VERSION if the standalone bootloader is not present, or the version of the installed standalone bootloader.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint8_t</data_type>

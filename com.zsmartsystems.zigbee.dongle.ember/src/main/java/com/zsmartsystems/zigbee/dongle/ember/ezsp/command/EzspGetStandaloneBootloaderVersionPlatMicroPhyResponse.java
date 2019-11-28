@@ -154,7 +154,7 @@ public class EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse extends Ezsp
     public String toString() {
         final StringBuilder builder = new StringBuilder(157);
         builder.append("EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse [bootloaderVersion=");
-        builder.append(bootloaderVersion);
+        builder.append(String.format("%04X", bootloaderVersion));
         builder.append(", nodePlat=");
         builder.append(nodePlat);
         builder.append(", nodeMicro=");
