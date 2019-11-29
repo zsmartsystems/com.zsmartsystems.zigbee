@@ -446,6 +446,10 @@ public class ZigBeeDongleEzspTest {
         assertEquals("", dongle.getFirmwareVersion());
         TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "versionString", "Stack Version=123.456");
         assertEquals("123.456", dongle.getFirmwareVersion());
+
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "versionString",
+                "Stack Version=123.456, Bootloader Version=0.1 build 23");
+        assertEquals("123.456", dongle.getFirmwareVersion());
     }
 
     @Test

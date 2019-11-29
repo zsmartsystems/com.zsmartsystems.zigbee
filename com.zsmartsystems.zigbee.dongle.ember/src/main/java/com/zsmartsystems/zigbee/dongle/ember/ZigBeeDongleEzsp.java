@@ -110,6 +110,11 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     private static final int WAIT_FOR_ONLINE = 5000;
 
     /**
+     * Response to the getBootloaderVersion if no bootloader is available
+     */
+    private static final int BOOTLOADER_INVALID_VERSION = 0xFFFF;
+
+    /**
      * The {@link Logger}.
      */
     private final Logger logger = LoggerFactory.getLogger(ZigBeeDongleEzsp.class);
@@ -1217,6 +1222,20 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 builder.append('.');
             }
         }
+
+        int bootloaderVersion = ncp.getBootloaderVersion();
+        builder.append(", Bootloader Version=");
+        if (bootloaderVersion == BOOTLOADER_INVALID_VERSION) {
+            builder.append("NONE");
+        } else {
+            builder.append((bootloaderVersion >> 12) & 0x0F);
+            builder.append('.');
+            builder.append((bootloaderVersion >> 8) & 0x0F);
+
+            builder.append(" build ");
+            builder.append(bootloaderVersion & 0xFF);
+        }
+
         versionString = builder.toString();
 
         return true;
@@ -1235,6 +1254,12 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         // Initialise the EZSP protocol so we can start the bootloader
         // If this fails, then we continue on the assumption that the bootloader may already be running
         if (initialiseEzspProtocol()) {
+            EmberNcp ncp = getEmberNcp();
+            if (ncp.getBootloaderVersion() == BOOTLOADER_INVALID_VERSION) {
+                logger.debug("EZSP bootload failed: No bootloader present");
+                return false;
+            }
+
             // Send the bootload command, but ignore the response since there doesn't seem to be one
             // despite what the documentation seems to indicate
             EzspLaunchStandaloneBootloaderRequest bootloadCommand = new EzspLaunchStandaloneBootloaderRequest();
@@ -1275,7 +1300,12 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         if (versionIndex == -1) {
             return "";
         }
-        return versionString.substring(versionIndex + 14);
+        String version = versionString.substring(versionIndex + 14);
+        versionIndex = version.indexOf(',');
+        if (versionIndex == -1) {
+            return version;
+        }
+        return version.substring(0, versionIndex);
     }
 
     @Override

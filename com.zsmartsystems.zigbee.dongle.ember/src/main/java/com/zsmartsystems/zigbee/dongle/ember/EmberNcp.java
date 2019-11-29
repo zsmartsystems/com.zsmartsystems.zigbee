@@ -59,6 +59,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetParentChildPara
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetParentChildParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetPolicyRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetPolicyResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetValueRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetValueResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLeaveNetworkRequest;
@@ -898,6 +900,21 @@ public class EmberNcp {
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspSetExtendedTimeoutResponse.class));
         EzspSetExtendedTimeoutResponse response = (EzspSetExtendedTimeoutResponse) transaction.getResponse();
         return (response == null) ? ZigBeeStatus.FAILURE : ZigBeeStatus.SUCCESS;
+    }
+
+    /**
+     * Detects if the standalone bootloader is installed, and if so returns the installed version. If not return 0xffff.
+     * A returned version of 0x1234 would indicate version 1.2 build 34.
+     *
+     * @return the bootloader version. A returned version of 0x1234 would indicate version 1.2 build 34.
+     */
+    public int getBootloaderVersion() {
+        EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest request = new EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest();
+        EzspTransaction transaction = protocolHandler.sendEzspTransaction(new EzspSingleResponseTransaction(request,
+                EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse.class));
+        EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse response = (EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse) transaction
+                .getResponse();
+        return (response == null) ? 0xFFFF : response.getBootloaderVersion();
     }
 
     private String intArrayToString(int[] payload) {
