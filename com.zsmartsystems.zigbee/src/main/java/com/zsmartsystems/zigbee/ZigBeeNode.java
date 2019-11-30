@@ -724,6 +724,11 @@ public class ZigBeeNode implements ZigBeeCommandListener {
 
         boolean updated = false;
 
+        if (nodeState != node.getNodeState()) {
+            nodeState = node.getNodeState();
+            updated = true;
+        }
+
         if (node.getNetworkAddress() != null
                 && (networkAddress == null || !networkAddress.equals(node.getNetworkAddress()))) {
             logger.debug("{}: Network address updated from {} to {}", ieeeAddress, networkAddress,
