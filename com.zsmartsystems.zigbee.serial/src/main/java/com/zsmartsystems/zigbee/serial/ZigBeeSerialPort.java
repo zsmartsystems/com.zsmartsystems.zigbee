@@ -131,7 +131,7 @@ public class ZigBeeSerialPort implements ZigBeePort, SerialPortEventListener {
         serialPort = new jssc.SerialPort(portName);
         try {
             serialPort.openPort();
-            serialPort.setParams(baudRate, 8, 1, 0);
+            serialPort.setParams(baudRate, 8, 1, 0, true, true);
             switch (flowControl) {
                 case FLOWCONTROL_OUT_NONE:
                     serialPort.setFlowControlMode(jssc.SerialPort.FLOWCONTROL_NONE);

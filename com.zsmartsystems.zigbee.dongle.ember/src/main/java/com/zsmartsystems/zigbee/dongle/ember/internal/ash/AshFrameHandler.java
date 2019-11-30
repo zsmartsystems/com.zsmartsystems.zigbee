@@ -63,15 +63,18 @@ public class AshFrameHandler implements EzspProtocolHandler {
     /**
      * The receive timeout settings - min/initial/max - defined in milliseconds
      */
-    private final int T_RX_ACK_MIN = 400;
-    private final int T_RX_ACK_INIT = 1600;
-    private final int T_RX_ACK_MAX = 3200;
+    private final static int T_RX_ACK_MIN = 400;
+    private final static int T_RX_ACK_INIT = 1600;
+    private final static int T_RX_ACK_MAX = 3200;
     private int receiveTimeout = T_RX_ACK_INIT;
+
+    private final static int T_CON_HOLDOFF = 1250;
+    private int connectTimeout = T_CON_HOLDOFF;
 
     /**
      * Maximum number of consecutive timeouts allowed while waiting to receive an ACK
      */
-    private final int ACK_TIMEOUTS = 4;
+    private final static int ACK_TIMEOUTS = 4;
     private int retries = 0;
 
     /**
@@ -81,14 +84,14 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
     private long sentTime;
 
-    private final int ASH_CANCEL_BYTE = 0x1A;
-    private final int ASH_FLAG_BYTE = 0x7E;
-    private final int ASH_SUBSTITUTE_BYTE = 0x18;
-    private final int ASH_XON_BYTE = 0x11;
-    private final int ASH_OFF_BYTE = 0x13;
-    private final int ASH_TIMEOUT = -1;
+    private final static int ASH_CANCEL_BYTE = 0x1A;
+    private final static int ASH_FLAG_BYTE = 0x7E;
+    private final static int ASH_SUBSTITUTE_BYTE = 0x18;
+    private final static int ASH_XON_BYTE = 0x11;
+    private final static int ASH_OFF_BYTE = 0x13;
+    private final static int ASH_TIMEOUT = -1;
 
-    private final int ASH_MAX_LENGTH = 220;
+    private final static int ASH_MAX_LENGTH = 220;
 
     private Integer ackNum = 0;
     private int frmNum = 0;
@@ -349,11 +352,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
         // Check the version
         if (rstAck.getVersion() == 2) {
-            stateConnected = true;
-            ackNum = 0;
-            frmNum = 0;
-            sentQueue.clear();
-            logger.debug("ASH: Connected");
+            startConnectTimer();
         } else {
             logger.debug("ASH: Invalid version");
         }
@@ -509,13 +508,19 @@ public class AshFrameHandler implements EzspProtocolHandler {
      */
     @Override
     public synchronized void connect() {
+        logger.debug("ASH: Connect");
         stateConnected = false;
 
-        ackNum = 0;
-        frmNum = 0;
         sentQueue.clear();
         sendQueue.clear();
 
+        reconnect();
+    }
+
+    public synchronized void reconnect() {
+        logger.debug("ASH: Reconnect");
+        ackNum = 0;
+        frmNum = 0;
         receiveTimeout = T_RX_ACK_INIT;
 
         sendFrame(new AshFrameRst());
@@ -563,6 +568,15 @@ public class AshFrameHandler implements EzspProtocolHandler {
         logger.trace("ASH: Started retry timer");
     }
 
+    private synchronized void startConnectTimer() {
+        // Stop any existing timer - shouldn't happen here, but play safe!
+        stopRetryTimer();
+
+        timerFuture = timer.schedule(new AshConnectTimer(), connectTimeout, TimeUnit.MILLISECONDS);
+
+        logger.trace("ASH: Started connect timer");
+    }
+
     private synchronized void stopRetryTimer() {
         // Stop any existing timer
         if (timerFuture != null) {
@@ -582,7 +596,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
             // If we're not connected, then try again
             if (!stateConnected) {
                 stopRetryTimer();
-                connect();
+                reconnect();
                 return;
             }
 
@@ -613,6 +627,20 @@ public class AshFrameHandler implements EzspProtocolHandler {
             } catch (Exception e) {
                 logger.warn("Caught exception while attempting to retry message in AshRetryTimer", e);
             }
+        }
+    }
+
+    private class AshConnectTimer implements Runnable {
+        @Override
+        public void run() {
+            stopRetryTimer();
+            stateConnected = true;
+            ackNum = 0;
+            frmNum = 0;
+            sentQueue.clear();
+            frameHandler.handleLinkStateChange(true);
+            logger.debug("ASH: Connected");
+            sendNextFrame();
         }
     }
 
