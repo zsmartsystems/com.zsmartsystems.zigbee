@@ -807,7 +807,11 @@ public class EmberNcp {
     }
 
     /**
-     * Perform an active scan
+     * Perform an active scan. The radio will try to send beacon request on each channel.
+     * <p>
+     * During the scan, the CSMA/CA mechanism will be used to detect whether the radio channel is free at that moment.
+     * If some of the radio channels in the environment are too busy for the device to perform the scan, the NCP returns
+     * EMBER_MAC_COMMAND_TRANSMIT_FAILURE. A clearer RF environment might mitigate this issue.
      *
      * @param channelMask the channel mask on which to perform the scan.
      * @param scanDuration Sets the exponent of the number of scan periods, where a scan period is 960 symbols. The scan
