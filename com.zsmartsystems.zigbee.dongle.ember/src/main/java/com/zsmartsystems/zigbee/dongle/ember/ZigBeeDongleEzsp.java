@@ -946,9 +946,13 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     @Override
     public void handleLinkStateChange(final boolean linkState) {
+        logger.debug("Ember: Link State change to {}, initialised={}, networkStateUp={}", linkState, initialised,
+                networkStateUp);
+
         // Only act on changes to OFFLINE once we have completed initialisation
         // changes to ONLINE have to work during init because they mark the end of the initialisation
-        if (!initialised && !linkState || linkState == networkStateUp) {
+        if (!initialised || linkState == networkStateUp) {
+            logger.debug("Ember: Link State change to {} ignored.", linkState);
             return;
         }
         networkStateUp = linkState;
@@ -957,6 +961,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             @Override
             public void run() {
                 if (linkState) {
+                    logger.debug("Ember: Link State up running");
+
                     EmberNcp ncp = getEmberNcp();
                     int addr = ncp.getNwkAddress();
                     if (addr != 0xFFFE) {
