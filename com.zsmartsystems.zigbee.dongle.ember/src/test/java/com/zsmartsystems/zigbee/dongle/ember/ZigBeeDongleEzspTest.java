@@ -216,19 +216,30 @@ public class ZigBeeDongleEzspTest {
         };
         dongle.setZigBeeTransportReceive(transport);
 
-        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "initialised", true);
-
+        // initialised is false so no transport state update
         EzspStackStatusHandler response = Mockito.mock(EzspStackStatusHandler.class);
-        Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_NETWORK_BUSY);
+        Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_NETWORK_UP);
+        dongle.handlePacket(response);
         Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(0))
                 .setTransportState(ArgumentMatchers.any(ZigBeeTransportState.class));
 
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "initialised", true);
+
+        // busy is ignored
+        response = Mockito.mock(EzspStackStatusHandler.class);
+        Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_NETWORK_BUSY);
+        dongle.handlePacket(response);
+        Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(0))
+                .setTransportState(ArgumentMatchers.any(ZigBeeTransportState.class));
+
+        // transport state is updated to online now that we're initialised
         response = Mockito.mock(EzspStackStatusHandler.class);
         Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_NETWORK_UP);
         dongle.handlePacket(response);
         Mockito.verify(transport, Mockito.timeout(TIMEOUT)).setTransportState(ZigBeeTransportState.ONLINE);
         assertEquals(Integer.valueOf(1243), dongle.getNwkAddress());
 
+        // network state should set offline if the network state is down
         response = Mockito.mock(EzspStackStatusHandler.class);
         Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_NETWORK_DOWN);
         dongle.handlePacket(response);

@@ -633,13 +633,13 @@ public class AshFrameHandler implements EzspProtocolHandler {
     private class AshConnectTimer implements Runnable {
         @Override
         public void run() {
+            logger.debug("ASH: Connected");
             stopRetryTimer();
             stateConnected = true;
             ackNum = 0;
             frmNum = 0;
             sentQueue.clear();
             frameHandler.handleLinkStateChange(true);
-            logger.debug("ASH: Connected");
             sendNextFrame();
         }
     }
