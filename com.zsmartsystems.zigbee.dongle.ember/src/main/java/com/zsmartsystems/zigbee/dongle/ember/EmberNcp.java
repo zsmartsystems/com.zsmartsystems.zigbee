@@ -639,7 +639,7 @@ public class EmberNcp {
     /**
      * Gets the 16 bit network node id of the local node
      *
-     * @return the network address of the local node or 0xFFFF if the network address is not known
+     * @return the network address of the local node or 0xFFFE if the network address is not known
      */
     public int getNwkAddress() {
         EzspGetNodeIdRequest request = new EzspGetNodeIdRequest();
@@ -647,7 +647,7 @@ public class EmberNcp {
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetNodeIdResponse.class));
         EzspGetNodeIdResponse response = (EzspGetNodeIdResponse) transaction.getResponse();
         if (response == null) {
-            return 0xFFFF;
+            return 0xFFFE;
         }
         return response.getNodeId();
     }
