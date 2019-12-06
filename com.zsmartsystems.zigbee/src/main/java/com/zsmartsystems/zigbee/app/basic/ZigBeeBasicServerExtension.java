@@ -48,6 +48,9 @@ public class ZigBeeBasicServerExtension implements ZigBeeNetworkExtension, ZigBe
     @Override
     public ZigBeeStatus extensionInitialize(ZigBeeNetworkManager networkManager) {
         this.networkManager = networkManager;
+
+        networkManager.addSupportedServerCluster(ZclBasicCluster.CLUSTER_ID);
+
         setAttribute(ZclBasicCluster.ATTR_STACKVERSION, DEFAULT_STACKVERSION);
         setAttribute(ZclBasicCluster.ATTR_ZCLVERSION, DEFAULT_ZCLVERSION);
         setAttribute(ZclBasicCluster.ATTR_POWERSOURCE, DEFAULT_POWERSOURCE);

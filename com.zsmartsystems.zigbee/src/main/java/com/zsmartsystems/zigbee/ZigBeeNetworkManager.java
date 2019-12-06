@@ -1657,10 +1657,18 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     /**
      * Adds a client cluster to the list of clusters we support.
      * We will respond to with the {@link MatchDescriptorRequest} and process any received client commands received.
+     * <p>
+     * This method is only valid when the network state is {@link ZigBeeNetworkState.INITIALISING}
      *
      * @param cluster the supported client cluster ID
      */
     public void addSupportedClientCluster(int cluster) {
+        if (networkState != ZigBeeNetworkState.INITIALISING) {
+            logger.debug("Cannot add supported client cluster {} when network state is {}",
+                    String.format("%04X", cluster), networkState);
+            return;
+        }
+
         logger.debug("Adding supported client cluster {}", String.format("%04X", cluster));
         if (clusterMatcher == null) {
             clusterMatcher = new ClusterMatcher(this, LOCAL_ENDPOINT_ID, defaultProfileId);
@@ -1671,10 +1679,18 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     /**
      * Adds a server cluster to the list of clusters we support.
      * We will respond to with the {@link MatchDescriptorRequest} and process any received server commands received.
+     * <p>
+     * This method is only valid when the network state is {@link ZigBeeNetworkState.INITIALISING}
      *
      * @param cluster the supported server cluster ID
      */
     public void addSupportedServerCluster(int cluster) {
+        if (networkState != ZigBeeNetworkState.INITIALISING) {
+            logger.debug("Cannot add supported server cluster {} when network state is {}",
+                    String.format("%04X", cluster), networkState);
+            return;
+        }
+
         logger.debug("Adding supported server cluster {}", String.format("%04X", cluster));
         if (clusterMatcher == null) {
             clusterMatcher = new ClusterMatcher(this, LOCAL_ENDPOINT_ID, defaultProfileId);
@@ -1683,18 +1699,18 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Adds a functional extension to the network.
+     * Adds a functional extension to the network. Extensions may only be added when the network manager is in the
+     * {@link ZigBeeNetworkState.INITIALISING} state.
      *
      * @param extension the new {@link ZigBeeNetworkExtension}
      */
     public void addExtension(ZigBeeNetworkExtension extension) {
+        if (networkState != ZigBeeNetworkState.INITIALISING) {
+            return;
+        }
+
         extensions.add(extension);
         extension.extensionInitialize(this);
-
-        // If the network is online, start the extension
-        if (networkState == ZigBeeNetworkState.ONLINE) {
-            extension.extensionStartup();
-        }
     }
 
     /**
