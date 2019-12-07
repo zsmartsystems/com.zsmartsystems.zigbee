@@ -31,7 +31,7 @@ public class ZigBeeOtaUpgradeExtension implements ZigBeeNetworkExtension, ZigBee
     public ZigBeeStatus extensionInitialize(ZigBeeNetworkManager networkManager) {
         this.networkManager = networkManager;
 
-        networkManager.addSupportedCluster(ZclOtaUpgradeCluster.CLUSTER_ID);
+        networkManager.addSupportedServerCluster(ZclOtaUpgradeCluster.CLUSTER_ID);
         networkManager.addNetworkNodeListener(this);
         return ZigBeeStatus.SUCCESS;
     }

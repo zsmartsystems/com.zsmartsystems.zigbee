@@ -42,6 +42,7 @@ public class ZigBeeBasicServerExtensionTest {
         ZigBeeBasicServerExtension basicServer = new ZigBeeBasicServerExtension();
         assertEquals(ZigBeeStatus.SUCCESS, basicServer.extensionInitialize(networkManager));
         assertEquals(ZigBeeStatus.SUCCESS, basicServer.extensionStartup());
+        Mockito.verify(networkManager, Mockito.times(1)).addSupportedServerCluster(ZclBasicCluster.CLUSTER_ID);
         Mockito.verify(networkManager, Mockito.times(1)).addNetworkNodeListener(basicServer);
 
         assertTrue(basicServer.setAttribute(ZclBasicCluster.ATTR_MODELIDENTIFIER, "ModelId"));

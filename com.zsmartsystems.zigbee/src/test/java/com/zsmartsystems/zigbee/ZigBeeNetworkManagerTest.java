@@ -502,9 +502,6 @@ public class ZigBeeNetworkManagerTest
         ZigBeeTransactionManager transactionManager = Mockito.mock(ZigBeeTransactionManager.class);
         TestUtilities.setField(ZigBeeNetworkManager.class, manager, "transactionManager", transactionManager);
 
-        ZigBeeNetworkExtension extension = Mockito.mock(ZigBeeNetworkExtension.class);
-        manager.addExtension(extension);
-
         ZigBeeNetworkNodeListener nodeListener = Mockito.mock(ZigBeeNetworkNodeListener.class);
         manager.addNetworkNodeListener(nodeListener);
         ZigBeeNetworkStateListener stateListener = Mockito.mock(ZigBeeNetworkStateListener.class);
@@ -528,6 +525,9 @@ public class ZigBeeNetworkManagerTest
 
         manager.setTransportState(ZigBeeTransportState.INITIALISING);
         Mockito.verify(stateListener, Mockito.timeout(TIMEOUT)).networkStateUpdated(ZigBeeNetworkState.INITIALISING);
+
+        ZigBeeNetworkExtension extension = Mockito.mock(ZigBeeNetworkExtension.class);
+        manager.addExtension(extension);
 
         // Transport state can only update to ONLINE once the Network state is past INITIALISING
         // In order for there to be a state change, we set this to OFFLINE
@@ -869,9 +869,15 @@ public class ZigBeeNetworkManagerTest
         ZigBeeNetworkDatabaseManager databaseManager = Mockito.mock(ZigBeeNetworkDatabaseManager.class);
         TestUtilities.setField(ZigBeeNetworkManager.class, manager, "databaseManager", databaseManager);
 
+        // Can't add extensions if the networkState is not INITIALISING
         manager.addExtension(new ZigBeeOtaUpgradeExtension());
-
         ZigBeeNetworkExtension returnedExtension = manager.getExtension(ZigBeeOtaUpgradeExtension.class);
+        assertNull(returnedExtension);
+
+        TestUtilities.setField(ZigBeeNetworkManager.class, manager, "networkState", ZigBeeNetworkState.INITIALISING);
+
+        manager.addExtension(new ZigBeeOtaUpgradeExtension());
+        returnedExtension = manager.getExtension(ZigBeeOtaUpgradeExtension.class);
         assertTrue(returnedExtension instanceof ZigBeeOtaUpgradeExtension);
 
         manager.shutdown();
