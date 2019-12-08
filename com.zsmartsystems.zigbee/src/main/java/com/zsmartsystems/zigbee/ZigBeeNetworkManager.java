@@ -389,14 +389,19 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     private void addLocalNode() {
         Integer nwkAddress = transport.getNwkAddress();
         IeeeAddress ieeeAddress = transport.getIeeeAddress();
-        if (nwkAddress != null && ieeeAddress != null) {
-            ZigBeeNode node = getNode(ieeeAddress);
-            if (node == null) {
-                logger.debug("{}: Adding local node to network, NWK={}", ieeeAddress, nwkAddress);
-                node = new ZigBeeNode(this, ieeeAddress, nwkAddress);
-                updateNode(node);
-            }
+        if (ieeeAddress == null) {
+            logger.error("Adding local node to network FAILED as IEEE address is unknown");
+            return;
         }
+
+        if (nwkAddress == null) {
+            logger.error("{}: Adding local node to network: NWK unknown", ieeeAddress);
+            nwkAddress = 0xFFFE;
+        }
+
+        logger.debug("{}: Adding local node to network, NWK={}", ieeeAddress, String.format("%04X", nwkAddress));
+        ZigBeeNode node = new ZigBeeNode(this, ieeeAddress, nwkAddress);
+        updateNode(node);
     }
 
     /**
@@ -406,6 +411,18 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      */
     public ZigBeeTransportTransmit getZigBeeTransport() {
         return transport;
+    }
+
+    /**
+     * Gets the local node. If not found, or the local IEEE address is not known, this will return null
+     *
+     * @return the local {@link ZigBeeNode} or null if not found or local {@link IeeeAddress} is not known
+     */
+    private ZigBeeNode getLocalNode() {
+        if (localIeeeAddress == null) {
+            return null;
+        }
+        return networkNodes.get(localIeeeAddress);
     }
 
     /**
@@ -486,12 +503,19 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * This should be set before calling the {@link #initialize} method.
      *
      * @param defaultProfileId the profile ID
+     * @return the {@link ZigBeeStatus} showing {@link ZigBeeStatus#SUCCESS} or reason for failure
      */
-    public void setDefaultProfileId(int defaultProfileId) {
+    public ZigBeeStatus setDefaultProfileId(int defaultProfileId) {
+        if (networkState != ZigBeeNetworkState.INITIALISING) {
+            logger.error("Cannot set default profile ID to {} when network state is {}",
+                    String.format("%04X", defaultProfileId), networkState);
+            return ZigBeeStatus.INVALID_STATE;
+        }
         logger.debug("Default profile ID set to {} [{}]", String.format("%04X", defaultProfileId),
                 ZigBeeProfileType.getByValue(defaultProfileId));
         this.defaultProfileId = defaultProfileId;
         transport.setDefaultProfileId(defaultProfileId);
+        return ZigBeeStatus.SUCCESS;
     }
 
     /**
@@ -500,11 +524,18 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * This should be set before calling the {@link #initialize} method.
      *
      * @param defaultDeviceId the device ID
+     * @return the {@link ZigBeeStatus} showing {@link ZigBeeStatus#SUCCESS} or reason for failure
      */
-    public void setDefaultDeviceId(int defaultDeviceId) {
+    public ZigBeeStatus setDefaultDeviceId(int defaultDeviceId) {
+        if (networkState != ZigBeeNetworkState.INITIALISING) {
+            logger.error("Cannot set default device ID to {} when network state is {}",
+                    String.format("%04X", defaultDeviceId), networkState);
+            return ZigBeeStatus.INVALID_STATE;
+        }
         logger.debug("Default device ID set to {} [{}]", String.format("%04X", defaultDeviceId),
                 ZigBeeDeviceType.getByValue(defaultDeviceId));
         transport.setDefaultDeviceId(defaultDeviceId);
+        return ZigBeeStatus.SUCCESS;
     }
 
     /**
@@ -580,7 +611,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      */
     public ZigBeeStatus startup(boolean reinitialize) {
         logger.debug("ZigBeeNetworkManager startup: reinitialize={}, networkState={}", reinitialize, networkState);
-        if (networkState == ZigBeeNetworkState.UNINITIALISED) {
+        if (networkState != ZigBeeNetworkState.INITIALISING) {
+            logger.error("ZigBeeNetworkManager startup: Can't be called when networkState={}", networkState);
             return ZigBeeStatus.INVALID_STATE;
         }
 
@@ -595,6 +627,13 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             databaseManager.clear();
         }
 
+        ZigBeeNode node = getLocalNode();
+        if (node == null) {
+            logger.error("Local node is unknown during startup");
+            return ZigBeeStatus.INVALID_STATE;
+        }
+
+        // Start the transport layer
         ZigBeeStatus status = transport.startup(reinitialize);
         if (status != ZigBeeStatus.SUCCESS) {
             setNetworkState(ZigBeeNetworkState.OFFLINE);
@@ -1661,12 +1700,13 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * This method is only valid when the network state is {@link ZigBeeNetworkState.INITIALISING}
      *
      * @param cluster the supported client cluster ID
+     * @return the {@link ZigBeeStatus} showing {@link ZigBeeStatus#SUCCESS} or reason for failure
      */
-    public void addSupportedClientCluster(int cluster) {
+    public ZigBeeStatus addSupportedClientCluster(int cluster) {
         if (networkState != ZigBeeNetworkState.INITIALISING) {
-            logger.debug("Cannot add supported client cluster {} when network state is {}",
+            logger.error("Cannot add supported client cluster {} when network state is {}",
                     String.format("%04X", cluster), networkState);
-            return;
+            return ZigBeeStatus.INVALID_STATE;
         }
 
         logger.debug("Adding supported client cluster {}", String.format("%04X", cluster));
@@ -1674,6 +1714,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             clusterMatcher = new ClusterMatcher(this, LOCAL_ENDPOINT_ID, defaultProfileId);
         }
         clusterMatcher.addClientCluster(cluster);
+        return ZigBeeStatus.SUCCESS;
     }
 
     /**
@@ -1683,12 +1724,13 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * This method is only valid when the network state is {@link ZigBeeNetworkState.INITIALISING}
      *
      * @param cluster the supported server cluster ID
+     * @return the {@link ZigBeeStatus} showing {@link ZigBeeStatus#SUCCESS} or reason for failure
      */
-    public void addSupportedServerCluster(int cluster) {
+    public ZigBeeStatus addSupportedServerCluster(int cluster) {
         if (networkState != ZigBeeNetworkState.INITIALISING) {
-            logger.debug("Cannot add supported server cluster {} when network state is {}",
+            logger.error("Cannot add supported server cluster {} when network state is {}",
                     String.format("%04X", cluster), networkState);
-            return;
+            return ZigBeeStatus.INVALID_STATE;
         }
 
         logger.debug("Adding supported server cluster {}", String.format("%04X", cluster));
@@ -1696,6 +1738,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             clusterMatcher = new ClusterMatcher(this, LOCAL_ENDPOINT_ID, defaultProfileId);
         }
         clusterMatcher.addServerCluster(cluster);
+        return ZigBeeStatus.SUCCESS;
     }
 
     /**
@@ -1703,14 +1746,18 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * {@link ZigBeeNetworkState.INITIALISING} state.
      *
      * @param extension the new {@link ZigBeeNetworkExtension}
+     * @return the {@link ZigBeeStatus} showing {@link ZigBeeStatus#SUCCESS} or reason for failure
      */
-    public void addExtension(ZigBeeNetworkExtension extension) {
+    public ZigBeeStatus addExtension(ZigBeeNetworkExtension extension) {
         if (networkState != ZigBeeNetworkState.INITIALISING) {
-            return;
+            logger.error("Cannot add extension {} when network state is {}", extension.getClass().getSimpleName(),
+                    networkState);
+            return ZigBeeStatus.INVALID_STATE;
         }
 
         extensions.add(extension);
         extension.extensionInitialize(this);
+        return ZigBeeStatus.SUCCESS;
     }
 
     /**

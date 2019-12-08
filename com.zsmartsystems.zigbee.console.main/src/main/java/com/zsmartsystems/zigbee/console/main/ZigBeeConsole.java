@@ -36,14 +36,10 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
 import com.zsmartsystems.zigbee.ZigBeeNetworkState;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
-import com.zsmartsystems.zigbee.app.basic.ZigBeeBasicServerExtension;
-import com.zsmartsystems.zigbee.app.discovery.ZigBeeDiscoveryExtension;
-import com.zsmartsystems.zigbee.app.iasclient.ZigBeeIasCieExtension;
 import com.zsmartsystems.zigbee.app.otaserver.ZclOtaUpgradeServer;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaFile;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaServerStatus;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaStatusCallback;
-import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaUpgradeExtension;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeReadCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeSupportedCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeWriteCommand;
@@ -144,15 +140,6 @@ public final class ZigBeeConsole {
         runtime.gc();
         // Calculate the used memory
         initialMemory = runtime.totalMemory() - runtime.freeMemory();
-
-        // Add the extensions to the network
-        networkManager.addExtension(new ZigBeeIasCieExtension());
-        networkManager.addExtension(new ZigBeeOtaUpgradeExtension());
-        networkManager.addExtension(new ZigBeeBasicServerExtension());
-
-        ZigBeeDiscoveryExtension discoveryExtension = new ZigBeeDiscoveryExtension();
-        discoveryExtension.setUpdatePeriod(60);
-        networkManager.addExtension(discoveryExtension);
 
         createCommands(newCommands, transportCommands);
 
