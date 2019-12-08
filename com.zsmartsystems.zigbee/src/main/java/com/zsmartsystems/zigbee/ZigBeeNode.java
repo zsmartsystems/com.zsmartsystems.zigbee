@@ -897,7 +897,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
         builder.append(", IEEE=");
         builder.append(ieeeAddress);
         if (networkAddress == null) {
-            builder.append("NWK=----");
+            builder.append(", NWK=----");
         } else {
             builder.append(String.format(", NWK=%04X", networkAddress));
         }
@@ -906,6 +906,9 @@ public class ZigBeeNode implements ZigBeeCommandListener {
             builder.append(", Type=");
             builder.append(nodeDescriptor.getLogicalType());
         }
+
+        builder.append(", endpoints=");
+        builder.append(endpoints.keySet());
 
         builder.append(']');
 

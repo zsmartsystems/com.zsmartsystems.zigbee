@@ -430,12 +430,14 @@ public class ZigBeeNodeTest {
         newNode = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), node.getIeeeAddress());
         ZigBeeEndpoint endpoint = new ZigBeeEndpoint(newNode, 1);
         newNode.addEndpoint(endpoint);
+        System.out.println(newNode);
         assertTrue(node.updateNode(newNode));
         assertFalse(node.updateNode(newNode));
         assertEquals(1, node.getEndpoints().size());
 
         endpoint = new ZigBeeEndpoint(newNode, 2);
         newNode.addEndpoint(endpoint);
+        System.out.println(newNode);
         assertTrue(node.updateNode(newNode));
         assertFalse(node.updateNode(newNode));
         assertEquals(2, node.getEndpoints().size());
