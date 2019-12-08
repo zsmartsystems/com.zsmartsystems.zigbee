@@ -135,7 +135,20 @@ public class ReadAttributeStatusRecord implements ZclListItemField {
 
     @Override
     public String toString() {
-        return "ReadAttributeStatusRecord [status=" + status + ", attributeIdentifier=" + attributeIdentifier
-                + ", attributeDataType=" + attributeDataType + ", attributeValue=" + attributeValue + "]";
+        StringBuilder builder = new StringBuilder(150);
+
+        builder.append("ReadAttributeStatusRecord [status=");
+        builder.append(status);
+        builder.append(", attributeIdentifier=");
+        builder.append(attributeIdentifier);
+        if (status == ZclStatus.SUCCESS) {
+            builder.append(", attributeDataType=");
+            builder.append(attributeDataType);
+            builder.append(", attributeValue=");
+            builder.append(attributeValue);
+        }
+        builder.append(']');
+
+        return builder.toString();
     }
 }

@@ -695,7 +695,7 @@ public class ZclClusterTest {
         identifiers.add(2);
 
         ReadAttributesCommand readCommand = new ReadAttributesCommand();
-        readCommand.setClusterId(ZclBasicCluster.CLUSTER_ID);
+        readCommand.setClusterId(ZclOnOffCluster.CLUSTER_ID);
         readCommand.setSourceAddress(new ZigBeeEndpointAddress(1234));
         readCommand.setDestinationAddress(new ZigBeeEndpointAddress(5678));
         readCommand.setCommandDirection(ZclCommandDirection.CLIENT_TO_SERVER);
@@ -706,7 +706,7 @@ public class ZclClusterTest {
         assertEquals(1, commandCapture.getAllValues().size());
         ReadAttributesResponse readResponse = (ReadAttributesResponse) commandCapture.getValue();
         System.out.println(readResponse);
-        assertEquals(Integer.valueOf(ZclBasicCluster.CLUSTER_ID), readResponse.getClusterId());
+        assertEquals(Integer.valueOf(ZclOnOffCluster.CLUSTER_ID), readResponse.getClusterId());
         assertEquals(ZclCommandDirection.SERVER_TO_CLIENT, readResponse.getCommandDirection());
         assertEquals(1, readResponse.getRecords().size());
         assertEquals(Integer.valueOf(55), readResponse.getTransactionId());
