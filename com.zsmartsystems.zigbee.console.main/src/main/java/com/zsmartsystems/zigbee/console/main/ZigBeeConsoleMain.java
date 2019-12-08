@@ -28,6 +28,10 @@ import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
+import com.zsmartsystems.zigbee.app.basic.ZigBeeBasicServerExtension;
+import com.zsmartsystems.zigbee.app.discovery.ZigBeeDiscoveryExtension;
+import com.zsmartsystems.zigbee.app.iasclient.ZigBeeIasCieExtension;
+import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaUpgradeExtension;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleMmoHashCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpChildrenCommand;
@@ -348,14 +352,23 @@ public class ZigBeeConsoleMain {
 
         dongle.updateTransportConfig(transportOptions);
 
+        // Add the extensions to the network
+        networkManager.addExtension(new ZigBeeIasCieExtension());
+        networkManager.addExtension(new ZigBeeOtaUpgradeExtension());
+        networkManager.addExtension(new ZigBeeBasicServerExtension());
+
+        ZigBeeDiscoveryExtension discoveryExtension = new ZigBeeDiscoveryExtension();
+        discoveryExtension.setUpdatePeriod(0);
+        networkManager.addExtension(discoveryExtension);
+
+        supportedClientClusters.stream().forEach(clusterId -> networkManager.addSupportedClientCluster(clusterId));
+        supportedServerClusters.stream().forEach(clusterId -> networkManager.addSupportedServerCluster(clusterId));
+
         if (networkManager.startup(resetNetwork) != ZigBeeStatus.SUCCESS) {
             System.out.println("ZigBee console starting up ... [FAIL]");
         } else {
             System.out.println("ZigBee console starting up ... [OK]");
         }
-
-        supportedClientClusters.stream().forEach(clusterId -> networkManager.addSupportedClientCluster(clusterId));
-        supportedServerClusters.stream().forEach(clusterId -> networkManager.addSupportedServerCluster(clusterId));
 
         if (dongleName.toUpperCase().equals("CC2531")) {
             ZigBeeDongleTiCc2531 tiDongle = (ZigBeeDongleTiCc2531) dongle;
