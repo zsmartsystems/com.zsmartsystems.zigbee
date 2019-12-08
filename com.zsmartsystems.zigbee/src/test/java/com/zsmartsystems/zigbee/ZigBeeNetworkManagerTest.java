@@ -953,9 +953,11 @@ public class ZigBeeNetworkManagerTest
         ZigBeeNetworkManager manager = mockZigBeeNetworkManager();
         Mockito.when(mockedTransport.initialize()).thenReturn(ZigBeeStatus.COMMUNICATION_ERROR);
 
+        ZigBeeNetworkDatabaseManager databaseManager = Mockito.mock(ZigBeeNetworkDatabaseManager.class);
         assertEquals(ZigBeeStatus.INVALID_STATE, manager.startup(true));
 
         TestUtilities.setField(ZigBeeNetworkManager.class, manager, "networkState", ZigBeeNetworkState.INITIALISING);
+        TestUtilities.setField(ZigBeeNetworkManager.class, manager, "databaseManager", databaseManager);
 
         assertEquals(mockedTransport, manager.getZigBeeTransport());
 
@@ -964,6 +966,7 @@ public class ZigBeeNetworkManagerTest
 
         assertEquals(ZigBeeStatus.COMMUNICATION_ERROR, manager.startup(false));
         Mockito.verify(mockedTransport, Mockito.times(1)).startup(false);
+        Mockito.verify(databaseManager, Mockito.never()).clear();
 
         TestUtilities.setField(ZigBeeNetworkManager.class, manager, "networkState", ZigBeeNetworkState.INITIALISING);
         manager.setTransportState(ZigBeeTransportState.OFFLINE);
@@ -971,6 +974,7 @@ public class ZigBeeNetworkManagerTest
 
         assertEquals(ZigBeeStatus.SUCCESS, manager.startup(true));
         Mockito.verify(mockedTransport, Mockito.timeout(TIMEOUT).times(1)).startup(true);
+        Mockito.verify(databaseManager, Mockito.times(1)).clear();
 
         Mockito.verify(mockedStateListener, Mockito.timeout(TIMEOUT).times(1))
                 .networkStateUpdated(ZigBeeNetworkState.ONLINE);
