@@ -20,9 +20,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.ExecutionException;
 
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
@@ -30,6 +32,7 @@ import com.zsmartsystems.zigbee.ZigBeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeCommandListener;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
+import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeGroupAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
@@ -82,6 +85,9 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.GetGroupMembershipResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.ViewGroupResponse;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zdo.ZdoStatus;
+import com.zsmartsystems.zigbee.zdo.command.ManagementLqiRequest;
+import com.zsmartsystems.zigbee.zdo.command.ManagementLqiResponse;
 
 /**
  * ZigBee command line console is an example usage of the ZigBee console.
@@ -177,6 +183,8 @@ public final class ZigBeeConsole {
 
         commands.put("stress", new StressCommand());
         commands.put("memory", new MemoryCommand());
+        commands.put("lqipoll", new LqiPollCommand());
+        commands.put("reinitialize", new ReinitializeCommand());
 
         newCommands.put("nodes", new ZigBeeConsoleNodeListCommand());
         newCommands.put("endpoint", new ZigBeeConsoleDescribeEndpointCommand());
@@ -1912,6 +1920,108 @@ public final class ZigBeeConsole {
             System.out.println("Free memory         : " + runtime.freeMemory());
             System.out.println("Used memory at start: " + initialMemory);
             System.out.println("Used memory in bytes: " + memory);
+
+            return true;
+        }
+    }
+
+    private class LqiPollCommand implements ConsoleCommand {
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getDescription() {
+            return "Poll LQI values";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getSyntax() {
+            return "lqipoll NODEID";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, final PrintStream out) throws Exception {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    int cnts = 1000;
+                    int errors = 0;
+                    int cnt = 0;
+                    List<Integer> lqi = new ArrayList<>();
+                    while (cnt < cnts) {
+                        print("LQI Poll CNT: " + cnt++, out);
+                        final ManagementLqiRequest neighborRequest = new ManagementLqiRequest();
+                        neighborRequest.setDestinationAddress(new ZigBeeEndpointAddress(0));
+                        neighborRequest.setStartIndex(0);
+
+                        CommandResult response;
+                        try {
+                            response = networkManager.sendTransaction(neighborRequest, neighborRequest).get();
+                            final ManagementLqiResponse neighborResponse = response.getResponse();
+
+                            if (neighborResponse == null || neighborResponse.getStatus() != ZdoStatus.SUCCESS) {
+                                errors++;
+                                continue;
+                            }
+                            if (neighborResponse.getNeighborTableList().isEmpty()) {
+                                print("No neighbors", out);
+                                continue;
+                            }
+                            lqi.add(neighborResponse.getNeighborTableList().get(0).getLqi());
+                        } catch (InterruptedException | ExecutionException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                    IntSummaryStatistics stats = lqi.stream().mapToInt((x) -> x).summaryStatistics();
+
+                    print("LQI Polling Complete", out);
+                    print("Errors: " + errors, out);
+                    print("Min   : " + stats.getMin(), out);
+                    print("Max   : " + stats.getMax(), out);
+                    print("Avg   : " + stats.getAverage(), out);
+
+                }
+            }).start();
+
+            return true;
+        }
+    }
+
+    private class ReinitializeCommand implements ConsoleCommand {
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getDescription() {
+            return "Put system back into initialise state";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getSyntax() {
+            return "";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, final PrintStream out) throws Exception {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    networkManager.reinitialize();
+                }
+            }).start();
 
             return true;
         }
