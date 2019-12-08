@@ -180,13 +180,23 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
      * <p>
      * Once the crypto suite has been manually selected the system will not request the supported suites on the remote
      * device. If the remote device does not support the manually selected crypto suite, then the CBKE will fail.
+     * <p>
+     * The CBKE provider must be set before calling this method.
      *
      * @param requestedCryptoSuite the {@link ZigBeeCryptoSuites} to use
      * @return true if the {@link ZigBeeCryptoSuites} was set
      */
     public boolean setCryptoSuite(ZigBeeCryptoSuites requestedCryptoSuite) {
-        if (!cbkeProvider.getSupportedCryptoSuites().contains(cryptoSuite)) {
-            logger.debug("CBKE Key establishment client: Failed to set crypto suite to unsupported value {}",
+        if (cbkeProvider == null) {
+            logger.debug("CBKE Key Establishment Client: Failed to set crypto suite as CBKE provider is not set");
+            return false;
+        }
+        if (requestedCryptoSuite == null) {
+            forceCryptoSuite = null;
+            return true;
+        }
+        if (!cbkeProvider.getSupportedCryptoSuites().contains(requestedCryptoSuite)) {
+            logger.debug("CBKE Key Establishment Client: Failed to set crypto suite to unsupported value {}",
                     requestedCryptoSuite);
             return false;
         }
