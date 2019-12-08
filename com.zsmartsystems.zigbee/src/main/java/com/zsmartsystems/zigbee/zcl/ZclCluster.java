@@ -1266,6 +1266,7 @@ public abstract class ZclCluster {
         }
 
         ReadAttributesResponse response = new ReadAttributesResponse();
+        response.setClusterId(clusterId);
         response.setRecords(attributeRecords);
         sendResponse(command, response);
     }
