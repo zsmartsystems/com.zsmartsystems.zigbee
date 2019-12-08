@@ -206,6 +206,11 @@ public class EmberCbkeProvider implements ZigBeeCbkeProvider {
 
     @Override
     public ByteArray getInitiatorMac(ZigBeeCryptoSuites suite) {
+        if (partnerEphemeralData == null || partnerCertificate == null) {
+            logger.debug("Unable to request initiator MAC until partner ephemeral data and certificate are set");
+            return null;
+        }
+
         switch (suite) {
             case ECC_163K1:
                 EzspCalculateSmacsHandler response163k1 = ezspCalculateSmacs163k1();
