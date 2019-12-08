@@ -592,8 +592,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 }
                 removeNode(node);
             }
+            databaseManager.clear();
         }
-        databaseManager.clear();
 
         ZigBeeStatus status = transport.startup(reinitialize);
         if (status != ZigBeeStatus.SUCCESS) {
