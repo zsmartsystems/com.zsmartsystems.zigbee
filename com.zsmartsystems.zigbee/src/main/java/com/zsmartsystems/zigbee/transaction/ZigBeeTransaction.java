@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.CommandResult;
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportProgressState;
@@ -92,12 +93,17 @@ public class ZigBeeTransaction {
     /**
      * The {@link ZigBeeTransactionMatcher} used to match the response to the command
      */
-    private ZigBeeTransactionMatcher responseMatcher;
+    private final ZigBeeTransactionMatcher responseMatcher;
 
     /**
      * The {@link ZigBeeCommand} that we are sending
      */
-    private ZigBeeCommand command;
+    private final ZigBeeCommand command;
+
+    /**
+     * The @{link {@link IeeeAddress} of the device that we are sending the command of this transaction to
+     */
+    private IeeeAddress ieeeAddress;
 
     /**
      * The task used for transaction timeouts
@@ -134,7 +140,7 @@ public class ZigBeeTransaction {
      * transmitted.
      */
     private final static int TRANSACTION_TIMER_2 = 8000;
-    private int timeout2 = TRANSACTION_TIMER_2;
+    private final int timeout2 = TRANSACTION_TIMER_2;
 
     /**
      * A {@link Long} that records the time this transaction was first added to the queue in milliseconds
@@ -145,9 +151,10 @@ public class ZigBeeTransaction {
      * Transaction constructor
      *
      * @param transactionManager the {@link ZigBeeTransactionManager} through which the transaction is being sent.
-     * @param command the {@link ZigBeeCommand}.
-     * @param responseMatcher the {@link ZigBeeTransactionMatcher} to match the response and complete the transaction.
-     *            May be null if no response is expected.
+     * @param command            the {@link ZigBeeCommand}.
+     * @param responseMatcher    the {@link ZigBeeTransactionMatcher} to match the response and complete the
+     *                               transaction.
+     *                               May be null if no response is expected.
      */
     public ZigBeeTransaction(ZigBeeTransactionManager transactionManager, final ZigBeeCommand command,
             final ZigBeeTransactionMatcher responseMatcher) {
@@ -300,6 +307,24 @@ public class ZigBeeTransaction {
     }
 
     /**
+     * Gets the {@link IeeeAddress} of the device for which the transaction is targeted at
+     *
+     * @return {@link IeeeAddress} of the device for which the transaction is targeted at
+     */
+    public IeeeAddress getIeeeAddress() {
+        return ieeeAddress;
+    }
+
+    /**
+     * Sets the {@link IeeeAddress} of the device for which the transaction is targeted at
+     *
+     * @param ieeeAddress the {@link IeeeAddress} of the device for which the transaction is targeted at
+     */
+    public void setIeeeAddress(IeeeAddress ieeeAddress) {
+        this.ieeeAddress = ieeeAddress;
+    }
+
+    /**
      * Cancels the transaction. The transaction will immediately be cancelled and the state will be set to
      * {@link TransactionState#FAILED}.
      * No further retry will be conducted and the transaction manager will not be notified (the assumption being that
@@ -402,7 +427,7 @@ public class ZigBeeTransaction {
      * Notifies of an updated state from the transport layer. This is used to see if the transaction state can be
      * progressed.
      *
-     * @param progress the {@link ZigBeeTransportProgressState} of the transaction
+     * @param progress      the {@link ZigBeeTransportProgressState} of the transaction
      * @param transactionId the transaction ID
      */
     public void transactionStatusReceived(ZigBeeTransportProgressState progress, int transactionId) {
@@ -463,7 +488,7 @@ public class ZigBeeTransaction {
     @Override
     public String toString() {
         String queuedTime = queueTime == null ? "-" : Long.toString(System.currentTimeMillis() - queueTime);
-        return "ZigBeeTransaction [queueTime=" + queuedTime + ", state=" + state + ", sendCnt=" + sendCnt + ", command="
-                + command + "]";
+        return "ZigBeeTransaction [ieeeAddress=" + ieeeAddress + " queueTime=" + queuedTime + ", state=" + state
+                + ", sendCnt=" + sendCnt + ", command=" + command + "]";
     }
 }

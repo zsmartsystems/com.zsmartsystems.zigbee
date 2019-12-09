@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.CommandResult;
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransaction.TransactionState;
 
 /**
@@ -85,6 +86,11 @@ public class ZigBeeTransactionQueue {
     private int outstandingTransactions = 0;
 
     /**
+     * The {@link IeeeAddress} of the device for which this queue has transactions
+     */
+    private final IeeeAddress deviceIeeeAdress;
+
+    /**
      * The profile for this queue
      */
     private ZigBeeTransactionProfile profile = new ZigBeeTransactionProfile();
@@ -99,8 +105,9 @@ public class ZigBeeTransactionQueue {
      *
      * @param queueName a queue name - used for logging to differentiate multiple queues
      */
-    protected ZigBeeTransactionQueue(String queueName) {
+    protected ZigBeeTransactionQueue(String queueName, IeeeAddress deviceIeeeAddress) {
         this.queueName = queueName;
+        this.deviceIeeeAdress = deviceIeeeAddress;
     }
 
     /**
@@ -162,6 +169,15 @@ public class ZigBeeTransactionQueue {
     }
 
     /**
+     * Gets the {@link IeeeAddress} of the device for which this queue has transactions
+     *
+     * @return the IEEE address
+     */
+    public IeeeAddress getDeviceIeeeAdress() {
+        return deviceIeeeAdress;
+    }
+
+    /**
      * Adds a {@link ZigBeeTransaction} to the queue, returning a {@link CommandResult} Future that will be fulfilled
      * once the transaction completes.
      * Once the queue has been shutdown with {@link #shutdown()} no further transactions will be accepted and this
@@ -177,6 +193,8 @@ public class ZigBeeTransactionQueue {
         if (transaction.getFuture() == null) {
             transaction.setFuture(new ZigBeeTransactionFuture());
         }
+
+        transaction.setIeeeAddress(deviceIeeeAdress);
 
         // Is this the first time this transaction has been added to the queue or is this a retry
         if (transaction.getSendCnt() == 0) {
@@ -251,7 +269,7 @@ public class ZigBeeTransactionQueue {
      * unsuccessfully)
      *
      * @param transaction the {@link ZigBeeTransaction} that is complete
-     * @param state the {@link TransactionState} of the transaction on completion
+     * @param state       the {@link TransactionState} of the transaction on completion
      */
     protected void transactionComplete(ZigBeeTransaction transaction, TransactionState state) {
         outstandingTransactions--;
@@ -275,7 +293,7 @@ public class ZigBeeTransactionQueue {
 
     @Override
     public String toString() {
-        return "ZigBeeTransactionQueue [queueName=" + queueName + ", sleepy=" + sleepy + ", outstandingTransactions="
-                + outstandingTransactions + ", profile=" + profile + "]";
+        return "ZigBeeTransactionQueue [queueName=" + queueName + " deviceIeeeAddress=" + deviceIeeeAdress + ", sleepy="
+                + sleepy + ", outstandingTransactions=" + outstandingTransactions + ", profile=" + profile + "]";
     }
 }

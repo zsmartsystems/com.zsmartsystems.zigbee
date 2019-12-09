@@ -7,11 +7,7 @@
  */
 package com.zsmartsystems.zigbee.transaction;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.concurrent.ScheduledFuture;
 
@@ -20,6 +16,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.TestUtilities;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
@@ -402,5 +399,14 @@ public class ZigBeeTransactionTest {
         assertNull(transaction.getTransactionId());
         transaction.setTransactionId(1);
         assertEquals(Integer.valueOf(1), transaction.getTransactionId());
+    }
+
+    @Test
+    public void setIeeeAddress() {
+        ZigBeeTransaction transaction = new ZigBeeTransaction(null, new OffCommand(), null);
+        assertNull(transaction.getIeeeAddress());
+        IeeeAddress address = new IeeeAddress();
+        transaction.setIeeeAddress(address);
+        assertEquals(address, transaction.getIeeeAddress());
     }
 }
