@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.transaction;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
 
 import java.util.concurrent.Future;
 
@@ -16,6 +17,7 @@ import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
+import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransaction.TransactionState;
 
 /**
@@ -109,5 +111,24 @@ public class ZigBeeTransactionQueueTest {
         Mockito.verify(transactionShutdown, Mockito.times(1)).cancel();
 
         assertTrue(queue.isEmpty());
+    }
+
+    @Test
+    public void testRewriteTransactions() {
+        ZigBeeTransactionQueue queue = new ZigBeeTransactionQueue("QueueName", null);
+        int oldAddress = 1;
+        int newAddress = 2;
+
+        ZigBeeCommand command = new ZigBeeCommand();
+        command.setDestinationAddress(new ZigBeeEndpointAddress(oldAddress));
+        ZigBeeTransaction transaction = new ZigBeeTransaction(mock(ZigBeeTransactionManager.class), command,
+                mock(ZigBeeTransactionMatcher.class));
+        queue.addToQueue(transaction);
+
+        queue.rewriteDestinationAddresses(newAddress);
+
+        ZigBeeTransaction rewrittenTransaction = queue.getTransaction();
+
+        assertEquals(newAddress, rewrittenTransaction.getDestinationAddress().getAddress());
     }
 }

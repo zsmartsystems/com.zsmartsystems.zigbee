@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
@@ -108,7 +109,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     /**
      * The set of outstanding transactions - used to notify transactions when responses are received.
      */
-    private Set<ZigBeeTransaction> outstandingTransactions = new HashSet<>();
+    private final Set<ZigBeeTransaction> outstandingTransactions = new HashSet<>();
 
     /**
      * The maximum number of transactions the manager will allow at any time
@@ -337,9 +338,9 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      * Sends a command, and uses the {@link ZigBeeTransactionMatcher} to match the response which will complete the
      * transaction.
      *
-     * @param command the {@link ZigBeeCommand} to send
+     * @param command         the {@link ZigBeeCommand} to send
      * @param responseMatcher the {@link ZigBeeTransactionMatcher} to match the response which will complete the
-     *            transaction.
+     *                            transaction.
      * @return the future {@link CommandResult}
      */
     public Future<CommandResult> sendTransaction(ZigBeeCommand command, ZigBeeTransactionMatcher responseMatcher) {
@@ -412,7 +413,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     /**
      * Sets the queue type to sleepy or non-sleepy. This will update the profile, and the sleepy flag in the quque
      *
-     * @param node the {@link ZigBeeNode} of the queue to update
+     * @param node  the {@link ZigBeeNode} of the queue to update
      * @param queue the {@link ZigBeeTransactionQueue} to update
      * @return true if the queue state was changed
      */
@@ -460,7 +461,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      * Callback from the transport layer when it has progressed the state of the transaction.
      *
      * @param transactionId the transaction ID whose state is updated
-     * @param state the updated {@link ZigBeeTransportProgressState} for the transaction
+     * @param state         the updated {@link ZigBeeTransportProgressState} for the transaction
      */
     public void receiveCommandState(int transactionId, ZigBeeTransportProgressState state) {
         notifyTransactionProgress(transactionId, state);
@@ -497,7 +498,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      * Schedules a task with a timeout. Used by {@link ZigBeeTransaction}s to time out failed transactions
      *
      * @param runnableTask the {@link Runnable} to call when the timer expires
-     * @param delay the delay in milliseconds
+     * @param delay        the delay in milliseconds
      * @return the {@link ScheduledFuture} for this task
      */
     protected ScheduledFuture<?> scheduleTask(Runnable runnableTask, long delay) {
@@ -508,7 +509,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      * Callback from {@link ZigBeeTransaction} when a transaction has completed or failed.
      *
      * @param transaction the {@link ZigBeeTransaction} to complete. Not null.
-     * @param state the {@link TransactionState} of the transaction on completion
+     * @param state       the {@link TransactionState} of the transaction on completion
      */
     protected void transactionComplete(ZigBeeTransaction transaction, TransactionState state) {
         logger.debug("Transaction complete: {}", transaction);
@@ -555,7 +556,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      * Notify transactions of the current {@link ZigBeeTransportProgressState} from the transport layer
      *
      * @param transactionId the ID of the transaction whose state has been updated
-     * @param state the current {@link ZigBeeTransportProgressState} for the transaction
+     * @param state         the current {@link ZigBeeTransportProgressState} for the transaction
      */
     private void notifyTransactionProgress(final int transactionId, ZigBeeTransportProgressState state) {
         logger.debug("notifyTransactionProgress: TID={}, state={}, outstanding={}",
@@ -723,6 +724,21 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
         ZigBeeTransactionQueue queue = nodeQueue.get(node.getIeeeAddress());
         if (queue == null) {
             return;
+        }
+
+        // if the node has rejoined the network with a different network address, we have to rewrite all pending
+        // transactions
+        queue.rewriteDestinationAddresses(node.getNetworkAddress());
+
+        synchronized (outstandingTransactions) {
+            for (ZigBeeTransaction transaction : outstandingTransactions) {
+                if (Objects.equals(transaction.getIeeeAddress(), node.getIeeeAddress()) && !Objects
+                        .equals(transaction.getDestinationAddress().getAddress(), node.getNetworkAddress())) {
+                    logger.debug("Rewriting outstandingTransaction destination address from {} to {} in transaction={}",
+                            transaction.getDestinationAddress().getAddress(), node.getNetworkAddress(), transaction);
+                    transaction.getDestinationAddress().setAddress(node.getNetworkAddress());
+                }
+            }
         }
 
         if (setQueueType(node, queue)) {
