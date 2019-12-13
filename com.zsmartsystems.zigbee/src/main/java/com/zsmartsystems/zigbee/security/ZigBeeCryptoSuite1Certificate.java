@@ -17,7 +17,7 @@ import com.zsmartsystems.zigbee.zcl.field.ByteArray;
  *
  */
 public class ZigBeeCryptoSuite1Certificate extends ZigBeeCertificate {
-    private static final int CERTIFICATE_LENGTH = 48;
+    public static final int CERTIFICATE_LENGTH = 48;
 
     private final ByteArray keyData;
 

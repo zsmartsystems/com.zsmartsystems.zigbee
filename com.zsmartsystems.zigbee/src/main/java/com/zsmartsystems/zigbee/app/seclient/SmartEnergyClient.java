@@ -970,7 +970,8 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
             if (keCluster != null) {
                 logger.debug("SEP Client Extension: Adding CBKE handler to node {} endpoint {}", node.getIeeeAddress(),
                         endpoint.getEndpointId());
-                ZclKeyEstablishmentClient keClient = new ZclKeyEstablishmentClient(this, keCluster);
+                ZclKeyEstablishmentClient keClient = new ZclKeyEstablishmentClient(node.getIeeeAddress(), this,
+                        keCluster);
                 cbkeClientRegistry.put(endpoint.getEndpointAddress(), keClient);
                 break;
             }
