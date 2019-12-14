@@ -61,6 +61,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclColorControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclElectricalMeasurementCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclIasZoneCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclKeyEstablishmentCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclMeteringCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
@@ -795,6 +796,9 @@ public class ZigBeeNetworkManagerTest
         cluster = new ZclMeteringCluster(endpoint);
         Mockito.when(endpoint.getInputCluster(0x0702)).thenReturn(cluster);
         Mockito.when(endpoint.getOutputCluster(0x0702)).thenReturn(cluster);
+        cluster = new ZclKeyEstablishmentCluster(endpoint);
+        Mockito.when(endpoint.getInputCluster(0x0800)).thenReturn(cluster);
+        Mockito.when(endpoint.getOutputCluster(0x0800)).thenReturn(cluster);
         cluster = new ZclElectricalMeasurementCluster(endpoint);
         Mockito.when(endpoint.getInputCluster(0x0B04)).thenReturn(cluster);
         Mockito.when(endpoint.getOutputCluster(0x0B04)).thenReturn(cluster);
