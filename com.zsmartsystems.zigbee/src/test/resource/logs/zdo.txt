@@ -49,7 +49,7 @@ ZigBeeApsFrame [sourceAddress=0000/0, destinationAddress=0000/0, profile=0000, c
 SimpleDescriptorRequest [0000/0 -> 0000/0, cluster=0004, TID=1E, nwkAddrOfInterest=31259, endpoint=3]
 
 ZigBeeApsFrame [sourceAddress=0000/0, destinationAddress=0000/0, profile=0000, cluster=8004, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=00, payload=00 00 1B 7A 1C 03 5E C0 10 02 02 09 00 10 00 00 03 00 04 00 05 00 06 00 08 00 00 03 0F FC 01 19 00]
-SimpleDescriptorResponse [0000/0 -> 0000/0, cluster=8004, TID=NULL, status=SUCCESS, nwkAddrOfInterest=31259, length=28, simpleDescriptor=SimpleDescriptor [endpoint=3, profileId=C05E, deviceId=528, deviceVersion=2, inputClusterList=[4096, 0, 3, 4, 5, 6, 8, 768, 64527], outputClusterList=[25]]]
+SimpleDescriptorResponse [0000/0 -> 0000/0, cluster=8004, TID=NULL, status=SUCCESS, nwkAddrOfInterest=31259, length=28, simpleDescriptor=SimpleDescriptor [endpoint=3, profileId=C05E, deviceId=0210, deviceVersion=2, inputClusterList=[1000, 0000, 0003, 0004, 0005, 0006, 0008, 0300, FC0F], outputClusterList=[0019]]]
 
 ZigBeeApsFrame [sourceAddress=0000/0, destinationAddress=0000/0, profile=0000, cluster=0000, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=1F, payload=00 43 1D A5 00 AA 3E B0 7C 00 00]
 NetworkAddressRequest [0000/0 -> 0000/0, cluster=0000, TID=1F, ieeeAddr=7CB03EAA00A51D43, requestType=0, startIndex=0]
