@@ -76,6 +76,11 @@ public class ZigBeeBasicServerExtension implements ZigBeeNetworkExtension, ZigBe
         updateAttributes();
     }
 
+    @Override
+    public void nodeUpdated(final ZigBeeNode node) {
+        nodeAdded(node);
+    }
+
     /**
      * Sets an attribute value in the basic server.
      *
@@ -96,19 +101,15 @@ public class ZigBeeBasicServerExtension implements ZigBeeNetworkExtension, ZigBe
         attributes.get(attributeId).updateValue(attributeValue);
 
         for (ZigBeeNode node : networkManager.getNodes()) {
-            logger.debug("Basic Server Extension: Updating attribute {} on {} {}", attributeId, node.getIeeeAddress(),
-                    String.format("%04X", node.getNetworkAddress()));
             for (ZigBeeEndpoint endpoint : node.getEndpoints()) {
                 ZclBasicCluster cluster = (ZclBasicCluster) endpoint.getOutputCluster(ZclBasicCluster.CLUSTER_ID);
                 if (cluster != null) {
-                    logger.debug("Basic Server Extension: Updating {} on {} {}, Endpoint {}", attributeId,
-                            node.getIeeeAddress(), String.format("%04X", node.getNetworkAddress()),
-                            endpoint.getEndpointId());
+                    logger.debug("{}: Endpoint {}. Basic Server Extension: Updating attribute {}",
+                            node.getIeeeAddress(), endpoint.getEndpointId(), attributeId);
                     ZclAttribute attribute = cluster.getLocalAttribute(attributeId);
                     if (attribute == null) {
-                        logger.debug("Basic Server Extension: Updating {} on {} {}, Endpoint {} UNSUPPORTED",
-                                attributeId, node.getIeeeAddress(), String.format("%04X", node.getNetworkAddress()),
-                                endpoint.getEndpointId());
+                        logger.debug("{}: Endpoint {}. Basic Server Extension: Updating attribute {} UNSUPPORTED",
+                                node.getIeeeAddress(), endpoint.getEndpointId(), attributeId);
                         continue;
                     }
                     attribute.setValue(attributeValue);

@@ -1017,7 +1017,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
         ZigBeeEndpoint endpoint = node.getEndpoint(apsFrame.getSourceEndpoint());
         if (endpoint == null) {
-            logger.debug("Unknown remote endpoint {}/{}", String.format("%04X", apsFrame.getSourceAddress()),
+            logger.debug("{}: Endpoint {}. Unknown remote endpoint", node.getIeeeAddress(),
                     apsFrame.getSourceEndpoint());
             return null;
         }
@@ -1031,9 +1031,17 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             }
             ZclCluster cluster = endpoint.getInputCluster(apsFrame.getCluster());
             if (cluster == null) {
-                logger.debug("Unknown input cluster {}", String.format("%04X", apsFrame.getCluster()));
-                createDefaultResponse(apsFrame, zclHeader, ZclStatus.FAILURE);
-                return null;
+                logger.debug("{}: Endpoint {}. Unknown input cluster {}", node.getIeeeAddress(),
+                        endpoint.getEndpointId(), String.format("%04X", apsFrame.getCluster()));
+
+                ZigBeeNode newNode = new ZigBeeNode(this, node.getIeeeAddress());
+                ZigBeeEndpoint newEndpoint = new ZigBeeEndpoint(node, endpoint.getEndpointId());
+                newEndpoint.setInputClusterIds(Collections.singletonList(apsFrame.getCluster()));
+                newEndpoint.updateEndpoint(newEndpoint);
+                newNode.addEndpoint(newEndpoint);
+                updateNode(newNode);
+
+                cluster = endpoint.getInputCluster(apsFrame.getCluster());
             }
             command = cluster.getResponseFromId(zclHeader.getFrameType(), zclHeader.getCommandId());
         } else {
@@ -1044,14 +1052,22 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             }
             ZclCluster cluster = endpoint.getOutputCluster(apsFrame.getCluster());
             if (cluster == null) {
-                logger.debug("Unknown output cluster {}", String.format("%04X", apsFrame.getCluster()));
-                createDefaultResponse(apsFrame, zclHeader, ZclStatus.FAILURE);
-                return null;
+                logger.debug("{}: Endpoint {}. Unknown output cluster {}", node.getIeeeAddress(),
+                        endpoint.getEndpointId(), String.format("%04X", apsFrame.getCluster()));
+
+                ZigBeeNode newNode = new ZigBeeNode(this, node.getIeeeAddress());
+                ZigBeeEndpoint newEndpoint = new ZigBeeEndpoint(node, endpoint.getEndpointId());
+                newEndpoint.setOutputClusterIds(Collections.singletonList(apsFrame.getCluster()));
+                newEndpoint.updateEndpoint(newEndpoint);
+                newNode.addEndpoint(newEndpoint);
+                updateNode(newNode);
+
+                cluster = endpoint.getOutputCluster(apsFrame.getCluster());
             }
             command = cluster.getCommandFromId(zclHeader.getFrameType(), zclHeader.getCommandId());
         }
         if (command == null) {
-            logger.debug("Unknown command {}", zclHeader.getCommandId());
+            logger.debug("{}: Unknown command {}", node.getIeeeAddress(), zclHeader.getCommandId());
             createDefaultResponse(apsFrame, zclHeader, ZclStatus.FAILURE);
             return null;
         }
