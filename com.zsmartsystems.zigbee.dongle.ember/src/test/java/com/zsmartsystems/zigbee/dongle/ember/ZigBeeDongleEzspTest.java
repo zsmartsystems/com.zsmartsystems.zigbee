@@ -10,10 +10,12 @@ package com.zsmartsystems.zigbee.dongle.ember;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -46,6 +48,9 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspTrustCenterJoinHan
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberDeviceUpdate;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberIncomingMessageType;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyStruct;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspPolicyId;
@@ -603,5 +608,28 @@ public class ZigBeeDongleEzspTest {
         dongle.setNodeDescriptor(new IeeeAddress("1234567890ABCDEF"), nodeDescriptor);
         Mockito.verify(ncp, Mockito.timeout(TIMEOUT).times(1)).setExtendedTimeout(new IeeeAddress("1234567890ABCDEF"),
                 true);
+    }
+
+    @Test
+    public void getTcLinkKey() {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        final EmberNcp ncp = Mockito.mock(EmberNcp.class);
+        ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null) {
+            @Override
+            public EmberNcp getEmberNcp() {
+                return ncp;
+            }
+        };
+
+        EmberKeyStruct emberKey = Mockito.mock(EmberKeyStruct.class);
+        EmberKeyData emberKeyData = new EmberKeyData();
+        emberKeyData.setContents(new int[16]);
+        Mockito.when(ncp.getKey(EmberKeyType.EMBER_TRUST_CENTER_LINK_KEY)).thenReturn(null);
+        Mockito.when(ncp.getKey(EmberKeyType.EMBER_CURRENT_NETWORK_KEY)).thenReturn(emberKey);
+        Mockito.when(emberKey.getBitmask()).thenReturn(Collections.emptySet());
+        Mockito.when(emberKey.getKey()).thenReturn(emberKeyData);
+
+        assertNull(dongle.getTcLinkKey());
+        assertNotNull(dongle.getZigBeeNetworkKey());
     }
 }

@@ -1391,9 +1391,12 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
      * Converts from an {@link EmberKeyStruct} to {@link ZigBeeKey}
      *
      * @param emberKey the {@link EmberKeyStruct} read from the NCP
-     * @return the {@link ZigBeeKey} used by the framework
+     * @return the {@link ZigBeeKey} used by the framework. May be null if the key is invalid.
      */
     private ZigBeeKey emberKeyToZigBeeKey(EmberKeyStruct emberKey) {
+        if (emberKey == null) {
+            return null;
+        }
         ZigBeeKey key = new ZigBeeKey(emberKey.getKey().getContents());
         if (emberKey.getBitmask().contains(EmberKeyStructBitmask.EMBER_KEY_HAS_PARTNER_EUI64)) {
             key.setAddress(emberKey.getPartnerEUI64());
