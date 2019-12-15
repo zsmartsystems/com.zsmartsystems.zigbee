@@ -23,4 +23,5 @@ public class ZigBeeXmlField {
     public String sizer;
     public ZigBeeXmlCondition condition;
     public boolean completeOnZero;
+    public String format;
 }

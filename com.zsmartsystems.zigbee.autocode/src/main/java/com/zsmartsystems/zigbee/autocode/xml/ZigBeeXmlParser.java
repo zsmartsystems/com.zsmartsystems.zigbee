@@ -245,6 +245,9 @@ public class ZigBeeXmlParser {
                     if (nodes.item(temp).getNodeName().equals("conditional")) {
                         field.condition = (ZigBeeXmlCondition) processNode(nodes.item(temp));
                     }
+                    if (nodes.item(temp).getNodeName().equals("format")) {
+                        field.format = nodes.item(temp).getTextContent().trim();
+                    }
                 }
                 System.out.println("Done: Field - " + field.name);
                 return field;

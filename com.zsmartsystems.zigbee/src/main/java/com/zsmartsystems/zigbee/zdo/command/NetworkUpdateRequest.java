@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-15T09:28:31Z")
 public class NetworkUpdateRequest extends ZdoRequest {
     /**
      * The ZDO cluster ID.
@@ -182,7 +182,7 @@ public class NetworkUpdateRequest extends ZdoRequest {
         builder.append("NetworkUpdateRequest [");
         builder.append(super.toString());
         builder.append(", scanChannels=");
-        builder.append(scanChannels);
+        builder.append(String.format("%08X", scanChannels));
         builder.append(", scanDuration=");
         builder.append(scanDuration);
         builder.append(", scanCount=");
