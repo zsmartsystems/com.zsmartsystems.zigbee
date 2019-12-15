@@ -423,7 +423,6 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
 
         timerCancel();
         updateClientState(SmartEnergyClientState.KEEP_ALIVE);
-        timerStart(keepaliveTimeout);
     }
 
     private void discoveryStop() {
@@ -437,15 +436,17 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
     }
 
     private void timerStart(int milliseconds) {
+        logger.debug("SEP Client Extension: SEP discovery timer start in {}ms at state {}", milliseconds, seState);
         timerCancel();
         timer = networkManager.scheduleTask(new Runnable() {
             @Override
             public void run() {
+                logger.debug("SEP Client Extension: SEP discovery running task {}, attempt {}", seState, retryCounter);
                 if (retryCounter++ > SEP_RETRIES) {
+                    logger.debug("SEP Client Extension: SEP discovery terminated - too many retries");
                     discoveryStop();
                     return;
                 }
-                logger.debug("SEP Client Extension: SEP discovery running task {}, attempt {}", seState, retryCounter);
 
                 switch (seState) {
                     case DISCOVER_TRUST_CENTRE:
@@ -453,6 +454,7 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
                                 && networkManager.getNode(0).getLogicalType() != LogicalType.UNKNOWN) {
                             logger.debug("SEP Client Extension: Trust centre already known");
                             updateClientState(SmartEnergyClientState.DISCOVER_KEY_ESTABLISHMENT_CLUSTER);
+                            timerStart(TIMER_IMMEDIATE);
                             break;
                         }
                         ZigBeeNode trustCentre = networkManager.getNode(0);
@@ -460,6 +462,7 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
                             IeeeAddress ieeeAddress = requestIeeeAddress(0);
                             if (ieeeAddress == null) {
                                 logger.debug("SEP Client Extension: SEP discovery did not find TC IEEE address");
+                                timerStart(SEP_RETRY_PERIOD);
                                 break;
                             }
                             logger.debug("SEP Client Extension: SEP discovery found TC IEEE address - {}", ieeeAddress);
@@ -481,27 +484,33 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
                         break;
                     case DISCOVER_KEY_ESTABLISHMENT_CLUSTER:
                         discoverKeyEstablishmentServer();
+                        // Timer restarted in discoverServices
                         break;
                     case PERFORM_KEY_ESTABLISHMENT:
                         performKeyEstablishment();
+                        // Timer restarted in keyEstablishmentCallback
                         break;
                     case DISCOVER_METERING_SERVERS:
                         discoverMeteringServers();
+                        // Timer restarted in discoverServices
                         break;
                     case DISCOVER_KEEP_ALIVE:
                         discoverKeepAlive();
+                        // Timer restarted in discoverServices
                         break;
                     case DISCOVER_KEEP_ALIVE_TIMEOUT:
                         discoverKeepAliveTimeout();
+                        // Timer restarted in updateClientState
                         break;
                     case KEEP_ALIVE:
                         keepalivePoll();
+                        timerStart(keepaliveTimeout);
                         break;
                     default:
                         break;
                 }
             }
-        }, milliseconds, milliseconds + SEP_RETRY_PERIOD);
+        }, milliseconds);
     }
 
     private void timerCancel() {
@@ -530,6 +539,7 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
         matchRequest.setNwkAddrOfInterest(destination);
 
         networkManager.sendTransaction(matchRequest);
+        timerStart(SEP_RETRY_PERIOD);
     }
 
     /**
@@ -537,28 +547,29 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
      */
     private void discoverKeyEstablishmentServer() {
         logger.debug("SEP Client Extension: Discovery searching for Key Establishment Server");
-
         discoverServices(0, ZclKeyEstablishmentCluster.CLUSTER_ID);
     }
 
     private void performKeyEstablishment() {
         logger.debug("SEP Client Extension: Discovery starting key establishment");
 
-        if (trustCenterKeyEstablishmentEndpoint == null) {
-            logger.debug("SEP Client Extension: SEP key establishment endpoint not known");
-            // TODO: Go back to searching for KE cluster?
-            return;
-        }
-
         ZigBeeNode trustCentre = networkManager.getNode(0);
         if (trustCentre == null) {
             logger.error("SEP Client Extension: SEP key establishment Trust Centre not found in network nodes list");
+            updateClientState(SmartEnergyClientState.DISCOVER_TRUST_CENTRE);
+            return;
+        }
+
+        if (trustCenterKeyEstablishmentEndpoint == null) {
+            logger.debug("SEP Client Extension: SEP key establishment endpoint not known");
+            updateClientState(SmartEnergyClientState.DISCOVER_TRUST_CENTRE);
             return;
         }
 
         ZigBeeEndpoint endpoint = trustCentre.getEndpoint(trustCenterKeyEstablishmentEndpoint);
         if (endpoint == null) {
             logger.error("SEP Client Extension: KeyEstablishment endpoint not found in trust centre");
+            updateClientState(SmartEnergyClientState.DISCOVER_TRUST_CENTRE);
             return;
         }
 
@@ -566,6 +577,7 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
                 .getInputCluster(ZclKeyEstablishmentCluster.CLUSTER_ID);
         if (keCluster == null) {
             logger.error("SEP Client Extension: KeyEstablishment cluster not found in endpoint");
+            updateClientState(SmartEnergyClientState.DISCOVER_KEY_ESTABLISHMENT_CLUSTER);
             return;
         }
 
@@ -573,13 +585,13 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
         if (cbkeProvider.isAuthorised(trustCentre.getIeeeAddress())) {
             logger.error("SEP Client Extension: Already authorised with {}", trustCentre.getIeeeAddress());
             updateClientState(SmartEnergyClientState.DISCOVER_METERING_SERVERS);
-            timerStart(TIMER_IMMEDIATE);
             return;
         }
 
         ZclKeyEstablishmentClient keClient = cbkeClientRegistry.get(endpoint.getEndpointAddress());
         if (keClient == null) {
             logger.error("SEP Client Extension: KeyEstablishment client not found in registry");
+            updateClientState(SmartEnergyClientState.DISCOVER_KEY_ESTABLISHMENT_CLUSTER);
             return;
         }
         keClient.setCbkeProvider(cbkeProvider);
@@ -587,6 +599,7 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
             keClient.setCryptoSuite(forceCryptoSuite);
         }
 
+        // Note. No timer has been started. This will be restarted when the CBKE terminates.
         keClient.start();
     }
 
@@ -662,9 +675,7 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
      * Searches for any metering servers on the network
      */
     private void discoverMeteringServers() {
-        logger.debug("SEP Client Extension: SEP discovery searching for Energy Service Interfaces");
-
-        updateClientState(SmartEnergyClientState.DISCOVER_METERING_SERVERS);
+        logger.debug("SEP Client Extension: SEP discovery searching for Metering servers");
         discoverServices(ZigBeeBroadcastDestination.BROADCAST_RX_ON.getKey(), ZclMeteringCluster.CLUSTER_ID);
     }
 
@@ -732,7 +743,6 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
 
                 // Advance the state machine
                 updateClientState(SmartEnergyClientState.PERFORM_KEY_ESTABLISHMENT);
-                timerStart(TIMER_IMMEDIATE);
                 break;
 
             case DISCOVER_METERING_SERVERS:
@@ -779,7 +789,6 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
 
                 // Advance the state machine
                 updateClientState(SmartEnergyClientState.KEEP_ALIVE);
-                timerStart(keepaliveTimeout);
                 break;
 
             default:
@@ -813,11 +822,11 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
             } else {
                 time = (waitTime * 1000);
             }
+            logger.debug("SEP Client Extension: keyEstablishmentCallback next timer {}ms", time);
+            timerStart(time);
         } else {
             setProfileSecurity(networkManager.getNode(0));
         }
-        logger.debug("SEP Client Extension: keyEstablishmentCallback next timer {}ms", time);
-        timerStart(time);
     }
 
     @Override
