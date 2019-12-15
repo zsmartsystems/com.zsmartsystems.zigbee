@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-15T18:21:05Z")
 public class ExtendedSimpleDescriptorRequest extends ZdoRequest {
     /**
      * The ZDO cluster ID.
@@ -134,7 +134,7 @@ public class ExtendedSimpleDescriptorRequest extends ZdoRequest {
         builder.append("ExtendedSimpleDescriptorRequest [");
         builder.append(super.toString());
         builder.append(", nwkAddrOfInterest=");
-        builder.append(nwkAddrOfInterest);
+        builder.append(String.format("%04X", nwkAddrOfInterest));
         builder.append(", endpoint=");
         builder.append(endpoint);
         builder.append(", startIndex=");
