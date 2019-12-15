@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-15T09:28:31Z")
 public class DeviceAnnounce extends ZdoRequest {
     /**
      * The ZDO cluster ID.
@@ -140,7 +140,7 @@ public class DeviceAnnounce extends ZdoRequest {
         builder.append(", ieeeAddr=");
         builder.append(ieeeAddr);
         builder.append(", capability=");
-        builder.append(capability);
+        builder.append(String.format("%02X", capability));
         builder.append(']');
         return builder.toString();
     }

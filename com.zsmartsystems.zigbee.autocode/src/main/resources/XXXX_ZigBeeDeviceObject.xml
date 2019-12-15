@@ -137,6 +137,7 @@
         </field>
         <field type="BITMAP_8_BIT">
             <name>Capability</name>
+             <format>hex[2]</format>
         </field>
     </command>
     <command code="0x0014" source="client">
@@ -334,6 +335,7 @@
         <description>The Mgmt_NWK_Disc_req is generated from a Local Device requesting that the Remote Device execute a Scan to report back networks in the vicinity of the Local Device. The destination addressing on this command shall be unicast.</description>
         <field type="BITMAP_32_BIT">
             <name>Scan Channels</name>
+            <format>hex[8]</format>
         </field>
         <field type="UNSIGNED_8_BIT_INTEGER">
             <name>Scan Duration</name>
@@ -392,6 +394,7 @@
         </field>
         <field type="BITMAP_8_BIT">
             <name>Capability Information</name>
+            <format>hex[2]</format>
         </field>
     </command>
     <command code="0x0036" source="client">
@@ -415,6 +418,7 @@
         <description>This command is provided to allow updating of network configuration parameters or to request information from devices on network conditions in the local operating environment. The destination addressing on this primitive shall be unicast or broadcast to all devices for which macRxOnWhenIdle = TRUE.</description>
         <field type="BITMAP_32_BIT">
             <name>Scan Channels</name>
+            <format>hex[8]</format>
         </field>
         <field type="UNSIGNED_8_BIT_INTEGER">
             <name>Scan Duration</name>
@@ -801,6 +805,7 @@
         </field>
         <field type="UNSIGNED_32_BIT_INTEGER">
             <name>Scanned Channels</name>
+            <format>hex[8]</format>
         </field>
         <field type="UNSIGNED_16_BIT_INTEGER">
             <name>Total Transmissions</name>

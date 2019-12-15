@@ -35,7 +35,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoStatus;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-15T09:28:31Z")
 public class ManagementNetworkUpdateNotify extends ZdoRequest {
     /**
      * The ZDO cluster ID.
@@ -209,7 +209,7 @@ public class ManagementNetworkUpdateNotify extends ZdoRequest {
         builder.append(", status=");
         builder.append(status);
         builder.append(", scannedChannels=");
-        builder.append(scannedChannels);
+        builder.append(String.format("%08X", scannedChannels));
         builder.append(", totalTransmissions=");
         builder.append(totalTransmissions);
         builder.append(", transmissionFailures=");
