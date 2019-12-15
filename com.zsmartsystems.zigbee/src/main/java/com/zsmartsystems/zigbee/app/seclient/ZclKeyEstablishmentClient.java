@@ -122,7 +122,7 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
 
     protected enum KeyEstablishmentState {
         /**
-         * Key estblishment has not started
+         * Key establishment has not started
          */
         UNINITIALISED,
         /**
