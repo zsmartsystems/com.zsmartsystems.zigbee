@@ -28,7 +28,7 @@ public class ZigBeeTransactionQueueTest {
 
     @Test
     public void testQueueFifo() {
-        ZigBeeTransactionQueue queue = new ZigBeeTransactionQueue("QueueName", null);
+        ZigBeeTransactionQueue queue = new ZigBeeTransactionQueue("QueueName");
         assertFalse(queue.isSleepy());
         assertFalse(queue.setSleepy(true));
         assertTrue(queue.setSleepy(true));

@@ -168,14 +168,14 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
         defaultProfile = new ZigBeeTransactionProfile(NODE_RETRIES, NODE_TRANSACTIONS, NODE_DELAY);
         defaultSleepyProfile = new ZigBeeTransactionProfile(SLEEPY_RETRIES, SLEEPY_TRANSACTIONS, SLEEPY_DELAY);
 
-        defaultQueue = new ZigBeeTransactionQueue("Default", null);
+        defaultQueue = new ZigBeeTransactionQueue("Default");
         defaultQueue.setProfile(defaultProfile);
         defaultQueue.setSleepy(false);
 
-        broadcastQueue = new ZigBeeTransactionQueue("Broadcast", null);
+        broadcastQueue = new ZigBeeTransactionQueue("Broadcast");
         broadcastQueue.setProfile(new ZigBeeTransactionProfile(BCAST_RETRIES, BCAST_TRANSACTIONS, BCAST_DELAY));
 
-        multicastQueue = new ZigBeeTransactionQueue("Multicast", null);
+        multicastQueue = new ZigBeeTransactionQueue("Multicast");
         multicastQueue.setProfile(new ZigBeeTransactionProfile(MCAST_RETRIES, MCAST_TRANSACTIONS, MCAST_DELAY));
 
         networkManager.addNetworkNodeListener(this);

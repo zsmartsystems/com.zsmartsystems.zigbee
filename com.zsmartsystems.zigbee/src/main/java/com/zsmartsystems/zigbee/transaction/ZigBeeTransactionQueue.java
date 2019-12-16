@@ -86,7 +86,8 @@ public class ZigBeeTransactionQueue {
     private int outstandingTransactions = 0;
 
     /**
-     * The {@link IeeeAddress} of the device for which this queue has transactions
+     * The {@link IeeeAddress} of the device for which this queue has transactions ({@code null} in case of a default,
+     * broadcast, or multicast queue)
      */
     private final IeeeAddress deviceIeeeAdress;
 
@@ -104,6 +105,17 @@ public class ZigBeeTransactionQueue {
      * Constructs a {@link ZigBeeTransactionQueue}
      *
      * @param queueName a queue name - used for logging to differentiate multiple queues
+     */
+    protected ZigBeeTransactionQueue(String queueName) {
+        this.queueName = queueName;
+        this.deviceIeeeAdress = null;
+    }
+
+    /**
+     * Constructs a {@link ZigBeeTransactionQueue}
+     *
+     * @param queueName         a queue name - used for logging to differentiate multiple queues
+     * @param deviceIeeeAddress - the {@link IEEEAddress} of the device for which this queue holds transactions
      */
     protected ZigBeeTransactionQueue(String queueName, IeeeAddress deviceIeeeAddress) {
         this.queueName = queueName;
@@ -171,7 +183,7 @@ public class ZigBeeTransactionQueue {
     /**
      * Gets the {@link IeeeAddress} of the device for which this queue has transactions
      *
-     * @return the IEEE address
+     * @return the IEEE address or {@code null} if this queue is a default, broadcast or multicast queue
      */
     public IeeeAddress getDeviceIeeeAdress() {
         return deviceIeeeAdress;
