@@ -116,7 +116,7 @@ public class ZigBeeTransactionQueue {
     /**
      * Constructs a {@link ZigBeeTransactionQueue}
      *
-     * @param queueName         a queue name - used for logging to differentiate multiple queues
+     * @param queueName a queue name - used for logging to differentiate multiple queues
      * @param deviceIeeeAddress - the {@link IEEEAddress} of the device for which this queue holds transactions
      */
     protected ZigBeeTransactionQueue(String queueName, IeeeAddress deviceIeeeAddress) {
@@ -283,7 +283,7 @@ public class ZigBeeTransactionQueue {
      * unsuccessfully)
      *
      * @param transaction the {@link ZigBeeTransaction} that is complete
-     * @param state       the {@link TransactionState} of the transaction on completion
+     * @param state the {@link TransactionState} of the transaction on completion
      */
     protected void transactionComplete(ZigBeeTransaction transaction, TransactionState state) {
         outstandingTransactions--;
@@ -306,11 +306,11 @@ public class ZigBeeTransactionQueue {
     }
 
     /**
-     * Rewrites all transactions in the queue to have the network address of the passed node as destination address
+     * Rewrites all transactions in the queue to have the network address of the passed node as destination address.
      *
      * @param newAddress the new address where the transactions should be send to
      */
-    void rewriteDestinationAddresses(Integer newAddress) {
+    protected void rewriteDestinationAddresses(Integer newAddress) {
         LinkedList<ZigBeeTransaction> transactions = new LinkedList<>();
 
         synchronized (queue) {
@@ -332,7 +332,8 @@ public class ZigBeeTransactionQueue {
 
     @Override
     public String toString() {
-        return "ZigBeeTransactionQueue [queueName=" + queueName + " deviceIeeeAddress=" + deviceIeeeAdress + ", sleepy="
-                + sleepy + ", outstandingTransactions=" + outstandingTransactions + ", profile=" + profile + "]";
+        return "ZigBeeTransactionQueue [queueName=" + queueName + ", deviceIeeeAddress=" + deviceIeeeAdress
+                + ", sleepy=" + sleepy + ", outstandingTransactions=" + outstandingTransactions + ", profile=" + profile
+                + "]";
     }
 }
