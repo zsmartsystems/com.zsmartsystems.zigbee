@@ -27,6 +27,7 @@ import org.apache.log4j.xml.DOMConfigurator;
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.ZigBeeProfileType;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.app.basic.ZigBeeBasicServerExtension;
 import com.zsmartsystems.zigbee.app.discovery.ZigBeeDiscoveryExtension;
@@ -92,7 +93,8 @@ public class ZigBeeConsoleMain {
 
         final String serialPortName;
         final String dongleName;
-        final Integer serialBaud;
+        final int serialBaud;
+        final int defaultProfileId;
 
         final Set<Integer> supportedClientClusters = new TreeSet<>();
         supportedClientClusters.addAll(Stream
@@ -133,6 +135,8 @@ public class ZigBeeConsoleMain {
                 .desc("Set the ZigBee Link key (defaults to well known ZHA key)").build());
         options.addOption(Option.builder("t").longOpt("linkkeyoutcnt").hasArg().argName("counter")
                 .desc("Set the ZigBee Link key outgoing frame counter").build());
+        options.addOption(Option.builder("h").longOpt("profile").hasArg().argName("profile")
+                .desc("Set the default profile ID").build());
         options.addOption(Option.builder("r").longOpt("reset").desc("Reset the ZigBee dongle").build());
         options.addOption(Option.builder("?").longOpt("help").desc("Print usage information").build());
 
@@ -154,6 +158,11 @@ public class ZigBeeConsoleMain {
             if (!cmdline.hasOption("port")) {
                 System.err.println("Serial port must be specified with the 'port' option");
                 return;
+            }
+            if (cmdline.hasOption("profile")) {
+                defaultProfileId = parseDecimalOrHexInt(cmdline.getOptionValue("profile"));
+            } else {
+                defaultProfileId = ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getKey();
             }
 
             dongleName = cmdline.getOptionValue("dongle");
@@ -342,6 +351,8 @@ public class ZigBeeConsoleMain {
             networkManager.setZigBeeNetworkKey(nwkKey);
             networkManager.setZigBeeLinkKey(linkKey);
         }
+
+        networkManager.setDefaultProfileId(defaultProfileId);
 
         // Add the default ZigBeeAlliance09 HA link key
 
