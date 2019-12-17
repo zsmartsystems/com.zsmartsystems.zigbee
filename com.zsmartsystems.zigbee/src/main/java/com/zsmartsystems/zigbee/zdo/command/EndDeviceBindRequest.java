@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-17T19:20:35Z")
 public class EndDeviceBindRequest extends ZdoRequest {
     /**
      * The ZDO cluster ID.
@@ -237,7 +237,7 @@ public class EndDeviceBindRequest extends ZdoRequest {
         builder.append(", srcEndpoint=");
         builder.append(srcEndpoint);
         builder.append(", profileId=");
-        builder.append(profileId);
+        builder.append(String.format("%04X", profileId));
         builder.append(", inClusterList=");
         builder.append(inClusterList);
         builder.append(", outClusterList=");

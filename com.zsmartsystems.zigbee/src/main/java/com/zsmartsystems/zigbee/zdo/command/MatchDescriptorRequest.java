@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-15T18:21:05Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-17T19:20:35Z")
 public class MatchDescriptorRequest extends ZdoRequest {
     /**
      * The ZDO cluster ID.
@@ -183,7 +183,7 @@ public class MatchDescriptorRequest extends ZdoRequest {
         builder.append(", nwkAddrOfInterest=");
         builder.append(String.format("%04X", nwkAddrOfInterest));
         builder.append(", profileId=");
-        builder.append(profileId);
+        builder.append(String.format("%04X", profileId));
         builder.append(", inClusterList=");
         builder.append(inClusterList);
         builder.append(", outClusterList=");
