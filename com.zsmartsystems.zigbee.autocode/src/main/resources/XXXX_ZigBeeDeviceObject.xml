@@ -92,6 +92,7 @@
         </field>
         <field type="UNSIGNED_16_BIT_INTEGER">
             <name>Profile ID</name>
+            <format>hex[4]</format>
         </field>
         <field type="UNSIGNED_8_BIT_INTEGER">
             <name>In Cluster Count</name>
@@ -217,6 +218,7 @@
         </field>
         <field type="UNSIGNED_16_BIT_INTEGER">
             <name>Profile ID</name>
+            <format>hex[4]</format>
         </field>
         <field type="UNSIGNED_8_BIT_INTEGER">
             <name>In Cluster Count</name>
