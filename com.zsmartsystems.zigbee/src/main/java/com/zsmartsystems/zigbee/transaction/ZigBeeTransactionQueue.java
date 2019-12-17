@@ -9,6 +9,8 @@ package com.zsmartsystems.zigbee.transaction;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.LinkedList;
+import java.util.Objects;
 import java.util.concurrent.Future;
 
 import org.slf4j.Logger;
@@ -299,6 +301,31 @@ public class ZigBeeTransactionQueue {
             } else {
                 logger.debug("{}: transactionComplete exceeded retries {}", queueName, transaction.getSendCnt());
                 transaction.cancel();
+            }
+        }
+    }
+
+    /**
+     * Rewrites all transactions in the queue to have the network address of the passed node as destination address
+     *
+     * @param newAddress the new address where the transactions should be send to
+     */
+    void rewriteDestinationAddresses(Integer newAddress) {
+        LinkedList<ZigBeeTransaction> transactions = new LinkedList<>();
+
+        synchronized (queue) {
+            ZigBeeTransaction zt = null;
+            while ((zt = queue.poll()) != null) {
+                if (!Objects.equals(zt.getDestinationAddress().getAddress(), newAddress)) {
+                    logger.debug("Rewriting transaction destination address from {} to {} in transaction={}",
+                            zt.getDestinationAddress().getAddress(), newAddress, zt);
+                    zt.getDestinationAddress().setAddress(newAddress);
+                }
+                transactions.add(zt);
+            }
+
+            for (ZigBeeTransaction trans : transactions) {
+                queue.add(trans);
             }
         }
     }
