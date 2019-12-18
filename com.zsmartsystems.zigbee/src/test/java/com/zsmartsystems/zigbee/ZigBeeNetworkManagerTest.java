@@ -67,7 +67,6 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclMeteringCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclThermostatCluster;
-import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
@@ -456,17 +455,6 @@ public class ZigBeeNetworkManagerTest
         apsFrame.setDestinationEndpoint(2);
         networkManager.receiveCommand(apsFrame);
         Mockito.verify(transactionManager, Mockito.never()).sendTransaction(commandCaptor.capture());
-
-        apsFrame.setApsCounter(4);
-        apsFrame.setSourceEndpoint(5);
-        apsFrame.setCluster(666);
-        apsFrame.setDestinationEndpoint(255);
-        networkManager.receiveCommand(apsFrame);
-
-        Mockito.verify(transactionManager, Mockito.timeout(TIMEOUT).times(1)).sendTransaction(commandCaptor.capture());
-
-        ZclCommand zclCommand = commandCaptor.getValue();
-        assertTrue(zclCommand instanceof DefaultResponse);
     }
 
     @Test
