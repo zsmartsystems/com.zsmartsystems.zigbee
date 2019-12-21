@@ -114,6 +114,10 @@ public class EmberConsoleNcpStateCommand extends EmberConsoleAbstractCommand {
     }
 
     private String printVersion(int version) {
+        if (version == 0xFFFF) {
+            return "";
+        }
+
         StringBuilder builder = new StringBuilder(60);
         for (int cnt = 3; cnt >= 0; cnt--) {
             builder.append((version >> (cnt * 4)) & 0x0F);
