@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.security;
 import java.util.Set;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 
 /**
@@ -19,6 +20,14 @@ import com.zsmartsystems.zigbee.zcl.field.ByteArray;
  *
  */
 public interface ZigBeeCbkeProvider {
+    /**
+     * Set the provider to act as a client or server when generating the SMAC codes.
+     *
+     * @param client set to true to act as a client, and false to act as the server
+     * @return the {@link ZigBeeStatus} providing success or failure
+     */
+    public ZigBeeStatus setClientServer(boolean client);
+
     /**
      * Checks if the key associated with the partner {@link IeeeAddress} has previously been authorised.
      *
