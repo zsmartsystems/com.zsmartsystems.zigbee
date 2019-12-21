@@ -103,10 +103,9 @@ public class EmberConsoleNcpStateCommand extends EmberConsoleAbstractCommand {
         out.println("Network PAN Id     : " + String.format("%04X", nwkParameters.getPanId()));
         out.println("Network EPAN Id    : " + nwkParameters.getExtendedPanId());
         out.println("Radio Channel      : " + nwkParameters.getRadioChannel());
-        out.println("Network Manager Id : " + nwkParameters.getNwkManagerId());
+        out.println("Network Manager Id : " + String.format("%04X", nwkParameters.getNwkManagerId()));
         out.println("Radio TX Power     : " + nwkParameters.getRadioTxPower());
         out.println("Join Method        : " + nwkParameters.getJoinMethod());
-
         out.println("Board Name         : " + mfgBoard);
         out.println("Manufacturer Name  : " + mfgName);
         out.println("Stack Version      : " + printVersion(version.getStackVersion()));
