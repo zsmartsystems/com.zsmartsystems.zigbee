@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspCalculateSmacs283k1Handler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspCalculateSmacs283k1Request;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspCalculateSmacs283k1Response;
@@ -89,6 +90,11 @@ public class EmberCbkeProvider implements ZigBeeCbkeProvider {
     private final ZigBeeDongleEzsp dongle;
 
     /**
+     * Defines if this provider is the initiator (true=Client) or not (false=Server)
+     */
+    private boolean amInitiator = true;
+
+    /**
      * The partner certificate
      */
     private ByteArray partnerCertificate;
@@ -114,8 +120,19 @@ public class EmberCbkeProvider implements ZigBeeCbkeProvider {
      */
     private ByteArray responderMac;
 
+    /**
+     * Creates the Ember CBKE provider
+     *
+     * @param dongle the {@link ZigBeeDongleEzsp} this provider is to use
+     */
     public EmberCbkeProvider(ZigBeeDongleEzsp dongle) {
         this.dongle = dongle;
+    }
+
+    @Override
+    public ZigBeeStatus setClientServer(boolean client) {
+        amInitiator = client;
+        return ZigBeeStatus.SUCCESS;
     }
 
     @Override
@@ -426,7 +443,7 @@ public class EmberCbkeProvider implements ZigBeeCbkeProvider {
     private EzspCalculateSmacsHandler ezspCalculateSmacs163k1() {
         EzspProtocolHandler protocolHandler = dongle.getProtocolHandler();
         EzspCalculateSmacsRequest request = new EzspCalculateSmacsRequest();
-        request.setAmInitiator(true);
+        request.setAmInitiator(amInitiator);
 
         EmberCertificateData certificateData = new EmberCertificateData();
         certificateData.setContents(partnerCertificate.getAsIntArray());
@@ -466,7 +483,7 @@ public class EmberCbkeProvider implements ZigBeeCbkeProvider {
     private EzspCalculateSmacs283k1Handler ezspCalculateSmacs283k1() {
         EzspProtocolHandler protocolHandler = dongle.getProtocolHandler();
         EzspCalculateSmacs283k1Request request = new EzspCalculateSmacs283k1Request();
-        request.setAmInitiator(true);
+        request.setAmInitiator(amInitiator);
 
         EmberCertificate283k1Data certificateData = new EmberCertificate283k1Data();
         certificateData.setContents(partnerCertificate.getAsIntArray());
