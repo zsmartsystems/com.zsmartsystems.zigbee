@@ -511,11 +511,13 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         logger.debug("EZSP Startup complete. NWK Address = {}, State = {}", String.format("%04X", nwkAddress),
                 networkState);
 
+        // At this stage, we will now take note of the EzspStackStatusHandler notifications
+        boolean joinedNetwork = (networkState == EmberNetworkStatus.EMBER_JOINED_NETWORK
+                || networkState == EmberNetworkStatus.EMBER_JOINED_NETWORK_NO_PARENT);
         initialised = true;
+        handleLinkStateChange(joinedNetwork);
 
-        return (networkState == EmberNetworkStatus.EMBER_JOINED_NETWORK
-                || networkState == EmberNetworkStatus.EMBER_JOINED_NETWORK_NO_PARENT) ? ZigBeeStatus.SUCCESS
-                        : ZigBeeStatus.BAD_RESPONSE;
+        return joinedNetwork ? ZigBeeStatus.SUCCESS : ZigBeeStatus.BAD_RESPONSE;
     }
 
     /**
