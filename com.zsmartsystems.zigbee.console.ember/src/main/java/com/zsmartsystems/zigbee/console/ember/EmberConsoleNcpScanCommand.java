@@ -8,7 +8,7 @@
 package com.zsmartsystems.zigbee.console.ember;
 
 import java.io.PrintStream;
-import java.util.List;
+import java.util.Collection;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
@@ -50,8 +50,8 @@ public class EmberConsoleNcpScanCommand extends EmberConsoleAbstractCommand {
             throws IllegalArgumentException {
         EmberNcp ncp = getEmberNcp(networkManager);
 
-        List<EzspNetworkFoundHandler> networksFound = ncp.doActiveScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, 6);
-        List<EzspEnergyScanResultHandler> channels = ncp.doEnergyScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, 6);
+        Collection<EzspNetworkFoundHandler> networksFound = ncp.doActiveScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, 6);
+        Collection<EzspEnergyScanResultHandler> channels = ncp.doEnergyScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, 6);
 
         if (networksFound == null) {
             out.println("Error performing active scan");
@@ -72,7 +72,7 @@ public class EmberConsoleNcpScanCommand extends EmberConsoleAbstractCommand {
         }
     }
 
-    private void outputNetworksFound(PrintStream out, List<EzspNetworkFoundHandler> networksFound) {
+    private void outputNetworksFound(PrintStream out, Collection<EzspNetworkFoundHandler> networksFound) {
         out.println("CH  PAN   Extended PAN      Stk  Join   Upd");
         for (EzspNetworkFoundHandler network : networksFound) {
             EmberZigbeeNetwork params = network.getNetworkFound();
@@ -82,7 +82,7 @@ public class EmberConsoleNcpScanCommand extends EmberConsoleAbstractCommand {
         }
     }
 
-    private void outputChannelEnergy(PrintStream out, List<EzspEnergyScanResultHandler> channels) {
+    private void outputChannelEnergy(PrintStream out, Collection<EzspEnergyScanResultHandler> channels) {
         out.println("CH  RSSI");
         for (EzspEnergyScanResultHandler channel : channels) {
             out.println(String.format("%-2d  %d", channel.getChannel(), channel.getMaxRssiValue()));

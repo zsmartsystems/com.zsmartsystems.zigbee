@@ -9,13 +9,17 @@ package com.zsmartsystems.zigbee.dongle.ember;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
@@ -819,7 +823,7 @@ public class EmberNcp {
      * @return a List of {@link EzspNetworkFoundHandler} on success. If there was an error during the scan, null is
      *         returned.
      */
-    public List<EzspNetworkFoundHandler> doActiveScan(int channelMask, int scanDuration) {
+    public Collection<EzspNetworkFoundHandler> doActiveScan(int channelMask, int scanDuration) {
         EzspStartScanRequest activeScan = new EzspStartScanRequest();
         activeScan.setChannelMask(channelMask);
         activeScan.setDuration(scanDuration);
@@ -838,14 +842,15 @@ public class EmberNcp {
             return null;
         }
 
-        List<EzspNetworkFoundHandler> networksFound = new ArrayList<>();
-        for (EzspFrameResponse network : transaction.getResponses()) {
-            if (network instanceof EzspNetworkFoundHandler) {
-                networksFound.add((EzspNetworkFoundHandler) network);
+        Map<ExtendedPanId, EzspNetworkFoundHandler> networksFound = new HashMap<>();
+        for (EzspFrameResponse response : transaction.getResponses()) {
+            if (response instanceof EzspNetworkFoundHandler) {
+                EzspNetworkFoundHandler network = (EzspNetworkFoundHandler) response;
+                networksFound.put(network.getNetworkFound().getExtendedPanId(), network);
             }
         }
 
-        return networksFound;
+        return networksFound.values();
     }
 
     /**
