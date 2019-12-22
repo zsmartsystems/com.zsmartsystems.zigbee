@@ -62,6 +62,7 @@ public class ZclKeyEstablishmentClientTest {
         System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         SmartEnergyClient seClient = Mockito.mock(SmartEnergyClient.class);
         ZclKeyEstablishmentCluster keCluster = Mockito.mock(ZclKeyEstablishmentCluster.class);
+
         IeeeAddress ieeeAddress = Mockito.mock(IeeeAddress.class);
 
         ZclKeyEstablishmentClient keClient = new ZclKeyEstablishmentClient(ieeeAddress, seClient, keCluster);
@@ -122,7 +123,7 @@ public class ZclKeyEstablishmentClientTest {
                 ZclKeyEstablishmentClient.KeyEstablishmentState.INITIATE_REQUEST);
         TestUtilities.setField(ZclKeyEstablishmentClient.class, keClient, "cryptoSuite", ZigBeeCryptoSuites.ECC_163K1);
 
-        ByteArray identity = new ByteArray(new int[49]);
+        ByteArray identity = new ByteArray(new int[58]);
         ByteArray local = new ByteArray(new int[48]);
 
         ZigBeeCbkeProvider cbkeProvider = Mockito.mock(ZigBeeCbkeProvider.class);
@@ -186,7 +187,6 @@ public class ZclKeyEstablishmentClientTest {
         TestUtilities.setField(ZclKeyEstablishmentClient.class, keClient, "cryptoSuite", ZigBeeCryptoSuites.ECC_283K1);
 
         ByteArray identity = new ByteArray(new int[48]);
-        ByteArray local = new ByteArray(new int[48]);
 
         ZigBeeCbkeProvider cbkeProvider = Mockito.mock(ZigBeeCbkeProvider.class);
         keClient.setCbkeProvider(cbkeProvider);
