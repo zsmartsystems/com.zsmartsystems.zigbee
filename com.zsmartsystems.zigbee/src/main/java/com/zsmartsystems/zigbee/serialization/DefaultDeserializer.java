@@ -186,7 +186,7 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 int cntX16 = (payload.length - index) / 2;
                 List<Integer> arrayX16 = new ArrayList<Integer>(cntX16);
                 for (int arrayIndex = 0; arrayIndex < cntX16; arrayIndex++) {
-                    arrayX16.add(Integer.valueOf(payload[index++]));
+                    arrayX16.add(Integer.valueOf(payload[index++] + (payload[index++] << 8)));
                 }
                 value[0] = arrayX16;
                 break;
