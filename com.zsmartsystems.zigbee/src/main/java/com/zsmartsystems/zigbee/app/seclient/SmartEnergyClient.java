@@ -980,13 +980,11 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
         logger.debug("SEP Extension: Adding node {} [{}]", node.getIeeeAddress(),
                 String.format("%04X", node.getNetworkAddress()));
         for (ZigBeeEndpoint endpoint : node.getEndpoints()) {
-            ZclKeyEstablishmentCluster keCluster;
-
             if (cbkeClientRegistry.get(endpoint.getEndpointAddress()) != null) {
                 logger.debug("SEP Extension: CBKE client handler for node {} endpoint {} already set",
                         node.getIeeeAddress(), endpoint.getEndpointId());
             } else {
-                keCluster = (ZclKeyEstablishmentCluster) endpoint
+                ZclKeyEstablishmentCluster keCluster = (ZclKeyEstablishmentCluster) endpoint
                         .getInputCluster(ZclKeyEstablishmentCluster.CLUSTER_ID);
                 if (keCluster != null) {
                     logger.debug("SEP Extension: Adding CBKE client handler to node {} endpoint {}",
@@ -1003,7 +1001,7 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
                 logger.debug("SEP Extension: CBKE server handler for node {} endpoint {} already set",
                         node.getIeeeAddress(), endpoint.getEndpointId());
             } else {
-                keCluster = (ZclKeyEstablishmentCluster) endpoint
+                ZclKeyEstablishmentCluster keCluster = (ZclKeyEstablishmentCluster) endpoint
                         .getOutputCluster(ZclKeyEstablishmentCluster.CLUSTER_ID);
                 if (keCluster != null) {
                     logger.debug("SEP Extension: Adding CBKE server handler to node {} endpoint {}",
@@ -1026,5 +1024,10 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
         }
 
         setProfileSecurity(node);
+    }
+
+    @Override
+    public void nodeUpdated(ZigBeeNode node) {
+        nodeAdded(node);
     }
 }

@@ -244,11 +244,7 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
             return false;
         }
 
-        if (state == KeyEstablishmentState.FAILED) {
-            logger.debug("{}: CBKE Key Establishment Client: Key establishment reset after previous failed attempt",
-                    ieeeAddress, state);
-            state = KeyEstablishmentState.UNINITIALISED;
-        } else if (state != KeyEstablishmentState.UNINITIALISED) {
+        if (state != KeyEstablishmentState.UNINITIALISED) {
             logger.debug("{}: CBKE Key Establishment Client: Initiate key establishment failed - state is {}",
                     ieeeAddress, state);
 
@@ -678,6 +674,7 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
         }
 
         smartEnergyClient.keyEstablishmentCallback(returnState, waitTime);
+        setState(KeyEstablishmentState.UNINITIALISED);
     }
 
     private KeyEstablishmentSuiteBitmap getPreferredCryptoSuite() {

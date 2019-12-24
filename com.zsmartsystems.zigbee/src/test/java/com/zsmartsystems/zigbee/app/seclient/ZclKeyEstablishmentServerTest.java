@@ -45,7 +45,7 @@ public class ZclKeyEstablishmentServerTest {
     private final static int TIMEOUT = 5000;
 
     @Test
-    public void InitiateKeyEstablishmentRequestCommandSuccess() {
+    public void InitiateKeyEstablishmentRequestCommandSuccess() throws Exception {
         System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ZclKeyEstablishmentCluster keCluster = Mockito.mock(ZclKeyEstablishmentCluster.class);
         IeeeAddress ieeeAddress = new IeeeAddress("0022A300001731F3");
@@ -84,10 +84,14 @@ public class ZclKeyEstablishmentServerTest {
 
         Mockito.verify(keCluster, Mockito.timeout(TIMEOUT))
                 .terminateKeyEstablishment(KeyEstablishmentStatusEnum.NO_RESOURCES.getKey(), 20, 1);
+
+        // State gets reset back to UNINITIALISED after the FAILURE
+        assertEquals(KeyEstablishmentState.UNINITIALISED,
+                TestUtilities.getField(ZclKeyEstablishmentServer.class, keServer, "keyEstablishmentState"));
     }
 
     @Test
-    public void InitiateKeyEstablishmentRequestCommandInvalidIssuer() {
+    public void InitiateKeyEstablishmentRequestCommandInvalidIssuer() throws Exception {
         System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ZclKeyEstablishmentCluster keCluster = Mockito.mock(ZclKeyEstablishmentCluster.class);
         IeeeAddress ieeeAddress = new IeeeAddress("1111111111111111");
@@ -119,10 +123,14 @@ public class ZclKeyEstablishmentServerTest {
 
         Mockito.verify(keCluster, Mockito.timeout(TIMEOUT))
                 .terminateKeyEstablishment(KeyEstablishmentStatusEnum.UNKNOWN_ISSUER.getKey(), 10, 1);
+
+        // State gets reset back to UNINITIALISED after the FAILURE
+        assertEquals(KeyEstablishmentState.UNINITIALISED,
+                TestUtilities.getField(ZclKeyEstablishmentServer.class, keServer, "keyEstablishmentState"));
     }
 
     @Test
-    public void HandleEphemeralDataRequestUninitialised() {
+    public void HandleEphemeralDataRequestUninitialised() throws Exception {
         System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ZclKeyEstablishmentCluster keCluster = Mockito.mock(ZclKeyEstablishmentCluster.class);
         IeeeAddress ieeeAddress = new IeeeAddress("1111111111111111");
@@ -136,10 +144,14 @@ public class ZclKeyEstablishmentServerTest {
         // State is not initialised
         Mockito.verify(keCluster, Mockito.timeout(TIMEOUT))
                 .terminateKeyEstablishment(KeyEstablishmentStatusEnum.BAD_MESSAGE.getKey(), 10, 1);
+
+        // State gets reset back to UNINITIALISED after the FAILURE
+        assertEquals(KeyEstablishmentState.UNINITIALISED,
+                TestUtilities.getField(ZclKeyEstablishmentServer.class, keServer, "keyEstablishmentState"));
     }
 
     @Test
-    public void HandleConfirmKeyRequestUninitialised() {
+    public void HandleConfirmKeyRequestUninitialised() throws Exception {
         System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ZclKeyEstablishmentCluster keCluster = Mockito.mock(ZclKeyEstablishmentCluster.class);
         IeeeAddress ieeeAddress = new IeeeAddress("1111111111111111");
@@ -153,6 +165,10 @@ public class ZclKeyEstablishmentServerTest {
         // State is not initialised
         Mockito.verify(keCluster, Mockito.timeout(TIMEOUT))
                 .terminateKeyEstablishment(KeyEstablishmentStatusEnum.BAD_MESSAGE.getKey(), 10, 1);
+
+        // State gets reset back to UNINITIALISED after the FAILURE
+        assertEquals(KeyEstablishmentState.UNINITIALISED,
+                TestUtilities.getField(ZclKeyEstablishmentServer.class, keServer, "keyEstablishmentState"));
     }
 
     @Test
@@ -179,10 +195,14 @@ public class ZclKeyEstablishmentServerTest {
 
         Mockito.verify(keCluster, Mockito.timeout(TIMEOUT))
                 .terminateKeyEstablishment(KeyEstablishmentStatusEnum.BAD_KEY_CONFIRM.getKey(), 10, 1);
+
+        // State gets reset back to UNINITIALISED after the FAILURE
+        assertEquals(KeyEstablishmentState.UNINITIALISED,
+                TestUtilities.getField(ZclKeyEstablishmentServer.class, keServer, "keyEstablishmentState"));
     }
 
     @Test
-    public void HandleTerminateKeyEstablishment() {
+    public void HandleTerminateKeyEstablishment() throws Exception {
         System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ZclKeyEstablishmentCluster keCluster = Mockito.mock(ZclKeyEstablishmentCluster.class);
         IeeeAddress ieeeAddress = new IeeeAddress("1111111111111111");
@@ -197,6 +217,9 @@ public class ZclKeyEstablishmentServerTest {
         command.setCommandDirection(ZclCommandDirection.SERVER_TO_CLIENT);
         assertFalse(keServer.commandReceived(command));
 
+        // State gets reset back to UNINITIALISED after the FAILURE
+        assertEquals(KeyEstablishmentState.UNINITIALISED,
+                TestUtilities.getField(ZclKeyEstablishmentServer.class, keServer, "keyEstablishmentState"));
     }
 
     @Test

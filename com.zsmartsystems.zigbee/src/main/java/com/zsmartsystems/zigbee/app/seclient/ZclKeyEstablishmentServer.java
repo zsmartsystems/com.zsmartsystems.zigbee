@@ -410,7 +410,12 @@ public class ZclKeyEstablishmentServer implements ZclCommandListener {
     private void setState(KeyEstablishmentState newState) {
         logger.debug("{}: CBKE Key Establishment Server: State updated from {} to {}", ieeeAddress,
                 keyEstablishmentState, newState);
-        keyEstablishmentState = newState;
+
+        if (newState == KeyEstablishmentState.COMPLETE || newState == KeyEstablishmentState.FAILED) {
+            logger.debug("{}: CBKE Key Establishment Server: Resetting state to UNINITIALIZED", ieeeAddress);
+        } else {
+            keyEstablishmentState = newState;
+        }
     }
 
     private void stopCbke() {
