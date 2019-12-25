@@ -140,7 +140,7 @@ public class ZigBeeTransaction {
      * transmitted.
      */
     private final static int TRANSACTION_TIMER_2 = 8000;
-    private final int timeout2 = TRANSACTION_TIMER_2;
+    private int timeout2 = TRANSACTION_TIMER_2;
 
     /**
      * A {@link Long} that records the time this transaction was first added to the queue in milliseconds
@@ -151,10 +151,10 @@ public class ZigBeeTransaction {
      * Transaction constructor
      *
      * @param transactionManager the {@link ZigBeeTransactionManager} through which the transaction is being sent.
-     * @param command            the {@link ZigBeeCommand}.
-     * @param responseMatcher    the {@link ZigBeeTransactionMatcher} to match the response and complete the
-     *                               transaction.
-     *                               May be null if no response is expected.
+     * @param command the {@link ZigBeeCommand}.
+     * @param responseMatcher the {@link ZigBeeTransactionMatcher} to match the response and complete the
+     *            transaction.
+     *            May be null if no response is expected.
      */
     public ZigBeeTransaction(ZigBeeTransactionManager transactionManager, final ZigBeeCommand command,
             final ZigBeeTransactionMatcher responseMatcher) {
@@ -274,7 +274,7 @@ public class ZigBeeTransaction {
      * @return the current timeout in milliseconds
      */
     public int getTimerPeriod2() {
-        return timeout1;
+        return timeout2;
     }
 
     /**
@@ -285,7 +285,7 @@ public class ZigBeeTransaction {
      * @param timeout the timeout to set in milliseconds
      */
     public void setTimerPeriod2(int timeout) {
-        this.timeout1 = timeout;
+        this.timeout2 = timeout;
     }
 
     /**
@@ -400,6 +400,10 @@ public class ZigBeeTransaction {
     }
 
     private void completeTransaction(ZigBeeCommand receivedCommand) {
+        if (isTransactionComplete()) {
+            return;
+        }
+
         state = TransactionState.COMPLETE;
         if (timeoutTask != null) {
             timeoutTask.cancel(false);
@@ -415,6 +419,10 @@ public class ZigBeeTransaction {
     }
 
     private void cancelTransaction() {
+        if (isTransactionComplete()) {
+            return;
+        }
+
         state = TransactionState.FAILED;
         if (timeoutTask != null) {
             timeoutTask.cancel(false);
@@ -423,11 +431,15 @@ public class ZigBeeTransaction {
         transactionManager.transactionComplete(this, TransactionState.FAILED);
     }
 
+    private boolean isTransactionComplete() {
+        return (state == TransactionState.COMPLETE || state == TransactionState.FAILED);
+    }
+
     /**
      * Notifies of an updated state from the transport layer. This is used to see if the transaction state can be
      * progressed.
      *
-     * @param progress      the {@link ZigBeeTransportProgressState} of the transaction
+     * @param progress the {@link ZigBeeTransportProgressState} of the transaction
      * @param transactionId the transaction ID
      */
     public void transactionStatusReceived(ZigBeeTransportProgressState progress, int transactionId) {
