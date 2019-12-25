@@ -1047,6 +1047,14 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 newNode.addEndpoint(newEndpoint);
                 updateNode(newNode);
 
+                // TODO: Find a better way to delay until the endpoint, and all attached extensions, have updated
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
                 cluster = endpoint.getInputCluster(apsFrame.getCluster());
             }
             command = cluster.getResponseFromId(zclHeader.getFrameType(), zclHeader.getCommandId());
@@ -1067,6 +1075,14 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 newEndpoint.updateEndpoint(newEndpoint);
                 newNode.addEndpoint(newEndpoint);
                 updateNode(newNode);
+
+                // TODO: Find a better way to delay until the endpoint, and all attached extensions, have updated
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
 
                 cluster = endpoint.getOutputCluster(apsFrame.getCluster());
             }
