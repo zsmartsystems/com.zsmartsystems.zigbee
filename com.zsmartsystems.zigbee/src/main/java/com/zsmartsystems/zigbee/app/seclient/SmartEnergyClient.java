@@ -322,6 +322,24 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
         return lastKeepAliveTime;
     }
 
+    /**
+     * Manually start a CBKE update with the specified endpoint.
+     *
+     * @param endpoint the endpoint with which to perform the CBKE.
+     * @return the {@link ZigBeeStatus}
+     */
+    public ZigBeeStatus startKeyExchange(ZigBeeEndpointAddress endpoint) {
+        ZclKeyEstablishmentClient keClient = cbkeClientRegistry.get(endpoint);
+        if (keClient == null) {
+            logger.debug("Unable to find CBKE Client for endpoint {}", endpoint);
+            return ZigBeeStatus.FAILURE;
+        }
+        keClient.start();
+
+        logger.debug("Manually starting CBKE Client for endpoint {}", endpoint);
+        return ZigBeeStatus.SUCCESS;
+    }
+
     private void updateClientState(SmartEnergyClientState newState) {
         logger.debug("SEP Extension: SE State updated from {} to {}.", seState, newState);
         if (seState != newState) {
