@@ -7,7 +7,11 @@
  */
 package com.zsmartsystems.zigbee.transaction;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.concurrent.ScheduledFuture;
 
@@ -113,7 +117,8 @@ public class ZigBeeTransactionTest {
         assertFalse(transactionFuture.isDone());
         assertFalse(transactionFuture.isCancelled());
 
-        // Correct TID
+        // Correct TID - sent twice to ensure we're only notified once
+        transaction.transactionStatusReceived(ZigBeeTransportProgressState.TX_NAK, 12);
         transaction.transactionStatusReceived(ZigBeeTransportProgressState.TX_NAK, 12);
 
         Mockito.verify(transactionManager, Mockito.times(1)).transactionComplete(transaction, TransactionState.FAILED);
@@ -185,6 +190,7 @@ public class ZigBeeTransactionTest {
 
         Mockito.verify(transactionManager, Mockito.never()).transactionComplete(transaction, TransactionState.COMPLETE);
 
+        transaction.transactionStatusReceived(ZigBeeTransportProgressState.RX_ACK, 12);
         transaction.transactionStatusReceived(ZigBeeTransportProgressState.RX_ACK, 12);
         Mockito.verify(transactionManager, Mockito.never()).transactionComplete(transaction, TransactionState.COMPLETE);
 
@@ -376,6 +382,10 @@ public class ZigBeeTransactionTest {
     public void getTimeout() {
         ZigBeeTransaction transaction = new ZigBeeTransaction(null, null, null);
         System.out.println(transaction);
+        transaction.setTimerPeriod1(1);
+        transaction.setTimerPeriod2(2);
+        assertEquals(1, transaction.getTimerPeriod1());
+        assertEquals(2, transaction.getTimerPeriod2());
         assertNull(transaction.getQueueTime());
         transaction.setQueueTime();
         System.out.println(transaction);
