@@ -15,9 +15,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.IntSummaryStatistics;
@@ -39,10 +36,6 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
 import com.zsmartsystems.zigbee.ZigBeeNetworkState;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
-import com.zsmartsystems.zigbee.app.otaserver.ZclOtaUpgradeServer;
-import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaFile;
-import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaServerStatus;
-import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaStatusCallback;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeReadCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeSupportedCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeWriteCommand;
@@ -81,7 +74,6 @@ import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
-import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.GetGroupMembershipResponse;
@@ -169,9 +161,6 @@ public final class ZigBeeConsole {
         commands.put("level", new LevelCommand());
         commands.put("listen", new ListenCommand());
         commands.put("unlisten", new UnlistenCommand());
-
-        commands.put("ota", new OtaCommand());
-        commands.put("otafile", new OtaFileCommand());
 
         commands.put("lqi", new LqiCommand());
         commands.put("enroll", new EnrollCommand());
@@ -1161,110 +1150,6 @@ public final class ZigBeeConsole {
                 return true;
             }
 
-        }
-    }
-
-    /**
-     * Support for OTA server.
-     */
-    private class OtaCommand implements ConsoleCommand {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getDescription() {
-            return "Upgrade the firmware of a node using the OTA server.";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getSyntax() {
-            return "ota [ENDPOINT] [COMPLETE | FILE]";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, final PrintStream out) throws Exception {
-            if (args.length != 3) {
-                return false;
-            }
-
-            final ZigBeeEndpoint endpoint = getDevice(zigbeeApi, args[1]);
-            if (endpoint == null) {
-                print("Endpoint not found.", out);
-                return false;
-            }
-
-            // Check if the OTA server is already set
-            ZclOtaUpgradeServer otaServer = (ZclOtaUpgradeServer) endpoint
-                    .getApplication(ZclOtaUpgradeCluster.CLUSTER_ID);
-            if (otaServer == null) {
-                // Create and add the server
-                otaServer = new ZclOtaUpgradeServer();
-
-                endpoint.addApplication(otaServer);
-
-                otaServer.addListener(new ZigBeeOtaStatusCallback() {
-                    @Override
-                    public void otaStatusUpdate(ZigBeeOtaServerStatus status, int percent) {
-                        print("OTA status callback: " + status + ", percent=" + percent, out);
-                    }
-                });
-            }
-
-            if (args[2].toLowerCase().equals("complete")) {
-                otaServer.completeUpgrade();
-            } else {
-                Path file = FileSystems.getDefault().getPath("./", args[2]);
-                byte[] fileData = Files.readAllBytes(file);
-                ZigBeeOtaFile otaFile = new ZigBeeOtaFile(fileData);
-                print("OTA File: " + otaFile, out);
-
-                otaServer.setFirmware(otaFile);
-            }
-            return true;
-        }
-    }
-
-    /**
-     * Support for OTA server.
-     */
-    private class OtaFileCommand implements ConsoleCommand {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getDescription() {
-            return "Dump information about an OTA file.";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getSyntax() {
-            return "ota [FILE]";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length != 2) {
-                return false;
-            }
-
-            Path file = FileSystems.getDefault().getPath("./", args[1]);
-            byte[] fileData = Files.readAllBytes(file);
-
-            ZigBeeOtaFile otaFile = new ZigBeeOtaFile(fileData);
-            print("OTA File: " + otaFile, out);
-            return true;
         }
     }
 

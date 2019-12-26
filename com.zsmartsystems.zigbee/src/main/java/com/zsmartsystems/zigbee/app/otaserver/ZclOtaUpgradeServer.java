@@ -16,7 +16,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QueryNextImageResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +33,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageBlockCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageBlockResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImagePageCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QueryNextImageCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QueryNextImageResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.UpgradeEndCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.UpgradeEndResponse;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
@@ -102,7 +102,7 @@ import com.zsmartsystems.zigbee.zcl.field.ByteArray;
  * terminate.
  * </ul>
  * <p>
- * This class uses the {@link ZigBeeOtaCluster} which provides the low level commands.
+ * This class uses the {@link ZclOtaUpgradeCluster} which provides the low level commands.
  *
  * @author Chris Jackson
  */
@@ -366,7 +366,7 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
 
     /**
      * Tells the server to automatically upgrade the firmware once the transfer is completed.
-     * If autoUpgrade is not set, then the user must explicitly call {@link #doUpgrade} once the server
+     * If autoUpgrade is not set, then the user must explicitly call {@link #completeUpgrade} once the server
      * state has reached {@link ZigBeeOtaServerStatus#OTA_TRANSFER_COMPLETE}.
      * <p>
      * It has been observed that if the upgrade is not completed quickly after the completion of
@@ -604,7 +604,7 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
      */
     private boolean handleQueryNextImageCommand(QueryNextImageCommand command) {
 
-        if(otaFile == null) {
+        if (otaFile == null) {
             sendNoImageAvailableResponse(command);
             return true;
         }
@@ -617,9 +617,12 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
         }
 
         // Check that the file attributes are consistent with the file we have
-        if (!(command.getManufacturerCode().equals(otaFile.getManufacturerCode()) && command.getImageType().equals(
-                otaFile.getImageType()))) {
-            logger.debug("{} OTA Error: Request is inconsistent with OTA file.", cluster.getZigBeeAddress());
+        if (!(command.getManufacturerCode().equals(otaFile.getManufacturerCode())
+                && command.getImageType().equals(otaFile.getImageType()))) {
+            logger.debug("{} OTA Error: Request is inconsistent with OTA file - manufacturer={}/{}, imageType={}/{}",
+                    cluster.getZigBeeAddress(), String.format("%04X", otaFile.getManufacturerCode()),
+                    String.format("%04X", command.getManufacturerCode()), String.format("%02X", otaFile.getImageType()),
+                    String.format("%02X", command.getImageType()));
             sendNoImageAvailableResponse(command);
             return true;
         }
@@ -655,7 +658,7 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
     private void sendNoImageAvailableResponse(QueryNextImageCommand command) {
         QueryNextImageResponse response = new QueryNextImageResponse();
         response.setStatus(ZclStatus.NO_IMAGE_AVAILABLE);
-        cluster.sendResponse(command,response);
+        cluster.sendResponse(command, response);
     }
 
     /**
