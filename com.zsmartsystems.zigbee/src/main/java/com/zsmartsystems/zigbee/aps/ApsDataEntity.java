@@ -164,7 +164,7 @@ public class ApsDataEntity {
 
         // Check that we have fragmentation enabled and that this frame requires fragmenting
         // TODO: Don't fragment unicast or broadcast
-        if (apsFrame.getPayload().length < fragmentationLength || fragmentationWindow == 0) {
+        if (apsFrame.getPayload().length <= fragmentationLength || fragmentationWindow == 0) {
             transport.sendCommand(msgTag, apsFrame);
             return true;
         }
