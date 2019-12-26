@@ -79,6 +79,12 @@ public class ZigBeeApsFrame {
     private boolean securityEnable;
 
     /**
+     * The AckRequest parameter specifies whether the current transmission requires an acknowledgement frame to be sent
+     * be the recipient on receipt of the frame.
+     */
+    private boolean ackRequest;
+
+    /**
      * The destination endpoint field is 8-bits in length and specifies the endpoint of the final recipient of the
      * frame. This field shall be included in the frame only if the delivery mode sub-field of the frame control field
      * is set to 0b00 (normal unicast delivery), 0b01 (indirect delivery where the indirect address mode sub-field of
@@ -309,6 +315,24 @@ public class ZigBeeApsFrame {
         this.securityEnable = securityEnable;
     }
 
+    /**
+     * Gets Ack request state
+     *
+     * @return true if Ack is requested
+     */
+    public boolean getAckRequest() {
+        return ackRequest;
+    }
+
+    /**
+     * Sets Ack request state
+     *
+     * @param ackRequest true to request ACK from the recipient
+     */
+    public void setAckRequest(boolean ackRequest) {
+        this.ackRequest = ackRequest;
+    }
+
     // public boolean isDiscoverRoute() {
     // return discoverRoute;
     // }
@@ -407,6 +431,8 @@ public class ZigBeeApsFrame {
         builder.append(radius);
         builder.append(", apsSecurity=");
         builder.append(securityEnable);
+        builder.append(", ackRequest=");
+        builder.append(ackRequest);
         builder.append(", apsCounter=");
         if (apsCounter == -1) {
             builder.append("--");

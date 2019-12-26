@@ -204,6 +204,7 @@ public class ApsDataEntity {
             fragment.setCluster(apsFrame.getCluster());
             fragment.setApsCounter(apsFrame.getApsCounter());
             fragment.setSecurityEnabled(apsFrame.getSecurityEnabled());
+            fragment.setAckRequest(apsFrame.getAckRequest());
             fragment.setSourceAddress(apsFrame.getSourceAddress());
             fragment.setSourceEndpoint(apsFrame.getSourceEndpoint());
             fragment.setRadius(apsFrame.getRadius());

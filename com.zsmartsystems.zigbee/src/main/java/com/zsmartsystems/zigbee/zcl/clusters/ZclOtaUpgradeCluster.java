@@ -466,6 +466,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
             sendResponse(request, response);
         } else {
             response.setDisableDefaultResponse(true);
+            response.setAckRequest(false);
             send(response);
         }
     }

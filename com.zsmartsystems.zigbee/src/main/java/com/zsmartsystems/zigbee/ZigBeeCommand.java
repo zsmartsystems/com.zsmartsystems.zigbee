@@ -45,6 +45,11 @@ public class ZigBeeCommand {
     private boolean apsSecurity = false;
 
     /**
+     * True if APS Ack is requested. Default is true.
+     */
+    private boolean ackRequest = true;
+
+    /**
      * Gets destination address.
      *
      * @return the destination address.
@@ -114,6 +119,24 @@ public class ZigBeeCommand {
      */
     public boolean getApsSecurity() {
         return apsSecurity;
+    }
+
+    /**
+     * When set to true, the recipient is requested to send APS Acknowledgement frame. Default is true.
+     *
+     * @return the ackRequest flag - when set to true, the APS Ack is requested from the recipient
+     */
+    public boolean isAckRequest() {
+        return ackRequest;
+    }
+
+    /**
+     * When set to true, the recipient is requested to send APS Acknowledgement frame. Default is true.
+     *
+     * @param ackRequest true if the APS Ack is requested
+     */
+    public void setAckRequest(boolean ackRequest) {
+        this.ackRequest = ackRequest;
     }
 
     /**
