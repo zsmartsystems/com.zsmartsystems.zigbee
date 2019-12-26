@@ -317,17 +317,17 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @param imageSize {@link Integer} Image Size
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> queryNextImageResponse(ZclStatus status, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer imageSize) {
-        QueryNextImageResponse command = new QueryNextImageResponse();
+    public void queryNextImageResponse(QueryNextImageCommand request, ZclStatus status, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer imageSize) {
+        QueryNextImageResponse response = new QueryNextImageResponse();
 
         // Set the fields
-        command.setStatus(status);
-        command.setManufacturerCode(manufacturerCode);
-        command.setImageType(imageType);
-        command.setFileVersion(fileVersion);
-        command.setImageSize(imageSize);
+        response.setStatus(status);
+        response.setManufacturerCode(manufacturerCode);
+        response.setImageType(imageType);
+        response.setFileVersion(fileVersion);
+        response.setImageSize(imageSize);
 
-        return send(command);
+        sendResponse(request, response);
     }
 
     /**
@@ -451,18 +451,23 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @param imageData {@link ByteArray} Image Data
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> imageBlockResponse(ZclStatus status, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer fileOffset, ByteArray imageData) {
-        ImageBlockResponse command = new ImageBlockResponse();
+    public void imageBlockResponse(ZclCommand request, ZclStatus status, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer fileOffset, ByteArray imageData) {
+        ImageBlockResponse response = new ImageBlockResponse();
 
         // Set the fields
-        command.setStatus(status);
-        command.setManufacturerCode(manufacturerCode);
-        command.setImageType(imageType);
-        command.setFileVersion(fileVersion);
-        command.setFileOffset(fileOffset);
-        command.setImageData(imageData);
+        response.setStatus(status);
+        response.setManufacturerCode(manufacturerCode);
+        response.setImageType(imageType);
+        response.setFileVersion(fileVersion);
+        response.setFileOffset(fileOffset);
+        response.setImageData(imageData);
 
-        return send(command);
+        if (request != null) {
+            sendResponse(request, response);
+        } else {
+            response.setDisableDefaultResponse(true);
+            send(response);
+        }
     }
 
     /**
