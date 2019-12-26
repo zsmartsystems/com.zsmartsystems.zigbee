@@ -946,6 +946,7 @@ public class ZigBeeNetworkManagerTest
         assertEquals(ZigBeeNetworkState.INITIALISING, manager.getNetworkState());
 
         manager.shutdown();
+        Mockito.verify(databaseManager, Mockito.times(1)).nodeUpdated(node);
         Mockito.verify(mockedTransport, Mockito.timeout(TIMEOUT).times(1)).shutdown();
         Mockito.verify(databaseManager, Mockito.times(1)).shutdown();
 

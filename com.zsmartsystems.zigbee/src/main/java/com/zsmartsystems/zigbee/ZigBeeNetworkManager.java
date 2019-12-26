@@ -678,6 +678,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
 
         for (ZigBeeNode node : networkNodes.values()) {
+            databaseManager.nodeUpdated(node);
             node.shutdown();
         }
 
