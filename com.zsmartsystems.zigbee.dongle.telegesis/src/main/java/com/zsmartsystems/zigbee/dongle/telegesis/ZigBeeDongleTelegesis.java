@@ -415,7 +415,14 @@ public class ZigBeeDongleTelegesis
             builder.append(productInfo.getFirmwareRevision());
             versionString = builder.toString();
 
+            if (!productInfo.getFirmwareRevision().startsWith("309")) {
+                logger.error("Telegesis driver will not work with R{}, R309 is required",
+                        productInfo.getFirmwareRevision());
+                return ZigBeeStatus.FAILURE;
+            }
             ieeeAddress = productInfo.getIeeeAddress();
+        } else {
+            logger.info("Unable to read Telegesis dongle firmware version");
         }
 
         return ZigBeeStatus.SUCCESS;
