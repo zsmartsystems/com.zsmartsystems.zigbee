@@ -83,7 +83,7 @@ import com.zsmartsystems.zigbee.zcl.field.ByteArray;
  * <li>... repeat to end of transfer
  * <li>Client sends <i>Upgrade End Request</i>. Status set to {@link ZigBeeOtaServerStatus#OTA_TRANSFER_COMPLETE}.
  * <li>Server waits for {@link #completeUpgrade()} to be called unless {@link ZclOtaUpgradeServer#autoUpgrade} is true.
- * <li>Server checks the client state. If it is {@link ImageUpgradeStatus.DOWNLOAD_COMPLETE} it sends <i>Upgrade End
+ * <li>Server checks the client state. If it is {@link ImageUpgradeStatus#DOWNLOAD_COMPLETE} it sends <i>Upgrade End
  * Response</i>.
  * <li>Client should respond with the default response, but this may not always be implemented as the device may start
  * to run the new firmware. Status set to {@link ZigBeeOtaServerStatus#OTA_UPGRADE_FIRMWARE_RESTARTING}.
@@ -102,7 +102,7 @@ import com.zsmartsystems.zigbee.zcl.field.ByteArray;
  * terminate.
  * </ul>
  * <p>
- * This class uses the {@link ZigBeeOtaCluster} which provides the low level commands.
+ * This class uses the {@link ZclOtaUpgradeCluster} which provides the low level commands.
  *
  * @author Chris Jackson
  */
@@ -366,7 +366,7 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
 
     /**
      * Tells the server to automatically upgrade the firmware once the transfer is completed.
-     * If autoUpgrade is not set, then the user must explicitly call {@link #doUpgrade} once the server
+     * If autoUpgrade is not set, then the user must explicitly call {@link #completeUpgrade} once the server
      * state has reached {@link ZigBeeOtaServerStatus#OTA_TRANSFER_COMPLETE}.
      * <p>
      * It has been observed that if the upgrade is not completed quickly after the completion of
@@ -514,15 +514,16 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
     /**
      * Sends an image block to the client
      *
+     * @param request the request command
      * @param fileOffset the offset into the {@link ZigBeeOtaFile} to send the block
      * @param maximumDataSize the maximum data size the client can accept
      * @return the number of bytes sent
      */
-    private int sendImageBlock(int fileOffset, int maximumDataSize) {
+    private int sendImageBlock(ZclCommand request, int fileOffset, int maximumDataSize) {
         ByteArray imageData = otaFile.getImageData(fileOffset, Math.min(dataSize, maximumDataSize));
         logger.debug("{} OTA Data: Sending {} bytes at offset {}", cluster.getZigBeeAddress(), imageData.size(),
                 fileOffset);
-        cluster.imageBlockResponse(ZclStatus.SUCCESS, otaFile.getManufacturerCode(), otaFile.getImageType(),
+        cluster.imageBlockResponse(request, ZclStatus.SUCCESS, otaFile.getManufacturerCode(), otaFile.getImageType(),
                 otaFile.getFileVersion(), fileOffset, imageData);
 
         return imageData.size();
@@ -531,23 +532,21 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
     /**
      * Handles the sending of {@link ImageBlockResponse} following a {@link ImagePageCommand}
      *
-     * @param pageOffset the starting offset for the page
-     * @param pageLength the length of the page
-     * @param maximumDataSize the maximum size of each data block
-     * @param responseSpacing the delay between each block response in milliseconds
+     * @param request the request command
      */
-    private void doPageResponse(final int pageOffset, final int pageLength, final int maximumDataSize,
-            final int responseSpacing) {
+    private void doPageResponse(ImagePageCommand request) {
 
         class PageSender implements Runnable {
+            private ImagePageCommand request;
             private int pagePosition;
             private final int pageEnd;
             private final int maximumDataSize;
 
-            PageSender(final int pageOffset, final int pageLength, final int maximumDataSize) {
-                this.pagePosition = pageOffset;
-                this.pageEnd = pageOffset + pageLength;
-                this.maximumDataSize = maximumDataSize;
+            PageSender(ImagePageCommand request) {
+                this.request = request;
+                this.pagePosition = request.getFileOffset();
+                this.pageEnd = request.getFileOffset() + request.getPageSize();
+                this.maximumDataSize = request.getMaximumDataSize();
 
                 // Stop the timer - restart it once the page has been sent
                 // Restart the timer
@@ -558,7 +557,11 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
             public void run() {
                 // Send the block response
                 // TODO: Ideally we should disable APS retry for page requests
-                int dataSent = sendImageBlock(pagePosition, maximumDataSize);
+                int dataSent = sendImageBlock(request, pagePosition, maximumDataSize);
+
+                // Refer to request only in a first block set.
+                // Following blocks will have incremental sequence id so we null request ref here
+                request = null;
 
                 // If dataSent is 0, then we either reached the end of file, or there was an error
                 // Either way, let's abort!
@@ -580,7 +583,6 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
                 }
             }
         }
-        ;
 
         synchronized (pageScheduledExecutor) {
             // Stop our task if it's running
@@ -589,9 +591,9 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
             }
 
             // Start the new task
-            PageSender pageSender = new PageSender(pageOffset, pageLength, maximumDataSize);
-            scheduledPageTask = pageScheduledExecutor.scheduleAtFixedRate(pageSender, responseSpacing, responseSpacing,
-                    TimeUnit.MILLISECONDS);
+            PageSender pageSender = new PageSender(request);
+            scheduledPageTask = pageScheduledExecutor.scheduleAtFixedRate(pageSender, request.getResponseSpacing(),
+                    request.getResponseSpacing(), TimeUnit.MILLISECONDS);
         }
     }
 
@@ -646,7 +648,7 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
         updateStatus(ZigBeeOtaServerStatus.OTA_TRANSFER_IN_PROGRESS);
         startTransferTimer();
 
-        cluster.queryNextImageResponse(ZclStatus.SUCCESS, otaFile.getManufacturerCode(), otaFile.getImageType(),
+        cluster.queryNextImageResponse(command, ZclStatus.SUCCESS, otaFile.getManufacturerCode(), otaFile.getImageType(),
                 otaFile.getFileVersion(), otaFile.getImageSize());
 
         return true;
@@ -698,8 +700,7 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
             return true;
         }
 
-        doPageResponse(command.getFileOffset(), command.getPageSize(), command.getMaximumDataSize(),
-                command.getResponseSpacing());
+        doPageResponse(command);
 
         return true;
     }
@@ -757,7 +758,7 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
         }
 
         // Send the block response
-        sendImageBlock(command.getFileOffset(), command.getMaximumDataSize());
+        sendImageBlock(command, command.getFileOffset(), command.getMaximumDataSize());
         return true;
     }
 

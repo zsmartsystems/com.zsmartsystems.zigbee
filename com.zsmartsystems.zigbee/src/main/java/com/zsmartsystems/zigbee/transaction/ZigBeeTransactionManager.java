@@ -651,11 +651,13 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
                     // Check if we've reached the maximum number of commands we can send
                     if (outstandingTransactions.size() >= maxOutstandingTransactions) {
                         sendDone = true;
+                        logger.debug("Max outstanding transactions limit exceeded");
                         break;
                     }
 
                     // If this is a sleepy queue, and we've exceeded the sleepy transmissions, then ignore the queue
                     if (queue.isSleepy() && sleepyTransactions >= maxSleepyTransactions) {
+                        logger.debug("Max sleeping transactions limit exceeded");
                         continue;
                     }
 
