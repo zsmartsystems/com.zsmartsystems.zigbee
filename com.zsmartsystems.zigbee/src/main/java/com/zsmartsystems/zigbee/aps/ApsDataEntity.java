@@ -204,6 +204,7 @@ public class ApsDataEntity {
             fragment.setCluster(apsFrame.getCluster());
             fragment.setApsCounter(apsFrame.getApsCounter());
             fragment.setSecurityEnabled(apsFrame.getSecurityEnabled());
+            fragment.setAckRequest(apsFrame.getAckRequest());
             fragment.setSourceAddress(apsFrame.getSourceAddress());
             fragment.setSourceEndpoint(apsFrame.getSourceEndpoint());
             fragment.setRadius(apsFrame.getRadius());
@@ -258,12 +259,18 @@ public class ApsDataEntity {
         logger.debug("receiveCommandState tag={}, fragmentBase={}, fragmentOutstanding={}", msgTag,
                 outgoingFrame.getFragmentBase(), outgoingFrame.getFragmentOutstanding());
 
-        // TX ACK doesn't mean the frame was delivered so it should be ignored.
-        if (state == ZigBeeTransportProgressState.RX_ACK) {
+        // The frame was not APS ACK requested so the TX ACK means the fragment is complete
+        if (state == ZigBeeTransportProgressState.TX_ACK && !outgoingFrame.getAckRequest()) {
             outgoingFrame.oneFragmentCompleted();
         }
 
-        if (state == ZigBeeTransportProgressState.TX_ACK &&
+        // We need to check if the frame was APS ACK requested as we may still receive RX_ACK for frames that
+        // were not APS ACK requested due to some dongles not supporting disabling APS ACKs
+        if (state == ZigBeeTransportProgressState.RX_ACK && outgoingFrame.getAckRequest()) {
+            outgoingFrame.oneFragmentCompleted();
+        }
+
+        if (state == ZigBeeTransportProgressState.TX_ACK && outgoingFrame.getAckRequest() &&
                 outgoingFrame.getFragmentBase() + 1 == outgoingFrame.getFragmentTotal()) {
             logger.debug("TX ACKed for last block in frame: {}", outgoingFrame);
             return true;

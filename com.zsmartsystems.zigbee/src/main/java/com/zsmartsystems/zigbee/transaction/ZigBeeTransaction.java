@@ -455,7 +455,7 @@ public class ZigBeeTransaction {
                     break;
                 case TX_ACK:
                     // If we aren't waiting for a response, then we're done
-                    if (responseMatcher == null) {
+                    if (responseMatcher == null || command.isAckRequest() == false) {
                         completeTransaction(null);
                         break;
                     }

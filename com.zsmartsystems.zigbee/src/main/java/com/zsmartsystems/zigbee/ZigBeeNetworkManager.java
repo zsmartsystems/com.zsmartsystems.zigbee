@@ -792,6 +792,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         apsFrame.setCluster(command.getClusterId());
         apsFrame.setApsCounter(apsCounter.getAndIncrement() & 0xff);
         apsFrame.setSecurityEnabled(command.getApsSecurity());
+        apsFrame.setAckRequest(command.isAckRequest());
 
         // TODO: Set the source address correctly?
         apsFrame.setSourceAddress(localNwkAddress);
