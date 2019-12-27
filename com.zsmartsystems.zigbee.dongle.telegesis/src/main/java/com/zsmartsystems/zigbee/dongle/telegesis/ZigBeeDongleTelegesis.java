@@ -342,7 +342,7 @@ public class ZigBeeDongleTelegesis
     private final int defaultS10 = 0x56A9;
 
     /**
-     * Map used to correlate the Telegesis sequence IDs with the APS counter we use to correlate messages in the stack
+     * Map used to correlate the Telegesis sequence IDs with the Transaction ID we use to correlate messages in the stack
      */
     private Map<Integer, Integer> messageIdMap = new ConcurrentHashMap<>();
 

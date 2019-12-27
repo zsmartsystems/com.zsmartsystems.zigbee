@@ -11,6 +11,8 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,8 +40,11 @@ import com.zsmartsystems.zigbee.dongle.cc2531.network.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.impl.CommandInterfaceImpl;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolCMD;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
+import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_DATA_CONFIRM;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_DATA_REQUEST;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_DATA_REQUEST_EXT;
+import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_DATA_SRSP;
+import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_DATA_SRSP_EXT;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_INCOMING_MSG;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_REGISTER;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.af.AF_REGISTER_SRSP;
@@ -47,6 +52,7 @@ import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfigOption;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
+import com.zsmartsystems.zigbee.transport.ZigBeeTransportProgressState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.zdo.SynchronousResponse;
@@ -82,6 +88,11 @@ public class ZigBeeDongleTiCc2531
 
     private final HashMap<Integer, Integer> sender2EndPoint = new HashMap<Integer, Integer>();
     private final HashMap<Integer, Integer> endpoint2Profile = new HashMap<Integer, Integer>();
+
+    /**
+     * Map used to correlate the APS sequence IDs with the Transaction IDs we use to correlate messages in the stack
+     */
+    private Map<Integer, Integer> messageIdMap = new ConcurrentHashMap<>();
 
     private int[] supportedInputClusters = new int[] {};
     private int[] supportedOutputClusters = new int[] {};
@@ -293,17 +304,23 @@ public class ZigBeeDongleTiCc2531
             } else {
                 sender = (short) getSendingEndpoint(apsFrame.getProfile());
             }
+            ZigBeeTransportProgressState state;
 
             // TODO: How to differentiate group and device addressing?????
             boolean groupCommand = false;
             if (!groupCommand) {
-                networkManager.sendCommand(new AF_DATA_REQUEST(apsFrame.getDestinationAddress(),
+                messageIdMap.put(apsFrame.getApsCounter(), msgTag);
+                ZToolPacket response = networkManager.sendCommand(new AF_DATA_REQUEST(apsFrame.getDestinationAddress(),
                         (short) apsFrame.getDestinationEndpoint(), sender, apsFrame.getCluster(),
                         apsFrame.getApsCounter(), (byte) 0x30, (byte) apsFrame.getRadius(), apsFrame.getPayload()));
+                state = (response == null || ((AF_DATA_SRSP)response).Status != 0) ? ZigBeeTransportProgressState.TX_NAK : ZigBeeTransportProgressState.TX_ACK;
             } else {
-                networkManager.sendCommand(new AF_DATA_REQUEST_EXT(apsFrame.getDestinationAddress(), sender,
+                ZToolPacket response = networkManager.sendCommand(new AF_DATA_REQUEST_EXT(apsFrame.getDestinationAddress(), sender,
                         apsFrame.getCluster(), apsFrame.getApsCounter(), (byte) (0), (byte) 0, apsFrame.getPayload()));
+                state = (response == null || ((AF_DATA_SRSP_EXT)response).getStatus() != 0) ? ZigBeeTransportProgressState.TX_NAK : ZigBeeTransportProgressState.TX_ACK;
             }
+
+            zigbeeNetworkReceive.receiveCommandState(msgTag, state);
         }
     }
 
@@ -336,31 +353,15 @@ public class ZigBeeDongleTiCc2531
             return;
         }
 
-        switch (packet.getCommandSubsystem()) {
-            case AF:
-                return;
-            /*
-             * logger.debug("AF!!!!!!!!!!!!");
-             * AF_INCOMING_MSG afPacket = new AF_INCOMING_MSG(packet.getPacket());
-             *
-             * ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
-             * apsFrame.setCluster(0);
-             * apsFrame.setDestinationEndpoint(afPacket.getDstEndpoint());
-             * apsFrame.setSourceEndpoint(afPacket.getSrcEndpoint());
-             * apsFrame.setProfile(ApplicationFrameworkLayer.getAFLayer(networkManager)
-             * .getSenderEndpointProfileId(afPacket.getDstEndpoint(), afPacket.getClusterId()));
-             *
-             * ZigBeeNwkHeader nwkHeader = new ZigBeeNwkHeader();
-             * // nwkHeader.setDestinationAddress(clusterMessage.geta);
-             * nwkHeader.setSourceAddress(afPacket.getSrcAddr());
-             * nwkHeader.setSequence(afPacket.getTransId());
-             */
-            // zigbeeNetworkReceive.receiveCommand(apsFrame);
-            // break;
-            case ZDO:
-                break;
-            default:
-                break;
+        if (packet.getCMD().get16BitValue() == ZToolCMD.AF_DATA_CONFIRM) {
+            AF_DATA_CONFIRM p = ((AF_DATA_CONFIRM) packet);
+            if (messageIdMap.containsKey(p.TransID)) {
+                zigbeeNetworkReceive.receiveCommandState(messageIdMap.remove(p.TransID),
+                        p.Status == 0 ? ZigBeeTransportProgressState.RX_ACK : ZigBeeTransportProgressState.RX_NAK);
+            } else {
+                logger.debug("No sequence correlated for ACK messageId {}", p.TransID);
+            }
+            return;
         }
 
         ZigBeeApsFrame apsFrame = null;
