@@ -671,12 +671,17 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     public void shutdown() {
         logger.debug("ZigBeeNetworkManager shutdown: networkState={}", networkState);
 
+        // To avoid deferred writes, set the deferred write time to 0.
+        databaseManager.setDeferredWriteTime(0);
+        databaseManager.setMaxDeferredWriteTime(0);
+
         setNetworkState(ZigBeeNetworkState.SHUTDOWN);
 
         if (clusterMatcher != null) {
             clusterMatcher.shutdown();
         }
 
+        // Write out all nodes to the data store.
         for (ZigBeeNode node : networkNodes.values()) {
             databaseManager.nodeUpdated(node);
             node.shutdown();
