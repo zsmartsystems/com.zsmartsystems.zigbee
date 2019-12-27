@@ -128,7 +128,7 @@ public class ZigBeeConsoleMain {
         options.addOption(
                 Option.builder("e").longOpt("epan").hasArg().argName("EPAN ID").desc("Set the ZigBee EPAN ID").build());
         options.addOption(Option.builder("n").longOpt("nwkkey").hasArg().argName("key")
-                .desc("Set the ZigBee Network key (defaults to randon value)").build());
+                .desc("Set the ZigBee Network key (defaults to random value)").build());
         options.addOption(Option.builder("o").longOpt("nwkkeyoutcnt").hasArg().argName("counter")
                 .desc("Set the ZigBee Network key outgoing frame counter").build());
         options.addOption(Option.builder("l").longOpt("linkkey").hasArg().argName("key")
