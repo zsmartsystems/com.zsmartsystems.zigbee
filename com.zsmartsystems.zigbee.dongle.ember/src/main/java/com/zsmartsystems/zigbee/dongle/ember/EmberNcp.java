@@ -137,7 +137,7 @@ public class EmberNcp {
     /**
      * The protocol handler used to send and receive EZSP packets
      */
-    private EzspProtocolHandler protocolHandler;
+    private final EzspProtocolHandler protocolHandler;
 
     /**
      * The status value from the last request

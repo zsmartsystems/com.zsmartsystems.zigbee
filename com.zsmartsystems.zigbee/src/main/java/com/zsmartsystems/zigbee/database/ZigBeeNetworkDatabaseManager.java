@@ -194,7 +194,7 @@ public class ZigBeeNetworkDatabaseManager implements ZigBeeNetworkNodeListener {
      * the network is saved.
      */
     public void shutdown() {
-        logger.debug("Data store: Shutting down.");
+        logger.debug("Data store: Shutdown");
         networkManager.removeNetworkNodeListener(this);
         executorService.shutdown();
         try {
