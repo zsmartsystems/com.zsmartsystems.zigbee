@@ -54,7 +54,7 @@ public class EmberMfglib {
     /**
      * The frame handler used to send the EZSP frames to the NCP
      */
-    private EzspProtocolHandler protocolHandler;
+    private final EzspProtocolHandler protocolHandler;
 
     /**
      * Constructor for {@link EmberMfglib} taking an instance of the {@link EzspProtocolHandler} that has been opened to

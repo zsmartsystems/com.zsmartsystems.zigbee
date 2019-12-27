@@ -395,7 +395,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     @Override
     public ZigBeeStatus initialize() {
-        logger.debug("EZSP dongle initialize with protocol {}.", protocol);
+        logger.debug("EZSP Dongle: Initialize with protocol {}.", protocol);
         zigbeeTransportReceive.setTransportState(ZigBeeTransportState.INITIALISING);
 
         if (protocol != EmberSerialProtocol.NONE && !initialiseEzspProtocol()) {
@@ -438,18 +438,18 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         ncp.getNetworkParameters();
 
-        logger.debug("EZSP dongle initialize done");
+        logger.debug("EZSP Dongle: initialize done");
 
         return ZigBeeStatus.SUCCESS;
     }
 
     @Override
     public ZigBeeStatus startup(boolean reinitialize) {
-        logger.debug("EZSP dongle startup. reinitialize={}", reinitialize);
+        logger.debug("EZSP Dongle: Startup - reinitialize={}", reinitialize);
 
         // If frameHandler is null then the serial port didn't initialise or startup has not been called
         if (frameHandler == null) {
-            logger.error("Initialising Ember Dongle but low level handler is not initialised.");
+            logger.error("EZSP Dongle: Startup found low level handler is not initialised.");
             return ZigBeeStatus.INVALID_STATE;
         }
 
@@ -508,7 +508,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         if (address != 0xFFFE) {
             nwkAddress = address;
         }
-        logger.debug("EZSP Startup complete. NWK Address = {}, State = {}", String.format("%04X", nwkAddress),
+        logger.debug("EZSP Dongle: Startup complete. NWK Address = {}, State = {}", String.format("%04X", nwkAddress),
                 networkState);
 
         // At this stage, we will now take note of the EzspStackStatusHandler notifications
@@ -607,14 +607,12 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     @Override
     public void shutdown() {
+        logger.debug("EZSP Dongle: Shutdown");
         if (frameHandler == null) {
+            logger.debug("EZSP Dongle: Shutdown frameHandler is null");
             return;
         }
-        logger.debug("Ember NCP Shutdown");
         frameHandler.setClosing();
-        frameHandler.close();
-        serialPort.close();
-        frameHandler = null;
 
         if (mfglibListener != null) {
             mfglibListener = null;
@@ -627,6 +625,10 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         if (executorService != null) {
             executorService.shutdownNow();
         }
+
+        frameHandler.close();
+        serialPort.close();
+        frameHandler = null;
     }
 
     /**
@@ -1164,11 +1166,11 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     private boolean initialiseEzspProtocol() {
         if (frameHandler != null) {
-            logger.error("Attempt to initialise Ember dongle when already initialised");
+            logger.error("EZSP Dongle: Attempt to initialise Ember dongle when already initialised");
             return false;
         }
         if (!serialPort.open()) {
-            logger.error("Unable to open Ember serial port");
+            logger.error("EZSP Dongle: Unable to open serial port");
             return false;
         }
 
@@ -1182,7 +1184,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             case NONE:
                 return true;
             default:
-                logger.error("Unknown Ember serial protocol {}", protocol);
+                logger.error("EZSP Dongle: Unknown serial protocol {}", protocol);
                 return false;
         }
 
@@ -1202,14 +1204,14 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         // Any failure to respond here indicates a failure of the ASH or EZSP layers to initialise
         EzspVersionResponse version = ncp.getVersion(4);
         if (version == null) {
-            logger.debug("Version returned null. ASH/EZSP not initialised.");
+            logger.debug("EZSP Dongle: Version returned null. ASH/EZSP not initialised.");
             return false;
         }
 
         if (version.getProtocolVersion() != EzspFrame.getEzspVersion()) {
             // The device supports a different version that we current have set
             if (!EzspFrame.setEzspVersion(version.getProtocolVersion())) {
-                logger.error("NCP requires unsupported version of EZSP (required = V{}, supported = V{})",
+                logger.error("EZSP Dongle: NCP requires unsupported version of EZSP (required = V{}, supported = V{})",
                         version.getProtocolVersion(), EzspFrame.getEzspVersion());
                 return false;
             }

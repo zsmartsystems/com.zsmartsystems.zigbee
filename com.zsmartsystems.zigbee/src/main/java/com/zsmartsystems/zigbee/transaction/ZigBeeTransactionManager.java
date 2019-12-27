@@ -186,7 +186,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      * Shuts down the manager and releases all resources
      */
     public void shutdown() {
-        logger.debug("Shutting down transaction manager");
+        logger.debug("Transaction Manager: Shutdown");
 
         networkManager.removeNetworkNodeListener(this);
 

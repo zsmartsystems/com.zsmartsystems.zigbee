@@ -771,7 +771,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
             futureResponse.get();
         } catch (InterruptedException | ExecutionException e) {
             futureResponse.cancel(true);
-            logger.debug("ASH interrupted in sendRequest: ", e);
+            logger.debug("ASH interrupted in sendRequest while sending {}", ezspTransaction.getRequest());
         }
 
         return ezspTransaction;
