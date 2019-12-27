@@ -125,11 +125,18 @@ public class ZigBeeNetworkDatabaseManager implements ZigBeeNetworkNodeListener {
      * @param deferredWriteTime the number of milliseconds to wait before writing to the store
      */
     public void setDeferredWriteTime(int deferredWriteTime) {
+        logger.debug("Data store: Deferred Write Time set to {}ms", deferredWriteTime);
+
         if (deferredWriteTime > DEFERRED_WRITE_TIMEOUT_MAX) {
             this.deferredWriteTime = DEFERRED_WRITE_TIMEOUT_MAX;
-            return;
+        } else {
+            this.deferredWriteTime = deferredWriteTime;
         }
-        this.deferredWriteTime = deferredWriteTime;
+
+        if (this.deferredWriteTimeout > TimeUnit.MILLISECONDS.toNanos(this.deferredWriteTime)) {
+            logger.debug("Data store: Deferred Write Time set less than Max Deferred Write Time");
+            this.deferredWriteTimeout = TimeUnit.MILLISECONDS.toNanos(this.deferredWriteTime);
+        }
     }
 
     /**
@@ -139,12 +146,19 @@ public class ZigBeeNetworkDatabaseManager implements ZigBeeNetworkNodeListener {
      * @param deferredWriteMax the maximum number of milliseconds that writes will be deferred
      */
     public void setMaxDeferredWriteTime(int deferredWriteMax) {
+        logger.debug("Data store: Max Deferred Write Time set to {}ms", deferredWriteMax);
+
+        // Note that internally this is stored in nanoseconds
         if (deferredWriteMax > DEFERRED_WRITE_TIMEOUT_MAX) {
             this.deferredWriteTimeout = TimeUnit.MILLISECONDS.toNanos(DEFERRED_WRITE_TIMEOUT_MAX);
-            return;
+        } else {
+            this.deferredWriteTimeout = TimeUnit.MILLISECONDS.toNanos(deferredWriteMax);
         }
-        // Note that internally this is stored in nanoseconds
-        this.deferredWriteTimeout = TimeUnit.MILLISECONDS.toNanos(deferredWriteMax);
+
+        if (TimeUnit.NANOSECONDS.toMillis(this.deferredWriteTimeout) < this.deferredWriteTime) {
+            logger.debug("Data store: Max Deferred Time set less than Write Time");
+            this.deferredWriteTime = (int) TimeUnit.NANOSECONDS.toMillis(this.deferredWriteTimeout);
+        }
     }
 
     /**
