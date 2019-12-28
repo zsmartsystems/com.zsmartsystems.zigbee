@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.autocode.xml;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -17,6 +18,7 @@ import java.util.List;
 public class ZigBeeXmlCommand {
     public Integer code;
     public String source;
+    public Optional<String> responseTo;
     public String name;
     public List<ZigBeeXmlDescription> description;
     public List<ZigBeeXmlField> fields;

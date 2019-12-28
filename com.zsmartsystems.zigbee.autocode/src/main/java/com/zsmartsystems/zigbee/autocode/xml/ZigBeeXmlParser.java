@@ -11,6 +11,7 @@ import java.io.File;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.TreeMap;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -20,6 +21,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import static org.apache.commons.lang.StringUtils.stripToNull;
 
 /**
  * XML file parser - reads the XML cluster definitions
@@ -194,6 +197,7 @@ public class ZigBeeXmlParser {
                 command.name = e.getAttribute("name").trim();
                 command.code = getInteger(e.getAttribute("code")).intValue();
                 command.source = e.getAttribute("source");
+                command.responseTo = Optional.ofNullable(stripToNull(e.getAttribute("responseTo")));
 
                 for (int temp = 0; temp < nodes.getLength(); temp++) {
                     if (nodes.item(temp).getNodeName().equals("name")) {

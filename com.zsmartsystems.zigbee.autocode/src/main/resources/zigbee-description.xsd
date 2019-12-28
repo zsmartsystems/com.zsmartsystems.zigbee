@@ -52,6 +52,7 @@
 						</xs:sequence>
 						<xs:attribute type="xs:string" name="code" use="optional" />
 						<xs:attribute type="xs:string" name="source" use="optional" />
+						<xs:attribute type="xs:string" name="responseTo" use="optional" />
 					</xs:complexType>
 				</xs:element>
 				<xs:element name="attribute" maxOccurs="unbounded" minOccurs="0">

@@ -67,7 +67,7 @@
             </conditional>
         </field>
     </command>
-    <command code="0x02" source="server">
+    <command code="0x02" source="server" responseTo="Query Next Image Command">
         <name>Query Next Image Response</name>
         <description>The upgrade server sends a Query Next Image Response with one of the following status: SUCCESS, NO_IMAGE_AVAILABLE or NOT_AUTHORIZED. When a SUCCESS status is sent, it is considered to be the explicit authorization to a device by the upgrade server that the device may upgrade to a specific software image. &lt;br&gt; A status of NO_IMAGE_AVAILABLE indicates that the server is authorized to upgrade the client but it currently does not have the (new) OTA upgrade image available for the client. For all clients (both ZR and ZED)9 , they shall continue sending Query Next Image Requests to the server periodically until an image becomes available. &lt;br&gt; A status of NOT_AUTHORIZED indicates the server is not authorized to upgrade the client. In this case, the client may perform discovery again to find another upgrade server. The client may implement an intelligence to avoid querying the same unauthorized server.</description>
         <field type="ZCL_STATUS" class="StatusEnum">
@@ -180,7 +180,7 @@
             </conditional>
         </field>
     </command>
-    <command code="0x05" source="server">
+    <command code="0x05" source="server" responseTo="Zcl Command">
         <name>Image Block Response</name>
         <description>Upon receipt of an Image Block Request command the server shall generate an Image Block Response. If the server is able to retrieve the data for the client and does not wish to change the image download rate, it will respond with a status of SUCCESS and it will include all the fields in the payload. The use of file offset allows the server to send packets with variable data size during the upgrade process. This allows the server to support a case when the network topology of a client may change during the upgrade process, for example, mobile client may move around during the upgrade process. If the client has moved a few hops away, the data size shall be smaller. Moreover, using file offset eliminates the need for data padding since each Image Block Response command may contain different data size. A simple server implementation may choose to only support largest possible data size for the worst-case scenario in order to avoid supporting sending packets with variable data size. &lt;br&gt; The server shall respect the maximum data size value requested by the client and shall not send the data with length greater than that value. The server may send the data with length smaller than the value depending on the network topology of the client. For example, the client may be able to receive 100 bytes of data at once so it sends the request with 100 as maximum data size. But after considering all the security headers (perhaps from both APS and network levels) and source routing overhead (for example, the client is five hops away), the largest possible data size that the server can send to the client shall be smaller than 100 bytes.</description>
         <field type="ZCL_STATUS" class="StatusEnum">

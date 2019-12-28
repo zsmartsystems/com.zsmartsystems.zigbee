@@ -21,6 +21,8 @@ import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlCluster;
 import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlCommand;
 import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlField;
 
+import static java.util.stream.Collectors.joining;
+
 /**
  *
  * @author Chris Jackson (zsmartsystems.com)
@@ -390,27 +392,39 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
             out.println("     *");
 
             final LinkedList<ZigBeeXmlField> fields = new LinkedList<ZigBeeXmlField>(command.fields);
+
+            if (command.responseTo.isPresent()) {
+                out.println("     * @param request {@link " + stringToUpperCamelCase(command.responseTo.get())
+                        + " A request that this command replies to");
+            }
             for (final ZigBeeXmlField field : fields) {
                 out.println("     * @param " + stringToLowerCamelCase(field.name) + " {@link " + getDataTypeClass(field)
                         + "} " + field.name);
             }
 
-            out.println("     * @return the {@link Future<CommandResult>} command result future");
-            out.println("     */");
-            out.print("    public Future<CommandResult> " + stringToLowerCamelCase(command.name) + "(");
-
-            boolean first = true;
-            for (final ZigBeeXmlField field : fields) {
-                if (first == false) {
-                    out.print(", ");
-                }
-                out.print(getDataTypeClass(field) + " " + stringToLowerCamelCase(field.name));
-                first = false;
+            if (!command.responseTo.isPresent()) {
+                out.println("     * @return the {@link Future<CommandResult>} command result future");
             }
+            out.println("     */");
+            if (command.responseTo.isPresent()) {
+                out.print("    public void " + stringToLowerCamelCase(command.name) + "(");
+            } else {
+                out.print("    public Future<CommandResult> " + stringToLowerCamelCase(command.name) + "(");
+            }
+
+            String requestArg = command.responseTo.map(responseTo -> stringToUpperCamelCase(responseTo) + " request, ").orElse("");
+            String fieldsArgs = fields.stream()
+                    .map(field -> getDataTypeClass(field) + " " + stringToLowerCamelCase(field.name))
+                    .collect(joining(", "));
+            out.print(requestArg + fieldsArgs);
 
             out.println(") {");
             if (fields.size() == 0) {
-                out.println("        return send(new " + stringToUpperCamelCase(command.name) + "());");
+                if (command.responseTo.isPresent()) {
+                    out.println("        sendResponse(request, new " + stringToUpperCamelCase(command.name) + "());");
+                } else {
+                    out.println("        return send(new " + stringToUpperCamelCase(command.name) + "());");
+                }
             } else {
                 out.println("        " + stringToUpperCamelCase(command.name) + " command = new "
                         + stringToUpperCamelCase(command.name) + "();");
@@ -422,7 +436,11 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
                             + stringToLowerCamelCase(field.name) + ");");
                 }
                 out.println();
-                out.println("        return send(command);");
+                if (command.responseTo.isPresent()) {
+                    out.println("        sendResponse(request, command);");
+                } else {
+                    out.println("        return send(command);");
+                }
             }
             out.println("    }");
         }

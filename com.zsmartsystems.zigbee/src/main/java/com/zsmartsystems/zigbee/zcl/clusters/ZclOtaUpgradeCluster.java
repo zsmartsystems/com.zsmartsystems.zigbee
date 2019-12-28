@@ -63,7 +63,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-28T01:54:47Z")
 public class ZclOtaUpgradeCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -310,24 +310,24 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * may perform discovery again to find another upgrade server. The client may implement an
      * intelligence to avoid querying the same unauthorized server.
      *
+     * @param request {@link QueryNextImageCommand A request that this command replies to
      * @param status {@link ZclStatus} Status
      * @param manufacturerCode {@link Integer} Manufacturer Code
      * @param imageType {@link Integer} Image Type
      * @param fileVersion {@link Integer} File Version
      * @param imageSize {@link Integer} Image Size
-     * @return the {@link Future<CommandResult>} command result future
      */
     public void queryNextImageResponse(QueryNextImageCommand request, ZclStatus status, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer imageSize) {
-        QueryNextImageResponse response = new QueryNextImageResponse();
+        QueryNextImageResponse command = new QueryNextImageResponse();
 
         // Set the fields
-        response.setStatus(status);
-        response.setManufacturerCode(manufacturerCode);
-        response.setImageType(imageType);
-        response.setFileVersion(fileVersion);
-        response.setImageSize(imageSize);
+        command.setStatus(status);
+        command.setManufacturerCode(manufacturerCode);
+        command.setImageType(imageType);
+        command.setFileVersion(fileVersion);
+        command.setImageSize(imageSize);
 
-        sendResponse(request, response);
+        sendResponse(request, command);
     }
 
     /**
@@ -443,31 +443,26 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * source routing overhead (for example, the client is five hops away), the largest
      * possible data size that the server can send to the client shall be smaller than 100 bytes.
      *
+     * @param request {@link ZclCommand A request that this command replies to
      * @param status {@link ZclStatus} Status
      * @param manufacturerCode {@link Integer} Manufacturer Code
      * @param imageType {@link Integer} Image Type
      * @param fileVersion {@link Integer} File Version
      * @param fileOffset {@link Integer} File Offset
      * @param imageData {@link ByteArray} Image Data
-     * @return the {@link Future<CommandResult>} command result future
      */
     public void imageBlockResponse(ZclCommand request, ZclStatus status, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer fileOffset, ByteArray imageData) {
-        ImageBlockResponse response = new ImageBlockResponse();
+        ImageBlockResponse command = new ImageBlockResponse();
 
         // Set the fields
-        response.setStatus(status);
-        response.setManufacturerCode(manufacturerCode);
-        response.setImageType(imageType);
-        response.setFileVersion(fileVersion);
-        response.setFileOffset(fileOffset);
-        response.setImageData(imageData);
+        command.setStatus(status);
+        command.setManufacturerCode(manufacturerCode);
+        command.setImageType(imageType);
+        command.setFileVersion(fileVersion);
+        command.setFileOffset(fileOffset);
+        command.setImageData(imageData);
 
-        if (request != null) {
-            sendResponse(request, response);
-        } else {
-            response.setDisableDefaultResponse(true);
-            send(response);
-        }
+        sendResponse(request, command);
     }
 
     /**

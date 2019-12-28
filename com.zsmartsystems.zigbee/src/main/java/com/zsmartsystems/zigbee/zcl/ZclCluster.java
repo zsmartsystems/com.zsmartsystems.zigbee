@@ -281,7 +281,7 @@ public abstract class ZclCluster {
      * @param command the {@link ZclCommand} to send
      * @return the command result future
      */
-    protected Future<CommandResult> send(ZclCommand command) {
+    public Future<CommandResult> send(ZclCommand command) {
         if (isClient()) {
             command.setCommandDirection(ZclCommandDirection.SERVER_TO_CLIENT);
         }

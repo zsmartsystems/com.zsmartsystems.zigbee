@@ -512,7 +512,7 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
     }
 
     /**
-     * Sends an image block to the client
+     * Sends an image block to the client with reference to the request
      *
      * @param request the request command
      * @param fileOffset the offset into the {@link ZigBeeOtaFile} to send the block
@@ -525,6 +525,32 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
                 fileOffset);
         cluster.imageBlockResponse(request, ZclStatus.SUCCESS, otaFile.getManufacturerCode(), otaFile.getImageType(),
                 otaFile.getFileVersion(), fileOffset, imageData);
+
+        return imageData.size();
+    }
+
+    /**
+     * Sends an image block to the client with no reference to the request. Used for response to Image Page Request.
+     *
+     * @param fileOffset the offset into the {@link ZigBeeOtaFile} to send the block
+     * @param maximumDataSize the maximum data size the client can accept
+     * @return the number of bytes sent
+     */
+    private int sendImageBlock(int fileOffset, int maximumDataSize) {
+        ByteArray imageData = otaFile.getImageData(fileOffset, Math.min(dataSize, maximumDataSize));
+        logger.debug("{} OTA Data: Sending {} bytes at offset {}", cluster.getZigBeeAddress(), imageData.size(),
+                fileOffset);
+
+        ImageBlockResponse command = new ImageBlockResponse();
+        command.setStatus(ZclStatus.SUCCESS);
+        command.setManufacturerCode(otaFile.getManufacturerCode());
+        command.setImageType(otaFile.getImageType());
+        command.setFileVersion(otaFile.getFileVersion());
+        command.setFileOffset(fileOffset);
+        command.setImageData(imageData);
+
+        command.setDisableDefaultResponse(true);
+        cluster.send(command);
 
         return imageData.size();
     }
@@ -557,7 +583,9 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
             public void run() {
                 // Send the block response
                 // TODO: Ideally we should disable APS retry for page requests
-                int dataSent = sendImageBlock(request, pagePosition, maximumDataSize);
+                int dataSent = request != null
+                        ? sendImageBlock(request, pagePosition, maximumDataSize)
+                        : sendImageBlock(pagePosition, maximumDataSize);
 
                 // Refer to request only in a first block set.
                 // Following blocks will have incremental sequence id so we null request ref here
