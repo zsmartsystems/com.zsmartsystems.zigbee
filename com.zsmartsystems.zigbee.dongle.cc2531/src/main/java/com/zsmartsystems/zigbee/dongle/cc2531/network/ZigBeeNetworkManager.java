@@ -853,8 +853,8 @@ public class ZigBeeNetworkManager {
      *
      * @param request {@link ZToolPacket}
      */
-    public void sendCommand(final ZToolPacket request) {
-        sendSynchronous(request);
+    public ZToolPacket sendCommand(final ZToolPacket request) {
+        return sendSynchronous(request);
     }
 
     private ZToolPacket sendSynchronous(final ZToolPacket request) {
