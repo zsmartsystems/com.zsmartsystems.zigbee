@@ -82,10 +82,10 @@ public class EmberConsoleNcpMfglibCommand extends EmberConsoleAbstractCommand {
     private void end(ZigBeeNetworkManager networkManager, PrintStream out) {
         EmberMfglib mfglib = getMfglib(networkManager);
         if (!mfglib.doMfglibEnd()) {
-            throw new IllegalStateException("NCP MfgLib start failed");
+            throw new IllegalStateException("NCP MfgLib end failed");
         }
 
-        out.println("NCP MfgLib started.");
+        out.println("NCP MfgLib ended.");
     }
 
     private void toneStart(ZigBeeNetworkManager networkManager, PrintStream out) {
@@ -94,7 +94,7 @@ public class EmberConsoleNcpMfglibCommand extends EmberConsoleAbstractCommand {
             throw new IllegalStateException("NCP MfgLib start tone failed");
         }
 
-        out.println("NCP MfgLib tone stopped.");
+        out.println("NCP MfgLib tone started.");
     }
 
     private void toneStop(ZigBeeNetworkManager networkManager, PrintStream out) {
