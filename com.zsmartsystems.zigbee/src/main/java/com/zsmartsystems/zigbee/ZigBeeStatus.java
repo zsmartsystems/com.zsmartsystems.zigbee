@@ -61,6 +61,12 @@ public enum ZigBeeStatus {
     BAD_RESPONSE,
 
     /**
+     * The system could not perform the requested action at this time due to limited resources. The caller should wait
+     * an appropriate amount of time and retry.
+     */
+    NO_RESOURCES,
+
+    /**
      * A fatal error occurred that cannot be recovered from.
      */
     FATAL_ERROR

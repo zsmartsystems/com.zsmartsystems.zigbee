@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,6 +59,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.EzspProtocolHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspSingleResponseTransaction;
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransaction;
 import com.zsmartsystems.zigbee.security.ZigBeeCbkeCertificate;
+import com.zsmartsystems.zigbee.security.ZigBeeCbkeExchange;
 import com.zsmartsystems.zigbee.security.ZigBeeCbkeProvider;
 import com.zsmartsystems.zigbee.security.ZigBeeCryptoSuites;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
@@ -90,21 +92,6 @@ public class EmberCbkeProvider implements ZigBeeCbkeProvider {
     private final ZigBeeDongleEzsp dongle;
 
     /**
-     * Defines if this provider is the initiator (true=Client) or not (false=Server)
-     */
-    private boolean amInitiator = true;
-
-    /**
-     * The partner certificate
-     */
-    private ByteArray partnerCertificate;
-
-    /**
-     * The partner ephemeral data
-     */
-    private ByteArray partnerEphemeralData;
-
-    /**
      * A list of crypto suites supported by the NCP
      */
     private Set<ZigBeeCryptoSuites> supportedSuites;
@@ -115,10 +102,9 @@ public class EmberCbkeProvider implements ZigBeeCbkeProvider {
     private Map<ZigBeeCryptoSuites, ByteArray> availableCertificates;
 
     /**
-     * Both initiator and responder MACs are returned in the same call, so we buffer the responder here to avoid making
-     * a second call.
+     * Object used to ensure we only have one outstanding {@link EmberCbkeExchange} at once
      */
-    private ByteArray responderMac;
+    private AtomicBoolean exchangeLocked = new AtomicBoolean();
 
     /**
      * Creates the Ember CBKE provider
@@ -127,12 +113,6 @@ public class EmberCbkeProvider implements ZigBeeCbkeProvider {
      */
     public EmberCbkeProvider(ZigBeeDongleEzsp dongle) {
         this.dongle = dongle;
-    }
-
-    @Override
-    public ZigBeeStatus setClientServer(boolean client) {
-        amInitiator = client;
-        return ZigBeeStatus.SUCCESS;
     }
 
     @Override
@@ -160,16 +140,18 @@ public class EmberCbkeProvider implements ZigBeeCbkeProvider {
     }
 
     @Override
-    public boolean addCertificate(ZigBeeCbkeCertificate certificate) {
+    public ZigBeeStatus addCertificate(ZigBeeCbkeCertificate certificate) {
         switch (certificate.getCryptoSuite()) {
             case ECC_163K1:
-                return setPreinstalledCbke163k1Data(certificate) == EmberStatus.EMBER_SUCCESS;
+                return (setPreinstalledCbke163k1Data(certificate) == EmberStatus.EMBER_SUCCESS) ? ZigBeeStatus.SUCCESS
+                        : ZigBeeStatus.FAILURE;
             case ECC_283K1:
-                return setPreinstalledCbke283k1Data(certificate) == EmberStatus.EMBER_SUCCESS;
+                return (setPreinstalledCbke283k1Data(certificate) == EmberStatus.EMBER_SUCCESS) ? ZigBeeStatus.SUCCESS
+                        : ZigBeeStatus.FAILURE;
             default:
                 break;
         }
-        return false;
+        return ZigBeeStatus.FAILURE;
     }
 
     @Override
@@ -185,102 +167,6 @@ public class EmberCbkeProvider implements ZigBeeCbkeProvider {
     @Override
     public ByteArray getCertificate(ZigBeeCryptoSuites suite) {
         return getNcpCryptoCertificates().get(suite);
-    }
-
-    @Override
-    public ByteArray getCbkeEphemeralData(ZigBeeCryptoSuites suite) {
-        switch (suite) {
-            case ECC_163K1:
-                EzspGenerateCbkeKeysHandler response163k1 = ezspGenerateCbke163k1Keys();
-                if (response163k1 == null || response163k1.getStatus() != EmberStatus.EMBER_SUCCESS) {
-                    break;
-                }
-                return new ByteArray(response163k1.getEphemeralPublicKey().getContents());
-            case ECC_283K1:
-                EzspGenerateCbkeKeys283k1Handler response283k1 = ezspGenerateCbke283k1Keys();
-                if (response283k1 == null || response283k1.getStatus() != EmberStatus.EMBER_SUCCESS) {
-                    break;
-                }
-                return new ByteArray(response283k1.getEphemeralPublicKey().getContents());
-            default:
-                break;
-        }
-
-        return null;
-    }
-
-    @Override
-    public boolean addPartnerCertificate(ZigBeeCryptoSuites suite, ByteArray partnerCertificate) {
-        this.partnerCertificate = partnerCertificate;
-        return true;
-    }
-
-    @Override
-    public boolean addPartnerEphemeralData(ZigBeeCryptoSuites suite, ByteArray partnerEphemeralData) {
-        this.partnerEphemeralData = partnerEphemeralData;
-        return true;
-    }
-
-    @Override
-    public ByteArray getInitiatorMac(ZigBeeCryptoSuites suite) {
-        if (partnerEphemeralData == null || partnerCertificate == null) {
-            logger.debug("Unable to request initiator MAC until partner ephemeral data and certificate are set");
-            return null;
-        }
-
-        switch (suite) {
-            case ECC_163K1:
-                EzspCalculateSmacsHandler response163k1 = ezspCalculateSmacs163k1();
-                if (response163k1 == null || response163k1.getStatus() != EmberStatus.EMBER_SUCCESS) {
-                    break;
-                }
-
-                if (amInitiator) {
-                    responderMac = new ByteArray(response163k1.getResponderSmac().getContents());
-                    return new ByteArray(response163k1.getInitiatorSmac().getContents());
-                } else {
-                    responderMac = new ByteArray(response163k1.getInitiatorSmac().getContents());
-                    return new ByteArray(response163k1.getResponderSmac().getContents());
-                }
-            case ECC_283K1:
-                EzspCalculateSmacs283k1Handler response283k1 = ezspCalculateSmacs283k1();
-                if (response283k1 == null || response283k1.getStatus() != EmberStatus.EMBER_SUCCESS) {
-                    break;
-                }
-
-                if (amInitiator) {
-                    responderMac = new ByteArray(response283k1.getResponderSmac().getContents());
-                    return new ByteArray(response283k1.getInitiatorSmac().getContents());
-                } else {
-                    responderMac = new ByteArray(response283k1.getInitiatorSmac().getContents());
-                    return new ByteArray(response283k1.getResponderSmac().getContents());
-                }
-            default:
-                break;
-        }
-
-        return null;
-    }
-
-    @Override
-    public ByteArray getResponderMac(ZigBeeCryptoSuites suite) {
-        return responderMac;
-    }
-
-    @Override
-    public boolean completeKeyExchange(ZigBeeCryptoSuites suite, boolean success) {
-        switch (suite) {
-            case ECC_163K1:
-                EzspClearTemporaryDataMaybeStoreLinkKeyResponse response163k1 = ezspClearTemporaryDataMaybeStoreLinkKey163k1(
-                        success);
-                return (response163k1.getStatus() == EmberStatus.EMBER_SUCCESS);
-            case ECC_283K1:
-                EzspClearTemporaryDataMaybeStoreLinkKey283k1Response response283k1 = ezspClearTemporaryDataMaybeStoreLinkKey283k1(
-                        success);
-                return (response283k1.getStatus() == EmberStatus.EMBER_SUCCESS);
-            default:
-                return false;
-        }
     }
 
     @Override
@@ -394,7 +280,7 @@ public class EmberCbkeProvider implements ZigBeeCbkeProvider {
      *
      * @return the {@link EzspGenerateCbkeKeysHandler}
      */
-    private EzspGenerateCbkeKeysHandler ezspGenerateCbke163k1Keys() {
+    protected EzspGenerateCbkeKeysHandler ezspGenerateCbke163k1Keys() {
         EmberNcp ncp = dongle.getEmberNcp();
         ncp.getCertificateData();
         ncp.getKey(EmberKeyType.EMBER_TRUST_CENTER_LINK_KEY);
@@ -423,7 +309,7 @@ public class EmberCbkeProvider implements ZigBeeCbkeProvider {
      *
      * @return the {@link EzspGenerateCbkeKeys283k1Handler}
      */
-    private EzspGenerateCbkeKeys283k1Handler ezspGenerateCbke283k1Keys() {
+    protected EzspGenerateCbkeKeys283k1Handler ezspGenerateCbke283k1Keys() {
         EzspProtocolHandler protocolHandler = dongle.getProtocolHandler();
         EzspGenerateCbkeKeys283k1Request request = new EzspGenerateCbkeKeys283k1Request();
         EzspTransaction transaction = protocolHandler.sendEzspTransaction(
@@ -448,9 +334,14 @@ public class EmberCbkeProvider implements ZigBeeCbkeProvider {
      * parameters and the stored public/private key pair previously generated with ezspGenerateKeysRetrieveCert(). It
      * also stores the unverified link key data in temporary storage on the NCP until the key establishment is complete.
      *
+     * @param amInitiator
+     * @param partnerCertificate
+     * @param partnerEphemeralData
+     *
      * @return the {@link EzspCalculateSmacsHandler}
      */
-    private EzspCalculateSmacsHandler ezspCalculateSmacs163k1() {
+    protected EzspCalculateSmacsHandler ezspCalculateSmacs163k1(boolean amInitiator, ByteArray partnerCertificate,
+            ByteArray partnerEphemeralData) {
         EzspProtocolHandler protocolHandler = dongle.getProtocolHandler();
         EzspCalculateSmacsRequest request = new EzspCalculateSmacsRequest();
         request.setAmInitiator(amInitiator);
@@ -488,9 +379,14 @@ public class EmberCbkeProvider implements ZigBeeCbkeProvider {
      * ezspGenerateKeysRetrieveCert283k1(). It also stores the unverified link key data in temporary storage on the NCP
      * until the key establishment is complete.
      *
+     * @param amInitiator
+     * @param partnerCertificate
+     * @param partnerEphemeralData
+     *
      * @return the {@link EzspCalculateSmacs283k1Handler}
      */
-    private EzspCalculateSmacs283k1Handler ezspCalculateSmacs283k1() {
+    protected EzspCalculateSmacs283k1Handler ezspCalculateSmacs283k1(boolean amInitiator, ByteArray partnerCertificate,
+            ByteArray partnerEphemeralData) {
         EzspProtocolHandler protocolHandler = dongle.getProtocolHandler();
         EzspCalculateSmacs283k1Request request = new EzspCalculateSmacs283k1Request();
         request.setAmInitiator(amInitiator);
@@ -529,7 +425,7 @@ public class EmberCbkeProvider implements ZigBeeCbkeProvider {
      * @param storeLinkKey true if the link key should be used
      * @return the {@link EzspClearTemporaryDataMaybeStoreLinkKeyResponse}
      */
-    private EzspClearTemporaryDataMaybeStoreLinkKeyResponse ezspClearTemporaryDataMaybeStoreLinkKey163k1(
+    protected EzspClearTemporaryDataMaybeStoreLinkKeyResponse clearTemporaryDataMaybeStoreLinkKey163k1(
             boolean storeLinkKey) {
         EzspProtocolHandler protocolHandler = dongle.getProtocolHandler();
         EzspClearTemporaryDataMaybeStoreLinkKeyRequest request = new EzspClearTemporaryDataMaybeStoreLinkKeyRequest();
@@ -540,6 +436,7 @@ public class EmberCbkeProvider implements ZigBeeCbkeProvider {
                 .getResponse();
         logger.debug("ezspClearTemporaryDataMaybeStoreLinkKey response {}", response);
 
+        exchangeLocked.set(false);
         return response;
     }
 
@@ -551,7 +448,7 @@ public class EmberCbkeProvider implements ZigBeeCbkeProvider {
      * @param storeLinkKey true if the link key should be used
      * @return the {@link EzspClearTemporaryDataMaybeStoreLinkKeyResponse}
      */
-    private EzspClearTemporaryDataMaybeStoreLinkKey283k1Response ezspClearTemporaryDataMaybeStoreLinkKey283k1(
+    protected EzspClearTemporaryDataMaybeStoreLinkKey283k1Response clearTemporaryDataMaybeStoreLinkKey283k1(
             boolean storeLinkKey) {
         EzspProtocolHandler protocolHandler = dongle.getProtocolHandler();
         EzspClearTemporaryDataMaybeStoreLinkKey283k1Request request = new EzspClearTemporaryDataMaybeStoreLinkKey283k1Request();
@@ -562,6 +459,7 @@ public class EmberCbkeProvider implements ZigBeeCbkeProvider {
                 .getResponse();
         logger.debug("ezspClearTemporaryDataMaybeStoreLinkKey response {}", response);
 
+        exchangeLocked.set(false);
         return response;
     }
 
@@ -630,5 +528,23 @@ public class EmberCbkeProvider implements ZigBeeCbkeProvider {
         }
         availableCertificates = Collections.unmodifiableMap(certificates);
         return availableCertificates;
+    }
+
+    @Override
+    public ZigBeeCbkeExchange getCbkeKeyExchangeInitiator() {
+        if (exchangeLocked.compareAndSet(false, true)) {
+            return new EmberCbkeExchange(this, true);
+        }
+
+        return null;
+    }
+
+    @Override
+    public ZigBeeCbkeExchange getCbkeKeyExchangeResponder() {
+        if (exchangeLocked.compareAndSet(false, true)) {
+            return new EmberCbkeExchange(this, false);
+        }
+
+        return null;
     }
 }

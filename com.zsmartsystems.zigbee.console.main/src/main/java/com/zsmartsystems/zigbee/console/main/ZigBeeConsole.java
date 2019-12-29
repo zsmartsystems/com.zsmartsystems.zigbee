@@ -48,6 +48,7 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeSupportedCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeWriteCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleBindCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleBindingTableCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleCbkeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleChannelCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommandsSupportedCommand;
@@ -66,6 +67,7 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleOtaUpgradeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingConfigCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingSubscribeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingUnsubscribeCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleSmartEnergyCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleUnbindCommand;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
@@ -216,6 +218,9 @@ public final class ZigBeeConsole {
 
         newCommands.put("otaupgrade", new ZigBeeConsoleOtaUpgradeCommand());
         newCommands.put("channel", new ZigBeeConsoleChannelCommand());
+
+        newCommands.put("smartenergy", new ZigBeeConsoleSmartEnergyCommand());
+        newCommands.put("cbke", new ZigBeeConsoleCbkeCommand());
 
         zigBeeApi = new ZigBeeApi(networkManager);
 
