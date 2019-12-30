@@ -21,6 +21,7 @@ import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.app.seclient.ZclKeyEstablishmentClient.KeyEstablishmentState;
 import com.zsmartsystems.zigbee.security.CerticomCbkeCertificate;
 import com.zsmartsystems.zigbee.security.ZigBeeCbkeCertificate;
+import com.zsmartsystems.zigbee.security.ZigBeeCbkeExchange;
 import com.zsmartsystems.zigbee.security.ZigBeeCbkeProvider;
 import com.zsmartsystems.zigbee.security.ZigBeeCryptoSuites;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
@@ -92,14 +93,14 @@ public class ZclKeyEstablishmentClientTest {
         ZclKeyEstablishmentClient keClient = new ZclKeyEstablishmentClient(ieeeAddress, seClient, keCluster);
         TestUtilities.setField(ZclKeyEstablishmentClient.class, keClient, "state",
                 ZclKeyEstablishmentClient.KeyEstablishmentState.INITIATE_REQUEST);
-        TestUtilities.setField(ZclKeyEstablishmentClient.class, keClient, "cryptoSuite", ZigBeeCryptoSuites.ECC_163K1);
 
         ByteArray identity = new ByteArray(new int[47]);
         ByteArray local = new ByteArray(new int[48]);
 
-        ZigBeeCbkeProvider cbkeProvider = Mockito.mock(ZigBeeCbkeProvider.class);
-        Mockito.when(cbkeProvider.getCertificate(ZigBeeCryptoSuites.ECC_163K1)).thenReturn(local);
-        keClient.setCbkeProvider(cbkeProvider);
+        ZigBeeCbkeExchange cbkeExchange = Mockito.mock(ZigBeeCbkeExchange.class);
+        Mockito.when(cbkeExchange.getCryptoSuite()).thenReturn(ZigBeeCryptoSuites.ECC_163K1);
+        Mockito.when(cbkeExchange.getCertificate()).thenReturn(new ByteArray(new int[48]));
+        TestUtilities.setField(ZclKeyEstablishmentClient.class, keClient, "cbkeExchange", cbkeExchange);
 
         InitiateKeyEstablishmentResponse command = new InitiateKeyEstablishmentResponse();
         command.setCommandDirection(ZclCommandDirection.SERVER_TO_CLIENT);
@@ -128,15 +129,16 @@ public class ZclKeyEstablishmentClientTest {
         ZclKeyEstablishmentClient keClient = new ZclKeyEstablishmentClient(ieeeAddress, seClient, keCluster);
         TestUtilities.setField(ZclKeyEstablishmentClient.class, keClient, "state",
                 ZclKeyEstablishmentClient.KeyEstablishmentState.INITIATE_REQUEST);
-        TestUtilities.setField(ZclKeyEstablishmentClient.class, keClient, "cryptoSuite", ZigBeeCryptoSuites.ECC_163K1);
 
         ByteArray identity = new ByteArray(new int[58]);
         ByteArray local = new ByteArray(new int[48]);
 
-        ZigBeeCbkeProvider cbkeProvider = Mockito.mock(ZigBeeCbkeProvider.class);
-        Mockito.when(cbkeProvider.getCertificate(ZigBeeCryptoSuites.ECC_163K1)).thenReturn(local);
-        Mockito.when(cbkeProvider.getCbkeEphemeralData(ZigBeeCryptoSuites.ECC_163K1)).thenReturn(local);
-        keClient.setCbkeProvider(cbkeProvider);
+        ZigBeeCbkeExchange cbkeExchange = Mockito.mock(ZigBeeCbkeExchange.class);
+        Mockito.when(cbkeExchange.getCryptoSuite()).thenReturn(ZigBeeCryptoSuites.ECC_163K1);
+        TestUtilities.setField(ZclKeyEstablishmentClient.class, keClient, "cbkeExchange", cbkeExchange);
+
+        Mockito.when(cbkeExchange.getCertificate()).thenReturn(local);
+        Mockito.when(cbkeExchange.getCbkeEphemeralData()).thenReturn(local);
 
         InitiateKeyEstablishmentResponse command = new InitiateKeyEstablishmentResponse();
         command.setCommandDirection(ZclCommandDirection.SERVER_TO_CLIENT);
@@ -159,14 +161,17 @@ public class ZclKeyEstablishmentClientTest {
         ZclKeyEstablishmentClient keClient = new ZclKeyEstablishmentClient(ieeeAddress, seClient, keCluster);
         TestUtilities.setField(ZclKeyEstablishmentClient.class, keClient, "state",
                 ZclKeyEstablishmentClient.KeyEstablishmentState.INITIATE_REQUEST);
-        TestUtilities.setField(ZclKeyEstablishmentClient.class, keClient, "cryptoSuite", ZigBeeCryptoSuites.ECC_163K1);
+
+        ZigBeeCbkeExchange cbkeExchange = Mockito.mock(ZigBeeCbkeExchange.class);
+        Mockito.when(cbkeExchange.getCryptoSuite()).thenReturn(ZigBeeCryptoSuites.ECC_163K1);
+        TestUtilities.setField(ZclKeyEstablishmentClient.class, keClient, "cbkeExchange", cbkeExchange);
 
         ByteArray identity = new ByteArray(new int[48]);
         ByteArray local = new ByteArray(new int[48]);
 
         ZigBeeCbkeProvider cbkeProvider = Mockito.mock(ZigBeeCbkeProvider.class);
-        Mockito.when(cbkeProvider.getCertificate(ZigBeeCryptoSuites.ECC_163K1)).thenReturn(local);
-        Mockito.when(cbkeProvider.getCbkeEphemeralData(ZigBeeCryptoSuites.ECC_163K1)).thenReturn(local);
+        Mockito.when(cbkeExchange.getCertificate()).thenReturn(local);
+        Mockito.when(cbkeExchange.getCbkeEphemeralData()).thenReturn(local);
         keClient.setCbkeProvider(cbkeProvider);
 
         InitiateKeyEstablishmentResponse command = new InitiateKeyEstablishmentResponse();
@@ -196,12 +201,13 @@ public class ZclKeyEstablishmentClientTest {
         ZclKeyEstablishmentClient keClient = new ZclKeyEstablishmentClient(ieeeAddress, seClient, keCluster);
         TestUtilities.setField(ZclKeyEstablishmentClient.class, keClient, "state",
                 ZclKeyEstablishmentClient.KeyEstablishmentState.INITIATE_REQUEST);
-        TestUtilities.setField(ZclKeyEstablishmentClient.class, keClient, "cryptoSuite", ZigBeeCryptoSuites.ECC_283K1);
+
+        ZigBeeCbkeExchange cbkeExchange = Mockito.mock(ZigBeeCbkeExchange.class);
+        Mockito.when(cbkeExchange.getCryptoSuite()).thenReturn(ZigBeeCryptoSuites.ECC_163K1);
+        Mockito.when(cbkeExchange.getCertificate()).thenReturn(new ByteArray(new int[48]));
+        TestUtilities.setField(ZclKeyEstablishmentClient.class, keClient, "cbkeExchange", cbkeExchange);
 
         ByteArray identity = new ByteArray(new int[48]);
-
-        ZigBeeCbkeProvider cbkeProvider = Mockito.mock(ZigBeeCbkeProvider.class);
-        keClient.setCbkeProvider(cbkeProvider);
 
         InitiateKeyEstablishmentResponse command = new InitiateKeyEstablishmentResponse();
         command.setCommandDirection(ZclCommandDirection.SERVER_TO_CLIENT);
@@ -227,7 +233,6 @@ public class ZclKeyEstablishmentClientTest {
         ZclKeyEstablishmentClient keClient = new ZclKeyEstablishmentClient(ieeeAddress, seClient, keCluster);
         TestUtilities.setField(ZclKeyEstablishmentClient.class, keClient, "state",
                 ZclKeyEstablishmentClient.KeyEstablishmentState.INITIATE_REQUEST);
-        TestUtilities.setField(ZclKeyEstablishmentClient.class, keClient, "cryptoSuite", ZigBeeCryptoSuites.ECC_163K1);
 
         ByteArray certificateByteArray = new ByteArray(new int[] { 0x02, 0x00, 0xCA, 0xA2, 0x5B, 0x4B, 0xEE, 0xDE, 0x65,
                 0xC3, 0x13, 0x9A, 0x5C, 0x3B, 0xC4, 0x0C, 0x9A, 0xD1, 0x53, 0x85, 0x4A, 0x27, 0x00, 0x22, 0xA3, 0x00,
@@ -236,9 +241,13 @@ public class ZclKeyEstablishmentClientTest {
         ZigBeeCbkeProvider cbkeProvider = Mockito.mock(ZigBeeCbkeProvider.class);
         Mockito.when(cbkeProvider.getEphemeralDataGenerateTime()).thenReturn(44);
         Mockito.when(cbkeProvider.getConfirmKeyGenerateTime()).thenReturn(55);
-        Mockito.when(cbkeProvider.getCertificate(ZigBeeCryptoSuites.ECC_163K1)).thenReturn(certificateByteArray);
         Mockito.verify(keCluster, Mockito.times(1)).addCommandListener(keClient);
         keClient.setCbkeProvider(cbkeProvider);
+
+        ZigBeeCbkeExchange cbkeExchange = Mockito.mock(ZigBeeCbkeExchange.class);
+        Mockito.when(cbkeExchange.getCryptoSuite()).thenReturn(ZigBeeCryptoSuites.ECC_163K1);
+        Mockito.when(cbkeExchange.getCertificate()).thenReturn(certificateByteArray);
+        TestUtilities.setField(ZclKeyEstablishmentClient.class, keClient, "cbkeExchange", cbkeExchange);
 
         assertFalse(keClient.commandReceived(Mockito.mock(ZclCommand.class)));
 

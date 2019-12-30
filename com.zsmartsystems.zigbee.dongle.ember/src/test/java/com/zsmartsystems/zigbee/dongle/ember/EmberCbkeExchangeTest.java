@@ -7,8 +7,6 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
@@ -17,14 +15,14 @@ import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.dongle.ember.internal.EzspProtocolHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransaction;
-import com.zsmartsystems.zigbee.security.ZigBeeCbkeExchange;
+import com.zsmartsystems.zigbee.security.ZigBeeCryptoSuites;
 
 /**
  *
  * @author Chris Jackson
  *
  */
-public class EmberCbkeProviderTest {
+public class EmberCbkeExchangeTest {
 
     @Test
     public void setClientServer() {
@@ -34,14 +32,10 @@ public class EmberCbkeProviderTest {
         Mockito.when(protocolHandler.sendEzspTransaction(ArgumentMatchers.any(EzspTransaction.class)))
                 .thenReturn(Mockito.mock(EzspTransaction.class));
         EmberCbkeProvider cbkeProvider = new EmberCbkeProvider(dongle);
+        EmberCbkeExchange cbkeExchange = new EmberCbkeExchange(cbkeProvider, false);
 
-        ZigBeeCbkeExchange cbkeExchange = cbkeProvider.getCbkeKeyExchangeInitiator();
-        assertNotNull(cbkeExchange);
-        assertNull(cbkeProvider.getCbkeKeyExchangeInitiator());
-        assertNull(cbkeProvider.getCbkeKeyExchangeResponder());
-
-        assertEquals(null, cbkeProvider.clearTemporaryDataMaybeStoreLinkKey283k1(false));
-        assertNotNull(cbkeProvider.getCbkeKeyExchangeResponder());
+        assertNull(cbkeExchange.getCertificate());
+        cbkeExchange.setCryptoSuite(ZigBeeCryptoSuites.ECC_163K1);
     }
 
 }
