@@ -426,4 +426,23 @@ public class ZigBeeApsFrame {
         return builder.toString();
     }
 
+    /**
+     * Calling this method indicates that transmission of a fragment has completed.
+     * It moves the fragment base and decrease outstanding fragments counter.
+     */
+    public void oneFragmentCompleted() {
+        fragmentBase++;
+        if (fragmentOutstanding > 0) {
+            fragmentOutstanding--;
+        }
+    }
+
+    /**
+     * Calling this method indicates that a fragment has been sent. It increases outstanding fragments counter.
+     */
+    public void oneFragmentSent() {
+        if (fragmentOutstanding <= fragmentTotal) {
+            this.fragmentOutstanding++;
+        }
+    }
 }
