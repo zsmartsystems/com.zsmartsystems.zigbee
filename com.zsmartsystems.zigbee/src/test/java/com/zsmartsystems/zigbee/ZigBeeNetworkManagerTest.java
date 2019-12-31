@@ -99,6 +99,7 @@ public class ZigBeeNetworkManagerTest
 
     @Test
     public void testAddRemoveNode() throws Exception {
+        TestUtilities.outputTestHeader();
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
 
         NodeDescriptor nodeDescriptor = Mockito.mock(NodeDescriptor.class);
@@ -230,6 +231,7 @@ public class ZigBeeNetworkManagerTest
 
     @Test
     public void testAddExistingNode() throws Exception {
+        TestUtilities.outputTestHeader();
         String address = "123456789ABCDEF0";
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
 
@@ -248,6 +250,7 @@ public class ZigBeeNetworkManagerTest
 
     @Test
     public void testAddRemoveGroup() throws Exception {
+        TestUtilities.outputTestHeader();
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
 
         networkManager.addGroup(new ZigBeeGroupAddress(1));
@@ -273,6 +276,7 @@ public class ZigBeeNetworkManagerTest
 
     @Test
     public void setDefaults() throws Exception {
+        TestUtilities.outputTestHeader();
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
 
         assertEquals(ZigBeeStatus.INVALID_STATE,
@@ -296,6 +300,7 @@ public class ZigBeeNetworkManagerTest
 
     @Test
     public void testSendCommandZCL() throws Exception {
+        TestUtilities.outputTestHeader();
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
         networkManager.setSerializer(DefaultSerializer.class, DefaultDeserializer.class);
 
@@ -339,6 +344,7 @@ public class ZigBeeNetworkManagerTest
 
     @Test
     public void testReceiveZclCommand() throws Exception {
+        TestUtilities.outputTestHeader();
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
         networkManager.setSerializer(DefaultSerializer.class, DefaultDeserializer.class);
         networkManager.addSupportedServerCluster(6);
@@ -396,6 +402,7 @@ public class ZigBeeNetworkManagerTest
 
     @Test
     public void testReceiveZclCommandDefault() throws Exception {
+        TestUtilities.outputTestHeader();
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
         networkManager.setSerializer(DefaultSerializer.class, DefaultDeserializer.class);
 
@@ -459,6 +466,7 @@ public class ZigBeeNetworkManagerTest
 
     @Test
     public void testReceiveDefaultCommand() throws Exception {
+        TestUtilities.outputTestHeader();
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
         ZigBeeCommandListener listener = Mockito.mock(ZigBeeCommandListener.class);
         networkManager.addCommandListener(listener);
@@ -466,7 +474,6 @@ public class ZigBeeNetworkManagerTest
 
         ZigBeeEndpoint endpoint = Mockito.mock(ZigBeeEndpoint.class);
         ZclCluster cluster = new ZclOnOffCluster(endpoint);
-        Mockito.when(endpoint.getOutputCluster(6)).thenReturn(cluster);
 
         ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
         Mockito.when(node.getIeeeAddress()).thenReturn(new IeeeAddress("1111111111111111"));
@@ -501,7 +508,134 @@ public class ZigBeeNetworkManagerTest
     }
 
     @Test
+    public void testReceiveZclCommandWithNewOutputCluster() throws Exception {
+        TestUtilities.outputTestHeader();
+        ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
+        networkManager.setSerializer(DefaultSerializer.class, DefaultDeserializer.class);
+
+        ZigBeeEndpoint endpoint = Mockito.mock(ZigBeeEndpoint.class);
+        ZclCluster cluster = new ZclOnOffCluster(endpoint);
+
+        ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
+        Mockito.when(node.getIeeeAddress()).thenReturn(new IeeeAddress("1111111111111111"));
+        Mockito.when(node.getNetworkAddress()).thenReturn(Integer.valueOf(0x1234));
+        Mockito.when(node.isDiscovered()).thenReturn(true);
+        Mockito.when(node.getEndpoint(5)).thenReturn(endpoint);
+        Mockito.when(node.updateNode(ArgumentMatchers.any())).thenReturn(true);
+
+        networkManager.addNetworkNodeListener(new ZigBeeNetworkNodeListener() {
+            @Override
+            public void nodeAdded(ZigBeeNode node) {
+                Mockito.when(endpoint.getOutputCluster(6)).thenReturn(cluster);
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        });
+        networkManager.updateNode(node);
+
+        ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
+        apsFrame.setSourceAddress(0x1234);
+        apsFrame.setSourceEndpoint(5);
+        apsFrame.setDestinationAddress(0);
+        apsFrame.setDestinationEndpoint(1);
+
+        apsFrame.setApsCounter(1);
+        apsFrame.setCluster(6);
+        apsFrame.setProfile(0x104);
+
+        ZclHeader zclHeader = new ZclHeader();
+        zclHeader.setCommandId(0);
+        zclHeader.setFrameType(ZclFrameType.ENTIRE_PROFILE_COMMAND);
+        zclHeader.setSequenceNumber(1);
+        zclHeader.setDirection(ZclCommandDirection.CLIENT_TO_SERVER);
+
+        DefaultSerializer serializer = new DefaultSerializer();
+        ZclFieldSerializer fieldSerializer = new ZclFieldSerializer(serializer);
+
+        apsFrame.setPayload(zclHeader.serialize(fieldSerializer, new int[] {}));
+
+        TestUtilities.setField(ZigBeeNetworkManager.class, networkManager, "networkState", ZigBeeNetworkState.ONLINE);
+        networkManager.receiveCommand(apsFrame);
+        Awaitility.await().until(() -> commandListenerUpdated());
+
+        ReadAttributesCommand response = (ReadAttributesCommand) commandListenerCapture.get(0);
+
+        assertEquals(6, (int) response.getClusterId());
+        assertEquals(0, (int) response.getCommandId());
+        assertEquals(1, (int) response.getTransactionId());
+        assertEquals(new ZigBeeEndpointAddress(0x1234, 5), response.getSourceAddress());
+    }
+
+    @Test
+    public void testReceiveZclCommandWithNewInputCluster() throws Exception {
+        TestUtilities.outputTestHeader();
+        ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
+        networkManager.setSerializer(DefaultSerializer.class, DefaultDeserializer.class);
+
+        ZigBeeEndpoint endpoint = Mockito.mock(ZigBeeEndpoint.class);
+        ZclCluster cluster = new ZclOnOffCluster(endpoint);
+
+        ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
+        Mockito.when(node.getIeeeAddress()).thenReturn(new IeeeAddress("1111111111111111"));
+        Mockito.when(node.getNetworkAddress()).thenReturn(Integer.valueOf(0x1234));
+        Mockito.when(node.isDiscovered()).thenReturn(true);
+        Mockito.when(node.getEndpoint(5)).thenReturn(endpoint);
+        Mockito.when(node.updateNode(ArgumentMatchers.any())).thenReturn(true);
+
+        networkManager.addNetworkNodeListener(new ZigBeeNetworkNodeListener() {
+            @Override
+            public void nodeAdded(ZigBeeNode node) {
+                Mockito.when(endpoint.getInputCluster(6)).thenReturn(cluster);
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        });
+        networkManager.updateNode(node);
+
+        ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
+        apsFrame.setSourceAddress(0x1234);
+        apsFrame.setSourceEndpoint(5);
+        apsFrame.setDestinationAddress(0);
+        apsFrame.setDestinationEndpoint(1);
+
+        apsFrame.setApsCounter(1);
+        apsFrame.setCluster(6);
+        apsFrame.setProfile(0x104);
+
+        ZclHeader zclHeader = new ZclHeader();
+        zclHeader.setCommandId(0);
+        zclHeader.setFrameType(ZclFrameType.ENTIRE_PROFILE_COMMAND);
+        zclHeader.setSequenceNumber(1);
+        zclHeader.setDirection(ZclCommandDirection.SERVER_TO_CLIENT);
+
+        DefaultSerializer serializer = new DefaultSerializer();
+        ZclFieldSerializer fieldSerializer = new ZclFieldSerializer(serializer);
+
+        apsFrame.setPayload(zclHeader.serialize(fieldSerializer, new int[] {}));
+
+        TestUtilities.setField(ZigBeeNetworkManager.class, networkManager, "networkState", ZigBeeNetworkState.ONLINE);
+        networkManager.receiveCommand(apsFrame);
+        Awaitility.await().until(() -> commandListenerUpdated());
+
+        ReadAttributesCommand response = (ReadAttributesCommand) commandListenerCapture.get(0);
+
+        assertEquals(6, (int) response.getClusterId());
+        assertEquals(0, (int) response.getCommandId());
+        assertEquals(1, (int) response.getTransactionId());
+        assertEquals(new ZigBeeEndpointAddress(0x1234, 5), response.getSourceAddress());
+    }
+
+    @Test
     public void testNetworkStateListener() throws Exception {
+        TestUtilities.outputTestHeader();
         ZigBeeNetworkManager manager = mockZigBeeNetworkManager();
         ZigBeeTransactionManager transactionManager = Mockito.mock(ZigBeeTransactionManager.class);
         TestUtilities.setField(ZigBeeNetworkManager.class, manager, "transactionManager", transactionManager);
@@ -565,6 +699,7 @@ public class ZigBeeNetworkManagerTest
 
     @Test
     public void testSetChannel() throws Exception {
+        TestUtilities.outputTestHeader();
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
 
         assertEquals(ZigBeeStatus.SUCCESS, networkManager.setZigBeeChannel(ZigBeeChannel.CHANNEL_11));
@@ -573,6 +708,7 @@ public class ZigBeeNetworkManagerTest
 
     @Test
     public void testSetPanId() throws Exception {
+        TestUtilities.outputTestHeader();
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
 
         assertEquals(ZigBeeStatus.INVALID_ARGUMENTS, networkManager.setZigBeePanId(-1));
@@ -584,6 +720,7 @@ public class ZigBeeNetworkManagerTest
 
     @Test
     public void testSetExtendedPanId() throws Exception {
+        TestUtilities.outputTestHeader();
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
 
         ExtendedPanId panId = new ExtendedPanId("1");
@@ -596,6 +733,7 @@ public class ZigBeeNetworkManagerTest
 
     @Test
     public void setZigBeeInstallKey() throws Exception {
+        TestUtilities.outputTestHeader();
         ZigBeeNetworkManager manager = mockZigBeeNetworkManager();
 
         ZigBeeKey key = new ZigBeeKey();
@@ -608,6 +746,7 @@ public class ZigBeeNetworkManagerTest
 
     @Test
     public void setZigBeeLinkKey() throws Exception {
+        TestUtilities.outputTestHeader();
         ZigBeeNetworkManager manager = mockZigBeeNetworkManager();
 
         ZigBeeKey key = new ZigBeeKey();
@@ -617,6 +756,7 @@ public class ZigBeeNetworkManagerTest
 
     @Test
     public void getZigBeeLinkKey() throws Exception {
+        TestUtilities.outputTestHeader();
         ZigBeeNetworkManager manager = mockZigBeeNetworkManager();
 
         ZigBeeKey key = new ZigBeeKey();
@@ -627,6 +767,7 @@ public class ZigBeeNetworkManagerTest
 
     @Test
     public void setZigBeeNetworkKey() throws Exception {
+        TestUtilities.outputTestHeader();
         ZigBeeNetworkManager manager = mockZigBeeNetworkManager();
 
         ZigBeeKey key = new ZigBeeKey();
@@ -636,6 +777,7 @@ public class ZigBeeNetworkManagerTest
 
     @Test
     public void getZigBeeNetworkKey() throws Exception {
+        TestUtilities.outputTestHeader();
         ZigBeeNetworkManager manager = mockZigBeeNetworkManager();
 
         ZigBeeKey key = new ZigBeeKey();
@@ -646,6 +788,7 @@ public class ZigBeeNetworkManagerTest
 
     @Test
     public void testPermitJoin() throws Exception {
+        TestUtilities.outputTestHeader();
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
 
         ZigBeeTransactionManager transactionManager = Mockito.mock(ZigBeeTransactionManager.class);
@@ -872,6 +1015,7 @@ public class ZigBeeNetworkManagerTest
 
     @Test
     public void testExtensions() throws Exception {
+        TestUtilities.outputTestHeader();
         ZigBeeNetworkManager manager = mockZigBeeNetworkManager();
         ZigBeeNetworkDatabaseManager databaseManager = Mockito.mock(ZigBeeNetworkDatabaseManager.class);
         TestUtilities.setField(ZigBeeNetworkManager.class, manager, "databaseManager", databaseManager);
@@ -895,6 +1039,7 @@ public class ZigBeeNetworkManagerTest
 
     @Test
     public void initialize() throws Exception {
+        TestUtilities.outputTestHeader();
         ZigBeeNetworkManager manager = mockZigBeeNetworkManager();
         Mockito.when(mockedTransport.initialize()).thenReturn(ZigBeeStatus.COMMUNICATION_ERROR);
         ZigBeeTransportTransmit transport = Mockito.mock(ZigBeeTransportTransmit.class);
@@ -958,6 +1103,7 @@ public class ZigBeeNetworkManagerTest
 
     @Test
     public void startup() throws Exception {
+        TestUtilities.outputTestHeader();
         ZigBeeNetworkManager manager = mockZigBeeNetworkManager();
         Mockito.when(mockedTransport.initialize()).thenReturn(ZigBeeStatus.COMMUNICATION_ERROR);
 
@@ -1020,6 +1166,7 @@ public class ZigBeeNetworkManagerTest
 
     @Test
     public void getTransportVersionString() throws Exception {
+        TestUtilities.outputTestHeader();
         ZigBeeNetworkManager manager = mockZigBeeNetworkManager();
 
         Mockito.when(mockedTransport.initialize()).thenReturn(ZigBeeStatus.COMMUNICATION_ERROR);
@@ -1031,6 +1178,7 @@ public class ZigBeeNetworkManagerTest
 
     @Test
     public void nodeStatusUpdate() throws Exception {
+        TestUtilities.outputTestHeader();
         ZigBeeNetworkManager manager = mockZigBeeNetworkManager();
 
         ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
@@ -1186,6 +1334,7 @@ public class ZigBeeNetworkManagerTest
 
     @Test
     public void processLogs() throws Exception {
+        TestUtilities.outputTestHeader();
         TestUtilities.setField(NotificationService.class, NotificationService.class, "executorService",
                 Executors.newCachedThreadPool());
 
@@ -1224,6 +1373,7 @@ public class ZigBeeNetworkManagerTest
 
     @Test
     public void scheduleTask() throws Exception {
+        TestUtilities.outputTestHeader();
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
         ScheduledExecutorService scheduler = Mockito.mock(ScheduledExecutorService.class);
         TestUtilities.setField(ZigBeeNetworkManager.class, networkManager, "executorService", scheduler);
@@ -1258,6 +1408,7 @@ public class ZigBeeNetworkManagerTest
 
     @Test
     public void addSupportedCluster() throws Exception {
+        TestUtilities.outputTestHeader();
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
 
         networkManager.addSupportedClientCluster(123);
