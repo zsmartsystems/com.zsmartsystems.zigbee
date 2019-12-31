@@ -205,6 +205,10 @@ public class EmberNcp {
     /**
      * Causes the stack to leave the current network. This generates a stackStatusHandler callback to indicate that the
      * network is down. The radio will not be used until after sending a formNetwork or joinNetwork command.
+     * <p>
+     * Note that the user must wait for the network state to change to {@link EmberNetworkStatus#EMBER_NO_NETWORK}
+     * otherwise the state may remain in {@link EmberNetworkStatus#EMBER_LEAVING_NETWORK} and attempts to reinitialise
+     * the NCP will result in {@link EmberStatus#EMBER_INVALID_CALL}.
      *
      * @return {@link EmberStatus} if success or failure
      */
