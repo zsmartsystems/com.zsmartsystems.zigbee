@@ -56,13 +56,17 @@ public abstract class EzspFrameResponse extends EzspFrame {
     protected EzspFrameResponse(int[] inputBuffer) {
         super();
         deserializer = new EzspDeserializer(inputBuffer);
-
         sequenceNumber = deserializer.deserializeUInt8();
-        frameControl = deserializer.deserializeUInt8();
-        frameId = deserializer.deserializeUInt8();
-        if (frameId == EZSP_LEGACY_FRAME_ID) {
-            deserializer.deserializeUInt8();
+        if (ezspVersion >= 8) {
+            frameControl = deserializer.deserializeUInt16();
+            frameId = deserializer.deserializeUInt16();
+        } else {
+            frameControl = deserializer.deserializeUInt8();
             frameId = deserializer.deserializeUInt8();
+            if (frameId == EZSP_LEGACY_FRAME_ID) {
+                deserializer.deserializeUInt8();
+                frameId = deserializer.deserializeUInt8();
+            }
         }
         isResponse = (frameControl & EZSP_FC_RESPONSE) != 0;
         callbackPending = (frameControl & EZSP_FC_CB_PENDING) != 0;

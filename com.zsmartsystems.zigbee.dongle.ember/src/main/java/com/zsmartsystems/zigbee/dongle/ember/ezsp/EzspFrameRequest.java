@@ -40,32 +40,37 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
  *
  */
 public abstract class EzspFrameRequest extends EzspFrame {
-    private final static AtomicLong sequence = new AtomicLong(1);
+    private final static AtomicLong sequence = new AtomicLong();
 
     /**
      * Constructor used to create an outgoing frame
      */
     protected EzspFrameRequest() {
-        sequenceNumber = (int) sequence.getAndIncrement();
-        if (sequenceNumber == 254) {
-            sequence.set(1);
-        }
+        sequenceNumber = (int) sequence.getAndIncrement() & 0xFF;
     }
 
     protected void serializeHeader(final EzspSerializer serializer) {
         // Output sequence number
         serializer.serializeUInt8(sequenceNumber);
 
-        // Output Frame Control Byte
-        serializer.serializeUInt8(EZSP_FC_REQUEST);
+        if (ezspVersion >= 8) {
+            // Output Frame Control - 2 Bytes
+            serializer.serializeUInt16(0x0100);
 
-        if (ezspVersion > 4) {
-            serializer.serializeUInt8(EZSP_LEGACY_FRAME_ID);
-            serializer.serializeUInt8(0x00);
+            // Output Frame ID - 2 Bytes
+            serializer.serializeUInt16(frameId);
+        } else {
+            serializer.serializeUInt8(EZSP_FC_REQUEST);
+
+            // Output Frame Control Byte
+            if (ezspVersion > 4) {
+                serializer.serializeUInt8(EZSP_LEGACY_FRAME_ID);
+                serializer.serializeUInt8(0x00);
+            }
+
+            // Output Frame ID
+            serializer.serializeUInt8(frameId);
         }
-
-        // Output Frame ID
-        serializer.serializeUInt8(frameId);
     }
 
     public int[] serialize() {
