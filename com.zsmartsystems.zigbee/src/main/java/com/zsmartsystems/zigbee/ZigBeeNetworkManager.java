@@ -22,6 +22,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
@@ -1045,7 +1046,16 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 newEndpoint.setInputClusterIds(Collections.singletonList(apsFrame.getCluster()));
                 newEndpoint.updateEndpoint(newEndpoint);
                 newNode.addEndpoint(newEndpoint);
-                updateNode(newNode);
+                try {
+                    boolean state = refreshNode(newNode).get();
+                    logger.debug("{}: Endpoint {}. Unknown input cluster {} updated node complete state {}",
+                            node.getIeeeAddress(), endpoint.getEndpointId(),
+                            String.format("%04X", apsFrame.getCluster()), state);
+                } catch (InterruptedException | ExecutionException e) {
+                    logger.debug("{}: Endpoint {}. Unknown input cluster {} updated node failed with {}",
+                            node.getIeeeAddress(), endpoint.getEndpointId(),
+                            String.format("%04X", apsFrame.getCluster()), e.getClass().getSimpleName());
+                }
 
                 cluster = endpoint.getInputCluster(apsFrame.getCluster());
             }
@@ -1066,7 +1076,16 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
                 newEndpoint.setOutputClusterIds(Collections.singletonList(apsFrame.getCluster()));
                 newEndpoint.updateEndpoint(newEndpoint);
                 newNode.addEndpoint(newEndpoint);
-                updateNode(newNode);
+                try {
+                    boolean state = refreshNode(newNode).get();
+                    logger.debug("{}: Endpoint {}. Unknown output cluster {} updated node complete state {}",
+                            node.getIeeeAddress(), endpoint.getEndpointId(),
+                            String.format("%04X", apsFrame.getCluster()), state);
+                } catch (InterruptedException | ExecutionException e) {
+                    logger.debug("{}: Endpoint {}. Unknown output cluster {} updated node failed with {}",
+                            node.getIeeeAddress(), endpoint.getEndpointId(),
+                            String.format("%04X", apsFrame.getCluster()), e.getClass().getSimpleName());
+                }
 
                 cluster = endpoint.getOutputCluster(apsFrame.getCluster());
             }
@@ -1631,13 +1650,19 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     }
 
     /**
-     * Update a {@link ZigBeeNode} within the network
+     * Update a {@link ZigBeeNode} within the network.
+     * <p>
+     * This method will return a {@link Future} {@link @Boolean} which will be true if all
+     * {@link ZigBeeNetworkNodeListener}s completed within a timeout. Callers can use this to ensure that all handlers
+     * have been notified of the updated node, and have performed any further manipulation within the system before
+     * proceeding.
      *
      * @param node the {@link ZigBeeNode} to update
+     * @return {@link Future} {@link @Boolean} which will be true if all {@link ZigBeeNetworkNodeListener}s completed
      */
-    private void refreshNode(final ZigBeeNode node) {
+    private Future<Boolean> refreshNode(final ZigBeeNode node) {
         if (node == null) {
-            return;
+            return null;
         }
         logger.debug("{}: Node {} update", node.getIeeeAddress(), String.format("%04X", node.getNetworkAddress()));
 
@@ -1648,14 +1673,14 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         if (currentNode == null) {
             logger.debug("{}: Node {} is not known - can't be updated", node.getIeeeAddress(),
                     String.format("%04X", node.getNetworkAddress()));
-            return;
+            return null;
         }
 
         // Return if there were no updates
         if (!currentNode.updateNode(node)) {
             logger.debug("{}: Node {} is not updated", node.getIeeeAddress(),
                     String.format("%04X", node.getNetworkAddress()));
-            return;
+            return null;
         }
 
         if (node.getNodeDescriptor() != null && networkNodes.get(node.getIeeeAddress()) != null && Objects
@@ -1676,29 +1701,52 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         } else if (!currentNode.isDiscovered() && !currentNode.getIeeeAddress().equals(localIeeeAddress)) {
             logger.debug("{}: Node {} discovery is not complete - not sending nodeUpdated notification",
                     node.getIeeeAddress(), String.format("%04X", node.getNetworkAddress()));
-            return;
+            return null;
         } else {
             sendNodeAdded = false;
         }
 
         synchronized (this) {
             if (networkState != ZigBeeNetworkState.ONLINE) {
-                return;
+                return null;
             }
         }
 
-        for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
-            NotificationService.execute(new Runnable() {
-                @Override
-                public void run() {
-                    if (sendNodeAdded) {
-                        listener.nodeAdded(currentNode);
-                    } else {
-                        listener.nodeUpdated(currentNode);
-                    }
+        return executorService.submit(() -> {
+            CountDownLatch latch;
+            synchronized (nodeListeners) {
+                latch = new CountDownLatch(nodeListeners.size());
+                for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
+                    NotificationService.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (sendNodeAdded) {
+                                listener.nodeAdded(currentNode);
+                            } else {
+                                listener.nodeUpdated(currentNode);
+                            }
+                            latch.countDown();
+                        }
+                    });
                 }
-            });
-        }
+            }
+
+            try {
+                // TODO: Set the timer properly
+                if (latch.await(2, TimeUnit.SECONDS)) {
+                    logger.trace("{}: Refresh Node notifyListener LATCH Complete", node.getIeeeAddress());
+                    return true;
+                } else {
+                    logger.trace("{}: Refresh Node notifyListener LATCH Timeout, remaining = {}", node.getIeeeAddress(),
+                            latch.getCount());
+                    return false;
+                }
+            } catch (InterruptedException e) {
+                logger.trace("{}: Refresh Node notifyListener LATCH Interrupted, remaining = {}", node.getIeeeAddress(),
+                        latch.getCount());
+                return false;
+            }
+        });
     }
 
     /**

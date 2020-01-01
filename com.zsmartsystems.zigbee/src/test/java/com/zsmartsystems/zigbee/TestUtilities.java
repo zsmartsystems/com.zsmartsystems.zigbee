@@ -29,7 +29,7 @@ public class TestUtilities {
      * @param newValue the Object to be set
      * @throws Exception
      */
-    static public void setField(Class clazz, Object object, String fieldName, Object newValue) throws Exception {
+    public static void setField(Class clazz, Object object, String fieldName, Object newValue) throws Exception {
         Field field = clazz.getDeclaredField(fieldName);
         field.setAccessible(true);
         Field modifiersField = Field.class.getDeclaredField("modifiers");
@@ -52,7 +52,7 @@ public class TestUtilities {
      * @throws IllegalArgumentException
      * @throws InvocationTargetException
      */
-    static public Object invokeMethod(Class clazz, Object object, String methodName, Object... params)
+    public static Object invokeMethod(Class clazz, Object object, String methodName, Object... params)
             throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
             InvocationTargetException {
         int paramCount = params.length;
@@ -77,13 +77,20 @@ public class TestUtilities {
      * @return the {@link Object} containing the field value
      * @throws Exception
      */
-    static public Object getField(Class clazz, Object object, String fieldName) throws Exception {
+    public static Object getField(Class clazz, Object object, String fieldName) throws Exception {
         Field field = clazz.getDeclaredField(fieldName);
         field.setAccessible(true);
         Field modifiersField = Field.class.getDeclaredField("modifiers");
         modifiersField.setAccessible(true);
         modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
         return field.get(object);
+    }
+
+    /**
+     * Prints a header at the start of each test to make it easier to read the test logs
+     */
+    public static void outputTestHeader() {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[2].getMethodName());
     }
 
 }
