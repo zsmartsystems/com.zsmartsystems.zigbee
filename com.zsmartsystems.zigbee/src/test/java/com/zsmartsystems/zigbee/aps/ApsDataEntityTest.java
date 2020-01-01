@@ -27,6 +27,7 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
  *
  */
 public class ApsDataEntityTest {
+    public static final int FRAGMENTATION_LENGTH = 65;
     private static int TIMEOUT = 5000;
 
     @Test
@@ -223,6 +224,83 @@ public class ApsDataEntityTest {
         ZigBeeTransportTransmit transport = Mockito.mock(ZigBeeTransportTransmit.class);
         ApsDataEntity aps = new ApsDataEntity(transport);
 
+        assertTrue(aps.receiveCommandState(0, ZigBeeTransportProgressState.RX_ACK));
+    }
+
+    @Test
+    public void shouldExpectOneFrameReceivedForPayloadShorterThanFragmentationLength() {
+        ZigBeeTransportTransmit transport = Mockito.mock(ZigBeeTransportTransmit.class);
+        ApsDataEntity aps = new ApsDataEntity(transport);
+
+        aps.setFragmentationLength(FRAGMENTATION_LENGTH);
+
+        ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
+        apsFrame.setApsCounter(1);
+        apsFrame.setPayload(createData(0, FRAGMENTATION_LENGTH-1));
+
+        aps.send(0, apsFrame);
+
+        assertTrue(aps.receiveCommandState(0, ZigBeeTransportProgressState.TX_ACK));
+        assertTrue(aps.receiveCommandState(0, ZigBeeTransportProgressState.RX_ACK));
+    }
+
+    @Test
+    public void shouldExpectOneFrameReceivedForPayloadEqualToFragmentationLength() {
+        ZigBeeTransportTransmit transport = Mockito.mock(ZigBeeTransportTransmit.class);
+        ApsDataEntity aps = new ApsDataEntity(transport);
+
+        aps.setFragmentationLength(FRAGMENTATION_LENGTH);
+
+        ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
+        apsFrame.setApsCounter(1);
+        apsFrame.setPayload(createData(0, FRAGMENTATION_LENGTH));
+
+        aps.send(0, apsFrame);
+
+        assertTrue(aps.receiveCommandState(0, ZigBeeTransportProgressState.TX_ACK));
+        assertTrue(aps.receiveCommandState(0, ZigBeeTransportProgressState.RX_ACK));
+    }
+
+    @Test
+    public void shouldExpectTwoFramesReceivedForPayloadFittingInTwoFragments() {
+        ZigBeeTransportTransmit transport = Mockito.mock(ZigBeeTransportTransmit.class);
+        ApsDataEntity aps = new ApsDataEntity(transport);
+
+        aps.setFragmentationLength(FRAGMENTATION_LENGTH);
+
+        ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
+        apsFrame.setApsCounter(1);
+        apsFrame.setPayload(createData(0, FRAGMENTATION_LENGTH+1));
+
+        aps.send(0, apsFrame);
+
+        assertFalse(aps.receiveCommandState(0, ZigBeeTransportProgressState.TX_ACK));
+        assertFalse(aps.receiveCommandState(0, ZigBeeTransportProgressState.RX_ACK));
+
+        assertTrue(aps.receiveCommandState(0, ZigBeeTransportProgressState.TX_ACK));
+        assertTrue(aps.receiveCommandState(0, ZigBeeTransportProgressState.RX_ACK));
+    }
+
+    @Test
+    public void shouldExpectThreeFramesReceivedForPayloadFittingInThreeFragments() {
+        ZigBeeTransportTransmit transport = Mockito.mock(ZigBeeTransportTransmit.class);
+        ApsDataEntity aps = new ApsDataEntity(transport);
+
+        aps.setFragmentationLength(FRAGMENTATION_LENGTH);
+
+        ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
+        apsFrame.setApsCounter(1);
+        apsFrame.setPayload(createData(0, FRAGMENTATION_LENGTH*2+1));
+
+        aps.send(0, apsFrame);
+
+        assertFalse(aps.receiveCommandState(0, ZigBeeTransportProgressState.TX_ACK));
+        assertFalse(aps.receiveCommandState(0, ZigBeeTransportProgressState.RX_ACK));
+
+        assertFalse(aps.receiveCommandState(0, ZigBeeTransportProgressState.TX_ACK));
+        assertFalse(aps.receiveCommandState(0, ZigBeeTransportProgressState.RX_ACK));
+
+        assertTrue(aps.receiveCommandState(0, ZigBeeTransportProgressState.TX_ACK));
         assertTrue(aps.receiveCommandState(0, ZigBeeTransportProgressState.RX_ACK));
     }
 

@@ -164,7 +164,7 @@ public class ApsDataEntity {
 
         // Check that we have fragmentation enabled and that this frame requires fragmenting
         // TODO: Don't fragment unicast or broadcast
-        if (apsFrame.getPayload().length < fragmentationLength || fragmentationWindow == 0) {
+        if (apsFrame.getPayload().length <= fragmentationLength || fragmentationWindow == 0) {
             transport.sendCommand(msgTag, apsFrame);
             return true;
         }
@@ -225,7 +225,7 @@ public class ApsDataEntity {
 
             fragment.setPayload(Arrays.copyOfRange(apsFrame.getPayload(), offset, end));
 
-            apsFrame.setFragmentOutstanding(apsFrame.getFragmentOutstanding() + 1);
+            apsFrame.oneFragmentSent();
             logger.debug("Sending APS Frame Fragment: outstanding={} {}", apsFrame.getFragmentOutstanding(), fragment);
 
             transport.sendCommand(apsFrame.getMsgTag(), fragment);
@@ -239,7 +239,7 @@ public class ApsDataEntity {
      *
      * @param msgTag the message tag whose state is updated
      * @param state the updated ZigBeeTransportProgressState for the transaction
-     * @return false if this frame is part of a fragmented packet and this is not the last frame. true otherwise.
+     * @return true if this last frame in packet or not fragmented frame. false otherwise.
      */
     public boolean receiveCommandState(int msgTag, ZigBeeTransportProgressState state) {
         ZigBeeApsFrame outgoingFrame = getFragmentedFrameFromQueue(msgTag);
@@ -258,8 +258,17 @@ public class ApsDataEntity {
         logger.debug("receiveCommandState tag={}, fragmentBase={}, fragmentOutstanding={}", msgTag,
                 outgoingFrame.getFragmentBase(), outgoingFrame.getFragmentOutstanding());
 
-        outgoingFrame.setFragmentBase(outgoingFrame.getFragmentBase() + 1);
-        outgoingFrame.setFragmentOutstanding(outgoingFrame.getFragmentOutstanding() - 1);
+        // TX ACK doesn't mean the frame was delivered so it should be ignored.
+        if (state == ZigBeeTransportProgressState.RX_ACK) {
+            outgoingFrame.oneFragmentCompleted();
+        }
+
+        if (state == ZigBeeTransportProgressState.TX_ACK &&
+                outgoingFrame.getFragmentBase() + 1 == outgoingFrame.getFragmentTotal()) {
+            logger.debug("TX ACKed for last block in frame: {}", outgoingFrame);
+            return true;
+        }
+
         if (outgoingFrame.getFragmentBase() == outgoingFrame.getFragmentTotal()) {
             logger.debug("Completed Sending Fragment APS Frame: {}", outgoingFrame);
             return true;

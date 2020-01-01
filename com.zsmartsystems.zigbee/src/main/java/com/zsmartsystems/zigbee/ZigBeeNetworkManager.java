@@ -1901,9 +1901,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     @Override
     public void receiveCommandState(int msgTag, ZigBeeTransportProgressState state) {
         logger.debug("RX STA: msgTag={} state={}", String.format("%02X", msgTag), state);
-        if (apsDataEntity.receiveCommandState(msgTag, state) == false) {
-            return;
+        if (apsDataEntity.receiveCommandState(msgTag, state)) {
+            // Pass the update to the transaction if this is NACK or ACK for last/only fragment
+            transactionManager.receiveCommandState(msgTag, state);
         }
-        transactionManager.receiveCommandState(msgTag, state);
     }
 }
