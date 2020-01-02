@@ -592,6 +592,65 @@ public class ZclClusterTest {
     }
 
     @Test
+    public void reportAttribute() {
+        createEndpoint();
+        Future future = Mockito.mock(Future.class);
+
+        ZclOnOffCluster cluster = new ZclOnOffCluster(endpoint);
+
+        cluster.reportAttribute(1, ZclDataType.SIGNED_16_BIT_INTEGER, Integer.valueOf(12345));
+        Mockito.when(endpoint.sendTransaction(commandCapture.capture(), matcherCapture.capture())).thenReturn(future);
+
+        ReportAttributesCommand command = (ReportAttributesCommand) commandCapture.getAllValues().get(0);
+        System.out.println(command);
+        List<AttributeReport> records = command.getReports();
+        assertEquals(1, records.size());
+        AttributeReport record = records.get(0);
+        assertEquals(1, record.getAttributeIdentifier());
+        assertEquals(ZclDataType.SIGNED_16_BIT_INTEGER, record.getAttributeDataType());
+        assertEquals(12345, record.getAttributeValue());
+    }
+
+    @Test
+    public void reportAttributes() {
+        createEndpoint();
+        Future future = Mockito.mock(Future.class);
+
+        ZclOnOffCluster cluster = new ZclOnOffCluster(endpoint);
+
+        List<AttributeReport> attributes = new ArrayList<>();
+
+        AttributeReport attribute = new AttributeReport();
+        attribute.setAttributeIdentifier(1);
+        attribute.setAttributeDataType(ZclDataType.BOOLEAN);
+        attribute.setAttributeValue(Boolean.TRUE);
+        attributes.add(attribute);
+
+        attribute = new AttributeReport();
+        attribute.setAttributeIdentifier(2);
+        attribute.setAttributeDataType(ZclDataType.SIGNED_16_BIT_INTEGER);
+        attribute.setAttributeValue(Integer.valueOf(123));
+        attributes.add(attribute);
+
+        cluster.reportAttributes(attributes);
+        Mockito.when(endpoint.sendTransaction(commandCapture.capture(), matcherCapture.capture())).thenReturn(future);
+
+        ReportAttributesCommand command = (ReportAttributesCommand) commandCapture.getAllValues().get(0);
+        System.out.println(command);
+        List<AttributeReport> records = command.getReports();
+        assertEquals(2, records.size());
+        AttributeReport record = records.get(0);
+        assertEquals(1, record.getAttributeIdentifier());
+        assertEquals(ZclDataType.BOOLEAN, record.getAttributeDataType());
+        assertEquals(true, record.getAttributeValue());
+
+        record = records.get(1);
+        assertEquals(2, record.getAttributeIdentifier());
+        assertEquals(ZclDataType.SIGNED_16_BIT_INTEGER, record.getAttributeDataType());
+        assertEquals(Integer.valueOf(123), record.getAttributeValue());
+    }
+
+    @Test
     public void setDao() {
         createEndpoint();
 

@@ -104,6 +104,17 @@ public class ZclAttributeTest {
     }
 
     @Test
+    public void reportValue() {
+        ZclCluster cluster = Mockito.mock(ZclCluster.class);
+        ZclAttribute attribute = new ZclAttribute(cluster, 123, "Test Name", ZclDataType.UNSIGNED_8_BIT_INTEGER, false,
+                false, false, false);
+
+        Integer value = Integer.valueOf(888);
+        attribute.reportValue(value);
+        Mockito.verify(cluster, Mockito.times(1)).reportAttribute(123, ZclDataType.UNSIGNED_8_BIT_INTEGER, value);
+    }
+
+    @Test
     public void setReporting() {
         ZclCluster cluster = Mockito.mock(ZclCluster.class);
         ZclAttribute attribute = new ZclAttribute(cluster, 123, "Test Name", ZclDataType.UNSIGNED_8_BIT_INTEGER, false,

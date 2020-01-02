@@ -493,6 +493,58 @@ public abstract class ZclCluster {
     }
 
     /**
+     * Report an attribute
+     *
+     * @param attributeId the attribute ID to write
+     * @param dataType the {@link ZclDataType} of the object
+     * @param value the value to set (as {@link Object})
+     * @return command future {@link CommandResult}
+     */
+    public Future<CommandResult> reportAttribute(final int attributeId, final ZclDataType dataType,
+            final Object value) {
+        logger.debug("{}: Reporting {} cluster {}, attribute {}, value {}, as dataType {}",
+                zigbeeEndpoint.getIeeeAddress(), (isClient ? "Client" : "Server"), clusterId, attributeId, value,
+                dataType);
+        final AttributeReport attributeIdentifier = new AttributeReport();
+        attributeIdentifier.setAttributeIdentifier(attributeId);
+        attributeIdentifier.setAttributeDataType(dataType);
+        attributeIdentifier.setAttributeValue(value);
+        return reportAttributes(Collections.singletonList(attributeIdentifier));
+    }
+
+    /**
+     * Writes a number of attributes in a single command
+     *
+     * @param attributes a List of {@link WriteAttributeRecord}s with the attribute ID, type and value
+     * @return command future {@link CommandResult}
+     */
+    public Future<CommandResult> reportAttributes(List<AttributeReport> attributes) {
+        final ReportAttributesCommand command = new ReportAttributesCommand();
+        command.setClusterId(clusterId);
+        command.setReports(attributes);
+        command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
+
+        ZclAttribute manufacturerSpecificAttribute = null;
+        for (AttributeReport attributeRecord : attributes) {
+            ZclAttribute attribute = getAttribute(attributeRecord.getAttributeIdentifier());
+            if (attribute != null) {
+                if (attribute.isManufacturerSpecific()) {
+                    manufacturerSpecificAttribute = attribute;
+                    break;
+                }
+            }
+        }
+
+        if (isManufacturerSpecific()) {
+            command.setManufacturerCode(getManufacturerCode());
+        } else if (manufacturerSpecificAttribute != null) {
+            command.setManufacturerCode(manufacturerSpecificAttribute.getManufacturerCode());
+        }
+
+        return send(command);
+    }
+
+    /**
      * Configures the reporting for the specified attribute ID for discrete attributes.
      * <p>
      * <b>minInterval</b>:
