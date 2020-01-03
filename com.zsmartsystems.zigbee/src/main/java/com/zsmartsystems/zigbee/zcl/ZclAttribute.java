@@ -204,6 +204,16 @@ public class ZclAttribute {
     }
 
     /**
+     * Report the attribute value to the remote cluster.
+     *
+     * @param value the value to set (as {@link Object})
+     * @return command future {@link CommandResult}
+     */
+    public Future<CommandResult> reportValue(Object value) {
+        return cluster.reportAttribute(id, dataType, value);
+    }
+
+    /**
      * Sets the attribute value to the attribute.
      *
      * @param value the value to set (as {@link Object})
