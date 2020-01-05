@@ -7,7 +7,11 @@
  */
 package com.zsmartsystems.zigbee.console;
 
+import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -16,6 +20,7 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.app.ZigBeeApplication;
 import com.zsmartsystems.zigbee.app.otaserver.ZclOtaUpgradeServer;
+import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaFile;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
 
 /**
@@ -36,7 +41,7 @@ public class ZigBeeConsoleOtaUpgradeCommand extends ZigBeeConsoleAbstractCommand
 
     @Override
     public String getSyntax() {
-        return "[NODEID]";
+        return "[STATE | FILE | START | COMPLETE] [ENDPOINT] [FILENAME]";
     }
 
     @Override
@@ -52,9 +57,40 @@ public class ZigBeeConsoleOtaUpgradeCommand extends ZigBeeConsoleAbstractCommand
             return;
         }
 
+        switch (args[1].toUpperCase()) {
+            case "FILE":
+                if (args.length < 3) {
+                    throw new IllegalArgumentException("Invalid number of arguments: Filename required.");
+                }
+                cmdDisplayFileInfo(args[2], out);
+                break;
+            case "STATE":
+                if (args.length < 3) {
+                    throw new IllegalArgumentException("Invalid number of arguments: Endpoint required.");
+                }
+                cmdNodeState(networkManager, args[2], out);
+                break;
+            case "START":
+                if (args.length < 4) {
+                    throw new IllegalArgumentException("Invalid number of arguments: Endpoint and Filename required.");
+                }
+                cmdOtaStart(networkManager, args[2], args[3], out);
+                break;
+            case "COMPLETE":
+                if (args.length < 3) {
+                    throw new IllegalArgumentException("Invalid number of arguments: Endpoint required.");
+                }
+                cmdOtaComplete(networkManager, args[2], out);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid command argument " + args[1]);
+        }
+    }
+
+    private void cmdNodeState(ZigBeeNetworkManager networkManager, String nodeString, PrintStream out) {
         Map<Integer, ZigBeeEndpoint> applications = getApplications(networkManager, ZclOtaUpgradeCluster.CLUSTER_ID);
 
-        ZigBeeNode node = getNode(networkManager, args[1]);
+        ZigBeeNode node = getNode(networkManager, nodeString);
 
         ZigBeeEndpoint endpoint = null;
         ZclOtaUpgradeServer server = null;
@@ -70,12 +106,7 @@ public class ZigBeeConsoleOtaUpgradeCommand extends ZigBeeConsoleAbstractCommand
                     "Node " + node.getNetworkAddress().toString() + " does not implement the OTA Upgrade server");
         }
 
-        if (args.length == 2) {
-            cmdDisplayNode(endpoint, server, out);
-            return;
-        }
-
-        throw new IllegalArgumentException("Invalid number of arguments");
+        cmdDisplayNode(endpoint, server, out);
     }
 
     private void cmdDisplayAllNodes(ZigBeeNetworkManager networkManager, PrintStream out) {
@@ -112,5 +143,51 @@ public class ZigBeeConsoleOtaUpgradeCommand extends ZigBeeConsoleAbstractCommand
         }
 
         return applications;
+    }
+
+    private void cmdDisplayFileInfo(String filename, PrintStream out) {
+        Path file = FileSystems.getDefault().getPath("./", filename);
+        byte[] fileData;
+        try {
+            fileData = Files.readAllBytes(file);
+        } catch (IOException e) {
+            throw new IllegalArgumentException("Error reading OTA File \"" + filename + "\"");
+        }
+
+        ZigBeeOtaFile otaFile = new ZigBeeOtaFile(fileData);
+        out.println("OTA File: " + otaFile);
+    }
+
+    private void cmdOtaStart(ZigBeeNetworkManager networkManager, String endpointString, String filename,
+            PrintStream out) {
+        final ZigBeeEndpoint endpoint = getEndpoint(networkManager, endpointString);
+
+        ZclOtaUpgradeServer otaServer = (ZclOtaUpgradeServer) endpoint.getApplication(ZclOtaUpgradeCluster.CLUSTER_ID);
+        if (otaServer == null) {
+            throw new IllegalArgumentException("OTA Server not supported by " + endpoint.getEndpointAddress() + "");
+        }
+
+        Path file = FileSystems.getDefault().getPath("./", filename);
+        byte[] fileData;
+        try {
+            fileData = Files.readAllBytes(file);
+        } catch (IOException e) {
+            throw new IllegalArgumentException("Error reading OTA File \"" + filename + "\"");
+        }
+        ZigBeeOtaFile otaFile = new ZigBeeOtaFile(fileData);
+        otaServer.setFirmware(otaFile);
+        out.println("OTA File \"" + filename + "\" set.");
+    }
+
+    private void cmdOtaComplete(ZigBeeNetworkManager networkManager, String endpointString, PrintStream out) {
+        final ZigBeeEndpoint endpoint = getEndpoint(networkManager, endpointString);
+
+        ZclOtaUpgradeServer otaServer = (ZclOtaUpgradeServer) endpoint.getApplication(ZclOtaUpgradeCluster.CLUSTER_ID);
+        if (otaServer == null) {
+            throw new IllegalArgumentException("OTA Server not supported by " + endpoint.getEndpointAddress() + "");
+        }
+
+        boolean success = otaServer.completeUpgrade();
+        out.println("OTA Upgrade completion on endpoint " + endpoint.getEndpointAddress() + " returned " + success);
     }
 }
