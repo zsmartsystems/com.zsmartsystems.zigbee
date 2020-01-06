@@ -42,6 +42,7 @@ import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaStatusCallback;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageNotifyCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QueryNextImageCommand;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
 
@@ -112,8 +113,7 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
 
         // Set the firmware and send notification
         server.setFirmware(otaFile);
-        Mockito.verify(cluster, Mockito.times(1)).imageNotifyCommand(Mockito.any(), Mockito.any(), Mockito.any(),
-                Mockito.any(), Mockito.any());
+        Mockito.verify(cluster, Mockito.times(1)).sendCommand(ArgumentMatchers.any(ImageNotifyCommand.class));
 
         Awaitility.await().atMost(1000, TimeUnit.MILLISECONDS).until(() -> otaListenerUpdated());
 
