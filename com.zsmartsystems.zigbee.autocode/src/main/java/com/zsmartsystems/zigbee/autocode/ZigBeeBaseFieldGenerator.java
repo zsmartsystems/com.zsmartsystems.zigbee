@@ -58,13 +58,14 @@ public class ZigBeeBaseFieldGenerator extends ZigBeeBaseClassGenerator {
             }
             out.println("     *");
             out.println("     * @param " + stringToLowerCamelCase(field.name) + " the " + field.name);
+            out.println("     * @return the " + className + " command");
             out.println("     */");
-            out.println("    public void set" + stringToUpperCamelCase(field.name) + "(final " + getDataTypeClass(field)
-                    + " " + stringToLowerCamelCase(field.name) + ") {");
+            out.println("    public " + className + " set" + stringToUpperCamelCase(field.name) + "(final "
+                    + getDataTypeClass(field) + " " + stringToLowerCamelCase(field.name) + ") {");
             out.println("        this." + stringToLowerCamelCase(field.name) + " = "
                     + stringToLowerCamelCase(field.name) + ";");
+            out.println("        return this;");
             out.println("    }");
-
         }
 
         if (fields.size() > 0) {

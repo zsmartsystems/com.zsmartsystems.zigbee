@@ -37,7 +37,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class QueryNextImageCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -97,9 +97,11 @@ public class QueryNextImageCommand extends ZclCommand {
      * Sets Field Control.
      *
      * @param fieldControl the Field Control
+     * @return the QueryNextImageCommand command
      */
-    public void setFieldControl(final Integer fieldControl) {
+    public QueryNextImageCommand setFieldControl(final Integer fieldControl) {
         this.fieldControl = fieldControl;
+        return this;
     }
 
     /**
@@ -115,9 +117,11 @@ public class QueryNextImageCommand extends ZclCommand {
      * Sets Manufacturer Code.
      *
      * @param manufacturerCode the Manufacturer Code
+     * @return the QueryNextImageCommand command
      */
-    public void setManufacturerCode(final Integer manufacturerCode) {
+    public QueryNextImageCommand setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
+        return this;
     }
 
     /**
@@ -133,9 +137,11 @@ public class QueryNextImageCommand extends ZclCommand {
      * Sets Image Type.
      *
      * @param imageType the Image Type
+     * @return the QueryNextImageCommand command
      */
-    public void setImageType(final Integer imageType) {
+    public QueryNextImageCommand setImageType(final Integer imageType) {
         this.imageType = imageType;
+        return this;
     }
 
     /**
@@ -151,9 +157,11 @@ public class QueryNextImageCommand extends ZclCommand {
      * Sets File Version.
      *
      * @param fileVersion the File Version
+     * @return the QueryNextImageCommand command
      */
-    public void setFileVersion(final Integer fileVersion) {
+    public QueryNextImageCommand setFileVersion(final Integer fileVersion) {
         this.fileVersion = fileVersion;
+        return this;
     }
 
     /**
@@ -169,9 +177,11 @@ public class QueryNextImageCommand extends ZclCommand {
      * Sets Hardware Version.
      *
      * @param hardwareVersion the Hardware Version
+     * @return the QueryNextImageCommand command
      */
-    public void setHardwareVersion(final Integer hardwareVersion) {
+    public QueryNextImageCommand setHardwareVersion(final Integer hardwareVersion) {
         this.hardwareVersion = hardwareVersion;
+        return this;
     }
 
     @Override

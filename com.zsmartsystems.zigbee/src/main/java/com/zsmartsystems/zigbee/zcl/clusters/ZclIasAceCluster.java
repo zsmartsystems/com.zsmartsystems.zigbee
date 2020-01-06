@@ -49,7 +49,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.iasace.ZoneStatusChangedCommand;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:44:02Z")
 public class ZclIasAceCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -132,6 +132,7 @@ public class ZclIasAceCluster extends ZclCluster {
      * @param zoneId {@link Integer} Zone ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> armCommand(Integer armMode, String armDisarmCode, Integer zoneId) {
         ArmCommand command = new ArmCommand();
 
@@ -140,7 +141,7 @@ public class ZclIasAceCluster extends ZclCluster {
         command.setArmDisarmCode(armDisarmCode);
         command.setZoneId(zoneId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -159,6 +160,7 @@ public class ZclIasAceCluster extends ZclCluster {
      * @param armDisarmCode {@link String} Arm/Disarm Code
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> bypassCommand(Integer numberOfZones, List<Integer> zoneIds, String armDisarmCode) {
         BypassCommand command = new BypassCommand();
 
@@ -167,7 +169,7 @@ public class ZclIasAceCluster extends ZclCluster {
         command.setZoneIds(zoneIds);
         command.setArmDisarmCode(armDisarmCode);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -175,8 +177,9 @@ public class ZclIasAceCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> emergencyCommand() {
-        return send(new EmergencyCommand());
+        return sendCommand(new EmergencyCommand());
     }
 
     /**
@@ -184,8 +187,9 @@ public class ZclIasAceCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> fireCommand() {
-        return send(new FireCommand());
+        return sendCommand(new FireCommand());
     }
 
     /**
@@ -193,8 +197,9 @@ public class ZclIasAceCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> panicCommand() {
-        return send(new PanicCommand());
+        return sendCommand(new PanicCommand());
     }
 
     /**
@@ -202,8 +207,9 @@ public class ZclIasAceCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getZoneIdMapCommand() {
-        return send(new GetZoneIdMapCommand());
+        return sendCommand(new GetZoneIdMapCommand());
     }
 
     /**
@@ -212,13 +218,14 @@ public class ZclIasAceCluster extends ZclCluster {
      * @param zoneId {@link Integer} Zone ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getZoneInformationCommand(Integer zoneId) {
         GetZoneInformationCommand command = new GetZoneInformationCommand();
 
         // Set the fields
         command.setZoneId(zoneId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -233,8 +240,9 @@ public class ZclIasAceCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getPanelStatusCommand() {
-        return send(new GetPanelStatusCommand());
+        return sendCommand(new GetPanelStatusCommand());
     }
 
     /**
@@ -247,8 +255,9 @@ public class ZclIasAceCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getBypassedZoneListCommand() {
-        return send(new GetBypassedZoneListCommand());
+        return sendCommand(new GetBypassedZoneListCommand());
     }
 
     /**
@@ -270,6 +279,7 @@ public class ZclIasAceCluster extends ZclCluster {
      * @param zoneStatusMask {@link Integer} Zone Status Mask
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getZoneStatusCommand(Integer startingZoneId, Integer maxZoneIDs, Boolean zoneStatusMaskFlag, Integer zoneStatusMask) {
         GetZoneStatusCommand command = new GetZoneStatusCommand();
 
@@ -279,7 +289,7 @@ public class ZclIasAceCluster extends ZclCluster {
         command.setZoneStatusMaskFlag(zoneStatusMaskFlag);
         command.setZoneStatusMask(zoneStatusMask);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -288,13 +298,14 @@ public class ZclIasAceCluster extends ZclCluster {
      * @param armNotification {@link Integer} Arm Notification
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> armResponse(Integer armNotification) {
         ArmResponse command = new ArmResponse();
 
         // Set the fields
         command.setArmNotification(armNotification);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -322,6 +333,7 @@ public class ZclIasAceCluster extends ZclCluster {
      * @param zoneIdMapSection15 {@link Integer} Zone ID Map Section 15
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getZoneIdMapResponse(Integer zoneIdMapSection0, Integer zoneIdMapSection1, Integer zoneIdMapSection2, Integer zoneIdMapSection3, Integer zoneIdMapSection4, Integer zoneIdMapSection5, Integer zoneIdMapSection6, Integer zoneIdMapSection7, Integer zoneIdMapSection8, Integer zoneIdMapSection9, Integer zoneIdMapSection10, Integer zoneIdMapSection11, Integer zoneIdMapSection12, Integer zoneIdMapSection13, Integer zoneIdMapSection14, Integer zoneIdMapSection15) {
         GetZoneIdMapResponse command = new GetZoneIdMapResponse();
 
@@ -343,7 +355,7 @@ public class ZclIasAceCluster extends ZclCluster {
         command.setZoneIdMapSection14(zoneIdMapSection14);
         command.setZoneIdMapSection15(zoneIdMapSection15);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -355,6 +367,7 @@ public class ZclIasAceCluster extends ZclCluster {
      * @param zoneLabel {@link String} Zone Label
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getZoneInformationResponse(Integer zoneId, Integer zoneType, IeeeAddress ieeeAddress, String zoneLabel) {
         GetZoneInformationResponse command = new GetZoneInformationResponse();
 
@@ -364,7 +377,7 @@ public class ZclIasAceCluster extends ZclCluster {
         command.setIeeeAddress(ieeeAddress);
         command.setZoneLabel(zoneLabel);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -382,6 +395,7 @@ public class ZclIasAceCluster extends ZclCluster {
      * @param zoneLabel {@link String} Zone Label
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> zoneStatusChangedCommand(Integer zoneId, Integer zoneStatus, Integer audibleNotification, String zoneLabel) {
         ZoneStatusChangedCommand command = new ZoneStatusChangedCommand();
 
@@ -391,7 +405,7 @@ public class ZclIasAceCluster extends ZclCluster {
         command.setAudibleNotification(audibleNotification);
         command.setZoneLabel(zoneLabel);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -415,6 +429,7 @@ public class ZclIasAceCluster extends ZclCluster {
      * @param alarmStatus {@link Integer} Alarm Status
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> panelStatusChangedCommand(Integer panelStatus, Integer secondsRemaining, Integer audibleNotification, Integer alarmStatus) {
         PanelStatusChangedCommand command = new PanelStatusChangedCommand();
 
@@ -424,7 +439,7 @@ public class ZclIasAceCluster extends ZclCluster {
         command.setAudibleNotification(audibleNotification);
         command.setAlarmStatus(alarmStatus);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -439,6 +454,7 @@ public class ZclIasAceCluster extends ZclCluster {
      * @param alarmStatus {@link Integer} Alarm Status
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getPanelStatusResponse(Integer panelStatus, Integer secondsRemaining, Integer audibleNotification, Integer alarmStatus) {
         GetPanelStatusResponse command = new GetPanelStatusResponse();
 
@@ -448,7 +464,7 @@ public class ZclIasAceCluster extends ZclCluster {
         command.setAudibleNotification(audibleNotification);
         command.setAlarmStatus(alarmStatus);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -461,13 +477,14 @@ public class ZclIasAceCluster extends ZclCluster {
      * @param zoneId {@link List<Integer>} Zone ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> setBypassedZoneListCommand(List<Integer> zoneId) {
         SetBypassedZoneListCommand command = new SetBypassedZoneListCommand();
 
         // Set the fields
         command.setZoneId(zoneId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -479,13 +496,14 @@ public class ZclIasAceCluster extends ZclCluster {
      * @param bypassResult {@link List<Integer>} Bypass Result
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> bypassResponse(List<Integer> bypassResult) {
         BypassResponse command = new BypassResponse();
 
         // Set the fields
         command.setBypassResult(bypassResult);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -501,6 +519,7 @@ public class ZclIasAceCluster extends ZclCluster {
      * @param zoneStatus {@link Integer} Zone Status
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getZoneStatusResponse(Boolean zoneStatusComplete, Integer numberOfZones, Integer iasAceZoneStatus, Integer zoneId, Integer zoneStatus) {
         GetZoneStatusResponse command = new GetZoneStatusResponse();
 
@@ -511,6 +530,6 @@ public class ZclIasAceCluster extends ZclCluster {
         command.setZoneId(zoneId);
         command.setZoneStatus(zoneStatus);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

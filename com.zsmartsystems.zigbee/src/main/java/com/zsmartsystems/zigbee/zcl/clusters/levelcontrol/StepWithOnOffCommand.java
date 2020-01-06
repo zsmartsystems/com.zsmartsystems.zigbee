@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class StepWithOnOffCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -73,9 +73,11 @@ public class StepWithOnOffCommand extends ZclCommand {
      * Sets Step Mode.
      *
      * @param stepMode the Step Mode
+     * @return the StepWithOnOffCommand command
      */
-    public void setStepMode(final Integer stepMode) {
+    public StepWithOnOffCommand setStepMode(final Integer stepMode) {
         this.stepMode = stepMode;
+        return this;
     }
 
     /**
@@ -91,9 +93,11 @@ public class StepWithOnOffCommand extends ZclCommand {
      * Sets Step Size.
      *
      * @param stepSize the Step Size
+     * @return the StepWithOnOffCommand command
      */
-    public void setStepSize(final Integer stepSize) {
+    public StepWithOnOffCommand setStepSize(final Integer stepSize) {
         this.stepSize = stepSize;
+        return this;
     }
 
     /**
@@ -109,9 +113,11 @@ public class StepWithOnOffCommand extends ZclCommand {
      * Sets Transition Time.
      *
      * @param transitionTime the Transition Time
+     * @return the StepWithOnOffCommand command
      */
-    public void setTransitionTime(final Integer transitionTime) {
+    public StepWithOnOffCommand setTransitionTime(final Integer transitionTime) {
         this.transitionTime = transitionTime;
+        return this;
     }
 
     @Override

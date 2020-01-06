@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-03T12:48:45Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GpSinkCommissioningMode extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -81,9 +81,11 @@ public class GpSinkCommissioningMode extends ZclCommand {
      * Sets Options.
      *
      * @param options the Options
+     * @return the GpSinkCommissioningMode command
      */
-    public void setOptions(final Integer options) {
+    public GpSinkCommissioningMode setOptions(final Integer options) {
         this.options = options;
+        return this;
     }
 
     /**
@@ -99,9 +101,11 @@ public class GpSinkCommissioningMode extends ZclCommand {
      * Sets Gpm Addr For Security.
      *
      * @param gpmAddrForSecurity the Gpm Addr For Security
+     * @return the GpSinkCommissioningMode command
      */
-    public void setGpmAddrForSecurity(final Integer gpmAddrForSecurity) {
+    public GpSinkCommissioningMode setGpmAddrForSecurity(final Integer gpmAddrForSecurity) {
         this.gpmAddrForSecurity = gpmAddrForSecurity;
+        return this;
     }
 
     /**
@@ -117,9 +121,11 @@ public class GpSinkCommissioningMode extends ZclCommand {
      * Sets Gpm Addr For Pairing.
      *
      * @param gpmAddrForPairing the Gpm Addr For Pairing
+     * @return the GpSinkCommissioningMode command
      */
-    public void setGpmAddrForPairing(final Integer gpmAddrForPairing) {
+    public GpSinkCommissioningMode setGpmAddrForPairing(final Integer gpmAddrForPairing) {
         this.gpmAddrForPairing = gpmAddrForPairing;
+        return this;
     }
 
     /**
@@ -135,9 +141,11 @@ public class GpSinkCommissioningMode extends ZclCommand {
      * Sets Sink Endpoint.
      *
      * @param sinkEndpoint the Sink Endpoint
+     * @return the GpSinkCommissioningMode command
      */
-    public void setSinkEndpoint(final Integer sinkEndpoint) {
+    public GpSinkCommissioningMode setSinkEndpoint(final Integer sinkEndpoint) {
         this.sinkEndpoint = sinkEndpoint;
+        return this;
     }
 
     @Override

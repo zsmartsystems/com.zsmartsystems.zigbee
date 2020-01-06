@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetLastMessage extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -94,9 +94,11 @@ public class GetLastMessage extends ZclCommand {
      * Sets Message ID.
      *
      * @param messageId the Message ID
+     * @return the GetLastMessage command
      */
-    public void setMessageId(final Integer messageId) {
+    public GetLastMessage setMessageId(final Integer messageId) {
         this.messageId = messageId;
+        return this;
     }
 
     /**
@@ -112,9 +114,11 @@ public class GetLastMessage extends ZclCommand {
      * Sets Message Control.
      *
      * @param messageControl the Message Control
+     * @return the GetLastMessage command
      */
-    public void setMessageControl(final Integer messageControl) {
+    public GetLastMessage setMessageControl(final Integer messageControl) {
         this.messageControl = messageControl;
+        return this;
     }
 
     /**
@@ -130,9 +134,11 @@ public class GetLastMessage extends ZclCommand {
      * Sets Start Time.
      *
      * @param startTime the Start Time
+     * @return the GetLastMessage command
      */
-    public void setStartTime(final Calendar startTime) {
+    public GetLastMessage setStartTime(final Calendar startTime) {
         this.startTime = startTime;
+        return this;
     }
 
     /**
@@ -148,9 +154,11 @@ public class GetLastMessage extends ZclCommand {
      * Sets Duration In Minutes.
      *
      * @param durationInMinutes the Duration In Minutes
+     * @return the GetLastMessage command
      */
-    public void setDurationInMinutes(final Integer durationInMinutes) {
+    public GetLastMessage setDurationInMinutes(final Integer durationInMinutes) {
         this.durationInMinutes = durationInMinutes;
+        return this;
     }
 
     /**
@@ -166,9 +174,11 @@ public class GetLastMessage extends ZclCommand {
      * Sets Message.
      *
      * @param message the Message
+     * @return the GetLastMessage command
      */
-    public void setMessage(final String message) {
+    public GetLastMessage setMessage(final String message) {
         this.message = message;
+        return this;
     }
 
     /**
@@ -184,9 +194,11 @@ public class GetLastMessage extends ZclCommand {
      * Sets Optional Extended Message Control.
      *
      * @param optionalExtendedMessageControl the Optional Extended Message Control
+     * @return the GetLastMessage command
      */
-    public void setOptionalExtendedMessageControl(final Integer optionalExtendedMessageControl) {
+    public GetLastMessage setOptionalExtendedMessageControl(final Integer optionalExtendedMessageControl) {
         this.optionalExtendedMessageControl = optionalExtendedMessageControl;
+        return this;
     }
 
     @Override

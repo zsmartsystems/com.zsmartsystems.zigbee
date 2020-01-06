@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class SetUncontrolledFlowThreshold extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -140,9 +140,11 @@ public class SetUncontrolledFlowThreshold extends ZclCommand {
      * whom this command relates.
      *
      * @param providerId the Provider ID
+     * @return the SetUncontrolledFlowThreshold command
      */
-    public void setProviderId(final Integer providerId) {
+    public SetUncontrolledFlowThreshold setProviderId(final Integer providerId) {
         this.providerId = providerId;
+        return this;
     }
 
     /**
@@ -172,9 +174,11 @@ public class SetUncontrolledFlowThreshold extends ZclCommand {
      * the Issuer Event ID field that is larger than older information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the SetUncontrolledFlowThreshold command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public SetUncontrolledFlowThreshold setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -196,9 +200,11 @@ public class SetUncontrolledFlowThreshold extends ZclCommand {
      * flow. A value of 0x0000 indicates the feature in unused.
      *
      * @param uncontrolledFlowThreshold the Uncontrolled Flow Threshold
+     * @return the SetUncontrolledFlowThreshold command
      */
-    public void setUncontrolledFlowThreshold(final Integer uncontrolledFlowThreshold) {
+    public SetUncontrolledFlowThreshold setUncontrolledFlowThreshold(final Integer uncontrolledFlowThreshold) {
         this.uncontrolledFlowThreshold = uncontrolledFlowThreshold;
+        return this;
     }
 
     /**
@@ -224,9 +230,11 @@ public class SetUncontrolledFlowThreshold extends ZclCommand {
      * Metering cluster.
      *
      * @param unitOfMeasure the Unit Of Measure
+     * @return the SetUncontrolledFlowThreshold command
      */
-    public void setUnitOfMeasure(final Integer unitOfMeasure) {
+    public SetUncontrolledFlowThreshold setUnitOfMeasure(final Integer unitOfMeasure) {
         this.unitOfMeasure = unitOfMeasure;
+        return this;
     }
 
     /**
@@ -250,9 +258,11 @@ public class SetUncontrolledFlowThreshold extends ZclCommand {
      * value. A value of 0x0000 is not allowed.
      *
      * @param multiplier the Multiplier
+     * @return the SetUncontrolledFlowThreshold command
      */
-    public void setMultiplier(final Integer multiplier) {
+    public SetUncontrolledFlowThreshold setMultiplier(final Integer multiplier) {
         this.multiplier = multiplier;
+        return this;
     }
 
     /**
@@ -276,9 +286,11 @@ public class SetUncontrolledFlowThreshold extends ZclCommand {
      * threshold value. A value of 0x0000 is not allowed.
      *
      * @param divisor the Divisor
+     * @return the SetUncontrolledFlowThreshold command
      */
-    public void setDivisor(final Integer divisor) {
+    public SetUncontrolledFlowThreshold setDivisor(final Integer divisor) {
         this.divisor = divisor;
+        return this;
     }
 
     /**
@@ -300,9 +312,11 @@ public class SetUncontrolledFlowThreshold extends ZclCommand {
      * defined in units of tenths of a second.
      *
      * @param stabilisationPeriod the Stabilisation Period
+     * @return the SetUncontrolledFlowThreshold command
      */
-    public void setStabilisationPeriod(final Integer stabilisationPeriod) {
+    public SetUncontrolledFlowThreshold setStabilisationPeriod(final Integer stabilisationPeriod) {
         this.stabilisationPeriod = stabilisationPeriod;
+        return this;
     }
 
     /**
@@ -326,9 +340,11 @@ public class SetUncontrolledFlowThreshold extends ZclCommand {
      * second.
      *
      * @param measurementPeriod the Measurement Period
+     * @return the SetUncontrolledFlowThreshold command
      */
-    public void setMeasurementPeriod(final Integer measurementPeriod) {
+    public SetUncontrolledFlowThreshold setMeasurementPeriod(final Integer measurementPeriod) {
         this.measurementPeriod = measurementPeriod;
+        return this;
     }
 
     @Override

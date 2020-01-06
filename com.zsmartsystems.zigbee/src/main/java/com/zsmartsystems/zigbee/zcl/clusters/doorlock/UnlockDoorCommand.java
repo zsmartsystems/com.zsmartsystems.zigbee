@@ -32,7 +32,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class UnlockDoorCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -72,9 +72,11 @@ public class UnlockDoorCommand extends ZclCommand {
      * Sets PIN Code.
      *
      * @param pinCode the PIN Code
+     * @return the UnlockDoorCommand command
      */
-    public void setPinCode(final ByteArray pinCode) {
+    public UnlockDoorCommand setPinCode(final ByteArray pinCode) {
         this.pinCode = pinCode;
+        return this;
     }
 
     @Override

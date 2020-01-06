@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetPanelStatusResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -104,9 +104,11 @@ public class GetPanelStatusResponse extends ZclCommand {
      * Defines the current status of the alarm panel.
      *
      * @param panelStatus the Panel Status
+     * @return the GetPanelStatusResponse command
      */
-    public void setPanelStatus(final Integer panelStatus) {
+    public GetPanelStatusResponse setPanelStatus(final Integer panelStatus) {
         this.panelStatus = panelStatus;
+        return this;
     }
 
     /**
@@ -134,9 +136,11 @@ public class GetPanelStatusResponse extends ZclCommand {
      * The default value shall be 0x00.
      *
      * @param secondsRemaining the Seconds Remaining
+     * @return the GetPanelStatusResponse command
      */
-    public void setSecondsRemaining(final Integer secondsRemaining) {
+    public GetPanelStatusResponse setSecondsRemaining(final Integer secondsRemaining) {
         this.secondsRemaining = secondsRemaining;
+        return this;
     }
 
     /**
@@ -166,9 +170,11 @@ public class GetPanelStatusResponse extends ZclCommand {
      * customise their system.
      *
      * @param audibleNotification the Audible Notification
+     * @return the GetPanelStatusResponse command
      */
-    public void setAudibleNotification(final Integer audibleNotification) {
+    public GetPanelStatusResponse setAudibleNotification(final Integer audibleNotification) {
         this.audibleNotification = audibleNotification;
+        return this;
     }
 
     /**
@@ -192,9 +198,11 @@ public class GetPanelStatusResponse extends ZclCommand {
      * display or otherwise initiate notification for users.
      *
      * @param alarmStatus the Alarm Status
+     * @return the GetPanelStatusResponse command
      */
-    public void setAlarmStatus(final Integer alarmStatus) {
+    public GetPanelStatusResponse setAlarmStatus(final Integer alarmStatus) {
         this.alarmStatus = alarmStatus;
+        return this;
     }
 
     @Override

@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class CancelTariffCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -98,9 +98,11 @@ public class CancelTariffCommand extends ZclCommand {
      * providers may be available.
      *
      * @param providerId the Provider ID
+     * @return the CancelTariffCommand command
      */
-    public void setProviderId(final Integer providerId) {
+    public CancelTariffCommand setProviderId(final Integer providerId) {
         this.providerId = providerId;
+        return this;
     }
 
     /**
@@ -122,9 +124,11 @@ public class CancelTariffCommand extends ZclCommand {
      * shall have the same Issuer Tariff ID.
      *
      * @param issuerTariffId the Issuer Tariff ID
+     * @return the CancelTariffCommand command
      */
-    public void setIssuerTariffId(final Integer issuerTariffId) {
+    public CancelTariffCommand setIssuerTariffId(final Integer issuerTariffId) {
         this.issuerTariffId = issuerTariffId;
+        return this;
     }
 
     /**
@@ -148,9 +152,11 @@ public class CancelTariffCommand extends ZclCommand {
      * shall use the ‘Received’ Tariff). The most significant nibble is reserved.
      *
      * @param tariffType the Tariff Type
+     * @return the CancelTariffCommand command
      */
-    public void setTariffType(final Integer tariffType) {
+    public CancelTariffCommand setTariffType(final Integer tariffType) {
         this.tariffType = tariffType;
+        return this;
     }
 
     @Override

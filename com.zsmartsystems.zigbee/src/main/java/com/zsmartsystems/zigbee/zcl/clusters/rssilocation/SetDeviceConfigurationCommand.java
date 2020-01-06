@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class SetDeviceConfigurationCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -83,9 +83,11 @@ public class SetDeviceConfigurationCommand extends ZclCommand {
      * Sets Power.
      *
      * @param power the Power
+     * @return the SetDeviceConfigurationCommand command
      */
-    public void setPower(final Integer power) {
+    public SetDeviceConfigurationCommand setPower(final Integer power) {
         this.power = power;
+        return this;
     }
 
     /**
@@ -101,9 +103,11 @@ public class SetDeviceConfigurationCommand extends ZclCommand {
      * Sets Path Loss Exponent.
      *
      * @param pathLossExponent the Path Loss Exponent
+     * @return the SetDeviceConfigurationCommand command
      */
-    public void setPathLossExponent(final Integer pathLossExponent) {
+    public SetDeviceConfigurationCommand setPathLossExponent(final Integer pathLossExponent) {
         this.pathLossExponent = pathLossExponent;
+        return this;
     }
 
     /**
@@ -119,9 +123,11 @@ public class SetDeviceConfigurationCommand extends ZclCommand {
      * Sets Calculation Period.
      *
      * @param calculationPeriod the Calculation Period
+     * @return the SetDeviceConfigurationCommand command
      */
-    public void setCalculationPeriod(final Integer calculationPeriod) {
+    public SetDeviceConfigurationCommand setCalculationPeriod(final Integer calculationPeriod) {
         this.calculationPeriod = calculationPeriod;
+        return this;
     }
 
     /**
@@ -137,9 +143,11 @@ public class SetDeviceConfigurationCommand extends ZclCommand {
      * Sets Number RSSI Measurements.
      *
      * @param numberRssiMeasurements the Number RSSI Measurements
+     * @return the SetDeviceConfigurationCommand command
      */
-    public void setNumberRssiMeasurements(final Integer numberRssiMeasurements) {
+    public SetDeviceConfigurationCommand setNumberRssiMeasurements(final Integer numberRssiMeasurements) {
         this.numberRssiMeasurements = numberRssiMeasurements;
+        return this;
     }
 
     /**
@@ -155,9 +163,11 @@ public class SetDeviceConfigurationCommand extends ZclCommand {
      * Sets Reporting Period.
      *
      * @param reportingPeriod the Reporting Period
+     * @return the SetDeviceConfigurationCommand command
      */
-    public void setReportingPeriod(final Integer reportingPeriod) {
+    public SetDeviceConfigurationCommand setReportingPeriod(final Integer reportingPeriod) {
         this.reportingPeriod = reportingPeriod;
+        return this;
     }
 
     @Override

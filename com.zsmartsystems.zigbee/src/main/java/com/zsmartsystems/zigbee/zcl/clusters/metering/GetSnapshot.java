@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetSnapshot extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -107,9 +107,11 @@ public class GetSnapshot extends ZclCommand {
      * greater than the specified Earliest Start Time shall be returned.
      *
      * @param earliestStartTime the Earliest Start Time
+     * @return the GetSnapshot command
      */
-    public void setEarliestStartTime(final Calendar earliestStartTime) {
+    public GetSnapshot setEarliestStartTime(final Calendar earliestStartTime) {
         this.earliestStartTime = earliestStartTime;
+        return this;
     }
 
     /**
@@ -133,9 +135,11 @@ public class GetSnapshot extends ZclCommand {
      * specified Latest End Time shall be returned.
      *
      * @param latestEndTime the Latest End Time
+     * @return the GetSnapshot command
      */
-    public void setLatestEndTime(final Calendar latestEndTime) {
+    public GetSnapshot setLatestEndTime(final Calendar latestEndTime) {
         this.latestEndTime = latestEndTime;
+        return this;
     }
 
     /**
@@ -161,9 +165,11 @@ public class GetSnapshot extends ZclCommand {
      * criteria should be returned, 0x01 the second, and so on.
      *
      * @param snapshotOffset the Snapshot Offset
+     * @return the GetSnapshot command
      */
-    public void setSnapshotOffset(final Integer snapshotOffset) {
+    public GetSnapshot setSnapshotOffset(final Integer snapshotOffset) {
         this.snapshotOffset = snapshotOffset;
+        return this;
     }
 
     /**
@@ -187,9 +193,11 @@ public class GetSnapshot extends ZclCommand {
      * irrespective of the cause.
      *
      * @param snapshotCause the Snapshot Cause
+     * @return the GetSnapshot command
      */
-    public void setSnapshotCause(final Integer snapshotCause) {
+    public GetSnapshot setSnapshotCause(final Integer snapshotCause) {
         this.snapshotCause = snapshotCause;
+        return this;
     }
 
     @Override

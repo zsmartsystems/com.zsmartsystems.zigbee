@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class SetMaximumCreditLimit extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -88,9 +88,11 @@ public class SetMaximumCreditLimit extends ZclCommand {
      * Sets Provider ID.
      *
      * @param providerId the Provider ID
+     * @return the SetMaximumCreditLimit command
      */
-    public void setProviderId(final Integer providerId) {
+    public SetMaximumCreditLimit setProviderId(final Integer providerId) {
         this.providerId = providerId;
+        return this;
     }
 
     /**
@@ -106,9 +108,11 @@ public class SetMaximumCreditLimit extends ZclCommand {
      * Sets Issuer Event ID.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the SetMaximumCreditLimit command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public SetMaximumCreditLimit setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -124,9 +128,11 @@ public class SetMaximumCreditLimit extends ZclCommand {
      * Sets Implementation Date Time.
      *
      * @param implementationDateTime the Implementation Date Time
+     * @return the SetMaximumCreditLimit command
      */
-    public void setImplementationDateTime(final Calendar implementationDateTime) {
+    public SetMaximumCreditLimit setImplementationDateTime(final Calendar implementationDateTime) {
         this.implementationDateTime = implementationDateTime;
+        return this;
     }
 
     /**
@@ -142,9 +148,11 @@ public class SetMaximumCreditLimit extends ZclCommand {
      * Sets Maximum Credit Level.
      *
      * @param maximumCreditLevel the Maximum Credit Level
+     * @return the SetMaximumCreditLimit command
      */
-    public void setMaximumCreditLevel(final Integer maximumCreditLevel) {
+    public SetMaximumCreditLimit setMaximumCreditLevel(final Integer maximumCreditLevel) {
         this.maximumCreditLevel = maximumCreditLevel;
+        return this;
     }
 
     /**
@@ -160,9 +168,11 @@ public class SetMaximumCreditLimit extends ZclCommand {
      * Sets Maximum Credit Per Top Up.
      *
      * @param maximumCreditPerTopUp the Maximum Credit Per Top Up
+     * @return the SetMaximumCreditLimit command
      */
-    public void setMaximumCreditPerTopUp(final Integer maximumCreditPerTopUp) {
+    public SetMaximumCreditLimit setMaximumCreditPerTopUp(final Integer maximumCreditPerTopUp) {
         this.maximumCreditPerTopUp = maximumCreditPerTopUp;
+        return this;
     }
 
     @Override

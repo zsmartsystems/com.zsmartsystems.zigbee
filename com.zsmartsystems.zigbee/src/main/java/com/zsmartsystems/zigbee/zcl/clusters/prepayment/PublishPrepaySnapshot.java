@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class PublishPrepaySnapshot extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -103,9 +103,11 @@ public class PublishPrepaySnapshot extends ZclCommand {
      * Sets Snapshot ID.
      *
      * @param snapshotId the Snapshot ID
+     * @return the PublishPrepaySnapshot command
      */
-    public void setSnapshotId(final Integer snapshotId) {
+    public PublishPrepaySnapshot setSnapshotId(final Integer snapshotId) {
         this.snapshotId = snapshotId;
+        return this;
     }
 
     /**
@@ -121,9 +123,11 @@ public class PublishPrepaySnapshot extends ZclCommand {
      * Sets Snapshot Time.
      *
      * @param snapshotTime the Snapshot Time
+     * @return the PublishPrepaySnapshot command
      */
-    public void setSnapshotTime(final Calendar snapshotTime) {
+    public PublishPrepaySnapshot setSnapshotTime(final Calendar snapshotTime) {
         this.snapshotTime = snapshotTime;
+        return this;
     }
 
     /**
@@ -139,9 +143,11 @@ public class PublishPrepaySnapshot extends ZclCommand {
      * Sets Total Snapshots Found.
      *
      * @param totalSnapshotsFound the Total Snapshots Found
+     * @return the PublishPrepaySnapshot command
      */
-    public void setTotalSnapshotsFound(final Integer totalSnapshotsFound) {
+    public PublishPrepaySnapshot setTotalSnapshotsFound(final Integer totalSnapshotsFound) {
         this.totalSnapshotsFound = totalSnapshotsFound;
+        return this;
     }
 
     /**
@@ -157,9 +163,11 @@ public class PublishPrepaySnapshot extends ZclCommand {
      * Sets Command Index.
      *
      * @param commandIndex the Command Index
+     * @return the PublishPrepaySnapshot command
      */
-    public void setCommandIndex(final Integer commandIndex) {
+    public PublishPrepaySnapshot setCommandIndex(final Integer commandIndex) {
         this.commandIndex = commandIndex;
+        return this;
     }
 
     /**
@@ -175,9 +183,11 @@ public class PublishPrepaySnapshot extends ZclCommand {
      * Sets Total Number Of Commands.
      *
      * @param totalNumberOfCommands the Total Number Of Commands
+     * @return the PublishPrepaySnapshot command
      */
-    public void setTotalNumberOfCommands(final Integer totalNumberOfCommands) {
+    public PublishPrepaySnapshot setTotalNumberOfCommands(final Integer totalNumberOfCommands) {
         this.totalNumberOfCommands = totalNumberOfCommands;
+        return this;
     }
 
     /**
@@ -193,9 +203,11 @@ public class PublishPrepaySnapshot extends ZclCommand {
      * Sets Snapshot Cause.
      *
      * @param snapshotCause the Snapshot Cause
+     * @return the PublishPrepaySnapshot command
      */
-    public void setSnapshotCause(final Integer snapshotCause) {
+    public PublishPrepaySnapshot setSnapshotCause(final Integer snapshotCause) {
         this.snapshotCause = snapshotCause;
+        return this;
     }
 
     /**
@@ -211,9 +223,11 @@ public class PublishPrepaySnapshot extends ZclCommand {
      * Sets Snapshot Payload Type.
      *
      * @param snapshotPayloadType the Snapshot Payload Type
+     * @return the PublishPrepaySnapshot command
      */
-    public void setSnapshotPayloadType(final Integer snapshotPayloadType) {
+    public PublishPrepaySnapshot setSnapshotPayloadType(final Integer snapshotPayloadType) {
         this.snapshotPayloadType = snapshotPayloadType;
+        return this;
     }
 
     /**
@@ -229,9 +243,11 @@ public class PublishPrepaySnapshot extends ZclCommand {
      * Sets Snapshot Payload.
      *
      * @param snapshotPayload the Snapshot Payload
+     * @return the PublishPrepaySnapshot command
      */
-    public void setSnapshotPayload(final Integer snapshotPayload) {
+    public PublishPrepaySnapshot setSnapshotPayload(final Integer snapshotPayload) {
         this.snapshotPayload = snapshotPayload;
+        return this;
     }
 
     @Override

@@ -35,7 +35,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.commissioning.SaveStartupParameters
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:44:02Z")
 public class ZclCommissioningCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -102,6 +102,7 @@ public class ZclCommissioningCluster extends ZclCluster {
      * @param jitter {@link Integer} Jitter
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> restartDeviceCommand(Integer option, Integer delay, Integer jitter) {
         RestartDeviceCommand command = new RestartDeviceCommand();
 
@@ -110,7 +111,7 @@ public class ZclCommissioningCluster extends ZclCluster {
         command.setDelay(delay);
         command.setJitter(jitter);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -120,6 +121,7 @@ public class ZclCommissioningCluster extends ZclCluster {
      * @param index {@link Integer} Index
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> saveStartupParametersCommand(Integer option, Integer index) {
         SaveStartupParametersCommand command = new SaveStartupParametersCommand();
 
@@ -127,7 +129,7 @@ public class ZclCommissioningCluster extends ZclCluster {
         command.setOption(option);
         command.setIndex(index);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -137,6 +139,7 @@ public class ZclCommissioningCluster extends ZclCluster {
      * @param index {@link Integer} Index
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> restoreStartupParametersCommand(Integer option, Integer index) {
         RestoreStartupParametersCommand command = new RestoreStartupParametersCommand();
 
@@ -144,7 +147,7 @@ public class ZclCommissioningCluster extends ZclCluster {
         command.setOption(option);
         command.setIndex(index);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -154,6 +157,7 @@ public class ZclCommissioningCluster extends ZclCluster {
      * @param index {@link Integer} Index
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> resetStartupParametersCommand(Integer option, Integer index) {
         ResetStartupParametersCommand command = new ResetStartupParametersCommand();
 
@@ -161,7 +165,7 @@ public class ZclCommissioningCluster extends ZclCluster {
         command.setOption(option);
         command.setIndex(index);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -170,13 +174,14 @@ public class ZclCommissioningCluster extends ZclCluster {
      * @param status {@link Integer} Status
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> restartDeviceResponseResponse(Integer status) {
         RestartDeviceResponseResponse command = new RestartDeviceResponseResponse();
 
         // Set the fields
         command.setStatus(status);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -185,13 +190,14 @@ public class ZclCommissioningCluster extends ZclCluster {
      * @param status {@link Integer} Status
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> saveStartupParametersResponse(Integer status) {
         SaveStartupParametersResponse command = new SaveStartupParametersResponse();
 
         // Set the fields
         command.setStatus(status);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -200,13 +206,14 @@ public class ZclCommissioningCluster extends ZclCluster {
      * @param status {@link Integer} Status
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> restoreStartupParametersResponse(Integer status) {
         RestoreStartupParametersResponse command = new RestoreStartupParametersResponse();
 
         // Set the fields
         command.setStatus(status);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -215,12 +222,13 @@ public class ZclCommissioningCluster extends ZclCluster {
      * @param status {@link Integer} Status
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> resetStartupParametersResponse(Integer status) {
         ResetStartupParametersResponse command = new ResetStartupParametersResponse();
 
         // Set the fields
         command.setStatus(status);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

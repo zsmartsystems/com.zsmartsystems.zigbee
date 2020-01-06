@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-15T18:21:05Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ExtendedSimpleDescriptorRequest extends ZdoRequest {
     /**
      * The ZDO cluster ID.
@@ -69,9 +69,11 @@ public class ExtendedSimpleDescriptorRequest extends ZdoRequest {
      * Sets NWK Addr Of Interest.
      *
      * @param nwkAddrOfInterest the NWK Addr Of Interest
+     * @return the ExtendedSimpleDescriptorRequest command
      */
-    public void setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
+    public ExtendedSimpleDescriptorRequest setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
         this.nwkAddrOfInterest = nwkAddrOfInterest;
+        return this;
     }
 
     /**
@@ -87,9 +89,11 @@ public class ExtendedSimpleDescriptorRequest extends ZdoRequest {
      * Sets Endpoint.
      *
      * @param endpoint the Endpoint
+     * @return the ExtendedSimpleDescriptorRequest command
      */
-    public void setEndpoint(final Integer endpoint) {
+    public ExtendedSimpleDescriptorRequest setEndpoint(final Integer endpoint) {
         this.endpoint = endpoint;
+        return this;
     }
 
     /**
@@ -105,9 +109,11 @@ public class ExtendedSimpleDescriptorRequest extends ZdoRequest {
      * Sets Start Index.
      *
      * @param startIndex the Start Index
+     * @return the ExtendedSimpleDescriptorRequest command
      */
-    public void setStartIndex(final Integer startIndex) {
+    public ExtendedSimpleDescriptorRequest setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;
+        return this;
     }
 
     @Override

@@ -34,7 +34,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class PublishCppEventCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -140,9 +140,11 @@ public class PublishCppEventCommand extends ZclCommand {
      * providers may be available.
      *
      * @param providerId the Provider ID
+     * @return the PublishCppEventCommand command
      */
-    public void setProviderId(final Integer providerId) {
+    public PublishCppEventCommand setProviderId(final Integer providerId) {
         this.providerId = providerId;
+        return this;
     }
 
     /**
@@ -186,9 +188,11 @@ public class PublishCppEventCommand extends ZclCommand {
      * the CPP event.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the PublishCppEventCommand command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public PublishCppEventCommand setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -204,9 +208,11 @@ public class PublishCppEventCommand extends ZclCommand {
      * Sets Start Time.
      *
      * @param startTime the Start Time
+     * @return the PublishCppEventCommand command
      */
-    public void setStartTime(final Calendar startTime) {
+    public PublishCppEventCommand setStartTime(final Calendar startTime) {
         this.startTime = startTime;
+        return this;
     }
 
     /**
@@ -222,9 +228,11 @@ public class PublishCppEventCommand extends ZclCommand {
      * Sets Duration In Minutes.
      *
      * @param durationInMinutes the Duration In Minutes
+     * @return the PublishCppEventCommand command
      */
-    public void setDurationInMinutes(final Integer durationInMinutes) {
+    public PublishCppEventCommand setDurationInMinutes(final Integer durationInMinutes) {
         this.durationInMinutes = durationInMinutes;
+        return this;
     }
 
     /**
@@ -248,9 +256,11 @@ public class PublishCppEventCommand extends ZclCommand {
      * shall use the ‘Received’ Tariff). The most significant nibble is reserved.
      *
      * @param tariffType the Tariff Type
+     * @return the PublishCppEventCommand command
      */
-    public void setTariffType(final Integer tariffType) {
+    public PublishCppEventCommand setTariffType(final Integer tariffType) {
         this.tariffType = tariffType;
+        return this;
     }
 
     /**
@@ -274,9 +284,11 @@ public class PublishCppEventCommand extends ZclCommand {
      * normal pricing scheme. Prices ‘CPP1’ and ‘CPP2’ are reserved for this purposes.
      *
      * @param cppPriceTier the Cpp Price Tier
+     * @return the PublishCppEventCommand command
      */
-    public void setCppPriceTier(final Integer cppPriceTier) {
+    public PublishCppEventCommand setCppPriceTier(final Integer cppPriceTier) {
         this.cppPriceTier = cppPriceTier;
+        return this;
     }
 
     /**
@@ -296,9 +308,11 @@ public class PublishCppEventCommand extends ZclCommand {
      * An 8-bit enumeration identifying the status of the CPP event:
      *
      * @param cppAuth the Cpp Auth
+     * @return the PublishCppEventCommand command
      */
-    public void setCppAuth(final Integer cppAuth) {
+    public PublishCppEventCommand setCppAuth(final Integer cppAuth) {
         this.cppAuth = cppAuth;
+        return this;
     }
 
     @Override

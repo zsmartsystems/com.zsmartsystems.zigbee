@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ReportRssiMeasurementsCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -77,9 +77,11 @@ public class ReportRssiMeasurementsCommand extends ZclCommand {
      * Sets Reporting Address.
      *
      * @param reportingAddress the Reporting Address
+     * @return the ReportRssiMeasurementsCommand command
      */
-    public void setReportingAddress(final IeeeAddress reportingAddress) {
+    public ReportRssiMeasurementsCommand setReportingAddress(final IeeeAddress reportingAddress) {
         this.reportingAddress = reportingAddress;
+        return this;
     }
 
     /**
@@ -95,9 +97,11 @@ public class ReportRssiMeasurementsCommand extends ZclCommand {
      * Sets Number Of Neighbors.
      *
      * @param numberOfNeighbors the Number Of Neighbors
+     * @return the ReportRssiMeasurementsCommand command
      */
-    public void setNumberOfNeighbors(final Integer numberOfNeighbors) {
+    public ReportRssiMeasurementsCommand setNumberOfNeighbors(final Integer numberOfNeighbors) {
         this.numberOfNeighbors = numberOfNeighbors;
+        return this;
     }
 
     /**
@@ -113,9 +117,11 @@ public class ReportRssiMeasurementsCommand extends ZclCommand {
      * Sets Neighbors Information.
      *
      * @param neighborsInformation the Neighbors Information
+     * @return the ReportRssiMeasurementsCommand command
      */
-    public void setNeighborsInformation(final List<NeighborInformation> neighborsInformation) {
+    public ReportRssiMeasurementsCommand setNeighborsInformation(final List<NeighborInformation> neighborsInformation) {
         this.neighborsInformation = neighborsInformation;
+        return this;
     }
 
     @Override

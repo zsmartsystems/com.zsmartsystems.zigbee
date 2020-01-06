@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class PublishCurrencyConversionCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -144,9 +144,11 @@ public class PublishCurrencyConversionCommand extends ZclCommand {
      * providers may be available.
      *
      * @param providerId the Provider ID
+     * @return the PublishCurrencyConversionCommand command
      */
-    public void setProviderId(final Integer providerId) {
+    public PublishCurrencyConversionCommand setProviderId(final Integer providerId) {
         this.providerId = providerId;
+        return this;
     }
 
     /**
@@ -176,9 +178,11 @@ public class PublishCurrencyConversionCommand extends ZclCommand {
      * value in the Issuer Event ID field that is larger than older information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the PublishCurrencyConversionCommand command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public PublishCurrencyConversionCommand setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -206,9 +210,11 @@ public class PublishCurrencyConversionCommand extends ZclCommand {
      * cancelled.
      *
      * @param startTime the Start Time
+     * @return the PublishCurrencyConversionCommand command
      */
-    public void setStartTime(final Calendar startTime) {
+    public PublishCurrencyConversionCommand setStartTime(final Calendar startTime) {
         this.startTime = startTime;
+        return this;
     }
 
     /**
@@ -232,9 +238,11 @@ public class PublishCurrencyConversionCommand extends ZclCommand {
      * match the values defined by ISO 4217.
      *
      * @param oldCurrency the Old Currency
+     * @return the PublishCurrencyConversionCommand command
      */
-    public void setOldCurrency(final Integer oldCurrency) {
+    public PublishCurrencyConversionCommand setOldCurrency(final Integer oldCurrency) {
         this.oldCurrency = oldCurrency;
+        return this;
     }
 
     /**
@@ -258,9 +266,11 @@ public class PublishCurrencyConversionCommand extends ZclCommand {
      * match the values defined by ISO 4217.
      *
      * @param newCurrency the New Currency
+     * @return the PublishCurrencyConversionCommand command
      */
-    public void setNewCurrency(final Integer newCurrency) {
+    public PublishCurrencyConversionCommand setNewCurrency(final Integer newCurrency) {
         this.newCurrency = newCurrency;
+        return this;
     }
 
     /**
@@ -280,9 +290,11 @@ public class PublishCurrencyConversionCommand extends ZclCommand {
      * The format and use of this field is the same as for the ConversionFactor attribute.
      *
      * @param conversionFactor the Conversion Factor
+     * @return the PublishCurrencyConversionCommand command
      */
-    public void setConversionFactor(final Integer conversionFactor) {
+    public PublishCurrencyConversionCommand setConversionFactor(final Integer conversionFactor) {
         this.conversionFactor = conversionFactor;
+        return this;
     }
 
     /**
@@ -304,9 +316,11 @@ public class PublishCurrencyConversionCommand extends ZclCommand {
      * attribute.
      *
      * @param conversionFactorTrailingDigit the Conversion Factor Trailing Digit
+     * @return the PublishCurrencyConversionCommand command
      */
-    public void setConversionFactorTrailingDigit(final Integer conversionFactorTrailingDigit) {
+    public PublishCurrencyConversionCommand setConversionFactorTrailingDigit(final Integer conversionFactorTrailingDigit) {
         this.conversionFactorTrailingDigit = conversionFactorTrailingDigit;
+        return this;
     }
 
     /**
@@ -328,9 +342,11 @@ public class PublishCurrencyConversionCommand extends ZclCommand {
      * processing of this command.
      *
      * @param currencyChangeControlFlags the Currency Change Control Flags
+     * @return the PublishCurrencyConversionCommand command
      */
-    public void setCurrencyChangeControlFlags(final Integer currencyChangeControlFlags) {
+    public PublishCurrencyConversionCommand setCurrencyChangeControlFlags(final Integer currencyChangeControlFlags) {
         this.currencyChangeControlFlags = currencyChangeControlFlags;
+        return this;
     }
 
     @Override

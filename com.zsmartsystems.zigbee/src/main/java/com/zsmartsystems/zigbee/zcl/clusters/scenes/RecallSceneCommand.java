@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class RecallSceneCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -70,9 +70,11 @@ public class RecallSceneCommand extends ZclCommand {
      * Sets Group ID.
      *
      * @param groupId the Group ID
+     * @return the RecallSceneCommand command
      */
-    public void setGroupId(final Integer groupId) {
+    public RecallSceneCommand setGroupId(final Integer groupId) {
         this.groupId = groupId;
+        return this;
     }
 
     /**
@@ -88,9 +90,11 @@ public class RecallSceneCommand extends ZclCommand {
      * Sets Scene ID.
      *
      * @param sceneId the Scene ID
+     * @return the RecallSceneCommand command
      */
-    public void setSceneId(final Integer sceneId) {
+    public RecallSceneCommand setSceneId(final Integer sceneId) {
         this.sceneId = sceneId;
+        return this;
     }
 
     @Override

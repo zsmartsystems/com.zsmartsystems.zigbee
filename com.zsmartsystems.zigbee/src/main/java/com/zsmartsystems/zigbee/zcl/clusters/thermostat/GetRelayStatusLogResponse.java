@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetRelayStatusLogResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -88,9 +88,11 @@ public class GetRelayStatusLogResponse extends ZclCommand {
      * Sets Time Of Day.
      *
      * @param timeOfDay the Time Of Day
+     * @return the GetRelayStatusLogResponse command
      */
-    public void setTimeOfDay(final Integer timeOfDay) {
+    public GetRelayStatusLogResponse setTimeOfDay(final Integer timeOfDay) {
         this.timeOfDay = timeOfDay;
+        return this;
     }
 
     /**
@@ -106,9 +108,11 @@ public class GetRelayStatusLogResponse extends ZclCommand {
      * Sets Relay Status.
      *
      * @param relayStatus the Relay Status
+     * @return the GetRelayStatusLogResponse command
      */
-    public void setRelayStatus(final Integer relayStatus) {
+    public GetRelayStatusLogResponse setRelayStatus(final Integer relayStatus) {
         this.relayStatus = relayStatus;
+        return this;
     }
 
     /**
@@ -124,9 +128,11 @@ public class GetRelayStatusLogResponse extends ZclCommand {
      * Sets Local Temperature.
      *
      * @param localTemperature the Local Temperature
+     * @return the GetRelayStatusLogResponse command
      */
-    public void setLocalTemperature(final Integer localTemperature) {
+    public GetRelayStatusLogResponse setLocalTemperature(final Integer localTemperature) {
         this.localTemperature = localTemperature;
+        return this;
     }
 
     /**
@@ -142,9 +148,11 @@ public class GetRelayStatusLogResponse extends ZclCommand {
      * Sets Humidity.
      *
      * @param humidity the Humidity
+     * @return the GetRelayStatusLogResponse command
      */
-    public void setHumidity(final Integer humidity) {
+    public GetRelayStatusLogResponse setHumidity(final Integer humidity) {
         this.humidity = humidity;
+        return this;
     }
 
     /**
@@ -160,9 +168,11 @@ public class GetRelayStatusLogResponse extends ZclCommand {
      * Sets Setpoint.
      *
      * @param setpoint the Setpoint
+     * @return the GetRelayStatusLogResponse command
      */
-    public void setSetpoint(final Integer setpoint) {
+    public GetRelayStatusLogResponse setSetpoint(final Integer setpoint) {
         this.setpoint = setpoint;
+        return this;
     }
 
     /**
@@ -178,9 +188,11 @@ public class GetRelayStatusLogResponse extends ZclCommand {
      * Sets Unread Entries.
      *
      * @param unreadEntries the Unread Entries
+     * @return the GetRelayStatusLogResponse command
      */
-    public void setUnreadEntries(final Integer unreadEntries) {
+    public GetRelayStatusLogResponse setUnreadEntries(final Integer unreadEntries) {
         this.unreadEntries = unreadEntries;
+        return this;
     }
 
     @Override

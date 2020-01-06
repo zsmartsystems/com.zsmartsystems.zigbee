@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetTopUpLog extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -73,9 +73,11 @@ public class GetTopUpLog extends ZclCommand {
      * Sets Latest End Time.
      *
      * @param latestEndTime the Latest End Time
+     * @return the GetTopUpLog command
      */
-    public void setLatestEndTime(final Calendar latestEndTime) {
+    public GetTopUpLog setLatestEndTime(final Calendar latestEndTime) {
         this.latestEndTime = latestEndTime;
+        return this;
     }
 
     /**
@@ -91,9 +93,11 @@ public class GetTopUpLog extends ZclCommand {
      * Sets Number Of Records.
      *
      * @param numberOfRecords the Number Of Records
+     * @return the GetTopUpLog command
      */
-    public void setNumberOfRecords(final Integer numberOfRecords) {
+    public GetTopUpLog setNumberOfRecords(final Integer numberOfRecords) {
         this.numberOfRecords = numberOfRecords;
+        return this;
     }
 
     @Override

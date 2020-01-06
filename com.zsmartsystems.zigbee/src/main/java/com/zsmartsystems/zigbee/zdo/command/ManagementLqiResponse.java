@@ -30,7 +30,7 @@ import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ManagementLqiResponse extends ZdoResponse {
     /**
      * The ZDO cluster ID.
@@ -72,9 +72,11 @@ public class ManagementLqiResponse extends ZdoResponse {
      * Sets Neighbor Table Entries.
      *
      * @param neighborTableEntries the Neighbor Table Entries
+     * @return the ManagementLqiResponse command
      */
-    public void setNeighborTableEntries(final Integer neighborTableEntries) {
+    public ManagementLqiResponse setNeighborTableEntries(final Integer neighborTableEntries) {
         this.neighborTableEntries = neighborTableEntries;
+        return this;
     }
 
     /**
@@ -90,9 +92,11 @@ public class ManagementLqiResponse extends ZdoResponse {
      * Sets Start Index.
      *
      * @param startIndex the Start Index
+     * @return the ManagementLqiResponse command
      */
-    public void setStartIndex(final Integer startIndex) {
+    public ManagementLqiResponse setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;
+        return this;
     }
 
     /**
@@ -108,9 +112,11 @@ public class ManagementLqiResponse extends ZdoResponse {
      * Sets Neighbor Table List.
      *
      * @param neighborTableList the Neighbor Table List
+     * @return the ManagementLqiResponse command
      */
-    public void setNeighborTableList(final List<NeighborTable> neighborTableList) {
+    public ManagementLqiResponse setNeighborTableList(final List<NeighborTable> neighborTableList) {
         this.neighborTableList = neighborTableList;
+        return this;
     }
 
     @Override

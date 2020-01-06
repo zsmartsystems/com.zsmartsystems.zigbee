@@ -30,7 +30,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class TunnelClosureNotification extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -85,9 +85,11 @@ public class TunnelClosureNotification extends ZclCommand {
      * the server.
      *
      * @param tunnelId the Tunnel ID
+     * @return the TunnelClosureNotification command
      */
-    public void setTunnelId(final Integer tunnelId) {
+    public TunnelClosureNotification setTunnelId(final Integer tunnelId) {
         this.tunnelId = tunnelId;
+        return this;
     }
 
     @Override

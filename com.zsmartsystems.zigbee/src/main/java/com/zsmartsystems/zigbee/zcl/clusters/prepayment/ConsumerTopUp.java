@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ConsumerTopUp extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -72,9 +72,11 @@ public class ConsumerTopUp extends ZclCommand {
      * Sets Originating Device.
      *
      * @param originatingDevice the Originating Device
+     * @return the ConsumerTopUp command
      */
-    public void setOriginatingDevice(final Integer originatingDevice) {
+    public ConsumerTopUp setOriginatingDevice(final Integer originatingDevice) {
         this.originatingDevice = originatingDevice;
+        return this;
     }
 
     /**
@@ -90,9 +92,11 @@ public class ConsumerTopUp extends ZclCommand {
      * Sets Top Up Code.
      *
      * @param topUpCode the Top Up Code
+     * @return the ConsumerTopUp command
      */
-    public void setTopUpCode(final ByteArray topUpCode) {
+    public ConsumerTopUp setTopUpCode(final ByteArray topUpCode) {
         this.topUpCode = topUpCode;
+        return this;
     }
 
     @Override

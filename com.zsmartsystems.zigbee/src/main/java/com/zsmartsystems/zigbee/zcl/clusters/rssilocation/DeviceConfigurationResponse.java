@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class DeviceConfigurationResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -88,9 +88,11 @@ public class DeviceConfigurationResponse extends ZclCommand {
      * Sets Status.
      *
      * @param status the Status
+     * @return the DeviceConfigurationResponse command
      */
-    public void setStatus(final Integer status) {
+    public DeviceConfigurationResponse setStatus(final Integer status) {
         this.status = status;
+        return this;
     }
 
     /**
@@ -106,9 +108,11 @@ public class DeviceConfigurationResponse extends ZclCommand {
      * Sets Power.
      *
      * @param power the Power
+     * @return the DeviceConfigurationResponse command
      */
-    public void setPower(final Integer power) {
+    public DeviceConfigurationResponse setPower(final Integer power) {
         this.power = power;
+        return this;
     }
 
     /**
@@ -124,9 +128,11 @@ public class DeviceConfigurationResponse extends ZclCommand {
      * Sets Path Loss Exponent.
      *
      * @param pathLossExponent the Path Loss Exponent
+     * @return the DeviceConfigurationResponse command
      */
-    public void setPathLossExponent(final Integer pathLossExponent) {
+    public DeviceConfigurationResponse setPathLossExponent(final Integer pathLossExponent) {
         this.pathLossExponent = pathLossExponent;
+        return this;
     }
 
     /**
@@ -142,9 +148,11 @@ public class DeviceConfigurationResponse extends ZclCommand {
      * Sets Calculation Period.
      *
      * @param calculationPeriod the Calculation Period
+     * @return the DeviceConfigurationResponse command
      */
-    public void setCalculationPeriod(final Integer calculationPeriod) {
+    public DeviceConfigurationResponse setCalculationPeriod(final Integer calculationPeriod) {
         this.calculationPeriod = calculationPeriod;
+        return this;
     }
 
     /**
@@ -160,9 +168,11 @@ public class DeviceConfigurationResponse extends ZclCommand {
      * Sets Number RSSI Measurements.
      *
      * @param numberRssiMeasurements the Number RSSI Measurements
+     * @return the DeviceConfigurationResponse command
      */
-    public void setNumberRssiMeasurements(final Integer numberRssiMeasurements) {
+    public DeviceConfigurationResponse setNumberRssiMeasurements(final Integer numberRssiMeasurements) {
         this.numberRssiMeasurements = numberRssiMeasurements;
+        return this;
     }
 
     /**
@@ -178,9 +188,11 @@ public class DeviceConfigurationResponse extends ZclCommand {
      * Sets Reporting Period.
      *
      * @param reportingPeriod the Reporting Period
+     * @return the DeviceConfigurationResponse command
      */
-    public void setReportingPeriod(final Integer reportingPeriod) {
+    public DeviceConfigurationResponse setReportingPeriod(final Integer reportingPeriod) {
         this.reportingPeriod = reportingPeriod;
+        return this;
     }
 
     @Override

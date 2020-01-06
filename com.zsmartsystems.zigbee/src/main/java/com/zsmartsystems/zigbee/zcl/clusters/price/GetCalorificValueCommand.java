@@ -30,7 +30,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetCalorificValueCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -107,9 +107,11 @@ public class GetCalorificValueCommand extends ZclCommand {
      * active and scheduled instances shall be sent with ascending ordered Start Time.
      *
      * @param earliestStartTime the Earliest Start Time
+     * @return the GetCalorificValueCommand command
      */
-    public void setEarliestStartTime(final Calendar earliestStartTime) {
+    public GetCalorificValueCommand setEarliestStartTime(final Calendar earliestStartTime) {
         this.earliestStartTime = earliestStartTime;
+        return this;
     }
 
     /**
@@ -135,9 +137,11 @@ public class GetCalorificValueCommand extends ZclCommand {
      * ID.
      *
      * @param minIssuerEventId the Min . Issuer Event ID
+     * @return the GetCalorificValueCommand command
      */
-    public void setMinIssuerEventId(final Integer minIssuerEventId) {
+    public GetCalorificValueCommand setMinIssuerEventId(final Integer minIssuerEventId) {
         this.minIssuerEventId = minIssuerEventId;
+        return this;
     }
 
     /**
@@ -161,9 +165,11 @@ public class GetCalorificValueCommand extends ZclCommand {
      * would indicate all available PublishCalorificValue commands shall be returned.
      *
      * @param numberOfCommands the Number Of Commands
+     * @return the GetCalorificValueCommand command
      */
-    public void setNumberOfCommands(final Integer numberOfCommands) {
+    public GetCalorificValueCommand setNumberOfCommands(final Integer numberOfCommands) {
         this.numberOfCommands = numberOfCommands;
+        return this;
     }
 
     @Override

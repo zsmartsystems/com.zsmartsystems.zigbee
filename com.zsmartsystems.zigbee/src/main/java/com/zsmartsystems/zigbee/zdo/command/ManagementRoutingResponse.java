@@ -30,7 +30,7 @@ import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ManagementRoutingResponse extends ZdoResponse {
     /**
      * The ZDO cluster ID.
@@ -72,9 +72,11 @@ public class ManagementRoutingResponse extends ZdoResponse {
      * Sets Routing Table Entries.
      *
      * @param routingTableEntries the Routing Table Entries
+     * @return the ManagementRoutingResponse command
      */
-    public void setRoutingTableEntries(final Integer routingTableEntries) {
+    public ManagementRoutingResponse setRoutingTableEntries(final Integer routingTableEntries) {
         this.routingTableEntries = routingTableEntries;
+        return this;
     }
 
     /**
@@ -90,9 +92,11 @@ public class ManagementRoutingResponse extends ZdoResponse {
      * Sets Start Index.
      *
      * @param startIndex the Start Index
+     * @return the ManagementRoutingResponse command
      */
-    public void setStartIndex(final Integer startIndex) {
+    public ManagementRoutingResponse setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;
+        return this;
     }
 
     /**
@@ -108,9 +112,11 @@ public class ManagementRoutingResponse extends ZdoResponse {
      * Sets Routing Table List.
      *
      * @param routingTableList the Routing Table List
+     * @return the ManagementRoutingResponse command
      */
-    public void setRoutingTableList(final List<RoutingTable> routingTableList) {
+    public ManagementRoutingResponse setRoutingTableList(final List<RoutingTable> routingTableList) {
         this.routingTableList = routingTableList;
+        return this;
     }
 
     @Override

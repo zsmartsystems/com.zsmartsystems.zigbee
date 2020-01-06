@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ConfigureNotificationScheme extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -104,9 +104,11 @@ public class ConfigureNotificationScheme extends ZclCommand {
      * information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the ConfigureNotificationScheme command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public ConfigureNotificationScheme setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -128,9 +130,11 @@ public class ConfigureNotificationScheme extends ZclCommand {
      * mapping to ZCL or Smart Energy Standard commands.
      *
      * @param notificationScheme the Notification Scheme
+     * @return the ConfigureNotificationScheme command
      */
-    public void setNotificationScheme(final Integer notificationScheme) {
+    public ConfigureNotificationScheme setNotificationScheme(final Integer notificationScheme) {
         this.notificationScheme = notificationScheme;
+        return this;
     }
 
     /**
@@ -152,9 +156,11 @@ public class ConfigureNotificationScheme extends ZclCommand {
      * (and order) to be returned in a MirrorReportAttributeResponse command.
      *
      * @param notificationFlagOrder the Notification Flag Order
+     * @return the ConfigureNotificationScheme command
      */
-    public void setNotificationFlagOrder(final Integer notificationFlagOrder) {
+    public ConfigureNotificationScheme setNotificationFlagOrder(final Integer notificationFlagOrder) {
         this.notificationFlagOrder = notificationFlagOrder;
+        return this;
     }
 
     @Override

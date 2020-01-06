@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class StartSamplingResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -95,9 +95,11 @@ public class StartSamplingResponse extends ZclCommand {
      * (automatically started) Profile mechanism.
      *
      * @param sampleId the Sample ID
+     * @return the StartSamplingResponse command
      */
-    public void setSampleId(final Integer sampleId) {
+    public StartSamplingResponse setSampleId(final Integer sampleId) {
         this.sampleId = sampleId;
+        return this;
     }
 
     @Override

@@ -34,7 +34,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class PublishConsolidatedBillCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -163,9 +163,11 @@ public class PublishConsolidatedBillCommand extends ZclCommand {
      * providers may be available.
      *
      * @param providerId the Provider ID
+     * @return the PublishConsolidatedBillCommand command
      */
-    public void setProviderId(final Integer providerId) {
+    public PublishConsolidatedBillCommand setProviderId(final Integer providerId) {
         this.providerId = providerId;
+        return this;
     }
 
     /**
@@ -195,9 +197,11 @@ public class PublishConsolidatedBillCommand extends ZclCommand {
      * value in the Issuer Event ID field that is larger than older information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the PublishConsolidatedBillCommand command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public PublishConsolidatedBillCommand setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -229,9 +233,11 @@ public class PublishConsolidatedBillCommand extends ZclCommand {
      * PublishConsolidatedBill command is used in place of this cancellation mechanism).
      *
      * @param billingPeriodStartTime the Billing Period Start Time
+     * @return the PublishConsolidatedBillCommand command
      */
-    public void setBillingPeriodStartTime(final Calendar billingPeriodStartTime) {
+    public PublishConsolidatedBillCommand setBillingPeriodStartTime(final Calendar billingPeriodStartTime) {
         this.billingPeriodStartTime = billingPeriodStartTime;
+        return this;
     }
 
     /**
@@ -253,9 +259,11 @@ public class PublishConsolidatedBillCommand extends ZclCommand {
      * duration units are defined by the Billing Period Duration Type field.
      *
      * @param billingPeriodDuration the Billing Period Duration
+     * @return the PublishConsolidatedBillCommand command
      */
-    public void setBillingPeriodDuration(final Integer billingPeriodDuration) {
+    public PublishConsolidatedBillCommand setBillingPeriodDuration(final Integer billingPeriodDuration) {
         this.billingPeriodDuration = billingPeriodDuration;
+        return this;
     }
 
     /**
@@ -279,9 +287,11 @@ public class PublishConsolidatedBillCommand extends ZclCommand {
      * enumerated sub-field providing duration control.
      *
      * @param billingPeriodDurationType the Billing Period Duration Type
+     * @return the PublishConsolidatedBillCommand command
      */
-    public void setBillingPeriodDurationType(final Integer billingPeriodDurationType) {
+    public PublishConsolidatedBillCommand setBillingPeriodDurationType(final Integer billingPeriodDurationType) {
         this.billingPeriodDurationType = billingPeriodDurationType;
+        return this;
     }
 
     /**
@@ -303,9 +313,11 @@ public class PublishConsolidatedBillCommand extends ZclCommand {
      * significant nibble represents an enumeration of the tariff type as detailed in
      *
      * @param tariffType the Tariff Type
+     * @return the PublishConsolidatedBillCommand command
      */
-    public void setTariffType(final Integer tariffType) {
+    public PublishConsolidatedBillCommand setTariffType(final Integer tariffType) {
         this.tariffType = tariffType;
+        return this;
     }
 
     /**
@@ -329,9 +341,11 @@ public class PublishConsolidatedBillCommand extends ZclCommand {
      * the Price cluster.
      *
      * @param consolidatedBill the Consolidated Bill
+     * @return the PublishConsolidatedBillCommand command
      */
-    public void setConsolidatedBill(final Integer consolidatedBill) {
+    public PublishConsolidatedBillCommand setConsolidatedBill(final Integer consolidatedBill) {
         this.consolidatedBill = consolidatedBill;
+        return this;
     }
 
     /**
@@ -355,9 +369,11 @@ public class PublishConsolidatedBillCommand extends ZclCommand {
      * should match the values defined by ISO 4217.
      *
      * @param currency the Currency
+     * @return the PublishConsolidatedBillCommand command
      */
-    public void setCurrency(final Integer currency) {
+    public PublishConsolidatedBillCommand setCurrency(final Integer currency) {
         this.currency = currency;
+        return this;
     }
 
     /**
@@ -381,9 +397,11 @@ public class PublishConsolidatedBillCommand extends ZclCommand {
      * indicates the number of digits to the right of the decimal point.
      *
      * @param billTrailingDigit the Bill Trailing Digit
+     * @return the PublishConsolidatedBillCommand command
      */
-    public void setBillTrailingDigit(final Integer billTrailingDigit) {
+    public PublishConsolidatedBillCommand setBillTrailingDigit(final Integer billTrailingDigit) {
         this.billTrailingDigit = billTrailingDigit;
+        return this;
     }
 
     @Override

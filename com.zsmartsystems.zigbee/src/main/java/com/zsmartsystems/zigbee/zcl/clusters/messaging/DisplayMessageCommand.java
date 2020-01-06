@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class DisplayMessageCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -126,9 +126,11 @@ public class DisplayMessageCommand extends ZclCommand {
      * stamp (UTCTime data type) identifying when the message was issued.
      *
      * @param messageId the Message ID
+     * @return the DisplayMessageCommand command
      */
-    public void setMessageId(final Integer messageId) {
+    public DisplayMessageCommand setMessageId(final Integer messageId) {
         this.messageId = messageId;
+        return this;
     }
 
     /**
@@ -148,9 +150,11 @@ public class DisplayMessageCommand extends ZclCommand {
      * An 8-bit BitMap field indicating control information related to the message.
      *
      * @param messageControl the Message Control
+     * @return the DisplayMessageCommand command
      */
-    public void setMessageControl(final Integer messageControl) {
+    public DisplayMessageCommand setMessageControl(final Integer messageControl) {
         this.messageControl = messageControl;
+        return this;
     }
 
     /**
@@ -176,9 +180,11 @@ public class DisplayMessageCommand extends ZclCommand {
      * the event.
      *
      * @param startTime the Start Time
+     * @return the DisplayMessageCommand command
      */
-    public void setStartTime(final Calendar startTime) {
+    public DisplayMessageCommand setStartTime(final Calendar startTime) {
         this.startTime = startTime;
+        return this;
     }
 
     /**
@@ -202,9 +208,11 @@ public class DisplayMessageCommand extends ZclCommand {
      * changed”.
      *
      * @param durationInMinutes the Duration In Minutes
+     * @return the DisplayMessageCommand command
      */
-    public void setDurationInMinutes(final Integer durationInMinutes) {
+    public DisplayMessageCommand setDurationInMinutes(final Integer durationInMinutes) {
         this.durationInMinutes = durationInMinutes;
+        return this;
     }
 
     /**
@@ -240,9 +248,11 @@ public class DisplayMessageCommand extends ZclCommand {
      * larger than this. Reserving bytes for source route will reduce this.
      *
      * @param message the Message
+     * @return the DisplayMessageCommand command
      */
-    public void setMessage(final String message) {
+    public DisplayMessageCommand setMessage(final String message) {
         this.message = message;
+        return this;
     }
 
     /**
@@ -264,9 +274,11 @@ public class DisplayMessageCommand extends ZclCommand {
      * message.
      *
      * @param extendedMessageControl the Extended Message Control
+     * @return the DisplayMessageCommand command
      */
-    public void setExtendedMessageControl(final Integer extendedMessageControl) {
+    public DisplayMessageCommand setExtendedMessageControl(final Integer extendedMessageControl) {
         this.extendedMessageControl = extendedMessageControl;
+        return this;
     }
 
     @Override

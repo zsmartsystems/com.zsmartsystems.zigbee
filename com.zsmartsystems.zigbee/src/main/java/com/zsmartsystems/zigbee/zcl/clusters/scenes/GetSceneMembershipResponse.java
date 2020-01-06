@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-09-20T08:23:22Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetSceneMembershipResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -85,9 +85,11 @@ public class GetSceneMembershipResponse extends ZclCommand {
      * Sets Status.
      *
      * @param status the Status
+     * @return the GetSceneMembershipResponse command
      */
-    public void setStatus(final Integer status) {
+    public GetSceneMembershipResponse setStatus(final Integer status) {
         this.status = status;
+        return this;
     }
 
     /**
@@ -103,9 +105,11 @@ public class GetSceneMembershipResponse extends ZclCommand {
      * Sets Capacity.
      *
      * @param capacity the Capacity
+     * @return the GetSceneMembershipResponse command
      */
-    public void setCapacity(final Integer capacity) {
+    public GetSceneMembershipResponse setCapacity(final Integer capacity) {
         this.capacity = capacity;
+        return this;
     }
 
     /**
@@ -121,9 +125,11 @@ public class GetSceneMembershipResponse extends ZclCommand {
      * Sets Group ID.
      *
      * @param groupId the Group ID
+     * @return the GetSceneMembershipResponse command
      */
-    public void setGroupId(final Integer groupId) {
+    public GetSceneMembershipResponse setGroupId(final Integer groupId) {
         this.groupId = groupId;
+        return this;
     }
 
     /**
@@ -139,9 +145,11 @@ public class GetSceneMembershipResponse extends ZclCommand {
      * Sets Scene Count.
      *
      * @param sceneCount the Scene Count
+     * @return the GetSceneMembershipResponse command
      */
-    public void setSceneCount(final Integer sceneCount) {
+    public GetSceneMembershipResponse setSceneCount(final Integer sceneCount) {
         this.sceneCount = sceneCount;
+        return this;
     }
 
     /**
@@ -157,9 +165,11 @@ public class GetSceneMembershipResponse extends ZclCommand {
      * Sets Scene List.
      *
      * @param sceneList the Scene List
+     * @return the GetSceneMembershipResponse command
      */
-    public void setSceneList(final List<Integer> sceneList) {
+    public GetSceneMembershipResponse setSceneList(final List<Integer> sceneList) {
         this.sceneList = sceneList;
+        return this;
     }
 
     @Override

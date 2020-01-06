@@ -35,7 +35,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:44:02Z")
 public class ZclIasZoneCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -737,6 +737,7 @@ public class ZclIasZoneCluster extends ZclCluster {
      * @param zoneId {@link Integer} Zone ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> zoneEnrollResponse(Integer enrollResponseCode, Integer zoneId) {
         ZoneEnrollResponse command = new ZoneEnrollResponse();
 
@@ -744,7 +745,7 @@ public class ZclIasZoneCluster extends ZclCluster {
         command.setEnrollResponseCode(enrollResponseCode);
         command.setZoneId(zoneId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -759,8 +760,9 @@ public class ZclIasZoneCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> initiateNormalOperationModeCommand() {
-        return send(new InitiateNormalOperationModeCommand());
+        return sendCommand(new InitiateNormalOperationModeCommand());
     }
 
     /**
@@ -789,6 +791,7 @@ public class ZclIasZoneCluster extends ZclCluster {
      * @param currentZoneSensitivityLevel {@link Integer} Current Zone Sensitivity Level
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> initiateTestModeCommand(Integer testModeDuration, Integer currentZoneSensitivityLevel) {
         InitiateTestModeCommand command = new InitiateTestModeCommand();
 
@@ -796,7 +799,7 @@ public class ZclIasZoneCluster extends ZclCluster {
         command.setTestModeDuration(testModeDuration);
         command.setCurrentZoneSensitivityLevel(currentZoneSensitivityLevel);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -811,6 +814,7 @@ public class ZclIasZoneCluster extends ZclCluster {
      * @param delay {@link Integer} Delay
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> zoneStatusChangeNotificationCommand(Integer zoneStatus, Integer extendedStatus, Integer zoneId, Integer delay) {
         ZoneStatusChangeNotificationCommand command = new ZoneStatusChangeNotificationCommand();
 
@@ -820,7 +824,7 @@ public class ZclIasZoneCluster extends ZclCluster {
         command.setZoneId(zoneId);
         command.setDelay(delay);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -834,6 +838,7 @@ public class ZclIasZoneCluster extends ZclCluster {
      * @param manufacturerCode {@link Integer} Manufacturer Code
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> zoneEnrollRequestCommand(Integer zoneType, Integer manufacturerCode) {
         ZoneEnrollRequestCommand command = new ZoneEnrollRequestCommand();
 
@@ -841,6 +846,6 @@ public class ZclIasZoneCluster extends ZclCluster {
         command.setZoneType(zoneType);
         command.setManufacturerCode(manufacturerCode);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

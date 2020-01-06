@@ -30,7 +30,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-03T12:48:45Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GpProxyTableResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -90,9 +90,11 @@ public class GpProxyTableResponse extends ZclCommand {
      * Sets Status.
      *
      * @param status the Status
+     * @return the GpProxyTableResponse command
      */
-    public void setStatus(final Integer status) {
+    public GpProxyTableResponse setStatus(final Integer status) {
         this.status = status;
+        return this;
     }
 
     /**
@@ -108,9 +110,11 @@ public class GpProxyTableResponse extends ZclCommand {
      * Sets Total Number Of Non Empty Proxy Table Entries.
      *
      * @param totalNumberOfNonEmptyProxyTableEntries the Total Number Of Non Empty Proxy Table Entries
+     * @return the GpProxyTableResponse command
      */
-    public void setTotalNumberOfNonEmptyProxyTableEntries(final Integer totalNumberOfNonEmptyProxyTableEntries) {
+    public GpProxyTableResponse setTotalNumberOfNonEmptyProxyTableEntries(final Integer totalNumberOfNonEmptyProxyTableEntries) {
         this.totalNumberOfNonEmptyProxyTableEntries = totalNumberOfNonEmptyProxyTableEntries;
+        return this;
     }
 
     /**
@@ -126,9 +130,11 @@ public class GpProxyTableResponse extends ZclCommand {
      * Sets Start Index.
      *
      * @param startIndex the Start Index
+     * @return the GpProxyTableResponse command
      */
-    public void setStartIndex(final Integer startIndex) {
+    public GpProxyTableResponse setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;
+        return this;
     }
 
     /**
@@ -144,9 +150,11 @@ public class GpProxyTableResponse extends ZclCommand {
      * Sets Entries Count.
      *
      * @param entriesCount the Entries Count
+     * @return the GpProxyTableResponse command
      */
-    public void setEntriesCount(final Integer entriesCount) {
+    public GpProxyTableResponse setEntriesCount(final Integer entriesCount) {
         this.entriesCount = entriesCount;
+        return this;
     }
 
     /**
@@ -162,9 +170,11 @@ public class GpProxyTableResponse extends ZclCommand {
      * Sets Proxy Table Entries.
      *
      * @param proxyTableEntries the Proxy Table Entries
+     * @return the GpProxyTableResponse command
      */
-    public void setProxyTableEntries(final Integer proxyTableEntries) {
+    public GpProxyTableResponse setProxyTableEntries(final Integer proxyTableEntries) {
         this.proxyTableEntries = proxyTableEntries;
+        return this;
     }
 
     @Override

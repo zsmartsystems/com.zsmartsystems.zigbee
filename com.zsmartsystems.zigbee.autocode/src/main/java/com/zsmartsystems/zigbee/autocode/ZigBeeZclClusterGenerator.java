@@ -397,6 +397,7 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
 
             out.println("     * @return the {@link Future<CommandResult>} command result future");
             out.println("     */");
+            out.println("    @Deprecated");
             out.print("    public Future<CommandResult> " + stringToLowerCamelCase(command.name) + "(");
 
             boolean first = true;
@@ -410,7 +411,7 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
 
             out.println(") {");
             if (fields.size() == 0) {
-                out.println("        return send(new " + stringToUpperCamelCase(command.name) + "());");
+                out.println("        return sendCommand(new " + stringToUpperCamelCase(command.name) + "());");
             } else {
                 out.println("        " + stringToUpperCamelCase(command.name) + " command = new "
                         + stringToUpperCamelCase(command.name) + "();");
@@ -422,7 +423,7 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
                             + stringToLowerCamelCase(field.name) + ");");
                 }
                 out.println();
-                out.println("        return send(command);");
+                out.println("        return sendCommand(command);");
             }
             out.println("    }");
         }

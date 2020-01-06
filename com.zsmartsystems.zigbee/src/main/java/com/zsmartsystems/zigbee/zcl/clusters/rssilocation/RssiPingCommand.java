@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class RssiPingCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -63,9 +63,11 @@ public class RssiPingCommand extends ZclCommand {
      * Sets Location Type.
      *
      * @param locationType the Location Type
+     * @return the RssiPingCommand command
      */
-    public void setLocationType(final Integer locationType) {
+    public RssiPingCommand setLocationType(final Integer locationType) {
         this.locationType = locationType;
+        return this;
     }
 
     @Override

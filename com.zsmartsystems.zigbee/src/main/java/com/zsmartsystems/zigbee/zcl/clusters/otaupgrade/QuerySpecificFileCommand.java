@@ -32,7 +32,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class QuerySpecificFileCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -92,9 +92,11 @@ public class QuerySpecificFileCommand extends ZclCommand {
      * Sets Request Node Address.
      *
      * @param requestNodeAddress the Request Node Address
+     * @return the QuerySpecificFileCommand command
      */
-    public void setRequestNodeAddress(final IeeeAddress requestNodeAddress) {
+    public QuerySpecificFileCommand setRequestNodeAddress(final IeeeAddress requestNodeAddress) {
         this.requestNodeAddress = requestNodeAddress;
+        return this;
     }
 
     /**
@@ -110,9 +112,11 @@ public class QuerySpecificFileCommand extends ZclCommand {
      * Sets Manufacturer Code.
      *
      * @param manufacturerCode the Manufacturer Code
+     * @return the QuerySpecificFileCommand command
      */
-    public void setManufacturerCode(final Integer manufacturerCode) {
+    public QuerySpecificFileCommand setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
+        return this;
     }
 
     /**
@@ -128,9 +132,11 @@ public class QuerySpecificFileCommand extends ZclCommand {
      * Sets Image Type.
      *
      * @param imageType the Image Type
+     * @return the QuerySpecificFileCommand command
      */
-    public void setImageType(final Integer imageType) {
+    public QuerySpecificFileCommand setImageType(final Integer imageType) {
         this.imageType = imageType;
+        return this;
     }
 
     /**
@@ -146,9 +152,11 @@ public class QuerySpecificFileCommand extends ZclCommand {
      * Sets File Version.
      *
      * @param fileVersion the File Version
+     * @return the QuerySpecificFileCommand command
      */
-    public void setFileVersion(final Integer fileVersion) {
+    public QuerySpecificFileCommand setFileVersion(final Integer fileVersion) {
         this.fileVersion = fileVersion;
+        return this;
     }
 
     /**
@@ -164,9 +172,11 @@ public class QuerySpecificFileCommand extends ZclCommand {
      * Sets Zigbee Stack Version.
      *
      * @param zigbeeStackVersion the Zigbee Stack Version
+     * @return the QuerySpecificFileCommand command
      */
-    public void setZigbeeStackVersion(final Integer zigbeeStackVersion) {
+    public QuerySpecificFileCommand setZigbeeStackVersion(final Integer zigbeeStackVersion) {
         this.zigbeeStackVersion = zigbeeStackVersion;
+        return this;
     }
 
     @Override

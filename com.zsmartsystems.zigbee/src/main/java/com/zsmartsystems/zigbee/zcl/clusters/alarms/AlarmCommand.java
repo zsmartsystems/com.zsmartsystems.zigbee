@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class AlarmCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -73,9 +73,11 @@ public class AlarmCommand extends ZclCommand {
      * Sets Alarm Code.
      *
      * @param alarmCode the Alarm Code
+     * @return the AlarmCommand command
      */
-    public void setAlarmCode(final Integer alarmCode) {
+    public AlarmCommand setAlarmCode(final Integer alarmCode) {
         this.alarmCode = alarmCode;
+        return this;
     }
 
     /**
@@ -91,9 +93,11 @@ public class AlarmCommand extends ZclCommand {
      * Sets Cluster Identifier.
      *
      * @param clusterIdentifier the Cluster Identifier
+     * @return the AlarmCommand command
      */
-    public void setClusterIdentifier(final Integer clusterIdentifier) {
+    public AlarmCommand setClusterIdentifier(final Integer clusterIdentifier) {
         this.clusterIdentifier = clusterIdentifier;
+        return this;
     }
 
     @Override

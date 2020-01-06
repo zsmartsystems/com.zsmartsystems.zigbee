@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetScheduledPricesCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -92,9 +92,11 @@ public class GetScheduledPricesCommand extends ZclCommand {
      * that StartTime with the current time stamp.
      *
      * @param startTime the Start Time
+     * @return the GetScheduledPricesCommand command
      */
-    public void setStartTime(final Calendar startTime) {
+    public GetScheduledPricesCommand setStartTime(final Calendar startTime) {
         this.startTime = startTime;
+        return this;
     }
 
     /**
@@ -122,9 +124,11 @@ public class GetScheduledPricesCommand extends ZclCommand {
      * listed in the device’s event table).
      *
      * @param numberOfEvents the Number Of Events
+     * @return the GetScheduledPricesCommand command
      */
-    public void setNumberOfEvents(final Integer numberOfEvents) {
+    public GetScheduledPricesCommand setNumberOfEvents(final Integer numberOfEvents) {
         this.numberOfEvents = numberOfEvents;
+        return this;
     }
 
     @Override

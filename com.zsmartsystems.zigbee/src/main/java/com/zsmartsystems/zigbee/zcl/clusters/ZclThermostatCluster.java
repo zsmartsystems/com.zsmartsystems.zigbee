@@ -34,7 +34,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:44:02Z")
 public class ZclThermostatCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -1386,6 +1386,7 @@ public class ZclThermostatCluster extends ZclCluster {
      * @param amount {@link Integer} Amount
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> setpointRaiseLowerCommand(Integer mode, Integer amount) {
         SetpointRaiseLowerCommand command = new SetpointRaiseLowerCommand();
 
@@ -1393,7 +1394,7 @@ public class ZclThermostatCluster extends ZclCluster {
         command.setMode(mode);
         command.setAmount(amount);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1417,6 +1418,7 @@ public class ZclThermostatCluster extends ZclCluster {
      * @param coolSet {@link Integer} Cool Set
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> setWeeklySchedule(Integer numberOfTransitions, Integer dayOfWeek, Integer mode, Integer transition, Integer heatSet, Integer coolSet) {
         SetWeeklySchedule command = new SetWeeklySchedule();
 
@@ -1428,7 +1430,7 @@ public class ZclThermostatCluster extends ZclCluster {
         command.setHeatSet(heatSet);
         command.setCoolSet(coolSet);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1438,6 +1440,7 @@ public class ZclThermostatCluster extends ZclCluster {
      * @param modeToReturn {@link Integer} Mode To Return
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getWeeklySchedule(Integer daysToReturn, Integer modeToReturn) {
         GetWeeklySchedule command = new GetWeeklySchedule();
 
@@ -1445,7 +1448,7 @@ public class ZclThermostatCluster extends ZclCluster {
         command.setDaysToReturn(daysToReturn);
         command.setModeToReturn(modeToReturn);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1453,8 +1456,9 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> clearWeeklySchedule() {
-        return send(new ClearWeeklySchedule());
+        return sendCommand(new ClearWeeklySchedule());
     }
 
     /**
@@ -1476,8 +1480,9 @@ public class ZclThermostatCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getRelayStatusLog() {
-        return send(new GetRelayStatusLog());
+        return sendCommand(new GetRelayStatusLog());
     }
 
     /**
@@ -1491,6 +1496,7 @@ public class ZclThermostatCluster extends ZclCluster {
      * @param coolSet {@link Integer} Cool Set
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getWeeklyScheduleResponse(Integer numberOfTransitions, Integer dayOfWeek, Integer mode, Integer transition, Integer heatSet, Integer coolSet) {
         GetWeeklyScheduleResponse command = new GetWeeklyScheduleResponse();
 
@@ -1502,7 +1508,7 @@ public class ZclThermostatCluster extends ZclCluster {
         command.setHeatSet(heatSet);
         command.setCoolSet(coolSet);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1516,6 +1522,7 @@ public class ZclThermostatCluster extends ZclCluster {
      * @param unreadEntries {@link Integer} Unread Entries
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getRelayStatusLogResponse(Integer timeOfDay, Integer relayStatus, Integer localTemperature, Integer humidity, Integer setpoint, Integer unreadEntries) {
         GetRelayStatusLogResponse command = new GetRelayStatusLogResponse();
 
@@ -1527,6 +1534,6 @@ public class ZclThermostatCluster extends ZclCluster {
         command.setSetpoint(setpoint);
         command.setUnreadEntries(unreadEntries);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

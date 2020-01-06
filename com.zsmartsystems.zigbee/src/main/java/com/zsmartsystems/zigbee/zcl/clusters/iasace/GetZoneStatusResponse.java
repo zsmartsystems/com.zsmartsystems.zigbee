@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetZoneStatusResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -113,9 +113,11 @@ public class GetZoneStatusResponse extends ZclCommand {
      * The IAS ACE client should NOT typically send another Get Zone Status command.
      *
      * @param zoneStatusComplete the Zone Status Complete
+     * @return the GetZoneStatusResponse command
      */
-    public void setZoneStatusComplete(final Boolean zoneStatusComplete) {
+    public GetZoneStatusResponse setZoneStatusComplete(final Boolean zoneStatusComplete) {
         this.zoneStatusComplete = zoneStatusComplete;
+        return this;
     }
 
     /**
@@ -131,9 +133,11 @@ public class GetZoneStatusResponse extends ZclCommand {
      * Sets Number Of Zones.
      *
      * @param numberOfZones the Number Of Zones
+     * @return the GetZoneStatusResponse command
      */
-    public void setNumberOfZones(final Integer numberOfZones) {
+    public GetZoneStatusResponse setNumberOfZones(final Integer numberOfZones) {
         this.numberOfZones = numberOfZones;
+        return this;
     }
 
     /**
@@ -149,9 +153,11 @@ public class GetZoneStatusResponse extends ZclCommand {
      * Sets IAS ACE Zone Status.
      *
      * @param iasAceZoneStatus the IAS ACE Zone Status
+     * @return the GetZoneStatusResponse command
      */
-    public void setIasAceZoneStatus(final Integer iasAceZoneStatus) {
+    public GetZoneStatusResponse setIasAceZoneStatus(final Integer iasAceZoneStatus) {
         this.iasAceZoneStatus = iasAceZoneStatus;
+        return this;
     }
 
     /**
@@ -167,9 +173,11 @@ public class GetZoneStatusResponse extends ZclCommand {
      * Sets Zone ID.
      *
      * @param zoneId the Zone ID
+     * @return the GetZoneStatusResponse command
      */
-    public void setZoneId(final Integer zoneId) {
+    public GetZoneStatusResponse setZoneId(final Integer zoneId) {
         this.zoneId = zoneId;
+        return this;
     }
 
     /**
@@ -185,9 +193,11 @@ public class GetZoneStatusResponse extends ZclCommand {
      * Sets Zone Status.
      *
      * @param zoneStatus the Zone Status
+     * @return the GetZoneStatusResponse command
      */
-    public void setZoneStatus(final Integer zoneStatus) {
+    public GetZoneStatusResponse setZoneStatus(final Integer zoneStatus) {
         this.zoneStatus = zoneStatus;
+        return this;
     }
 
     @Override

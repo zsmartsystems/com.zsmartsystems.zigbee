@@ -34,7 +34,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class WriteAttributesUndividedCommand extends ZclCommand {
     /**
      * The command ID.
@@ -81,9 +81,11 @@ public class WriteAttributesUndividedCommand extends ZclCommand {
      * Sets Records.
      *
      * @param records the Records
+     * @return the WriteAttributesUndividedCommand command
      */
-    public void setRecords(final List<WriteAttributeRecord> records) {
+    public WriteAttributesUndividedCommand setRecords(final List<WriteAttributeRecord> records) {
         this.records = records;
+        return this;
     }
 
     @Override

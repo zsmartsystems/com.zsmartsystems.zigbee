@@ -65,7 +65,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:44:02Z")
 public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -230,6 +230,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      * @param maximumIncomingTransferSize {@link Integer} Maximum Incoming Transfer Size
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> requestTunnel(Integer protocolId, Integer manufacturerCode, Boolean flowControlSupport, Integer maximumIncomingTransferSize) {
         RequestTunnel command = new RequestTunnel();
 
@@ -239,7 +240,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
         command.setFlowControlSupport(flowControlSupport);
         command.setMaximumIncomingTransferSize(maximumIncomingTransferSize);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -253,13 +254,14 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      * @param tunnelId {@link Integer} Tunnel ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> closeTunnel(Integer tunnelId) {
         CloseTunnel command = new CloseTunnel();
 
         // Set the fields
         command.setTunnelId(tunnelId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -272,6 +274,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      * @param data {@link Integer} Data
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> transferDataClientToServer(Integer tunnelId, Integer data) {
         TransferDataClientToServer command = new TransferDataClientToServer();
 
@@ -279,7 +282,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
         command.setTunnelId(tunnelId);
         command.setData(data);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -304,6 +307,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      * @param transferDataStatus {@link Integer} Transfer Data Status
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> transferDataErrorClientToServer(Integer tunnelId, Integer transferDataStatus) {
         TransferDataErrorClientToServer command = new TransferDataErrorClientToServer();
 
@@ -311,7 +315,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
         command.setTunnelId(tunnelId);
         command.setTransferDataStatus(transferDataStatus);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -326,6 +330,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      * @param numberOfBytesLeft {@link Integer} Number Of Bytes Left
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> ackTransferDataClientToServer(Integer tunnelId, Integer numberOfBytesLeft) {
         AckTransferDataClientToServer command = new AckTransferDataClientToServer();
 
@@ -333,7 +338,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
         command.setTunnelId(tunnelId);
         command.setNumberOfBytesLeft(numberOfBytesLeft);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -349,6 +354,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      * @param numberOfOctetsLeft {@link Integer} Number Of Octets Left
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> readyDataClientToServer(Integer tunnelId, Integer numberOfOctetsLeft) {
         ReadyDataClientToServer command = new ReadyDataClientToServer();
 
@@ -356,7 +362,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
         command.setTunnelId(tunnelId);
         command.setNumberOfOctetsLeft(numberOfOctetsLeft);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -368,13 +374,14 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      * @param protocolOffset {@link Integer} Protocol Offset
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getSupportedTunnelProtocols(Integer protocolOffset) {
         GetSupportedTunnelProtocols command = new GetSupportedTunnelProtocols();
 
         // Set the fields
         command.setProtocolOffset(protocolOffset);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -390,6 +397,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      * @param maximumIncomingTransferSize {@link Integer} Maximum Incoming Transfer Size
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> requestTunnelResponse(Integer tunnelId, Integer tunnelStatus, Integer maximumIncomingTransferSize) {
         RequestTunnelResponse command = new RequestTunnelResponse();
 
@@ -398,7 +406,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
         command.setTunnelStatus(tunnelStatus);
         command.setMaximumIncomingTransferSize(maximumIncomingTransferSize);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -411,6 +419,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      * @param data {@link ByteArray} Data
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> transferDataServerToClient(Integer tunnelId, ByteArray data) {
         TransferDataServerToClient command = new TransferDataServerToClient();
 
@@ -418,7 +427,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
         command.setTunnelId(tunnelId);
         command.setData(data);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -443,6 +452,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      * @param transferDataStatus {@link Integer} Transfer Data Status
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> transferDataErrorServerToClient(Integer tunnelId, Integer transferDataStatus) {
         TransferDataErrorServerToClient command = new TransferDataErrorServerToClient();
 
@@ -450,7 +460,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
         command.setTunnelId(tunnelId);
         command.setTransferDataStatus(transferDataStatus);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -465,6 +475,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      * @param numberOfBytesLeft {@link Integer} Number Of Bytes Left
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> ackTransferDataServerToClient(Integer tunnelId, Integer numberOfBytesLeft) {
         AckTransferDataServerToClient command = new AckTransferDataServerToClient();
 
@@ -472,7 +483,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
         command.setTunnelId(tunnelId);
         command.setNumberOfBytesLeft(numberOfBytesLeft);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -488,6 +499,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      * @param numberOfOctetsLeft {@link Integer} Number Of Octets Left
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> readyDataServerToClient(Integer tunnelId, Integer numberOfOctetsLeft) {
         ReadyDataServerToClient command = new ReadyDataServerToClient();
 
@@ -495,7 +507,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
         command.setTunnelId(tunnelId);
         command.setNumberOfOctetsLeft(numberOfOctetsLeft);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -511,6 +523,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      * @param protocolList {@link Protocol} Protocol List
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> supportedTunnelProtocolsResponse(Boolean protocolListComplete, Integer protocolCount, Protocol protocolList) {
         SupportedTunnelProtocolsResponse command = new SupportedTunnelProtocolsResponse();
 
@@ -519,7 +532,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
         command.setProtocolCount(protocolCount);
         command.setProtocolList(protocolList);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -535,12 +548,13 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      * @param tunnelId {@link Integer} Tunnel ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> tunnelClosureNotification(Integer tunnelId) {
         TunnelClosureNotification command = new TunnelClosureNotification();
 
         // Set the fields
         command.setTunnelId(tunnelId);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

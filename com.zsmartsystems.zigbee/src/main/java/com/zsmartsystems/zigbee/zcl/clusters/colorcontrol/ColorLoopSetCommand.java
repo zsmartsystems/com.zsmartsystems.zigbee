@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ColorLoopSetCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -86,9 +86,11 @@ public class ColorLoopSetCommand extends ZclCommand {
      * Sets Update Flags.
      *
      * @param updateFlags the Update Flags
+     * @return the ColorLoopSetCommand command
      */
-    public void setUpdateFlags(final Integer updateFlags) {
+    public ColorLoopSetCommand setUpdateFlags(final Integer updateFlags) {
         this.updateFlags = updateFlags;
+        return this;
     }
 
     /**
@@ -104,9 +106,11 @@ public class ColorLoopSetCommand extends ZclCommand {
      * Sets Action.
      *
      * @param action the Action
+     * @return the ColorLoopSetCommand command
      */
-    public void setAction(final Integer action) {
+    public ColorLoopSetCommand setAction(final Integer action) {
         this.action = action;
+        return this;
     }
 
     /**
@@ -122,9 +126,11 @@ public class ColorLoopSetCommand extends ZclCommand {
      * Sets Direction.
      *
      * @param direction the Direction
+     * @return the ColorLoopSetCommand command
      */
-    public void setDirection(final Integer direction) {
+    public ColorLoopSetCommand setDirection(final Integer direction) {
         this.direction = direction;
+        return this;
     }
 
     /**
@@ -140,9 +146,11 @@ public class ColorLoopSetCommand extends ZclCommand {
      * Sets Transition Time.
      *
      * @param transitionTime the Transition Time
+     * @return the ColorLoopSetCommand command
      */
-    public void setTransitionTime(final Integer transitionTime) {
+    public ColorLoopSetCommand setTransitionTime(final Integer transitionTime) {
         this.transitionTime = transitionTime;
+        return this;
     }
 
     /**
@@ -158,9 +166,11 @@ public class ColorLoopSetCommand extends ZclCommand {
      * Sets Start Hue.
      *
      * @param startHue the Start Hue
+     * @return the ColorLoopSetCommand command
      */
-    public void setStartHue(final Integer startHue) {
+    public ColorLoopSetCommand setStartHue(final Integer startHue) {
         this.startHue = startHue;
+        return this;
     }
 
     @Override

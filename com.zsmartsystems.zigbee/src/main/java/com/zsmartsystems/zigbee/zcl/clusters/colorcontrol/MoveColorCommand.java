@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class MoveColorCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -68,9 +68,11 @@ public class MoveColorCommand extends ZclCommand {
      * Sets Rate X.
      *
      * @param rateX the Rate X
+     * @return the MoveColorCommand command
      */
-    public void setRateX(final Integer rateX) {
+    public MoveColorCommand setRateX(final Integer rateX) {
         this.rateX = rateX;
+        return this;
     }
 
     /**
@@ -86,9 +88,11 @@ public class MoveColorCommand extends ZclCommand {
      * Sets Rate Y.
      *
      * @param rateY the Rate Y
+     * @return the MoveColorCommand command
      */
-    public void setRateY(final Integer rateY) {
+    public MoveColorCommand setRateY(final Integer rateY) {
         this.rateY = rateY;
+        return this;
     }
 
     @Override

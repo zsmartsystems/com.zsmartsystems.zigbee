@@ -45,7 +45,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:44:02Z")
 public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -172,6 +172,7 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
      * @param signature {@link ByteArray} Signature
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> reportEventStatus(Integer issuerEventId, Integer eventStatus, Calendar eventStatusTime, Integer criticalityLevelApplied, Integer coolingTemperatureSetPointApplied, Integer heatingTemperatureSetPointApplied, Integer averageLoadAdjustmentPercentageApplied, Integer dutyCycleApplied, Integer eventControl, Integer signatureType, ByteArray signature) {
         ReportEventStatus command = new ReportEventStatus();
 
@@ -188,7 +189,7 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
         command.setSignatureType(signatureType);
         command.setSignature(signature);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -203,6 +204,7 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
      * @param numberOfEvents {@link Integer} Number Of Events
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getScheduledEvents(Calendar startTime, Integer numberOfEvents) {
         GetScheduledEvents command = new GetScheduledEvents();
 
@@ -210,7 +212,7 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
         command.setStartTime(startTime);
         command.setNumberOfEvents(numberOfEvents);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -231,6 +233,7 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
      * @param eventControl {@link Integer} Event Control
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> loadControlEventCommand(Integer issuerEventId, Integer deviceClass, Integer utilityEnrollmentGroup, Calendar startTime, Integer durationInMinutes, Integer criticalityLevel, Integer coolingTemperatureOffset, Integer heatingTemperatureOffset, Integer coolingTemperatureSetPoint, Integer heatingTemperatureSetPoint, Integer averageLoadAdjustmentPercentage, Integer dutyCycle, Integer eventControl) {
         LoadControlEventCommand command = new LoadControlEventCommand();
 
@@ -249,7 +252,7 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
         command.setDutyCycle(dutyCycle);
         command.setEventControl(eventControl);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -262,6 +265,7 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
      * @param effectiveTime {@link Calendar} Effective Time
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> cancelLoadControlEvent(Integer issuerEventId, Integer deviceClass, Integer utilityEnrollmentGroup, Integer cancelControl, Calendar effectiveTime) {
         CancelLoadControlEvent command = new CancelLoadControlEvent();
 
@@ -272,7 +276,7 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
         command.setCancelControl(cancelControl);
         command.setEffectiveTime(effectiveTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -281,12 +285,13 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
      * @param cancelControl {@link Integer} Cancel Control
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> cancelAllLoadControlEvents(Integer cancelControl) {
         CancelAllLoadControlEvents command = new CancelAllLoadControlEvents();
 
         // Set the fields
         command.setCancelControl(cancelControl);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

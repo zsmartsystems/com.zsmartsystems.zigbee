@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-03T12:48:45Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GpTranslationTableUpdate extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -87,9 +87,11 @@ public class GpTranslationTableUpdate extends ZclCommand {
      * Sets Options.
      *
      * @param options the Options
+     * @return the GpTranslationTableUpdate command
      */
-    public void setOptions(final Integer options) {
+    public GpTranslationTableUpdate setOptions(final Integer options) {
         this.options = options;
+        return this;
     }
 
     /**
@@ -105,9 +107,11 @@ public class GpTranslationTableUpdate extends ZclCommand {
      * Sets Gpd Src ID.
      *
      * @param gpdSrcId the Gpd Src ID
+     * @return the GpTranslationTableUpdate command
      */
-    public void setGpdSrcId(final Integer gpdSrcId) {
+    public GpTranslationTableUpdate setGpdSrcId(final Integer gpdSrcId) {
         this.gpdSrcId = gpdSrcId;
+        return this;
     }
 
     /**
@@ -123,9 +127,11 @@ public class GpTranslationTableUpdate extends ZclCommand {
      * Sets Gpd IEEE.
      *
      * @param gpdIeee the Gpd IEEE
+     * @return the GpTranslationTableUpdate command
      */
-    public void setGpdIeee(final IeeeAddress gpdIeee) {
+    public GpTranslationTableUpdate setGpdIeee(final IeeeAddress gpdIeee) {
         this.gpdIeee = gpdIeee;
+        return this;
     }
 
     /**
@@ -141,9 +147,11 @@ public class GpTranslationTableUpdate extends ZclCommand {
      * Sets Endpoint.
      *
      * @param endpoint the Endpoint
+     * @return the GpTranslationTableUpdate command
      */
-    public void setEndpoint(final Integer endpoint) {
+    public GpTranslationTableUpdate setEndpoint(final Integer endpoint) {
         this.endpoint = endpoint;
+        return this;
     }
 
     /**
@@ -159,9 +167,11 @@ public class GpTranslationTableUpdate extends ZclCommand {
      * Sets Translations.
      *
      * @param translations the Translations
+     * @return the GpTranslationTableUpdate command
      */
-    public void setTranslations(final GpTranslationTableUpdateTranslation translations) {
+    public GpTranslationTableUpdate setTranslations(final GpTranslationTableUpdateTranslation translations) {
         this.translations = translations;
+        return this;
     }
 
     @Override

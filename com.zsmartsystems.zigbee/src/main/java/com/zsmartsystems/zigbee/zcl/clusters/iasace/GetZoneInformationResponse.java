@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetZoneInformationResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -86,9 +86,11 @@ public class GetZoneInformationResponse extends ZclCommand {
      * Sets Zone ID.
      *
      * @param zoneId the Zone ID
+     * @return the GetZoneInformationResponse command
      */
-    public void setZoneId(final Integer zoneId) {
+    public GetZoneInformationResponse setZoneId(final Integer zoneId) {
         this.zoneId = zoneId;
+        return this;
     }
 
     /**
@@ -104,9 +106,11 @@ public class GetZoneInformationResponse extends ZclCommand {
      * Sets Zone Type.
      *
      * @param zoneType the Zone Type
+     * @return the GetZoneInformationResponse command
      */
-    public void setZoneType(final Integer zoneType) {
+    public GetZoneInformationResponse setZoneType(final Integer zoneType) {
         this.zoneType = zoneType;
+        return this;
     }
 
     /**
@@ -122,9 +126,11 @@ public class GetZoneInformationResponse extends ZclCommand {
      * Sets IEEE Address.
      *
      * @param ieeeAddress the IEEE Address
+     * @return the GetZoneInformationResponse command
      */
-    public void setIeeeAddress(final IeeeAddress ieeeAddress) {
+    public GetZoneInformationResponse setIeeeAddress(final IeeeAddress ieeeAddress) {
         this.ieeeAddress = ieeeAddress;
+        return this;
     }
 
     /**
@@ -154,9 +160,11 @@ public class GetZoneInformationResponse extends ZclCommand {
      * The string encoding shall be UTF-8.
      *
      * @param zoneLabel the Zone Label
+     * @return the GetZoneInformationResponse command
      */
-    public void setZoneLabel(final String zoneLabel) {
+    public GetZoneInformationResponse setZoneLabel(final String zoneLabel) {
         this.zoneLabel = zoneLabel;
+        return this;
     }
 
     @Override

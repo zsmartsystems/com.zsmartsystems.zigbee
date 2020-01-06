@@ -51,7 +51,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:44:02Z")
 public class ZclLevelControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -768,6 +768,7 @@ public class ZclLevelControlCluster extends ZclCluster {
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> moveToLevelCommand(Integer level, Integer transitionTime) {
         MoveToLevelCommand command = new MoveToLevelCommand();
 
@@ -775,7 +776,7 @@ public class ZclLevelControlCluster extends ZclCluster {
         command.setLevel(level);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -785,6 +786,7 @@ public class ZclLevelControlCluster extends ZclCluster {
      * @param rate {@link Integer} Rate
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> moveCommand(Integer moveMode, Integer rate) {
         MoveCommand command = new MoveCommand();
 
@@ -792,7 +794,7 @@ public class ZclLevelControlCluster extends ZclCluster {
         command.setMoveMode(moveMode);
         command.setRate(rate);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -803,6 +805,7 @@ public class ZclLevelControlCluster extends ZclCluster {
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> stepCommand(Integer stepMode, Integer stepSize, Integer transitionTime) {
         StepCommand command = new StepCommand();
 
@@ -811,7 +814,7 @@ public class ZclLevelControlCluster extends ZclCluster {
         command.setStepSize(stepSize);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -824,8 +827,9 @@ public class ZclLevelControlCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> stopCommand() {
-        return send(new StopCommand());
+        return sendCommand(new StopCommand());
     }
 
     /**
@@ -845,6 +849,7 @@ public class ZclLevelControlCluster extends ZclCluster {
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> moveToLevelWithOnOffCommand(Integer level, Integer transitionTime) {
         MoveToLevelWithOnOffCommand command = new MoveToLevelWithOnOffCommand();
 
@@ -852,7 +857,7 @@ public class ZclLevelControlCluster extends ZclCluster {
         command.setLevel(level);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -862,6 +867,7 @@ public class ZclLevelControlCluster extends ZclCluster {
      * @param rate {@link Integer} Rate
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> moveWithOnOffCommand(Integer moveMode, Integer rate) {
         MoveWithOnOffCommand command = new MoveWithOnOffCommand();
 
@@ -869,7 +875,7 @@ public class ZclLevelControlCluster extends ZclCluster {
         command.setMoveMode(moveMode);
         command.setRate(rate);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -880,6 +886,7 @@ public class ZclLevelControlCluster extends ZclCluster {
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> stepWithOnOffCommand(Integer stepMode, Integer stepSize, Integer transitionTime) {
         StepWithOnOffCommand command = new StepWithOnOffCommand();
 
@@ -888,7 +895,7 @@ public class ZclLevelControlCluster extends ZclCluster {
         command.setStepSize(stepSize);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -896,7 +903,8 @@ public class ZclLevelControlCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> stop2Command() {
-        return send(new Stop2Command());
+        return sendCommand(new Stop2Command());
     }
 }

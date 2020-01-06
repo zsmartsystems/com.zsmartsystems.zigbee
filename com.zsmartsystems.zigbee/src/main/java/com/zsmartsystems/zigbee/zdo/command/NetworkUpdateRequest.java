@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-15T09:28:31Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class NetworkUpdateRequest extends ZdoRequest {
     /**
      * The ZDO cluster ID.
@@ -77,9 +77,11 @@ public class NetworkUpdateRequest extends ZdoRequest {
      * Sets Scan Channels.
      *
      * @param scanChannels the Scan Channels
+     * @return the NetworkUpdateRequest command
      */
-    public void setScanChannels(final Integer scanChannels) {
+    public NetworkUpdateRequest setScanChannels(final Integer scanChannels) {
         this.scanChannels = scanChannels;
+        return this;
     }
 
     /**
@@ -95,9 +97,11 @@ public class NetworkUpdateRequest extends ZdoRequest {
      * Sets Scan Duration.
      *
      * @param scanDuration the Scan Duration
+     * @return the NetworkUpdateRequest command
      */
-    public void setScanDuration(final Integer scanDuration) {
+    public NetworkUpdateRequest setScanDuration(final Integer scanDuration) {
         this.scanDuration = scanDuration;
+        return this;
     }
 
     /**
@@ -113,9 +117,11 @@ public class NetworkUpdateRequest extends ZdoRequest {
      * Sets Scan Count.
      *
      * @param scanCount the Scan Count
+     * @return the NetworkUpdateRequest command
      */
-    public void setScanCount(final Integer scanCount) {
+    public NetworkUpdateRequest setScanCount(final Integer scanCount) {
         this.scanCount = scanCount;
+        return this;
     }
 
     /**
@@ -131,9 +137,11 @@ public class NetworkUpdateRequest extends ZdoRequest {
      * Sets NWK Update ID.
      *
      * @param nwkUpdateId the NWK Update ID
+     * @return the NetworkUpdateRequest command
      */
-    public void setNwkUpdateId(final Integer nwkUpdateId) {
+    public NetworkUpdateRequest setNwkUpdateId(final Integer nwkUpdateId) {
         this.nwkUpdateId = nwkUpdateId;
+        return this;
     }
 
     /**
@@ -149,9 +157,11 @@ public class NetworkUpdateRequest extends ZdoRequest {
      * Sets NWK Manager Addr.
      *
      * @param nwkManagerAddr the NWK Manager Addr
+     * @return the NetworkUpdateRequest command
      */
-    public void setNwkManagerAddr(final Integer nwkManagerAddr) {
+    public NetworkUpdateRequest setNwkManagerAddr(final Integer nwkManagerAddr) {
         this.nwkManagerAddr = nwkManagerAddr;
+        return this;
     }
 
     @Override

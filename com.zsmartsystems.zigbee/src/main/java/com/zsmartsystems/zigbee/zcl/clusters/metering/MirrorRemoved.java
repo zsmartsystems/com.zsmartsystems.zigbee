@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class MirrorRemoved extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -75,9 +75,11 @@ public class MirrorRemoved extends ZclCommand {
      * Devices meter data.
      *
      * @param removedEndpointId the Removed Endpoint ID
+     * @return the MirrorRemoved command
      */
-    public void setRemovedEndpointId(final Integer removedEndpointId) {
+    public MirrorRemoved setRemovedEndpointId(final Integer removedEndpointId) {
         this.removedEndpointId = removedEndpointId;
+        return this;
     }
 
     @Override

@@ -47,7 +47,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:44:02Z")
 public class ZclRssiLocationCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -1261,6 +1261,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param pathLossExponent {@link Integer} Path Loss Exponent
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> setAbsoluteLocationCommand(Integer coordinate1, Integer coordinate2, Integer coordinate3, Integer power, Integer pathLossExponent) {
         SetAbsoluteLocationCommand command = new SetAbsoluteLocationCommand();
 
@@ -1271,7 +1272,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
         command.setPower(power);
         command.setPathLossExponent(pathLossExponent);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1284,6 +1285,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param reportingPeriod {@link Integer} Reporting Period
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> setDeviceConfigurationCommand(Integer power, Integer pathLossExponent, Integer calculationPeriod, Integer numberRssiMeasurements, Integer reportingPeriod) {
         SetDeviceConfigurationCommand command = new SetDeviceConfigurationCommand();
 
@@ -1294,7 +1296,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
         command.setNumberRssiMeasurements(numberRssiMeasurements);
         command.setReportingPeriod(reportingPeriod);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1303,13 +1305,14 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param targetAddress {@link IeeeAddress} Target Address
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getDeviceConfigurationCommand(IeeeAddress targetAddress) {
         GetDeviceConfigurationCommand command = new GetDeviceConfigurationCommand();
 
         // Set the fields
         command.setTargetAddress(targetAddress);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1320,6 +1323,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param targetAddress {@link IeeeAddress} Target Address
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getLocationDataCommand(Integer header, Integer numberResponses, IeeeAddress targetAddress) {
         GetLocationDataCommand command = new GetLocationDataCommand();
 
@@ -1328,7 +1332,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
         command.setNumberResponses(numberResponses);
         command.setTargetAddress(targetAddress);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1342,6 +1346,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param numberRssiMeasurements {@link Integer} Number RSSI Measurements
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> rssiResponse(IeeeAddress replyingDevice, Integer coordinate1, Integer coordinate2, Integer coordinate3, Integer rssi, Integer numberRssiMeasurements) {
         RssiResponse command = new RssiResponse();
 
@@ -1353,7 +1358,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
         command.setRssi(rssi);
         command.setNumberRssiMeasurements(numberRssiMeasurements);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1364,6 +1369,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param calculationPeriod {@link Integer} Calculation Period
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> sendPingsCommand(IeeeAddress targetAddress, Integer numberRssiMeasurements, Integer calculationPeriod) {
         SendPingsCommand command = new SendPingsCommand();
 
@@ -1372,7 +1378,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
         command.setNumberRssiMeasurements(numberRssiMeasurements);
         command.setCalculationPeriod(calculationPeriod);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1384,6 +1390,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param coordinate3 {@link Integer} Coordinate 3
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> anchorNodeAnnounceCommand(IeeeAddress anchorNodeAddress, Integer coordinate1, Integer coordinate2, Integer coordinate3) {
         AnchorNodeAnnounceCommand command = new AnchorNodeAnnounceCommand();
 
@@ -1393,7 +1400,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
         command.setCoordinate2(coordinate2);
         command.setCoordinate3(coordinate3);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1407,6 +1414,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param reportingPeriod {@link Integer} Reporting Period
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> deviceConfigurationResponse(Integer status, Integer power, Integer pathLossExponent, Integer calculationPeriod, Integer numberRssiMeasurements, Integer reportingPeriod) {
         DeviceConfigurationResponse command = new DeviceConfigurationResponse();
 
@@ -1418,7 +1426,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
         command.setNumberRssiMeasurements(numberRssiMeasurements);
         command.setReportingPeriod(reportingPeriod);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1436,6 +1444,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param locationAge {@link Integer} Location Age
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> locationDataResponse(Integer status, Integer locationType, Integer coordinate1, Integer coordinate2, Integer coordinate3, Integer power, Integer pathLossExponent, Integer locationMethod, Integer qualityMeasure, Integer locationAge) {
         LocationDataResponse command = new LocationDataResponse();
 
@@ -1451,7 +1460,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
         command.setQualityMeasure(qualityMeasure);
         command.setLocationAge(locationAge);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1468,6 +1477,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param locationAge {@link Integer} Location Age
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> locationDataNotificationCommand(Integer locationType, Integer coordinate1, Integer coordinate2, Integer coordinate3, Integer power, Integer pathLossExponent, Integer locationMethod, Integer qualityMeasure, Integer locationAge) {
         LocationDataNotificationCommand command = new LocationDataNotificationCommand();
 
@@ -1482,7 +1492,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
         command.setQualityMeasure(qualityMeasure);
         command.setLocationAge(locationAge);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1490,8 +1500,9 @@ public class ZclRssiLocationCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> compactLocationDataNotificationCommand() {
-        return send(new CompactLocationDataNotificationCommand());
+        return sendCommand(new CompactLocationDataNotificationCommand());
     }
 
     /**
@@ -1500,13 +1511,14 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param locationType {@link Integer} Location Type
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> rssiPingCommand(Integer locationType) {
         RssiPingCommand command = new RssiPingCommand();
 
         // Set the fields
         command.setLocationType(locationType);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1514,8 +1526,9 @@ public class ZclRssiLocationCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> rssiRequestCommand() {
-        return send(new RssiRequestCommand());
+        return sendCommand(new RssiRequestCommand());
     }
 
     /**
@@ -1526,6 +1539,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param neighborsInformation {@link List<NeighborInformation>} Neighbors Information
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> reportRssiMeasurementsCommand(IeeeAddress reportingAddress, Integer numberOfNeighbors, List<NeighborInformation> neighborsInformation) {
         ReportRssiMeasurementsCommand command = new ReportRssiMeasurementsCommand();
 
@@ -1534,7 +1548,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
         command.setNumberOfNeighbors(numberOfNeighbors);
         command.setNeighborsInformation(neighborsInformation);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1543,12 +1557,13 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param requestingAddress {@link IeeeAddress} Requesting Address
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> requestOwnLocationCommand(IeeeAddress requestingAddress) {
         RequestOwnLocationCommand command = new RequestOwnLocationCommand();
 
         // Set the fields
         command.setRequestingAddress(requestingAddress);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

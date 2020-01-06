@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class PublishCalorificValueCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -89,9 +89,11 @@ public class PublishCalorificValueCommand extends ZclCommand {
      * Sets Issuer Event ID.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the PublishCalorificValueCommand command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public PublishCalorificValueCommand setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -107,9 +109,11 @@ public class PublishCalorificValueCommand extends ZclCommand {
      * Sets Start Time.
      *
      * @param startTime the Start Time
+     * @return the PublishCalorificValueCommand command
      */
-    public void setStartTime(final Calendar startTime) {
+    public PublishCalorificValueCommand setStartTime(final Calendar startTime) {
         this.startTime = startTime;
+        return this;
     }
 
     /**
@@ -125,9 +129,11 @@ public class PublishCalorificValueCommand extends ZclCommand {
      * Sets Calorific Value.
      *
      * @param calorificValue the Calorific Value
+     * @return the PublishCalorificValueCommand command
      */
-    public void setCalorificValue(final Integer calorificValue) {
+    public PublishCalorificValueCommand setCalorificValue(final Integer calorificValue) {
         this.calorificValue = calorificValue;
+        return this;
     }
 
     /**
@@ -143,9 +149,11 @@ public class PublishCalorificValueCommand extends ZclCommand {
      * Sets Calorific Value Unit.
      *
      * @param calorificValueUnit the Calorific Value Unit
+     * @return the PublishCalorificValueCommand command
      */
-    public void setCalorificValueUnit(final Integer calorificValueUnit) {
+    public PublishCalorificValueCommand setCalorificValueUnit(final Integer calorificValueUnit) {
         this.calorificValueUnit = calorificValueUnit;
+        return this;
     }
 
     /**
@@ -161,9 +169,11 @@ public class PublishCalorificValueCommand extends ZclCommand {
      * Sets Calorific Value Trailing Digit.
      *
      * @param calorificValueTrailingDigit the Calorific Value Trailing Digit
+     * @return the PublishCalorificValueCommand command
      */
-    public void setCalorificValueTrailingDigit(final Integer calorificValueTrailingDigit) {
+    public PublishCalorificValueCommand setCalorificValueTrailingDigit(final Integer calorificValueTrailingDigit) {
         this.calorificValueTrailingDigit = calorificValueTrailingDigit;
+        return this;
     }
 
     @Override

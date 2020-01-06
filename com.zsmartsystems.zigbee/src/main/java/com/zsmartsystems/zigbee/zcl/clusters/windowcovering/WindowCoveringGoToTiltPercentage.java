@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class WindowCoveringGoToTiltPercentage extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -65,9 +65,11 @@ public class WindowCoveringGoToTiltPercentage extends ZclCommand {
      * Sets Percentage Tilt Value.
      *
      * @param percentageTiltValue the Percentage Tilt Value
+     * @return the WindowCoveringGoToTiltPercentage command
      */
-    public void setPercentageTiltValue(final Integer percentageTiltValue) {
+    public WindowCoveringGoToTiltPercentage setPercentageTiltValue(final Integer percentageTiltValue) {
         this.percentageTiltValue = percentageTiltValue;
+        return this;
     }
 
     @Override

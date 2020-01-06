@@ -18,7 +18,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class SnapshotResponsePayload implements ZigBeeSerializable {
     /**
      * Snapshot Schedule ID structure field.
@@ -45,9 +45,11 @@ public class SnapshotResponsePayload implements ZigBeeSerializable {
      * Sets Snapshot Schedule ID.
      *
      * @param snapshotScheduleId the Snapshot Schedule ID
+     * @return the SnapshotResponsePayload command
      */
-    public void setSnapshotScheduleId(final Integer snapshotScheduleId) {
+    public SnapshotResponsePayload setSnapshotScheduleId(final Integer snapshotScheduleId) {
         this.snapshotScheduleId = snapshotScheduleId;
+        return this;
     }
 
     /**
@@ -63,9 +65,11 @@ public class SnapshotResponsePayload implements ZigBeeSerializable {
      * Sets Snapshot Schedule Confirmation.
      *
      * @param snapshotScheduleConfirmation the Snapshot Schedule Confirmation
+     * @return the SnapshotResponsePayload command
      */
-    public void setSnapshotScheduleConfirmation(final Integer snapshotScheduleConfirmation) {
+    public SnapshotResponsePayload setSnapshotScheduleConfirmation(final Integer snapshotScheduleConfirmation) {
         this.snapshotScheduleConfirmation = snapshotScheduleConfirmation;
+        return this;
     }
 
     @Override

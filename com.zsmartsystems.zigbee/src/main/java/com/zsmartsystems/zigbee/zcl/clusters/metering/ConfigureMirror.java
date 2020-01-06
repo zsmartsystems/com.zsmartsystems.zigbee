@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ConfigureMirror extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -120,9 +120,11 @@ public class ConfigureMirror extends ZclCommand {
      * information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the ConfigureMirror command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public ConfigureMirror setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -144,9 +146,11 @@ public class ConfigureMirror extends ZclCommand {
      * intends to use the ReportAttribute command.
      *
      * @param reportingInterval the Reporting Interval
+     * @return the ConfigureMirror command
      */
-    public void setReportingInterval(final Integer reportingInterval) {
+    public ConfigureMirror setReportingInterval(final Integer reportingInterval) {
         this.reportingInterval = reportingInterval;
+        return this;
     }
 
     /**
@@ -186,9 +190,11 @@ public class ConfigureMirror extends ZclCommand {
      * means of a normal ReadAttribute command.
      *
      * @param mirrorNotificationReporting the Mirror Notification Reporting
+     * @return the ConfigureMirror command
      */
-    public void setMirrorNotificationReporting(final Boolean mirrorNotificationReporting) {
+    public ConfigureMirror setMirrorNotificationReporting(final Boolean mirrorNotificationReporting) {
         this.mirrorNotificationReporting = mirrorNotificationReporting;
+        return this;
     }
 
     /**
@@ -210,9 +216,11 @@ public class ConfigureMirror extends ZclCommand {
      * mapping to ZCL or Smart Energy Standard commands.
      *
      * @param notificationScheme the Notification Scheme
+     * @return the ConfigureMirror command
      */
-    public void setNotificationScheme(final Integer notificationScheme) {
+    public ConfigureMirror setNotificationScheme(final Integer notificationScheme) {
         this.notificationScheme = notificationScheme;
+        return this;
     }
 
     @Override

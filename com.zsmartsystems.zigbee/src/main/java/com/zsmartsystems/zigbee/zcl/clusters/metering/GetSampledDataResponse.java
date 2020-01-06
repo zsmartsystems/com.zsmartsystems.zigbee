@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetSampledDataResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -120,9 +120,11 @@ public class GetSampledDataResponse extends ZclCommand {
      * match response data with the appropriate request.
      *
      * @param sampleId the Sample ID
+     * @return the GetSampledDataResponse command
      */
-    public void setSampleId(final Integer sampleId) {
+    public GetSampledDataResponse setSampleId(final Integer sampleId) {
         this.sampleId = sampleId;
+        return this;
     }
 
     /**
@@ -142,9 +144,11 @@ public class GetSampledDataResponse extends ZclCommand {
      * A UTC Time field to denote the time of the first sample returned in this response.
      *
      * @param sampleStartTime the Sample Start Time
+     * @return the GetSampledDataResponse command
      */
-    public void setSampleStartTime(final Calendar sampleStartTime) {
+    public GetSampledDataResponse setSampleStartTime(final Calendar sampleStartTime) {
         this.sampleStartTime = sampleStartTime;
+        return this;
     }
 
     /**
@@ -164,9 +168,11 @@ public class GetSampledDataResponse extends ZclCommand {
      * An 8 bit enumeration that identifies the type of data being sampled.
      *
      * @param sampleType the Sample Type
+     * @return the GetSampledDataResponse command
      */
-    public void setSampleType(final Integer sampleType) {
+    public GetSampledDataResponse setSampleType(final Integer sampleType) {
         this.sampleType = sampleType;
+        return this;
     }
 
     /**
@@ -186,9 +192,11 @@ public class GetSampledDataResponse extends ZclCommand {
      * An unsigned 16-bit field representing the interval or time in seconds between samples.
      *
      * @param sampleRequestInterval the Sample Request Interval
+     * @return the GetSampledDataResponse command
      */
-    public void setSampleRequestInterval(final Integer sampleRequestInterval) {
+    public GetSampledDataResponse setSampleRequestInterval(final Integer sampleRequestInterval) {
         this.sampleRequestInterval = sampleRequestInterval;
+        return this;
     }
 
     /**
@@ -216,9 +224,11 @@ public class GetSampledDataResponse extends ZclCommand {
      * available for the time period, only those available shall be returned.
      *
      * @param numberOfSamples the Number Of Samples
+     * @return the GetSampledDataResponse command
      */
-    public void setNumberOfSamples(final Integer numberOfSamples) {
+    public GetSampledDataResponse setNumberOfSamples(final Integer numberOfSamples) {
         this.numberOfSamples = numberOfSamples;
+        return this;
     }
 
     /**
@@ -246,9 +256,11 @@ public class GetSampledDataResponse extends ZclCommand {
      * is transmitted last. Invalid samples should be marked as 0xFFFFFF.
      *
      * @param samples the Samples
+     * @return the GetSampledDataResponse command
      */
-    public void setSamples(final Integer samples) {
+    public GetSampledDataResponse setSamples(final Integer samples) {
         this.samples = samples;
+        return this;
     }
 
     @Override

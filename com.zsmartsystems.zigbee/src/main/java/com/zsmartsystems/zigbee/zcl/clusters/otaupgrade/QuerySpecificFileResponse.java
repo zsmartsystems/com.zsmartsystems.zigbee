@@ -34,7 +34,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class QuerySpecificFileResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -94,9 +94,11 @@ public class QuerySpecificFileResponse extends ZclCommand {
      * Sets Status.
      *
      * @param status the Status
+     * @return the QuerySpecificFileResponse command
      */
-    public void setStatus(final ZclStatus status) {
+    public QuerySpecificFileResponse setStatus(final ZclStatus status) {
         this.status = status;
+        return this;
     }
 
     /**
@@ -112,9 +114,11 @@ public class QuerySpecificFileResponse extends ZclCommand {
      * Sets Manufacturer Code.
      *
      * @param manufacturerCode the Manufacturer Code
+     * @return the QuerySpecificFileResponse command
      */
-    public void setManufacturerCode(final Integer manufacturerCode) {
+    public QuerySpecificFileResponse setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
+        return this;
     }
 
     /**
@@ -130,9 +134,11 @@ public class QuerySpecificFileResponse extends ZclCommand {
      * Sets Image Type.
      *
      * @param imageType the Image Type
+     * @return the QuerySpecificFileResponse command
      */
-    public void setImageType(final Integer imageType) {
+    public QuerySpecificFileResponse setImageType(final Integer imageType) {
         this.imageType = imageType;
+        return this;
     }
 
     /**
@@ -148,9 +154,11 @@ public class QuerySpecificFileResponse extends ZclCommand {
      * Sets File Version.
      *
      * @param fileVersion the File Version
+     * @return the QuerySpecificFileResponse command
      */
-    public void setFileVersion(final Integer fileVersion) {
+    public QuerySpecificFileResponse setFileVersion(final Integer fileVersion) {
         this.fileVersion = fileVersion;
+        return this;
     }
 
     /**
@@ -166,9 +174,11 @@ public class QuerySpecificFileResponse extends ZclCommand {
      * Sets Image Size.
      *
      * @param imageSize the Image Size
+     * @return the QuerySpecificFileResponse command
      */
-    public void setImageSize(final Integer imageSize) {
+    public QuerySpecificFileResponse setImageSize(final Integer imageSize) {
         this.imageSize = imageSize;
+        return this;
     }
 
     @Override

@@ -31,7 +31,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetConversionFactorCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -121,9 +121,11 @@ public class GetConversionFactorCommand extends ZclCommand {
      * value of the Issuer Event ID.
      *
      * @param earliestStartTime the Earliest Start Time
+     * @return the GetConversionFactorCommand command
      */
-    public void setEarliestStartTime(final Calendar earliestStartTime) {
+    public GetConversionFactorCommand setEarliestStartTime(final Calendar earliestStartTime) {
         this.earliestStartTime = earliestStartTime;
+        return this;
     }
 
     /**
@@ -139,9 +141,11 @@ public class GetConversionFactorCommand extends ZclCommand {
      * Sets Min . Issuer Event ID.
      *
      * @param minIssuerEventId the Min . Issuer Event ID
+     * @return the GetConversionFactorCommand command
      */
-    public void setMinIssuerEventId(final Integer minIssuerEventId) {
+    public GetConversionFactorCommand setMinIssuerEventId(final Integer minIssuerEventId) {
         this.minIssuerEventId = minIssuerEventId;
+        return this;
     }
 
     /**
@@ -165,9 +169,11 @@ public class GetConversionFactorCommand extends ZclCommand {
      * would indicate all available PublishConversionFactor commands shall be returned.
      *
      * @param numberOfCommands the Number Of Commands
+     * @return the GetConversionFactorCommand command
      */
-    public void setNumberOfCommands(final Integer numberOfCommands) {
+    public GetConversionFactorCommand setNumberOfCommands(final Integer numberOfCommands) {
         this.numberOfCommands = numberOfCommands;
+        return this;
     }
 
     @Override

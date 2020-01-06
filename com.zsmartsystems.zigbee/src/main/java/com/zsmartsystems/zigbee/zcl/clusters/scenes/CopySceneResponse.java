@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-15T22:10:14Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class CopySceneResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -73,9 +73,11 @@ public class CopySceneResponse extends ZclCommand {
      * Sets Status.
      *
      * @param status the Status
+     * @return the CopySceneResponse command
      */
-    public void setStatus(final Integer status) {
+    public CopySceneResponse setStatus(final Integer status) {
         this.status = status;
+        return this;
     }
 
     /**
@@ -91,9 +93,11 @@ public class CopySceneResponse extends ZclCommand {
      * Sets Group ID.
      *
      * @param groupId the Group ID
+     * @return the CopySceneResponse command
      */
-    public void setGroupId(final Integer groupId) {
+    public CopySceneResponse setGroupId(final Integer groupId) {
         this.groupId = groupId;
+        return this;
     }
 
     /**
@@ -109,9 +113,11 @@ public class CopySceneResponse extends ZclCommand {
      * Sets Scene ID.
      *
      * @param sceneId the Scene ID
+     * @return the CopySceneResponse command
      */
-    public void setSceneId(final Integer sceneId) {
+    public CopySceneResponse setSceneId(final Integer sceneId) {
         this.sceneId = sceneId;
+        return this;
     }
 
     @Override

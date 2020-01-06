@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetDebtRepaymentLog extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -77,9 +77,11 @@ public class GetDebtRepaymentLog extends ZclCommand {
      * Sets Latest End Time.
      *
      * @param latestEndTime the Latest End Time
+     * @return the GetDebtRepaymentLog command
      */
-    public void setLatestEndTime(final Calendar latestEndTime) {
+    public GetDebtRepaymentLog setLatestEndTime(final Calendar latestEndTime) {
         this.latestEndTime = latestEndTime;
+        return this;
     }
 
     /**
@@ -95,9 +97,11 @@ public class GetDebtRepaymentLog extends ZclCommand {
      * Sets Number Of Debts.
      *
      * @param numberOfDebts the Number Of Debts
+     * @return the GetDebtRepaymentLog command
      */
-    public void setNumberOfDebts(final Integer numberOfDebts) {
+    public GetDebtRepaymentLog setNumberOfDebts(final Integer numberOfDebts) {
         this.numberOfDebts = numberOfDebts;
+        return this;
     }
 
     /**
@@ -113,9 +117,11 @@ public class GetDebtRepaymentLog extends ZclCommand {
      * Sets Debt Type.
      *
      * @param debtType the Debt Type
+     * @return the GetDebtRepaymentLog command
      */
-    public void setDebtType(final Integer debtType) {
+    public GetDebtRepaymentLog setDebtType(final Integer debtType) {
         this.debtType = debtType;
+        return this;
     }
 
     @Override

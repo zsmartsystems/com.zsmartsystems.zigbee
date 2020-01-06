@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class LocationDataNotificationCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -103,9 +103,11 @@ public class LocationDataNotificationCommand extends ZclCommand {
      * Sets Location Type.
      *
      * @param locationType the Location Type
+     * @return the LocationDataNotificationCommand command
      */
-    public void setLocationType(final Integer locationType) {
+    public LocationDataNotificationCommand setLocationType(final Integer locationType) {
         this.locationType = locationType;
+        return this;
     }
 
     /**
@@ -121,9 +123,11 @@ public class LocationDataNotificationCommand extends ZclCommand {
      * Sets Coordinate 1.
      *
      * @param coordinate1 the Coordinate 1
+     * @return the LocationDataNotificationCommand command
      */
-    public void setCoordinate1(final Integer coordinate1) {
+    public LocationDataNotificationCommand setCoordinate1(final Integer coordinate1) {
         this.coordinate1 = coordinate1;
+        return this;
     }
 
     /**
@@ -139,9 +143,11 @@ public class LocationDataNotificationCommand extends ZclCommand {
      * Sets Coordinate 2.
      *
      * @param coordinate2 the Coordinate 2
+     * @return the LocationDataNotificationCommand command
      */
-    public void setCoordinate2(final Integer coordinate2) {
+    public LocationDataNotificationCommand setCoordinate2(final Integer coordinate2) {
         this.coordinate2 = coordinate2;
+        return this;
     }
 
     /**
@@ -157,9 +163,11 @@ public class LocationDataNotificationCommand extends ZclCommand {
      * Sets Coordinate 3.
      *
      * @param coordinate3 the Coordinate 3
+     * @return the LocationDataNotificationCommand command
      */
-    public void setCoordinate3(final Integer coordinate3) {
+    public LocationDataNotificationCommand setCoordinate3(final Integer coordinate3) {
         this.coordinate3 = coordinate3;
+        return this;
     }
 
     /**
@@ -175,9 +183,11 @@ public class LocationDataNotificationCommand extends ZclCommand {
      * Sets Power.
      *
      * @param power the Power
+     * @return the LocationDataNotificationCommand command
      */
-    public void setPower(final Integer power) {
+    public LocationDataNotificationCommand setPower(final Integer power) {
         this.power = power;
+        return this;
     }
 
     /**
@@ -193,9 +203,11 @@ public class LocationDataNotificationCommand extends ZclCommand {
      * Sets Path Loss Exponent.
      *
      * @param pathLossExponent the Path Loss Exponent
+     * @return the LocationDataNotificationCommand command
      */
-    public void setPathLossExponent(final Integer pathLossExponent) {
+    public LocationDataNotificationCommand setPathLossExponent(final Integer pathLossExponent) {
         this.pathLossExponent = pathLossExponent;
+        return this;
     }
 
     /**
@@ -211,9 +223,11 @@ public class LocationDataNotificationCommand extends ZclCommand {
      * Sets Location Method.
      *
      * @param locationMethod the Location Method
+     * @return the LocationDataNotificationCommand command
      */
-    public void setLocationMethod(final Integer locationMethod) {
+    public LocationDataNotificationCommand setLocationMethod(final Integer locationMethod) {
         this.locationMethod = locationMethod;
+        return this;
     }
 
     /**
@@ -229,9 +243,11 @@ public class LocationDataNotificationCommand extends ZclCommand {
      * Sets Quality Measure.
      *
      * @param qualityMeasure the Quality Measure
+     * @return the LocationDataNotificationCommand command
      */
-    public void setQualityMeasure(final Integer qualityMeasure) {
+    public LocationDataNotificationCommand setQualityMeasure(final Integer qualityMeasure) {
         this.qualityMeasure = qualityMeasure;
+        return this;
     }
 
     /**
@@ -247,9 +263,11 @@ public class LocationDataNotificationCommand extends ZclCommand {
      * Sets Location Age.
      *
      * @param locationAge the Location Age
+     * @return the LocationDataNotificationCommand command
      */
-    public void setLocationAge(final Integer locationAge) {
+    public LocationDataNotificationCommand setLocationAge(final Integer locationAge) {
         this.locationAge = locationAge;
+        return this;
     }
 
     @Override

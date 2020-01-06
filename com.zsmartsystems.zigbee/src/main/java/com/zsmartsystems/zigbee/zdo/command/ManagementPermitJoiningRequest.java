@@ -32,7 +32,7 @@ import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ManagementPermitJoiningRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * The ZDO cluster ID.
@@ -69,9 +69,11 @@ public class ManagementPermitJoiningRequest extends ZdoRequest implements ZigBee
      * Sets Permit Duration.
      *
      * @param permitDuration the Permit Duration
+     * @return the ManagementPermitJoiningRequest command
      */
-    public void setPermitDuration(final Integer permitDuration) {
+    public ManagementPermitJoiningRequest setPermitDuration(final Integer permitDuration) {
         this.permitDuration = permitDuration;
+        return this;
     }
 
     /**
@@ -87,9 +89,11 @@ public class ManagementPermitJoiningRequest extends ZdoRequest implements ZigBee
      * Sets Tc_Significance.
      *
      * @param tcSignificance the Tc_Significance
+     * @return the ManagementPermitJoiningRequest command
      */
-    public void setTcSignificance(final Boolean tcSignificance) {
+    public ManagementPermitJoiningRequest setTcSignificance(final Boolean tcSignificance) {
         this.tcSignificance = tcSignificance;
+        return this;
     }
 
     @Override

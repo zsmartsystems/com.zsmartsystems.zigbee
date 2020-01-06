@@ -41,7 +41,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:44:02Z")
 public class ZclElectricalMeasurementCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -7944,8 +7944,9 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getProfileInfoCommand() {
-        return send(new GetProfileInfoCommand());
+        return sendCommand(new GetProfileInfoCommand());
     }
 
     /**
@@ -7959,6 +7960,7 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param numberOfIntervals {@link Integer} Number Of Intervals
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getMeasurementProfileCommand(Integer attributeId, Integer startTime, Integer numberOfIntervals) {
         GetMeasurementProfileCommand command = new GetMeasurementProfileCommand();
 
@@ -7967,7 +7969,7 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
         command.setStartTime(startTime);
         command.setNumberOfIntervals(numberOfIntervals);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -7983,6 +7985,7 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param listOfAttributes {@link Integer} List Of Attributes
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getProfileInfoResponseCommand(Integer profileCount, Integer profileIntervalPeriod, Integer maxNumberOfIntervals, Integer listOfAttributes) {
         GetProfileInfoResponseCommand command = new GetProfileInfoResponseCommand();
 
@@ -7992,7 +7995,7 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
         command.setMaxNumberOfIntervals(maxNumberOfIntervals);
         command.setListOfAttributes(listOfAttributes);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -8010,6 +8013,7 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param intervals {@link Integer} Intervals
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getMeasurementProfileResponseCommand(Integer startTime, Integer status, Integer profileIntervalPeriod, Integer numberOfIntervalsDelivered, Integer attributeId, Integer intervals) {
         GetMeasurementProfileResponseCommand command = new GetMeasurementProfileResponseCommand();
 
@@ -8021,6 +8025,6 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
         command.setAttributeId(attributeId);
         command.setIntervals(intervals);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

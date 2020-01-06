@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ConsumerTopUpResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -80,9 +80,11 @@ public class ConsumerTopUpResponse extends ZclCommand {
      * Sets Result Type.
      *
      * @param resultType the Result Type
+     * @return the ConsumerTopUpResponse command
      */
-    public void setResultType(final Integer resultType) {
+    public ConsumerTopUpResponse setResultType(final Integer resultType) {
         this.resultType = resultType;
+        return this;
     }
 
     /**
@@ -98,9 +100,11 @@ public class ConsumerTopUpResponse extends ZclCommand {
      * Sets Top Up Value.
      *
      * @param topUpValue the Top Up Value
+     * @return the ConsumerTopUpResponse command
      */
-    public void setTopUpValue(final Integer topUpValue) {
+    public ConsumerTopUpResponse setTopUpValue(final Integer topUpValue) {
         this.topUpValue = topUpValue;
+        return this;
     }
 
     /**
@@ -116,9 +120,11 @@ public class ConsumerTopUpResponse extends ZclCommand {
      * Sets Source Of Top Up.
      *
      * @param sourceOfTopUp the Source Of Top Up
+     * @return the ConsumerTopUpResponse command
      */
-    public void setSourceOfTopUp(final Integer sourceOfTopUp) {
+    public ConsumerTopUpResponse setSourceOfTopUp(final Integer sourceOfTopUp) {
         this.sourceOfTopUp = sourceOfTopUp;
+        return this;
     }
 
     /**
@@ -134,9 +140,11 @@ public class ConsumerTopUpResponse extends ZclCommand {
      * Sets Credit Remaining.
      *
      * @param creditRemaining the Credit Remaining
+     * @return the ConsumerTopUpResponse command
      */
-    public void setCreditRemaining(final Integer creditRemaining) {
+    public ConsumerTopUpResponse setCreditRemaining(final Integer creditRemaining) {
         this.creditRemaining = creditRemaining;
+        return this;
     }
 
     @Override

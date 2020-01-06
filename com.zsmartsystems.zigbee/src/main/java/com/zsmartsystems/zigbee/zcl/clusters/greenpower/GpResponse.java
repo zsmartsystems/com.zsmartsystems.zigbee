@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-03T12:48:45Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GpResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -103,9 +103,11 @@ public class GpResponse extends ZclCommand {
      * Sets Options.
      *
      * @param options the Options
+     * @return the GpResponse command
      */
-    public void setOptions(final Integer options) {
+    public GpResponse setOptions(final Integer options) {
         this.options = options;
+        return this;
     }
 
     /**
@@ -121,9 +123,11 @@ public class GpResponse extends ZclCommand {
      * Sets Temp Master Short Address.
      *
      * @param tempMasterShortAddress the Temp Master Short Address
+     * @return the GpResponse command
      */
-    public void setTempMasterShortAddress(final Integer tempMasterShortAddress) {
+    public GpResponse setTempMasterShortAddress(final Integer tempMasterShortAddress) {
         this.tempMasterShortAddress = tempMasterShortAddress;
+        return this;
     }
 
     /**
@@ -139,9 +143,11 @@ public class GpResponse extends ZclCommand {
      * Sets Temp Master Tx Channel.
      *
      * @param tempMasterTxChannel the Temp Master Tx Channel
+     * @return the GpResponse command
      */
-    public void setTempMasterTxChannel(final Integer tempMasterTxChannel) {
+    public GpResponse setTempMasterTxChannel(final Integer tempMasterTxChannel) {
         this.tempMasterTxChannel = tempMasterTxChannel;
+        return this;
     }
 
     /**
@@ -157,9 +163,11 @@ public class GpResponse extends ZclCommand {
      * Sets Gpd Src ID.
      *
      * @param gpdSrcId the Gpd Src ID
+     * @return the GpResponse command
      */
-    public void setGpdSrcId(final Integer gpdSrcId) {
+    public GpResponse setGpdSrcId(final Integer gpdSrcId) {
         this.gpdSrcId = gpdSrcId;
+        return this;
     }
 
     /**
@@ -175,9 +183,11 @@ public class GpResponse extends ZclCommand {
      * Sets Gpd IEEE.
      *
      * @param gpdIeee the Gpd IEEE
+     * @return the GpResponse command
      */
-    public void setGpdIeee(final IeeeAddress gpdIeee) {
+    public GpResponse setGpdIeee(final IeeeAddress gpdIeee) {
         this.gpdIeee = gpdIeee;
+        return this;
     }
 
     /**
@@ -193,9 +203,11 @@ public class GpResponse extends ZclCommand {
      * Sets Endpoint.
      *
      * @param endpoint the Endpoint
+     * @return the GpResponse command
      */
-    public void setEndpoint(final Integer endpoint) {
+    public GpResponse setEndpoint(final Integer endpoint) {
         this.endpoint = endpoint;
+        return this;
     }
 
     /**
@@ -211,9 +223,11 @@ public class GpResponse extends ZclCommand {
      * Sets Gpd Command ID.
      *
      * @param gpdCommandId the Gpd Command ID
+     * @return the GpResponse command
      */
-    public void setGpdCommandId(final Integer gpdCommandId) {
+    public GpResponse setGpdCommandId(final Integer gpdCommandId) {
         this.gpdCommandId = gpdCommandId;
+        return this;
     }
 
     /**
@@ -229,9 +243,11 @@ public class GpResponse extends ZclCommand {
      * Sets Gpd Command Payload.
      *
      * @param gpdCommandPayload the Gpd Command Payload
+     * @return the GpResponse command
      */
-    public void setGpdCommandPayload(final ByteArray gpdCommandPayload) {
+    public GpResponse setGpdCommandPayload(final ByteArray gpdCommandPayload) {
         this.gpdCommandPayload = gpdCommandPayload;
+        return this;
     }
 
     @Override

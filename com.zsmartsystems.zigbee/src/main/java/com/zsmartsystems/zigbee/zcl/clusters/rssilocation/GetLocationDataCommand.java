@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetLocationDataCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -74,9 +74,11 @@ public class GetLocationDataCommand extends ZclCommand {
      * Sets Header.
      *
      * @param header the Header
+     * @return the GetLocationDataCommand command
      */
-    public void setHeader(final Integer header) {
+    public GetLocationDataCommand setHeader(final Integer header) {
         this.header = header;
+        return this;
     }
 
     /**
@@ -92,9 +94,11 @@ public class GetLocationDataCommand extends ZclCommand {
      * Sets Number Responses.
      *
      * @param numberResponses the Number Responses
+     * @return the GetLocationDataCommand command
      */
-    public void setNumberResponses(final Integer numberResponses) {
+    public GetLocationDataCommand setNumberResponses(final Integer numberResponses) {
         this.numberResponses = numberResponses;
+        return this;
     }
 
     /**
@@ -110,9 +114,11 @@ public class GetLocationDataCommand extends ZclCommand {
      * Sets Target Address.
      *
      * @param targetAddress the Target Address
+     * @return the GetLocationDataCommand command
      */
-    public void setTargetAddress(final IeeeAddress targetAddress) {
+    public GetLocationDataCommand setTargetAddress(final IeeeAddress targetAddress) {
         this.targetAddress = targetAddress;
+        return this;
     }
 
     @Override

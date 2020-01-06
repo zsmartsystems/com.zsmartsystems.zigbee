@@ -31,7 +31,7 @@ import com.zsmartsystems.zigbee.zdo.command.BindResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class BindRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * The ZDO cluster ID.
@@ -108,9 +108,11 @@ public class BindRequest extends ZdoRequest implements ZigBeeTransactionMatcher 
      * The IEEE address for the source.
      *
      * @param srcAddress the Src Address
+     * @return the BindRequest command
      */
-    public void setSrcAddress(final IeeeAddress srcAddress) {
+    public BindRequest setSrcAddress(final IeeeAddress srcAddress) {
         this.srcAddress = srcAddress;
+        return this;
     }
 
     /**
@@ -130,9 +132,11 @@ public class BindRequest extends ZdoRequest implements ZigBeeTransactionMatcher 
      * The source endpoint for the binding entry.
      *
      * @param srcEndpoint the Src Endpoint
+     * @return the BindRequest command
      */
-    public void setSrcEndpoint(final Integer srcEndpoint) {
+    public BindRequest setSrcEndpoint(final Integer srcEndpoint) {
         this.srcEndpoint = srcEndpoint;
+        return this;
     }
 
     /**
@@ -152,9 +156,11 @@ public class BindRequest extends ZdoRequest implements ZigBeeTransactionMatcher 
      * The identifier of the cluster on the source device that is bound to the destination.
      *
      * @param bindCluster the Bind Cluster
+     * @return the BindRequest command
      */
-    public void setBindCluster(final Integer bindCluster) {
+    public BindRequest setBindCluster(final Integer bindCluster) {
         this.bindCluster = bindCluster;
+        return this;
     }
 
     /**
@@ -180,9 +186,11 @@ public class BindRequest extends ZdoRequest implements ZigBeeTransactionMatcher 
      * 64-bit extended address for DstAddress and DstEndp present 0x04 – 0xff = reserved
      *
      * @param dstAddrMode the DST Addr Mode
+     * @return the BindRequest command
      */
-    public void setDstAddrMode(final Integer dstAddrMode) {
+    public BindRequest setDstAddrMode(final Integer dstAddrMode) {
         this.dstAddrMode = dstAddrMode;
+        return this;
     }
 
     /**
@@ -202,9 +210,11 @@ public class BindRequest extends ZdoRequest implements ZigBeeTransactionMatcher 
      * The destination address for the binding entry.
      *
      * @param dstAddress the DST Address
+     * @return the BindRequest command
      */
-    public void setDstAddress(final IeeeAddress dstAddress) {
+    public BindRequest setDstAddress(final IeeeAddress dstAddress) {
         this.dstAddress = dstAddress;
+        return this;
     }
 
     /**
@@ -226,9 +236,11 @@ public class BindRequest extends ZdoRequest implements ZigBeeTransactionMatcher 
      * present, shall be the destination endpoint for the binding entry.
      *
      * @param dstEndpoint the DST Endpoint
+     * @return the BindRequest command
      */
-    public void setDstEndpoint(final Integer dstEndpoint) {
+    public BindRequest setDstEndpoint(final Integer dstEndpoint) {
         this.dstEndpoint = dstEndpoint;
+        return this;
     }
 
     @Override

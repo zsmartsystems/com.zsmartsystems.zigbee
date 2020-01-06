@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetMeasurementProfileResponseCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -92,9 +92,11 @@ public class GetMeasurementProfileResponseCommand extends ZclCommand {
      * Sets Start Time.
      *
      * @param startTime the Start Time
+     * @return the GetMeasurementProfileResponseCommand command
      */
-    public void setStartTime(final Integer startTime) {
+    public GetMeasurementProfileResponseCommand setStartTime(final Integer startTime) {
         this.startTime = startTime;
+        return this;
     }
 
     /**
@@ -110,9 +112,11 @@ public class GetMeasurementProfileResponseCommand extends ZclCommand {
      * Sets Status.
      *
      * @param status the Status
+     * @return the GetMeasurementProfileResponseCommand command
      */
-    public void setStatus(final Integer status) {
+    public GetMeasurementProfileResponseCommand setStatus(final Integer status) {
         this.status = status;
+        return this;
     }
 
     /**
@@ -128,9 +132,11 @@ public class GetMeasurementProfileResponseCommand extends ZclCommand {
      * Sets Profile Interval Period.
      *
      * @param profileIntervalPeriod the Profile Interval Period
+     * @return the GetMeasurementProfileResponseCommand command
      */
-    public void setProfileIntervalPeriod(final Integer profileIntervalPeriod) {
+    public GetMeasurementProfileResponseCommand setProfileIntervalPeriod(final Integer profileIntervalPeriod) {
         this.profileIntervalPeriod = profileIntervalPeriod;
+        return this;
     }
 
     /**
@@ -146,9 +152,11 @@ public class GetMeasurementProfileResponseCommand extends ZclCommand {
      * Sets Number Of Intervals Delivered.
      *
      * @param numberOfIntervalsDelivered the Number Of Intervals Delivered
+     * @return the GetMeasurementProfileResponseCommand command
      */
-    public void setNumberOfIntervalsDelivered(final Integer numberOfIntervalsDelivered) {
+    public GetMeasurementProfileResponseCommand setNumberOfIntervalsDelivered(final Integer numberOfIntervalsDelivered) {
         this.numberOfIntervalsDelivered = numberOfIntervalsDelivered;
+        return this;
     }
 
     /**
@@ -164,9 +172,11 @@ public class GetMeasurementProfileResponseCommand extends ZclCommand {
      * Sets Attribute ID.
      *
      * @param attributeId the Attribute ID
+     * @return the GetMeasurementProfileResponseCommand command
      */
-    public void setAttributeId(final Integer attributeId) {
+    public GetMeasurementProfileResponseCommand setAttributeId(final Integer attributeId) {
         this.attributeId = attributeId;
+        return this;
     }
 
     /**
@@ -182,9 +192,11 @@ public class GetMeasurementProfileResponseCommand extends ZclCommand {
      * Sets Intervals.
      *
      * @param intervals the Intervals
+     * @return the GetMeasurementProfileResponseCommand command
      */
-    public void setIntervals(final Integer intervals) {
+    public GetMeasurementProfileResponseCommand setIntervals(final Integer intervals) {
         this.intervals = intervals;
+        return this;
     }
 
     @Override

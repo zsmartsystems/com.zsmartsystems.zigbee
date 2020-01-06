@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-08-15T18:28:04Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ReadReportingConfigurationResponse extends ZclCommand {
     /**
      * The command ID.
@@ -76,9 +76,11 @@ public class ReadReportingConfigurationResponse extends ZclCommand {
      * Sets Records.
      *
      * @param records the Records
+     * @return the ReadReportingConfigurationResponse command
      */
-    public void setRecords(final List<AttributeReportingStatusRecord> records) {
+    public ReadReportingConfigurationResponse setRecords(final List<AttributeReportingStatusRecord> records) {
         this.records = records;
+        return this;
     }
 
     @Override

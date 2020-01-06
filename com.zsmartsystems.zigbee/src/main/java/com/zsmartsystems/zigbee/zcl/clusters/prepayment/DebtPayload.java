@@ -20,7 +20,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class DebtPayload implements ZigBeeSerializable {
     /**
      * Collection Time structure field.
@@ -57,9 +57,11 @@ public class DebtPayload implements ZigBeeSerializable {
      * Sets Collection Time.
      *
      * @param collectionTime the Collection Time
+     * @return the DebtPayload command
      */
-    public void setCollectionTime(final Calendar collectionTime) {
+    public DebtPayload setCollectionTime(final Calendar collectionTime) {
         this.collectionTime = collectionTime;
+        return this;
     }
 
     /**
@@ -75,9 +77,11 @@ public class DebtPayload implements ZigBeeSerializable {
      * Sets Amount Collected.
      *
      * @param amountCollected the Amount Collected
+     * @return the DebtPayload command
      */
-    public void setAmountCollected(final Integer amountCollected) {
+    public DebtPayload setAmountCollected(final Integer amountCollected) {
         this.amountCollected = amountCollected;
+        return this;
     }
 
     /**
@@ -93,9 +97,11 @@ public class DebtPayload implements ZigBeeSerializable {
      * Sets Debt Type.
      *
      * @param debtType the Debt Type
+     * @return the DebtPayload command
      */
-    public void setDebtType(final Integer debtType) {
+    public DebtPayload setDebtType(final Integer debtType) {
         this.debtType = debtType;
+        return this;
     }
 
     /**
@@ -111,9 +117,11 @@ public class DebtPayload implements ZigBeeSerializable {
      * Sets Outstanding Debt.
      *
      * @param outstandingDebt the Outstanding Debt
+     * @return the DebtPayload command
      */
-    public void setOutstandingDebt(final Integer outstandingDebt) {
+    public DebtPayload setOutstandingDebt(final Integer outstandingDebt) {
         this.outstandingDebt = outstandingDebt;
+        return this;
     }
 
     @Override

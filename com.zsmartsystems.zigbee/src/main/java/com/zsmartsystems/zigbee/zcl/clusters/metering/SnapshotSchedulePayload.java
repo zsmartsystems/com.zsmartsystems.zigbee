@@ -20,7 +20,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class SnapshotSchedulePayload implements ZigBeeSerializable {
     /**
      * Snapshot Schedule ID structure field.
@@ -62,9 +62,11 @@ public class SnapshotSchedulePayload implements ZigBeeSerializable {
      * Sets Snapshot Schedule ID.
      *
      * @param snapshotScheduleId the Snapshot Schedule ID
+     * @return the SnapshotSchedulePayload command
      */
-    public void setSnapshotScheduleId(final Integer snapshotScheduleId) {
+    public SnapshotSchedulePayload setSnapshotScheduleId(final Integer snapshotScheduleId) {
         this.snapshotScheduleId = snapshotScheduleId;
+        return this;
     }
 
     /**
@@ -80,9 +82,11 @@ public class SnapshotSchedulePayload implements ZigBeeSerializable {
      * Sets Snapshot Start Time.
      *
      * @param snapshotStartTime the Snapshot Start Time
+     * @return the SnapshotSchedulePayload command
      */
-    public void setSnapshotStartTime(final Calendar snapshotStartTime) {
+    public SnapshotSchedulePayload setSnapshotStartTime(final Calendar snapshotStartTime) {
         this.snapshotStartTime = snapshotStartTime;
+        return this;
     }
 
     /**
@@ -98,9 +102,11 @@ public class SnapshotSchedulePayload implements ZigBeeSerializable {
      * Sets Snapshot Schedule.
      *
      * @param snapshotSchedule the Snapshot Schedule
+     * @return the SnapshotSchedulePayload command
      */
-    public void setSnapshotSchedule(final Integer snapshotSchedule) {
+    public SnapshotSchedulePayload setSnapshotSchedule(final Integer snapshotSchedule) {
         this.snapshotSchedule = snapshotSchedule;
+        return this;
     }
 
     /**
@@ -116,9 +122,11 @@ public class SnapshotSchedulePayload implements ZigBeeSerializable {
      * Sets Snapshot Payload Type.
      *
      * @param snapshotPayloadType the Snapshot Payload Type
+     * @return the SnapshotSchedulePayload command
      */
-    public void setSnapshotPayloadType(final Integer snapshotPayloadType) {
+    public SnapshotSchedulePayload setSnapshotPayloadType(final Integer snapshotPayloadType) {
         this.snapshotPayloadType = snapshotPayloadType;
+        return this;
     }
 
     /**
@@ -134,9 +142,11 @@ public class SnapshotSchedulePayload implements ZigBeeSerializable {
      * Sets Snapshot Cause.
      *
      * @param snapshotCause the Snapshot Cause
+     * @return the SnapshotSchedulePayload command
      */
-    public void setSnapshotCause(final Integer snapshotCause) {
+    public SnapshotSchedulePayload setSnapshotCause(final Integer snapshotCause) {
         this.snapshotCause = snapshotCause;
+        return this;
     }
 
     @Override

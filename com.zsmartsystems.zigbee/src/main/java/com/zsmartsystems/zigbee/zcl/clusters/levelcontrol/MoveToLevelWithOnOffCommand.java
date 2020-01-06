@@ -33,7 +33,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class MoveToLevelWithOnOffCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -78,9 +78,11 @@ public class MoveToLevelWithOnOffCommand extends ZclCommand {
      * Sets Level.
      *
      * @param level the Level
+     * @return the MoveToLevelWithOnOffCommand command
      */
-    public void setLevel(final Integer level) {
+    public MoveToLevelWithOnOffCommand setLevel(final Integer level) {
         this.level = level;
+        return this;
     }
 
     /**
@@ -96,9 +98,11 @@ public class MoveToLevelWithOnOffCommand extends ZclCommand {
      * Sets Transition Time.
      *
      * @param transitionTime the Transition Time
+     * @return the MoveToLevelWithOnOffCommand command
      */
-    public void setTransitionTime(final Integer transitionTime) {
+    public MoveToLevelWithOnOffCommand setTransitionTime(final Integer transitionTime) {
         this.transitionTime = transitionTime;
+        return this;
     }
 
     @Override

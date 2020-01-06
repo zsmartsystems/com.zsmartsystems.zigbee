@@ -43,7 +43,7 @@ import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-15T18:21:05Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class NodeDescriptorResponse extends ZdoResponse {
     /**
      * The ZDO cluster ID.
@@ -80,9 +80,11 @@ public class NodeDescriptorResponse extends ZdoResponse {
      * Sets NWK Addr Of Interest.
      *
      * @param nwkAddrOfInterest the NWK Addr Of Interest
+     * @return the NodeDescriptorResponse command
      */
-    public void setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
+    public NodeDescriptorResponse setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
         this.nwkAddrOfInterest = nwkAddrOfInterest;
+        return this;
     }
 
     /**
@@ -98,9 +100,11 @@ public class NodeDescriptorResponse extends ZdoResponse {
      * Sets Node Descriptor.
      *
      * @param nodeDescriptor the Node Descriptor
+     * @return the NodeDescriptorResponse command
      */
-    public void setNodeDescriptor(final NodeDescriptor nodeDescriptor) {
+    public NodeDescriptorResponse setNodeDescriptor(final NodeDescriptor nodeDescriptor) {
         this.nodeDescriptor = nodeDescriptor;
+        return this;
     }
 
     @Override

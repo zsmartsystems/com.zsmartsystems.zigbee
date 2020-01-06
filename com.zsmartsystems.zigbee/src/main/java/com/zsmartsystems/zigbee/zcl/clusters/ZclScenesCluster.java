@@ -56,7 +56,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-16T08:52:33Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:44:02Z")
 public class ZclScenesCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -597,6 +597,7 @@ public class ZclScenesCluster extends ZclCluster {
      * @param extensionFieldSets {@link List<ExtensionFieldSet>} Extension Field Sets
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> addSceneCommand(Integer groupId, Integer sceneId, Integer transitionTime, String sceneName, List<ExtensionFieldSet> extensionFieldSets) {
         AddSceneCommand command = new AddSceneCommand();
 
@@ -607,7 +608,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setSceneName(sceneName);
         command.setExtensionFieldSets(extensionFieldSets);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -619,6 +620,7 @@ public class ZclScenesCluster extends ZclCluster {
      * @param sceneId {@link Integer} Scene ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> viewSceneCommand(Integer groupId, Integer sceneId) {
         ViewSceneCommand command = new ViewSceneCommand();
 
@@ -626,7 +628,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setGroupId(groupId);
         command.setSceneId(sceneId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -638,6 +640,7 @@ public class ZclScenesCluster extends ZclCluster {
      * @param sceneId {@link Integer} Scene ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> removeSceneCommand(Integer groupId, Integer sceneId) {
         RemoveSceneCommand command = new RemoveSceneCommand();
 
@@ -645,7 +648,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setGroupId(groupId);
         command.setSceneId(sceneId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -656,13 +659,14 @@ public class ZclScenesCluster extends ZclCluster {
      * @param groupId {@link Integer} Group ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> removeAllScenesCommand(Integer groupId) {
         RemoveAllScenesCommand command = new RemoveAllScenesCommand();
 
         // Set the fields
         command.setGroupId(groupId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -674,6 +678,7 @@ public class ZclScenesCluster extends ZclCluster {
      * @param sceneId {@link Integer} Scene ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> storeSceneCommand(Integer groupId, Integer sceneId) {
         StoreSceneCommand command = new StoreSceneCommand();
 
@@ -681,7 +686,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setGroupId(groupId);
         command.setSceneId(sceneId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -693,6 +698,7 @@ public class ZclScenesCluster extends ZclCluster {
      * @param sceneId {@link Integer} Scene ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> recallSceneCommand(Integer groupId, Integer sceneId) {
         RecallSceneCommand command = new RecallSceneCommand();
 
@@ -700,7 +706,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setGroupId(groupId);
         command.setSceneId(sceneId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -713,13 +719,14 @@ public class ZclScenesCluster extends ZclCluster {
      * @param groupId {@link Integer} Group ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getSceneMembershipCommand(Integer groupId) {
         GetSceneMembershipCommand command = new GetSceneMembershipCommand();
 
         // Set the fields
         command.setGroupId(groupId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -735,6 +742,7 @@ public class ZclScenesCluster extends ZclCluster {
      * @param extensionFieldSets {@link List<ExtensionFieldSet>} Extension Field Sets
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> enhancedAddSceneCommand(Integer groupId, Integer sceneId, Integer transitionTime, String sceneName, List<ExtensionFieldSet> extensionFieldSets) {
         EnhancedAddSceneCommand command = new EnhancedAddSceneCommand();
 
@@ -745,7 +753,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setSceneName(sceneName);
         command.setExtensionFieldSets(extensionFieldSets);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -758,6 +766,7 @@ public class ZclScenesCluster extends ZclCluster {
      * @param sceneId {@link Integer} Scene ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> enhancedViewSceneCommand(Integer groupId, Integer sceneId) {
         EnhancedViewSceneCommand command = new EnhancedViewSceneCommand();
 
@@ -765,7 +774,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setGroupId(groupId);
         command.setSceneId(sceneId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -781,6 +790,7 @@ public class ZclScenesCluster extends ZclCluster {
      * @param sceneIdTo {@link Integer} Scene ID To
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> copySceneCommand(Integer mode, Integer groupIdFrom, Integer sceneIdFrom, Integer groupIdTo, Integer sceneIdTo) {
         CopySceneCommand command = new CopySceneCommand();
 
@@ -791,7 +801,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setGroupIdTo(groupIdTo);
         command.setSceneIdTo(sceneIdTo);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -802,6 +812,7 @@ public class ZclScenesCluster extends ZclCluster {
      * @param sceneId {@link Integer} Scene ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> addSceneResponse(Integer status, Integer groupId, Integer sceneId) {
         AddSceneResponse command = new AddSceneResponse();
 
@@ -810,7 +821,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setGroupId(groupId);
         command.setSceneId(sceneId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -824,6 +835,7 @@ public class ZclScenesCluster extends ZclCluster {
      * @param extensionFieldSets {@link List<ExtensionFieldSet>} Extension Field Sets
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> viewSceneResponse(Integer status, Integer groupId, Integer sceneId, Integer transitionTime, String sceneName, List<ExtensionFieldSet> extensionFieldSets) {
         ViewSceneResponse command = new ViewSceneResponse();
 
@@ -835,7 +847,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setSceneName(sceneName);
         command.setExtensionFieldSets(extensionFieldSets);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -846,6 +858,7 @@ public class ZclScenesCluster extends ZclCluster {
      * @param sceneId {@link Integer} Scene ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> removeSceneResponse(Integer status, Integer groupId, Integer sceneId) {
         RemoveSceneResponse command = new RemoveSceneResponse();
 
@@ -854,7 +867,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setGroupId(groupId);
         command.setSceneId(sceneId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -864,6 +877,7 @@ public class ZclScenesCluster extends ZclCluster {
      * @param groupId {@link Integer} Group ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> removeAllScenesResponse(Integer status, Integer groupId) {
         RemoveAllScenesResponse command = new RemoveAllScenesResponse();
 
@@ -871,7 +885,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setStatus(status);
         command.setGroupId(groupId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -882,6 +896,7 @@ public class ZclScenesCluster extends ZclCluster {
      * @param sceneId {@link Integer} Scene ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> storeSceneResponse(Integer status, Integer groupId, Integer sceneId) {
         StoreSceneResponse command = new StoreSceneResponse();
 
@@ -890,7 +905,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setGroupId(groupId);
         command.setSceneId(sceneId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -903,6 +918,7 @@ public class ZclScenesCluster extends ZclCluster {
      * @param sceneList {@link List<Integer>} Scene List
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getSceneMembershipResponse(Integer status, Integer capacity, Integer groupId, Integer sceneCount, List<Integer> sceneList) {
         GetSceneMembershipResponse command = new GetSceneMembershipResponse();
 
@@ -913,7 +929,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setSceneCount(sceneCount);
         command.setSceneList(sceneList);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -924,6 +940,7 @@ public class ZclScenesCluster extends ZclCluster {
      * @param sceneId {@link Integer} Scene ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> enhancedAddSceneResponse(Integer status, Integer groupId, Integer sceneId) {
         EnhancedAddSceneResponse command = new EnhancedAddSceneResponse();
 
@@ -932,7 +949,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setGroupId(groupId);
         command.setSceneId(sceneId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -946,6 +963,7 @@ public class ZclScenesCluster extends ZclCluster {
      * @param extensionFieldSets {@link List<ExtensionFieldSet>} Extension Field Sets
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> enhancedViewSceneResponse(Integer status, Integer groupId, Integer sceneId, Integer transitionTime, String sceneName, List<ExtensionFieldSet> extensionFieldSets) {
         EnhancedViewSceneResponse command = new EnhancedViewSceneResponse();
 
@@ -957,7 +975,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setSceneName(sceneName);
         command.setExtensionFieldSets(extensionFieldSets);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -968,6 +986,7 @@ public class ZclScenesCluster extends ZclCluster {
      * @param sceneId {@link Integer} Scene ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> copySceneResponse(Integer status, Integer groupId, Integer sceneId) {
         CopySceneResponse command = new CopySceneResponse();
 
@@ -976,6 +995,6 @@ public class ZclScenesCluster extends ZclCluster {
         command.setGroupId(groupId);
         command.setSceneId(sceneId);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

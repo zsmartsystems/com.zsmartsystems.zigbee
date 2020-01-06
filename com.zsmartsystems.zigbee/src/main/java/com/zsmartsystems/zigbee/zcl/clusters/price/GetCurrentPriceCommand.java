@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetCurrentPriceCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -66,9 +66,11 @@ public class GetCurrentPriceCommand extends ZclCommand {
      * Sets Command Options.
      *
      * @param commandOptions the Command Options
+     * @return the GetCurrentPriceCommand command
      */
-    public void setCommandOptions(final Integer commandOptions) {
+    public GetCurrentPriceCommand setCommandOptions(final Integer commandOptions) {
         this.commandOptions = commandOptions;
+        return this;
     }
 
     @Override

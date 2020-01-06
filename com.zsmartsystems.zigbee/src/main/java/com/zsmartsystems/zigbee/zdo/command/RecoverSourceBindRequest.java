@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class RecoverSourceBindRequest extends ZdoRequest {
     /**
      * The ZDO cluster ID.
@@ -56,9 +56,11 @@ public class RecoverSourceBindRequest extends ZdoRequest {
      * Sets Start Index.
      *
      * @param startIndex the Start Index
+     * @return the RecoverSourceBindRequest command
      */
-    public void setStartIndex(final Integer startIndex) {
+    public RecoverSourceBindRequest setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;
+        return this;
     }
 
     @Override

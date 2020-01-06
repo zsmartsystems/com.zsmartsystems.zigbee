@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class RequestFastPollModeResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -96,9 +96,11 @@ public class RequestFastPollModeResponse extends ZclCommand {
      * Attribute and less than or equal to the Requested Fast Poll Rate.
      *
      * @param appliedUpdatePeriod the Applied Update Period
+     * @return the RequestFastPollModeResponse command
      */
-    public void setAppliedUpdatePeriod(final Integer appliedUpdatePeriod) {
+    public RequestFastPollModeResponse setAppliedUpdatePeriod(final Integer appliedUpdatePeriod) {
         this.appliedUpdatePeriod = appliedUpdatePeriod;
+        return this;
     }
 
     /**
@@ -126,9 +128,11 @@ public class RequestFastPollModeResponse extends ZclCommand {
      * would make it possible to be in fast poll mode longer than 15 minutes.
      *
      * @param fastPollModeEndtime the Fast Poll Mode Endtime
+     * @return the RequestFastPollModeResponse command
      */
-    public void setFastPollModeEndtime(final Calendar fastPollModeEndtime) {
+    public RequestFastPollModeResponse setFastPollModeEndtime(final Calendar fastPollModeEndtime) {
         this.fastPollModeEndtime = fastPollModeEndtime;
+        return this;
     }
 
     @Override

@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class LocationDataResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -108,9 +108,11 @@ public class LocationDataResponse extends ZclCommand {
      * Sets Status.
      *
      * @param status the Status
+     * @return the LocationDataResponse command
      */
-    public void setStatus(final Integer status) {
+    public LocationDataResponse setStatus(final Integer status) {
         this.status = status;
+        return this;
     }
 
     /**
@@ -126,9 +128,11 @@ public class LocationDataResponse extends ZclCommand {
      * Sets Location Type.
      *
      * @param locationType the Location Type
+     * @return the LocationDataResponse command
      */
-    public void setLocationType(final Integer locationType) {
+    public LocationDataResponse setLocationType(final Integer locationType) {
         this.locationType = locationType;
+        return this;
     }
 
     /**
@@ -144,9 +148,11 @@ public class LocationDataResponse extends ZclCommand {
      * Sets Coordinate 1.
      *
      * @param coordinate1 the Coordinate 1
+     * @return the LocationDataResponse command
      */
-    public void setCoordinate1(final Integer coordinate1) {
+    public LocationDataResponse setCoordinate1(final Integer coordinate1) {
         this.coordinate1 = coordinate1;
+        return this;
     }
 
     /**
@@ -162,9 +168,11 @@ public class LocationDataResponse extends ZclCommand {
      * Sets Coordinate 2.
      *
      * @param coordinate2 the Coordinate 2
+     * @return the LocationDataResponse command
      */
-    public void setCoordinate2(final Integer coordinate2) {
+    public LocationDataResponse setCoordinate2(final Integer coordinate2) {
         this.coordinate2 = coordinate2;
+        return this;
     }
 
     /**
@@ -180,9 +188,11 @@ public class LocationDataResponse extends ZclCommand {
      * Sets Coordinate 3.
      *
      * @param coordinate3 the Coordinate 3
+     * @return the LocationDataResponse command
      */
-    public void setCoordinate3(final Integer coordinate3) {
+    public LocationDataResponse setCoordinate3(final Integer coordinate3) {
         this.coordinate3 = coordinate3;
+        return this;
     }
 
     /**
@@ -198,9 +208,11 @@ public class LocationDataResponse extends ZclCommand {
      * Sets Power.
      *
      * @param power the Power
+     * @return the LocationDataResponse command
      */
-    public void setPower(final Integer power) {
+    public LocationDataResponse setPower(final Integer power) {
         this.power = power;
+        return this;
     }
 
     /**
@@ -216,9 +228,11 @@ public class LocationDataResponse extends ZclCommand {
      * Sets Path Loss Exponent.
      *
      * @param pathLossExponent the Path Loss Exponent
+     * @return the LocationDataResponse command
      */
-    public void setPathLossExponent(final Integer pathLossExponent) {
+    public LocationDataResponse setPathLossExponent(final Integer pathLossExponent) {
         this.pathLossExponent = pathLossExponent;
+        return this;
     }
 
     /**
@@ -234,9 +248,11 @@ public class LocationDataResponse extends ZclCommand {
      * Sets Location Method.
      *
      * @param locationMethod the Location Method
+     * @return the LocationDataResponse command
      */
-    public void setLocationMethod(final Integer locationMethod) {
+    public LocationDataResponse setLocationMethod(final Integer locationMethod) {
         this.locationMethod = locationMethod;
+        return this;
     }
 
     /**
@@ -252,9 +268,11 @@ public class LocationDataResponse extends ZclCommand {
      * Sets Quality Measure.
      *
      * @param qualityMeasure the Quality Measure
+     * @return the LocationDataResponse command
      */
-    public void setQualityMeasure(final Integer qualityMeasure) {
+    public LocationDataResponse setQualityMeasure(final Integer qualityMeasure) {
         this.qualityMeasure = qualityMeasure;
+        return this;
     }
 
     /**
@@ -270,9 +288,11 @@ public class LocationDataResponse extends ZclCommand {
      * Sets Location Age.
      *
      * @param locationAge the Location Age
+     * @return the LocationDataResponse command
      */
-    public void setLocationAge(final Integer locationAge) {
+    public LocationDataResponse setLocationAge(final Integer locationAge) {
         this.locationAge = locationAge;
+        return this;
     }
 
     @Override

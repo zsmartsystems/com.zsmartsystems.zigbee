@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-03T12:48:45Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GpProxyCommissioningMode extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -77,9 +77,11 @@ public class GpProxyCommissioningMode extends ZclCommand {
      * Sets Options.
      *
      * @param options the Options
+     * @return the GpProxyCommissioningMode command
      */
-    public void setOptions(final Integer options) {
+    public GpProxyCommissioningMode setOptions(final Integer options) {
         this.options = options;
+        return this;
     }
 
     /**
@@ -95,9 +97,11 @@ public class GpProxyCommissioningMode extends ZclCommand {
      * Sets Commissioning Window.
      *
      * @param commissioningWindow the Commissioning Window
+     * @return the GpProxyCommissioningMode command
      */
-    public void setCommissioningWindow(final Integer commissioningWindow) {
+    public GpProxyCommissioningMode setCommissioningWindow(final Integer commissioningWindow) {
         this.commissioningWindow = commissioningWindow;
+        return this;
     }
 
     /**
@@ -113,9 +117,11 @@ public class GpProxyCommissioningMode extends ZclCommand {
      * Sets Channel.
      *
      * @param channel the Channel
+     * @return the GpProxyCommissioningMode command
      */
-    public void setChannel(final Integer channel) {
+    public GpProxyCommissioningMode setChannel(final Integer channel) {
         this.channel = channel;
+        return this;
     }
 
     @Override

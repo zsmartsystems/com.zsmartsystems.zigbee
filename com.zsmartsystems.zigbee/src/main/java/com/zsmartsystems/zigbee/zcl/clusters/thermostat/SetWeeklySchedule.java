@@ -33,7 +33,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class SetWeeklySchedule extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -98,9 +98,11 @@ public class SetWeeklySchedule extends ZclCommand {
      * Sets Number Of Transitions.
      *
      * @param numberOfTransitions the Number Of Transitions
+     * @return the SetWeeklySchedule command
      */
-    public void setNumberOfTransitions(final Integer numberOfTransitions) {
+    public SetWeeklySchedule setNumberOfTransitions(final Integer numberOfTransitions) {
         this.numberOfTransitions = numberOfTransitions;
+        return this;
     }
 
     /**
@@ -116,9 +118,11 @@ public class SetWeeklySchedule extends ZclCommand {
      * Sets Day Of Week.
      *
      * @param dayOfWeek the Day Of Week
+     * @return the SetWeeklySchedule command
      */
-    public void setDayOfWeek(final Integer dayOfWeek) {
+    public SetWeeklySchedule setDayOfWeek(final Integer dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
+        return this;
     }
 
     /**
@@ -134,9 +138,11 @@ public class SetWeeklySchedule extends ZclCommand {
      * Sets Mode.
      *
      * @param mode the Mode
+     * @return the SetWeeklySchedule command
      */
-    public void setMode(final Integer mode) {
+    public SetWeeklySchedule setMode(final Integer mode) {
         this.mode = mode;
+        return this;
     }
 
     /**
@@ -152,9 +158,11 @@ public class SetWeeklySchedule extends ZclCommand {
      * Sets Transition.
      *
      * @param transition the Transition
+     * @return the SetWeeklySchedule command
      */
-    public void setTransition(final Integer transition) {
+    public SetWeeklySchedule setTransition(final Integer transition) {
         this.transition = transition;
+        return this;
     }
 
     /**
@@ -170,9 +178,11 @@ public class SetWeeklySchedule extends ZclCommand {
      * Sets Heat Set.
      *
      * @param heatSet the Heat Set
+     * @return the SetWeeklySchedule command
      */
-    public void setHeatSet(final Integer heatSet) {
+    public SetWeeklySchedule setHeatSet(final Integer heatSet) {
         this.heatSet = heatSet;
+        return this;
     }
 
     /**
@@ -188,9 +198,11 @@ public class SetWeeklySchedule extends ZclCommand {
      * Sets Cool Set.
      *
      * @param coolSet the Cool Set
+     * @return the SetWeeklySchedule command
      */
-    public void setCoolSet(final Integer coolSet) {
+    public SetWeeklySchedule setCoolSet(final Integer coolSet) {
         this.coolSet = coolSet;
+        return this;
     }
 
     @Override

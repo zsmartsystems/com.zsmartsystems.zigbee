@@ -71,7 +71,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:44:02Z")
 public class ZclPriceCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -11404,13 +11404,14 @@ public class ZclPriceCluster extends ZclCluster {
      * @param commandOptions {@link Integer} Command Options
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getCurrentPriceCommand(Integer commandOptions) {
         GetCurrentPriceCommand command = new GetCurrentPriceCommand();
 
         // Set the fields
         command.setCommandOptions(commandOptions);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11425,6 +11426,7 @@ public class ZclPriceCluster extends ZclCluster {
      * @param numberOfEvents {@link Integer} Number Of Events
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getScheduledPricesCommand(Calendar startTime, Integer numberOfEvents) {
         GetScheduledPricesCommand command = new GetScheduledPricesCommand();
 
@@ -11432,7 +11434,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setStartTime(startTime);
         command.setNumberOfEvents(numberOfEvents);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11448,6 +11450,7 @@ public class ZclPriceCluster extends ZclCluster {
      * @param control {@link Integer} Control
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> priceAcknowledgementCommand(Integer providerId, Integer issuerEventId, Calendar priceAckTime, Integer control) {
         PriceAcknowledgementCommand command = new PriceAcknowledgementCommand();
 
@@ -11457,7 +11460,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setPriceAckTime(priceAckTime);
         command.setControl(control);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11473,6 +11476,7 @@ public class ZclPriceCluster extends ZclCluster {
      * @param tariffType {@link Integer} Tariff Type
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getBlockPeriodCommand(Calendar startTime, Integer numberOfEvents, Integer tariffType) {
         GetBlockPeriodCommand command = new GetBlockPeriodCommand();
 
@@ -11481,7 +11485,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setNumberOfEvents(numberOfEvents);
         command.setTariffType(tariffType);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11498,6 +11502,7 @@ public class ZclPriceCluster extends ZclCluster {
      * @param numberOfCommands {@link Integer} Number Of Commands
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getConversionFactorCommand(Calendar earliestStartTime, Integer minIssuerEventId, Integer numberOfCommands) {
         GetConversionFactorCommand command = new GetConversionFactorCommand();
 
@@ -11506,7 +11511,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setMinIssuerEventId(minIssuerEventId);
         command.setNumberOfCommands(numberOfCommands);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11523,6 +11528,7 @@ public class ZclPriceCluster extends ZclCluster {
      * @param numberOfCommands {@link Integer} Number Of Commands
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getCalorificValueCommand(Calendar earliestStartTime, Integer minIssuerEventId, Integer numberOfCommands) {
         GetCalorificValueCommand command = new GetCalorificValueCommand();
 
@@ -11531,7 +11537,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setMinIssuerEventId(minIssuerEventId);
         command.setNumberOfCommands(numberOfCommands);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11551,6 +11557,7 @@ public class ZclPriceCluster extends ZclCluster {
      * @param tariffType {@link Integer} Tariff Type
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getTariffInformationCommand(Calendar earliestStartTime, Integer minIssuerEventId, Integer numberOfCommands, Integer tariffType) {
         GetTariffInformationCommand command = new GetTariffInformationCommand();
 
@@ -11560,7 +11567,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setNumberOfCommands(numberOfCommands);
         command.setTariffType(tariffType);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11574,13 +11581,14 @@ public class ZclPriceCluster extends ZclCluster {
      * @param issuerTariffId {@link Integer} Issuer Tariff ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getPriceMatrixCommand(Integer issuerTariffId) {
         GetPriceMatrixCommand command = new GetPriceMatrixCommand();
 
         // Set the fields
         command.setIssuerTariffId(issuerTariffId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11594,13 +11602,14 @@ public class ZclPriceCluster extends ZclCluster {
      * @param issuerTariffId {@link Integer} Issuer Tariff ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getBlockThresholdsCommand(Integer issuerTariffId) {
         GetBlockThresholdsCommand command = new GetBlockThresholdsCommand();
 
         // Set the fields
         command.setIssuerTariffId(issuerTariffId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11616,6 +11625,7 @@ public class ZclPriceCluster extends ZclCluster {
      * @param tariffType {@link Integer} Tariff Type
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getCo2ValueCommand(Calendar earliestStartTime, Integer minIssuerEventId, Integer numberOfCommands, Integer tariffType) {
         GetCo2ValueCommand command = new GetCo2ValueCommand();
 
@@ -11625,7 +11635,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setNumberOfCommands(numberOfCommands);
         command.setTariffType(tariffType);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11637,13 +11647,14 @@ public class ZclPriceCluster extends ZclCluster {
      * @param issuerTariffId {@link Integer} Issuer Tariff ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getTierLabelsCommand(Integer issuerTariffId) {
         GetTierLabelsCommand command = new GetTierLabelsCommand();
 
         // Set the fields
         command.setIssuerTariffId(issuerTariffId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11658,6 +11669,7 @@ public class ZclPriceCluster extends ZclCluster {
      * @param tariffType {@link Integer} Tariff Type
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getBillingPeriodCommand(Calendar earliestStartTime, Integer minIssuerEventId, Integer numberOfCommands, Integer tariffType) {
         GetBillingPeriodCommand command = new GetBillingPeriodCommand();
 
@@ -11667,7 +11679,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setNumberOfCommands(numberOfCommands);
         command.setTariffType(tariffType);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11682,6 +11694,7 @@ public class ZclPriceCluster extends ZclCluster {
      * @param tariffType {@link Integer} Tariff Type
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getConsolidatedBillCommand(Calendar earliestStartTime, Integer minIssuerEventId, Integer numberOfCommands, Integer tariffType) {
         GetConsolidatedBillCommand command = new GetConsolidatedBillCommand();
 
@@ -11691,7 +11704,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setNumberOfCommands(numberOfCommands);
         command.setTariffType(tariffType);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11704,6 +11717,7 @@ public class ZclPriceCluster extends ZclCluster {
      * @param cppAuth {@link Integer} Cpp Auth
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> cppEventResponse(Integer issuerEventId, Integer cppAuth) {
         CppEventResponse command = new CppEventResponse();
 
@@ -11711,7 +11725,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setIssuerEventId(issuerEventId);
         command.setCppAuth(cppAuth);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11724,6 +11738,7 @@ public class ZclPriceCluster extends ZclCluster {
      * @param numberOfRecords {@link Integer} Number Of Records
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getCreditPaymentCommand(Calendar latestEndTime, Integer numberOfRecords) {
         GetCreditPaymentCommand command = new GetCreditPaymentCommand();
 
@@ -11731,7 +11746,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setLatestEndTime(latestEndTime);
         command.setNumberOfRecords(numberOfRecords);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11744,8 +11759,9 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getCurrencyConversionCommand() {
-        return send(new GetCurrencyConversionCommand());
+        return sendCommand(new GetCurrencyConversionCommand());
     }
 
     /**
@@ -11757,8 +11773,9 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getTariffCancellationCommand() {
-        return send(new GetTariffCancellationCommand());
+        return sendCommand(new GetTariffCancellationCommand());
     }
 
     /**
@@ -11813,6 +11830,7 @@ public class ZclPriceCluster extends ZclCluster {
      * @param extendedRegisterTier {@link Integer} Extended Register Tier
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> publishPriceCommand(Integer providerId, ByteArray rateLabel, Integer issuerEventId, Calendar currentTime, Integer unitOfMeasure, Integer currency, Integer priceTrailingDigitAndTier, Integer numberOfPriceTiers, Calendar startTime, Integer duration, Integer price, Integer priceRatio, Integer generationPrice, Integer generationPriceRatio, Integer alternateCostDelivered, Integer alternateCostUnit, Integer alternateCostTrailingDigit, Integer numberOfBlockThresholds, Integer priceControl, Integer numberOfGenerationTiers, Integer generationTier, Integer extendedNumberOfPriceTiers, Integer extendedPriceTier, Integer extendedRegisterTier) {
         PublishPriceCommand command = new PublishPriceCommand();
 
@@ -11842,7 +11860,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setExtendedPriceTier(extendedPriceTier);
         command.setExtendedRegisterTier(extendedRegisterTier);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11871,6 +11889,7 @@ public class ZclPriceCluster extends ZclCluster {
      * @param tariffResolutionPeriod {@link Integer} Tariff Resolution Period
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> publishBlockPeriodCommand(Integer providerId, Integer issuerEventId, Calendar blockPeriodStartTime, Integer blockPeriodDuration, Integer blockPeriodControl, Integer blockPeriodDurationType, Integer tariffType, Integer tariffResolutionPeriod) {
         PublishBlockPeriodCommand command = new PublishBlockPeriodCommand();
 
@@ -11884,7 +11903,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setTariffType(tariffType);
         command.setTariffResolutionPeriod(tariffResolutionPeriod);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11901,6 +11920,7 @@ public class ZclPriceCluster extends ZclCluster {
      * @param conversionFactorTrailingDigit {@link Integer} Conversion Factor Trailing Digit
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> publishConversionFactorCommand(Integer issuerEventId, Calendar startTime, Integer conversionFactor, Integer conversionFactorTrailingDigit) {
         PublishConversionFactorCommand command = new PublishConversionFactorCommand();
 
@@ -11910,7 +11930,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setConversionFactor(conversionFactor);
         command.setConversionFactorTrailingDigit(conversionFactorTrailingDigit);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11927,6 +11947,7 @@ public class ZclPriceCluster extends ZclCluster {
      * @param calorificValueTrailingDigit {@link Integer} Calorific Value Trailing Digit
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> publishCalorificValueCommand(Integer issuerEventId, Calendar startTime, Integer calorificValue, Integer calorificValueUnit, Integer calorificValueTrailingDigit) {
         PublishCalorificValueCommand command = new PublishCalorificValueCommand();
 
@@ -11937,7 +11958,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setCalorificValueUnit(calorificValueUnit);
         command.setCalorificValueTrailingDigit(calorificValueTrailingDigit);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11970,6 +11991,7 @@ public class ZclPriceCluster extends ZclCluster {
      * @param blockThresholdDivisor {@link Integer} Block Threshold Divisor
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> publishTariffInformationCommand(Integer providerId, Integer issuerEventId, Integer issuerTariffId, Calendar startTime, Integer tariffType, ByteArray tariffLabel, Integer numberOfPriceTiers, Integer numberOfBlockThresholds, Integer unitOfMeasure, Integer currency, Integer priceTrailingDigit, Integer standingCharge, Integer tierBlockMode, Integer blockThresholdMultiplier, Integer blockThresholdDivisor) {
         PublishTariffInformationCommand command = new PublishTariffInformationCommand();
 
@@ -11990,7 +12012,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setBlockThresholdMultiplier(blockThresholdMultiplier);
         command.setBlockThresholdDivisor(blockThresholdDivisor);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -12022,6 +12044,7 @@ public class ZclPriceCluster extends ZclCluster {
      * @param priceMatrixSubPayload {@link PriceMatrixSubPayload} Price Matrix Sub Payload
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> publishPriceMatrixCommand(Integer providerId, Integer issuerEventId, Calendar startTime, Integer issuerTariffId, Integer commandIndex, Integer totalNumberOfCommands, Integer subPayloadControl, PriceMatrixSubPayload priceMatrixSubPayload) {
         PublishPriceMatrixCommand command = new PublishPriceMatrixCommand();
 
@@ -12035,7 +12058,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setSubPayloadControl(subPayloadControl);
         command.setPriceMatrixSubPayload(priceMatrixSubPayload);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -12065,6 +12088,7 @@ public class ZclPriceCluster extends ZclCluster {
      * @param blockThresholdSubPayload {@link BlockThresholdSubPayload} Block Threshold Sub Payload
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> publishBlockThresholdsCommand(Integer providerId, Integer issuerEventId, Calendar startTime, Integer issuerTariffId, Integer commandIndex, Integer totalNumberOfCommands, Integer subPayloadControl, BlockThresholdSubPayload blockThresholdSubPayload) {
         PublishBlockThresholdsCommand command = new PublishBlockThresholdsCommand();
 
@@ -12078,7 +12102,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setSubPayloadControl(subPayloadControl);
         command.setBlockThresholdSubPayload(blockThresholdSubPayload);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -12097,6 +12121,7 @@ public class ZclPriceCluster extends ZclCluster {
      * @param co2ValueTrailingDigit {@link Integer} CO2 Value Trailing Digit
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> publishCo2ValueCommand(Integer providerId, Integer issuerEventId, Calendar startTime, Integer tariffType, Integer co2Value, Integer co2ValueUnit, Integer co2ValueTrailingDigit) {
         PublishCo2ValueCommand command = new PublishCo2ValueCommand();
 
@@ -12109,7 +12134,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setCo2ValueUnit(co2ValueUnit);
         command.setCo2ValueTrailingDigit(co2ValueTrailingDigit);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -12128,6 +12153,7 @@ public class ZclPriceCluster extends ZclCluster {
      * @param tierLabel {@link ByteArray} Tier Label
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> publishTierLabelsCommand(Integer providerId, Integer issuerEventId, Integer issuerTariffId, Integer commandIndex, Integer totalNumberOfCommands, Integer numberOfLabels, Integer tierId, ByteArray tierLabel) {
         PublishTierLabelsCommand command = new PublishTierLabelsCommand();
 
@@ -12141,7 +12167,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setTierId(tierId);
         command.setTierLabel(tierLabel);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -12163,6 +12189,7 @@ public class ZclPriceCluster extends ZclCluster {
      * @param tariffType {@link Integer} Tariff Type
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> publishBillingPeriodCommand(Integer providerId, Integer issuerEventId, Calendar billingPeriodStartTime, Integer billingPeriodDuration, Integer billingPeriodDurationType, Integer tariffType) {
         PublishBillingPeriodCommand command = new PublishBillingPeriodCommand();
 
@@ -12174,7 +12201,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setBillingPeriodDurationType(billingPeriodDurationType);
         command.setTariffType(tariffType);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -12200,6 +12227,7 @@ public class ZclPriceCluster extends ZclCluster {
      * @param billTrailingDigit {@link Integer} Bill Trailing Digit
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> publishConsolidatedBillCommand(Integer providerId, Integer issuerEventId, Calendar billingPeriodStartTime, Integer billingPeriodDuration, Integer billingPeriodDurationType, Integer tariffType, Integer consolidatedBill, Integer currency, Integer billTrailingDigit) {
         PublishConsolidatedBillCommand command = new PublishConsolidatedBillCommand();
 
@@ -12214,7 +12242,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setCurrency(currency);
         command.setBillTrailingDigit(billTrailingDigit);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -12238,6 +12266,7 @@ public class ZclPriceCluster extends ZclCluster {
      * @param cppAuth {@link Integer} Cpp Auth
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> publishCppEventCommand(Integer providerId, Integer issuerEventId, Calendar startTime, Integer durationInMinutes, Integer tariffType, Integer cppPriceTier, Integer cppAuth) {
         PublishCppEventCommand command = new PublishCppEventCommand();
 
@@ -12250,7 +12279,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setCppPriceTier(cppPriceTier);
         command.setCppAuth(cppAuth);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -12272,6 +12301,7 @@ public class ZclPriceCluster extends ZclCluster {
      * @param creditPaymentRef {@link ByteArray} Credit Payment Ref
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> publishCreditPaymentCommand(Integer providerId, Integer issuerEventId, Calendar creditPaymentDueDate, Integer creditPaymentOverdueAmount, Integer creditPaymentStatus, Integer creditPayment, Calendar creditPaymentDate, ByteArray creditPaymentRef) {
         PublishCreditPaymentCommand command = new PublishCreditPaymentCommand();
 
@@ -12285,7 +12315,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setCreditPaymentDate(creditPaymentDate);
         command.setCreditPaymentRef(creditPaymentRef);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -12304,6 +12334,7 @@ public class ZclPriceCluster extends ZclCluster {
      * @param currencyChangeControlFlags {@link Integer} Currency Change Control Flags
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> publishCurrencyConversionCommand(Integer providerId, Integer issuerEventId, Calendar startTime, Integer oldCurrency, Integer newCurrency, Integer conversionFactor, Integer conversionFactorTrailingDigit, Integer currencyChangeControlFlags) {
         PublishCurrencyConversionCommand command = new PublishCurrencyConversionCommand();
 
@@ -12317,7 +12348,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setConversionFactorTrailingDigit(conversionFactorTrailingDigit);
         command.setCurrencyChangeControlFlags(currencyChangeControlFlags);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -12335,6 +12366,7 @@ public class ZclPriceCluster extends ZclCluster {
      * @param tariffType {@link Integer} Tariff Type
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> cancelTariffCommand(Integer providerId, Integer issuerTariffId, Integer tariffType) {
         CancelTariffCommand command = new CancelTariffCommand();
 
@@ -12343,6 +12375,6 @@ public class ZclPriceCluster extends ZclCluster {
         command.setIssuerTariffId(issuerTariffId);
         command.setTariffType(tariffType);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

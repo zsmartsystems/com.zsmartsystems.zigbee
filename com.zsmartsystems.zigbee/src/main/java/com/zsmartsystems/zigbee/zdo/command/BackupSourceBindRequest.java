@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class BackupSourceBindRequest extends ZdoRequest {
     /**
      * The ZDO cluster ID.
@@ -73,9 +73,11 @@ public class BackupSourceBindRequest extends ZdoRequest {
      * Sets Source Table Entries.
      *
      * @param sourceTableEntries the Source Table Entries
+     * @return the BackupSourceBindRequest command
      */
-    public void setSourceTableEntries(final Integer sourceTableEntries) {
+    public BackupSourceBindRequest setSourceTableEntries(final Integer sourceTableEntries) {
         this.sourceTableEntries = sourceTableEntries;
+        return this;
     }
 
     /**
@@ -91,9 +93,11 @@ public class BackupSourceBindRequest extends ZdoRequest {
      * Sets Start Index.
      *
      * @param startIndex the Start Index
+     * @return the BackupSourceBindRequest command
      */
-    public void setStartIndex(final Integer startIndex) {
+    public BackupSourceBindRequest setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;
+        return this;
     }
 
     /**
@@ -109,9 +113,11 @@ public class BackupSourceBindRequest extends ZdoRequest {
      * Sets Source Table List Count.
      *
      * @param sourceTableListCount the Source Table List Count
+     * @return the BackupSourceBindRequest command
      */
-    public void setSourceTableListCount(final Integer sourceTableListCount) {
+    public BackupSourceBindRequest setSourceTableListCount(final Integer sourceTableListCount) {
         this.sourceTableListCount = sourceTableListCount;
+        return this;
     }
 
     /**
@@ -127,9 +133,11 @@ public class BackupSourceBindRequest extends ZdoRequest {
      * Sets Source Table List.
      *
      * @param sourceTableList the Source Table List
+     * @return the BackupSourceBindRequest command
      */
-    public void setSourceTableList(final List<Long> sourceTableList) {
+    public BackupSourceBindRequest setSourceTableList(final List<Long> sourceTableList) {
         this.sourceTableList = sourceTableList;
+        return this;
     }
 
     @Override

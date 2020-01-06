@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ZoneStatusChangedCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -98,9 +98,11 @@ public class ZoneStatusChangedCommand extends ZclCommand {
      * default value shall be indicated in this field.
      *
      * @param zoneId the Zone ID
+     * @return the ZoneStatusChangedCommand command
      */
-    public void setZoneId(final Integer zoneId) {
+    public ZoneStatusChangedCommand setZoneId(final Integer zoneId) {
         this.zoneId = zoneId;
+        return this;
     }
 
     /**
@@ -116,9 +118,11 @@ public class ZoneStatusChangedCommand extends ZclCommand {
      * Sets Zone Status.
      *
      * @param zoneStatus the Zone Status
+     * @return the ZoneStatusChangedCommand command
      */
-    public void setZoneStatus(final Integer zoneStatus) {
+    public ZoneStatusChangedCommand setZoneStatus(final Integer zoneStatus) {
         this.zoneStatus = zoneStatus;
+        return this;
     }
 
     /**
@@ -134,9 +138,11 @@ public class ZoneStatusChangedCommand extends ZclCommand {
      * Sets Audible Notification.
      *
      * @param audibleNotification the Audible Notification
+     * @return the ZoneStatusChangedCommand command
      */
-    public void setAudibleNotification(final Integer audibleNotification) {
+    public ZoneStatusChangedCommand setAudibleNotification(final Integer audibleNotification) {
         this.audibleNotification = audibleNotification;
+        return this;
     }
 
     /**
@@ -162,9 +168,11 @@ public class ZoneStatusChangedCommand extends ZclCommand {
      * characters in length.
      *
      * @param zoneLabel the Zone Label
+     * @return the ZoneStatusChangedCommand command
      */
-    public void setZoneLabel(final String zoneLabel) {
+    public ZoneStatusChangedCommand setZoneLabel(final String zoneLabel) {
         this.zoneLabel = zoneLabel;
+        return this;
     }
 
     @Override

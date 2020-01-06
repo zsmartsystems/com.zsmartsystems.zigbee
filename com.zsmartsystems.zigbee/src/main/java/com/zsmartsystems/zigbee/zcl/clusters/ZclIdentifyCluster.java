@@ -35,7 +35,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:44:02Z")
 public class ZclIdentifyCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -234,13 +234,14 @@ public class ZclIdentifyCluster extends ZclCluster {
      * @param identifyTime {@link Integer} Identify Time
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> identifyCommand(Integer identifyTime) {
         IdentifyCommand command = new IdentifyCommand();
 
         // Set the fields
         command.setIdentifyTime(identifyTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -248,8 +249,9 @@ public class ZclIdentifyCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> identifyQueryCommand() {
-        return send(new IdentifyQueryCommand());
+        return sendCommand(new IdentifyQueryCommand());
     }
 
     /**
@@ -261,12 +263,13 @@ public class ZclIdentifyCluster extends ZclCluster {
      * @param identifyTime {@link Integer} Identify Time
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> identifyQueryResponse(Integer identifyTime) {
         IdentifyQueryResponse command = new IdentifyQueryResponse();
 
         // Set the fields
         command.setIdentifyTime(identifyTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

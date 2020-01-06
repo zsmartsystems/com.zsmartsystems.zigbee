@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zdo.field.BindingTable;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class BindRegisterResponse extends ZdoResponse {
     /**
      * The ZDO cluster ID.
@@ -66,9 +66,11 @@ public class BindRegisterResponse extends ZdoResponse {
      * Sets Binding Table Entries.
      *
      * @param bindingTableEntries the Binding Table Entries
+     * @return the BindRegisterResponse command
      */
-    public void setBindingTableEntries(final Integer bindingTableEntries) {
+    public BindRegisterResponse setBindingTableEntries(final Integer bindingTableEntries) {
         this.bindingTableEntries = bindingTableEntries;
+        return this;
     }
 
     /**
@@ -84,9 +86,11 @@ public class BindRegisterResponse extends ZdoResponse {
      * Sets Binding Table List.
      *
      * @param bindingTableList the Binding Table List
+     * @return the BindRegisterResponse command
      */
-    public void setBindingTableList(final List<BindingTable> bindingTableList) {
+    public BindRegisterResponse setBindingTableList(final List<BindingTable> bindingTableList) {
         this.bindingTableList = bindingTableList;
+        return this;
     }
 
     @Override

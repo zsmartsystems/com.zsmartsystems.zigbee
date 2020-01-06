@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class LoadControlEventCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -218,9 +218,11 @@ public class LoadControlEventCommand extends ZclCommand {
      * Event was issued.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the LoadControlEventCommand command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public LoadControlEventCommand setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -252,9 +254,11 @@ public class LoadControlEventCommand extends ZclCommand {
      * devices that are subject to load shed.)
      *
      * @param deviceClass the Device Class
+     * @return the LoadControlEventCommand command
      */
-    public void setDeviceClass(final Integer deviceClass) {
+    public LoadControlEventCommand setDeviceClass(final Integer deviceClass) {
         this.deviceClass = deviceClass;
+        return this;
     }
 
     /**
@@ -296,9 +300,11 @@ public class LoadControlEventCommand extends ZclCommand {
      * status code.
      *
      * @param utilityEnrollmentGroup the Utility Enrollment Group
+     * @return the LoadControlEventCommand command
      */
-    public void setUtilityEnrollmentGroup(final Integer utilityEnrollmentGroup) {
+    public LoadControlEventCommand setUtilityEnrollmentGroup(final Integer utilityEnrollmentGroup) {
         this.utilityEnrollmentGroup = utilityEnrollmentGroup;
+        return this;
     }
 
     /**
@@ -324,9 +330,11 @@ public class LoadControlEventCommand extends ZclCommand {
      * the event.
      *
      * @param startTime the Start Time
+     * @return the LoadControlEventCommand command
      */
-    public void setStartTime(final Calendar startTime) {
+    public LoadControlEventCommand setStartTime(final Calendar startTime) {
         this.startTime = startTime;
+        return this;
     }
 
     /**
@@ -346,9 +354,11 @@ public class LoadControlEventCommand extends ZclCommand {
      * Duration of this event in number of minutes. Maximum value is 1440 (one day).
      *
      * @param durationInMinutes the Duration In Minutes
+     * @return the LoadControlEventCommand command
      */
-    public void setDurationInMinutes(final Integer durationInMinutes) {
+    public LoadControlEventCommand setDurationInMinutes(final Integer durationInMinutes) {
         this.durationInMinutes = durationInMinutes;
+        return this;
     }
 
     /**
@@ -378,9 +388,11 @@ public class LoadControlEventCommand extends ZclCommand {
      * Point can be used in combination with the Criticality level.
      *
      * @param criticalityLevel the Criticality Level
+     * @return the LoadControlEventCommand command
      */
-    public void setCriticalityLevel(final Integer criticalityLevel) {
+    public LoadControlEventCommand setCriticalityLevel(final Integer criticalityLevel) {
         this.criticalityLevel = criticalityLevel;
+        return this;
     }
 
     /**
@@ -402,9 +414,11 @@ public class LoadControlEventCommand extends ZclCommand {
      * event in + 0.1 oC.
      *
      * @param coolingTemperatureOffset the Cooling Temperature Offset
+     * @return the LoadControlEventCommand command
      */
-    public void setCoolingTemperatureOffset(final Integer coolingTemperatureOffset) {
+    public LoadControlEventCommand setCoolingTemperatureOffset(final Integer coolingTemperatureOffset) {
         this.coolingTemperatureOffset = coolingTemperatureOffset;
+        return this;
     }
 
     /**
@@ -426,9 +440,11 @@ public class LoadControlEventCommand extends ZclCommand {
      * event in + 0.1 oC.
      *
      * @param heatingTemperatureOffset the Heating Temperature Offset
+     * @return the LoadControlEventCommand command
      */
-    public void setHeatingTemperatureOffset(final Integer heatingTemperatureOffset) {
+    public LoadControlEventCommand setHeatingTemperatureOffset(final Integer heatingTemperatureOffset) {
         this.heatingTemperatureOffset = heatingTemperatureOffset;
+        return this;
     }
 
     /**
@@ -448,9 +464,11 @@ public class LoadControlEventCommand extends ZclCommand {
      * Requested cooling set point in 0.01 degrees Celsius.
      *
      * @param coolingTemperatureSetPoint the Cooling Temperature Set Point
+     * @return the LoadControlEventCommand command
      */
-    public void setCoolingTemperatureSetPoint(final Integer coolingTemperatureSetPoint) {
+    public LoadControlEventCommand setCoolingTemperatureSetPoint(final Integer coolingTemperatureSetPoint) {
         this.coolingTemperatureSetPoint = coolingTemperatureSetPoint;
+        return this;
     }
 
     /**
@@ -470,9 +488,11 @@ public class LoadControlEventCommand extends ZclCommand {
      * Requested heating set point in 0.01 degrees Celsius.
      *
      * @param heatingTemperatureSetPoint the Heating Temperature Set Point
+     * @return the LoadControlEventCommand command
      */
-    public void setHeatingTemperatureSetPoint(final Integer heatingTemperatureSetPoint) {
+    public LoadControlEventCommand setHeatingTemperatureSetPoint(final Integer heatingTemperatureSetPoint) {
         this.heatingTemperatureSetPoint = heatingTemperatureSetPoint;
+        return this;
     }
 
     /**
@@ -520,9 +540,11 @@ public class LoadControlEventCommand extends ZclCommand {
      * use.
      *
      * @param averageLoadAdjustmentPercentage the Average Load Adjustment Percentage
+     * @return the LoadControlEventCommand command
      */
-    public void setAverageLoadAdjustmentPercentage(final Integer averageLoadAdjustmentPercentage) {
+    public LoadControlEventCommand setAverageLoadAdjustmentPercentage(final Integer averageLoadAdjustmentPercentage) {
         this.averageLoadAdjustmentPercentage = averageLoadAdjustmentPercentage;
+        return this;
     }
 
     /**
@@ -562,9 +584,11 @@ public class LoadControlEventCommand extends ZclCommand {
      * state” will precede the “on state”.
      *
      * @param dutyCycle the Duty Cycle
+     * @return the LoadControlEventCommand command
      */
-    public void setDutyCycle(final Integer dutyCycle) {
+    public LoadControlEventCommand setDutyCycle(final Integer dutyCycle) {
         this.dutyCycle = dutyCycle;
+        return this;
     }
 
     /**
@@ -584,9 +608,11 @@ public class LoadControlEventCommand extends ZclCommand {
      * Identifies additional control options for the event.
      *
      * @param eventControl the Event Control
+     * @return the LoadControlEventCommand command
      */
-    public void setEventControl(final Integer eventControl) {
+    public LoadControlEventCommand setEventControl(final Integer eventControl) {
         this.eventControl = eventControl;
+        return this;
     }
 
     @Override

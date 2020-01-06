@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-15T18:21:05Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class DeviceAnnounce extends ZdoRequest {
     /**
      * The ZDO cluster ID.
@@ -71,9 +71,11 @@ public class DeviceAnnounce extends ZdoRequest {
      * Sets NWK Addr Of Interest.
      *
      * @param nwkAddrOfInterest the NWK Addr Of Interest
+     * @return the DeviceAnnounce command
      */
-    public void setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
+    public DeviceAnnounce setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
         this.nwkAddrOfInterest = nwkAddrOfInterest;
+        return this;
     }
 
     /**
@@ -89,9 +91,11 @@ public class DeviceAnnounce extends ZdoRequest {
      * Sets IEEE Addr.
      *
      * @param ieeeAddr the IEEE Addr
+     * @return the DeviceAnnounce command
      */
-    public void setIeeeAddr(final IeeeAddress ieeeAddr) {
+    public DeviceAnnounce setIeeeAddr(final IeeeAddress ieeeAddr) {
         this.ieeeAddr = ieeeAddr;
+        return this;
     }
 
     /**
@@ -107,9 +111,11 @@ public class DeviceAnnounce extends ZdoRequest {
      * Sets Capability.
      *
      * @param capability the Capability
+     * @return the DeviceAnnounce command
      */
-    public void setCapability(final Integer capability) {
+    public DeviceAnnounce setCapability(final Integer capability) {
         this.capability = capability;
+        return this;
     }
 
     @Override

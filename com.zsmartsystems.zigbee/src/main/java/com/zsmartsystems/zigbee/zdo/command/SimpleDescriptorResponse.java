@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zdo.field.SimpleDescriptor;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-15T18:21:05Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class SimpleDescriptorResponse extends ZdoResponse {
     /**
      * The ZDO cluster ID.
@@ -68,9 +68,11 @@ public class SimpleDescriptorResponse extends ZdoResponse {
      * Sets NWK Addr Of Interest.
      *
      * @param nwkAddrOfInterest the NWK Addr Of Interest
+     * @return the SimpleDescriptorResponse command
      */
-    public void setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
+    public SimpleDescriptorResponse setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
         this.nwkAddrOfInterest = nwkAddrOfInterest;
+        return this;
     }
 
     /**
@@ -86,9 +88,11 @@ public class SimpleDescriptorResponse extends ZdoResponse {
      * Sets Length.
      *
      * @param length the Length
+     * @return the SimpleDescriptorResponse command
      */
-    public void setLength(final Integer length) {
+    public SimpleDescriptorResponse setLength(final Integer length) {
         this.length = length;
+        return this;
     }
 
     /**
@@ -104,9 +108,11 @@ public class SimpleDescriptorResponse extends ZdoResponse {
      * Sets Simple Descriptor.
      *
      * @param simpleDescriptor the Simple Descriptor
+     * @return the SimpleDescriptorResponse command
      */
-    public void setSimpleDescriptor(final SimpleDescriptor simpleDescriptor) {
+    public SimpleDescriptorResponse setSimpleDescriptor(final SimpleDescriptor simpleDescriptor) {
         this.simpleDescriptor = simpleDescriptor;
+        return this;
     }
 
     @Override

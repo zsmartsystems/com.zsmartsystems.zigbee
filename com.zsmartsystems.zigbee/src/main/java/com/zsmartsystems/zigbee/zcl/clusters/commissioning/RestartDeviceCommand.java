@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-06-15T20:20:47Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class RestartDeviceCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -73,9 +73,11 @@ public class RestartDeviceCommand extends ZclCommand {
      * Sets Option.
      *
      * @param option the Option
+     * @return the RestartDeviceCommand command
      */
-    public void setOption(final Integer option) {
+    public RestartDeviceCommand setOption(final Integer option) {
         this.option = option;
+        return this;
     }
 
     /**
@@ -91,9 +93,11 @@ public class RestartDeviceCommand extends ZclCommand {
      * Sets Delay.
      *
      * @param delay the Delay
+     * @return the RestartDeviceCommand command
      */
-    public void setDelay(final Integer delay) {
+    public RestartDeviceCommand setDelay(final Integer delay) {
         this.delay = delay;
+        return this;
     }
 
     /**
@@ -109,9 +113,11 @@ public class RestartDeviceCommand extends ZclCommand {
      * Sets Jitter.
      *
      * @param jitter the Jitter
+     * @return the RestartDeviceCommand command
      */
-    public void setJitter(final Integer jitter) {
+    public RestartDeviceCommand setJitter(final Integer jitter) {
         this.jitter = jitter;
+        return this;
     }
 
     @Override

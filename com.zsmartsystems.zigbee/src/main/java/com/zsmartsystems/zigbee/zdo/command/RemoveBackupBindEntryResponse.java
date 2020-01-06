@@ -30,7 +30,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoStatus;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class RemoveBackupBindEntryResponse extends ZdoResponse {
     /**
      * The ZDO cluster ID.
@@ -62,9 +62,11 @@ public class RemoveBackupBindEntryResponse extends ZdoResponse {
      * Sets Entry Count.
      *
      * @param entryCount the Entry Count
+     * @return the RemoveBackupBindEntryResponse command
      */
-    public void setEntryCount(final Integer entryCount) {
+    public RemoveBackupBindEntryResponse setEntryCount(final Integer entryCount) {
         this.entryCount = entryCount;
+        return this;
     }
 
     @Override

@@ -32,7 +32,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class PublishCreditPaymentCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -141,9 +141,11 @@ public class PublishCreditPaymentCommand extends ZclCommand {
      * providers may be available.
      *
      * @param providerId the Provider ID
+     * @return the PublishCreditPaymentCommand command
      */
-    public void setProviderId(final Integer providerId) {
+    public PublishCreditPaymentCommand setProviderId(final Integer providerId) {
         this.providerId = providerId;
+        return this;
     }
 
     /**
@@ -173,9 +175,11 @@ public class PublishCreditPaymentCommand extends ZclCommand {
      * value in the Issuer Event ID field that is larger than older information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the PublishCreditPaymentCommand command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public PublishCreditPaymentCommand setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -195,9 +199,11 @@ public class PublishCreditPaymentCommand extends ZclCommand {
      * A UTCTime field containing the time that the next credit payment is due.
      *
      * @param creditPaymentDueDate the Credit Payment Due Date
+     * @return the PublishCreditPaymentCommand command
      */
-    public void setCreditPaymentDueDate(final Calendar creditPaymentDueDate) {
+    public PublishCreditPaymentCommand setCreditPaymentDueDate(final Calendar creditPaymentDueDate) {
         this.creditPaymentDueDate = creditPaymentDueDate;
+        return this;
     }
 
     /**
@@ -219,9 +225,11 @@ public class PublishCreditPaymentCommand extends ZclCommand {
      * This field should be provided in the same currency as used in the Price cluster.
      *
      * @param creditPaymentOverdueAmount the Credit Payment Overdue Amount
+     * @return the PublishCreditPaymentCommand command
      */
-    public void setCreditPaymentOverdueAmount(final Integer creditPaymentOverdueAmount) {
+    public PublishCreditPaymentCommand setCreditPaymentOverdueAmount(final Integer creditPaymentOverdueAmount) {
         this.creditPaymentOverdueAmount = creditPaymentOverdueAmount;
+        return this;
     }
 
     /**
@@ -241,9 +249,11 @@ public class PublishCreditPaymentCommand extends ZclCommand {
      * An 8-bit enumeration identifying the current credit payment status.
      *
      * @param creditPaymentStatus the Credit Payment Status
+     * @return the PublishCreditPaymentCommand command
      */
-    public void setCreditPaymentStatus(final Integer creditPaymentStatus) {
+    public PublishCreditPaymentCommand setCreditPaymentStatus(final Integer creditPaymentStatus) {
         this.creditPaymentStatus = creditPaymentStatus;
+        return this;
     }
 
     /**
@@ -265,9 +275,11 @@ public class PublishCreditPaymentCommand extends ZclCommand {
      * provided in the same currency as used in the Price cluster.
      *
      * @param creditPayment the Credit Payment
+     * @return the PublishCreditPaymentCommand command
      */
-    public void setCreditPayment(final Integer creditPayment) {
+    public PublishCreditPaymentCommand setCreditPayment(final Integer creditPayment) {
         this.creditPayment = creditPayment;
+        return this;
     }
 
     /**
@@ -287,9 +299,11 @@ public class PublishCreditPaymentCommand extends ZclCommand {
      * A UTCTime field containing the time at which the last credit payment was made.
      *
      * @param creditPaymentDate the Credit Payment Date
+     * @return the PublishCreditPaymentCommand command
      */
-    public void setCreditPaymentDate(final Calendar creditPaymentDate) {
+    public PublishCreditPaymentCommand setCreditPaymentDate(final Calendar creditPaymentDate) {
         this.creditPaymentDate = creditPaymentDate;
+        return this;
     }
 
     /**
@@ -311,9 +325,11 @@ public class PublishCreditPaymentCommand extends ZclCommand {
      * the energy supplier.
      *
      * @param creditPaymentRef the Credit Payment Ref
+     * @return the PublishCreditPaymentCommand command
      */
-    public void setCreditPaymentRef(final ByteArray creditPaymentRef) {
+    public PublishCreditPaymentCommand setCreditPaymentRef(final ByteArray creditPaymentRef) {
         this.creditPaymentRef = creditPaymentRef;
+        return this;
     }
 
     @Override

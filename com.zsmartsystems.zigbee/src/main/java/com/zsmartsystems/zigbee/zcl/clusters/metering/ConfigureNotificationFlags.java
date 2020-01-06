@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ConfigureNotificationFlags extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -109,9 +109,11 @@ public class ConfigureNotificationFlags extends ZclCommand {
      * information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the ConfigureNotificationFlags command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public ConfigureNotificationFlags setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -133,9 +135,11 @@ public class ConfigureNotificationFlags extends ZclCommand {
      * mapping to ZCL or Smart Energy Standard commands.
      *
      * @param notificationScheme the Notification Scheme
+     * @return the ConfigureNotificationFlags command
      */
-    public void setNotificationScheme(final Integer notificationScheme) {
+    public ConfigureNotificationFlags setNotificationScheme(final Integer notificationScheme) {
         this.notificationScheme = notificationScheme;
+        return this;
     }
 
     /**
@@ -157,9 +161,11 @@ public class ConfigureNotificationFlags extends ZclCommand {
      * that will be configured for this Notification scheme.
      *
      * @param notificationFlagAttributeId the Notification Flag Attribute ID
+     * @return the ConfigureNotificationFlags command
      */
-    public void setNotificationFlagAttributeId(final Integer notificationFlagAttributeId) {
+    public ConfigureNotificationFlags setNotificationFlagAttributeId(final Integer notificationFlagAttributeId) {
         this.notificationFlagAttributeId = notificationFlagAttributeId;
+        return this;
     }
 
     /**
@@ -175,9 +181,11 @@ public class ConfigureNotificationFlags extends ZclCommand {
      * Sets Sub Payload.
      *
      * @param subPayload the Sub Payload
+     * @return the ConfigureNotificationFlags command
      */
-    public void setSubPayload(final NotificationCommandSubPayload subPayload) {
+    public ConfigureNotificationFlags setSubPayload(final NotificationCommandSubPayload subPayload) {
         this.subPayload = subPayload;
+        return this;
     }
 
     @Override

@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-15T18:21:05Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class PowerDescriptorResponse extends ZdoResponse {
     /**
      * The ZDO cluster ID.
@@ -63,9 +63,11 @@ public class PowerDescriptorResponse extends ZdoResponse {
      * Sets NWK Addr Of Interest.
      *
      * @param nwkAddrOfInterest the NWK Addr Of Interest
+     * @return the PowerDescriptorResponse command
      */
-    public void setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
+    public PowerDescriptorResponse setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
         this.nwkAddrOfInterest = nwkAddrOfInterest;
+        return this;
     }
 
     /**
@@ -81,9 +83,11 @@ public class PowerDescriptorResponse extends ZdoResponse {
      * Sets Power Descriptor.
      *
      * @param powerDescriptor the Power Descriptor
+     * @return the PowerDescriptorResponse command
      */
-    public void setPowerDescriptor(final PowerDescriptor powerDescriptor) {
+    public PowerDescriptorResponse setPowerDescriptor(final PowerDescriptor powerDescriptor) {
         this.powerDescriptor = powerDescriptor;
+        return this;
     }
 
     @Override

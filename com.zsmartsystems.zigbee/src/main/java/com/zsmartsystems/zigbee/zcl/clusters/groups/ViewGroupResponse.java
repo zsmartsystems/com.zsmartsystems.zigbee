@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ViewGroupResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -76,9 +76,11 @@ public class ViewGroupResponse extends ZclCommand {
      * Sets Status.
      *
      * @param status the Status
+     * @return the ViewGroupResponse command
      */
-    public void setStatus(final Integer status) {
+    public ViewGroupResponse setStatus(final Integer status) {
         this.status = status;
+        return this;
     }
 
     /**
@@ -94,9 +96,11 @@ public class ViewGroupResponse extends ZclCommand {
      * Sets Group ID.
      *
      * @param groupId the Group ID
+     * @return the ViewGroupResponse command
      */
-    public void setGroupId(final Integer groupId) {
+    public ViewGroupResponse setGroupId(final Integer groupId) {
         this.groupId = groupId;
+        return this;
     }
 
     /**
@@ -112,9 +116,11 @@ public class ViewGroupResponse extends ZclCommand {
      * Sets Group Name.
      *
      * @param groupName the Group Name
+     * @return the ViewGroupResponse command
      */
-    public void setGroupName(final String groupName) {
+    public ViewGroupResponse setGroupName(final String groupName) {
         this.groupName = groupName;
+        return this;
     }
 
     @Override

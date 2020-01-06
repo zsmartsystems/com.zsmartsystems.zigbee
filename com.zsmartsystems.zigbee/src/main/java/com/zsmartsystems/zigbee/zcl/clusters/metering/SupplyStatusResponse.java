@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class SupplyStatusResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -103,9 +103,11 @@ public class SupplyStatusResponse extends ZclCommand {
      * whom this command relates.
      *
      * @param providerId the Provider ID
+     * @return the SupplyStatusResponse command
      */
-    public void setProviderId(final Integer providerId) {
+    public SupplyStatusResponse setProviderId(final Integer providerId) {
         this.providerId = providerId;
+        return this;
     }
 
     /**
@@ -135,9 +137,11 @@ public class SupplyStatusResponse extends ZclCommand {
      * the Issuer Event ID field that is larger than older information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the SupplyStatusResponse command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public SupplyStatusResponse setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -157,9 +161,11 @@ public class SupplyStatusResponse extends ZclCommand {
      * A UTC Time field to indicate the date at which the originating command was to be applied.
      *
      * @param implementationDateTime the Implementation Date Time
+     * @return the SupplyStatusResponse command
      */
-    public void setImplementationDateTime(final Calendar implementationDateTime) {
+    public SupplyStatusResponse setImplementationDateTime(final Calendar implementationDateTime) {
         this.implementationDateTime = implementationDateTime;
+        return this;
     }
 
     /**
@@ -181,9 +187,11 @@ public class SupplyStatusResponse extends ZclCommand {
      * Metering Device following implementation of the originating command.
      *
      * @param supplyStatus the Supply Status
+     * @return the SupplyStatusResponse command
      */
-    public void setSupplyStatus(final Integer supplyStatus) {
+    public SupplyStatusResponse setSupplyStatus(final Integer supplyStatus) {
         this.supplyStatus = supplyStatus;
+        return this;
     }
 
     @Override

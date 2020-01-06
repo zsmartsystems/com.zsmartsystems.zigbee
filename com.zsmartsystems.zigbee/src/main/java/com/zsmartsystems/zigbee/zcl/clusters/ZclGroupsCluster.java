@@ -61,7 +61,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:44:02Z")
 public class ZclGroupsCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -213,6 +213,7 @@ public class ZclGroupsCluster extends ZclCluster {
      * @param groupName {@link String} Group Name
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> addGroupCommand(Integer groupId, String groupName) {
         AddGroupCommand command = new AddGroupCommand();
 
@@ -220,7 +221,7 @@ public class ZclGroupsCluster extends ZclCluster {
         command.setGroupId(groupId);
         command.setGroupName(groupName);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -233,13 +234,14 @@ public class ZclGroupsCluster extends ZclCluster {
      * @param groupId {@link Integer} Group ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> viewGroupCommand(Integer groupId) {
         ViewGroupCommand command = new ViewGroupCommand();
 
         // Set the fields
         command.setGroupId(groupId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -252,6 +254,7 @@ public class ZclGroupsCluster extends ZclCluster {
      * @param groupList {@link List<Integer>} Group List
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getGroupMembershipCommand(Integer groupCount, List<Integer> groupList) {
         GetGroupMembershipCommand command = new GetGroupMembershipCommand();
 
@@ -259,7 +262,7 @@ public class ZclGroupsCluster extends ZclCluster {
         command.setGroupCount(groupCount);
         command.setGroupList(groupList);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -271,13 +274,14 @@ public class ZclGroupsCluster extends ZclCluster {
      * @param groupId {@link Integer} Group ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> removeGroupCommand(Integer groupId) {
         RemoveGroupCommand command = new RemoveGroupCommand();
 
         // Set the fields
         command.setGroupId(groupId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -288,8 +292,9 @@ public class ZclGroupsCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> removeAllGroupsCommand() {
-        return send(new RemoveAllGroupsCommand());
+        return sendCommand(new RemoveAllGroupsCommand());
     }
 
     /**
@@ -304,6 +309,7 @@ public class ZclGroupsCluster extends ZclCluster {
      * @param groupName {@link String} Group Name
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> addGroupIfIdentifyingCommand(Integer groupId, String groupName) {
         AddGroupIfIdentifyingCommand command = new AddGroupIfIdentifyingCommand();
 
@@ -311,7 +317,7 @@ public class ZclGroupsCluster extends ZclCluster {
         command.setGroupId(groupId);
         command.setGroupName(groupName);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -324,6 +330,7 @@ public class ZclGroupsCluster extends ZclCluster {
      * @param groupId {@link Integer} Group ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> addGroupResponse(Integer status, Integer groupId) {
         AddGroupResponse command = new AddGroupResponse();
 
@@ -331,7 +338,7 @@ public class ZclGroupsCluster extends ZclCluster {
         command.setStatus(status);
         command.setGroupId(groupId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -345,6 +352,7 @@ public class ZclGroupsCluster extends ZclCluster {
      * @param groupName {@link String} Group Name
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> viewGroupResponse(Integer status, Integer groupId, String groupName) {
         ViewGroupResponse command = new ViewGroupResponse();
 
@@ -353,7 +361,7 @@ public class ZclGroupsCluster extends ZclCluster {
         command.setGroupId(groupId);
         command.setGroupName(groupName);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -367,6 +375,7 @@ public class ZclGroupsCluster extends ZclCluster {
      * @param groupList {@link List<Integer>} Group List
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getGroupMembershipResponse(Integer capacity, Integer groupCount, List<Integer> groupList) {
         GetGroupMembershipResponse command = new GetGroupMembershipResponse();
 
@@ -375,7 +384,7 @@ public class ZclGroupsCluster extends ZclCluster {
         command.setGroupCount(groupCount);
         command.setGroupList(groupList);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -388,6 +397,7 @@ public class ZclGroupsCluster extends ZclCluster {
      * @param groupId {@link Integer} Group ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> removeGroupResponse(Integer status, Integer groupId) {
         RemoveGroupResponse command = new RemoveGroupResponse();
 
@@ -395,6 +405,6 @@ public class ZclGroupsCluster extends ZclCluster {
         command.setStatus(status);
         command.setGroupId(groupId);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

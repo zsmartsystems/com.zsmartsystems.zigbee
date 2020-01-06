@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class DiscoverAttributesExtendedResponse extends ZclCommand {
     /**
      * The command ID.
@@ -81,9 +81,11 @@ public class DiscoverAttributesExtendedResponse extends ZclCommand {
      * Sets Discovery Complete.
      *
      * @param discoveryComplete the Discovery Complete
+     * @return the DiscoverAttributesExtendedResponse command
      */
-    public void setDiscoveryComplete(final Boolean discoveryComplete) {
+    public DiscoverAttributesExtendedResponse setDiscoveryComplete(final Boolean discoveryComplete) {
         this.discoveryComplete = discoveryComplete;
+        return this;
     }
 
     /**
@@ -99,9 +101,11 @@ public class DiscoverAttributesExtendedResponse extends ZclCommand {
      * Sets Attribute Information.
      *
      * @param attributeInformation the Attribute Information
+     * @return the DiscoverAttributesExtendedResponse command
      */
-    public void setAttributeInformation(final List<ExtendedAttributeInformation> attributeInformation) {
+    public DiscoverAttributesExtendedResponse setAttributeInformation(final List<ExtendedAttributeInformation> attributeInformation) {
         this.attributeInformation = attributeInformation;
+        return this;
     }
 
     @Override

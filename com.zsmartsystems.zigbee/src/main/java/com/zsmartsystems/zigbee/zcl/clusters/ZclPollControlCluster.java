@@ -44,7 +44,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:44:02Z")
 public class ZclPollControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -836,6 +836,7 @@ public class ZclPollControlCluster extends ZclCluster {
      * @param fastPollTimeout {@link Integer} Fast Poll Timeout
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> checkInResponse(Boolean startFastPolling, Integer fastPollTimeout) {
         CheckInResponse command = new CheckInResponse();
 
@@ -843,7 +844,7 @@ public class ZclPollControlCluster extends ZclCluster {
         command.setStartFastPolling(startFastPolling);
         command.setFastPollTimeout(fastPollTimeout);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -862,8 +863,9 @@ public class ZclPollControlCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> fastPollStopCommand() {
-        return send(new FastPollStopCommand());
+        return sendCommand(new FastPollStopCommand());
     }
 
     /**
@@ -880,13 +882,14 @@ public class ZclPollControlCluster extends ZclCluster {
      * @param newLongPollInterval {@link Integer} New Long Poll Interval
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> setLongPollIntervalCommand(Integer newLongPollInterval) {
         SetLongPollIntervalCommand command = new SetLongPollIntervalCommand();
 
         // Set the fields
         command.setNewLongPollInterval(newLongPollInterval);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -903,13 +906,14 @@ public class ZclPollControlCluster extends ZclCluster {
      * @param newShortPollInterval {@link Integer} New Short Poll Interval
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> setShortPollIntervalCommand(Integer newShortPollInterval) {
         SetShortPollIntervalCommand command = new SetShortPollIntervalCommand();
 
         // Set the fields
         command.setNewShortPollInterval(newShortPollInterval);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -927,7 +931,8 @@ public class ZclPollControlCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> checkInCommand() {
-        return send(new CheckInCommand());
+        return sendCommand(new CheckInCommand());
     }
 }

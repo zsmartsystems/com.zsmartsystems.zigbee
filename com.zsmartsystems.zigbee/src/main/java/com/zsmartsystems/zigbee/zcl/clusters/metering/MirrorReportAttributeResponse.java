@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class MirrorReportAttributeResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -80,9 +80,11 @@ public class MirrorReportAttributeResponse extends ZclCommand {
      * mapping to ZCL or Smart Energy Standard commands.
      *
      * @param notificationScheme the Notification Scheme
+     * @return the MirrorReportAttributeResponse command
      */
-    public void setNotificationScheme(final Integer notificationScheme) {
+    public MirrorReportAttributeResponse setNotificationScheme(final Integer notificationScheme) {
         this.notificationScheme = notificationScheme;
+        return this;
     }
 
     /**
@@ -98,9 +100,11 @@ public class MirrorReportAttributeResponse extends ZclCommand {
      * Sets Notification Flags.
      *
      * @param notificationFlags the Notification Flags
+     * @return the MirrorReportAttributeResponse command
      */
-    public void setNotificationFlags(final Integer notificationFlags) {
+    public MirrorReportAttributeResponse setNotificationFlags(final Integer notificationFlags) {
         this.notificationFlags = notificationFlags;
+        return this;
     }
 
     @Override

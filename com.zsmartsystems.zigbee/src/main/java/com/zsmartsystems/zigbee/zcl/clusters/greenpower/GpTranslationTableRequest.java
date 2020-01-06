@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-03T12:48:45Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GpTranslationTableRequest extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -66,9 +66,11 @@ public class GpTranslationTableRequest extends ZclCommand {
      * Sets Start Index.
      *
      * @param startIndex the Start Index
+     * @return the GpTranslationTableRequest command
      */
-    public void setStartIndex(final Integer startIndex) {
+    public GpTranslationTableRequest setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;
+        return this;
     }
 
     @Override

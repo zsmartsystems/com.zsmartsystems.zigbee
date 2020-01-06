@@ -44,7 +44,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:44:02Z")
 public class ZclAlarmsCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -179,6 +179,7 @@ public class ZclAlarmsCluster extends ZclCluster {
      * @param clusterIdentifier {@link Integer} Cluster Identifier
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> resetAlarmCommand(Integer alarmCode, Integer clusterIdentifier) {
         ResetAlarmCommand command = new ResetAlarmCommand();
 
@@ -186,7 +187,7 @@ public class ZclAlarmsCluster extends ZclCluster {
         command.setAlarmCode(alarmCode);
         command.setClusterIdentifier(clusterIdentifier);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -198,8 +199,9 @@ public class ZclAlarmsCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> resetAllAlarmsCommand() {
-        return send(new ResetAllAlarmsCommand());
+        return sendCommand(new ResetAllAlarmsCommand());
     }
 
     /**
@@ -212,8 +214,9 @@ public class ZclAlarmsCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getAlarmCommand() {
-        return send(new GetAlarmCommand());
+        return sendCommand(new GetAlarmCommand());
     }
 
     /**
@@ -223,8 +226,9 @@ public class ZclAlarmsCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> resetAlarmLogCommand() {
-        return send(new ResetAlarmLogCommand());
+        return sendCommand(new ResetAlarmLogCommand());
     }
 
     /**
@@ -239,6 +243,7 @@ public class ZclAlarmsCluster extends ZclCluster {
      * @param clusterIdentifier {@link Integer} Cluster Identifier
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> alarmCommand(Integer alarmCode, Integer clusterIdentifier) {
         AlarmCommand command = new AlarmCommand();
 
@@ -246,7 +251,7 @@ public class ZclAlarmsCluster extends ZclCluster {
         command.setAlarmCode(alarmCode);
         command.setClusterIdentifier(clusterIdentifier);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -265,6 +270,7 @@ public class ZclAlarmsCluster extends ZclCluster {
      * @param timestamp {@link Integer} Timestamp
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getAlarmResponse(Integer status, Integer alarmCode, Integer clusterIdentifier, Integer timestamp) {
         GetAlarmResponse command = new GetAlarmResponse();
 
@@ -274,6 +280,6 @@ public class ZclAlarmsCluster extends ZclCluster {
         command.setClusterIdentifier(clusterIdentifier);
         command.setTimestamp(timestamp);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

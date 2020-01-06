@@ -64,7 +64,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:44:02Z")
 public class ZclPrepaymentCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -9412,6 +9412,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param meterSerialNumber {@link ByteArray} Meter Serial Number
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> selectAvailableEmergencyCredit(Calendar commandIssueDateTime, Integer originatingDevice, ByteArray siteId, ByteArray meterSerialNumber) {
         SelectAvailableEmergencyCredit command = new SelectAvailableEmergencyCredit();
 
@@ -9421,7 +9422,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setSiteId(siteId);
         command.setMeterSerialNumber(meterSerialNumber);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9442,6 +9443,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param debtRecoveryBalancePercentage {@link Integer} Debt Recovery Balance Percentage
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> changeDebt(Integer issuerEventId, ByteArray debtLabel, Integer debtAmount, Integer debtRecoveryMethod, Integer debtAmountType, Calendar debtRecoveryStartTime, Integer debtRecoveryCollectionTime, Integer debtRecoveryFrequency, Integer debtRecoveryAmount, Integer debtRecoveryBalancePercentage) {
         ChangeDebt command = new ChangeDebt();
 
@@ -9457,7 +9459,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setDebtRecoveryAmount(debtRecoveryAmount);
         command.setDebtRecoveryBalancePercentage(debtRecoveryBalancePercentage);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9471,6 +9473,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param emergencyCreditThreshold {@link Integer} Emergency Credit Threshold
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> emergencyCreditSetup(Integer issuerEventId, Calendar startTime, Integer emergencyCreditLimit, Integer emergencyCreditThreshold) {
         EmergencyCreditSetup command = new EmergencyCreditSetup();
 
@@ -9480,7 +9483,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setEmergencyCreditLimit(emergencyCreditLimit);
         command.setEmergencyCreditThreshold(emergencyCreditThreshold);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9493,6 +9496,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param topUpCode {@link ByteArray} Top Up Code
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> consumerTopUp(Integer originatingDevice, ByteArray topUpCode) {
         ConsumerTopUp command = new ConsumerTopUp();
 
@@ -9500,7 +9504,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setOriginatingDevice(originatingDevice);
         command.setTopUpCode(topUpCode);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9515,6 +9519,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param creditAdjustmentValue {@link Integer} Credit Adjustment Value
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> creditAdjustment(Integer issuerEventId, Calendar startTime, Integer creditAdjustmentType, Integer creditAdjustmentValue) {
         CreditAdjustment command = new CreditAdjustment();
 
@@ -9524,7 +9529,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setCreditAdjustmentType(creditAdjustmentType);
         command.setCreditAdjustmentValue(creditAdjustmentValue);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9540,6 +9545,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param cutOffValue {@link Integer} Cut Off Value
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> changePaymentMode(Integer providerId, Integer issuerEventId, Calendar implementationDateTime, Integer proposedPaymentControlConfiguration, Integer cutOffValue) {
         ChangePaymentMode command = new ChangePaymentMode();
 
@@ -9550,7 +9556,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setProposedPaymentControlConfiguration(proposedPaymentControlConfiguration);
         command.setCutOffValue(cutOffValue);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9564,6 +9570,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param snapshotCause {@link Integer} Snapshot Cause
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getPrepaySnapshot(Calendar earliestStartTime, Calendar latestEndTime, Integer snapshotOffset, Integer snapshotCause) {
         GetPrepaySnapshot command = new GetPrepaySnapshot();
 
@@ -9573,7 +9580,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setSnapshotOffset(snapshotOffset);
         command.setSnapshotCause(snapshotCause);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9586,6 +9593,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param numberOfRecords {@link Integer} Number Of Records
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getTopUpLog(Calendar latestEndTime, Integer numberOfRecords) {
         GetTopUpLog command = new GetTopUpLog();
 
@@ -9593,7 +9601,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setLatestEndTime(latestEndTime);
         command.setNumberOfRecords(numberOfRecords);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9605,13 +9613,14 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param lowCreditWarningLevel {@link Integer} Low Credit Warning Level
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> setLowCreditWarningLevel(Integer lowCreditWarningLevel) {
         SetLowCreditWarningLevel command = new SetLowCreditWarningLevel();
 
         // Set the fields
         command.setLowCreditWarningLevel(lowCreditWarningLevel);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9624,6 +9633,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param debtType {@link Integer} Debt Type
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getDebtRepaymentLog(Calendar latestEndTime, Integer numberOfDebts, Integer debtType) {
         GetDebtRepaymentLog command = new GetDebtRepaymentLog();
 
@@ -9632,7 +9642,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setNumberOfDebts(numberOfDebts);
         command.setDebtType(debtType);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9648,6 +9658,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maximumCreditPerTopUp {@link Integer} Maximum Credit Per Top Up
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> setMaximumCreditLimit(Integer providerId, Integer issuerEventId, Calendar implementationDateTime, Integer maximumCreditLevel, Integer maximumCreditPerTopUp) {
         SetMaximumCreditLimit command = new SetMaximumCreditLimit();
 
@@ -9658,7 +9669,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setMaximumCreditLevel(maximumCreditLevel);
         command.setMaximumCreditPerTopUp(maximumCreditPerTopUp);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9673,6 +9684,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param overallDebtCap {@link Integer} Overall Debt Cap
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> setOverallDebtCap(Integer providerId, Integer issuerEventId, Calendar implementationDateTime, Integer overallDebtCap) {
         SetOverallDebtCap command = new SetOverallDebtCap();
 
@@ -9682,7 +9694,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setImplementationDateTime(implementationDateTime);
         command.setOverallDebtCap(overallDebtCap);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9701,6 +9713,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param snapshotPayload {@link Integer} Snapshot Payload
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> publishPrepaySnapshot(Integer snapshotId, Calendar snapshotTime, Integer totalSnapshotsFound, Integer commandIndex, Integer totalNumberOfCommands, Integer snapshotCause, Integer snapshotPayloadType, Integer snapshotPayload) {
         PublishPrepaySnapshot command = new PublishPrepaySnapshot();
 
@@ -9714,7 +9727,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setSnapshotPayloadType(snapshotPayloadType);
         command.setSnapshotPayload(snapshotPayload);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9728,6 +9741,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param emergencyCreditThreshold {@link Integer} Emergency Credit Threshold
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> changePaymentModeResponse(Integer friendlyCredit, Integer friendlyCreditCalendarId, Integer emergencyCreditLimit, Integer emergencyCreditThreshold) {
         ChangePaymentModeResponse command = new ChangePaymentModeResponse();
 
@@ -9737,7 +9751,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setEmergencyCreditLimit(emergencyCreditLimit);
         command.setEmergencyCreditThreshold(emergencyCreditThreshold);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9751,6 +9765,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param creditRemaining {@link Integer} Credit Remaining
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> consumerTopUpResponse(Integer resultType, Integer topUpValue, Integer sourceOfTopUp, Integer creditRemaining) {
         ConsumerTopUpResponse command = new ConsumerTopUpResponse();
 
@@ -9760,7 +9775,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setSourceOfTopUp(sourceOfTopUp);
         command.setCreditRemaining(creditRemaining);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9773,6 +9788,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param topUpPayload {@link TopUpPayload} Top Up Payload
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> publishTopUpLog(Integer commandIndex, Integer totalNumberOfCommands, TopUpPayload topUpPayload) {
         PublishTopUpLog command = new PublishTopUpLog();
 
@@ -9781,7 +9797,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setTotalNumberOfCommands(totalNumberOfCommands);
         command.setTopUpPayload(topUpPayload);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9794,6 +9810,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param debtPayload {@link DebtPayload} Debt Payload
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> publishDebtLog(Integer commandIndex, Integer totalNumberOfCommands, DebtPayload debtPayload) {
         PublishDebtLog command = new PublishDebtLog();
 
@@ -9802,6 +9819,6 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setTotalNumberOfCommands(totalNumberOfCommands);
         command.setDebtPayload(debtPayload);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

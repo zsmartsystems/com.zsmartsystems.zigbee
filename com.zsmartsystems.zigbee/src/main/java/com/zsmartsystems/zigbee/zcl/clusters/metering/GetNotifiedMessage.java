@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetNotifiedMessage extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -92,9 +92,11 @@ public class GetNotifiedMessage extends ZclCommand {
      * mapping to ZCL or Smart Energy Standard commands.
      *
      * @param notificationScheme the Notification Scheme
+     * @return the GetNotifiedMessage command
      */
-    public void setNotificationScheme(final Integer notificationScheme) {
+    public GetNotifiedMessage setNotificationScheme(final Integer notificationScheme) {
         this.notificationScheme = notificationScheme;
+        return this;
     }
 
     /**
@@ -116,9 +118,11 @@ public class GetNotifiedMessage extends ZclCommand {
      * that is included in this command.
      *
      * @param notificationFlagAttributeId the Notification Flag Attribute ID
+     * @return the GetNotifiedMessage command
      */
-    public void setNotificationFlagAttributeId(final Integer notificationFlagAttributeId) {
+    public GetNotifiedMessage setNotificationFlagAttributeId(final Integer notificationFlagAttributeId) {
         this.notificationFlagAttributeId = notificationFlagAttributeId;
+        return this;
     }
 
     /**
@@ -138,9 +142,11 @@ public class GetNotifiedMessage extends ZclCommand {
      * The Notification Flags attribute/parameter indicating the command being requested.
      *
      * @param notificationFlagsN the Notification Flags N
+     * @return the GetNotifiedMessage command
      */
-    public void setNotificationFlagsN(final Integer notificationFlagsN) {
+    public GetNotifiedMessage setNotificationFlagsN(final Integer notificationFlagsN) {
         this.notificationFlagsN = notificationFlagsN;
+        return this;
     }
 
     @Override

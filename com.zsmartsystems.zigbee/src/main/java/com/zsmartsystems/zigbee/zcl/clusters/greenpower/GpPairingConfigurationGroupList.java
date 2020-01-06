@@ -18,7 +18,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T21:54:11Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GpPairingConfigurationGroupList implements ZigBeeSerializable {
     /**
      * Sink Group structure field.
@@ -45,9 +45,11 @@ public class GpPairingConfigurationGroupList implements ZigBeeSerializable {
      * Sets Sink Group.
      *
      * @param sinkGroup the Sink Group
+     * @return the GpPairingConfigurationGroupList command
      */
-    public void setSinkGroup(final Integer sinkGroup) {
+    public GpPairingConfigurationGroupList setSinkGroup(final Integer sinkGroup) {
         this.sinkGroup = sinkGroup;
+        return this;
     }
 
     /**
@@ -63,9 +65,11 @@ public class GpPairingConfigurationGroupList implements ZigBeeSerializable {
      * Sets Alias.
      *
      * @param alias the Alias
+     * @return the GpPairingConfigurationGroupList command
      */
-    public void setAlias(final Integer alias) {
+    public GpPairingConfigurationGroupList setAlias(final Integer alias) {
         this.alias = alias;
+        return this;
     }
 
     @Override

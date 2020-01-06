@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetSampledData extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -105,9 +105,11 @@ public class GetSampledData extends ZclCommand {
      * match response data with the appropriate request.
      *
      * @param sampleId the Sample ID
+     * @return the GetSampledData command
      */
-    public void setSampleId(final Integer sampleId) {
+    public GetSampledData setSampleId(final Integer sampleId) {
         this.sampleId = sampleId;
+        return this;
     }
 
     /**
@@ -131,9 +133,11 @@ public class GetSampledData extends ZclCommand {
      * returned.
      *
      * @param earliestSampleTime the Earliest Sample Time
+     * @return the GetSampledData command
      */
-    public void setEarliestSampleTime(final Calendar earliestSampleTime) {
+    public GetSampledData setEarliestSampleTime(final Calendar earliestSampleTime) {
         this.earliestSampleTime = earliestSampleTime;
+        return this;
     }
 
     /**
@@ -153,9 +157,11 @@ public class GetSampledData extends ZclCommand {
      * An 8 bit enumeration that identifies the required type of sampled data.
      *
      * @param sampleType the Sample Type
+     * @return the GetSampledData command
      */
-    public void setSampleType(final Integer sampleType) {
+    public GetSampledData setSampleType(final Integer sampleType) {
         this.sampleType = sampleType;
+        return this;
     }
 
     /**
@@ -183,9 +189,11 @@ public class GetSampledData extends ZclCommand {
      * are available for the time period, only those available are returned.
      *
      * @param numberOfSamples the Number Of Samples
+     * @return the GetSampledData command
      */
-    public void setNumberOfSamples(final Integer numberOfSamples) {
+    public GetSampledData setNumberOfSamples(final Integer numberOfSamples) {
         this.numberOfSamples = numberOfSamples;
+        return this;
     }
 
     @Override

@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class RssiResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -89,9 +89,11 @@ public class RssiResponse extends ZclCommand {
      * Sets Replying Device.
      *
      * @param replyingDevice the Replying Device
+     * @return the RssiResponse command
      */
-    public void setReplyingDevice(final IeeeAddress replyingDevice) {
+    public RssiResponse setReplyingDevice(final IeeeAddress replyingDevice) {
         this.replyingDevice = replyingDevice;
+        return this;
     }
 
     /**
@@ -107,9 +109,11 @@ public class RssiResponse extends ZclCommand {
      * Sets Coordinate 1.
      *
      * @param coordinate1 the Coordinate 1
+     * @return the RssiResponse command
      */
-    public void setCoordinate1(final Integer coordinate1) {
+    public RssiResponse setCoordinate1(final Integer coordinate1) {
         this.coordinate1 = coordinate1;
+        return this;
     }
 
     /**
@@ -125,9 +129,11 @@ public class RssiResponse extends ZclCommand {
      * Sets Coordinate 2.
      *
      * @param coordinate2 the Coordinate 2
+     * @return the RssiResponse command
      */
-    public void setCoordinate2(final Integer coordinate2) {
+    public RssiResponse setCoordinate2(final Integer coordinate2) {
         this.coordinate2 = coordinate2;
+        return this;
     }
 
     /**
@@ -143,9 +149,11 @@ public class RssiResponse extends ZclCommand {
      * Sets Coordinate 3.
      *
      * @param coordinate3 the Coordinate 3
+     * @return the RssiResponse command
      */
-    public void setCoordinate3(final Integer coordinate3) {
+    public RssiResponse setCoordinate3(final Integer coordinate3) {
         this.coordinate3 = coordinate3;
+        return this;
     }
 
     /**
@@ -161,9 +169,11 @@ public class RssiResponse extends ZclCommand {
      * Sets RSSI.
      *
      * @param rssi the RSSI
+     * @return the RssiResponse command
      */
-    public void setRssi(final Integer rssi) {
+    public RssiResponse setRssi(final Integer rssi) {
         this.rssi = rssi;
+        return this;
     }
 
     /**
@@ -179,9 +189,11 @@ public class RssiResponse extends ZclCommand {
      * Sets Number RSSI Measurements.
      *
      * @param numberRssiMeasurements the Number RSSI Measurements
+     * @return the RssiResponse command
      */
-    public void setNumberRssiMeasurements(final Integer numberRssiMeasurements) {
+    public RssiResponse setNumberRssiMeasurements(final Integer numberRssiMeasurements) {
         this.numberRssiMeasurements = numberRssiMeasurements;
+        return this;
     }
 
     @Override

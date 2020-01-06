@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-06-15T20:20:47Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ResetStartupParametersCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -68,9 +68,11 @@ public class ResetStartupParametersCommand extends ZclCommand {
      * Sets Option.
      *
      * @param option the Option
+     * @return the ResetStartupParametersCommand command
      */
-    public void setOption(final Integer option) {
+    public ResetStartupParametersCommand setOption(final Integer option) {
         this.option = option;
+        return this;
     }
 
     /**
@@ -86,9 +88,11 @@ public class ResetStartupParametersCommand extends ZclCommand {
      * Sets Index.
      *
      * @param index the Index
+     * @return the ResetStartupParametersCommand command
      */
-    public void setIndex(final Integer index) {
+    public ResetStartupParametersCommand setIndex(final Integer index) {
         this.index = index;
+        return this;
     }
 
     @Override

@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class DiscoverCommandsReceived extends ZclCommand {
     /**
      * The command ID.
@@ -78,9 +78,11 @@ public class DiscoverCommandsReceived extends ZclCommand {
      * Sets Start Command Identifier.
      *
      * @param startCommandIdentifier the Start Command Identifier
+     * @return the DiscoverCommandsReceived command
      */
-    public void setStartCommandIdentifier(final Integer startCommandIdentifier) {
+    public DiscoverCommandsReceived setStartCommandIdentifier(final Integer startCommandIdentifier) {
         this.startCommandIdentifier = startCommandIdentifier;
+        return this;
     }
 
     /**
@@ -96,9 +98,11 @@ public class DiscoverCommandsReceived extends ZclCommand {
      * Sets Maximum Command Identifiers.
      *
      * @param maximumCommandIdentifiers the Maximum Command Identifiers
+     * @return the DiscoverCommandsReceived command
      */
-    public void setMaximumCommandIdentifiers(final Integer maximumCommandIdentifiers) {
+    public DiscoverCommandsReceived setMaximumCommandIdentifiers(final Integer maximumCommandIdentifiers) {
         this.maximumCommandIdentifiers = maximumCommandIdentifiers;
+        return this;
     }
 
     @Override

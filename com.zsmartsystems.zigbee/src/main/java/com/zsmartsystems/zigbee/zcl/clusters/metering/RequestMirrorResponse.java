@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class RequestMirrorResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -87,9 +87,11 @@ public class RequestMirrorResponse extends ZclCommand {
      * valid, the Metering device shall use the EndPoint ID to forward its metered data.
      *
      * @param endpointId the Endpoint ID
+     * @return the RequestMirrorResponse command
      */
-    public void setEndpointId(final Integer endpointId) {
+    public RequestMirrorResponse setEndpointId(final Integer endpointId) {
         this.endpointId = endpointId;
+        return this;
     }
 
     @Override

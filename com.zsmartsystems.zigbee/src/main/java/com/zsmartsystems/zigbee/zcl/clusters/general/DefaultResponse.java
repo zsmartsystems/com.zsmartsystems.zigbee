@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class DefaultResponse extends ZclCommand {
     /**
      * The command ID.
@@ -80,9 +80,11 @@ public class DefaultResponse extends ZclCommand {
      * Sets Command Identifier.
      *
      * @param commandIdentifier the Command Identifier
+     * @return the DefaultResponse command
      */
-    public void setCommandIdentifier(final Integer commandIdentifier) {
+    public DefaultResponse setCommandIdentifier(final Integer commandIdentifier) {
         this.commandIdentifier = commandIdentifier;
+        return this;
     }
 
     /**
@@ -98,9 +100,11 @@ public class DefaultResponse extends ZclCommand {
      * Sets Status Code.
      *
      * @param statusCode the Status Code
+     * @return the DefaultResponse command
      */
-    public void setStatusCode(final ZclStatus statusCode) {
+    public DefaultResponse setStatusCode(final ZclStatus statusCode) {
         this.statusCode = statusCode;
+        return this;
     }
 
     @Override

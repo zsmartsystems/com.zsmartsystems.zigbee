@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-15T09:28:31Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ManagementDirectJoinRequest extends ZdoRequest {
     /**
      * The ZDO cluster ID.
@@ -64,9 +64,11 @@ public class ManagementDirectJoinRequest extends ZdoRequest {
      * Sets Device Address.
      *
      * @param deviceAddress the Device Address
+     * @return the ManagementDirectJoinRequest command
      */
-    public void setDeviceAddress(final IeeeAddress deviceAddress) {
+    public ManagementDirectJoinRequest setDeviceAddress(final IeeeAddress deviceAddress) {
         this.deviceAddress = deviceAddress;
+        return this;
     }
 
     /**
@@ -82,9 +84,11 @@ public class ManagementDirectJoinRequest extends ZdoRequest {
      * Sets Capability Information.
      *
      * @param capabilityInformation the Capability Information
+     * @return the ManagementDirectJoinRequest command
      */
-    public void setCapabilityInformation(final Integer capabilityInformation) {
+    public ManagementDirectJoinRequest setCapabilityInformation(final Integer capabilityInformation) {
         this.capabilityInformation = capabilityInformation;
+        return this;
     }
 
     @Override

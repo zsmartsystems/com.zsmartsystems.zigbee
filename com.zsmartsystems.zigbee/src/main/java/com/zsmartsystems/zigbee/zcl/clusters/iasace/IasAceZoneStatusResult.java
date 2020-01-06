@@ -18,7 +18,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class IasAceZoneStatusResult implements ZigBeeSerializable {
     /**
      * Zone ID structure field.
@@ -45,9 +45,11 @@ public class IasAceZoneStatusResult implements ZigBeeSerializable {
      * Sets Zone ID.
      *
      * @param zoneId the Zone ID
+     * @return the IasAceZoneStatusResult command
      */
-    public void setZoneId(final Integer zoneId) {
+    public IasAceZoneStatusResult setZoneId(final Integer zoneId) {
         this.zoneId = zoneId;
+        return this;
     }
 
     /**
@@ -63,9 +65,11 @@ public class IasAceZoneStatusResult implements ZigBeeSerializable {
      * Sets Zone Status.
      *
      * @param zoneStatus the Zone Status
+     * @return the IasAceZoneStatusResult command
      */
-    public void setZoneStatus(final Integer zoneStatus) {
+    public IasAceZoneStatusResult setZoneStatus(final Integer zoneStatus) {
         this.zoneStatus = zoneStatus;
+        return this;
     }
 
     @Override

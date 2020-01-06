@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class MoveColorTemperatureCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -81,9 +81,11 @@ public class MoveColorTemperatureCommand extends ZclCommand {
      * Sets Move Mode.
      *
      * @param moveMode the Move Mode
+     * @return the MoveColorTemperatureCommand command
      */
-    public void setMoveMode(final Integer moveMode) {
+    public MoveColorTemperatureCommand setMoveMode(final Integer moveMode) {
         this.moveMode = moveMode;
+        return this;
     }
 
     /**
@@ -99,9 +101,11 @@ public class MoveColorTemperatureCommand extends ZclCommand {
      * Sets Rate.
      *
      * @param rate the Rate
+     * @return the MoveColorTemperatureCommand command
      */
-    public void setRate(final Integer rate) {
+    public MoveColorTemperatureCommand setRate(final Integer rate) {
         this.rate = rate;
+        return this;
     }
 
     /**
@@ -117,9 +121,11 @@ public class MoveColorTemperatureCommand extends ZclCommand {
      * Sets Color Temperature Minimum.
      *
      * @param colorTemperatureMinimum the Color Temperature Minimum
+     * @return the MoveColorTemperatureCommand command
      */
-    public void setColorTemperatureMinimum(final Integer colorTemperatureMinimum) {
+    public MoveColorTemperatureCommand setColorTemperatureMinimum(final Integer colorTemperatureMinimum) {
         this.colorTemperatureMinimum = colorTemperatureMinimum;
+        return this;
     }
 
     /**
@@ -135,9 +141,11 @@ public class MoveColorTemperatureCommand extends ZclCommand {
      * Sets Color Temperature Maximum.
      *
      * @param colorTemperatureMaximum the Color Temperature Maximum
+     * @return the MoveColorTemperatureCommand command
      */
-    public void setColorTemperatureMaximum(final Integer colorTemperatureMaximum) {
+    public MoveColorTemperatureCommand setColorTemperatureMaximum(final Integer colorTemperatureMaximum) {
         this.colorTemperatureMaximum = colorTemperatureMaximum;
+        return this;
     }
 
     @Override

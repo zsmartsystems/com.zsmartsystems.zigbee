@@ -63,7 +63,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:44:02Z")
 public class ZclOtaUpgradeCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -244,6 +244,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @param newFileVersion {@link Integer} New File Version
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> imageNotifyCommand(Integer payloadType, Integer queryJitter, Integer manufacturerCode, Integer imageType, Integer newFileVersion) {
         ImageNotifyCommand command = new ImageNotifyCommand();
 
@@ -254,7 +255,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         command.setImageType(imageType);
         command.setNewFileVersion(newFileVersion);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -282,6 +283,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @param hardwareVersion {@link Integer} Hardware Version
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> queryNextImageCommand(Integer fieldControl, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer hardwareVersion) {
         QueryNextImageCommand command = new QueryNextImageCommand();
 
@@ -292,7 +294,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         command.setFileVersion(fileVersion);
         command.setHardwareVersion(hardwareVersion);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -317,6 +319,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @param imageSize {@link Integer} Image Size
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> queryNextImageResponse(ZclStatus status, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer imageSize) {
         QueryNextImageResponse command = new QueryNextImageResponse();
 
@@ -327,7 +330,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         command.setFileVersion(fileVersion);
         command.setImageSize(imageSize);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -357,6 +360,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @param blockRequestDelay {@link Integer} Block Request Delay
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> imageBlockCommand(Integer fieldControl, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer fileOffset, Integer maximumDataSize, IeeeAddress requestNodeAddress, Integer blockRequestDelay) {
         ImageBlockCommand command = new ImageBlockCommand();
 
@@ -370,7 +374,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         command.setRequestNodeAddress(requestNodeAddress);
         command.setBlockRequestDelay(blockRequestDelay);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -403,6 +407,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @param requestNodeAddress {@link IeeeAddress} Request Node Address
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> imagePageCommand(Integer fieldControl, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer fileOffset, Integer maximumDataSize, Integer pageSize, Integer responseSpacing, IeeeAddress requestNodeAddress) {
         ImagePageCommand command = new ImagePageCommand();
 
@@ -417,7 +422,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         command.setResponseSpacing(responseSpacing);
         command.setRequestNodeAddress(requestNodeAddress);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -451,6 +456,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @param imageData {@link ByteArray} Image Data
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> imageBlockResponse(ZclStatus status, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer fileOffset, ByteArray imageData) {
         ImageBlockResponse command = new ImageBlockResponse();
 
@@ -462,7 +468,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         command.setFileOffset(fileOffset);
         command.setImageData(imageData);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -492,6 +498,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @param fileVersion {@link Integer} File Version
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> upgradeEndCommand(ZclStatus status, Integer manufacturerCode, Integer imageType, Integer fileVersion) {
         UpgradeEndCommand command = new UpgradeEndCommand();
 
@@ -501,7 +508,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         command.setImageType(imageType);
         command.setFileVersion(fileVersion);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -526,6 +533,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @param upgradeTime {@link Integer} Upgrade Time
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> upgradeEndResponse(Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer currentTime, Integer upgradeTime) {
         UpgradeEndResponse command = new UpgradeEndResponse();
 
@@ -536,7 +544,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         command.setCurrentTime(currentTime);
         command.setUpgradeTime(upgradeTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -557,6 +565,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @param zigbeeStackVersion {@link Integer} Zigbee Stack Version
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> querySpecificFileCommand(IeeeAddress requestNodeAddress, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer zigbeeStackVersion) {
         QuerySpecificFileCommand command = new QuerySpecificFileCommand();
 
@@ -567,7 +576,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         command.setFileVersion(fileVersion);
         command.setZigbeeStackVersion(zigbeeStackVersion);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -590,6 +599,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @param imageSize {@link Integer} Image Size
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> querySpecificFileResponse(ZclStatus status, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer imageSize) {
         QuerySpecificFileResponse command = new QuerySpecificFileResponse();
 
@@ -600,6 +610,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         command.setFileVersion(fileVersion);
         command.setImageSize(imageSize);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

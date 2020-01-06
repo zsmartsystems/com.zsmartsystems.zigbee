@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class SetpointRaiseLowerCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -68,9 +68,11 @@ public class SetpointRaiseLowerCommand extends ZclCommand {
      * Sets Mode.
      *
      * @param mode the Mode
+     * @return the SetpointRaiseLowerCommand command
      */
-    public void setMode(final Integer mode) {
+    public SetpointRaiseLowerCommand setMode(final Integer mode) {
         this.mode = mode;
+        return this;
     }
 
     /**
@@ -86,9 +88,11 @@ public class SetpointRaiseLowerCommand extends ZclCommand {
      * Sets Amount.
      *
      * @param amount the Amount
+     * @return the SetpointRaiseLowerCommand command
      */
-    public void setAmount(final Integer amount) {
+    public SetpointRaiseLowerCommand setAmount(final Integer amount) {
         this.amount = amount;
+        return this;
     }
 
     @Override

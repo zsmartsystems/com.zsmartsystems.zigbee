@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class EnhancedMoveToHueAndSaturationCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -77,9 +77,11 @@ public class EnhancedMoveToHueAndSaturationCommand extends ZclCommand {
      * Sets Enhanced Hue.
      *
      * @param enhancedHue the Enhanced Hue
+     * @return the EnhancedMoveToHueAndSaturationCommand command
      */
-    public void setEnhancedHue(final Integer enhancedHue) {
+    public EnhancedMoveToHueAndSaturationCommand setEnhancedHue(final Integer enhancedHue) {
         this.enhancedHue = enhancedHue;
+        return this;
     }
 
     /**
@@ -95,9 +97,11 @@ public class EnhancedMoveToHueAndSaturationCommand extends ZclCommand {
      * Sets Saturation.
      *
      * @param saturation the Saturation
+     * @return the EnhancedMoveToHueAndSaturationCommand command
      */
-    public void setSaturation(final Integer saturation) {
+    public EnhancedMoveToHueAndSaturationCommand setSaturation(final Integer saturation) {
         this.saturation = saturation;
+        return this;
     }
 
     /**
@@ -113,9 +117,11 @@ public class EnhancedMoveToHueAndSaturationCommand extends ZclCommand {
      * Sets Transition Time.
      *
      * @param transitionTime the Transition Time
+     * @return the EnhancedMoveToHueAndSaturationCommand command
      */
-    public void setTransitionTime(final Integer transitionTime) {
+    public EnhancedMoveToHueAndSaturationCommand setTransitionTime(final Integer transitionTime) {
         this.transitionTime = transitionTime;
+        return this;
     }
 
     @Override

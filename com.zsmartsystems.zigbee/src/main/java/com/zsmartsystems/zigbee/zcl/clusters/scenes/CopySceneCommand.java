@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-16T08:52:33Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class CopySceneCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -86,9 +86,11 @@ public class CopySceneCommand extends ZclCommand {
      * Sets Mode.
      *
      * @param mode the Mode
+     * @return the CopySceneCommand command
      */
-    public void setMode(final Integer mode) {
+    public CopySceneCommand setMode(final Integer mode) {
         this.mode = mode;
+        return this;
     }
 
     /**
@@ -104,9 +106,11 @@ public class CopySceneCommand extends ZclCommand {
      * Sets Group ID From.
      *
      * @param groupIdFrom the Group ID From
+     * @return the CopySceneCommand command
      */
-    public void setGroupIdFrom(final Integer groupIdFrom) {
+    public CopySceneCommand setGroupIdFrom(final Integer groupIdFrom) {
         this.groupIdFrom = groupIdFrom;
+        return this;
     }
 
     /**
@@ -122,9 +126,11 @@ public class CopySceneCommand extends ZclCommand {
      * Sets Scene ID From.
      *
      * @param sceneIdFrom the Scene ID From
+     * @return the CopySceneCommand command
      */
-    public void setSceneIdFrom(final Integer sceneIdFrom) {
+    public CopySceneCommand setSceneIdFrom(final Integer sceneIdFrom) {
         this.sceneIdFrom = sceneIdFrom;
+        return this;
     }
 
     /**
@@ -140,9 +146,11 @@ public class CopySceneCommand extends ZclCommand {
      * Sets Group ID To.
      *
      * @param groupIdTo the Group ID To
+     * @return the CopySceneCommand command
      */
-    public void setGroupIdTo(final Integer groupIdTo) {
+    public CopySceneCommand setGroupIdTo(final Integer groupIdTo) {
         this.groupIdTo = groupIdTo;
+        return this;
     }
 
     /**
@@ -158,9 +166,11 @@ public class CopySceneCommand extends ZclCommand {
      * Sets Scene ID To.
      *
      * @param sceneIdTo the Scene ID To
+     * @return the CopySceneCommand command
      */
-    public void setSceneIdTo(final Integer sceneIdTo) {
+    public CopySceneCommand setSceneIdTo(final Integer sceneIdTo) {
         this.sceneIdTo = sceneIdTo;
+        return this;
     }
 
     @Override

@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ReadAttributesCommand extends ZclCommand {
     /**
      * The command ID.
@@ -76,9 +76,11 @@ public class ReadAttributesCommand extends ZclCommand {
      * Sets Identifiers.
      *
      * @param identifiers the Identifiers
+     * @return the ReadAttributesCommand command
      */
-    public void setIdentifiers(final List<Integer> identifiers) {
+    public ReadAttributesCommand setIdentifiers(final List<Integer> identifiers) {
         this.identifiers = identifiers;
+        return this;
     }
 
     @Override

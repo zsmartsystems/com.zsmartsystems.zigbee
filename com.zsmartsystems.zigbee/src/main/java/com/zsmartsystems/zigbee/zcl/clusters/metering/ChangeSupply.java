@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ChangeSupply extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -123,9 +123,11 @@ public class ChangeSupply extends ZclCommand {
      * whom this command relates.
      *
      * @param providerId the Provider ID
+     * @return the ChangeSupply command
      */
-    public void setProviderId(final Integer providerId) {
+    public ChangeSupply setProviderId(final Integer providerId) {
         this.providerId = providerId;
+        return this;
     }
 
     /**
@@ -155,9 +157,11 @@ public class ChangeSupply extends ZclCommand {
      * the Issuer Event ID field that is larger than older information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the ChangeSupply command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public ChangeSupply setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -177,9 +181,11 @@ public class ChangeSupply extends ZclCommand {
      * A UTC Time field to indicate the date and time at which the supply change was requested.
      *
      * @param requestDateTime the Request Date Time
+     * @return the ChangeSupply command
      */
-    public void setRequestDateTime(final Calendar requestDateTime) {
+    public ChangeSupply setRequestDateTime(final Calendar requestDateTime) {
         this.requestDateTime = requestDateTime;
+        return this;
     }
 
     /**
@@ -209,9 +215,11 @@ public class ChangeSupply extends ZclCommand {
      * Implementation Time attribute shall be reset to zero).
      *
      * @param implementationDateTime the Implementation Date Time
+     * @return the ChangeSupply command
      */
-    public void setImplementationDateTime(final Calendar implementationDateTime) {
+    public ChangeSupply setImplementationDateTime(final Calendar implementationDateTime) {
         this.implementationDateTime = implementationDateTime;
+        return this;
     }
 
     /**
@@ -233,9 +241,11 @@ public class ChangeSupply extends ZclCommand {
      * Metering Device following implementation of this command.
      *
      * @param proposedSupplyStatus the Proposed Supply Status
+     * @return the ChangeSupply command
      */
-    public void setProposedSupplyStatus(final Integer proposedSupplyStatus) {
+    public ChangeSupply setProposedSupplyStatus(final Integer proposedSupplyStatus) {
         this.proposedSupplyStatus = proposedSupplyStatus;
+        return this;
     }
 
     /**
@@ -255,9 +265,11 @@ public class ChangeSupply extends ZclCommand {
      * An 8-bit BitMap where the least significant nibble defines the Supply Control bits.
      *
      * @param supplyControlBits the Supply Control Bits
+     * @return the ChangeSupply command
      */
-    public void setSupplyControlBits(final Integer supplyControlBits) {
+    public ChangeSupply setSupplyControlBits(final Integer supplyControlBits) {
         this.supplyControlBits = supplyControlBits;
+        return this;
     }
 
     @Override

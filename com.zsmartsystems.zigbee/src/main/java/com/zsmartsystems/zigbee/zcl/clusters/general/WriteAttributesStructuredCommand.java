@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class WriteAttributesStructuredCommand extends ZclCommand {
     /**
      * The command ID.
@@ -99,9 +99,11 @@ public class WriteAttributesStructuredCommand extends ZclCommand {
      * bandwidth.
      *
      * @param status the Status
+     * @return the WriteAttributesStructuredCommand command
      */
-    public void setStatus(final ZclStatus status) {
+    public WriteAttributesStructuredCommand setStatus(final ZclStatus status) {
         this.status = status;
+        return this;
     }
 
     /**
@@ -129,9 +131,11 @@ public class WriteAttributesStructuredCommand extends ZclCommand {
      * fields omitted.
      *
      * @param attributeSelectors the Attribute Selectors
+     * @return the WriteAttributesStructuredCommand command
      */
-    public void setAttributeSelectors(final Object attributeSelectors) {
+    public WriteAttributesStructuredCommand setAttributeSelectors(final Object attributeSelectors) {
         this.attributeSelectors = attributeSelectors;
+        return this;
     }
 
     @Override

@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ScheduleSnapshotResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -88,9 +88,11 @@ public class ScheduleSnapshotResponse extends ZclCommand {
      * response is generated.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the ScheduleSnapshotResponse command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public ScheduleSnapshotResponse setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -114,9 +116,11 @@ public class ScheduleSnapshotResponse extends ZclCommand {
      * snapshot and the ability for the device to support that type of snapshot.
      *
      * @param snapshotResponsePayload the Snapshot Response Payload
+     * @return the ScheduleSnapshotResponse command
      */
-    public void setSnapshotResponsePayload(final SnapshotResponsePayload snapshotResponsePayload) {
+    public ScheduleSnapshotResponse setSnapshotResponsePayload(final SnapshotResponsePayload snapshotResponsePayload) {
         this.snapshotResponsePayload = snapshotResponsePayload;
+        return this;
     }
 
     @Override

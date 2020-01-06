@@ -47,7 +47,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class PublishPriceCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -297,9 +297,11 @@ public class PublishPriceCommand extends ZclCommand {
      * providers may be available.
      *
      * @param providerId the Provider ID
+     * @return the PublishPriceCommand command
      */
-    public void setProviderId(final Integer providerId) {
+    public PublishPriceCommand setProviderId(final Integer providerId) {
         this.providerId = providerId;
+        return this;
     }
 
     /**
@@ -325,9 +327,11 @@ public class PublishPriceCommand extends ZclCommand {
      * allows differentiation when a commodity provider may have multiple pricing plans.
      *
      * @param rateLabel the Rate Label
+     * @return the PublishPriceCommand command
      */
-    public void setRateLabel(final ByteArray rateLabel) {
+    public PublishPriceCommand setRateLabel(final ByteArray rateLabel) {
         this.rateLabel = rateLabel;
+        return this;
     }
 
     /**
@@ -359,9 +363,11 @@ public class PublishPriceCommand extends ZclCommand {
      * that is larger than older pricing information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the PublishPriceCommand command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public PublishPriceCommand setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -383,9 +389,11 @@ public class PublishPriceCommand extends ZclCommand {
      * provides an extra value-added feature for the broadcast price signals.
      *
      * @param currentTime the Current Time
+     * @return the PublishPriceCommand command
      */
-    public void setCurrentTime(final Calendar currentTime) {
+    public PublishPriceCommand setCurrentTime(final Calendar currentTime) {
         this.currentTime = currentTime;
+        return this;
     }
 
     /**
@@ -409,9 +417,11 @@ public class PublishPriceCommand extends ZclCommand {
      * values using a pure binary format as defined in the Metering cluster.
      *
      * @param unitOfMeasure the Unit Of Measure
+     * @return the PublishPriceCommand command
      */
-    public void setUnitOfMeasure(final Integer unitOfMeasure) {
+    public PublishPriceCommand setUnitOfMeasure(final Integer unitOfMeasure) {
         this.unitOfMeasure = unitOfMeasure;
+        return this;
     }
 
     /**
@@ -467,9 +477,11 @@ public class PublishPriceCommand extends ZclCommand {
      * and the Extended Number of Price Tiers field.
      *
      * @param currency the Currency
+     * @return the PublishPriceCommand command
      */
-    public void setCurrency(final Integer currency) {
+    public PublishPriceCommand setCurrency(final Integer currency) {
         this.currency = currency;
+        return this;
     }
 
     /**
@@ -485,9 +497,11 @@ public class PublishPriceCommand extends ZclCommand {
      * Sets Price Trailing Digit And Tier.
      *
      * @param priceTrailingDigitAndTier the Price Trailing Digit And Tier
+     * @return the PublishPriceCommand command
      */
-    public void setPriceTrailingDigitAndTier(final Integer priceTrailingDigitAndTier) {
+    public PublishPriceCommand setPriceTrailingDigitAndTier(final Integer priceTrailingDigitAndTier) {
         this.priceTrailingDigitAndTier = priceTrailingDigitAndTier;
+        return this;
     }
 
     /**
@@ -503,9 +517,11 @@ public class PublishPriceCommand extends ZclCommand {
      * Sets Number Of Price Tiers.
      *
      * @param numberOfPriceTiers the Number Of Price Tiers
+     * @return the PublishPriceCommand command
      */
-    public void setNumberOfPriceTiers(final Integer numberOfPriceTiers) {
+    public PublishPriceCommand setNumberOfPriceTiers(final Integer numberOfPriceTiers) {
         this.numberOfPriceTiers = numberOfPriceTiers;
+        return this;
     }
 
     /**
@@ -537,9 +553,11 @@ public class PublishPriceCommand extends ZclCommand {
      * command shall be set to 0xFFFF indicating the price is valid “until changed”.
      *
      * @param startTime the Start Time
+     * @return the PublishPriceCommand command
      */
-    public void setStartTime(final Calendar startTime) {
+    public PublishPriceCommand setStartTime(final Calendar startTime) {
         this.startTime = startTime;
+        return this;
     }
 
     /**
@@ -555,9 +573,11 @@ public class PublishPriceCommand extends ZclCommand {
      * Sets Duration.
      *
      * @param duration the Duration
+     * @return the PublishPriceCommand command
      */
-    public void setDuration(final Integer duration) {
+    public PublishPriceCommand setDuration(final Integer duration) {
         this.duration = duration;
+        return this;
     }
 
     /**
@@ -581,9 +601,11 @@ public class PublishPriceCommand extends ZclCommand {
      * Trailing Digit field when the commodity is delivered to the premises.
      *
      * @param price the Price
+     * @return the PublishPriceCommand command
      */
-    public void setPrice(final Integer price) {
+    public PublishPriceCommand setPrice(final Integer price) {
         this.price = price;
+        return this;
     }
 
     /**
@@ -611,9 +633,11 @@ public class PublishPriceCommand extends ZclCommand {
      * 0.1 to 25.4. A value of 0xFF indicates the field is not used and 0x00 is an invalid value.
      *
      * @param priceRatio the Price Ratio
+     * @return the PublishPriceCommand command
      */
-    public void setPriceRatio(final Integer priceRatio) {
+    public PublishPriceCommand setPriceRatio(final Integer priceRatio) {
         this.priceRatio = priceRatio;
+        return this;
     }
 
     /**
@@ -643,9 +667,11 @@ public class PublishPriceCommand extends ZclCommand {
      * field is not used.
      *
      * @param generationPrice the Generation Price
+     * @return the PublishPriceCommand command
      */
-    public void setGenerationPrice(final Integer generationPrice) {
+    public PublishPriceCommand setGenerationPrice(final Integer generationPrice) {
         this.generationPrice = generationPrice;
+        return this;
     }
 
     /**
@@ -675,9 +701,11 @@ public class PublishPriceCommand extends ZclCommand {
      * invalid value.
      *
      * @param generationPriceRatio the Generation Price Ratio
+     * @return the PublishPriceCommand command
      */
-    public void setGenerationPriceRatio(final Integer generationPriceRatio) {
+    public PublishPriceCommand setGenerationPriceRatio(final Integer generationPriceRatio) {
         this.generationPriceRatio = generationPriceRatio;
+        return this;
     }
 
     /**
@@ -709,9 +737,11 @@ public class PublishPriceCommand extends ZclCommand {
      * TOU rates. A value of 0xFFFFFFFF indicates the field is not used.
      *
      * @param alternateCostDelivered the Alternate Cost Delivered
+     * @return the PublishPriceCommand command
      */
-    public void setAlternateCostDelivered(final Integer alternateCostDelivered) {
+    public PublishPriceCommand setAlternateCostDelivered(final Integer alternateCostDelivered) {
         this.alternateCostDelivered = alternateCostDelivered;
+        return this;
     }
 
     /**
@@ -733,9 +763,11 @@ public class PublishPriceCommand extends ZclCommand {
      * value of 0xFF indicates the field is not used.
      *
      * @param alternateCostUnit the Alternate Cost Unit
+     * @return the PublishPriceCommand command
      */
-    public void setAlternateCostUnit(final Integer alternateCostUnit) {
+    public PublishPriceCommand setAlternateCostUnit(final Integer alternateCostUnit) {
         this.alternateCostUnit = alternateCostUnit;
+        return this;
     }
 
     /**
@@ -751,9 +783,11 @@ public class PublishPriceCommand extends ZclCommand {
      * Sets Alternate Cost Trailing Digit.
      *
      * @param alternateCostTrailingDigit the Alternate Cost Trailing Digit
+     * @return the PublishPriceCommand command
      */
-    public void setAlternateCostTrailingDigit(final Integer alternateCostTrailingDigit) {
+    public PublishPriceCommand setAlternateCostTrailingDigit(final Integer alternateCostTrailingDigit) {
         this.alternateCostTrailingDigit = alternateCostTrailingDigit;
+        return this;
     }
 
     /**
@@ -769,9 +803,11 @@ public class PublishPriceCommand extends ZclCommand {
      * Sets Number Of Block Thresholds.
      *
      * @param numberOfBlockThresholds the Number Of Block Thresholds
+     * @return the PublishPriceCommand command
      */
-    public void setNumberOfBlockThresholds(final Integer numberOfBlockThresholds) {
+    public PublishPriceCommand setNumberOfBlockThresholds(final Integer numberOfBlockThresholds) {
         this.numberOfBlockThresholds = numberOfBlockThresholds;
+        return this;
     }
 
     /**
@@ -787,9 +823,11 @@ public class PublishPriceCommand extends ZclCommand {
      * Sets Price Control.
      *
      * @param priceControl the Price Control
+     * @return the PublishPriceCommand command
      */
-    public void setPriceControl(final Integer priceControl) {
+    public PublishPriceCommand setPriceControl(final Integer priceControl) {
         this.priceControl = priceControl;
+        return this;
     }
 
     /**
@@ -805,9 +843,11 @@ public class PublishPriceCommand extends ZclCommand {
      * Sets Number Of Generation Tiers.
      *
      * @param numberOfGenerationTiers the Number Of Generation Tiers
+     * @return the PublishPriceCommand command
      */
-    public void setNumberOfGenerationTiers(final Integer numberOfGenerationTiers) {
+    public PublishPriceCommand setNumberOfGenerationTiers(final Integer numberOfGenerationTiers) {
         this.numberOfGenerationTiers = numberOfGenerationTiers;
+        return this;
     }
 
     /**
@@ -823,9 +863,11 @@ public class PublishPriceCommand extends ZclCommand {
      * Sets Generation Tier.
      *
      * @param generationTier the Generation Tier
+     * @return the PublishPriceCommand command
      */
-    public void setGenerationTier(final Integer generationTier) {
+    public PublishPriceCommand setGenerationTier(final Integer generationTier) {
         this.generationTier = generationTier;
+        return this;
     }
 
     /**
@@ -841,9 +883,11 @@ public class PublishPriceCommand extends ZclCommand {
      * Sets Extended Number Of Price Tiers.
      *
      * @param extendedNumberOfPriceTiers the Extended Number Of Price Tiers
+     * @return the PublishPriceCommand command
      */
-    public void setExtendedNumberOfPriceTiers(final Integer extendedNumberOfPriceTiers) {
+    public PublishPriceCommand setExtendedNumberOfPriceTiers(final Integer extendedNumberOfPriceTiers) {
         this.extendedNumberOfPriceTiers = extendedNumberOfPriceTiers;
+        return this;
     }
 
     /**
@@ -859,9 +903,11 @@ public class PublishPriceCommand extends ZclCommand {
      * Sets Extended Price Tier.
      *
      * @param extendedPriceTier the Extended Price Tier
+     * @return the PublishPriceCommand command
      */
-    public void setExtendedPriceTier(final Integer extendedPriceTier) {
+    public PublishPriceCommand setExtendedPriceTier(final Integer extendedPriceTier) {
         this.extendedPriceTier = extendedPriceTier;
+        return this;
     }
 
     /**
@@ -877,9 +923,11 @@ public class PublishPriceCommand extends ZclCommand {
      * Sets Extended Register Tier.
      *
      * @param extendedRegisterTier the Extended Register Tier
+     * @return the PublishPriceCommand command
      */
-    public void setExtendedRegisterTier(final Integer extendedRegisterTier) {
+    public PublishPriceCommand setExtendedRegisterTier(final Integer extendedRegisterTier) {
         this.extendedRegisterTier = extendedRegisterTier;
+        return this;
     }
 
     @Override

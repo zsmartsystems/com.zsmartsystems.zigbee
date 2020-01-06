@@ -31,7 +31,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class MessageConfirmation extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -101,9 +101,11 @@ public class MessageConfirmation extends ZclCommand {
      * A unique unsigned 32-bit number identifier for the message being confirmed.
      *
      * @param messageId the Message ID
+     * @return the MessageConfirmation command
      */
-    public void setMessageId(final Integer messageId) {
+    public MessageConfirmation setMessageId(final Integer messageId) {
         this.messageId = messageId;
+        return this;
     }
 
     /**
@@ -123,9 +125,11 @@ public class MessageConfirmation extends ZclCommand {
      * UTCTime of user confirmation of message.
      *
      * @param confirmationTime the Confirmation Time
+     * @return the MessageConfirmation command
      */
-    public void setConfirmationTime(final Calendar confirmationTime) {
+    public MessageConfirmation setConfirmationTime(final Calendar confirmationTime) {
         this.confirmationTime = confirmationTime;
+        return this;
     }
 
     /**
@@ -147,9 +151,11 @@ public class MessageConfirmation extends ZclCommand {
      * response.
      *
      * @param messageConfirmationControl the Message Confirmation Control
+     * @return the MessageConfirmation command
      */
-    public void setMessageConfirmationControl(final Integer messageConfirmationControl) {
+    public MessageConfirmation setMessageConfirmationControl(final Integer messageConfirmationControl) {
         this.messageConfirmationControl = messageConfirmationControl;
+        return this;
     }
 
     /**
@@ -173,9 +179,11 @@ public class MessageConfirmation extends ZclCommand {
      * available, a default value of 0x00 shall be used.
      *
      * @param messageConfirmationResponse the Message Confirmation Response
+     * @return the MessageConfirmation command
      */
-    public void setMessageConfirmationResponse(final ByteArray messageConfirmationResponse) {
+    public MessageConfirmation setMessageConfirmationResponse(final ByteArray messageConfirmationResponse) {
         this.messageConfirmationResponse = messageConfirmationResponse;
+        return this;
     }
 
     @Override

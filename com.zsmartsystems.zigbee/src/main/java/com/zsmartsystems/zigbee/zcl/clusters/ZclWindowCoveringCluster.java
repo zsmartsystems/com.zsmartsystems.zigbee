@@ -35,7 +35,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:44:02Z")
 public class ZclWindowCoveringCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -1681,8 +1681,9 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> windowCoveringUpOpen() {
-        return send(new WindowCoveringUpOpen());
+        return sendCommand(new WindowCoveringUpOpen());
     }
 
     /**
@@ -1692,8 +1693,9 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> windowCoveringDownClose() {
-        return send(new WindowCoveringDownClose());
+        return sendCommand(new WindowCoveringDownClose());
     }
 
     /**
@@ -1703,8 +1705,9 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> windowCoveringStop() {
-        return send(new WindowCoveringStop());
+        return sendCommand(new WindowCoveringStop());
     }
 
     /**
@@ -1715,13 +1718,14 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * @param liftValue {@link Integer} Lift Value
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> windowCoveringGoToLiftValue(Integer liftValue) {
         WindowCoveringGoToLiftValue command = new WindowCoveringGoToLiftValue();
 
         // Set the fields
         command.setLiftValue(liftValue);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1732,13 +1736,14 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * @param percentageLiftValue {@link Integer} Percentage Lift Value
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> windowCoveringGoToLiftPercentage(Integer percentageLiftValue) {
         WindowCoveringGoToLiftPercentage command = new WindowCoveringGoToLiftPercentage();
 
         // Set the fields
         command.setPercentageLiftValue(percentageLiftValue);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1749,13 +1754,14 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * @param tiltValue {@link Integer} Tilt Value
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> windowCoveringGoToTiltValue(Integer tiltValue) {
         WindowCoveringGoToTiltValue command = new WindowCoveringGoToTiltValue();
 
         // Set the fields
         command.setTiltValue(tiltValue);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1766,12 +1772,13 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * @param percentageTiltValue {@link Integer} Percentage Tilt Value
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> windowCoveringGoToTiltPercentage(Integer percentageTiltValue) {
         WindowCoveringGoToTiltPercentage command = new WindowCoveringGoToTiltPercentage();
 
         // Set the fields
         command.setPercentageTiltValue(percentageTiltValue);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

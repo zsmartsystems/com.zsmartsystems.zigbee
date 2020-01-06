@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ReportEventStatus extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -165,9 +165,11 @@ public class ReportEventStatus extends ZclCommand {
      * Event was issued.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the ReportEventStatus command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public ReportEventStatus setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -187,9 +189,11 @@ public class ReportEventStatus extends ZclCommand {
      * This lists the valid values returned in the Event Status field.
      *
      * @param eventStatus the Event Status
+     * @return the ReportEventStatus command
      */
-    public void setEventStatus(final Integer eventStatus) {
+    public ReportEventStatus setEventStatus(final Integer eventStatus) {
         this.eventStatus = eventStatus;
+        return this;
     }
 
     /**
@@ -211,9 +215,11 @@ public class ReportEventStatus extends ZclCommand {
      * value of 0x00000000.
      *
      * @param eventStatusTime the Event Status Time
+     * @return the ReportEventStatus command
      */
-    public void setEventStatusTime(final Calendar eventStatusTime) {
+    public ReportEventStatus setEventStatusTime(final Calendar eventStatusTime) {
         this.eventStatusTime = eventStatusTime;
+        return this;
     }
 
     /**
@@ -235,9 +241,11 @@ public class ReportEventStatus extends ZclCommand {
      * Control Event command for more information.
      *
      * @param criticalityLevelApplied the Criticality Level Applied
+     * @return the ReportEventStatus command
      */
-    public void setCriticalityLevelApplied(final Integer criticalityLevelApplied) {
+    public ReportEventStatus setCriticalityLevelApplied(final Integer criticalityLevelApplied) {
         this.criticalityLevelApplied = criticalityLevelApplied;
+        return this;
     }
 
     /**
@@ -261,9 +269,11 @@ public class ReportEventStatus extends ZclCommand {
      * field has not been used by the end device.
      *
      * @param coolingTemperatureSetPointApplied the Cooling Temperature Set Point Applied
+     * @return the ReportEventStatus command
      */
-    public void setCoolingTemperatureSetPointApplied(final Integer coolingTemperatureSetPointApplied) {
+    public ReportEventStatus setCoolingTemperatureSetPointApplied(final Integer coolingTemperatureSetPointApplied) {
         this.coolingTemperatureSetPointApplied = coolingTemperatureSetPointApplied;
+        return this;
     }
 
     /**
@@ -287,9 +297,11 @@ public class ReportEventStatus extends ZclCommand {
      * field has not been used by the end device.
      *
      * @param heatingTemperatureSetPointApplied the Heating Temperature Set Point Applied
+     * @return the ReportEventStatus command
      */
-    public void setHeatingTemperatureSetPointApplied(final Integer heatingTemperatureSetPointApplied) {
+    public ReportEventStatus setHeatingTemperatureSetPointApplied(final Integer heatingTemperatureSetPointApplied) {
         this.heatingTemperatureSetPointApplied = heatingTemperatureSetPointApplied;
+        return this;
     }
 
     /**
@@ -313,9 +325,11 @@ public class ReportEventStatus extends ZclCommand {
      * this field has not been used by the end device.
      *
      * @param averageLoadAdjustmentPercentageApplied the Average Load Adjustment Percentage Applied
+     * @return the ReportEventStatus command
      */
-    public void setAverageLoadAdjustmentPercentageApplied(final Integer averageLoadAdjustmentPercentageApplied) {
+    public ReportEventStatus setAverageLoadAdjustmentPercentageApplied(final Integer averageLoadAdjustmentPercentageApplied) {
         this.averageLoadAdjustmentPercentageApplied = averageLoadAdjustmentPercentageApplied;
+        return this;
     }
 
     /**
@@ -337,9 +351,11 @@ public class ReportEventStatus extends ZclCommand {
      * this field has not been used by the end device.
      *
      * @param dutyCycleApplied the Duty Cycle Applied
+     * @return the ReportEventStatus command
      */
-    public void setDutyCycleApplied(final Integer dutyCycleApplied) {
+    public ReportEventStatus setDutyCycleApplied(final Integer dutyCycleApplied) {
         this.dutyCycleApplied = dutyCycleApplied;
+        return this;
     }
 
     /**
@@ -359,9 +375,11 @@ public class ReportEventStatus extends ZclCommand {
      * Identifies additional control options for the event.
      *
      * @param eventControl the Event Control
+     * @return the ReportEventStatus command
      */
-    public void setEventControl(final Integer eventControl) {
+    public ReportEventStatus setEventControl(final Integer eventControl) {
         this.eventControl = eventControl;
+        return this;
     }
 
     /**
@@ -383,9 +401,11 @@ public class ReportEventStatus extends ZclCommand {
      * Signature.
      *
      * @param signatureType the Signature Type
+     * @return the ReportEventStatus command
      */
-    public void setSignatureType(final Integer signatureType) {
+    public ReportEventStatus setSignatureType(final Integer signatureType) {
         this.signatureType = signatureType;
+        return this;
     }
 
     /**
@@ -407,9 +427,11 @@ public class ReportEventStatus extends ZclCommand {
      * used in conjunction with ECDSA.
      *
      * @param signature the Signature
+     * @return the ReportEventStatus command
      */
-    public void setSignature(final ByteArray signature) {
+    public ReportEventStatus setSignature(final ByteArray signature) {
         this.signature = signature;
+        return this;
     }
 
     @Override

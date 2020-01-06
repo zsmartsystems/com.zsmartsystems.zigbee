@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class TakeSnapshot extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -74,9 +74,11 @@ public class TakeSnapshot extends ZclCommand {
      * from Client flag shall additionally be set for all Snapshots triggered in this manner.
      *
      * @param snapshotCause the Snapshot Cause
+     * @return the TakeSnapshot command
      */
-    public void setSnapshotCause(final Integer snapshotCause) {
+    public TakeSnapshot setSnapshotCause(final Integer snapshotCause) {
         this.snapshotCause = snapshotCause;
+        return this;
     }
 
     @Override

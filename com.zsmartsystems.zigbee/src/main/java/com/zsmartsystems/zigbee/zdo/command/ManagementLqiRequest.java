@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zdo.command.ManagementLqiResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ManagementLqiRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * The ZDO cluster ID.
@@ -60,9 +60,11 @@ public class ManagementLqiRequest extends ZdoRequest implements ZigBeeTransactio
      * Sets Start Index.
      *
      * @param startIndex the Start Index
+     * @return the ManagementLqiRequest command
      */
-    public void setStartIndex(final Integer startIndex) {
+    public ManagementLqiRequest setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;
+        return this;
     }
 
     @Override

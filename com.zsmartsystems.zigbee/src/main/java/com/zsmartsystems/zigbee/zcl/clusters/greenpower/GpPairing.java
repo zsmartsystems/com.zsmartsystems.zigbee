@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-03T12:48:45Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GpPairing extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -124,9 +124,11 @@ public class GpPairing extends ZclCommand {
      * Sets Options.
      *
      * @param options the Options
+     * @return the GpPairing command
      */
-    public void setOptions(final Integer options) {
+    public GpPairing setOptions(final Integer options) {
         this.options = options;
+        return this;
     }
 
     /**
@@ -142,9 +144,11 @@ public class GpPairing extends ZclCommand {
      * Sets Gpd Src ID.
      *
      * @param gpdSrcId the Gpd Src ID
+     * @return the GpPairing command
      */
-    public void setGpdSrcId(final Integer gpdSrcId) {
+    public GpPairing setGpdSrcId(final Integer gpdSrcId) {
         this.gpdSrcId = gpdSrcId;
+        return this;
     }
 
     /**
@@ -160,9 +164,11 @@ public class GpPairing extends ZclCommand {
      * Sets Gpd IEEE.
      *
      * @param gpdIeee the Gpd IEEE
+     * @return the GpPairing command
      */
-    public void setGpdIeee(final IeeeAddress gpdIeee) {
+    public GpPairing setGpdIeee(final IeeeAddress gpdIeee) {
         this.gpdIeee = gpdIeee;
+        return this;
     }
 
     /**
@@ -178,9 +184,11 @@ public class GpPairing extends ZclCommand {
      * Sets Endpoint.
      *
      * @param endpoint the Endpoint
+     * @return the GpPairing command
      */
-    public void setEndpoint(final Integer endpoint) {
+    public GpPairing setEndpoint(final Integer endpoint) {
         this.endpoint = endpoint;
+        return this;
     }
 
     /**
@@ -196,9 +204,11 @@ public class GpPairing extends ZclCommand {
      * Sets Sink IEEE Address.
      *
      * @param sinkIeeeAddress the Sink IEEE Address
+     * @return the GpPairing command
      */
-    public void setSinkIeeeAddress(final IeeeAddress sinkIeeeAddress) {
+    public GpPairing setSinkIeeeAddress(final IeeeAddress sinkIeeeAddress) {
         this.sinkIeeeAddress = sinkIeeeAddress;
+        return this;
     }
 
     /**
@@ -214,9 +224,11 @@ public class GpPairing extends ZclCommand {
      * Sets Sink NWK Address.
      *
      * @param sinkNwkAddress the Sink NWK Address
+     * @return the GpPairing command
      */
-    public void setSinkNwkAddress(final Integer sinkNwkAddress) {
+    public GpPairing setSinkNwkAddress(final Integer sinkNwkAddress) {
         this.sinkNwkAddress = sinkNwkAddress;
+        return this;
     }
 
     /**
@@ -232,9 +244,11 @@ public class GpPairing extends ZclCommand {
      * Sets Sink Group ID.
      *
      * @param sinkGroupId the Sink Group ID
+     * @return the GpPairing command
      */
-    public void setSinkGroupId(final Integer sinkGroupId) {
+    public GpPairing setSinkGroupId(final Integer sinkGroupId) {
         this.sinkGroupId = sinkGroupId;
+        return this;
     }
 
     /**
@@ -250,9 +264,11 @@ public class GpPairing extends ZclCommand {
      * Sets Device ID.
      *
      * @param deviceId the Device ID
+     * @return the GpPairing command
      */
-    public void setDeviceId(final Integer deviceId) {
+    public GpPairing setDeviceId(final Integer deviceId) {
         this.deviceId = deviceId;
+        return this;
     }
 
     /**
@@ -268,9 +284,11 @@ public class GpPairing extends ZclCommand {
      * Sets Gpd Security Frame Counter.
      *
      * @param gpdSecurityFrameCounter the Gpd Security Frame Counter
+     * @return the GpPairing command
      */
-    public void setGpdSecurityFrameCounter(final Integer gpdSecurityFrameCounter) {
+    public GpPairing setGpdSecurityFrameCounter(final Integer gpdSecurityFrameCounter) {
         this.gpdSecurityFrameCounter = gpdSecurityFrameCounter;
+        return this;
     }
 
     /**
@@ -286,9 +304,11 @@ public class GpPairing extends ZclCommand {
      * Sets Gpd Key.
      *
      * @param gpdKey the Gpd Key
+     * @return the GpPairing command
      */
-    public void setGpdKey(final ZigBeeKey gpdKey) {
+    public GpPairing setGpdKey(final ZigBeeKey gpdKey) {
         this.gpdKey = gpdKey;
+        return this;
     }
 
     /**
@@ -304,9 +324,11 @@ public class GpPairing extends ZclCommand {
      * Sets Assigned Alias.
      *
      * @param assignedAlias the Assigned Alias
+     * @return the GpPairing command
      */
-    public void setAssignedAlias(final Integer assignedAlias) {
+    public GpPairing setAssignedAlias(final Integer assignedAlias) {
         this.assignedAlias = assignedAlias;
+        return this;
     }
 
     /**
@@ -322,9 +344,11 @@ public class GpPairing extends ZclCommand {
      * Sets Forwarding Radius.
      *
      * @param forwardingRadius the Forwarding Radius
+     * @return the GpPairing command
      */
-    public void setForwardingRadius(final Integer forwardingRadius) {
+    public GpPairing setForwardingRadius(final Integer forwardingRadius) {
         this.forwardingRadius = forwardingRadius;
+        return this;
     }
 
     @Override

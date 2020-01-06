@@ -40,7 +40,7 @@ import com.zsmartsystems.zigbee.zcl.field.ByteArray;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:44:02Z")
 public class ZclMessagingCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -110,6 +110,7 @@ public class ZclMessagingCluster extends ZclCluster {
      * @param extendedMessageControl {@link Integer} Extended Message Control
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> displayMessageCommand(Integer messageId, Integer messageControl, Calendar startTime, Integer durationInMinutes, String message, Integer extendedMessageControl) {
         DisplayMessageCommand command = new DisplayMessageCommand();
 
@@ -121,7 +122,7 @@ public class ZclMessagingCluster extends ZclCluster {
         command.setMessage(message);
         command.setExtendedMessageControl(extendedMessageControl);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -136,6 +137,7 @@ public class ZclMessagingCluster extends ZclCluster {
      * @param messageControl {@link Integer} Message Control
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> cancelMessageCommand(Integer messageId, Integer messageControl) {
         CancelMessageCommand command = new CancelMessageCommand();
 
@@ -143,7 +145,7 @@ public class ZclMessagingCluster extends ZclCluster {
         command.setMessageId(messageId);
         command.setMessageControl(messageControl);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -160,6 +162,7 @@ public class ZclMessagingCluster extends ZclCluster {
      * @param extendedMessageControl {@link Integer} Extended Message Control
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> displayProtectedMessageCommand(Integer messageId, Integer messageControl, Calendar startTime, Integer durationInMinutes, String message, Integer extendedMessageControl) {
         DisplayProtectedMessageCommand command = new DisplayProtectedMessageCommand();
 
@@ -171,7 +174,7 @@ public class ZclMessagingCluster extends ZclCluster {
         command.setMessage(message);
         command.setExtendedMessageControl(extendedMessageControl);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -183,13 +186,14 @@ public class ZclMessagingCluster extends ZclCluster {
      * @param implementationTime {@link Calendar} Implementation Time
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> cancelAllMessagesCommand(Calendar implementationTime) {
         CancelAllMessagesCommand command = new CancelAllMessagesCommand();
 
         // Set the fields
         command.setImplementationTime(implementationTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -207,6 +211,7 @@ public class ZclMessagingCluster extends ZclCluster {
      * @param optionalExtendedMessageControl {@link Integer} Optional Extended Message Control
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getLastMessage(Integer messageId, Integer messageControl, Calendar startTime, Integer durationInMinutes, String message, Integer optionalExtendedMessageControl) {
         GetLastMessage command = new GetLastMessage();
 
@@ -218,7 +223,7 @@ public class ZclMessagingCluster extends ZclCluster {
         command.setMessage(message);
         command.setOptionalExtendedMessageControl(optionalExtendedMessageControl);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -235,6 +240,7 @@ public class ZclMessagingCluster extends ZclCluster {
      * @param messageConfirmationResponse {@link ByteArray} Message Confirmation Response
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> messageConfirmation(Integer messageId, Calendar confirmationTime, Integer messageConfirmationControl, ByteArray messageConfirmationResponse) {
         MessageConfirmation command = new MessageConfirmation();
 
@@ -244,7 +250,7 @@ public class ZclMessagingCluster extends ZclCluster {
         command.setMessageConfirmationControl(messageConfirmationControl);
         command.setMessageConfirmationResponse(messageConfirmationResponse);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -257,13 +263,14 @@ public class ZclMessagingCluster extends ZclCluster {
      * @param earliestImplementationTime {@link Calendar} Earliest Implementation Time
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getMessageCancellation(Calendar earliestImplementationTime) {
         GetMessageCancellation command = new GetMessageCancellation();
 
         // Set the fields
         command.setEarliestImplementationTime(earliestImplementationTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -275,12 +282,13 @@ public class ZclMessagingCluster extends ZclCluster {
      * @param implementationDateTime {@link Calendar} Implementation Date Time
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> cancelAllMessages(Calendar implementationDateTime) {
         CancelAllMessages command = new CancelAllMessages();
 
         // Set the fields
         command.setImplementationDateTime(implementationDateTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

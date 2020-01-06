@@ -32,7 +32,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetTariffInformationCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -118,9 +118,11 @@ public class GetTariffInformationCommand extends ZclCommand {
      * the active and scheduled commands shall be sent with ascending ordered StartTime.
      *
      * @param earliestStartTime the Earliest Start Time
+     * @return the GetTariffInformationCommand command
      */
-    public void setEarliestStartTime(final Calendar earliestStartTime) {
+    public GetTariffInformationCommand setEarliestStartTime(final Calendar earliestStartTime) {
         this.earliestStartTime = earliestStartTime;
+        return this;
     }
 
     /**
@@ -146,9 +148,11 @@ public class GetTariffInformationCommand extends ZclCommand {
      * Event ID.
      *
      * @param minIssuerEventId the Min . Issuer Event ID
+     * @return the GetTariffInformationCommand command
      */
-    public void setMinIssuerEventId(final Integer minIssuerEventId) {
+    public GetTariffInformationCommand setMinIssuerEventId(final Integer minIssuerEventId) {
         this.minIssuerEventId = minIssuerEventId;
+        return this;
     }
 
     /**
@@ -172,9 +176,11 @@ public class GetTariffInformationCommand extends ZclCommand {
      * would indicate all available PublishTariffInformation commands shall be returned.
      *
      * @param numberOfCommands the Number Of Commands
+     * @return the GetTariffInformationCommand command
      */
-    public void setNumberOfCommands(final Integer numberOfCommands) {
+    public GetTariffInformationCommand setNumberOfCommands(final Integer numberOfCommands) {
         this.numberOfCommands = numberOfCommands;
+        return this;
     }
 
     /**
@@ -198,9 +204,11 @@ public class GetTariffInformationCommand extends ZclCommand {
      * shall use the ‘Received’ Tariff.). The most significant nibble is reserved.
      *
      * @param tariffType the Tariff Type
+     * @return the GetTariffInformationCommand command
      */
-    public void setTariffType(final Integer tariffType) {
+    public GetTariffInformationCommand setTariffType(final Integer tariffType) {
         this.tariffType = tariffType;
+        return this;
     }
 
     @Override

@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class TerminateKeyEstablishment extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -82,9 +82,11 @@ public class TerminateKeyEstablishment extends ZclCommand {
      * Sets Status Code.
      *
      * @param statusCode the Status Code
+     * @return the TerminateKeyEstablishment command
      */
-    public void setStatusCode(final Integer statusCode) {
+    public TerminateKeyEstablishment setStatusCode(final Integer statusCode) {
         this.statusCode = statusCode;
+        return this;
     }
 
     /**
@@ -106,9 +108,11 @@ public class TerminateKeyEstablishment extends ZclCommand {
      * wait before trying to initiate key establishment again. The valid range is 0x00 to 0xFE.
      *
      * @param waitTime the Wait Time
+     * @return the TerminateKeyEstablishment command
      */
-    public void setWaitTime(final Integer waitTime) {
+    public TerminateKeyEstablishment setWaitTime(final Integer waitTime) {
         this.waitTime = waitTime;
+        return this;
     }
 
     /**
@@ -130,9 +134,11 @@ public class TerminateKeyEstablishment extends ZclCommand {
      * the list of key exchange methods that the device supports.
      *
      * @param keyEstablishmentSuite the Key Establishment Suite
+     * @return the TerminateKeyEstablishment command
      */
-    public void setKeyEstablishmentSuite(final Integer keyEstablishmentSuite) {
+    public TerminateKeyEstablishment setKeyEstablishmentSuite(final Integer keyEstablishmentSuite) {
         this.keyEstablishmentSuite = keyEstablishmentSuite;
+        return this;
     }
 
     @Override

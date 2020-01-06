@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-09-20T08:23:22Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class EnhancedAddSceneCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -89,9 +89,11 @@ public class EnhancedAddSceneCommand extends ZclCommand {
      * Sets Group ID.
      *
      * @param groupId the Group ID
+     * @return the EnhancedAddSceneCommand command
      */
-    public void setGroupId(final Integer groupId) {
+    public EnhancedAddSceneCommand setGroupId(final Integer groupId) {
         this.groupId = groupId;
+        return this;
     }
 
     /**
@@ -107,9 +109,11 @@ public class EnhancedAddSceneCommand extends ZclCommand {
      * Sets Scene ID.
      *
      * @param sceneId the Scene ID
+     * @return the EnhancedAddSceneCommand command
      */
-    public void setSceneId(final Integer sceneId) {
+    public EnhancedAddSceneCommand setSceneId(final Integer sceneId) {
         this.sceneId = sceneId;
+        return this;
     }
 
     /**
@@ -125,9 +129,11 @@ public class EnhancedAddSceneCommand extends ZclCommand {
      * Sets Transition Time.
      *
      * @param transitionTime the Transition Time
+     * @return the EnhancedAddSceneCommand command
      */
-    public void setTransitionTime(final Integer transitionTime) {
+    public EnhancedAddSceneCommand setTransitionTime(final Integer transitionTime) {
         this.transitionTime = transitionTime;
+        return this;
     }
 
     /**
@@ -143,9 +149,11 @@ public class EnhancedAddSceneCommand extends ZclCommand {
      * Sets Scene Name.
      *
      * @param sceneName the Scene Name
+     * @return the EnhancedAddSceneCommand command
      */
-    public void setSceneName(final String sceneName) {
+    public EnhancedAddSceneCommand setSceneName(final String sceneName) {
         this.sceneName = sceneName;
+        return this;
     }
 
     /**
@@ -161,9 +169,11 @@ public class EnhancedAddSceneCommand extends ZclCommand {
      * Sets Extension Field Sets.
      *
      * @param extensionFieldSets the Extension Field Sets
+     * @return the EnhancedAddSceneCommand command
      */
-    public void setExtensionFieldSets(final List<ExtensionFieldSet> extensionFieldSets) {
+    public EnhancedAddSceneCommand setExtensionFieldSets(final List<ExtensionFieldSet> extensionFieldSets) {
         this.extensionFieldSets = extensionFieldSets;
+        return this;
     }
 
     @Override

@@ -33,7 +33,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-26T17:06:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:44:02Z")
 public class ZclOnOffCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -567,8 +567,9 @@ public class ZclOnOffCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> offCommand() {
-        return send(new OffCommand());
+        return sendCommand(new OffCommand());
     }
 
     /**
@@ -581,8 +582,9 @@ public class ZclOnOffCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> onCommand() {
-        return send(new OnCommand());
+        return sendCommand(new OnCommand());
     }
 
     /**
@@ -597,8 +599,9 @@ public class ZclOnOffCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> toggleCommand() {
-        return send(new ToggleCommand());
+        return sendCommand(new ToggleCommand());
     }
 
     /**
@@ -611,6 +614,7 @@ public class ZclOnOffCluster extends ZclCluster {
      * @param effectVariant {@link Integer} Effect Variant
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> offWithEffectCommand(Integer effectIdentifier, Integer effectVariant) {
         OffWithEffectCommand command = new OffWithEffectCommand();
 
@@ -618,7 +622,7 @@ public class ZclOnOffCluster extends ZclCluster {
         command.setEffectIdentifier(effectIdentifier);
         command.setEffectVariant(effectVariant);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -629,8 +633,9 @@ public class ZclOnOffCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> onWithRecallGlobalSceneCommand() {
-        return send(new OnWithRecallGlobalSceneCommand());
+        return sendCommand(new OnWithRecallGlobalSceneCommand());
     }
 
     /**
@@ -647,6 +652,7 @@ public class ZclOnOffCluster extends ZclCluster {
      * @param offWaitTime {@link Integer} Off Wait Time
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> onWithTimedOffCommand(Integer onOffControl, Integer onTime, Integer offWaitTime) {
         OnWithTimedOffCommand command = new OnWithTimedOffCommand();
 
@@ -655,6 +661,6 @@ public class ZclOnOffCluster extends ZclCluster {
         command.setOnTime(onTime);
         command.setOffWaitTime(offWaitTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

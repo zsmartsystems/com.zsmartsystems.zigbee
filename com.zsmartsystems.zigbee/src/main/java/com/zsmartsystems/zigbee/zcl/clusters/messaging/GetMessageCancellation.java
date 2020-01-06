@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetMessageCancellation extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -78,9 +78,11 @@ public class GetMessageCancellation extends ZclCommand {
      * command to be returned.
      *
      * @param earliestImplementationTime the Earliest Implementation Time
+     * @return the GetMessageCancellation command
      */
-    public void setEarliestImplementationTime(final Calendar earliestImplementationTime) {
+    public GetMessageCancellation setEarliestImplementationTime(final Calendar earliestImplementationTime) {
         this.earliestImplementationTime = earliestImplementationTime;
+        return this;
     }
 
     @Override

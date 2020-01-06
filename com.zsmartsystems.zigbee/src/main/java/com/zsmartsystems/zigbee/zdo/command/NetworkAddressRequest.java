@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zdo.command.NetworkAddressResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class NetworkAddressRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * The ZDO cluster ID.
@@ -73,9 +73,11 @@ public class NetworkAddressRequest extends ZdoRequest implements ZigBeeTransacti
      * Sets IEEE Addr.
      *
      * @param ieeeAddr the IEEE Addr
+     * @return the NetworkAddressRequest command
      */
-    public void setIeeeAddr(final IeeeAddress ieeeAddr) {
+    public NetworkAddressRequest setIeeeAddr(final IeeeAddress ieeeAddr) {
         this.ieeeAddr = ieeeAddr;
+        return this;
     }
 
     /**
@@ -97,9 +99,11 @@ public class NetworkAddressRequest extends ZdoRequest implements ZigBeeTransacti
      * 0x02-0xFF – reserved
      *
      * @param requestType the Request Type
+     * @return the NetworkAddressRequest command
      */
-    public void setRequestType(final Integer requestType) {
+    public NetworkAddressRequest setRequestType(final Integer requestType) {
         this.requestType = requestType;
+        return this;
     }
 
     /**
@@ -115,9 +119,11 @@ public class NetworkAddressRequest extends ZdoRequest implements ZigBeeTransacti
      * Sets Start Index.
      *
      * @param startIndex the Start Index
+     * @return the NetworkAddressRequest command
      */
-    public void setStartIndex(final Integer startIndex) {
+    public NetworkAddressRequest setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;
+        return this;
     }
 
     @Override

@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class SetSupplyStatus extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -119,9 +119,11 @@ public class SetSupplyStatus extends ZclCommand {
      * the Issuer Event ID field that is larger than older information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the SetSupplyStatus command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public SetSupplyStatus setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -143,9 +145,11 @@ public class SetSupplyStatus extends ZclCommand {
      * detection of a tamper event within the metering device.
      *
      * @param supplyTamperState the Supply Tamper State
+     * @return the SetSupplyStatus command
      */
-    public void setSupplyTamperState(final Integer supplyTamperState) {
+    public SetSupplyStatus setSupplyTamperState(final Integer supplyTamperState) {
         this.supplyTamperState = supplyTamperState;
+        return this;
     }
 
     /**
@@ -167,9 +171,11 @@ public class SetSupplyStatus extends ZclCommand {
      * detection of a depleted battery within the metering device.
      *
      * @param supplyDepletionState the Supply Depletion State
+     * @return the SetSupplyStatus command
      */
-    public void setSupplyDepletionState(final Integer supplyDepletionState) {
+    public SetSupplyStatus setSupplyDepletionState(final Integer supplyDepletionState) {
         this.supplyDepletionState = supplyDepletionState;
+        return this;
     }
 
     /**
@@ -191,9 +197,11 @@ public class SetSupplyStatus extends ZclCommand {
      * following detection of an uncontrolled flow event within the metering device.
      *
      * @param supplyUncontrolledFlowState the Supply Uncontrolled Flow State
+     * @return the SetSupplyStatus command
      */
-    public void setSupplyUncontrolledFlowState(final Integer supplyUncontrolledFlowState) {
+    public SetSupplyStatus setSupplyUncontrolledFlowState(final Integer supplyUncontrolledFlowState) {
         this.supplyUncontrolledFlowState = supplyUncontrolledFlowState;
+        return this;
     }
 
     /**
@@ -215,9 +223,11 @@ public class SetSupplyStatus extends ZclCommand {
      * is in a load limit state.
      *
      * @param loadLimitSupplyState the Load Limit Supply State
+     * @return the SetSupplyStatus command
      */
-    public void setLoadLimitSupplyState(final Integer loadLimitSupplyState) {
+    public SetSupplyStatus setLoadLimitSupplyState(final Integer loadLimitSupplyState) {
         this.loadLimitSupplyState = loadLimitSupplyState;
+        return this;
     }
 
     @Override

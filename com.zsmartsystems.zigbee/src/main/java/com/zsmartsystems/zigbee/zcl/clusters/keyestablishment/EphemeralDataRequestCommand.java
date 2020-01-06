@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class EphemeralDataRequestCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -67,9 +67,11 @@ public class EphemeralDataRequestCommand extends ZclCommand {
      * Sets Ephemeral Data.
      *
      * @param ephemeralData the Ephemeral Data
+     * @return the EphemeralDataRequestCommand command
      */
-    public void setEphemeralData(final ByteArray ephemeralData) {
+    public EphemeralDataRequestCommand setEphemeralData(final ByteArray ephemeralData) {
         this.ephemeralData = ephemeralData;
+        return this;
     }
 
     @Override

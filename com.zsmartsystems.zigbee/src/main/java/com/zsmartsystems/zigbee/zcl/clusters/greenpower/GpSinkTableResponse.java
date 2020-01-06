@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T21:54:11Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GpSinkTableResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -85,9 +85,11 @@ public class GpSinkTableResponse extends ZclCommand {
      * Sets Status.
      *
      * @param status the Status
+     * @return the GpSinkTableResponse command
      */
-    public void setStatus(final Integer status) {
+    public GpSinkTableResponse setStatus(final Integer status) {
         this.status = status;
+        return this;
     }
 
     /**
@@ -103,9 +105,11 @@ public class GpSinkTableResponse extends ZclCommand {
      * Sets Total Numberof Non Empty Sink Table Entries.
      *
      * @param totalNumberofNonEmptySinkTableEntries the Total Numberof Non Empty Sink Table Entries
+     * @return the GpSinkTableResponse command
      */
-    public void setTotalNumberofNonEmptySinkTableEntries(final Integer totalNumberofNonEmptySinkTableEntries) {
+    public GpSinkTableResponse setTotalNumberofNonEmptySinkTableEntries(final Integer totalNumberofNonEmptySinkTableEntries) {
         this.totalNumberofNonEmptySinkTableEntries = totalNumberofNonEmptySinkTableEntries;
+        return this;
     }
 
     /**
@@ -121,9 +125,11 @@ public class GpSinkTableResponse extends ZclCommand {
      * Sets Start Index.
      *
      * @param startIndex the Start Index
+     * @return the GpSinkTableResponse command
      */
-    public void setStartIndex(final Integer startIndex) {
+    public GpSinkTableResponse setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;
+        return this;
     }
 
     /**
@@ -139,9 +145,11 @@ public class GpSinkTableResponse extends ZclCommand {
      * Sets Sink Table Entries Count.
      *
      * @param sinkTableEntriesCount the Sink Table Entries Count
+     * @return the GpSinkTableResponse command
      */
-    public void setSinkTableEntriesCount(final Integer sinkTableEntriesCount) {
+    public GpSinkTableResponse setSinkTableEntriesCount(final Integer sinkTableEntriesCount) {
         this.sinkTableEntriesCount = sinkTableEntriesCount;
+        return this;
     }
 
     /**
@@ -157,9 +165,11 @@ public class GpSinkTableResponse extends ZclCommand {
      * Sets Sink Table Entries.
      *
      * @param sinkTableEntries the Sink Table Entries
+     * @return the GpSinkTableResponse command
      */
-    public void setSinkTableEntries(final Integer sinkTableEntries) {
+    public GpSinkTableResponse setSinkTableEntries(final Integer sinkTableEntries) {
         this.sinkTableEntries = sinkTableEntries;
+        return this;
     }
 
     @Override

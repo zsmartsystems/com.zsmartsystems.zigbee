@@ -18,7 +18,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class BlockThresholdSubPayload implements ZigBeeSerializable {
     /**
      * Tier Number Of Block Thresholds structure field.
@@ -45,9 +45,11 @@ public class BlockThresholdSubPayload implements ZigBeeSerializable {
      * Sets Tier Number Of Block Thresholds.
      *
      * @param tierNumberOfBlockThresholds the Tier Number Of Block Thresholds
+     * @return the BlockThresholdSubPayload command
      */
-    public void setTierNumberOfBlockThresholds(final Integer tierNumberOfBlockThresholds) {
+    public BlockThresholdSubPayload setTierNumberOfBlockThresholds(final Integer tierNumberOfBlockThresholds) {
         this.tierNumberOfBlockThresholds = tierNumberOfBlockThresholds;
+        return this;
     }
 
     /**
@@ -63,9 +65,11 @@ public class BlockThresholdSubPayload implements ZigBeeSerializable {
      * Sets Block Threshold.
      *
      * @param blockThreshold the Block Threshold
+     * @return the BlockThresholdSubPayload command
      */
-    public void setBlockThreshold(final Integer blockThreshold) {
+    public BlockThresholdSubPayload setBlockThreshold(final Integer blockThreshold) {
         this.blockThreshold = blockThreshold;
+        return this;
     }
 
     @Override

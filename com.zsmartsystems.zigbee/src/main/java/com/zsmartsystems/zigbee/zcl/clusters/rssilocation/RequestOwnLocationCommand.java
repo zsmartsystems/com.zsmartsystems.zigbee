@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class RequestOwnLocationCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -64,9 +64,11 @@ public class RequestOwnLocationCommand extends ZclCommand {
      * Sets Requesting Address.
      *
      * @param requestingAddress the Requesting Address
+     * @return the RequestOwnLocationCommand command
      */
-    public void setRequestingAddress(final IeeeAddress requestingAddress) {
+    public RequestOwnLocationCommand setRequestingAddress(final IeeeAddress requestingAddress) {
         this.requestingAddress = requestingAddress;
+        return this;
     }
 
     @Override

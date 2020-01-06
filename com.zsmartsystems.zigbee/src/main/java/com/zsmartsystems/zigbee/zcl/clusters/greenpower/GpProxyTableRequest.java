@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T22:00:57Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GpProxyTableRequest extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -86,9 +86,11 @@ public class GpProxyTableRequest extends ZclCommand {
      * Sets Options.
      *
      * @param options the Options
+     * @return the GpProxyTableRequest command
      */
-    public void setOptions(final Integer options) {
+    public GpProxyTableRequest setOptions(final Integer options) {
         this.options = options;
+        return this;
     }
 
     /**
@@ -104,9 +106,11 @@ public class GpProxyTableRequest extends ZclCommand {
      * Sets Gpd Src ID.
      *
      * @param gpdSrcId the Gpd Src ID
+     * @return the GpProxyTableRequest command
      */
-    public void setGpdSrcId(final Integer gpdSrcId) {
+    public GpProxyTableRequest setGpdSrcId(final Integer gpdSrcId) {
         this.gpdSrcId = gpdSrcId;
+        return this;
     }
 
     /**
@@ -122,9 +126,11 @@ public class GpProxyTableRequest extends ZclCommand {
      * Sets Gpd IEEE.
      *
      * @param gpdIeee the Gpd IEEE
+     * @return the GpProxyTableRequest command
      */
-    public void setGpdIeee(final IeeeAddress gpdIeee) {
+    public GpProxyTableRequest setGpdIeee(final IeeeAddress gpdIeee) {
         this.gpdIeee = gpdIeee;
+        return this;
     }
 
     /**
@@ -140,9 +146,11 @@ public class GpProxyTableRequest extends ZclCommand {
      * Sets Endpoint.
      *
      * @param endpoint the Endpoint
+     * @return the GpProxyTableRequest command
      */
-    public void setEndpoint(final Integer endpoint) {
+    public GpProxyTableRequest setEndpoint(final Integer endpoint) {
         this.endpoint = endpoint;
+        return this;
     }
 
     /**
@@ -158,9 +166,11 @@ public class GpProxyTableRequest extends ZclCommand {
      * Sets Index.
      *
      * @param index the Index
+     * @return the GpProxyTableRequest command
      */
-    public void setIndex(final Integer index) {
+    public GpProxyTableRequest setIndex(final Integer index) {
         this.index = index;
+        return this;
     }
 
     @Override

@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetGroupMembershipResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -78,9 +78,11 @@ public class GetGroupMembershipResponse extends ZclCommand {
      * Sets Capacity.
      *
      * @param capacity the Capacity
+     * @return the GetGroupMembershipResponse command
      */
-    public void setCapacity(final Integer capacity) {
+    public GetGroupMembershipResponse setCapacity(final Integer capacity) {
         this.capacity = capacity;
+        return this;
     }
 
     /**
@@ -96,9 +98,11 @@ public class GetGroupMembershipResponse extends ZclCommand {
      * Sets Group Count.
      *
      * @param groupCount the Group Count
+     * @return the GetGroupMembershipResponse command
      */
-    public void setGroupCount(final Integer groupCount) {
+    public GetGroupMembershipResponse setGroupCount(final Integer groupCount) {
         this.groupCount = groupCount;
+        return this;
     }
 
     /**
@@ -114,9 +118,11 @@ public class GetGroupMembershipResponse extends ZclCommand {
      * Sets Group List.
      *
      * @param groupList the Group List
+     * @return the GetGroupMembershipResponse command
      */
-    public void setGroupList(final List<Integer> groupList) {
+    public GetGroupMembershipResponse setGroupList(final List<Integer> groupList) {
         this.groupList = groupList;
+        return this;
     }
 
     @Override

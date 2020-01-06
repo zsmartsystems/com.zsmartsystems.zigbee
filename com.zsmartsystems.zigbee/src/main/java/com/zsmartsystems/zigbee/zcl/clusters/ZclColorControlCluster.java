@@ -58,7 +58,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:44:02Z")
 public class ZclColorControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -1368,6 +1368,7 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> moveToHueCommand(Integer hue, Integer direction, Integer transitionTime) {
         MoveToHueCommand command = new MoveToHueCommand();
 
@@ -1376,7 +1377,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setDirection(direction);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1386,6 +1387,7 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param rate {@link Integer} Rate
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> moveHueCommand(Integer moveMode, Integer rate) {
         MoveHueCommand command = new MoveHueCommand();
 
@@ -1393,7 +1395,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setMoveMode(moveMode);
         command.setRate(rate);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1404,6 +1406,7 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> stepHueCommand(Integer stepMode, Integer stepSize, Integer transitionTime) {
         StepHueCommand command = new StepHueCommand();
 
@@ -1412,7 +1415,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setStepSize(stepSize);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1422,6 +1425,7 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> moveToSaturationCommand(Integer saturation, Integer transitionTime) {
         MoveToSaturationCommand command = new MoveToSaturationCommand();
 
@@ -1429,7 +1433,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setSaturation(saturation);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1439,6 +1443,7 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param rate {@link Integer} Rate
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> moveSaturationCommand(Integer moveMode, Integer rate) {
         MoveSaturationCommand command = new MoveSaturationCommand();
 
@@ -1446,7 +1451,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setMoveMode(moveMode);
         command.setRate(rate);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1457,6 +1462,7 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> stepSaturationCommand(Integer stepMode, Integer stepSize, Integer transitionTime) {
         StepSaturationCommand command = new StepSaturationCommand();
 
@@ -1465,7 +1471,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setStepSize(stepSize);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1476,6 +1482,7 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> moveToHueAndSaturationCommand(Integer hue, Integer saturation, Integer transitionTime) {
         MoveToHueAndSaturationCommand command = new MoveToHueAndSaturationCommand();
 
@@ -1484,7 +1491,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setSaturation(saturation);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1495,6 +1502,7 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> moveToColorCommand(Integer colorX, Integer colorY, Integer transitionTime) {
         MoveToColorCommand command = new MoveToColorCommand();
 
@@ -1503,7 +1511,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setColorY(colorY);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1513,6 +1521,7 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param rateY {@link Integer} Rate Y
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> moveColorCommand(Integer rateX, Integer rateY) {
         MoveColorCommand command = new MoveColorCommand();
 
@@ -1520,7 +1529,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setRateX(rateX);
         command.setRateY(rateY);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1531,6 +1540,7 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> stepColorCommand(Integer stepX, Integer stepY, Integer transitionTime) {
         StepColorCommand command = new StepColorCommand();
 
@@ -1539,7 +1549,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setStepY(stepY);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1556,6 +1566,7 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> moveToColorTemperatureCommand(Integer colorTemperature, Integer transitionTime) {
         MoveToColorTemperatureCommand command = new MoveToColorTemperatureCommand();
 
@@ -1563,7 +1574,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setColorTemperature(colorTemperature);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1584,6 +1595,7 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> enhancedMoveToHueCommand(Integer enhancedHue, Integer direction, Integer transitionTime) {
         EnhancedMoveToHueCommand command = new EnhancedMoveToHueCommand();
 
@@ -1592,7 +1604,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setDirection(direction);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1609,6 +1621,7 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param rate {@link Integer} Rate
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> enhancedMoveHueCommand(Integer moveMode, Integer rate) {
         EnhancedMoveHueCommand command = new EnhancedMoveHueCommand();
 
@@ -1616,7 +1629,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setMoveMode(moveMode);
         command.setRate(rate);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1630,6 +1643,7 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> enhancedStepHueCommand(Integer stepMode, Integer stepSize, Integer transitionTime) {
         EnhancedStepHueCommand command = new EnhancedStepHueCommand();
 
@@ -1638,7 +1652,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setStepSize(stepSize);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1653,6 +1667,7 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> enhancedMoveToHueAndSaturationCommand(Integer enhancedHue, Integer saturation, Integer transitionTime) {
         EnhancedMoveToHueAndSaturationCommand command = new EnhancedMoveToHueAndSaturationCommand();
 
@@ -1661,7 +1676,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setSaturation(saturation);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1677,6 +1692,7 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param startHue {@link Integer} Start Hue
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> colorLoopSetCommand(Integer updateFlags, Integer action, Integer direction, Integer transitionTime, Integer startHue) {
         ColorLoopSetCommand command = new ColorLoopSetCommand();
 
@@ -1687,7 +1703,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setTransitionTime(transitionTime);
         command.setStartHue(startHue);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1703,8 +1719,9 @@ public class ZclColorControlCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> stopMoveStepCommand() {
-        return send(new StopMoveStepCommand());
+        return sendCommand(new StopMoveStepCommand());
     }
 
     /**
@@ -1719,6 +1736,7 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param colorTemperatureMaximum {@link Integer} Color Temperature Maximum
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> moveColorTemperatureCommand(Integer moveMode, Integer rate, Integer colorTemperatureMinimum, Integer colorTemperatureMaximum) {
         MoveColorTemperatureCommand command = new MoveColorTemperatureCommand();
 
@@ -1728,7 +1746,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setColorTemperatureMinimum(colorTemperatureMinimum);
         command.setColorTemperatureMaximum(colorTemperatureMaximum);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1744,6 +1762,7 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param colorTemperatureMaximum {@link Integer} Color Temperature Maximum
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> stepColorTemperatureCommand(Integer stepMode, Integer stepSize, Integer transitionTime, Integer colorTemperatureMinimum, Integer colorTemperatureMaximum) {
         StepColorTemperatureCommand command = new StepColorTemperatureCommand();
 
@@ -1754,6 +1773,6 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setColorTemperatureMinimum(colorTemperatureMinimum);
         command.setColorTemperatureMaximum(colorTemperatureMaximum);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

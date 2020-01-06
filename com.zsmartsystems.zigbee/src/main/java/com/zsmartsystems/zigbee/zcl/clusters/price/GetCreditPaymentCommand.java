@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetCreditPaymentCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -95,9 +95,11 @@ public class GetCreditPaymentCommand extends ZclCommand {
      * CreditPaymentDate equal to or older than the Latest End Time provided.
      *
      * @param latestEndTime the Latest End Time
+     * @return the GetCreditPaymentCommand command
      */
-    public void setLatestEndTime(final Calendar latestEndTime) {
+    public GetCreditPaymentCommand setLatestEndTime(final Calendar latestEndTime) {
         this.latestEndTime = latestEndTime;
+        return this;
     }
 
     /**
@@ -127,9 +129,11 @@ public class GetCreditPaymentCommand extends ZclCommand {
      * requested, only those available are returned.
      *
      * @param numberOfRecords the Number Of Records
+     * @return the GetCreditPaymentCommand command
      */
-    public void setNumberOfRecords(final Integer numberOfRecords) {
+    public GetCreditPaymentCommand setNumberOfRecords(final Integer numberOfRecords) {
         this.numberOfRecords = numberOfRecords;
+        return this;
     }
 
     @Override

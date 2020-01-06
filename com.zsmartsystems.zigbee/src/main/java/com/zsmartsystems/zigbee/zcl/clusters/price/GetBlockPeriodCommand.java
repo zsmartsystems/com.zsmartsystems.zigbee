@@ -30,7 +30,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetBlockPeriodCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -102,9 +102,11 @@ public class GetBlockPeriodCommand extends ZclCommand {
      * that Start Time with the current time stamp.
      *
      * @param startTime the Start Time
+     * @return the GetBlockPeriodCommand command
      */
-    public void setStartTime(final Calendar startTime) {
+    public GetBlockPeriodCommand setStartTime(final Calendar startTime) {
         this.startTime = startTime;
+        return this;
     }
 
     /**
@@ -140,9 +142,11 @@ public class GetBlockPeriodCommand extends ZclCommand {
      * the request is for the ‘Delivered’ Tariff. The most significant nibble is reserved.
      *
      * @param numberOfEvents the Number Of Events
+     * @return the GetBlockPeriodCommand command
      */
-    public void setNumberOfEvents(final Integer numberOfEvents) {
+    public GetBlockPeriodCommand setNumberOfEvents(final Integer numberOfEvents) {
         this.numberOfEvents = numberOfEvents;
+        return this;
     }
 
     /**
@@ -158,9 +162,11 @@ public class GetBlockPeriodCommand extends ZclCommand {
      * Sets Tariff Type.
      *
      * @param tariffType the Tariff Type
+     * @return the GetBlockPeriodCommand command
      */
-    public void setTariffType(final Integer tariffType) {
+    public GetBlockPeriodCommand setTariffType(final Integer tariffType) {
         this.tariffType = tariffType;
+        return this;
     }
 
     @Override

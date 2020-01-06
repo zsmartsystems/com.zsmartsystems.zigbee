@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetBlockThresholdsCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -74,9 +74,11 @@ public class GetBlockThresholdsCommand extends ZclCommand {
      * IssuerTariffID indicates the tariff to which the requested Price Matrix belongs.
      *
      * @param issuerTariffId the Issuer Tariff ID
+     * @return the GetBlockThresholdsCommand command
      */
-    public void setIssuerTariffId(final Integer issuerTariffId) {
+    public GetBlockThresholdsCommand setIssuerTariffId(final Integer issuerTariffId) {
         this.issuerTariffId = issuerTariffId;
+        return this;
     }
 
     @Override

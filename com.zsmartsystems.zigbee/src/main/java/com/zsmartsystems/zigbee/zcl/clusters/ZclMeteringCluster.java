@@ -66,7 +66,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:44:02Z")
 public class ZclMeteringCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -17116,6 +17116,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param numberOfPeriods {@link Integer} Number Of Periods
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getProfile(Integer intervalChannel, Calendar endTime, Integer numberOfPeriods) {
         GetProfile command = new GetProfile();
 
@@ -17124,7 +17125,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setEndTime(endTime);
         command.setNumberOfPeriods(numberOfPeriods);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17136,13 +17137,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param endpointId {@link Integer} Endpoint ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> requestMirrorResponse(Integer endpointId) {
         RequestMirrorResponse command = new RequestMirrorResponse();
 
         // Set the fields
         command.setEndpointId(endpointId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17154,13 +17156,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param removedEndpointId {@link Integer} Removed Endpoint ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> mirrorRemoved(Integer removedEndpointId) {
         MirrorRemoved command = new MirrorRemoved();
 
         // Set the fields
         command.setRemovedEndpointId(removedEndpointId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17173,6 +17176,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param duration {@link Integer} Duration
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> requestFastPollMode(Integer fastPollUpdatePeriod, Integer duration) {
         RequestFastPollMode command = new RequestFastPollMode();
 
@@ -17180,7 +17184,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setFastPollUpdatePeriod(fastPollUpdatePeriod);
         command.setDuration(duration);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17194,6 +17198,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param snapshotSchedulePayload {@link SnapshotSchedulePayload} Snapshot Schedule Payload
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> scheduleSnapshot(Integer issuerEventId, Integer commandIndex, Integer totalNumberOfCommands, SnapshotSchedulePayload snapshotSchedulePayload) {
         ScheduleSnapshot command = new ScheduleSnapshot();
 
@@ -17203,7 +17208,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setTotalNumberOfCommands(totalNumberOfCommands);
         command.setSnapshotSchedulePayload(snapshotSchedulePayload);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17214,13 +17219,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param snapshotCause {@link Integer} Snapshot Cause
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> takeSnapshot(Integer snapshotCause) {
         TakeSnapshot command = new TakeSnapshot();
 
         // Set the fields
         command.setSnapshotCause(snapshotCause);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17234,6 +17240,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param snapshotCause {@link Integer} Snapshot Cause
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getSnapshot(Calendar earliestStartTime, Calendar latestEndTime, Integer snapshotOffset, Integer snapshotCause) {
         GetSnapshot command = new GetSnapshot();
 
@@ -17243,7 +17250,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setSnapshotOffset(snapshotOffset);
         command.setSnapshotCause(snapshotCause);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17261,6 +17268,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxNumberOfSamples {@link Integer} Max Number Of Samples
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> startSampling(Integer issuerEventId, Calendar startSamplingTime, Integer sampleType, Integer sampleRequestInterval, Integer maxNumberOfSamples) {
         StartSampling command = new StartSampling();
 
@@ -17271,7 +17279,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setSampleRequestInterval(sampleRequestInterval);
         command.setMaxNumberOfSamples(maxNumberOfSamples);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17287,6 +17295,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param numberOfSamples {@link Integer} Number Of Samples
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getSampledData(Integer sampleId, Calendar earliestSampleTime, Integer sampleType, Integer numberOfSamples) {
         GetSampledData command = new GetSampledData();
 
@@ -17296,7 +17305,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setSampleType(sampleType);
         command.setNumberOfSamples(numberOfSamples);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17309,6 +17318,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param notificationFlags {@link Integer} Notification Flags
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> mirrorReportAttributeResponse(Integer notificationScheme, Integer notificationFlags) {
         MirrorReportAttributeResponse command = new MirrorReportAttributeResponse();
 
@@ -17316,7 +17326,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setNotificationScheme(notificationScheme);
         command.setNotificationFlags(notificationFlags);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17329,6 +17339,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param issuerEventId {@link Integer} Issuer Event ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> resetLoadLimitCounter(Integer providerId, Integer issuerEventId) {
         ResetLoadLimitCounter command = new ResetLoadLimitCounter();
 
@@ -17336,7 +17347,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setProviderId(providerId);
         command.setIssuerEventId(issuerEventId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17353,6 +17364,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param supplyControlBits {@link Integer} Supply Control Bits
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> changeSupply(Integer providerId, Integer issuerEventId, Calendar requestDateTime, Calendar implementationDateTime, Integer proposedSupplyStatus, Integer supplyControlBits) {
         ChangeSupply command = new ChangeSupply();
 
@@ -17364,7 +17376,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setProposedSupplyStatus(proposedSupplyStatus);
         command.setSupplyControlBits(supplyControlBits);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17378,13 +17390,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param proposedSupplyStatus {@link Integer} Proposed Supply Status
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> localChangeSupply(Integer proposedSupplyStatus) {
         LocalChangeSupply command = new LocalChangeSupply();
 
         // Set the fields
         command.setProposedSupplyStatus(proposedSupplyStatus);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17400,6 +17413,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param loadLimitSupplyState {@link Integer} Load Limit Supply State
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> setSupplyStatus(Integer issuerEventId, Integer supplyTamperState, Integer supplyDepletionState, Integer supplyUncontrolledFlowState, Integer loadLimitSupplyState) {
         SetSupplyStatus command = new SetSupplyStatus();
 
@@ -17410,7 +17424,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setSupplyUncontrolledFlowState(supplyUncontrolledFlowState);
         command.setLoadLimitSupplyState(loadLimitSupplyState);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17429,6 +17443,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param measurementPeriod {@link Integer} Measurement Period
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> setUncontrolledFlowThreshold(Integer providerId, Integer issuerEventId, Integer uncontrolledFlowThreshold, Integer unitOfMeasure, Integer multiplier, Integer divisor, Integer stabilisationPeriod, Integer measurementPeriod) {
         SetUncontrolledFlowThreshold command = new SetUncontrolledFlowThreshold();
 
@@ -17442,7 +17457,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setStabilisationPeriod(stabilisationPeriod);
         command.setMeasurementPeriod(measurementPeriod);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17457,6 +17472,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param intervals {@link Integer} Intervals
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getProfileResponse(Calendar endTime, Integer status, Integer profileIntervalPeriod, Integer numberOfPeriodsDelivered, Integer intervals) {
         GetProfileResponse command = new GetProfileResponse();
 
@@ -17467,7 +17483,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setNumberOfPeriodsDelivered(numberOfPeriodsDelivered);
         command.setIntervals(intervals);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17477,8 +17493,9 @@ public class ZclMeteringCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> requestMirror() {
-        return send(new RequestMirror());
+        return sendCommand(new RequestMirror());
     }
 
     /**
@@ -17488,8 +17505,9 @@ public class ZclMeteringCluster extends ZclCluster {
      *
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> removeMirror() {
-        return send(new RemoveMirror());
+        return sendCommand(new RemoveMirror());
     }
 
     /**
@@ -17501,6 +17519,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param fastPollModeEndtime {@link Calendar} Fast Poll Mode Endtime
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> requestFastPollModeResponse(Integer appliedUpdatePeriod, Calendar fastPollModeEndtime) {
         RequestFastPollModeResponse command = new RequestFastPollModeResponse();
 
@@ -17508,7 +17527,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setAppliedUpdatePeriod(appliedUpdatePeriod);
         command.setFastPollModeEndtime(fastPollModeEndtime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17521,6 +17540,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param snapshotResponsePayload {@link SnapshotResponsePayload} Snapshot Response Payload
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> scheduleSnapshotResponse(Integer issuerEventId, SnapshotResponsePayload snapshotResponsePayload) {
         ScheduleSnapshotResponse command = new ScheduleSnapshotResponse();
 
@@ -17528,7 +17548,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setIssuerEventId(issuerEventId);
         command.setSnapshotResponsePayload(snapshotResponsePayload);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17541,6 +17561,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param snapshotConfirmation {@link Integer} Snapshot Confirmation
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> takeSnapshotResponse(Integer snapshotId, Integer snapshotConfirmation) {
         TakeSnapshotResponse command = new TakeSnapshotResponse();
 
@@ -17548,7 +17569,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setSnapshotId(snapshotId);
         command.setSnapshotConfirmation(snapshotConfirmation);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17567,6 +17588,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param snapshotPayload {@link Integer} Snapshot Payload
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> publishSnapshot(Integer snapshotId, Calendar snapshotTime, Integer totalSnapshotsFound, Integer commandIndex, Integer totalNumberOfCommands, Integer snapshotCause, Integer snapshotPayloadType, Integer snapshotPayload) {
         PublishSnapshot command = new PublishSnapshot();
 
@@ -17580,7 +17602,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setSnapshotPayloadType(snapshotPayloadType);
         command.setSnapshotPayload(snapshotPayload);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17597,6 +17619,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param samples {@link Integer} Samples
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getSampledDataResponse(Integer sampleId, Calendar sampleStartTime, Integer sampleType, Integer sampleRequestInterval, Integer numberOfSamples, Integer samples) {
         GetSampledDataResponse command = new GetSampledDataResponse();
 
@@ -17608,7 +17631,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setNumberOfSamples(numberOfSamples);
         command.setSamples(samples);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17623,6 +17646,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param notificationScheme {@link Integer} Notification Scheme
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> configureMirror(Integer issuerEventId, Integer reportingInterval, Boolean mirrorNotificationReporting, Integer notificationScheme) {
         ConfigureMirror command = new ConfigureMirror();
 
@@ -17632,7 +17656,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setMirrorNotificationReporting(mirrorNotificationReporting);
         command.setNotificationScheme(notificationScheme);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17647,6 +17671,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param notificationFlagOrder {@link Integer} Notification Flag Order
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> configureNotificationScheme(Integer issuerEventId, Integer notificationScheme, Integer notificationFlagOrder) {
         ConfigureNotificationScheme command = new ConfigureNotificationScheme();
 
@@ -17655,7 +17680,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setNotificationScheme(notificationScheme);
         command.setNotificationFlagOrder(notificationFlagOrder);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17670,6 +17695,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param subPayload {@link NotificationCommandSubPayload} Sub Payload
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> configureNotificationFlags(Integer issuerEventId, Integer notificationScheme, Integer notificationFlagAttributeId, NotificationCommandSubPayload subPayload) {
         ConfigureNotificationFlags command = new ConfigureNotificationFlags();
 
@@ -17679,7 +17705,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setNotificationFlagAttributeId(notificationFlagAttributeId);
         command.setSubPayload(subPayload);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17695,6 +17721,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param notificationFlagsN {@link Integer} Notification Flags N
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> getNotifiedMessage(Integer notificationScheme, Integer notificationFlagAttributeId, Integer notificationFlagsN) {
         GetNotifiedMessage command = new GetNotifiedMessage();
 
@@ -17703,7 +17730,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setNotificationFlagAttributeId(notificationFlagAttributeId);
         command.setNotificationFlagsN(notificationFlagsN);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17717,6 +17744,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param supplyStatus {@link Integer} Supply Status
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> supplyStatusResponse(Integer providerId, Integer issuerEventId, Calendar implementationDateTime, Integer supplyStatus) {
         SupplyStatusResponse command = new SupplyStatusResponse();
 
@@ -17726,7 +17754,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setImplementationDateTime(implementationDateTime);
         command.setSupplyStatus(supplyStatus);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17738,12 +17766,13 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param sampleId {@link Integer} Sample ID
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> startSamplingResponse(Integer sampleId) {
         StartSamplingResponse command = new StartSamplingResponse();
 
         // Set the fields
         command.setSampleId(sampleId);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zdo.field.ComplexDescriptor;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-15T18:21:05Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ComplexDescriptorResponse extends ZdoResponse {
     /**
      * The ZDO cluster ID.
@@ -68,9 +68,11 @@ public class ComplexDescriptorResponse extends ZdoResponse {
      * Sets NWK Addr Of Interest.
      *
      * @param nwkAddrOfInterest the NWK Addr Of Interest
+     * @return the ComplexDescriptorResponse command
      */
-    public void setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
+    public ComplexDescriptorResponse setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
         this.nwkAddrOfInterest = nwkAddrOfInterest;
+        return this;
     }
 
     /**
@@ -86,9 +88,11 @@ public class ComplexDescriptorResponse extends ZdoResponse {
      * Sets Length.
      *
      * @param length the Length
+     * @return the ComplexDescriptorResponse command
      */
-    public void setLength(final Integer length) {
+    public ComplexDescriptorResponse setLength(final Integer length) {
         this.length = length;
+        return this;
     }
 
     /**
@@ -104,9 +108,11 @@ public class ComplexDescriptorResponse extends ZdoResponse {
      * Sets Complex Descriptor.
      *
      * @param complexDescriptor the Complex Descriptor
+     * @return the ComplexDescriptorResponse command
      */
-    public void setComplexDescriptor(final ComplexDescriptor complexDescriptor) {
+    public ComplexDescriptorResponse setComplexDescriptor(final ComplexDescriptor complexDescriptor) {
         this.complexDescriptor = complexDescriptor;
+        return this;
     }
 
     @Override

@@ -30,7 +30,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class UnlockWithTimeout extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -75,9 +75,11 @@ public class UnlockWithTimeout extends ZclCommand {
      * Sets Timeout In Seconds.
      *
      * @param timeoutInSeconds the Timeout In Seconds
+     * @return the UnlockWithTimeout command
      */
-    public void setTimeoutInSeconds(final Integer timeoutInSeconds) {
+    public UnlockWithTimeout setTimeoutInSeconds(final Integer timeoutInSeconds) {
         this.timeoutInSeconds = timeoutInSeconds;
+        return this;
     }
 
     /**
@@ -93,9 +95,11 @@ public class UnlockWithTimeout extends ZclCommand {
      * Sets PIN.
      *
      * @param pin the PIN
+     * @return the UnlockWithTimeout command
      */
-    public void setPin(final String pin) {
+    public UnlockWithTimeout setPin(final String pin) {
         this.pin = pin;
+        return this;
     }
 
     @Override

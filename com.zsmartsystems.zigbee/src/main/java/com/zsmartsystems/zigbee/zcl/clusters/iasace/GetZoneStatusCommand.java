@@ -32,7 +32,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetZoneStatusCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -124,9 +124,11 @@ public class GetZoneStatusCommand extends ZclCommand {
      * information.
      *
      * @param startingZoneId the Starting Zone ID
+     * @return the GetZoneStatusCommand command
      */
-    public void setStartingZoneId(final Integer startingZoneId) {
+    public GetZoneStatusCommand setStartingZoneId(final Integer startingZoneId) {
         this.startingZoneId = startingZoneId;
+        return this;
     }
 
     /**
@@ -148,9 +150,11 @@ public class GetZoneStatusCommand extends ZclCommand {
      * returned by the IAS ACE server when it responds with a Get Zone Status Response command
      *
      * @param maxZoneIDs the Max Zone I Ds
+     * @return the GetZoneStatusCommand command
      */
-    public void setMaxZoneIDs(final Integer maxZoneIDs) {
+    public GetZoneStatusCommand setMaxZoneIDs(final Integer maxZoneIDs) {
         this.maxZoneIDs = maxZoneIDs;
+        return this;
     }
 
     /**
@@ -188,9 +192,11 @@ public class GetZoneStatusCommand extends ZclCommand {
      * the number of IAS Zone devices in a system is large.
      *
      * @param zoneStatusMaskFlag the Zone Status Mask Flag
+     * @return the GetZoneStatusCommand command
      */
-    public void setZoneStatusMaskFlag(final Boolean zoneStatusMaskFlag) {
+    public GetZoneStatusCommand setZoneStatusMaskFlag(final Boolean zoneStatusMaskFlag) {
         this.zoneStatusMaskFlag = zoneStatusMaskFlag;
+        return this;
     }
 
     /**
@@ -234,9 +240,11 @@ public class GetZoneStatusCommand extends ZclCommand {
      * IAS Zone in the Get Zone Status Response command.
      *
      * @param zoneStatusMask the Zone Status Mask
+     * @return the GetZoneStatusCommand command
      */
-    public void setZoneStatusMask(final Integer zoneStatusMask) {
+    public GetZoneStatusCommand setZoneStatusMask(final Integer zoneStatusMask) {
         this.zoneStatusMask = zoneStatusMask;
+        return this;
     }
 
     @Override

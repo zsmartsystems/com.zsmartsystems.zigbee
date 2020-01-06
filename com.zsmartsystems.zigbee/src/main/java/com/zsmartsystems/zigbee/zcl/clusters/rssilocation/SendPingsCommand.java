@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class SendPingsCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -74,9 +74,11 @@ public class SendPingsCommand extends ZclCommand {
      * Sets Target Address.
      *
      * @param targetAddress the Target Address
+     * @return the SendPingsCommand command
      */
-    public void setTargetAddress(final IeeeAddress targetAddress) {
+    public SendPingsCommand setTargetAddress(final IeeeAddress targetAddress) {
         this.targetAddress = targetAddress;
+        return this;
     }
 
     /**
@@ -92,9 +94,11 @@ public class SendPingsCommand extends ZclCommand {
      * Sets Number RSSI Measurements.
      *
      * @param numberRssiMeasurements the Number RSSI Measurements
+     * @return the SendPingsCommand command
      */
-    public void setNumberRssiMeasurements(final Integer numberRssiMeasurements) {
+    public SendPingsCommand setNumberRssiMeasurements(final Integer numberRssiMeasurements) {
         this.numberRssiMeasurements = numberRssiMeasurements;
+        return this;
     }
 
     /**
@@ -110,9 +114,11 @@ public class SendPingsCommand extends ZclCommand {
      * Sets Calculation Period.
      *
      * @param calculationPeriod the Calculation Period
+     * @return the SendPingsCommand command
      */
-    public void setCalculationPeriod(final Integer calculationPeriod) {
+    public SendPingsCommand setCalculationPeriod(final Integer calculationPeriod) {
         this.calculationPeriod = calculationPeriod;
+        return this;
     }
 
     @Override

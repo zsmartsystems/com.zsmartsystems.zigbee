@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-03T12:48:45Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GpNotificationResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -83,9 +83,11 @@ public class GpNotificationResponse extends ZclCommand {
      * Sets Options.
      *
      * @param options the Options
+     * @return the GpNotificationResponse command
      */
-    public void setOptions(final Integer options) {
+    public GpNotificationResponse setOptions(final Integer options) {
         this.options = options;
+        return this;
     }
 
     /**
@@ -101,9 +103,11 @@ public class GpNotificationResponse extends ZclCommand {
      * Sets Gpd Src ID.
      *
      * @param gpdSrcId the Gpd Src ID
+     * @return the GpNotificationResponse command
      */
-    public void setGpdSrcId(final Integer gpdSrcId) {
+    public GpNotificationResponse setGpdSrcId(final Integer gpdSrcId) {
         this.gpdSrcId = gpdSrcId;
+        return this;
     }
 
     /**
@@ -119,9 +123,11 @@ public class GpNotificationResponse extends ZclCommand {
      * Sets Gpd IEEE.
      *
      * @param gpdIeee the Gpd IEEE
+     * @return the GpNotificationResponse command
      */
-    public void setGpdIeee(final IeeeAddress gpdIeee) {
+    public GpNotificationResponse setGpdIeee(final IeeeAddress gpdIeee) {
         this.gpdIeee = gpdIeee;
+        return this;
     }
 
     /**
@@ -137,9 +143,11 @@ public class GpNotificationResponse extends ZclCommand {
      * Sets Gpd Security Frame Counter.
      *
      * @param gpdSecurityFrameCounter the Gpd Security Frame Counter
+     * @return the GpNotificationResponse command
      */
-    public void setGpdSecurityFrameCounter(final Integer gpdSecurityFrameCounter) {
+    public GpNotificationResponse setGpdSecurityFrameCounter(final Integer gpdSecurityFrameCounter) {
         this.gpdSecurityFrameCounter = gpdSecurityFrameCounter;
+        return this;
     }
 
     @Override

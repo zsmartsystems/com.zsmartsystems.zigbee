@@ -18,7 +18,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class NotificationCommandSubPayload implements ZigBeeSerializable {
     /**
      * Cluster ID structure field.
@@ -74,9 +74,11 @@ public class NotificationCommandSubPayload implements ZigBeeSerializable {
      * will be configured for this Notification scheme.
      *
      * @param clusterId the Cluster ID
+     * @return the NotificationCommandSubPayload command
      */
-    public void setClusterId(final Integer clusterId) {
+    public NotificationCommandSubPayload setClusterId(final Integer clusterId) {
         this.clusterId = clusterId;
+        return this;
     }
 
     /**
@@ -100,9 +102,11 @@ public class NotificationCommandSubPayload implements ZigBeeSerializable {
      * scheme.
      *
      * @param manufacturerCode the Manufacturer Code
+     * @return the NotificationCommandSubPayload command
      */
-    public void setManufacturerCode(final Integer manufacturerCode) {
+    public NotificationCommandSubPayload setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
+        return this;
     }
 
     /**
@@ -124,9 +128,11 @@ public class NotificationCommandSubPayload implements ZigBeeSerializable {
      * within this sub payload.
      *
      * @param numberOfCommands the Number Of Commands
+     * @return the NotificationCommandSubPayload command
      */
-    public void setNumberOfCommands(final Integer numberOfCommands) {
+    public NotificationCommandSubPayload setNumberOfCommands(final Integer numberOfCommands) {
         this.numberOfCommands = numberOfCommands;
+        return this;
     }
 
     /**
@@ -148,9 +154,11 @@ public class NotificationCommandSubPayload implements ZigBeeSerializable {
      * should be used with the cluster ID to reference the command(s).
      *
      * @param commandIds the Command IDs
+     * @return the NotificationCommandSubPayload command
      */
-    public void setCommandIds(final Integer commandIds) {
+    public NotificationCommandSubPayload setCommandIds(final Integer commandIds) {
         this.commandIds = commandIds;
+        return this;
     }
 
     @Override

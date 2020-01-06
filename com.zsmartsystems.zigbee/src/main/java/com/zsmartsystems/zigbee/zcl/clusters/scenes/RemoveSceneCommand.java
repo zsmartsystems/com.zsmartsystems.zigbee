@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class RemoveSceneCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -70,9 +70,11 @@ public class RemoveSceneCommand extends ZclCommand {
      * Sets Group ID.
      *
      * @param groupId the Group ID
+     * @return the RemoveSceneCommand command
      */
-    public void setGroupId(final Integer groupId) {
+    public RemoveSceneCommand setGroupId(final Integer groupId) {
         this.groupId = groupId;
+        return this;
     }
 
     /**
@@ -88,9 +90,11 @@ public class RemoveSceneCommand extends ZclCommand {
      * Sets Scene ID.
      *
      * @param sceneId the Scene ID
+     * @return the RemoveSceneCommand command
      */
-    public void setSceneId(final Integer sceneId) {
+    public RemoveSceneCommand setSceneId(final Integer sceneId) {
         this.sceneId = sceneId;
+        return this;
     }
 
     @Override

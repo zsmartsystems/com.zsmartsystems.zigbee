@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class MoveSaturationCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -68,9 +68,11 @@ public class MoveSaturationCommand extends ZclCommand {
      * Sets Move Mode.
      *
      * @param moveMode the Move Mode
+     * @return the MoveSaturationCommand command
      */
-    public void setMoveMode(final Integer moveMode) {
+    public MoveSaturationCommand setMoveMode(final Integer moveMode) {
         this.moveMode = moveMode;
+        return this;
     }
 
     /**
@@ -86,9 +88,11 @@ public class MoveSaturationCommand extends ZclCommand {
      * Sets Rate.
      *
      * @param rate the Rate
+     * @return the MoveSaturationCommand command
      */
-    public void setRate(final Integer rate) {
+    public MoveSaturationCommand setRate(final Integer rate) {
         this.rate = rate;
+        return this;
     }
 
     @Override

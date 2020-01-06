@@ -35,7 +35,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoStatus;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-15T09:28:31Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ManagementNetworkUpdateNotify extends ZdoRequest {
     /**
      * The ZDO cluster ID.
@@ -87,9 +87,11 @@ public class ManagementNetworkUpdateNotify extends ZdoRequest {
      * Sets Status.
      *
      * @param status the Status
+     * @return the ManagementNetworkUpdateNotify command
      */
-    public void setStatus(final ZdoStatus status) {
+    public ManagementNetworkUpdateNotify setStatus(final ZdoStatus status) {
         this.status = status;
+        return this;
     }
 
     /**
@@ -105,9 +107,11 @@ public class ManagementNetworkUpdateNotify extends ZdoRequest {
      * Sets Scanned Channels.
      *
      * @param scannedChannels the Scanned Channels
+     * @return the ManagementNetworkUpdateNotify command
      */
-    public void setScannedChannels(final Integer scannedChannels) {
+    public ManagementNetworkUpdateNotify setScannedChannels(final Integer scannedChannels) {
         this.scannedChannels = scannedChannels;
+        return this;
     }
 
     /**
@@ -123,9 +127,11 @@ public class ManagementNetworkUpdateNotify extends ZdoRequest {
      * Sets Total Transmissions.
      *
      * @param totalTransmissions the Total Transmissions
+     * @return the ManagementNetworkUpdateNotify command
      */
-    public void setTotalTransmissions(final Integer totalTransmissions) {
+    public ManagementNetworkUpdateNotify setTotalTransmissions(final Integer totalTransmissions) {
         this.totalTransmissions = totalTransmissions;
+        return this;
     }
 
     /**
@@ -141,9 +147,11 @@ public class ManagementNetworkUpdateNotify extends ZdoRequest {
      * Sets Transmission Failures.
      *
      * @param transmissionFailures the Transmission Failures
+     * @return the ManagementNetworkUpdateNotify command
      */
-    public void setTransmissionFailures(final Integer transmissionFailures) {
+    public ManagementNetworkUpdateNotify setTransmissionFailures(final Integer transmissionFailures) {
         this.transmissionFailures = transmissionFailures;
+        return this;
     }
 
     /**
@@ -159,9 +167,11 @@ public class ManagementNetworkUpdateNotify extends ZdoRequest {
      * Sets Energy Values.
      *
      * @param energyValues the Energy Values
+     * @return the ManagementNetworkUpdateNotify command
      */
-    public void setEnergyValues(final List<Integer> energyValues) {
+    public ManagementNetworkUpdateNotify setEnergyValues(final List<Integer> energyValues) {
         this.energyValues = energyValues;
+        return this;
     }
 
     @Override

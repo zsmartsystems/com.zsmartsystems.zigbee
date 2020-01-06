@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class OnWithTimedOffCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -96,9 +96,11 @@ public class OnWithTimedOffCommand extends ZclCommand {
      * is to be operated.
      *
      * @param onOffControl the On Off Control
+     * @return the OnWithTimedOffCommand command
      */
-    public void setOnOffControl(final Integer onOffControl) {
+    public OnWithTimedOffCommand setOnOffControl(final Integer onOffControl) {
         this.onOffControl = onOffControl;
+        return this;
     }
 
     /**
@@ -130,9 +132,11 @@ public class OnWithTimedOffCommand extends ZclCommand {
      * back “on”. This field shall be specified in the range 0x0000–0xfffe.
      *
      * @param onTime the On Time
+     * @return the OnWithTimedOffCommand command
      */
-    public void setOnTime(final Integer onTime) {
+    public OnWithTimedOffCommand setOnTime(final Integer onTime) {
         this.onTime = onTime;
+        return this;
     }
 
     /**
@@ -148,9 +152,11 @@ public class OnWithTimedOffCommand extends ZclCommand {
      * Sets Off Wait Time.
      *
      * @param offWaitTime the Off Wait Time
+     * @return the OnWithTimedOffCommand command
      */
-    public void setOffWaitTime(final Integer offWaitTime) {
+    public OnWithTimedOffCommand setOffWaitTime(final Integer offWaitTime) {
         this.offWaitTime = offWaitTime;
+        return this;
     }
 
     @Override

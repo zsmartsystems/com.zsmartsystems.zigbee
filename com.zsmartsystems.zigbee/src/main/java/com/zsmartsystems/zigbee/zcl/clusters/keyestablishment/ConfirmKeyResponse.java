@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ConfirmKeyResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -68,9 +68,11 @@ public class ConfirmKeyResponse extends ZclCommand {
      * Sets Secure Message Authentication Code.
      *
      * @param secureMessageAuthenticationCode the Secure Message Authentication Code
+     * @return the ConfirmKeyResponse command
      */
-    public void setSecureMessageAuthenticationCode(final ByteArray secureMessageAuthenticationCode) {
+    public ConfirmKeyResponse setSecureMessageAuthenticationCode(final ByteArray secureMessageAuthenticationCode) {
         this.secureMessageAuthenticationCode = secureMessageAuthenticationCode;
+        return this;
     }
 
     @Override

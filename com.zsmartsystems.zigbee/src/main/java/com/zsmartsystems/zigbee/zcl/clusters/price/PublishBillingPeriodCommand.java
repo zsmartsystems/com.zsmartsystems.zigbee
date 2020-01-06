@@ -33,7 +33,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class PublishBillingPeriodCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -138,9 +138,11 @@ public class PublishBillingPeriodCommand extends ZclCommand {
      * providers may be available.
      *
      * @param providerId the Provider ID
+     * @return the PublishBillingPeriodCommand command
      */
-    public void setProviderId(final Integer providerId) {
+    public PublishBillingPeriodCommand setProviderId(final Integer providerId) {
         this.providerId = providerId;
+        return this;
     }
 
     /**
@@ -170,9 +172,11 @@ public class PublishBillingPeriodCommand extends ZclCommand {
      * value in the Issuer Event ID field that is larger than older information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the PublishBillingPeriodCommand command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public PublishBillingPeriodCommand setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -204,9 +208,11 @@ public class PublishBillingPeriodCommand extends ZclCommand {
      * cancellation mechanism).
      *
      * @param billingPeriodStartTime the Billing Period Start Time
+     * @return the PublishBillingPeriodCommand command
      */
-    public void setBillingPeriodStartTime(final Calendar billingPeriodStartTime) {
+    public PublishBillingPeriodCommand setBillingPeriodStartTime(final Calendar billingPeriodStartTime) {
         this.billingPeriodStartTime = billingPeriodStartTime;
+        return this;
     }
 
     /**
@@ -232,9 +238,11 @@ public class PublishBillingPeriodCommand extends ZclCommand {
      * BillingPeriodStartTime, a new billing period will start with the same duration.
      *
      * @param billingPeriodDuration the Billing Period Duration
+     * @return the PublishBillingPeriodCommand command
      */
-    public void setBillingPeriodDuration(final Integer billingPeriodDuration) {
+    public PublishBillingPeriodCommand setBillingPeriodDuration(final Integer billingPeriodDuration) {
         this.billingPeriodDuration = billingPeriodDuration;
+        return this;
     }
 
     /**
@@ -258,9 +266,11 @@ public class PublishBillingPeriodCommand extends ZclCommand {
      * enumerated sub-field providing duration control.
      *
      * @param billingPeriodDurationType the Billing Period Duration Type
+     * @return the PublishBillingPeriodCommand command
      */
-    public void setBillingPeriodDurationType(final Integer billingPeriodDurationType) {
+    public PublishBillingPeriodCommand setBillingPeriodDurationType(final Integer billingPeriodDurationType) {
         this.billingPeriodDurationType = billingPeriodDurationType;
+        return this;
     }
 
     /**
@@ -284,9 +294,11 @@ public class PublishBillingPeriodCommand extends ZclCommand {
      * shall use the ‘Received’ Tariff). The most significant nibble is reserved.
      *
      * @param tariffType the Tariff Type
+     * @return the PublishBillingPeriodCommand command
      */
-    public void setTariffType(final Integer tariffType) {
+    public PublishBillingPeriodCommand setTariffType(final Integer tariffType) {
         this.tariffType = tariffType;
+        return this;
     }
 
     @Override

@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-15T09:28:31Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ManagementNetworkDiscovery extends ZdoRequest {
     /**
      * The ZDO cluster ID.
@@ -66,9 +66,11 @@ public class ManagementNetworkDiscovery extends ZdoRequest {
      * Sets Scan Channels.
      *
      * @param scanChannels the Scan Channels
+     * @return the ManagementNetworkDiscovery command
      */
-    public void setScanChannels(final Integer scanChannels) {
+    public ManagementNetworkDiscovery setScanChannels(final Integer scanChannels) {
         this.scanChannels = scanChannels;
+        return this;
     }
 
     /**
@@ -84,9 +86,11 @@ public class ManagementNetworkDiscovery extends ZdoRequest {
      * Sets Scan Duration.
      *
      * @param scanDuration the Scan Duration
+     * @return the ManagementNetworkDiscovery command
      */
-    public void setScanDuration(final Integer scanDuration) {
+    public ManagementNetworkDiscovery setScanDuration(final Integer scanDuration) {
         this.scanDuration = scanDuration;
+        return this;
     }
 
     /**
@@ -102,9 +106,11 @@ public class ManagementNetworkDiscovery extends ZdoRequest {
      * Sets Start Index.
      *
      * @param startIndex the Start Index
+     * @return the ManagementNetworkDiscovery command
      */
-    public void setStartIndex(final Integer startIndex) {
+    public ManagementNetworkDiscovery setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;
+        return this;
     }
 
     @Override

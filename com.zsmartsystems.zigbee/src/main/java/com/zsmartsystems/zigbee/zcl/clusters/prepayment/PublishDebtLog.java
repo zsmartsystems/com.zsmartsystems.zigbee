@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class PublishDebtLog extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -76,9 +76,11 @@ public class PublishDebtLog extends ZclCommand {
      * Sets Command Index.
      *
      * @param commandIndex the Command Index
+     * @return the PublishDebtLog command
      */
-    public void setCommandIndex(final Integer commandIndex) {
+    public PublishDebtLog setCommandIndex(final Integer commandIndex) {
         this.commandIndex = commandIndex;
+        return this;
     }
 
     /**
@@ -94,9 +96,11 @@ public class PublishDebtLog extends ZclCommand {
      * Sets Total Number Of Commands.
      *
      * @param totalNumberOfCommands the Total Number Of Commands
+     * @return the PublishDebtLog command
      */
-    public void setTotalNumberOfCommands(final Integer totalNumberOfCommands) {
+    public PublishDebtLog setTotalNumberOfCommands(final Integer totalNumberOfCommands) {
         this.totalNumberOfCommands = totalNumberOfCommands;
+        return this;
     }
 
     /**
@@ -112,9 +116,11 @@ public class PublishDebtLog extends ZclCommand {
      * Sets Debt Payload.
      *
      * @param debtPayload the Debt Payload
+     * @return the PublishDebtLog command
      */
-    public void setDebtPayload(final DebtPayload debtPayload) {
+    public PublishDebtLog setDebtPayload(final DebtPayload debtPayload) {
         this.debtPayload = debtPayload;
+        return this;
     }
 
     @Override

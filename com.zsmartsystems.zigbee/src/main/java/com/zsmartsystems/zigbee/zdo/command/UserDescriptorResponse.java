@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zdo.field.UserDescriptor;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-15T18:21:05Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class UserDescriptorResponse extends ZdoResponse {
     /**
      * The ZDO cluster ID.
@@ -68,9 +68,11 @@ public class UserDescriptorResponse extends ZdoResponse {
      * Sets NWK Addr Of Interest.
      *
      * @param nwkAddrOfInterest the NWK Addr Of Interest
+     * @return the UserDescriptorResponse command
      */
-    public void setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
+    public UserDescriptorResponse setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
         this.nwkAddrOfInterest = nwkAddrOfInterest;
+        return this;
     }
 
     /**
@@ -86,9 +88,11 @@ public class UserDescriptorResponse extends ZdoResponse {
      * Sets Length.
      *
      * @param length the Length
+     * @return the UserDescriptorResponse command
      */
-    public void setLength(final Integer length) {
+    public UserDescriptorResponse setLength(final Integer length) {
         this.length = length;
+        return this;
     }
 
     /**
@@ -104,9 +108,11 @@ public class UserDescriptorResponse extends ZdoResponse {
      * Sets User Descriptor.
      *
      * @param userDescriptor the User Descriptor
+     * @return the UserDescriptorResponse command
      */
-    public void setUserDescriptor(final UserDescriptor userDescriptor) {
+    public UserDescriptorResponse setUserDescriptor(final UserDescriptor userDescriptor) {
         this.userDescriptor = userDescriptor;
+        return this;
     }
 
     @Override

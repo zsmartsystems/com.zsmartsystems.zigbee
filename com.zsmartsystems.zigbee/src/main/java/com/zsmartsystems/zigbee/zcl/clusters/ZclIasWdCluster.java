@@ -32,7 +32,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:44:02Z")
 public class ZclIasWdCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -185,6 +185,7 @@ public class ZclIasWdCluster extends ZclCluster {
      * @param warningDuration {@link Integer} Warning Duration
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> startWarningCommand(Integer header, Integer warningDuration) {
         StartWarningCommand command = new StartWarningCommand();
 
@@ -192,7 +193,7 @@ public class ZclIasWdCluster extends ZclCluster {
         command.setHeader(header);
         command.setWarningDuration(warningDuration);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -205,12 +206,13 @@ public class ZclIasWdCluster extends ZclCluster {
      * @param squawkInfo {@link Integer} Squawk Info
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> squawk(Integer squawkInfo) {
         Squawk command = new Squawk();
 
         // Set the fields
         command.setSquawkInfo(squawkInfo);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class SelectAvailableEmergencyCredit extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -84,9 +84,11 @@ public class SelectAvailableEmergencyCredit extends ZclCommand {
      * Sets Command Issue Date Time.
      *
      * @param commandIssueDateTime the Command Issue Date Time
+     * @return the SelectAvailableEmergencyCredit command
      */
-    public void setCommandIssueDateTime(final Calendar commandIssueDateTime) {
+    public SelectAvailableEmergencyCredit setCommandIssueDateTime(final Calendar commandIssueDateTime) {
         this.commandIssueDateTime = commandIssueDateTime;
+        return this;
     }
 
     /**
@@ -102,9 +104,11 @@ public class SelectAvailableEmergencyCredit extends ZclCommand {
      * Sets Originating Device.
      *
      * @param originatingDevice the Originating Device
+     * @return the SelectAvailableEmergencyCredit command
      */
-    public void setOriginatingDevice(final Integer originatingDevice) {
+    public SelectAvailableEmergencyCredit setOriginatingDevice(final Integer originatingDevice) {
         this.originatingDevice = originatingDevice;
+        return this;
     }
 
     /**
@@ -120,9 +124,11 @@ public class SelectAvailableEmergencyCredit extends ZclCommand {
      * Sets Site ID.
      *
      * @param siteId the Site ID
+     * @return the SelectAvailableEmergencyCredit command
      */
-    public void setSiteId(final ByteArray siteId) {
+    public SelectAvailableEmergencyCredit setSiteId(final ByteArray siteId) {
         this.siteId = siteId;
+        return this;
     }
 
     /**
@@ -138,9 +144,11 @@ public class SelectAvailableEmergencyCredit extends ZclCommand {
      * Sets Meter Serial Number.
      *
      * @param meterSerialNumber the Meter Serial Number
+     * @return the SelectAvailableEmergencyCredit command
      */
-    public void setMeterSerialNumber(final ByteArray meterSerialNumber) {
+    public SelectAvailableEmergencyCredit setMeterSerialNumber(final ByteArray meterSerialNumber) {
         this.meterSerialNumber = meterSerialNumber;
+        return this;
     }
 
     @Override

@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class SetOverallDebtCap extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -83,9 +83,11 @@ public class SetOverallDebtCap extends ZclCommand {
      * Sets Provider ID.
      *
      * @param providerId the Provider ID
+     * @return the SetOverallDebtCap command
      */
-    public void setProviderId(final Integer providerId) {
+    public SetOverallDebtCap setProviderId(final Integer providerId) {
         this.providerId = providerId;
+        return this;
     }
 
     /**
@@ -101,9 +103,11 @@ public class SetOverallDebtCap extends ZclCommand {
      * Sets Issuer Event ID.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the SetOverallDebtCap command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public SetOverallDebtCap setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -119,9 +123,11 @@ public class SetOverallDebtCap extends ZclCommand {
      * Sets Implementation Date Time.
      *
      * @param implementationDateTime the Implementation Date Time
+     * @return the SetOverallDebtCap command
      */
-    public void setImplementationDateTime(final Calendar implementationDateTime) {
+    public SetOverallDebtCap setImplementationDateTime(final Calendar implementationDateTime) {
         this.implementationDateTime = implementationDateTime;
+        return this;
     }
 
     /**
@@ -137,9 +143,11 @@ public class SetOverallDebtCap extends ZclCommand {
      * Sets Overall Debt Cap.
      *
      * @param overallDebtCap the Overall Debt Cap
+     * @return the SetOverallDebtCap command
      */
-    public void setOverallDebtCap(final Integer overallDebtCap) {
+    public SetOverallDebtCap setOverallDebtCap(final Integer overallDebtCap) {
         this.overallDebtCap = overallDebtCap;
+        return this;
     }
 
     @Override

@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class RequestTunnelResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -102,9 +102,11 @@ public class RequestTunnelResponse extends ZclCommand {
      * the reason of the error and the TunnelID is set to 0xFFFF.
      *
      * @param tunnelId the Tunnel ID
+     * @return the RequestTunnelResponse command
      */
-    public void setTunnelId(final Integer tunnelId) {
+    public RequestTunnelResponse setTunnelId(final Integer tunnelId) {
         this.tunnelId = tunnelId;
+        return this;
     }
 
     /**
@@ -126,9 +128,11 @@ public class RequestTunnelResponse extends ZclCommand {
      * execution of a RequestTunnel command.
      *
      * @param tunnelStatus the Tunnel Status
+     * @return the RequestTunnelResponse command
      */
-    public void setTunnelStatus(final Integer tunnelStatus) {
+    public RequestTunnelResponse setTunnelStatus(final Integer tunnelStatus) {
         this.tunnelStatus = tunnelStatus;
+        return this;
     }
 
     /**
@@ -150,9 +154,11 @@ public class RequestTunnelResponse extends ZclCommand {
      * transferred to the server in the payload of a single TransferData command.
      *
      * @param maximumIncomingTransferSize the Maximum Incoming Transfer Size
+     * @return the RequestTunnelResponse command
      */
-    public void setMaximumIncomingTransferSize(final Integer maximumIncomingTransferSize) {
+    public RequestTunnelResponse setMaximumIncomingTransferSize(final Integer maximumIncomingTransferSize) {
         this.maximumIncomingTransferSize = maximumIncomingTransferSize;
+        return this;
     }
 
     @Override

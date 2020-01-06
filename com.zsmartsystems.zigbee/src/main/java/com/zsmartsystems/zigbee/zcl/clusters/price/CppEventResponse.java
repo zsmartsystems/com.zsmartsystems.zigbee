@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class CppEventResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -95,9 +95,11 @@ public class CppEventResponse extends ZclCommand {
      * value in the Issuer Event ID field that is larger than older information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the CppEventResponse command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public CppEventResponse setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -119,9 +121,11 @@ public class CppEventResponse extends ZclCommand {
      * the ‘Accepted’ or ‘Rejected’ values.
      *
      * @param cppAuth the Cpp Auth
+     * @return the CppEventResponse command
      */
-    public void setCppAuth(final Integer cppAuth) {
+    public CppEventResponse setCppAuth(final Integer cppAuth) {
         this.cppAuth = cppAuth;
+        return this;
     }
 
     @Override

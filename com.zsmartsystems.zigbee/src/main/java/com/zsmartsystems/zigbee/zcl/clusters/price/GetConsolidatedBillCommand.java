@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetConsolidatedBillCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -119,9 +119,11 @@ public class GetConsolidatedBillCommand extends ZclCommand {
      * StartTime.
      *
      * @param earliestStartTime the Earliest Start Time
+     * @return the GetConsolidatedBillCommand command
      */
-    public void setEarliestStartTime(final Calendar earliestStartTime) {
+    public GetConsolidatedBillCommand setEarliestStartTime(final Calendar earliestStartTime) {
         this.earliestStartTime = earliestStartTime;
+        return this;
     }
 
     /**
@@ -147,9 +149,11 @@ public class GetConsolidatedBillCommand extends ZclCommand {
      * the value of the Issuer Event ID.
      *
      * @param minIssuerEventId the Min . Issuer Event ID
+     * @return the GetConsolidatedBillCommand command
      */
-    public void setMinIssuerEventId(final Integer minIssuerEventId) {
+    public GetConsolidatedBillCommand setMinIssuerEventId(final Integer minIssuerEventId) {
         this.minIssuerEventId = minIssuerEventId;
+        return this;
     }
 
     /**
@@ -173,9 +177,11 @@ public class GetConsolidatedBillCommand extends ZclCommand {
      * PublishConsolidatedBill commands shall be returned.
      *
      * @param numberOfCommands the Number Of Commands
+     * @return the GetConsolidatedBillCommand command
      */
-    public void setNumberOfCommands(final Integer numberOfCommands) {
+    public GetConsolidatedBillCommand setNumberOfCommands(final Integer numberOfCommands) {
         this.numberOfCommands = numberOfCommands;
+        return this;
     }
 
     /**
@@ -203,9 +209,11 @@ public class GetConsolidatedBillCommand extends ZclCommand {
      * regardless of tariff type. The most significant nibble is reserved.
      *
      * @param tariffType the Tariff Type
+     * @return the GetConsolidatedBillCommand command
      */
-    public void setTariffType(final Integer tariffType) {
+    public GetConsolidatedBillCommand setTariffType(final Integer tariffType) {
         this.tariffType = tariffType;
+        return this;
     }
 
     @Override

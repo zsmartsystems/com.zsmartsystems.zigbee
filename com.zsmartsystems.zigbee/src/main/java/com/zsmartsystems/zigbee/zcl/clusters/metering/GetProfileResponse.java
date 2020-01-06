@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetProfileResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -121,9 +121,11 @@ public class GetProfileResponse extends ZclCommand {
      * the CurrentPartialProfileIntervalValue attribute.
      *
      * @param endTime the End Time
+     * @return the GetProfileResponse command
      */
-    public void setEndTime(final Calendar endTime) {
+    public GetProfileResponse setEndTime(final Calendar endTime) {
         this.endTime = endTime;
+        return this;
     }
 
     /**
@@ -139,9 +141,11 @@ public class GetProfileResponse extends ZclCommand {
      * Sets Status.
      *
      * @param status the Status
+     * @return the GetProfileResponse command
      */
-    public void setStatus(final Integer status) {
+    public GetProfileResponse setStatus(final Integer status) {
         this.status = status;
+        return this;
     }
 
     /**
@@ -163,9 +167,11 @@ public class GetProfileResponse extends ZclCommand {
      * consumption for profiling purposes.
      *
      * @param profileIntervalPeriod the Profile Interval Period
+     * @return the GetProfileResponse command
      */
-    public void setProfileIntervalPeriod(final Integer profileIntervalPeriod) {
+    public GetProfileResponse setProfileIntervalPeriod(final Integer profileIntervalPeriod) {
         this.profileIntervalPeriod = profileIntervalPeriod;
+        return this;
     }
 
     /**
@@ -191,9 +197,11 @@ public class GetProfileResponse extends ZclCommand {
      * information as a convenience.
      *
      * @param numberOfPeriodsDelivered the Number Of Periods Delivered
+     * @return the GetProfileResponse command
      */
-    public void setNumberOfPeriodsDelivered(final Integer numberOfPeriodsDelivered) {
+    public GetProfileResponse setNumberOfPeriodsDelivered(final Integer numberOfPeriodsDelivered) {
         this.numberOfPeriodsDelivered = numberOfPeriodsDelivered;
+        return this;
     }
 
     /**
@@ -225,9 +233,11 @@ public class GetProfileResponse extends ZclCommand {
      * as 0xFFFFFF.
      *
      * @param intervals the Intervals
+     * @return the GetProfileResponse command
      */
-    public void setIntervals(final Integer intervals) {
+    public GetProfileResponse setIntervals(final Integer intervals) {
         this.intervals = intervals;
+        return this;
     }
 
     @Override

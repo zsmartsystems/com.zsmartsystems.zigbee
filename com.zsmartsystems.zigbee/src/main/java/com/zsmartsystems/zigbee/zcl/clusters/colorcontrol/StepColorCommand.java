@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class StepColorCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -73,9 +73,11 @@ public class StepColorCommand extends ZclCommand {
      * Sets Step X.
      *
      * @param stepX the Step X
+     * @return the StepColorCommand command
      */
-    public void setStepX(final Integer stepX) {
+    public StepColorCommand setStepX(final Integer stepX) {
         this.stepX = stepX;
+        return this;
     }
 
     /**
@@ -91,9 +93,11 @@ public class StepColorCommand extends ZclCommand {
      * Sets Step Y.
      *
      * @param stepY the Step Y
+     * @return the StepColorCommand command
      */
-    public void setStepY(final Integer stepY) {
+    public StepColorCommand setStepY(final Integer stepY) {
         this.stepY = stepY;
+        return this;
     }
 
     /**
@@ -109,9 +113,11 @@ public class StepColorCommand extends ZclCommand {
      * Sets Transition Time.
      *
      * @param transitionTime the Transition Time
+     * @return the StepColorCommand command
      */
-    public void setTransitionTime(final Integer transitionTime) {
+    public StepColorCommand setTransitionTime(final Integer transitionTime) {
         this.transitionTime = transitionTime;
+        return this;
     }
 
     @Override

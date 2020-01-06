@@ -18,7 +18,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class PriceMatrixSubPayload implements ZigBeeSerializable {
     /**
      * Tier Block ID structure field.
@@ -45,9 +45,11 @@ public class PriceMatrixSubPayload implements ZigBeeSerializable {
      * Sets Tier Block ID.
      *
      * @param tierBlockId the Tier Block ID
+     * @return the PriceMatrixSubPayload command
      */
-    public void setTierBlockId(final Integer tierBlockId) {
+    public PriceMatrixSubPayload setTierBlockId(final Integer tierBlockId) {
         this.tierBlockId = tierBlockId;
+        return this;
     }
 
     /**
@@ -63,9 +65,11 @@ public class PriceMatrixSubPayload implements ZigBeeSerializable {
      * Sets Price.
      *
      * @param price the Price
+     * @return the PriceMatrixSubPayload command
      */
-    public void setPrice(final Integer price) {
+    public PriceMatrixSubPayload setPrice(final Integer price) {
         this.price = price;
+        return this;
     }
 
     @Override

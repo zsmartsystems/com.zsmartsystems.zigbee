@@ -30,7 +30,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class StartSampling extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -128,9 +128,11 @@ public class StartSampling extends ZclCommand {
      * device may return a ZCL Default Response command in this case.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the StartSampling command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public StartSampling setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -156,9 +158,11 @@ public class StartSampling extends ZclCommand {
      * Issuer Event ID to be cancelled.
      *
      * @param startSamplingTime the Start Sampling Time
+     * @return the StartSampling command
      */
-    public void setStartSamplingTime(final Calendar startSamplingTime) {
+    public StartSampling setStartSamplingTime(final Calendar startSamplingTime) {
         this.startSamplingTime = startSamplingTime;
+        return this;
     }
 
     /**
@@ -178,9 +182,11 @@ public class StartSampling extends ZclCommand {
      * An 8 bit enumeration that identifies the type of data being sampled.
      *
      * @param sampleType the Sample Type
+     * @return the StartSampling command
      */
-    public void setSampleType(final Integer sampleType) {
+    public StartSampling setSampleType(final Integer sampleType) {
         this.sampleType = sampleType;
+        return this;
     }
 
     /**
@@ -200,9 +206,11 @@ public class StartSampling extends ZclCommand {
      * An unsigned 16-bit field representing the interval or time in seconds between samples.
      *
      * @param sampleRequestInterval the Sample Request Interval
+     * @return the StartSampling command
      */
-    public void setSampleRequestInterval(final Integer sampleRequestInterval) {
+    public StartSampling setSampleRequestInterval(final Integer sampleRequestInterval) {
         this.sampleRequestInterval = sampleRequestInterval;
+        return this;
     }
 
     /**
@@ -222,9 +230,11 @@ public class StartSampling extends ZclCommand {
      * A 16 bit unsigned integer that represents the number of samples to be taken.
      *
      * @param maxNumberOfSamples the Max Number Of Samples
+     * @return the StartSampling command
      */
-    public void setMaxNumberOfSamples(final Integer maxNumberOfSamples) {
+    public StartSampling setMaxNumberOfSamples(final Integer maxNumberOfSamples) {
         this.maxNumberOfSamples = maxNumberOfSamples;
+        return this;
     }
 
     @Override

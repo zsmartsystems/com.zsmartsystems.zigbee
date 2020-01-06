@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetAlarmResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -84,9 +84,11 @@ public class GetAlarmResponse extends ZclCommand {
      * Sets Status.
      *
      * @param status the Status
+     * @return the GetAlarmResponse command
      */
-    public void setStatus(final Integer status) {
+    public GetAlarmResponse setStatus(final Integer status) {
         this.status = status;
+        return this;
     }
 
     /**
@@ -102,9 +104,11 @@ public class GetAlarmResponse extends ZclCommand {
      * Sets Alarm Code.
      *
      * @param alarmCode the Alarm Code
+     * @return the GetAlarmResponse command
      */
-    public void setAlarmCode(final Integer alarmCode) {
+    public GetAlarmResponse setAlarmCode(final Integer alarmCode) {
         this.alarmCode = alarmCode;
+        return this;
     }
 
     /**
@@ -120,9 +124,11 @@ public class GetAlarmResponse extends ZclCommand {
      * Sets Cluster Identifier.
      *
      * @param clusterIdentifier the Cluster Identifier
+     * @return the GetAlarmResponse command
      */
-    public void setClusterIdentifier(final Integer clusterIdentifier) {
+    public GetAlarmResponse setClusterIdentifier(final Integer clusterIdentifier) {
         this.clusterIdentifier = clusterIdentifier;
+        return this;
     }
 
     /**
@@ -138,9 +144,11 @@ public class GetAlarmResponse extends ZclCommand {
      * Sets Timestamp.
      *
      * @param timestamp the Timestamp
+     * @return the GetAlarmResponse command
      */
-    public void setTimestamp(final Integer timestamp) {
+    public GetAlarmResponse setTimestamp(final Integer timestamp) {
         this.timestamp = timestamp;
+        return this;
     }
 
     @Override

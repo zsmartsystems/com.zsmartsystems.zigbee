@@ -32,7 +32,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-03T12:48:45Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GpNotification extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -112,9 +112,11 @@ public class GpNotification extends ZclCommand {
      * Sets Options.
      *
      * @param options the Options
+     * @return the GpNotification command
      */
-    public void setOptions(final Integer options) {
+    public GpNotification setOptions(final Integer options) {
         this.options = options;
+        return this;
     }
 
     /**
@@ -130,9 +132,11 @@ public class GpNotification extends ZclCommand {
      * Sets Gpd Src ID.
      *
      * @param gpdSrcId the Gpd Src ID
+     * @return the GpNotification command
      */
-    public void setGpdSrcId(final Integer gpdSrcId) {
+    public GpNotification setGpdSrcId(final Integer gpdSrcId) {
         this.gpdSrcId = gpdSrcId;
+        return this;
     }
 
     /**
@@ -148,9 +152,11 @@ public class GpNotification extends ZclCommand {
      * Sets Gpd IEEE.
      *
      * @param gpdIeee the Gpd IEEE
+     * @return the GpNotification command
      */
-    public void setGpdIeee(final IeeeAddress gpdIeee) {
+    public GpNotification setGpdIeee(final IeeeAddress gpdIeee) {
         this.gpdIeee = gpdIeee;
+        return this;
     }
 
     /**
@@ -166,9 +172,11 @@ public class GpNotification extends ZclCommand {
      * Sets Gpd Endpoint.
      *
      * @param gpdEndpoint the Gpd Endpoint
+     * @return the GpNotification command
      */
-    public void setGpdEndpoint(final Integer gpdEndpoint) {
+    public GpNotification setGpdEndpoint(final Integer gpdEndpoint) {
         this.gpdEndpoint = gpdEndpoint;
+        return this;
     }
 
     /**
@@ -184,9 +192,11 @@ public class GpNotification extends ZclCommand {
      * Sets Gpd Security Frame Counter.
      *
      * @param gpdSecurityFrameCounter the Gpd Security Frame Counter
+     * @return the GpNotification command
      */
-    public void setGpdSecurityFrameCounter(final Integer gpdSecurityFrameCounter) {
+    public GpNotification setGpdSecurityFrameCounter(final Integer gpdSecurityFrameCounter) {
         this.gpdSecurityFrameCounter = gpdSecurityFrameCounter;
+        return this;
     }
 
     /**
@@ -202,9 +212,11 @@ public class GpNotification extends ZclCommand {
      * Sets Gpd Command ID.
      *
      * @param gpdCommandId the Gpd Command ID
+     * @return the GpNotification command
      */
-    public void setGpdCommandId(final Integer gpdCommandId) {
+    public GpNotification setGpdCommandId(final Integer gpdCommandId) {
         this.gpdCommandId = gpdCommandId;
+        return this;
     }
 
     /**
@@ -220,9 +232,11 @@ public class GpNotification extends ZclCommand {
      * Sets Gpd Command Payload.
      *
      * @param gpdCommandPayload the Gpd Command Payload
+     * @return the GpNotification command
      */
-    public void setGpdCommandPayload(final ByteArray gpdCommandPayload) {
+    public GpNotification setGpdCommandPayload(final ByteArray gpdCommandPayload) {
         this.gpdCommandPayload = gpdCommandPayload;
+        return this;
     }
 
     /**
@@ -238,9 +252,11 @@ public class GpNotification extends ZclCommand {
      * Sets Gpp Short Address.
      *
      * @param gppShortAddress the Gpp Short Address
+     * @return the GpNotification command
      */
-    public void setGppShortAddress(final Integer gppShortAddress) {
+    public GpNotification setGppShortAddress(final Integer gppShortAddress) {
         this.gppShortAddress = gppShortAddress;
+        return this;
     }
 
     /**
@@ -256,9 +272,11 @@ public class GpNotification extends ZclCommand {
      * Sets Gpp Distance.
      *
      * @param gppDistance the Gpp Distance
+     * @return the GpNotification command
      */
-    public void setGppDistance(final Integer gppDistance) {
+    public GpNotification setGppDistance(final Integer gppDistance) {
         this.gppDistance = gppDistance;
+        return this;
     }
 
     @Override

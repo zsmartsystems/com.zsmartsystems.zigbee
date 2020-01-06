@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-09-20T08:23:22Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class EnhancedViewSceneCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -71,9 +71,11 @@ public class EnhancedViewSceneCommand extends ZclCommand {
      * Sets Group ID.
      *
      * @param groupId the Group ID
+     * @return the EnhancedViewSceneCommand command
      */
-    public void setGroupId(final Integer groupId) {
+    public EnhancedViewSceneCommand setGroupId(final Integer groupId) {
         this.groupId = groupId;
+        return this;
     }
 
     /**
@@ -89,9 +91,11 @@ public class EnhancedViewSceneCommand extends ZclCommand {
      * Sets Scene ID.
      *
      * @param sceneId the Scene ID
+     * @return the EnhancedViewSceneCommand command
      */
-    public void setSceneId(final Integer sceneId) {
+    public EnhancedViewSceneCommand setSceneId(final Integer sceneId) {
         this.sceneId = sceneId;
+        return this;
     }
 
     @Override

@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ChangePaymentModeResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -80,9 +80,11 @@ public class ChangePaymentModeResponse extends ZclCommand {
      * Sets Friendly Credit.
      *
      * @param friendlyCredit the Friendly Credit
+     * @return the ChangePaymentModeResponse command
      */
-    public void setFriendlyCredit(final Integer friendlyCredit) {
+    public ChangePaymentModeResponse setFriendlyCredit(final Integer friendlyCredit) {
         this.friendlyCredit = friendlyCredit;
+        return this;
     }
 
     /**
@@ -98,9 +100,11 @@ public class ChangePaymentModeResponse extends ZclCommand {
      * Sets Friendly Credit Calendar ID.
      *
      * @param friendlyCreditCalendarId the Friendly Credit Calendar ID
+     * @return the ChangePaymentModeResponse command
      */
-    public void setFriendlyCreditCalendarId(final Integer friendlyCreditCalendarId) {
+    public ChangePaymentModeResponse setFriendlyCreditCalendarId(final Integer friendlyCreditCalendarId) {
         this.friendlyCreditCalendarId = friendlyCreditCalendarId;
+        return this;
     }
 
     /**
@@ -116,9 +120,11 @@ public class ChangePaymentModeResponse extends ZclCommand {
      * Sets Emergency Credit Limit.
      *
      * @param emergencyCreditLimit the Emergency Credit Limit
+     * @return the ChangePaymentModeResponse command
      */
-    public void setEmergencyCreditLimit(final Integer emergencyCreditLimit) {
+    public ChangePaymentModeResponse setEmergencyCreditLimit(final Integer emergencyCreditLimit) {
         this.emergencyCreditLimit = emergencyCreditLimit;
+        return this;
     }
 
     /**
@@ -134,9 +140,11 @@ public class ChangePaymentModeResponse extends ZclCommand {
      * Sets Emergency Credit Threshold.
      *
      * @param emergencyCreditThreshold the Emergency Credit Threshold
+     * @return the ChangePaymentModeResponse command
      */
-    public void setEmergencyCreditThreshold(final Integer emergencyCreditThreshold) {
+    public ChangePaymentModeResponse setEmergencyCreditThreshold(final Integer emergencyCreditThreshold) {
         this.emergencyCreditThreshold = emergencyCreditThreshold;
+        return this;
     }
 
     @Override

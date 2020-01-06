@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-15T22:10:14Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class EnhancedViewSceneResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -91,9 +91,11 @@ public class EnhancedViewSceneResponse extends ZclCommand {
      * Sets Status.
      *
      * @param status the Status
+     * @return the EnhancedViewSceneResponse command
      */
-    public void setStatus(final Integer status) {
+    public EnhancedViewSceneResponse setStatus(final Integer status) {
         this.status = status;
+        return this;
     }
 
     /**
@@ -109,9 +111,11 @@ public class EnhancedViewSceneResponse extends ZclCommand {
      * Sets Group ID.
      *
      * @param groupId the Group ID
+     * @return the EnhancedViewSceneResponse command
      */
-    public void setGroupId(final Integer groupId) {
+    public EnhancedViewSceneResponse setGroupId(final Integer groupId) {
         this.groupId = groupId;
+        return this;
     }
 
     /**
@@ -127,9 +131,11 @@ public class EnhancedViewSceneResponse extends ZclCommand {
      * Sets Scene ID.
      *
      * @param sceneId the Scene ID
+     * @return the EnhancedViewSceneResponse command
      */
-    public void setSceneId(final Integer sceneId) {
+    public EnhancedViewSceneResponse setSceneId(final Integer sceneId) {
         this.sceneId = sceneId;
+        return this;
     }
 
     /**
@@ -145,9 +151,11 @@ public class EnhancedViewSceneResponse extends ZclCommand {
      * Sets Transition Time.
      *
      * @param transitionTime the Transition Time
+     * @return the EnhancedViewSceneResponse command
      */
-    public void setTransitionTime(final Integer transitionTime) {
+    public EnhancedViewSceneResponse setTransitionTime(final Integer transitionTime) {
         this.transitionTime = transitionTime;
+        return this;
     }
 
     /**
@@ -163,9 +171,11 @@ public class EnhancedViewSceneResponse extends ZclCommand {
      * Sets Scene Name.
      *
      * @param sceneName the Scene Name
+     * @return the EnhancedViewSceneResponse command
      */
-    public void setSceneName(final String sceneName) {
+    public EnhancedViewSceneResponse setSceneName(final String sceneName) {
         this.sceneName = sceneName;
+        return this;
     }
 
     /**
@@ -181,9 +191,11 @@ public class EnhancedViewSceneResponse extends ZclCommand {
      * Sets Extension Field Sets.
      *
      * @param extensionFieldSets the Extension Field Sets
+     * @return the EnhancedViewSceneResponse command
      */
-    public void setExtensionFieldSets(final List<ExtensionFieldSet> extensionFieldSets) {
+    public EnhancedViewSceneResponse setExtensionFieldSets(final List<ExtensionFieldSet> extensionFieldSets) {
         this.extensionFieldSets = extensionFieldSets;
+        return this;
     }
 
     @Override

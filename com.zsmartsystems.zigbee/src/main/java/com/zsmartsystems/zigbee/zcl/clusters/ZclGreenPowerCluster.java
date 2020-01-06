@@ -48,7 +48,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-03T12:48:45Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:44:02Z")
 public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -1071,6 +1071,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param gppDistance {@link Integer} Gpp Distance
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> gpNotification(Integer options, Integer gpdSrcId, IeeeAddress gpdIeee, Integer gpdEndpoint, Integer gpdSecurityFrameCounter, Integer gpdCommandId, ByteArray gpdCommandPayload, Integer gppShortAddress, Integer gppDistance) {
         GpNotification command = new GpNotification();
 
@@ -1085,7 +1086,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setGppShortAddress(gppShortAddress);
         command.setGppDistance(gppDistance);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1103,6 +1104,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param endpoint {@link Integer} Endpoint
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> gpPairingSearch(Integer options, Integer gpdSrcId, IeeeAddress gpdIeee, Integer endpoint) {
         GpPairingSearch command = new GpPairingSearch();
 
@@ -1112,7 +1114,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setGpdIeee(gpdIeee);
         command.setEndpoint(endpoint);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1130,6 +1132,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param gppDistance {@link Integer} Gpp Distance
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> gpTunnelingStop(Integer options, Integer gpdSrcId, IeeeAddress gpdIeee, Integer endpoint, Integer gpdSecurityFrameCounter, Integer gppShortAddress, Integer gppDistance) {
         GpTunnelingStop command = new GpTunnelingStop();
 
@@ -1142,7 +1145,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setGppShortAddress(gppShortAddress);
         command.setGppDistance(gppDistance);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1167,6 +1170,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param mic {@link Integer} Mic
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> gpCommissioningNotification(Integer options, Integer gpdSrcId, IeeeAddress gpdIeee, Integer endpoint, Integer gpdSecurityFrameCounter, Integer gpdCommandId, ByteArray gpdCommandPayload, Integer gppShortAddress, Integer gppLink, Integer mic) {
         GpCommissioningNotification command = new GpCommissioningNotification();
 
@@ -1182,7 +1186,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setGppLink(gppLink);
         command.setMic(mic);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1198,6 +1202,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param sinkEndpoint {@link Integer} Sink Endpoint
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> gpSinkCommissioningMode(Integer options, Integer gpmAddrForSecurity, Integer gpmAddrForPairing, Integer sinkEndpoint) {
         GpSinkCommissioningMode command = new GpSinkCommissioningMode();
 
@@ -1207,7 +1212,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setGpmAddrForPairing(gpmAddrForPairing);
         command.setSinkEndpoint(sinkEndpoint);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1222,6 +1227,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param translations {@link GpTranslationTableUpdateTranslation} Translations
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> gpTranslationTableUpdate(Integer options, Integer gpdSrcId, IeeeAddress gpdIeee, Integer endpoint, GpTranslationTableUpdateTranslation translations) {
         GpTranslationTableUpdate command = new GpTranslationTableUpdate();
 
@@ -1232,7 +1238,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setEndpoint(endpoint);
         command.setTranslations(translations);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1244,13 +1250,14 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param startIndex {@link Integer} Start Index
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> gpTranslationTableRequest(Integer startIndex) {
         GpTranslationTableRequest command = new GpTranslationTableRequest();
 
         // Set the fields
         command.setStartIndex(startIndex);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1289,6 +1296,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param clusterListClient {@link Integer} Cluster List Client
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> gpPairingConfiguration(Integer actions, Integer options, Integer gpdSrcId, IeeeAddress gpdIeee, Integer endpoint, Integer deviceId, Integer groupListCount, GpPairingConfigurationGroupList groupList, Integer gpdAssignedAlias, Integer forwardingRadius, Integer securityOptions, Integer gpdSecurityFrameCounter, ZigBeeKey gpdSecurityKey, Integer numberOfPairedEndpoints, Integer pairedEndpoints, Integer applicationInformation, Integer manufacturerId, Integer modeId, Integer numberOfGpdCommands, Integer gpdCommandIdList, Integer clusterIdListCount, Integer clusterListServer, Integer clusterListClient) {
         GpPairingConfiguration command = new GpPairingConfiguration();
 
@@ -1317,7 +1325,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setClusterListServer(clusterListServer);
         command.setClusterListClient(clusterListClient);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1333,6 +1341,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param index {@link Integer} Index
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> gpSinkTableRequest(Integer options, Integer gpdSrcId, IeeeAddress gpdIeee, Integer endpoint, Integer index) {
         GpSinkTableRequest command = new GpSinkTableRequest();
 
@@ -1343,7 +1352,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setEndpoint(endpoint);
         command.setIndex(index);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1363,6 +1372,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param proxyTableEntries {@link Integer} Proxy Table Entries
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> gpProxyTableResponse(Integer status, Integer totalNumberOfNonEmptyProxyTableEntries, Integer startIndex, Integer entriesCount, Integer proxyTableEntries) {
         GpProxyTableResponse command = new GpProxyTableResponse();
 
@@ -1373,7 +1383,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setEntriesCount(entriesCount);
         command.setProxyTableEntries(proxyTableEntries);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1389,6 +1399,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param gpdSecurityFrameCounter {@link Integer} Gpd Security Frame Counter
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> gpNotificationResponse(Integer options, Integer gpdSrcId, IeeeAddress gpdIeee, Integer gpdSecurityFrameCounter) {
         GpNotificationResponse command = new GpNotificationResponse();
 
@@ -1398,7 +1409,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setGpdIeee(gpdIeee);
         command.setGpdSecurityFrameCounter(gpdSecurityFrameCounter);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1423,6 +1434,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param forwardingRadius {@link Integer} Forwarding Radius
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> gpPairing(Integer options, Integer gpdSrcId, IeeeAddress gpdIeee, Integer endpoint, IeeeAddress sinkIeeeAddress, Integer sinkNwkAddress, Integer sinkGroupId, Integer deviceId, Integer gpdSecurityFrameCounter, ZigBeeKey gpdKey, Integer assignedAlias, Integer forwardingRadius) {
         GpPairing command = new GpPairing();
 
@@ -1440,7 +1452,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setAssignedAlias(assignedAlias);
         command.setForwardingRadius(forwardingRadius);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1455,6 +1467,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param channel {@link Integer} Channel
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> gpProxyCommissioningMode(Integer options, Integer commissioningWindow, Integer channel) {
         GpProxyCommissioningMode command = new GpProxyCommissioningMode();
 
@@ -1463,7 +1476,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setCommissioningWindow(commissioningWindow);
         command.setChannel(channel);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1482,6 +1495,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param gpdCommandPayload {@link ByteArray} Gpd Command Payload
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> gpResponse(Integer options, Integer tempMasterShortAddress, Integer tempMasterTxChannel, Integer gpdSrcId, IeeeAddress gpdIeee, Integer endpoint, Integer gpdCommandId, ByteArray gpdCommandPayload) {
         GpResponse command = new GpResponse();
 
@@ -1495,7 +1509,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setGpdCommandId(gpdCommandId);
         command.setGpdCommandPayload(gpdCommandPayload);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1510,6 +1524,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param sinkTableEntries {@link Integer} Sink Table Entries
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> gpSinkTableResponse(Integer status, Integer totalNumberofNonEmptySinkTableEntries, Integer startIndex, Integer sinkTableEntriesCount, Integer sinkTableEntries) {
         GpSinkTableResponse command = new GpSinkTableResponse();
 
@@ -1520,7 +1535,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setSinkTableEntriesCount(sinkTableEntriesCount);
         command.setSinkTableEntries(sinkTableEntries);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1535,6 +1550,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param index {@link Integer} Index
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> gpProxyTableRequest(Integer options, Integer gpdSrcId, IeeeAddress gpdIeee, Integer endpoint, Integer index) {
         GpProxyTableRequest command = new GpProxyTableRequest();
 
@@ -1545,6 +1561,6 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setEndpoint(endpoint);
         command.setIndex(index);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

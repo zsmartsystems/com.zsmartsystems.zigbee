@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ResetAlarmCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -72,9 +72,11 @@ public class ResetAlarmCommand extends ZclCommand {
      * Sets Alarm Code.
      *
      * @param alarmCode the Alarm Code
+     * @return the ResetAlarmCommand command
      */
-    public void setAlarmCode(final Integer alarmCode) {
+    public ResetAlarmCommand setAlarmCode(final Integer alarmCode) {
         this.alarmCode = alarmCode;
+        return this;
     }
 
     /**
@@ -90,9 +92,11 @@ public class ResetAlarmCommand extends ZclCommand {
      * Sets Cluster Identifier.
      *
      * @param clusterIdentifier the Cluster Identifier
+     * @return the ResetAlarmCommand command
      */
-    public void setClusterIdentifier(final Integer clusterIdentifier) {
+    public ResetAlarmCommand setClusterIdentifier(final Integer clusterIdentifier) {
         this.clusterIdentifier = clusterIdentifier;
+        return this;
     }
 
     @Override

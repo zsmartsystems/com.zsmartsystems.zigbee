@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ReadAttributesStructuredCommand extends ZclCommand {
     /**
      * The command ID.
@@ -74,9 +74,11 @@ public class ReadAttributesStructuredCommand extends ZclCommand {
      * Sets Attribute Selectors.
      *
      * @param attributeSelectors the Attribute Selectors
+     * @return the ReadAttributesStructuredCommand command
      */
-    public void setAttributeSelectors(final Object attributeSelectors) {
+    public ReadAttributesStructuredCommand setAttributeSelectors(final Object attributeSelectors) {
         this.attributeSelectors = attributeSelectors;
+        return this;
     }
 
     @Override

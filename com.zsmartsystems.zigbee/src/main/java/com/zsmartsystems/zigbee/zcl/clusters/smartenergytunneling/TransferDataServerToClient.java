@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class TransferDataServerToClient extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -99,9 +99,11 @@ public class TransferDataServerToClient extends ZclCommand {
      * the reason of the error and the TunnelID is set to 0xFFFF.
      *
      * @param tunnelId the Tunnel ID
+     * @return the TransferDataServerToClient command
      */
-    public void setTunnelId(final Integer tunnelId) {
+    public TransferDataServerToClient setTunnelId(final Integer tunnelId) {
         this.tunnelId = tunnelId;
+        return this;
     }
 
     /**
@@ -135,9 +137,11 @@ public class TransferDataServerToClient extends ZclCommand {
      * the implementer of the specific tunnel protocol).
      *
      * @param data the Data
+     * @return the TransferDataServerToClient command
      */
-    public void setData(final ByteArray data) {
+    public TransferDataServerToClient setData(final ByteArray data) {
         this.data = data;
+        return this;
     }
 
     @Override

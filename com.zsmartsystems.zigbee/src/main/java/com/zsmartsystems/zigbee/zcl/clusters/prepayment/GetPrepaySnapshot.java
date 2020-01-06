@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetPrepaySnapshot extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -82,9 +82,11 @@ public class GetPrepaySnapshot extends ZclCommand {
      * Sets Earliest Start Time.
      *
      * @param earliestStartTime the Earliest Start Time
+     * @return the GetPrepaySnapshot command
      */
-    public void setEarliestStartTime(final Calendar earliestStartTime) {
+    public GetPrepaySnapshot setEarliestStartTime(final Calendar earliestStartTime) {
         this.earliestStartTime = earliestStartTime;
+        return this;
     }
 
     /**
@@ -100,9 +102,11 @@ public class GetPrepaySnapshot extends ZclCommand {
      * Sets Latest End Time.
      *
      * @param latestEndTime the Latest End Time
+     * @return the GetPrepaySnapshot command
      */
-    public void setLatestEndTime(final Calendar latestEndTime) {
+    public GetPrepaySnapshot setLatestEndTime(final Calendar latestEndTime) {
         this.latestEndTime = latestEndTime;
+        return this;
     }
 
     /**
@@ -118,9 +122,11 @@ public class GetPrepaySnapshot extends ZclCommand {
      * Sets Snapshot Offset.
      *
      * @param snapshotOffset the Snapshot Offset
+     * @return the GetPrepaySnapshot command
      */
-    public void setSnapshotOffset(final Integer snapshotOffset) {
+    public GetPrepaySnapshot setSnapshotOffset(final Integer snapshotOffset) {
         this.snapshotOffset = snapshotOffset;
+        return this;
     }
 
     /**
@@ -136,9 +142,11 @@ public class GetPrepaySnapshot extends ZclCommand {
      * Sets Snapshot Cause.
      *
      * @param snapshotCause the Snapshot Cause
+     * @return the GetPrepaySnapshot command
      */
-    public void setSnapshotCause(final Integer snapshotCause) {
+    public GetPrepaySnapshot setSnapshotCause(final Integer snapshotCause) {
         this.snapshotCause = snapshotCause;
+        return this;
     }
 
     @Override

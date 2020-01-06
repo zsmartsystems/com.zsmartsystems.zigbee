@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zdo.command.IeeeAddressResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-15T18:21:05Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class IeeeAddressRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * The ZDO cluster ID.
@@ -69,9 +69,11 @@ public class IeeeAddressRequest extends ZdoRequest implements ZigBeeTransactionM
      * Sets NWK Addr Of Interest.
      *
      * @param nwkAddrOfInterest the NWK Addr Of Interest
+     * @return the IeeeAddressRequest command
      */
-    public void setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
+    public IeeeAddressRequest setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
         this.nwkAddrOfInterest = nwkAddrOfInterest;
+        return this;
     }
 
     /**
@@ -87,9 +89,11 @@ public class IeeeAddressRequest extends ZdoRequest implements ZigBeeTransactionM
      * Sets Request Type.
      *
      * @param requestType the Request Type
+     * @return the IeeeAddressRequest command
      */
-    public void setRequestType(final Integer requestType) {
+    public IeeeAddressRequest setRequestType(final Integer requestType) {
         this.requestType = requestType;
+        return this;
     }
 
     /**
@@ -105,9 +109,11 @@ public class IeeeAddressRequest extends ZdoRequest implements ZigBeeTransactionM
      * Sets Start Index.
      *
      * @param startIndex the Start Index
+     * @return the IeeeAddressRequest command
      */
-    public void setStartIndex(final Integer startIndex) {
+    public IeeeAddressRequest setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;
+        return this;
     }
 
     @Override

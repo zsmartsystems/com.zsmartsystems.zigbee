@@ -41,7 +41,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class InitiateTestModeCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -101,9 +101,11 @@ public class InitiateTestModeCommand extends ZclCommand {
      * test mode.
      *
      * @param testModeDuration the Test Mode Duration
+     * @return the InitiateTestModeCommand command
      */
-    public void setTestModeDuration(final Integer testModeDuration) {
+    public InitiateTestModeCommand setTestModeDuration(final Integer testModeDuration) {
         this.testModeDuration = testModeDuration;
+        return this;
     }
 
     /**
@@ -131,9 +133,11 @@ public class InitiateTestModeCommand extends ZclCommand {
      * CurrentZoneSensitivityLevel Attribute.
      *
      * @param currentZoneSensitivityLevel the Current Zone Sensitivity Level
+     * @return the InitiateTestModeCommand command
      */
-    public void setCurrentZoneSensitivityLevel(final Integer currentZoneSensitivityLevel) {
+    public InitiateTestModeCommand setCurrentZoneSensitivityLevel(final Integer currentZoneSensitivityLevel) {
         this.currentZoneSensitivityLevel = currentZoneSensitivityLevel;
+        return this;
     }
 
     @Override

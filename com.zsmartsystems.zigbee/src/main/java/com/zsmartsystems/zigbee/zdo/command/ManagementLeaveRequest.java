@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zdo.command.ManagementLeaveResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ManagementLeaveRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * The ZDO cluster ID.
@@ -66,9 +66,11 @@ public class ManagementLeaveRequest extends ZdoRequest implements ZigBeeTransact
      * Sets Device Address.
      *
      * @param deviceAddress the Device Address
+     * @return the ManagementLeaveRequest command
      */
-    public void setDeviceAddress(final IeeeAddress deviceAddress) {
+    public ManagementLeaveRequest setDeviceAddress(final IeeeAddress deviceAddress) {
         this.deviceAddress = deviceAddress;
+        return this;
     }
 
     /**
@@ -84,9 +86,11 @@ public class ManagementLeaveRequest extends ZdoRequest implements ZigBeeTransact
      * Sets Remove Children_Rejoin.
      *
      * @param removeChildrenRejoin the Remove Children_Rejoin
+     * @return the ManagementLeaveRequest command
      */
-    public void setRemoveChildrenRejoin(final Boolean removeChildrenRejoin) {
+    public ManagementLeaveRequest setRemoveChildrenRejoin(final Boolean removeChildrenRejoin) {
         this.removeChildrenRejoin = removeChildrenRejoin;
+        return this;
     }
 
     @Override

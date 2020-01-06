@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ReadyDataClientToServer extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -95,9 +95,11 @@ public class ReadyDataClientToServer extends ZclCommand {
      * tunnel.
      *
      * @param tunnelId the Tunnel ID
+     * @return the ReadyDataClientToServer command
      */
-    public void setTunnelId(final Integer tunnelId) {
+    public ReadyDataClientToServer setTunnelId(final Integer tunnelId) {
         this.tunnelId = tunnelId;
+        return this;
     }
 
     /**
@@ -127,9 +129,11 @@ public class ReadyDataClientToServer extends ZclCommand {
      * the cluster to decide what flow control algorithm shall be applied.
      *
      * @param numberOfOctetsLeft the Number Of Octets Left
+     * @return the ReadyDataClientToServer command
      */
-    public void setNumberOfOctetsLeft(final Integer numberOfOctetsLeft) {
+    public ReadyDataClientToServer setNumberOfOctetsLeft(final Integer numberOfOctetsLeft) {
         this.numberOfOctetsLeft = numberOfOctetsLeft;
+        return this;
     }
 
     @Override

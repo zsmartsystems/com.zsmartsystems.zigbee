@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class RequestTunnel extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -110,9 +110,11 @@ public class RequestTunnel extends ZclCommand {
      * The values above 199 may be used for manufacturer specific protocols.
      *
      * @param protocolId the Protocol ID
+     * @return the RequestTunnel command
      */
-    public void setProtocolId(final Integer protocolId) {
+    public RequestTunnel setProtocolId(final Integer protocolId) {
         this.protocolId = protocolId;
+        return this;
     }
 
     /**
@@ -140,9 +142,11 @@ public class RequestTunnel extends ZclCommand {
      * Manufacturer Code is not used.
      *
      * @param manufacturerCode the Manufacturer Code
+     * @return the RequestTunnel command
      */
-    public void setManufacturerCode(final Integer manufacturerCode) {
+    public RequestTunnel setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
+        return this;
     }
 
     /**
@@ -164,9 +168,11 @@ public class RequestTunnel extends ZclCommand {
      * the tunnel (TRUE) or not (FALSE). The default value is FALSE (no flow control).
      *
      * @param flowControlSupport the Flow Control Support
+     * @return the RequestTunnel command
      */
-    public void setFlowControlSupport(final Boolean flowControlSupport) {
+    public RequestTunnel setFlowControlSupport(final Boolean flowControlSupport) {
         this.flowControlSupport = flowControlSupport;
+        return this;
     }
 
     /**
@@ -188,9 +194,11 @@ public class RequestTunnel extends ZclCommand {
      * transferred to the client in the payload of a single TransferData command.
      *
      * @param maximumIncomingTransferSize the Maximum Incoming Transfer Size
+     * @return the RequestTunnel command
      */
-    public void setMaximumIncomingTransferSize(final Integer maximumIncomingTransferSize) {
+    public RequestTunnel setMaximumIncomingTransferSize(final Integer maximumIncomingTransferSize) {
         this.maximumIncomingTransferSize = maximumIncomingTransferSize;
+        return this;
     }
 
     @Override

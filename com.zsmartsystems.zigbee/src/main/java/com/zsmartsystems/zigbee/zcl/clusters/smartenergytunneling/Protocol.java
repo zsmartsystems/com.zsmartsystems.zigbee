@@ -18,7 +18,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class Protocol implements ZigBeeSerializable {
     /**
      * Manufacturer Code structure field.
@@ -45,9 +45,11 @@ public class Protocol implements ZigBeeSerializable {
      * Sets Manufacturer Code.
      *
      * @param manufacturerCode the Manufacturer Code
+     * @return the Protocol command
      */
-    public void setManufacturerCode(final Integer manufacturerCode) {
+    public Protocol setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
+        return this;
     }
 
     /**
@@ -63,9 +65,11 @@ public class Protocol implements ZigBeeSerializable {
      * Sets Protocol ID.
      *
      * @param protocolId the Protocol ID
+     * @return the Protocol command
      */
-    public void setProtocolId(final Integer protocolId) {
+    public Protocol setProtocolId(final Integer protocolId) {
         this.protocolId = protocolId;
+        return this;
     }
 
     @Override

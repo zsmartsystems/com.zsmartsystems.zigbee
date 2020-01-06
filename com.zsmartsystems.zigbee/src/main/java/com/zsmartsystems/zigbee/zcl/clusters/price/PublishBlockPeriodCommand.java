@@ -37,7 +37,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class PublishBlockPeriodCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -181,9 +181,11 @@ public class PublishBlockPeriodCommand extends ZclCommand {
      * providers may be available.
      *
      * @param providerId the Provider ID
+     * @return the PublishBlockPeriodCommand command
      */
-    public void setProviderId(final Integer providerId) {
+    public PublishBlockPeriodCommand setProviderId(final Integer providerId) {
         this.providerId = providerId;
+        return this;
     }
 
     /**
@@ -215,9 +217,11 @@ public class PublishBlockPeriodCommand extends ZclCommand {
      * field that is larger than older block information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the PublishBlockPeriodCommand command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public PublishBlockPeriodCommand setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -263,9 +267,11 @@ public class PublishBlockPeriodCommand extends ZclCommand {
      * set to 23:59:59 on the applicable date.
      *
      * @param blockPeriodStartTime the Block Period Start Time
+     * @return the PublishBlockPeriodCommand command
      */
-    public void setBlockPeriodStartTime(final Calendar blockPeriodStartTime) {
+    public PublishBlockPeriodCommand setBlockPeriodStartTime(final Calendar blockPeriodStartTime) {
         this.blockPeriodStartTime = blockPeriodStartTime;
+        return this;
     }
 
     /**
@@ -289,9 +295,11 @@ public class PublishBlockPeriodCommand extends ZclCommand {
      * changed'.
      *
      * @param blockPeriodDuration the Block Period Duration
+     * @return the PublishBlockPeriodCommand command
      */
-    public void setBlockPeriodDuration(final Integer blockPeriodDuration) {
+    public PublishBlockPeriodCommand setBlockPeriodDuration(final Integer blockPeriodDuration) {
         this.blockPeriodDuration = blockPeriodDuration;
+        return this;
     }
 
     /**
@@ -319,9 +327,11 @@ public class PublishBlockPeriodCommand extends ZclCommand {
      * Billing periods is out of scope of this specification.
      *
      * @param blockPeriodControl the Block Period Control
+     * @return the PublishBlockPeriodCommand command
      */
-    public void setBlockPeriodControl(final Integer blockPeriodControl) {
+    public PublishBlockPeriodCommand setBlockPeriodControl(final Integer blockPeriodControl) {
         this.blockPeriodControl = blockPeriodControl;
+        return this;
     }
 
     /**
@@ -359,9 +369,11 @@ public class PublishBlockPeriodCommand extends ZclCommand {
      * Minutes is in use.
      *
      * @param blockPeriodDurationType the Block Period Duration Type
+     * @return the PublishBlockPeriodCommand command
      */
-    public void setBlockPeriodDurationType(final Integer blockPeriodDurationType) {
+    public PublishBlockPeriodCommand setBlockPeriodDurationType(final Integer blockPeriodDurationType) {
         this.blockPeriodDurationType = blockPeriodDurationType;
+        return this;
     }
 
     /**
@@ -385,9 +397,11 @@ public class PublishBlockPeriodCommand extends ZclCommand {
      * shall use the ‘Received’ Tariff). The most significant nibble is reserved.
      *
      * @param tariffType the Tariff Type
+     * @return the PublishBlockPeriodCommand command
      */
-    public void setTariffType(final Integer tariffType) {
+    public PublishBlockPeriodCommand setTariffType(final Integer tariffType) {
         this.tariffType = tariffType;
+        return this;
     }
 
     /**
@@ -421,9 +435,11 @@ public class PublishBlockPeriodCommand extends ZclCommand {
      * for the customer. This is described as follows:
      *
      * @param tariffResolutionPeriod the Tariff Resolution Period
+     * @return the PublishBlockPeriodCommand command
      */
-    public void setTariffResolutionPeriod(final Integer tariffResolutionPeriod) {
+    public PublishBlockPeriodCommand setTariffResolutionPeriod(final Integer tariffResolutionPeriod) {
         this.tariffResolutionPeriod = tariffResolutionPeriod;
+        return this;
     }
 
     @Override

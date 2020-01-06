@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetCo2ValueCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -116,9 +116,11 @@ public class GetCo2ValueCommand extends ZclCommand {
      * instances shall be sent with ascending ordered StartTime.
      *
      * @param earliestStartTime the Earliest Start Time
+     * @return the GetCo2ValueCommand command
      */
-    public void setEarliestStartTime(final Calendar earliestStartTime) {
+    public GetCo2ValueCommand setEarliestStartTime(final Calendar earliestStartTime) {
         this.earliestStartTime = earliestStartTime;
+        return this;
     }
 
     /**
@@ -142,9 +144,11 @@ public class GetCo2ValueCommand extends ZclCommand {
      * the server shall return values irrespective of the value of the Issuer Event ID.
      *
      * @param minIssuerEventId the Min . Issuer Event ID
+     * @return the GetCo2ValueCommand command
      */
-    public void setMinIssuerEventId(final Integer minIssuerEventId) {
+    public GetCo2ValueCommand setMinIssuerEventId(final Integer minIssuerEventId) {
         this.minIssuerEventId = minIssuerEventId;
+        return this;
     }
 
     /**
@@ -168,9 +172,11 @@ public class GetCo2ValueCommand extends ZclCommand {
      * all available PublishCO2Value commands shall be returned.
      *
      * @param numberOfCommands the Number Of Commands
+     * @return the GetCo2ValueCommand command
      */
-    public void setNumberOfCommands(final Integer numberOfCommands) {
+    public GetCo2ValueCommand setNumberOfCommands(final Integer numberOfCommands) {
         this.numberOfCommands = numberOfCommands;
+        return this;
     }
 
     /**
@@ -198,9 +204,11 @@ public class GetCo2ValueCommand extends ZclCommand {
      * tariff type. The most significant nibble is reserved.
      *
      * @param tariffType the Tariff Type
+     * @return the GetCo2ValueCommand command
      */
-    public void setTariffType(final Integer tariffType) {
+    public GetCo2ValueCommand setTariffType(final Integer tariffType) {
         this.tariffType = tariffType;
+        return this;
     }
 
     @Override

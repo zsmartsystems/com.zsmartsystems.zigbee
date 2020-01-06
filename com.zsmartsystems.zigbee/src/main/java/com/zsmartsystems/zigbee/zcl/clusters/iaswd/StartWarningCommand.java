@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class StartWarningCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -72,9 +72,11 @@ public class StartWarningCommand extends ZclCommand {
      * Sets Header.
      *
      * @param header the Header
+     * @return the StartWarningCommand command
      */
-    public void setHeader(final Integer header) {
+    public StartWarningCommand setHeader(final Integer header) {
         this.header = header;
+        return this;
     }
 
     /**
@@ -90,9 +92,11 @@ public class StartWarningCommand extends ZclCommand {
      * Sets Warning Duration.
      *
      * @param warningDuration the Warning Duration
+     * @return the StartWarningCommand command
      */
-    public void setWarningDuration(final Integer warningDuration) {
+    public StartWarningCommand setWarningDuration(final Integer warningDuration) {
         this.warningDuration = warningDuration;
+        return this;
     }
 
     @Override

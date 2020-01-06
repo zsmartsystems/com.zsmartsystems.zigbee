@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zdo.command.UserDescriptorResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-15T18:21:05Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class UserDescriptorRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * The ZDO cluster ID.
@@ -60,9 +60,11 @@ public class UserDescriptorRequest extends ZdoRequest implements ZigBeeTransacti
      * Sets NWK Addr Of Interest.
      *
      * @param nwkAddrOfInterest the NWK Addr Of Interest
+     * @return the UserDescriptorRequest command
      */
-    public void setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
+    public UserDescriptorRequest setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
         this.nwkAddrOfInterest = nwkAddrOfInterest;
+        return this;
     }
 
     @Override

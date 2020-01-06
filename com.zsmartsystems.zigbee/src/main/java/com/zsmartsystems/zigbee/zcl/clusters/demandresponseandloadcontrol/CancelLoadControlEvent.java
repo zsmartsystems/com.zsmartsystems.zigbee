@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class CancelLoadControlEvent extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -130,9 +130,11 @@ public class CancelLoadControlEvent extends ZclCommand {
      * Event was issued.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the CancelLoadControlEvent command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public CancelLoadControlEvent setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -164,9 +166,11 @@ public class CancelLoadControlEvent extends ZclCommand {
      * devices that are subject to load shed.)
      *
      * @param deviceClass the Device Class
+     * @return the CancelLoadControlEvent command
      */
-    public void setDeviceClass(final Integer deviceClass) {
+    public CancelLoadControlEvent setDeviceClass(final Integer deviceClass) {
         this.deviceClass = deviceClass;
+        return this;
     }
 
     /**
@@ -200,9 +204,11 @@ public class CancelLoadControlEvent extends ZclCommand {
      * further details.
      *
      * @param utilityEnrollmentGroup the Utility Enrollment Group
+     * @return the CancelLoadControlEvent command
      */
-    public void setUtilityEnrollmentGroup(final Integer utilityEnrollmentGroup) {
+    public CancelLoadControlEvent setUtilityEnrollmentGroup(final Integer utilityEnrollmentGroup) {
         this.utilityEnrollmentGroup = utilityEnrollmentGroup;
+        return this;
     }
 
     /**
@@ -218,9 +224,11 @@ public class CancelLoadControlEvent extends ZclCommand {
      * Sets Cancel Control.
      *
      * @param cancelControl the Cancel Control
+     * @return the CancelLoadControlEvent command
      */
-    public void setCancelControl(final Integer cancelControl) {
+    public CancelLoadControlEvent setCancelControl(final Integer cancelControl) {
         this.cancelControl = cancelControl;
+        return this;
     }
 
     /**
@@ -256,9 +264,11 @@ public class CancelLoadControlEvent extends ZclCommand {
      * correspond to the remainder of the event.
      *
      * @param effectiveTime the Effective Time
+     * @return the CancelLoadControlEvent command
      */
-    public void setEffectiveTime(final Calendar effectiveTime) {
+    public CancelLoadControlEvent setEffectiveTime(final Calendar effectiveTime) {
         this.effectiveTime = effectiveTime;
+        return this;
     }
 
     @Override

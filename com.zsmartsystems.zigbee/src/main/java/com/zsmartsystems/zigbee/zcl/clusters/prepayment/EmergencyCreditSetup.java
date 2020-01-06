@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class EmergencyCreditSetup extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -82,9 +82,11 @@ public class EmergencyCreditSetup extends ZclCommand {
      * Sets Issuer Event ID.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the EmergencyCreditSetup command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public EmergencyCreditSetup setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -100,9 +102,11 @@ public class EmergencyCreditSetup extends ZclCommand {
      * Sets Start Time.
      *
      * @param startTime the Start Time
+     * @return the EmergencyCreditSetup command
      */
-    public void setStartTime(final Calendar startTime) {
+    public EmergencyCreditSetup setStartTime(final Calendar startTime) {
         this.startTime = startTime;
+        return this;
     }
 
     /**
@@ -118,9 +122,11 @@ public class EmergencyCreditSetup extends ZclCommand {
      * Sets Emergency Credit Limit.
      *
      * @param emergencyCreditLimit the Emergency Credit Limit
+     * @return the EmergencyCreditSetup command
      */
-    public void setEmergencyCreditLimit(final Integer emergencyCreditLimit) {
+    public EmergencyCreditSetup setEmergencyCreditLimit(final Integer emergencyCreditLimit) {
         this.emergencyCreditLimit = emergencyCreditLimit;
+        return this;
     }
 
     /**
@@ -136,9 +142,11 @@ public class EmergencyCreditSetup extends ZclCommand {
      * Sets Emergency Credit Threshold.
      *
      * @param emergencyCreditThreshold the Emergency Credit Threshold
+     * @return the EmergencyCreditSetup command
      */
-    public void setEmergencyCreditThreshold(final Integer emergencyCreditThreshold) {
+    public EmergencyCreditSetup setEmergencyCreditThreshold(final Integer emergencyCreditThreshold) {
         this.emergencyCreditThreshold = emergencyCreditThreshold;
+        return this;
     }
 
     @Override

@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoStatus;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-15T18:21:05Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class MatchDescriptorResponse extends ZdoResponse {
     /**
      * The ZDO cluster ID.
@@ -65,9 +65,11 @@ public class MatchDescriptorResponse extends ZdoResponse {
      * Sets NWK Addr Of Interest.
      *
      * @param nwkAddrOfInterest the NWK Addr Of Interest
+     * @return the MatchDescriptorResponse command
      */
-    public void setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
+    public MatchDescriptorResponse setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
         this.nwkAddrOfInterest = nwkAddrOfInterest;
+        return this;
     }
 
     /**
@@ -83,9 +85,11 @@ public class MatchDescriptorResponse extends ZdoResponse {
      * Sets Match List.
      *
      * @param matchList the Match List
+     * @return the MatchDescriptorResponse command
      */
-    public void setMatchList(final List<Integer> matchList) {
+    public MatchDescriptorResponse setMatchList(final List<Integer> matchList) {
         this.matchList = matchList;
+        return this;
     }
 
     @Override

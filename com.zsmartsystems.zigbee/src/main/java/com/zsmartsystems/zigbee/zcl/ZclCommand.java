@@ -99,8 +99,9 @@ public abstract class ZclCommand extends ZigBeeCommand {
      *
      * @param commandDirection the {@link ZclCommandDirection}
      */
-    public void setCommandDirection(ZclCommandDirection commandDirection) {
+    public ZclCommand setCommandDirection(ZclCommandDirection commandDirection) {
         this.commandDirection = commandDirection;
+        return this;
     }
 
     /**
@@ -127,13 +128,14 @@ public abstract class ZclCommand extends ZigBeeCommand {
      *
      * @param manufacturerCode the manufacturer code
      */
-    protected void setManufacturerCode(int manufacturerCode) {
+    protected ZclCommand setManufacturerCode(int manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
+        return this;
     }
 
     /**
      * When set to true, the default response message will not be generated
-     * 
+     *
      * @return the disableDefaultResponse flag - when set to true, the default response message will not be generated
      */
     public boolean isDisableDefaultResponse() {
@@ -145,8 +147,9 @@ public abstract class ZclCommand extends ZigBeeCommand {
      *
      * @param disableDefaultResponse true if the default response is not required
      */
-    public void setDisableDefaultResponse(boolean disableDefaultResponse) {
+    public ZclCommand setDisableDefaultResponse(boolean disableDefaultResponse) {
         this.disableDefaultResponse = disableDefaultResponse;
+        return this;
     }
 
     @Override

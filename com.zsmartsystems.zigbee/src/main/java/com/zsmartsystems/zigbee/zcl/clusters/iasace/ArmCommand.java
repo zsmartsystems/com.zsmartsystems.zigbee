@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ArmCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -93,9 +93,11 @@ public class ArmCommand extends ZclCommand {
      * Sets Arm Mode.
      *
      * @param armMode the Arm Mode
+     * @return the ArmCommand command
      */
-    public void setArmMode(final Integer armMode) {
+    public ArmCommand setArmMode(final Integer armMode) {
         this.armMode = armMode;
+        return this;
     }
 
     /**
@@ -135,9 +137,11 @@ public class ArmCommand extends ZclCommand {
      * The string encoding shall be UTF-8.
      *
      * @param armDisarmCode the Arm/Disarm Code
+     * @return the ArmCommand command
      */
-    public void setArmDisarmCode(final String armDisarmCode) {
+    public ArmCommand setArmDisarmCode(final String armDisarmCode) {
         this.armDisarmCode = armDisarmCode;
+        return this;
     }
 
     /**
@@ -159,9 +163,11 @@ public class ArmCommand extends ZclCommand {
      * default value shall be indicated in this field.
      *
      * @param zoneId the Zone ID
+     * @return the ArmCommand command
      */
-    public void setZoneId(final Integer zoneId) {
+    public ArmCommand setZoneId(final Integer zoneId) {
         this.zoneId = zoneId;
+        return this;
     }
 
     @Override

@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class Squawk extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -67,9 +67,11 @@ public class Squawk extends ZclCommand {
      * Sets Squawk Info.
      *
      * @param squawkInfo the Squawk Info
+     * @return the Squawk command
      */
-    public void setSquawkInfo(final Integer squawkInfo) {
+    public Squawk setSquawkInfo(final Integer squawkInfo) {
         this.squawkInfo = squawkInfo;
+        return this;
     }
 
     @Override

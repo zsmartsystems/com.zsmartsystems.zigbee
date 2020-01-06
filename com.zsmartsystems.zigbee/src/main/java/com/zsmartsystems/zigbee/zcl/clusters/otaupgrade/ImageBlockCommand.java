@@ -37,7 +37,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ImageBlockCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -112,9 +112,11 @@ public class ImageBlockCommand extends ZclCommand {
      * Sets Field Control.
      *
      * @param fieldControl the Field Control
+     * @return the ImageBlockCommand command
      */
-    public void setFieldControl(final Integer fieldControl) {
+    public ImageBlockCommand setFieldControl(final Integer fieldControl) {
         this.fieldControl = fieldControl;
+        return this;
     }
 
     /**
@@ -130,9 +132,11 @@ public class ImageBlockCommand extends ZclCommand {
      * Sets Manufacturer Code.
      *
      * @param manufacturerCode the Manufacturer Code
+     * @return the ImageBlockCommand command
      */
-    public void setManufacturerCode(final Integer manufacturerCode) {
+    public ImageBlockCommand setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
+        return this;
     }
 
     /**
@@ -148,9 +152,11 @@ public class ImageBlockCommand extends ZclCommand {
      * Sets Image Type.
      *
      * @param imageType the Image Type
+     * @return the ImageBlockCommand command
      */
-    public void setImageType(final Integer imageType) {
+    public ImageBlockCommand setImageType(final Integer imageType) {
         this.imageType = imageType;
+        return this;
     }
 
     /**
@@ -166,9 +172,11 @@ public class ImageBlockCommand extends ZclCommand {
      * Sets File Version.
      *
      * @param fileVersion the File Version
+     * @return the ImageBlockCommand command
      */
-    public void setFileVersion(final Integer fileVersion) {
+    public ImageBlockCommand setFileVersion(final Integer fileVersion) {
         this.fileVersion = fileVersion;
+        return this;
     }
 
     /**
@@ -184,9 +192,11 @@ public class ImageBlockCommand extends ZclCommand {
      * Sets File Offset.
      *
      * @param fileOffset the File Offset
+     * @return the ImageBlockCommand command
      */
-    public void setFileOffset(final Integer fileOffset) {
+    public ImageBlockCommand setFileOffset(final Integer fileOffset) {
         this.fileOffset = fileOffset;
+        return this;
     }
 
     /**
@@ -202,9 +212,11 @@ public class ImageBlockCommand extends ZclCommand {
      * Sets Maximum Data Size.
      *
      * @param maximumDataSize the Maximum Data Size
+     * @return the ImageBlockCommand command
      */
-    public void setMaximumDataSize(final Integer maximumDataSize) {
+    public ImageBlockCommand setMaximumDataSize(final Integer maximumDataSize) {
         this.maximumDataSize = maximumDataSize;
+        return this;
     }
 
     /**
@@ -220,9 +232,11 @@ public class ImageBlockCommand extends ZclCommand {
      * Sets Request Node Address.
      *
      * @param requestNodeAddress the Request Node Address
+     * @return the ImageBlockCommand command
      */
-    public void setRequestNodeAddress(final IeeeAddress requestNodeAddress) {
+    public ImageBlockCommand setRequestNodeAddress(final IeeeAddress requestNodeAddress) {
         this.requestNodeAddress = requestNodeAddress;
+        return this;
     }
 
     /**
@@ -238,9 +252,11 @@ public class ImageBlockCommand extends ZclCommand {
      * Sets Block Request Delay.
      *
      * @param blockRequestDelay the Block Request Delay
+     * @return the ImageBlockCommand command
      */
-    public void setBlockRequestDelay(final Integer blockRequestDelay) {
+    public ImageBlockCommand setBlockRequestDelay(final Integer blockRequestDelay) {
         this.blockRequestDelay = blockRequestDelay;
+        return this;
     }
 
     @Override

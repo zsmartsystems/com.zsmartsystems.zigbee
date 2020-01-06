@@ -31,7 +31,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class SetLongPollIntervalCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -71,9 +71,11 @@ public class SetLongPollIntervalCommand extends ZclCommand {
      * Sets New Long Poll Interval.
      *
      * @param newLongPollInterval the New Long Poll Interval
+     * @return the SetLongPollIntervalCommand command
      */
-    public void setNewLongPollInterval(final Integer newLongPollInterval) {
+    public SetLongPollIntervalCommand setNewLongPollInterval(final Integer newLongPollInterval) {
         this.newLongPollInterval = newLongPollInterval;
+        return this;
     }
 
     @Override

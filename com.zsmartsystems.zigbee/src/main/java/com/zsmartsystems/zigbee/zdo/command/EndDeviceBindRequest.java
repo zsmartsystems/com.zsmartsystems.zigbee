@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-17T19:20:35Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class EndDeviceBindRequest extends ZdoRequest {
     /**
      * The ZDO cluster ID.
@@ -86,9 +86,11 @@ public class EndDeviceBindRequest extends ZdoRequest {
      * Sets Binding Target.
      *
      * @param bindingTarget the Binding Target
+     * @return the EndDeviceBindRequest command
      */
-    public void setBindingTarget(final Integer bindingTarget) {
+    public EndDeviceBindRequest setBindingTarget(final Integer bindingTarget) {
         this.bindingTarget = bindingTarget;
+        return this;
     }
 
     /**
@@ -104,9 +106,11 @@ public class EndDeviceBindRequest extends ZdoRequest {
      * Sets Src Address.
      *
      * @param srcAddress the Src Address
+     * @return the EndDeviceBindRequest command
      */
-    public void setSrcAddress(final IeeeAddress srcAddress) {
+    public EndDeviceBindRequest setSrcAddress(final IeeeAddress srcAddress) {
         this.srcAddress = srcAddress;
+        return this;
     }
 
     /**
@@ -122,9 +126,11 @@ public class EndDeviceBindRequest extends ZdoRequest {
      * Sets Src Endpoint.
      *
      * @param srcEndpoint the Src Endpoint
+     * @return the EndDeviceBindRequest command
      */
-    public void setSrcEndpoint(final Integer srcEndpoint) {
+    public EndDeviceBindRequest setSrcEndpoint(final Integer srcEndpoint) {
         this.srcEndpoint = srcEndpoint;
+        return this;
     }
 
     /**
@@ -140,9 +146,11 @@ public class EndDeviceBindRequest extends ZdoRequest {
      * Sets Profile ID.
      *
      * @param profileId the Profile ID
+     * @return the EndDeviceBindRequest command
      */
-    public void setProfileId(final Integer profileId) {
+    public EndDeviceBindRequest setProfileId(final Integer profileId) {
         this.profileId = profileId;
+        return this;
     }
 
     /**
@@ -158,9 +166,11 @@ public class EndDeviceBindRequest extends ZdoRequest {
      * Sets In Cluster List.
      *
      * @param inClusterList the In Cluster List
+     * @return the EndDeviceBindRequest command
      */
-    public void setInClusterList(final List<Integer> inClusterList) {
+    public EndDeviceBindRequest setInClusterList(final List<Integer> inClusterList) {
         this.inClusterList = inClusterList;
+        return this;
     }
 
     /**
@@ -176,9 +186,11 @@ public class EndDeviceBindRequest extends ZdoRequest {
      * Sets Out Cluster List.
      *
      * @param outClusterList the Out Cluster List
+     * @return the EndDeviceBindRequest command
      */
-    public void setOutClusterList(final List<Integer> outClusterList) {
+    public EndDeviceBindRequest setOutClusterList(final List<Integer> outClusterList) {
         this.outClusterList = outClusterList;
+        return this;
     }
 
     @Override

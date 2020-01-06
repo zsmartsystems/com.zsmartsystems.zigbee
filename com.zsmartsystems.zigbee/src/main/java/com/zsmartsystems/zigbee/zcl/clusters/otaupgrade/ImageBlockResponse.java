@@ -44,7 +44,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ImageBlockResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -109,9 +109,11 @@ public class ImageBlockResponse extends ZclCommand {
      * Sets Status.
      *
      * @param status the Status
+     * @return the ImageBlockResponse command
      */
-    public void setStatus(final ZclStatus status) {
+    public ImageBlockResponse setStatus(final ZclStatus status) {
         this.status = status;
+        return this;
     }
 
     /**
@@ -127,9 +129,11 @@ public class ImageBlockResponse extends ZclCommand {
      * Sets Manufacturer Code.
      *
      * @param manufacturerCode the Manufacturer Code
+     * @return the ImageBlockResponse command
      */
-    public void setManufacturerCode(final Integer manufacturerCode) {
+    public ImageBlockResponse setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
+        return this;
     }
 
     /**
@@ -145,9 +149,11 @@ public class ImageBlockResponse extends ZclCommand {
      * Sets Image Type.
      *
      * @param imageType the Image Type
+     * @return the ImageBlockResponse command
      */
-    public void setImageType(final Integer imageType) {
+    public ImageBlockResponse setImageType(final Integer imageType) {
         this.imageType = imageType;
+        return this;
     }
 
     /**
@@ -163,9 +169,11 @@ public class ImageBlockResponse extends ZclCommand {
      * Sets File Version.
      *
      * @param fileVersion the File Version
+     * @return the ImageBlockResponse command
      */
-    public void setFileVersion(final Integer fileVersion) {
+    public ImageBlockResponse setFileVersion(final Integer fileVersion) {
         this.fileVersion = fileVersion;
+        return this;
     }
 
     /**
@@ -181,9 +189,11 @@ public class ImageBlockResponse extends ZclCommand {
      * Sets File Offset.
      *
      * @param fileOffset the File Offset
+     * @return the ImageBlockResponse command
      */
-    public void setFileOffset(final Integer fileOffset) {
+    public ImageBlockResponse setFileOffset(final Integer fileOffset) {
         this.fileOffset = fileOffset;
+        return this;
     }
 
     /**
@@ -199,9 +209,11 @@ public class ImageBlockResponse extends ZclCommand {
      * Sets Image Data.
      *
      * @param imageData the Image Data
+     * @return the ImageBlockResponse command
      */
-    public void setImageData(final ByteArray imageData) {
+    public ImageBlockResponse setImageData(final ByteArray imageData) {
         this.imageData = imageData;
+        return this;
     }
 
     @Override

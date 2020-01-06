@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class PublishTierLabelsCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -140,9 +140,11 @@ public class PublishTierLabelsCommand extends ZclCommand {
      * providers may be available.
      *
      * @param providerId the Provider ID
+     * @return the PublishTierLabelsCommand command
      */
-    public void setProviderId(final Integer providerId) {
+    public PublishTierLabelsCommand setProviderId(final Integer providerId) {
         this.providerId = providerId;
+        return this;
     }
 
     /**
@@ -174,9 +176,11 @@ public class PublishTierLabelsCommand extends ZclCommand {
      * information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the PublishTierLabelsCommand command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public PublishTierLabelsCommand setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -198,9 +202,11 @@ public class PublishTierLabelsCommand extends ZclCommand {
      * tariff that the labels apply to.
      *
      * @param issuerTariffId the Issuer Tariff ID
+     * @return the PublishTierLabelsCommand command
      */
-    public void setIssuerTariffId(final Integer issuerTariffId) {
+    public PublishTierLabelsCommand setIssuerTariffId(final Integer issuerTariffId) {
         this.issuerTariffId = issuerTariffId;
+        return this;
     }
 
     /**
@@ -224,9 +230,11 @@ public class PublishTierLabelsCommand extends ZclCommand {
      * for each fragment belonging to the same command.
      *
      * @param commandIndex the Command Index
+     * @return the PublishTierLabelsCommand command
      */
-    public void setCommandIndex(final Integer commandIndex) {
+    public PublishTierLabelsCommand setCommandIndex(final Integer commandIndex) {
         this.commandIndex = commandIndex;
+        return this;
     }
 
     /**
@@ -248,9 +256,11 @@ public class PublishTierLabelsCommand extends ZclCommand {
      * Commands field indicates the total number of sub commands in the message.
      *
      * @param totalNumberOfCommands the Total Number Of Commands
+     * @return the PublishTierLabelsCommand command
      */
-    public void setTotalNumberOfCommands(final Integer totalNumberOfCommands) {
+    public PublishTierLabelsCommand setTotalNumberOfCommands(final Integer totalNumberOfCommands) {
         this.totalNumberOfCommands = totalNumberOfCommands;
+        return this;
     }
 
     /**
@@ -270,9 +280,11 @@ public class PublishTierLabelsCommand extends ZclCommand {
      * The number of Tier ID/Tier Label sets contained within the command.
      *
      * @param numberOfLabels the Number Of Labels
+     * @return the PublishTierLabelsCommand command
      */
-    public void setNumberOfLabels(final Integer numberOfLabels) {
+    public PublishTierLabelsCommand setNumberOfLabels(final Integer numberOfLabels) {
         this.numberOfLabels = numberOfLabels;
+        return this;
     }
 
     /**
@@ -292,9 +304,11 @@ public class PublishTierLabelsCommand extends ZclCommand {
      * The tier number that the associated Tier Label applies to.
      *
      * @param tierId the Tier ID
+     * @return the PublishTierLabelsCommand command
      */
-    public void setTierId(final Integer tierId) {
+    public PublishTierLabelsCommand setTierId(final Integer tierId) {
         this.tierId = tierId;
+        return this;
     }
 
     /**
@@ -318,9 +332,11 @@ public class PublishTierLabelsCommand extends ZclCommand {
      * format.
      *
      * @param tierLabel the Tier Label
+     * @return the PublishTierLabelsCommand command
      */
-    public void setTierLabel(final ByteArray tierLabel) {
+    public PublishTierLabelsCommand setTierLabel(final ByteArray tierLabel) {
         this.tierLabel = tierLabel;
+        return this;
     }
 
     @Override

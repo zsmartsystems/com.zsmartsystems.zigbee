@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class SupportedTunnelProtocolsResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -92,9 +92,11 @@ public class SupportedTunnelProtocolsResponse extends ZclCommand {
      * indicates that the list of supported protocols is complete.
      *
      * @param protocolListComplete the Protocol List Complete
+     * @return the SupportedTunnelProtocolsResponse command
      */
-    public void setProtocolListComplete(final Boolean protocolListComplete) {
+    public SupportedTunnelProtocolsResponse setProtocolListComplete(final Boolean protocolListComplete) {
         this.protocolListComplete = protocolListComplete;
+        return this;
     }
 
     /**
@@ -114,9 +116,11 @@ public class SupportedTunnelProtocolsResponse extends ZclCommand {
      * The number of Protocol fields contained in the response.
      *
      * @param protocolCount the Protocol Count
+     * @return the SupportedTunnelProtocolsResponse command
      */
-    public void setProtocolCount(final Integer protocolCount) {
+    public SupportedTunnelProtocolsResponse setProtocolCount(final Integer protocolCount) {
         this.protocolCount = protocolCount;
+        return this;
     }
 
     /**
@@ -132,9 +136,11 @@ public class SupportedTunnelProtocolsResponse extends ZclCommand {
      * Sets Protocol List.
      *
      * @param protocolList the Protocol List
+     * @return the SupportedTunnelProtocolsResponse command
      */
-    public void setProtocolList(final Protocol protocolList) {
+    public SupportedTunnelProtocolsResponse setProtocolList(final Protocol protocolList) {
         this.protocolList = protocolList;
+        return this;
     }
 
     @Override

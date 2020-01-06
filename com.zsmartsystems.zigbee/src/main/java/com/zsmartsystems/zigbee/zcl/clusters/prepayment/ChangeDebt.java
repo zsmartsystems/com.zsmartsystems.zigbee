@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ChangeDebt extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -114,9 +114,11 @@ public class ChangeDebt extends ZclCommand {
      * Sets Issuer Event ID.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the ChangeDebt command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public ChangeDebt setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -132,9 +134,11 @@ public class ChangeDebt extends ZclCommand {
      * Sets Debt Label.
      *
      * @param debtLabel the Debt Label
+     * @return the ChangeDebt command
      */
-    public void setDebtLabel(final ByteArray debtLabel) {
+    public ChangeDebt setDebtLabel(final ByteArray debtLabel) {
         this.debtLabel = debtLabel;
+        return this;
     }
 
     /**
@@ -150,9 +154,11 @@ public class ChangeDebt extends ZclCommand {
      * Sets Debt Amount.
      *
      * @param debtAmount the Debt Amount
+     * @return the ChangeDebt command
      */
-    public void setDebtAmount(final Integer debtAmount) {
+    public ChangeDebt setDebtAmount(final Integer debtAmount) {
         this.debtAmount = debtAmount;
+        return this;
     }
 
     /**
@@ -168,9 +174,11 @@ public class ChangeDebt extends ZclCommand {
      * Sets Debt Recovery Method.
      *
      * @param debtRecoveryMethod the Debt Recovery Method
+     * @return the ChangeDebt command
      */
-    public void setDebtRecoveryMethod(final Integer debtRecoveryMethod) {
+    public ChangeDebt setDebtRecoveryMethod(final Integer debtRecoveryMethod) {
         this.debtRecoveryMethod = debtRecoveryMethod;
+        return this;
     }
 
     /**
@@ -186,9 +194,11 @@ public class ChangeDebt extends ZclCommand {
      * Sets Debt Amount Type.
      *
      * @param debtAmountType the Debt Amount Type
+     * @return the ChangeDebt command
      */
-    public void setDebtAmountType(final Integer debtAmountType) {
+    public ChangeDebt setDebtAmountType(final Integer debtAmountType) {
         this.debtAmountType = debtAmountType;
+        return this;
     }
 
     /**
@@ -204,9 +214,11 @@ public class ChangeDebt extends ZclCommand {
      * Sets Debt Recovery Start Time.
      *
      * @param debtRecoveryStartTime the Debt Recovery Start Time
+     * @return the ChangeDebt command
      */
-    public void setDebtRecoveryStartTime(final Calendar debtRecoveryStartTime) {
+    public ChangeDebt setDebtRecoveryStartTime(final Calendar debtRecoveryStartTime) {
         this.debtRecoveryStartTime = debtRecoveryStartTime;
+        return this;
     }
 
     /**
@@ -222,9 +234,11 @@ public class ChangeDebt extends ZclCommand {
      * Sets Debt Recovery Collection Time.
      *
      * @param debtRecoveryCollectionTime the Debt Recovery Collection Time
+     * @return the ChangeDebt command
      */
-    public void setDebtRecoveryCollectionTime(final Integer debtRecoveryCollectionTime) {
+    public ChangeDebt setDebtRecoveryCollectionTime(final Integer debtRecoveryCollectionTime) {
         this.debtRecoveryCollectionTime = debtRecoveryCollectionTime;
+        return this;
     }
 
     /**
@@ -240,9 +254,11 @@ public class ChangeDebt extends ZclCommand {
      * Sets Debt Recovery Frequency.
      *
      * @param debtRecoveryFrequency the Debt Recovery Frequency
+     * @return the ChangeDebt command
      */
-    public void setDebtRecoveryFrequency(final Integer debtRecoveryFrequency) {
+    public ChangeDebt setDebtRecoveryFrequency(final Integer debtRecoveryFrequency) {
         this.debtRecoveryFrequency = debtRecoveryFrequency;
+        return this;
     }
 
     /**
@@ -258,9 +274,11 @@ public class ChangeDebt extends ZclCommand {
      * Sets Debt Recovery Amount.
      *
      * @param debtRecoveryAmount the Debt Recovery Amount
+     * @return the ChangeDebt command
      */
-    public void setDebtRecoveryAmount(final Integer debtRecoveryAmount) {
+    public ChangeDebt setDebtRecoveryAmount(final Integer debtRecoveryAmount) {
         this.debtRecoveryAmount = debtRecoveryAmount;
+        return this;
     }
 
     /**
@@ -276,9 +294,11 @@ public class ChangeDebt extends ZclCommand {
      * Sets Debt Recovery Balance Percentage.
      *
      * @param debtRecoveryBalancePercentage the Debt Recovery Balance Percentage
+     * @return the ChangeDebt command
      */
-    public void setDebtRecoveryBalancePercentage(final Integer debtRecoveryBalancePercentage) {
+    public ChangeDebt setDebtRecoveryBalancePercentage(final Integer debtRecoveryBalancePercentage) {
         this.debtRecoveryBalancePercentage = debtRecoveryBalancePercentage;
+        return this;
     }
 
     @Override

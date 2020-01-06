@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ChangePaymentMode extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -88,9 +88,11 @@ public class ChangePaymentMode extends ZclCommand {
      * Sets Provider ID.
      *
      * @param providerId the Provider ID
+     * @return the ChangePaymentMode command
      */
-    public void setProviderId(final Integer providerId) {
+    public ChangePaymentMode setProviderId(final Integer providerId) {
         this.providerId = providerId;
+        return this;
     }
 
     /**
@@ -106,9 +108,11 @@ public class ChangePaymentMode extends ZclCommand {
      * Sets Issuer Event ID.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the ChangePaymentMode command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public ChangePaymentMode setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -124,9 +128,11 @@ public class ChangePaymentMode extends ZclCommand {
      * Sets Implementation Date Time.
      *
      * @param implementationDateTime the Implementation Date Time
+     * @return the ChangePaymentMode command
      */
-    public void setImplementationDateTime(final Calendar implementationDateTime) {
+    public ChangePaymentMode setImplementationDateTime(final Calendar implementationDateTime) {
         this.implementationDateTime = implementationDateTime;
+        return this;
     }
 
     /**
@@ -142,9 +148,11 @@ public class ChangePaymentMode extends ZclCommand {
      * Sets Proposed Payment Control Configuration.
      *
      * @param proposedPaymentControlConfiguration the Proposed Payment Control Configuration
+     * @return the ChangePaymentMode command
      */
-    public void setProposedPaymentControlConfiguration(final Integer proposedPaymentControlConfiguration) {
+    public ChangePaymentMode setProposedPaymentControlConfiguration(final Integer proposedPaymentControlConfiguration) {
         this.proposedPaymentControlConfiguration = proposedPaymentControlConfiguration;
+        return this;
     }
 
     /**
@@ -160,9 +168,11 @@ public class ChangePaymentMode extends ZclCommand {
      * Sets Cut Off Value.
      *
      * @param cutOffValue the Cut Off Value
+     * @return the ChangePaymentMode command
      */
-    public void setCutOffValue(final Integer cutOffValue) {
+    public ChangePaymentMode setCutOffValue(final Integer cutOffValue) {
         this.cutOffValue = cutOffValue;
+        return this;
     }
 
     @Override

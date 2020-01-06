@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class AddGroupIfIdentifyingCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -72,9 +72,11 @@ public class AddGroupIfIdentifyingCommand extends ZclCommand {
      * Sets Group ID.
      *
      * @param groupId the Group ID
+     * @return the AddGroupIfIdentifyingCommand command
      */
-    public void setGroupId(final Integer groupId) {
+    public AddGroupIfIdentifyingCommand setGroupId(final Integer groupId) {
         this.groupId = groupId;
+        return this;
     }
 
     /**
@@ -90,9 +92,11 @@ public class AddGroupIfIdentifyingCommand extends ZclCommand {
      * Sets Group Name.
      *
      * @param groupName the Group Name
+     * @return the AddGroupIfIdentifyingCommand command
      */
-    public void setGroupName(final String groupName) {
+    public AddGroupIfIdentifyingCommand setGroupName(final String groupName) {
         this.groupName = groupName;
+        return this;
     }
 
     @Override

@@ -39,7 +39,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class PublishBlockThresholdsCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -148,9 +148,11 @@ public class PublishBlockThresholdsCommand extends ZclCommand {
      * Sets Provider ID.
      *
      * @param providerId the Provider ID
+     * @return the PublishBlockThresholdsCommand command
      */
-    public void setProviderId(final Integer providerId) {
+    public PublishBlockThresholdsCommand setProviderId(final Integer providerId) {
         this.providerId = providerId;
+        return this;
     }
 
     /**
@@ -180,9 +182,11 @@ public class PublishBlockThresholdsCommand extends ZclCommand {
      * value in the Issuer Event ID field that is larger than older information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the PublishBlockThresholdsCommand command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public PublishBlockThresholdsCommand setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -206,9 +210,11 @@ public class PublishBlockThresholdsCommand extends ZclCommand {
      * immediately.
      *
      * @param startTime the Start Time
+     * @return the PublishBlockThresholdsCommand command
      */
-    public void setStartTime(final Calendar startTime) {
+    public PublishBlockThresholdsCommand setStartTime(final Calendar startTime) {
         this.startTime = startTime;
+        return this;
     }
 
     /**
@@ -230,9 +236,11 @@ public class PublishBlockThresholdsCommand extends ZclCommand {
      * Tariff ID sent in the related PublishTariffInformation command.
      *
      * @param issuerTariffId the Issuer Tariff ID
+     * @return the PublishBlockThresholdsCommand command
      */
-    public void setIssuerTariffId(final Integer issuerTariffId) {
+    public PublishBlockThresholdsCommand setIssuerTariffId(final Integer issuerTariffId) {
         this.issuerTariffId = issuerTariffId;
+        return this;
     }
 
     /**
@@ -256,9 +264,11 @@ public class PublishBlockThresholdsCommand extends ZclCommand {
      * for each fragment belonging to the same command.
      *
      * @param commandIndex the Command Index
+     * @return the PublishBlockThresholdsCommand command
      */
-    public void setCommandIndex(final Integer commandIndex) {
+    public PublishBlockThresholdsCommand setCommandIndex(final Integer commandIndex) {
         this.commandIndex = commandIndex;
+        return this;
     }
 
     /**
@@ -290,9 +300,11 @@ public class PublishBlockThresholdsCommand extends ZclCommand {
      * identified in the NumberOfBlockThresholds sub-field.
      *
      * @param totalNumberOfCommands the Total Number Of Commands
+     * @return the PublishBlockThresholdsCommand command
      */
-    public void setTotalNumberOfCommands(final Integer totalNumberOfCommands) {
+    public PublishBlockThresholdsCommand setTotalNumberOfCommands(final Integer totalNumberOfCommands) {
         this.totalNumberOfCommands = totalNumberOfCommands;
+        return this;
     }
 
     /**
@@ -314,9 +326,11 @@ public class PublishBlockThresholdsCommand extends ZclCommand {
      * within the Block Threshold Sub-Payload.
      *
      * @param subPayloadControl the Sub Payload Control
+     * @return the PublishBlockThresholdsCommand command
      */
-    public void setSubPayloadControl(final Integer subPayloadControl) {
+    public PublishBlockThresholdsCommand setSubPayloadControl(final Integer subPayloadControl) {
         this.subPayloadControl = subPayloadControl;
+        return this;
     }
 
     /**
@@ -342,9 +356,11 @@ public class PublishBlockThresholdsCommand extends ZclCommand {
      * NumberOfBlockThresholds sub-field.
      *
      * @param blockThresholdSubPayload the Block Threshold Sub Payload
+     * @return the PublishBlockThresholdsCommand command
      */
-    public void setBlockThresholdSubPayload(final BlockThresholdSubPayload blockThresholdSubPayload) {
+    public PublishBlockThresholdsCommand setBlockThresholdSubPayload(final BlockThresholdSubPayload blockThresholdSubPayload) {
         this.blockThresholdSubPayload = blockThresholdSubPayload;
+        return this;
     }
 
     @Override

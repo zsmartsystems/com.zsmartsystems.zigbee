@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class DiscoverAttributesCommand extends ZclCommand {
     /**
      * The command ID.
@@ -92,9 +92,11 @@ public class DiscoverAttributesCommand extends ZclCommand {
      * identifier at which to begin the attribute discovery.
      *
      * @param startAttributeIdentifier the Start Attribute Identifier
+     * @return the DiscoverAttributesCommand command
      */
-    public void setStartAttributeIdentifier(final Integer startAttributeIdentifier) {
+    public DiscoverAttributesCommand setStartAttributeIdentifier(final Integer startAttributeIdentifier) {
         this.startAttributeIdentifier = startAttributeIdentifier;
+        return this;
     }
 
     /**
@@ -118,9 +120,11 @@ public class DiscoverAttributesCommand extends ZclCommand {
      * Attributes Response command.
      *
      * @param maximumAttributeIdentifiers the Maximum Attribute Identifiers
+     * @return the DiscoverAttributesCommand command
      */
-    public void setMaximumAttributeIdentifiers(final Integer maximumAttributeIdentifiers) {
+    public DiscoverAttributesCommand setMaximumAttributeIdentifiers(final Integer maximumAttributeIdentifiers) {
         this.maximumAttributeIdentifiers = maximumAttributeIdentifiers;
+        return this;
     }
 
     @Override

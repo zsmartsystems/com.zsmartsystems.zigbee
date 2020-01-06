@@ -38,7 +38,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class CheckInResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -118,9 +118,11 @@ public class CheckInResponse extends ZclCommand {
      * is not required to go into fast poll mode.
      *
      * @param startFastPolling the Start Fast Polling
+     * @return the CheckInResponse command
      */
-    public void setStartFastPolling(final Boolean startFastPolling) {
+    public CheckInResponse setStartFastPolling(final Boolean startFastPolling) {
         this.startFastPolling = startFastPolling;
+        return this;
     }
 
     /**
@@ -170,9 +172,11 @@ public class CheckInResponse extends ZclCommand {
      * Status of ZCL_INVALID_FIELD.
      *
      * @param fastPollTimeout the Fast Poll Timeout
+     * @return the CheckInResponse command
      */
-    public void setFastPollTimeout(final Integer fastPollTimeout) {
+    public CheckInResponse setFastPollTimeout(final Integer fastPollTimeout) {
         this.fastPollTimeout = fastPollTimeout;
+        return this;
     }
 
     @Override

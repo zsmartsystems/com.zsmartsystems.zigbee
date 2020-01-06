@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoStatus;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class NetworkAddressResponse extends ZdoResponse {
     /**
      * The ZDO cluster ID.
@@ -76,9 +76,11 @@ public class NetworkAddressResponse extends ZdoResponse {
      * Sets IEEE Addr Remote Dev.
      *
      * @param ieeeAddrRemoteDev the IEEE Addr Remote Dev
+     * @return the NetworkAddressResponse command
      */
-    public void setIeeeAddrRemoteDev(final IeeeAddress ieeeAddrRemoteDev) {
+    public NetworkAddressResponse setIeeeAddrRemoteDev(final IeeeAddress ieeeAddrRemoteDev) {
         this.ieeeAddrRemoteDev = ieeeAddrRemoteDev;
+        return this;
     }
 
     /**
@@ -94,9 +96,11 @@ public class NetworkAddressResponse extends ZdoResponse {
      * Sets NWK Addr Remote Dev.
      *
      * @param nwkAddrRemoteDev the NWK Addr Remote Dev
+     * @return the NetworkAddressResponse command
      */
-    public void setNwkAddrRemoteDev(final Integer nwkAddrRemoteDev) {
+    public NetworkAddressResponse setNwkAddrRemoteDev(final Integer nwkAddrRemoteDev) {
         this.nwkAddrRemoteDev = nwkAddrRemoteDev;
+        return this;
     }
 
     /**
@@ -112,9 +116,11 @@ public class NetworkAddressResponse extends ZdoResponse {
      * Sets Start Index.
      *
      * @param startIndex the Start Index
+     * @return the NetworkAddressResponse command
      */
-    public void setStartIndex(final Integer startIndex) {
+    public NetworkAddressResponse setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;
+        return this;
     }
 
     /**
@@ -130,9 +136,11 @@ public class NetworkAddressResponse extends ZdoResponse {
      * Sets NWK Addr Assoc Dev List.
      *
      * @param nwkAddrAssocDevList the NWK Addr Assoc Dev List
+     * @return the NetworkAddressResponse command
      */
-    public void setNwkAddrAssocDevList(final List<Integer> nwkAddrAssocDevList) {
+    public NetworkAddressResponse setNwkAddrAssocDevList(final List<Integer> nwkAddrAssocDevList) {
         this.nwkAddrAssocDevList = nwkAddrAssocDevList;
+        return this;
     }
 
     @Override

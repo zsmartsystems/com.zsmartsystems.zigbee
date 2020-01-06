@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetProfileInfoResponseCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -82,9 +82,11 @@ public class GetProfileInfoResponseCommand extends ZclCommand {
      * Sets Profile Count.
      *
      * @param profileCount the Profile Count
+     * @return the GetProfileInfoResponseCommand command
      */
-    public void setProfileCount(final Integer profileCount) {
+    public GetProfileInfoResponseCommand setProfileCount(final Integer profileCount) {
         this.profileCount = profileCount;
+        return this;
     }
 
     /**
@@ -100,9 +102,11 @@ public class GetProfileInfoResponseCommand extends ZclCommand {
      * Sets Profile Interval Period.
      *
      * @param profileIntervalPeriod the Profile Interval Period
+     * @return the GetProfileInfoResponseCommand command
      */
-    public void setProfileIntervalPeriod(final Integer profileIntervalPeriod) {
+    public GetProfileInfoResponseCommand setProfileIntervalPeriod(final Integer profileIntervalPeriod) {
         this.profileIntervalPeriod = profileIntervalPeriod;
+        return this;
     }
 
     /**
@@ -118,9 +122,11 @@ public class GetProfileInfoResponseCommand extends ZclCommand {
      * Sets Max Number Of Intervals.
      *
      * @param maxNumberOfIntervals the Max Number Of Intervals
+     * @return the GetProfileInfoResponseCommand command
      */
-    public void setMaxNumberOfIntervals(final Integer maxNumberOfIntervals) {
+    public GetProfileInfoResponseCommand setMaxNumberOfIntervals(final Integer maxNumberOfIntervals) {
         this.maxNumberOfIntervals = maxNumberOfIntervals;
+        return this;
     }
 
     /**
@@ -136,9 +142,11 @@ public class GetProfileInfoResponseCommand extends ZclCommand {
      * Sets List Of Attributes.
      *
      * @param listOfAttributes the List Of Attributes
+     * @return the GetProfileInfoResponseCommand command
      */
-    public void setListOfAttributes(final Integer listOfAttributes) {
+    public GetProfileInfoResponseCommand setListOfAttributes(final Integer listOfAttributes) {
         this.listOfAttributes = listOfAttributes;
+        return this;
     }
 
     @Override

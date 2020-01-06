@@ -37,7 +37,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ImageNotifyCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -97,9 +97,11 @@ public class ImageNotifyCommand extends ZclCommand {
      * Sets Payload Type.
      *
      * @param payloadType the Payload Type
+     * @return the ImageNotifyCommand command
      */
-    public void setPayloadType(final Integer payloadType) {
+    public ImageNotifyCommand setPayloadType(final Integer payloadType) {
         this.payloadType = payloadType;
+        return this;
     }
 
     /**
@@ -115,9 +117,11 @@ public class ImageNotifyCommand extends ZclCommand {
      * Sets Query Jitter.
      *
      * @param queryJitter the Query Jitter
+     * @return the ImageNotifyCommand command
      */
-    public void setQueryJitter(final Integer queryJitter) {
+    public ImageNotifyCommand setQueryJitter(final Integer queryJitter) {
         this.queryJitter = queryJitter;
+        return this;
     }
 
     /**
@@ -133,9 +137,11 @@ public class ImageNotifyCommand extends ZclCommand {
      * Sets Manufacturer Code.
      *
      * @param manufacturerCode the Manufacturer Code
+     * @return the ImageNotifyCommand command
      */
-    public void setManufacturerCode(final Integer manufacturerCode) {
+    public ImageNotifyCommand setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
+        return this;
     }
 
     /**
@@ -151,9 +157,11 @@ public class ImageNotifyCommand extends ZclCommand {
      * Sets Image Type.
      *
      * @param imageType the Image Type
+     * @return the ImageNotifyCommand command
      */
-    public void setImageType(final Integer imageType) {
+    public ImageNotifyCommand setImageType(final Integer imageType) {
         this.imageType = imageType;
+        return this;
     }
 
     /**
@@ -169,9 +177,11 @@ public class ImageNotifyCommand extends ZclCommand {
      * Sets New File Version.
      *
      * @param newFileVersion the New File Version
+     * @return the ImageNotifyCommand command
      */
-    public void setNewFileVersion(final Integer newFileVersion) {
+    public ImageNotifyCommand setNewFileVersion(final Integer newFileVersion) {
         this.newFileVersion = newFileVersion;
+        return this;
     }
 
     @Override

@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class PublishSnapshot extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -142,9 +142,11 @@ public class PublishSnapshot extends ZclCommand {
      * Unique identifier allocated by the device creating the snapshot.
      *
      * @param snapshotId the Snapshot ID
+     * @return the PublishSnapshot command
      */
-    public void setSnapshotId(final Integer snapshotId) {
+    public PublishSnapshot setSnapshotId(final Integer snapshotId) {
         this.snapshotId = snapshotId;
+        return this;
     }
 
     /**
@@ -166,9 +168,11 @@ public class PublishSnapshot extends ZclCommand {
      * taken.
      *
      * @param snapshotTime the Snapshot Time
+     * @return the PublishSnapshot command
      */
-    public void setSnapshotTime(final Calendar snapshotTime) {
+    public PublishSnapshot setSnapshotTime(final Calendar snapshotTime) {
         this.snapshotTime = snapshotTime;
+        return this;
     }
 
     /**
@@ -194,9 +198,11 @@ public class PublishSnapshot extends ZclCommand {
      * an otherwise repeated GetSnapshot command.
      *
      * @param totalSnapshotsFound the Total Snapshots Found
+     * @return the PublishSnapshot command
      */
-    public void setTotalSnapshotsFound(final Integer totalSnapshotsFound) {
+    public PublishSnapshot setTotalSnapshotsFound(final Integer totalSnapshotsFound) {
         this.totalSnapshotsFound = totalSnapshotsFound;
+        return this;
     }
 
     /**
@@ -220,9 +226,11 @@ public class PublishSnapshot extends ZclCommand {
      * incremented for each fragment belonging to the same command.
      *
      * @param commandIndex the Command Index
+     * @return the PublishSnapshot command
      */
-    public void setCommandIndex(final Integer commandIndex) {
+    public PublishSnapshot setCommandIndex(final Integer commandIndex) {
         this.commandIndex = commandIndex;
+        return this;
     }
 
     /**
@@ -246,9 +254,11 @@ public class PublishSnapshot extends ZclCommand {
      * returned.
      *
      * @param totalNumberOfCommands the Total Number Of Commands
+     * @return the PublishSnapshot command
      */
-    public void setTotalNumberOfCommands(final Integer totalNumberOfCommands) {
+    public PublishSnapshot setTotalNumberOfCommands(final Integer totalNumberOfCommands) {
         this.totalNumberOfCommands = totalNumberOfCommands;
+        return this;
     }
 
     /**
@@ -268,9 +278,11 @@ public class PublishSnapshot extends ZclCommand {
      * A 32-bit BitMap indicating the cause of the snapshot.
      *
      * @param snapshotCause the Snapshot Cause
+     * @return the PublishSnapshot command
      */
-    public void setSnapshotCause(final Integer snapshotCause) {
+    public PublishSnapshot setSnapshotCause(final Integer snapshotCause) {
         this.snapshotCause = snapshotCause;
+        return this;
     }
 
     /**
@@ -304,9 +316,11 @@ public class PublishSnapshot extends ZclCommand {
      * introduced.
      *
      * @param snapshotPayloadType the Snapshot Payload Type
+     * @return the PublishSnapshot command
      */
-    public void setSnapshotPayloadType(final Integer snapshotPayloadType) {
+    public PublishSnapshot setSnapshotPayloadType(final Integer snapshotPayloadType) {
         this.snapshotPayloadType = snapshotPayloadType;
+        return this;
     }
 
     /**
@@ -334,9 +348,11 @@ public class PublishSnapshot extends ZclCommand {
      * of commands.
      *
      * @param snapshotPayload the Snapshot Payload
+     * @return the PublishSnapshot command
      */
-    public void setSnapshotPayload(final Integer snapshotPayload) {
+    public PublishSnapshot setSnapshotPayload(final Integer snapshotPayload) {
         this.snapshotPayload = snapshotPayload;
+        return this;
     }
 
     @Override

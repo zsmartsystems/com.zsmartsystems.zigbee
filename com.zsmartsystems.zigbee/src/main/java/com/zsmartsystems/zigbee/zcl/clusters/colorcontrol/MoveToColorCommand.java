@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class MoveToColorCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -73,9 +73,11 @@ public class MoveToColorCommand extends ZclCommand {
      * Sets Color X.
      *
      * @param colorX the Color X
+     * @return the MoveToColorCommand command
      */
-    public void setColorX(final Integer colorX) {
+    public MoveToColorCommand setColorX(final Integer colorX) {
         this.colorX = colorX;
+        return this;
     }
 
     /**
@@ -91,9 +93,11 @@ public class MoveToColorCommand extends ZclCommand {
      * Sets Color Y.
      *
      * @param colorY the Color Y
+     * @return the MoveToColorCommand command
      */
-    public void setColorY(final Integer colorY) {
+    public MoveToColorCommand setColorY(final Integer colorY) {
         this.colorY = colorY;
+        return this;
     }
 
     /**
@@ -109,9 +113,11 @@ public class MoveToColorCommand extends ZclCommand {
      * Sets Transition Time.
      *
      * @param transitionTime the Transition Time
+     * @return the MoveToColorCommand command
      */
-    public void setTransitionTime(final Integer transitionTime) {
+    public MoveToColorCommand setTransitionTime(final Integer transitionTime) {
         this.transitionTime = transitionTime;
+        return this;
     }
 
     @Override

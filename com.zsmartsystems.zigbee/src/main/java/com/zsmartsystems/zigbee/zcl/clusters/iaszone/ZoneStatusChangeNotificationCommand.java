@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ZoneStatusChangeNotificationCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -98,9 +98,11 @@ public class ZoneStatusChangeNotificationCommand extends ZclCommand {
      * The Zone Status field shall be the current value of the ZoneStatus attribute.
      *
      * @param zoneStatus the Zone Status
+     * @return the ZoneStatusChangeNotificationCommand command
      */
-    public void setZoneStatus(final Integer zoneStatus) {
+    public ZoneStatusChangeNotificationCommand setZoneStatus(final Integer zoneStatus) {
         this.zoneStatus = zoneStatus;
+        return this;
     }
 
     /**
@@ -122,9 +124,11 @@ public class ZoneStatusChangeNotificationCommand extends ZclCommand {
      * set to zero.
      *
      * @param extendedStatus the Extended Status
+     * @return the ZoneStatusChangeNotificationCommand command
      */
-    public void setExtendedStatus(final Integer extendedStatus) {
+    public ZoneStatusChangeNotificationCommand setExtendedStatus(final Integer extendedStatus) {
         this.extendedStatus = extendedStatus;
+        return this;
     }
 
     /**
@@ -144,9 +148,11 @@ public class ZoneStatusChangeNotificationCommand extends ZclCommand {
      * Zone ID is the index of the Zone in the CIE's zone table.
      *
      * @param zoneId the Zone ID
+     * @return the ZoneStatusChangeNotificationCommand command
      */
-    public void setZoneId(final Integer zoneId) {
+    public ZoneStatusChangeNotificationCommand setZoneId(final Integer zoneId) {
         this.zoneId = zoneId;
+        return this;
     }
 
     /**
@@ -174,9 +180,11 @@ public class ZoneStatusChangeNotificationCommand extends ZclCommand {
      * event was detected and when it could be reported to the client.
      *
      * @param delay the Delay
+     * @return the ZoneStatusChangeNotificationCommand command
      */
-    public void setDelay(final Integer delay) {
+    public ZoneStatusChangeNotificationCommand setDelay(final Integer delay) {
         this.delay = delay;
+        return this;
     }
 
     @Override

@@ -19,7 +19,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T21:54:11Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GpTranslationTableUpdateTranslation implements ZigBeeSerializable {
     /**
      * Index structure field.
@@ -71,9 +71,11 @@ public class GpTranslationTableUpdateTranslation implements ZigBeeSerializable {
      * Sets Index.
      *
      * @param index the Index
+     * @return the GpTranslationTableUpdateTranslation command
      */
-    public void setIndex(final Integer index) {
+    public GpTranslationTableUpdateTranslation setIndex(final Integer index) {
         this.index = index;
+        return this;
     }
 
     /**
@@ -89,9 +91,11 @@ public class GpTranslationTableUpdateTranslation implements ZigBeeSerializable {
      * Sets Gpd Command ID.
      *
      * @param gpdCommandId the Gpd Command ID
+     * @return the GpTranslationTableUpdateTranslation command
      */
-    public void setGpdCommandId(final Integer gpdCommandId) {
+    public GpTranslationTableUpdateTranslation setGpdCommandId(final Integer gpdCommandId) {
         this.gpdCommandId = gpdCommandId;
+        return this;
     }
 
     /**
@@ -107,9 +111,11 @@ public class GpTranslationTableUpdateTranslation implements ZigBeeSerializable {
      * Sets Endpoint.
      *
      * @param endpoint the Endpoint
+     * @return the GpTranslationTableUpdateTranslation command
      */
-    public void setEndpoint(final Integer endpoint) {
+    public GpTranslationTableUpdateTranslation setEndpoint(final Integer endpoint) {
         this.endpoint = endpoint;
+        return this;
     }
 
     /**
@@ -125,9 +131,11 @@ public class GpTranslationTableUpdateTranslation implements ZigBeeSerializable {
      * Sets Profile.
      *
      * @param profile the Profile
+     * @return the GpTranslationTableUpdateTranslation command
      */
-    public void setProfile(final Integer profile) {
+    public GpTranslationTableUpdateTranslation setProfile(final Integer profile) {
         this.profile = profile;
+        return this;
     }
 
     /**
@@ -143,9 +151,11 @@ public class GpTranslationTableUpdateTranslation implements ZigBeeSerializable {
      * Sets Cluster.
      *
      * @param cluster the Cluster
+     * @return the GpTranslationTableUpdateTranslation command
      */
-    public void setCluster(final Integer cluster) {
+    public GpTranslationTableUpdateTranslation setCluster(final Integer cluster) {
         this.cluster = cluster;
+        return this;
     }
 
     /**
@@ -161,9 +171,11 @@ public class GpTranslationTableUpdateTranslation implements ZigBeeSerializable {
      * Sets Zigbee Command ID.
      *
      * @param zigbeeCommandId the Zigbee Command ID
+     * @return the GpTranslationTableUpdateTranslation command
      */
-    public void setZigbeeCommandId(final Integer zigbeeCommandId) {
+    public GpTranslationTableUpdateTranslation setZigbeeCommandId(final Integer zigbeeCommandId) {
         this.zigbeeCommandId = zigbeeCommandId;
+        return this;
     }
 
     /**
@@ -179,9 +191,11 @@ public class GpTranslationTableUpdateTranslation implements ZigBeeSerializable {
      * Sets Zigbee Command Payload.
      *
      * @param zigbeeCommandPayload the Zigbee Command Payload
+     * @return the GpTranslationTableUpdateTranslation command
      */
-    public void setZigbeeCommandPayload(final ByteArray zigbeeCommandPayload) {
+    public GpTranslationTableUpdateTranslation setZigbeeCommandPayload(final ByteArray zigbeeCommandPayload) {
         this.zigbeeCommandPayload = zigbeeCommandPayload;
+        return this;
     }
 
     @Override

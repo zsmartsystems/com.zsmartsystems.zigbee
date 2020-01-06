@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetMeasurementProfileCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -76,9 +76,11 @@ public class GetMeasurementProfileCommand extends ZclCommand {
      * Sets Attribute ID.
      *
      * @param attributeId the Attribute ID
+     * @return the GetMeasurementProfileCommand command
      */
-    public void setAttributeId(final Integer attributeId) {
+    public GetMeasurementProfileCommand setAttributeId(final Integer attributeId) {
         this.attributeId = attributeId;
+        return this;
     }
 
     /**
@@ -94,9 +96,11 @@ public class GetMeasurementProfileCommand extends ZclCommand {
      * Sets Start Time.
      *
      * @param startTime the Start Time
+     * @return the GetMeasurementProfileCommand command
      */
-    public void setStartTime(final Integer startTime) {
+    public GetMeasurementProfileCommand setStartTime(final Integer startTime) {
         this.startTime = startTime;
+        return this;
     }
 
     /**
@@ -112,9 +116,11 @@ public class GetMeasurementProfileCommand extends ZclCommand {
      * Sets Number Of Intervals.
      *
      * @param numberOfIntervals the Number Of Intervals
+     * @return the GetMeasurementProfileCommand command
      */
-    public void setNumberOfIntervals(final Integer numberOfIntervals) {
+    public GetMeasurementProfileCommand setNumberOfIntervals(final Integer numberOfIntervals) {
         this.numberOfIntervals = numberOfIntervals;
+        return this;
     }
 
     @Override

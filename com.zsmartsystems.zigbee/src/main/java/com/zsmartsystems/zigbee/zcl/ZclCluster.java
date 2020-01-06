@@ -281,7 +281,7 @@ public abstract class ZclCluster {
      * @param command the {@link ZclCommand} to send
      * @return the command result future
      */
-    protected Future<CommandResult> send(ZclCommand command) {
+    public Future<CommandResult> sendCommand(ZclCommand command) {
         if (isClient()) {
             command.setCommandDirection(ZclCommandDirection.SERVER_TO_CLIENT);
         }
@@ -354,7 +354,7 @@ public abstract class ZclCluster {
             defaultResponse.setManufacturerCode(manufacturerCode);
         }
 
-        send(defaultResponse);
+        sendCommand(defaultResponse);
     }
 
     /**
@@ -418,7 +418,7 @@ public abstract class ZclCluster {
             command.setManufacturerCode(manufacturerSpecificAttribute.getManufacturerCode());
         }
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -452,7 +452,7 @@ public abstract class ZclCluster {
             command.setManufacturerCode(getAttribute(attributeIds.get(0)).getManufacturerCode());
         }
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -541,7 +541,7 @@ public abstract class ZclCluster {
             command.setManufacturerCode(manufacturerSpecificAttribute.getManufacturerCode());
         }
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -625,7 +625,7 @@ public abstract class ZclCluster {
             command.setManufacturerCode(getAttribute(attributeId).getManufacturerCode());
         }
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -906,7 +906,7 @@ public abstract class ZclCluster {
                             command.setManufacturerCode(manufacturerCode);
                         }
 
-                        CommandResult result = send(command).get();
+                        CommandResult result = sendCommand(command).get();
                         if (result.isError()) {
                             return false;
                         }
@@ -1028,7 +1028,7 @@ public abstract class ZclCluster {
                             command.setManufacturerCode(manufacturerCode);
                         }
 
-                        CommandResult result = send(command).get();
+                        CommandResult result = sendCommand(command).get();
                         if (result.isError()) {
                             return false;
                         }
@@ -1137,7 +1137,7 @@ public abstract class ZclCluster {
                             command.setManufacturerCode(manufacturerCode);
                         }
 
-                        CommandResult result = send(command).get();
+                        CommandResult result = sendCommand(command).get();
                         if (result.isError()) {
                             return false;
                         }
@@ -1765,7 +1765,7 @@ public abstract class ZclCluster {
             command.setManufacturerCode(attribute.getManufacturerCode());
         }
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1815,7 +1815,7 @@ public abstract class ZclCluster {
         command.setRecords(Collections.singletonList(record));
         command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**

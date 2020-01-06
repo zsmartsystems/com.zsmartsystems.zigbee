@@ -32,7 +32,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-03T12:48:45Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GpCommissioningNotification extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -117,9 +117,11 @@ public class GpCommissioningNotification extends ZclCommand {
      * Sets Options.
      *
      * @param options the Options
+     * @return the GpCommissioningNotification command
      */
-    public void setOptions(final Integer options) {
+    public GpCommissioningNotification setOptions(final Integer options) {
         this.options = options;
+        return this;
     }
 
     /**
@@ -135,9 +137,11 @@ public class GpCommissioningNotification extends ZclCommand {
      * Sets Gpd Src ID.
      *
      * @param gpdSrcId the Gpd Src ID
+     * @return the GpCommissioningNotification command
      */
-    public void setGpdSrcId(final Integer gpdSrcId) {
+    public GpCommissioningNotification setGpdSrcId(final Integer gpdSrcId) {
         this.gpdSrcId = gpdSrcId;
+        return this;
     }
 
     /**
@@ -153,9 +157,11 @@ public class GpCommissioningNotification extends ZclCommand {
      * Sets Gpd IEEE.
      *
      * @param gpdIeee the Gpd IEEE
+     * @return the GpCommissioningNotification command
      */
-    public void setGpdIeee(final IeeeAddress gpdIeee) {
+    public GpCommissioningNotification setGpdIeee(final IeeeAddress gpdIeee) {
         this.gpdIeee = gpdIeee;
+        return this;
     }
 
     /**
@@ -171,9 +177,11 @@ public class GpCommissioningNotification extends ZclCommand {
      * Sets Endpoint.
      *
      * @param endpoint the Endpoint
+     * @return the GpCommissioningNotification command
      */
-    public void setEndpoint(final Integer endpoint) {
+    public GpCommissioningNotification setEndpoint(final Integer endpoint) {
         this.endpoint = endpoint;
+        return this;
     }
 
     /**
@@ -189,9 +197,11 @@ public class GpCommissioningNotification extends ZclCommand {
      * Sets Gpd Security Frame Counter.
      *
      * @param gpdSecurityFrameCounter the Gpd Security Frame Counter
+     * @return the GpCommissioningNotification command
      */
-    public void setGpdSecurityFrameCounter(final Integer gpdSecurityFrameCounter) {
+    public GpCommissioningNotification setGpdSecurityFrameCounter(final Integer gpdSecurityFrameCounter) {
         this.gpdSecurityFrameCounter = gpdSecurityFrameCounter;
+        return this;
     }
 
     /**
@@ -207,9 +217,11 @@ public class GpCommissioningNotification extends ZclCommand {
      * Sets Gpd Command ID.
      *
      * @param gpdCommandId the Gpd Command ID
+     * @return the GpCommissioningNotification command
      */
-    public void setGpdCommandId(final Integer gpdCommandId) {
+    public GpCommissioningNotification setGpdCommandId(final Integer gpdCommandId) {
         this.gpdCommandId = gpdCommandId;
+        return this;
     }
 
     /**
@@ -225,9 +237,11 @@ public class GpCommissioningNotification extends ZclCommand {
      * Sets Gpd Command Payload.
      *
      * @param gpdCommandPayload the Gpd Command Payload
+     * @return the GpCommissioningNotification command
      */
-    public void setGpdCommandPayload(final ByteArray gpdCommandPayload) {
+    public GpCommissioningNotification setGpdCommandPayload(final ByteArray gpdCommandPayload) {
         this.gpdCommandPayload = gpdCommandPayload;
+        return this;
     }
 
     /**
@@ -243,9 +257,11 @@ public class GpCommissioningNotification extends ZclCommand {
      * Sets Gpp Short Address.
      *
      * @param gppShortAddress the Gpp Short Address
+     * @return the GpCommissioningNotification command
      */
-    public void setGppShortAddress(final Integer gppShortAddress) {
+    public GpCommissioningNotification setGppShortAddress(final Integer gppShortAddress) {
         this.gppShortAddress = gppShortAddress;
+        return this;
     }
 
     /**
@@ -261,9 +277,11 @@ public class GpCommissioningNotification extends ZclCommand {
      * Sets Gpp Link.
      *
      * @param gppLink the Gpp Link
+     * @return the GpCommissioningNotification command
      */
-    public void setGppLink(final Integer gppLink) {
+    public GpCommissioningNotification setGppLink(final Integer gppLink) {
         this.gppLink = gppLink;
+        return this;
     }
 
     /**
@@ -279,9 +297,11 @@ public class GpCommissioningNotification extends ZclCommand {
      * Sets Mic.
      *
      * @param mic the Mic
+     * @return the GpCommissioningNotification command
      */
-    public void setMic(final Integer mic) {
+    public GpCommissioningNotification setMic(final Integer mic) {
         this.mic = mic;
+        return this;
     }
 
     @Override

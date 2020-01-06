@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetZoneIdMapResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -142,9 +142,11 @@ public class GetZoneIdMapResponse extends ZclCommand {
      * Sets Zone ID Map Section 0.
      *
      * @param zoneIdMapSection0 the Zone ID Map Section 0
+     * @return the GetZoneIdMapResponse command
      */
-    public void setZoneIdMapSection0(final Integer zoneIdMapSection0) {
+    public GetZoneIdMapResponse setZoneIdMapSection0(final Integer zoneIdMapSection0) {
         this.zoneIdMapSection0 = zoneIdMapSection0;
+        return this;
     }
 
     /**
@@ -160,9 +162,11 @@ public class GetZoneIdMapResponse extends ZclCommand {
      * Sets Zone ID Map Section 1.
      *
      * @param zoneIdMapSection1 the Zone ID Map Section 1
+     * @return the GetZoneIdMapResponse command
      */
-    public void setZoneIdMapSection1(final Integer zoneIdMapSection1) {
+    public GetZoneIdMapResponse setZoneIdMapSection1(final Integer zoneIdMapSection1) {
         this.zoneIdMapSection1 = zoneIdMapSection1;
+        return this;
     }
 
     /**
@@ -178,9 +182,11 @@ public class GetZoneIdMapResponse extends ZclCommand {
      * Sets Zone ID Map Section 2.
      *
      * @param zoneIdMapSection2 the Zone ID Map Section 2
+     * @return the GetZoneIdMapResponse command
      */
-    public void setZoneIdMapSection2(final Integer zoneIdMapSection2) {
+    public GetZoneIdMapResponse setZoneIdMapSection2(final Integer zoneIdMapSection2) {
         this.zoneIdMapSection2 = zoneIdMapSection2;
+        return this;
     }
 
     /**
@@ -196,9 +202,11 @@ public class GetZoneIdMapResponse extends ZclCommand {
      * Sets Zone ID Map Section 3.
      *
      * @param zoneIdMapSection3 the Zone ID Map Section 3
+     * @return the GetZoneIdMapResponse command
      */
-    public void setZoneIdMapSection3(final Integer zoneIdMapSection3) {
+    public GetZoneIdMapResponse setZoneIdMapSection3(final Integer zoneIdMapSection3) {
         this.zoneIdMapSection3 = zoneIdMapSection3;
+        return this;
     }
 
     /**
@@ -214,9 +222,11 @@ public class GetZoneIdMapResponse extends ZclCommand {
      * Sets Zone ID Map Section 4.
      *
      * @param zoneIdMapSection4 the Zone ID Map Section 4
+     * @return the GetZoneIdMapResponse command
      */
-    public void setZoneIdMapSection4(final Integer zoneIdMapSection4) {
+    public GetZoneIdMapResponse setZoneIdMapSection4(final Integer zoneIdMapSection4) {
         this.zoneIdMapSection4 = zoneIdMapSection4;
+        return this;
     }
 
     /**
@@ -232,9 +242,11 @@ public class GetZoneIdMapResponse extends ZclCommand {
      * Sets Zone ID Map Section 5.
      *
      * @param zoneIdMapSection5 the Zone ID Map Section 5
+     * @return the GetZoneIdMapResponse command
      */
-    public void setZoneIdMapSection5(final Integer zoneIdMapSection5) {
+    public GetZoneIdMapResponse setZoneIdMapSection5(final Integer zoneIdMapSection5) {
         this.zoneIdMapSection5 = zoneIdMapSection5;
+        return this;
     }
 
     /**
@@ -250,9 +262,11 @@ public class GetZoneIdMapResponse extends ZclCommand {
      * Sets Zone ID Map Section 6.
      *
      * @param zoneIdMapSection6 the Zone ID Map Section 6
+     * @return the GetZoneIdMapResponse command
      */
-    public void setZoneIdMapSection6(final Integer zoneIdMapSection6) {
+    public GetZoneIdMapResponse setZoneIdMapSection6(final Integer zoneIdMapSection6) {
         this.zoneIdMapSection6 = zoneIdMapSection6;
+        return this;
     }
 
     /**
@@ -268,9 +282,11 @@ public class GetZoneIdMapResponse extends ZclCommand {
      * Sets Zone ID Map Section 7.
      *
      * @param zoneIdMapSection7 the Zone ID Map Section 7
+     * @return the GetZoneIdMapResponse command
      */
-    public void setZoneIdMapSection7(final Integer zoneIdMapSection7) {
+    public GetZoneIdMapResponse setZoneIdMapSection7(final Integer zoneIdMapSection7) {
         this.zoneIdMapSection7 = zoneIdMapSection7;
+        return this;
     }
 
     /**
@@ -286,9 +302,11 @@ public class GetZoneIdMapResponse extends ZclCommand {
      * Sets Zone ID Map Section 8.
      *
      * @param zoneIdMapSection8 the Zone ID Map Section 8
+     * @return the GetZoneIdMapResponse command
      */
-    public void setZoneIdMapSection8(final Integer zoneIdMapSection8) {
+    public GetZoneIdMapResponse setZoneIdMapSection8(final Integer zoneIdMapSection8) {
         this.zoneIdMapSection8 = zoneIdMapSection8;
+        return this;
     }
 
     /**
@@ -304,9 +322,11 @@ public class GetZoneIdMapResponse extends ZclCommand {
      * Sets Zone ID Map Section 9.
      *
      * @param zoneIdMapSection9 the Zone ID Map Section 9
+     * @return the GetZoneIdMapResponse command
      */
-    public void setZoneIdMapSection9(final Integer zoneIdMapSection9) {
+    public GetZoneIdMapResponse setZoneIdMapSection9(final Integer zoneIdMapSection9) {
         this.zoneIdMapSection9 = zoneIdMapSection9;
+        return this;
     }
 
     /**
@@ -322,9 +342,11 @@ public class GetZoneIdMapResponse extends ZclCommand {
      * Sets Zone ID Map Section 10.
      *
      * @param zoneIdMapSection10 the Zone ID Map Section 10
+     * @return the GetZoneIdMapResponse command
      */
-    public void setZoneIdMapSection10(final Integer zoneIdMapSection10) {
+    public GetZoneIdMapResponse setZoneIdMapSection10(final Integer zoneIdMapSection10) {
         this.zoneIdMapSection10 = zoneIdMapSection10;
+        return this;
     }
 
     /**
@@ -340,9 +362,11 @@ public class GetZoneIdMapResponse extends ZclCommand {
      * Sets Zone ID Map Section 11.
      *
      * @param zoneIdMapSection11 the Zone ID Map Section 11
+     * @return the GetZoneIdMapResponse command
      */
-    public void setZoneIdMapSection11(final Integer zoneIdMapSection11) {
+    public GetZoneIdMapResponse setZoneIdMapSection11(final Integer zoneIdMapSection11) {
         this.zoneIdMapSection11 = zoneIdMapSection11;
+        return this;
     }
 
     /**
@@ -358,9 +382,11 @@ public class GetZoneIdMapResponse extends ZclCommand {
      * Sets Zone ID Map Section 12.
      *
      * @param zoneIdMapSection12 the Zone ID Map Section 12
+     * @return the GetZoneIdMapResponse command
      */
-    public void setZoneIdMapSection12(final Integer zoneIdMapSection12) {
+    public GetZoneIdMapResponse setZoneIdMapSection12(final Integer zoneIdMapSection12) {
         this.zoneIdMapSection12 = zoneIdMapSection12;
+        return this;
     }
 
     /**
@@ -376,9 +402,11 @@ public class GetZoneIdMapResponse extends ZclCommand {
      * Sets Zone ID Map Section 13.
      *
      * @param zoneIdMapSection13 the Zone ID Map Section 13
+     * @return the GetZoneIdMapResponse command
      */
-    public void setZoneIdMapSection13(final Integer zoneIdMapSection13) {
+    public GetZoneIdMapResponse setZoneIdMapSection13(final Integer zoneIdMapSection13) {
         this.zoneIdMapSection13 = zoneIdMapSection13;
+        return this;
     }
 
     /**
@@ -394,9 +422,11 @@ public class GetZoneIdMapResponse extends ZclCommand {
      * Sets Zone ID Map Section 14.
      *
      * @param zoneIdMapSection14 the Zone ID Map Section 14
+     * @return the GetZoneIdMapResponse command
      */
-    public void setZoneIdMapSection14(final Integer zoneIdMapSection14) {
+    public GetZoneIdMapResponse setZoneIdMapSection14(final Integer zoneIdMapSection14) {
         this.zoneIdMapSection14 = zoneIdMapSection14;
+        return this;
     }
 
     /**
@@ -412,9 +442,11 @@ public class GetZoneIdMapResponse extends ZclCommand {
      * Sets Zone ID Map Section 15.
      *
      * @param zoneIdMapSection15 the Zone ID Map Section 15
+     * @return the GetZoneIdMapResponse command
      */
-    public void setZoneIdMapSection15(final Integer zoneIdMapSection15) {
+    public GetZoneIdMapResponse setZoneIdMapSection15(final Integer zoneIdMapSection15) {
         this.zoneIdMapSection15 = zoneIdMapSection15;
+        return this;
     }
 
     @Override

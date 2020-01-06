@@ -55,7 +55,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:44:02Z")
 public class ZclDoorLockCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -3403,13 +3403,14 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param pinCode {@link ByteArray} PIN Code
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> lockDoorCommand(ByteArray pinCode) {
         LockDoorCommand command = new LockDoorCommand();
 
         // Set the fields
         command.setPinCode(pinCode);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -3427,13 +3428,14 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param pinCode {@link ByteArray} PIN Code
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> unlockDoorCommand(ByteArray pinCode) {
         UnlockDoorCommand command = new UnlockDoorCommand();
 
         // Set the fields
         command.setPinCode(pinCode);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -3446,13 +3448,14 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param pin {@link String} PIN
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> toggle(String pin) {
         Toggle command = new Toggle();
 
         // Set the fields
         command.setPin(pin);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -3469,6 +3472,7 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param pin {@link String} PIN
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> unlockWithTimeout(Integer timeoutInSeconds, String pin) {
         UnlockWithTimeout command = new UnlockWithTimeout();
 
@@ -3476,7 +3480,7 @@ public class ZclDoorLockCluster extends ZclCluster {
         command.setTimeoutInSeconds(timeoutInSeconds);
         command.setPin(pin);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -3492,13 +3496,14 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param status {@link Integer} Status
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> lockDoorResponse(Integer status) {
         LockDoorResponse command = new LockDoorResponse();
 
         // Set the fields
         command.setStatus(status);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -3514,13 +3519,14 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param status {@link Integer} Status
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> unlockDoorResponse(Integer status) {
         UnlockDoorResponse command = new UnlockDoorResponse();
 
         // Set the fields
         command.setStatus(status);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -3536,13 +3542,14 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param status {@link Integer} Status
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> toggleResponse(Integer status) {
         ToggleResponse command = new ToggleResponse();
 
         // Set the fields
         command.setStatus(status);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -3557,12 +3564,13 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param status {@link Integer} Status
      * @return the {@link Future<CommandResult>} command result future
      */
+    @Deprecated
     public Future<CommandResult> unlockWithTimeoutResponse(Integer status) {
         UnlockWithTimeoutResponse command = new UnlockWithTimeoutResponse();
 
         // Set the fields
         command.setStatus(status);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

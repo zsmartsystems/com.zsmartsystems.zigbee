@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class StepColorTemperatureCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -86,9 +86,11 @@ public class StepColorTemperatureCommand extends ZclCommand {
      * Sets Step Mode.
      *
      * @param stepMode the Step Mode
+     * @return the StepColorTemperatureCommand command
      */
-    public void setStepMode(final Integer stepMode) {
+    public StepColorTemperatureCommand setStepMode(final Integer stepMode) {
         this.stepMode = stepMode;
+        return this;
     }
 
     /**
@@ -104,9 +106,11 @@ public class StepColorTemperatureCommand extends ZclCommand {
      * Sets Step Size.
      *
      * @param stepSize the Step Size
+     * @return the StepColorTemperatureCommand command
      */
-    public void setStepSize(final Integer stepSize) {
+    public StepColorTemperatureCommand setStepSize(final Integer stepSize) {
         this.stepSize = stepSize;
+        return this;
     }
 
     /**
@@ -122,9 +126,11 @@ public class StepColorTemperatureCommand extends ZclCommand {
      * Sets Transition Time.
      *
      * @param transitionTime the Transition Time
+     * @return the StepColorTemperatureCommand command
      */
-    public void setTransitionTime(final Integer transitionTime) {
+    public StepColorTemperatureCommand setTransitionTime(final Integer transitionTime) {
         this.transitionTime = transitionTime;
+        return this;
     }
 
     /**
@@ -140,9 +146,11 @@ public class StepColorTemperatureCommand extends ZclCommand {
      * Sets Color Temperature Minimum.
      *
      * @param colorTemperatureMinimum the Color Temperature Minimum
+     * @return the StepColorTemperatureCommand command
      */
-    public void setColorTemperatureMinimum(final Integer colorTemperatureMinimum) {
+    public StepColorTemperatureCommand setColorTemperatureMinimum(final Integer colorTemperatureMinimum) {
         this.colorTemperatureMinimum = colorTemperatureMinimum;
+        return this;
     }
 
     /**
@@ -158,9 +166,11 @@ public class StepColorTemperatureCommand extends ZclCommand {
      * Sets Color Temperature Maximum.
      *
      * @param colorTemperatureMaximum the Color Temperature Maximum
+     * @return the StepColorTemperatureCommand command
      */
-    public void setColorTemperatureMaximum(final Integer colorTemperatureMaximum) {
+    public StepColorTemperatureCommand setColorTemperatureMaximum(final Integer colorTemperatureMaximum) {
         this.colorTemperatureMaximum = colorTemperatureMaximum;
+        return this;
     }
 
     @Override

@@ -33,7 +33,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class BypassCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -90,9 +90,11 @@ public class BypassCommand extends ZclCommand {
      * Sets Number Of Zones.
      *
      * @param numberOfZones the Number Of Zones
+     * @return the BypassCommand command
      */
-    public void setNumberOfZones(final Integer numberOfZones) {
+    public BypassCommand setNumberOfZones(final Integer numberOfZones) {
         this.numberOfZones = numberOfZones;
+        return this;
     }
 
     /**
@@ -108,9 +110,11 @@ public class BypassCommand extends ZclCommand {
      * Sets Zone IDs.
      *
      * @param zoneIds the Zone IDs
+     * @return the BypassCommand command
      */
-    public void setZoneIds(final List<Integer> zoneIds) {
+    public BypassCommand setZoneIds(final List<Integer> zoneIds) {
         this.zoneIds = zoneIds;
+        return this;
     }
 
     /**
@@ -140,9 +144,11 @@ public class BypassCommand extends ZclCommand {
      * length of zero.
      *
      * @param armDisarmCode the Arm/Disarm Code
+     * @return the BypassCommand command
      */
-    public void setArmDisarmCode(final String armDisarmCode) {
+    public BypassCommand setArmDisarmCode(final String armDisarmCode) {
         this.armDisarmCode = armDisarmCode;
+        return this;
     }
 
     @Override

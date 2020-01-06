@@ -35,7 +35,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class UpgradeEndResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -95,9 +95,11 @@ public class UpgradeEndResponse extends ZclCommand {
      * Sets Manufacturer Code.
      *
      * @param manufacturerCode the Manufacturer Code
+     * @return the UpgradeEndResponse command
      */
-    public void setManufacturerCode(final Integer manufacturerCode) {
+    public UpgradeEndResponse setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
+        return this;
     }
 
     /**
@@ -113,9 +115,11 @@ public class UpgradeEndResponse extends ZclCommand {
      * Sets Image Type.
      *
      * @param imageType the Image Type
+     * @return the UpgradeEndResponse command
      */
-    public void setImageType(final Integer imageType) {
+    public UpgradeEndResponse setImageType(final Integer imageType) {
         this.imageType = imageType;
+        return this;
     }
 
     /**
@@ -131,9 +135,11 @@ public class UpgradeEndResponse extends ZclCommand {
      * Sets File Version.
      *
      * @param fileVersion the File Version
+     * @return the UpgradeEndResponse command
      */
-    public void setFileVersion(final Integer fileVersion) {
+    public UpgradeEndResponse setFileVersion(final Integer fileVersion) {
         this.fileVersion = fileVersion;
+        return this;
     }
 
     /**
@@ -149,9 +155,11 @@ public class UpgradeEndResponse extends ZclCommand {
      * Sets Current Time.
      *
      * @param currentTime the Current Time
+     * @return the UpgradeEndResponse command
      */
-    public void setCurrentTime(final Integer currentTime) {
+    public UpgradeEndResponse setCurrentTime(final Integer currentTime) {
         this.currentTime = currentTime;
+        return this;
     }
 
     /**
@@ -167,9 +175,11 @@ public class UpgradeEndResponse extends ZclCommand {
      * Sets Upgrade Time.
      *
      * @param upgradeTime the Upgrade Time
+     * @return the UpgradeEndResponse command
      */
-    public void setUpgradeTime(final Integer upgradeTime) {
+    public UpgradeEndResponse setUpgradeTime(final Integer upgradeTime) {
         this.upgradeTime = upgradeTime;
+        return this;
     }
 
     @Override

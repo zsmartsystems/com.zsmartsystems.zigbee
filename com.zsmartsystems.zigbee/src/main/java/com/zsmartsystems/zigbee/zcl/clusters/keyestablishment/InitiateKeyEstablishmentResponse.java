@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class InitiateKeyEstablishmentResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -104,9 +104,11 @@ public class InitiateKeyEstablishmentResponse extends ZclCommand {
      * indicating the requested suite, all other bits shall be set to zero.
      *
      * @param requestedKeyEstablishmentSuite the Requested Key Establishment Suite
+     * @return the InitiateKeyEstablishmentResponse command
      */
-    public void setRequestedKeyEstablishmentSuite(final Integer requestedKeyEstablishmentSuite) {
+    public InitiateKeyEstablishmentResponse setRequestedKeyEstablishmentSuite(final Integer requestedKeyEstablishmentSuite) {
         this.requestedKeyEstablishmentSuite = requestedKeyEstablishmentSuite;
+        return this;
     }
 
     /**
@@ -128,9 +130,11 @@ public class InitiateKeyEstablishmentResponse extends ZclCommand {
      * generate the Ephemeral Data Response message. The valid range is 0x00 to 0xFE.
      *
      * @param ephemeralDataGenerateTime the Ephemeral Data Generate Time
+     * @return the InitiateKeyEstablishmentResponse command
      */
-    public void setEphemeralDataGenerateTime(final Integer ephemeralDataGenerateTime) {
+    public InitiateKeyEstablishmentResponse setEphemeralDataGenerateTime(final Integer ephemeralDataGenerateTime) {
         this.ephemeralDataGenerateTime = ephemeralDataGenerateTime;
+        return this;
     }
 
     /**
@@ -152,9 +156,11 @@ public class InitiateKeyEstablishmentResponse extends ZclCommand {
      * to generate the Confirm Key Response message. The valid range is 0x00 to 0xFE.
      *
      * @param confirmKeyGenerateTime the Confirm Key Generate Time
+     * @return the InitiateKeyEstablishmentResponse command
      */
-    public void setConfirmKeyGenerateTime(final Integer confirmKeyGenerateTime) {
+    public InitiateKeyEstablishmentResponse setConfirmKeyGenerateTime(final Integer confirmKeyGenerateTime) {
         this.confirmKeyGenerateTime = confirmKeyGenerateTime;
+        return this;
     }
 
     /**
@@ -176,9 +182,11 @@ public class InitiateKeyEstablishmentResponse extends ZclCommand {
      * Octets containing the implicit certificate CERTU .
      *
      * @param identity the Identity
+     * @return the InitiateKeyEstablishmentResponse command
      */
-    public void setIdentity(final ByteArray identity) {
+    public InitiateKeyEstablishmentResponse setIdentity(final ByteArray identity) {
         this.identity = identity;
+        return this;
     }
 
     @Override

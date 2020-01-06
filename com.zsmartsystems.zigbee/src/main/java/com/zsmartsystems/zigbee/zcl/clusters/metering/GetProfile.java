@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetProfile extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -100,9 +100,11 @@ public class GetProfile extends ZclCommand {
      * GetProfileReponse command.
      *
      * @param intervalChannel the Interval Channel
+     * @return the GetProfile command
      */
-    public void setIntervalChannel(final Integer intervalChannel) {
+    public GetProfile setIntervalChannel(final Integer intervalChannel) {
         this.intervalChannel = intervalChannel;
+        return this;
     }
 
     /**
@@ -132,9 +134,11 @@ public class GetProfile extends ZclCommand {
      * block * ProfileIntervalPeriod).
      *
      * @param endTime the End Time
+     * @return the GetProfile command
      */
-    public void setEndTime(final Calendar endTime) {
+    public GetProfile setEndTime(final Calendar endTime) {
         this.endTime = endTime;
+        return this;
     }
 
     /**
@@ -162,9 +166,11 @@ public class GetProfile extends ZclCommand {
      * for the time period, only those available are returned.
      *
      * @param numberOfPeriods the Number Of Periods
+     * @return the GetProfile command
      */
-    public void setNumberOfPeriods(final Integer numberOfPeriods) {
+    public GetProfile setNumberOfPeriods(final Integer numberOfPeriods) {
         this.numberOfPeriods = numberOfPeriods;
+        return this;
     }
 
     @Override

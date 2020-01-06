@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class PublishCo2ValueCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -141,9 +141,11 @@ public class PublishCo2ValueCommand extends ZclCommand {
      * providers may be available.
      *
      * @param providerId the Provider ID
+     * @return the PublishCo2ValueCommand command
      */
-    public void setProviderId(final Integer providerId) {
+    public PublishCo2ValueCommand setProviderId(final Integer providerId) {
         this.providerId = providerId;
+        return this;
     }
 
     /**
@@ -173,9 +175,11 @@ public class PublishCo2ValueCommand extends ZclCommand {
      * value in the Issuer Event ID field that is larger than older information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the PublishCo2ValueCommand command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public PublishCo2ValueCommand setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -207,9 +211,11 @@ public class PublishCo2ValueCommand extends ZclCommand {
      * cancellation mechanism).
      *
      * @param startTime the Start Time
+     * @return the PublishCo2ValueCommand command
      */
-    public void setStartTime(final Calendar startTime) {
+    public PublishCo2ValueCommand setStartTime(final Calendar startTime) {
         this.startTime = startTime;
+        return this;
     }
 
     /**
@@ -235,9 +241,11 @@ public class PublishCo2ValueCommand extends ZclCommand {
      * nibble is reserved.
      *
      * @param tariffType the Tariff Type
+     * @return the PublishCo2ValueCommand command
      */
-    public void setTariffType(final Integer tariffType) {
+    public PublishCo2ValueCommand setTariffType(final Integer tariffType) {
         this.tariffType = tariffType;
+        return this;
     }
 
     /**
@@ -273,9 +281,11 @@ public class PublishCo2ValueCommand extends ZclCommand {
      * indicates field not used.
      *
      * @param co2Value the CO2 Value
+     * @return the PublishCo2ValueCommand command
      */
-    public void setCo2Value(final Integer co2Value) {
+    public PublishCo2ValueCommand setCo2Value(final Integer co2Value) {
         this.co2Value = co2Value;
+        return this;
     }
 
     /**
@@ -291,9 +301,11 @@ public class PublishCo2ValueCommand extends ZclCommand {
      * Sets CO2 Value Unit.
      *
      * @param co2ValueUnit the CO2 Value Unit
+     * @return the PublishCo2ValueCommand command
      */
-    public void setCo2ValueUnit(final Integer co2ValueUnit) {
+    public PublishCo2ValueCommand setCo2ValueUnit(final Integer co2ValueUnit) {
         this.co2ValueUnit = co2ValueUnit;
+        return this;
     }
 
     /**
@@ -309,9 +321,11 @@ public class PublishCo2ValueCommand extends ZclCommand {
      * Sets CO2 Value Trailing Digit.
      *
      * @param co2ValueTrailingDigit the CO2 Value Trailing Digit
+     * @return the PublishCo2ValueCommand command
      */
-    public void setCo2ValueTrailingDigit(final Integer co2ValueTrailingDigit) {
+    public PublishCo2ValueCommand setCo2ValueTrailingDigit(final Integer co2ValueTrailingDigit) {
         this.co2ValueTrailingDigit = co2ValueTrailingDigit;
+        return this;
     }
 
     @Override

@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class CreditAdjustment extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -83,9 +83,11 @@ public class CreditAdjustment extends ZclCommand {
      * Sets Issuer Event ID.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the CreditAdjustment command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public CreditAdjustment setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -101,9 +103,11 @@ public class CreditAdjustment extends ZclCommand {
      * Sets Start Time.
      *
      * @param startTime the Start Time
+     * @return the CreditAdjustment command
      */
-    public void setStartTime(final Calendar startTime) {
+    public CreditAdjustment setStartTime(final Calendar startTime) {
         this.startTime = startTime;
+        return this;
     }
 
     /**
@@ -119,9 +123,11 @@ public class CreditAdjustment extends ZclCommand {
      * Sets Credit Adjustment Type.
      *
      * @param creditAdjustmentType the Credit Adjustment Type
+     * @return the CreditAdjustment command
      */
-    public void setCreditAdjustmentType(final Integer creditAdjustmentType) {
+    public CreditAdjustment setCreditAdjustmentType(final Integer creditAdjustmentType) {
         this.creditAdjustmentType = creditAdjustmentType;
+        return this;
     }
 
     /**
@@ -137,9 +143,11 @@ public class CreditAdjustment extends ZclCommand {
      * Sets Credit Adjustment Value.
      *
      * @param creditAdjustmentValue the Credit Adjustment Value
+     * @return the CreditAdjustment command
      */
-    public void setCreditAdjustmentValue(final Integer creditAdjustmentValue) {
+    public CreditAdjustment setCreditAdjustmentValue(final Integer creditAdjustmentValue) {
         this.creditAdjustmentValue = creditAdjustmentValue;
+        return this;
     }
 
     @Override

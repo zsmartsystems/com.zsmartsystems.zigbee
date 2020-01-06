@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ScheduleSnapshot extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -115,9 +115,11 @@ public class ScheduleSnapshot extends ZclCommand {
      * allowing for the client to easily identify the set of messages that form a group.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the ScheduleSnapshot command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public ScheduleSnapshot setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     /**
@@ -141,9 +143,11 @@ public class ScheduleSnapshot extends ZclCommand {
      * for each fragment belonging to the same command.
      *
      * @param commandIndex the Command Index
+     * @return the ScheduleSnapshot command
      */
-    public void setCommandIndex(final Integer commandIndex) {
+    public ScheduleSnapshot setCommandIndex(final Integer commandIndex) {
         this.commandIndex = commandIndex;
+        return this;
     }
 
     /**
@@ -165,9 +169,11 @@ public class ScheduleSnapshot extends ZclCommand {
      * Commands field indicates the total number of sub-commands in the message.
      *
      * @param totalNumberOfCommands the Total Number of Commands
+     * @return the ScheduleSnapshot command
      */
-    public void setTotalNumberOfCommands(final Integer totalNumberOfCommands) {
+    public ScheduleSnapshot setTotalNumberOfCommands(final Integer totalNumberOfCommands) {
         this.totalNumberOfCommands = totalNumberOfCommands;
+        return this;
     }
 
     /**
@@ -183,9 +189,11 @@ public class ScheduleSnapshot extends ZclCommand {
      * Sets Snapshot Schedule Payload.
      *
      * @param snapshotSchedulePayload the Snapshot Schedule Payload
+     * @return the ScheduleSnapshot command
      */
-    public void setSnapshotSchedulePayload(final SnapshotSchedulePayload snapshotSchedulePayload) {
+    public ScheduleSnapshot setSnapshotSchedulePayload(final SnapshotSchedulePayload snapshotSchedulePayload) {
         this.snapshotSchedulePayload = snapshotSchedulePayload;
+        return this;
     }
 
     @Override

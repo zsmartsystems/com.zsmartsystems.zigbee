@@ -39,7 +39,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ImagePageCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -119,9 +119,11 @@ public class ImagePageCommand extends ZclCommand {
      * Sets Field Control.
      *
      * @param fieldControl the Field Control
+     * @return the ImagePageCommand command
      */
-    public void setFieldControl(final Integer fieldControl) {
+    public ImagePageCommand setFieldControl(final Integer fieldControl) {
         this.fieldControl = fieldControl;
+        return this;
     }
 
     /**
@@ -137,9 +139,11 @@ public class ImagePageCommand extends ZclCommand {
      * Sets Manufacturer Code.
      *
      * @param manufacturerCode the Manufacturer Code
+     * @return the ImagePageCommand command
      */
-    public void setManufacturerCode(final Integer manufacturerCode) {
+    public ImagePageCommand setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
+        return this;
     }
 
     /**
@@ -155,9 +159,11 @@ public class ImagePageCommand extends ZclCommand {
      * Sets Image Type.
      *
      * @param imageType the Image Type
+     * @return the ImagePageCommand command
      */
-    public void setImageType(final Integer imageType) {
+    public ImagePageCommand setImageType(final Integer imageType) {
         this.imageType = imageType;
+        return this;
     }
 
     /**
@@ -173,9 +179,11 @@ public class ImagePageCommand extends ZclCommand {
      * Sets File Version.
      *
      * @param fileVersion the File Version
+     * @return the ImagePageCommand command
      */
-    public void setFileVersion(final Integer fileVersion) {
+    public ImagePageCommand setFileVersion(final Integer fileVersion) {
         this.fileVersion = fileVersion;
+        return this;
     }
 
     /**
@@ -191,9 +199,11 @@ public class ImagePageCommand extends ZclCommand {
      * Sets File Offset.
      *
      * @param fileOffset the File Offset
+     * @return the ImagePageCommand command
      */
-    public void setFileOffset(final Integer fileOffset) {
+    public ImagePageCommand setFileOffset(final Integer fileOffset) {
         this.fileOffset = fileOffset;
+        return this;
     }
 
     /**
@@ -209,9 +219,11 @@ public class ImagePageCommand extends ZclCommand {
      * Sets Maximum Data Size.
      *
      * @param maximumDataSize the Maximum Data Size
+     * @return the ImagePageCommand command
      */
-    public void setMaximumDataSize(final Integer maximumDataSize) {
+    public ImagePageCommand setMaximumDataSize(final Integer maximumDataSize) {
         this.maximumDataSize = maximumDataSize;
+        return this;
     }
 
     /**
@@ -227,9 +239,11 @@ public class ImagePageCommand extends ZclCommand {
      * Sets Page Size.
      *
      * @param pageSize the Page Size
+     * @return the ImagePageCommand command
      */
-    public void setPageSize(final Integer pageSize) {
+    public ImagePageCommand setPageSize(final Integer pageSize) {
         this.pageSize = pageSize;
+        return this;
     }
 
     /**
@@ -245,9 +259,11 @@ public class ImagePageCommand extends ZclCommand {
      * Sets Response Spacing.
      *
      * @param responseSpacing the Response Spacing
+     * @return the ImagePageCommand command
      */
-    public void setResponseSpacing(final Integer responseSpacing) {
+    public ImagePageCommand setResponseSpacing(final Integer responseSpacing) {
         this.responseSpacing = responseSpacing;
+        return this;
     }
 
     /**
@@ -263,9 +279,11 @@ public class ImagePageCommand extends ZclCommand {
      * Sets Request Node Address.
      *
      * @param requestNodeAddress the Request Node Address
+     * @return the ImagePageCommand command
      */
-    public void setRequestNodeAddress(final IeeeAddress requestNodeAddress) {
+    public ImagePageCommand setRequestNodeAddress(final IeeeAddress requestNodeAddress) {
         this.requestNodeAddress = requestNodeAddress;
+        return this;
     }
 
     @Override

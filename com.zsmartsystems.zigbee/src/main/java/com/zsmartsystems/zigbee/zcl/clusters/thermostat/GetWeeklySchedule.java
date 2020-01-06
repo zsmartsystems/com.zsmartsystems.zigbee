@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GetWeeklySchedule extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -68,9 +68,11 @@ public class GetWeeklySchedule extends ZclCommand {
      * Sets Days To Return.
      *
      * @param daysToReturn the Days To Return
+     * @return the GetWeeklySchedule command
      */
-    public void setDaysToReturn(final Integer daysToReturn) {
+    public GetWeeklySchedule setDaysToReturn(final Integer daysToReturn) {
         this.daysToReturn = daysToReturn;
+        return this;
     }
 
     /**
@@ -86,9 +88,11 @@ public class GetWeeklySchedule extends ZclCommand {
      * Sets Mode To Return.
      *
      * @param modeToReturn the Mode To Return
+     * @return the GetWeeklySchedule command
      */
-    public void setModeToReturn(final Integer modeToReturn) {
+    public GetWeeklySchedule setModeToReturn(final Integer modeToReturn) {
         this.modeToReturn = modeToReturn;
+        return this;
     }
 
     @Override

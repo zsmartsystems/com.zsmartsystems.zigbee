@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class ResetLoadLimitCounter extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -83,9 +83,11 @@ public class ResetLoadLimitCounter extends ZclCommand {
      * An unsigned 32-bit field containing a unique identifier for the commodity provider.
      *
      * @param providerId the Provider ID
+     * @return the ResetLoadLimitCounter command
      */
-    public void setProviderId(final Integer providerId) {
+    public ResetLoadLimitCounter setProviderId(final Integer providerId) {
         this.providerId = providerId;
+        return this;
     }
 
     /**
@@ -113,9 +115,11 @@ public class ResetLoadLimitCounter extends ZclCommand {
      * Issuer Event ID field that is larger than previous versions of the command.
      *
      * @param issuerEventId the Issuer Event ID
+     * @return the ResetLoadLimitCounter command
      */
-    public void setIssuerEventId(final Integer issuerEventId) {
+    public ResetLoadLimitCounter setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
+        return this;
     }
 
     @Override

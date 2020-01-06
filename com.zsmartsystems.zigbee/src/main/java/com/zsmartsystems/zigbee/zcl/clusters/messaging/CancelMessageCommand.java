@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class CancelMessageCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -90,9 +90,11 @@ public class CancelMessageCommand extends ZclCommand {
      * originally issued.
      *
      * @param messageId the Message ID
+     * @return the CancelMessageCommand command
      */
-    public void setMessageId(final Integer messageId) {
+    public CancelMessageCommand setMessageId(final Integer messageId) {
         this.messageId = messageId;
+        return this;
     }
 
     /**
@@ -112,9 +114,11 @@ public class CancelMessageCommand extends ZclCommand {
      * This field is deprecated and should be set to 0x00.
      *
      * @param messageControl the Message Control
+     * @return the CancelMessageCommand command
      */
-    public void setMessageControl(final Integer messageControl) {
+    public CancelMessageCommand setMessageControl(final Integer messageControl) {
         this.messageControl = messageControl;
+        return this;
     }
 
     @Override

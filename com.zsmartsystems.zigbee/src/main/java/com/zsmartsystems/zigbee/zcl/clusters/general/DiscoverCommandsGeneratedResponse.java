@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class DiscoverCommandsGeneratedResponse extends ZclCommand {
     /**
      * The command ID.
@@ -80,9 +80,11 @@ public class DiscoverCommandsGeneratedResponse extends ZclCommand {
      * Sets Discovery Complete.
      *
      * @param discoveryComplete the Discovery Complete
+     * @return the DiscoverCommandsGeneratedResponse command
      */
-    public void setDiscoveryComplete(final Boolean discoveryComplete) {
+    public DiscoverCommandsGeneratedResponse setDiscoveryComplete(final Boolean discoveryComplete) {
         this.discoveryComplete = discoveryComplete;
+        return this;
     }
 
     /**
@@ -98,9 +100,11 @@ public class DiscoverCommandsGeneratedResponse extends ZclCommand {
      * Sets Command Identifiers.
      *
      * @param commandIdentifiers the Command Identifiers
+     * @return the DiscoverCommandsGeneratedResponse command
      */
-    public void setCommandIdentifiers(final List<Integer> commandIdentifiers) {
+    public DiscoverCommandsGeneratedResponse setCommandIdentifiers(final List<Integer> commandIdentifiers) {
         this.commandIdentifiers = commandIdentifiers;
+        return this;
     }
 
     @Override

@@ -21,7 +21,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class TopUpPayload implements ZigBeeSerializable {
     /**
      * Top Up Code structure field.
@@ -53,9 +53,11 @@ public class TopUpPayload implements ZigBeeSerializable {
      * Sets Top Up Code.
      *
      * @param topUpCode the Top Up Code
+     * @return the TopUpPayload command
      */
-    public void setTopUpCode(final ByteArray topUpCode) {
+    public TopUpPayload setTopUpCode(final ByteArray topUpCode) {
         this.topUpCode = topUpCode;
+        return this;
     }
 
     /**
@@ -71,9 +73,11 @@ public class TopUpPayload implements ZigBeeSerializable {
      * Sets Top Up Amount.
      *
      * @param topUpAmount the Top Up Amount
+     * @return the TopUpPayload command
      */
-    public void setTopUpAmount(final Integer topUpAmount) {
+    public TopUpPayload setTopUpAmount(final Integer topUpAmount) {
         this.topUpAmount = topUpAmount;
+        return this;
     }
 
     /**
@@ -89,9 +93,11 @@ public class TopUpPayload implements ZigBeeSerializable {
      * Sets Top Up Time.
      *
      * @param topUpTime the Top Up Time
+     * @return the TopUpPayload command
      */
-    public void setTopUpTime(final Calendar topUpTime) {
+    public TopUpPayload setTopUpTime(final Calendar topUpTime) {
         this.topUpTime = topUpTime;
+        return this;
     }
 
     @Override

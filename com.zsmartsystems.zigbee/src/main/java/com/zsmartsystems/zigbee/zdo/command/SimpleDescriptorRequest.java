@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zdo.command.SimpleDescriptorResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-15T18:21:05Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class SimpleDescriptorRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * The ZDO cluster ID.
@@ -65,9 +65,11 @@ public class SimpleDescriptorRequest extends ZdoRequest implements ZigBeeTransac
      * Sets NWK Addr Of Interest.
      *
      * @param nwkAddrOfInterest the NWK Addr Of Interest
+     * @return the SimpleDescriptorRequest command
      */
-    public void setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
+    public SimpleDescriptorRequest setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
         this.nwkAddrOfInterest = nwkAddrOfInterest;
+        return this;
     }
 
     /**
@@ -83,9 +85,11 @@ public class SimpleDescriptorRequest extends ZdoRequest implements ZigBeeTransac
      * Sets Endpoint.
      *
      * @param endpoint the Endpoint
+     * @return the SimpleDescriptorRequest command
      */
-    public void setEndpoint(final Integer endpoint) {
+    public SimpleDescriptorRequest setEndpoint(final Integer endpoint) {
         this.endpoint = endpoint;
+        return this;
     }
 
     @Override

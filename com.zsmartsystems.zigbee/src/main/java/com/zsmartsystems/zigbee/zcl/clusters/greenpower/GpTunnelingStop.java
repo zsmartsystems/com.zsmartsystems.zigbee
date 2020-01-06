@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-03T12:48:45Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-06T18:45:28Z")
 public class GpTunnelingStop extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -97,9 +97,11 @@ public class GpTunnelingStop extends ZclCommand {
      * Sets Options.
      *
      * @param options the Options
+     * @return the GpTunnelingStop command
      */
-    public void setOptions(final Integer options) {
+    public GpTunnelingStop setOptions(final Integer options) {
         this.options = options;
+        return this;
     }
 
     /**
@@ -115,9 +117,11 @@ public class GpTunnelingStop extends ZclCommand {
      * Sets Gpd Src ID.
      *
      * @param gpdSrcId the Gpd Src ID
+     * @return the GpTunnelingStop command
      */
-    public void setGpdSrcId(final Integer gpdSrcId) {
+    public GpTunnelingStop setGpdSrcId(final Integer gpdSrcId) {
         this.gpdSrcId = gpdSrcId;
+        return this;
     }
 
     /**
@@ -133,9 +137,11 @@ public class GpTunnelingStop extends ZclCommand {
      * Sets Gpd IEEE.
      *
      * @param gpdIeee the Gpd IEEE
+     * @return the GpTunnelingStop command
      */
-    public void setGpdIeee(final IeeeAddress gpdIeee) {
+    public GpTunnelingStop setGpdIeee(final IeeeAddress gpdIeee) {
         this.gpdIeee = gpdIeee;
+        return this;
     }
 
     /**
@@ -151,9 +157,11 @@ public class GpTunnelingStop extends ZclCommand {
      * Sets Endpoint.
      *
      * @param endpoint the Endpoint
+     * @return the GpTunnelingStop command
      */
-    public void setEndpoint(final Integer endpoint) {
+    public GpTunnelingStop setEndpoint(final Integer endpoint) {
         this.endpoint = endpoint;
+        return this;
     }
 
     /**
@@ -169,9 +177,11 @@ public class GpTunnelingStop extends ZclCommand {
      * Sets Gpd Security Frame Counter.
      *
      * @param gpdSecurityFrameCounter the Gpd Security Frame Counter
+     * @return the GpTunnelingStop command
      */
-    public void setGpdSecurityFrameCounter(final Integer gpdSecurityFrameCounter) {
+    public GpTunnelingStop setGpdSecurityFrameCounter(final Integer gpdSecurityFrameCounter) {
         this.gpdSecurityFrameCounter = gpdSecurityFrameCounter;
+        return this;
     }
 
     /**
@@ -187,9 +197,11 @@ public class GpTunnelingStop extends ZclCommand {
      * Sets Gpp Short Address.
      *
      * @param gppShortAddress the Gpp Short Address
+     * @return the GpTunnelingStop command
      */
-    public void setGppShortAddress(final Integer gppShortAddress) {
+    public GpTunnelingStop setGppShortAddress(final Integer gppShortAddress) {
         this.gppShortAddress = gppShortAddress;
+        return this;
     }
 
     /**
@@ -205,9 +217,11 @@ public class GpTunnelingStop extends ZclCommand {
      * Sets Gpp Distance.
      *
      * @param gppDistance the Gpp Distance
+     * @return the GpTunnelingStop command
      */
-    public void setGppDistance(final Integer gppDistance) {
+    public GpTunnelingStop setGppDistance(final Integer gppDistance) {
         this.gppDistance = gppDistance;
+        return this;
     }
 
     @Override
