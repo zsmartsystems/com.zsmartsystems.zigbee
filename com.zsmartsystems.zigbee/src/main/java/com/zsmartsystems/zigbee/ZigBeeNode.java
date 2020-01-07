@@ -407,6 +407,12 @@ public class ZigBeeNode implements ZigBeeCommandListener {
                     if (response.getStatus() == ZdoStatus.NOT_SUPPORTED) {
                         return ZigBeeStatus.UNSUPPORTED;
                     }
+                    if (response.getStatus() == ZdoStatus.NOT_PERMITTED) {
+                        return ZigBeeStatus.INVALID_STATE;
+                    }
+                    if (response.getStatus() != ZdoStatus.SUCCESS) {
+                        return ZigBeeStatus.FAILURE;
+                    }
 
                     if (response.getStartIndex() == index) {
                         tableSize = response.getBindingTableEntries();
