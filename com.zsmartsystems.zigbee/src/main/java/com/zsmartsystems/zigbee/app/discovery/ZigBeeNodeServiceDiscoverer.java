@@ -731,8 +731,9 @@ public class ZigBeeNodeServiceDiscoverer {
             case ROUTER:
             case COORDINATOR:
                 return false;
+            default:
+                return true;
         }
-        return true;
     }
 
     /**
