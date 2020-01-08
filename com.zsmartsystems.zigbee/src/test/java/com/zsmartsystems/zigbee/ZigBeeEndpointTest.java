@@ -179,6 +179,25 @@ public class ZigBeeEndpointTest {
         assertEquals(application, endpoint.getApplication(0));
     }
 
+    @Test
+    public void commandReceivedUnsecured() {
+        ZigBeeEndpoint endpoint = getEndpoint();
+
+        ZclCommand command = mockZclCommand(ZclCommand.class);
+        Mockito.when(command.getClusterId()).thenReturn(0);
+        Mockito.when(command.getApsSecurity()).thenReturn(false);
+
+        ZclCluster cluster = Mockito.mock(ZclCluster.class);
+        Mockito.when(cluster.getClusterId()).thenReturn(0);
+        Mockito.when(cluster.getApsSecurityRequired()).thenReturn(true);
+        endpoint.addInputCluster(cluster);
+        endpoint.commandReceived(command);
+
+        Mockito.verify(node, Mockito.timeout(TIMEOUT).times(1)).sendTransaction(commandCapture.capture());
+        ZigBeeCommand response = commandCapture.getValue();
+        assertTrue(response instanceof DefaultResponse);
+    }
+
     private ZclCommand mockZclCommand(Class<?> clazz) {
         ZclCommand command = (ZclCommand) Mockito.mock(clazz);
         ZigBeeEndpointAddress sourceAddress = new ZigBeeEndpointAddress(1234, 5);

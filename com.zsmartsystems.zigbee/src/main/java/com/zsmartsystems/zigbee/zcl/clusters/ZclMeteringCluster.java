@@ -2651,14 +2651,22 @@ public class ZclMeteringCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
 
-        attributeMap.put(ATTR_FUNCTIONALNOTIFICATIONFLAGS, new ZclAttribute(this, ATTR_FUNCTIONALNOTIFICATIONFLAGS, "Functional Notification Flags", ZclDataType.BITMAP_32_BIT, true, true, false, false));
-        attributeMap.put(ATTR_NOTIFICATIONFLAGS2, new ZclAttribute(this, ATTR_NOTIFICATIONFLAGS2, "Notification Flags 2", ZclDataType.BITMAP_32_BIT, true, true, false, false));
-        attributeMap.put(ATTR_NOTIFICATIONFLAGS3, new ZclAttribute(this, ATTR_NOTIFICATIONFLAGS3, "Notification Flags 3", ZclDataType.BITMAP_32_BIT, true, true, false, false));
-        attributeMap.put(ATTR_NOTIFICATIONFLAGS4, new ZclAttribute(this, ATTR_NOTIFICATIONFLAGS4, "Notification Flags 4", ZclDataType.BITMAP_32_BIT, true, true, false, false));
-        attributeMap.put(ATTR_NOTIFICATIONFLAGS5, new ZclAttribute(this, ATTR_NOTIFICATIONFLAGS5, "Notification Flags 5", ZclDataType.BITMAP_32_BIT, true, true, false, false));
-        attributeMap.put(ATTR_NOTIFICATIONFLAGS6, new ZclAttribute(this, ATTR_NOTIFICATIONFLAGS6, "Notification Flags 6", ZclDataType.BITMAP_32_BIT, true, true, false, false));
-        attributeMap.put(ATTR_NOTIFICATIONFLAGS7, new ZclAttribute(this, ATTR_NOTIFICATIONFLAGS7, "Notification Flags 7", ZclDataType.BITMAP_32_BIT, true, true, false, false));
-        attributeMap.put(ATTR_NOTIFICATIONFLAGS8, new ZclAttribute(this, ATTR_NOTIFICATIONFLAGS8, "Notification Flags 8", ZclDataType.BITMAP_32_BIT, true, true, false, false));
+        attributeMap.put(ATTR_FUNCTIONALNOTIFICATIONFLAGS, new ZclAttribute(this, ATTR_FUNCTIONALNOTIFICATIONFLAGS,
+                "Functional Notification Flags", ZclDataType.BITMAP_32_BIT, true, true, false, false));
+        attributeMap.put(ATTR_NOTIFICATIONFLAGS2, new ZclAttribute(this, ATTR_NOTIFICATIONFLAGS2,
+                "Notification Flags 2", ZclDataType.BITMAP_32_BIT, true, true, false, false));
+        attributeMap.put(ATTR_NOTIFICATIONFLAGS3, new ZclAttribute(this, ATTR_NOTIFICATIONFLAGS3,
+                "Notification Flags 3", ZclDataType.BITMAP_32_BIT, true, true, false, false));
+        attributeMap.put(ATTR_NOTIFICATIONFLAGS4, new ZclAttribute(this, ATTR_NOTIFICATIONFLAGS4,
+                "Notification Flags 4", ZclDataType.BITMAP_32_BIT, true, true, false, false));
+        attributeMap.put(ATTR_NOTIFICATIONFLAGS5, new ZclAttribute(this, ATTR_NOTIFICATIONFLAGS5,
+                "Notification Flags 5", ZclDataType.BITMAP_32_BIT, true, true, false, false));
+        attributeMap.put(ATTR_NOTIFICATIONFLAGS6, new ZclAttribute(this, ATTR_NOTIFICATIONFLAGS6,
+                "Notification Flags 6", ZclDataType.BITMAP_32_BIT, true, true, false, false));
+        attributeMap.put(ATTR_NOTIFICATIONFLAGS7, new ZclAttribute(this, ATTR_NOTIFICATIONFLAGS7,
+                "Notification Flags 7", ZclDataType.BITMAP_32_BIT, true, true, false, false));
+        attributeMap.put(ATTR_NOTIFICATIONFLAGS8, new ZclAttribute(this, ATTR_NOTIFICATIONFLAGS8,
+                "Notification Flags 8", ZclDataType.BITMAP_32_BIT, true, true, false, false));
 
         return attributeMap;
     }
@@ -2667,866 +2675,3090 @@ public class ZclMeteringCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
 
-        attributeMap.put(ATTR_CURRENTSUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTSUMMATIONDELIVERED, "Current Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTSUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTSUMMATIONRECEIVED, "Current Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_CURRENTMAXDEMANDDELIVERED, new ZclAttribute(this, ATTR_CURRENTMAXDEMANDDELIVERED, "Current Max Demand Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_CURRENTMAXDEMANDRECEIVED, new ZclAttribute(this, ATTR_CURRENTMAXDEMANDRECEIVED, "Current Max Demand Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_DFTSUMMATION, new ZclAttribute(this, ATTR_DFTSUMMATION, "Dft Summation", ZclDataType.UNSIGNED_48_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_DAILYFREEZETIME, new ZclAttribute(this, ATTR_DAILYFREEZETIME, "Daily Freeze Time", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_POWERFACTOR, new ZclAttribute(this, ATTR_POWERFACTOR, "Power Factor", ZclDataType.SIGNED_8_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_READINGSNAPSHOTTIME, new ZclAttribute(this, ATTR_READINGSNAPSHOTTIME, "Reading Snapshot Time", ZclDataType.UTCTIME, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTMAXDEMANDDELIVEREDTIME, new ZclAttribute(this, ATTR_CURRENTMAXDEMANDDELIVEREDTIME, "Current Max Demand Delivered Time", ZclDataType.UTCTIME, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTMAXDEMANDRECEIVEDTIME, new ZclAttribute(this, ATTR_CURRENTMAXDEMANDRECEIVEDTIME, "Current Max Demand Received Time", ZclDataType.UTCTIME, true, true, false, false));
-        attributeMap.put(ATTR_DEFAULTUPDATEPERIOD, new ZclAttribute(this, ATTR_DEFAULTUPDATEPERIOD, "Default Update Period", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_FASTPOLLUPDATEPERIOD, new ZclAttribute(this, ATTR_FASTPOLLUPDATEPERIOD, "Fast Poll Update Period", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_CURRENTBLOCKPERIODCONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTBLOCKPERIODCONSUMPTIONDELIVERED, "Current Block Period Consumption Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_DAILYCONSUMPTIONTARGET, new ZclAttribute(this, ATTR_DAILYCONSUMPTIONTARGET, "Daily Consumption Target", ZclDataType.UNSIGNED_24_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_CURRENTBLOCK, new ZclAttribute(this, ATTR_CURRENTBLOCK, "Current Block", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
-        attributeMap.put(ATTR_PROFILEINTERVALPERIOD, new ZclAttribute(this, ATTR_PROFILEINTERVALPERIOD, "Profile Interval Period", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
-        attributeMap.put(ATTR_INTERVALREADREPORTINGPERIOD, new ZclAttribute(this, ATTR_INTERVALREADREPORTINGPERIOD, "Interval Read Reporting Period", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_PRESETREADINGTIME, new ZclAttribute(this, ATTR_PRESETREADINGTIME, "Preset Reading Time", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_VOLUMEPERREPORT, new ZclAttribute(this, ATTR_VOLUMEPERREPORT, "Volume Per Report", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_FLOWRESTRICTION, new ZclAttribute(this, ATTR_FLOWRESTRICTION, "Flow Restriction", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_SUPPLYSTATUS, new ZclAttribute(this, ATTR_SUPPLYSTATUS, "Supply Status", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
-        attributeMap.put(ATTR_CURRENTINLETENERGYCARRIERSUMMATION, new ZclAttribute(this, ATTR_CURRENTINLETENERGYCARRIERSUMMATION, "Current Inlet Energy Carrier Summation", ZclDataType.UNSIGNED_48_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_CURRENTOUTLETENERGYCARRIERSUMMATION, new ZclAttribute(this, ATTR_CURRENTOUTLETENERGYCARRIERSUMMATION, "Current Outlet Energy Carrier Summation", ZclDataType.UNSIGNED_48_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_INLETTEMPERATURE, new ZclAttribute(this, ATTR_INLETTEMPERATURE, "Inlet Temperature", ZclDataType.SIGNED_24_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_OUTLETTEMPERATURE, new ZclAttribute(this, ATTR_OUTLETTEMPERATURE, "Outlet Temperature", ZclDataType.SIGNED_24_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_CONTROLTEMPERATURE, new ZclAttribute(this, ATTR_CONTROLTEMPERATURE, "Control Temperature", ZclDataType.SIGNED_24_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_CURRENTINLETENERGYCARRIERDEMAND, new ZclAttribute(this, ATTR_CURRENTINLETENERGYCARRIERDEMAND, "Current Inlet Energy Carrier Demand", ZclDataType.SIGNED_24_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_CURRENTOUTLETENERGYCARRIERDEMAND, new ZclAttribute(this, ATTR_CURRENTOUTLETENERGYCARRIERDEMAND, "Current Outlet Energy Carrier Demand", ZclDataType.SIGNED_24_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSBLOCKPERIODCONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSBLOCKPERIODCONSUMPTIONDELIVERED, "Previous Block Period Consumption Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_CURRENTBLOCKPERIODCONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTBLOCKPERIODCONSUMPTIONRECEIVED, "Current Block Period Consumption Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_CURRENTBLOCKRECEIVED, new ZclAttribute(this, ATTR_CURRENTBLOCKRECEIVED, "Current Block Received", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
-        attributeMap.put(ATTR_DFTSUMMATIONRECEIVED, new ZclAttribute(this, ATTR_DFTSUMMATIONRECEIVED, "Dft Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_ACTIVEREGISTERTIERDELIVERED, new ZclAttribute(this, ATTR_ACTIVEREGISTERTIERDELIVERED, "Active Register Tier Delivered", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
-        attributeMap.put(ATTR_ACTIVEREGISTERTIERRECEIVED, new ZclAttribute(this, ATTR_ACTIVEREGISTERTIERRECEIVED, "Active Register Tier Received", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
-        attributeMap.put(ATTR_LASTBLOCKSWITCHTIME, new ZclAttribute(this, ATTR_LASTBLOCKSWITCHTIME, "Last Block Switch Time", ZclDataType.UTCTIME, false, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER1SUMMATIONDELIVERED, "Current Tier 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER3SUMMATIONDELIVERED, "Current Tier 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER5SUMMATIONDELIVERED, "Current Tier 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER7SUMMATIONDELIVERED, "Current Tier 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER9SUMMATIONDELIVERED, "Current Tier 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER11SUMMATIONDELIVERED, "Current Tier 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER13SUMMATIONDELIVERED, "Current Tier 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER15SUMMATIONDELIVERED, "Current Tier 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER17SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER17SUMMATIONDELIVERED, "Current Tier 17 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER19SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER19SUMMATIONDELIVERED, "Current Tier 19 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER21SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER21SUMMATIONDELIVERED, "Current Tier 21 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER23SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER23SUMMATIONDELIVERED, "Current Tier 23 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER25SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER25SUMMATIONDELIVERED, "Current Tier 25 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER27SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER27SUMMATIONDELIVERED, "Current Tier 27 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER29SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER29SUMMATIONDELIVERED, "Current Tier 29 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER31SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER31SUMMATIONDELIVERED, "Current Tier 31 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER33SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER33SUMMATIONDELIVERED, "Current Tier 33 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER35SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER35SUMMATIONDELIVERED, "Current Tier 35 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER37SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER37SUMMATIONDELIVERED, "Current Tier 37 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER39SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER39SUMMATIONDELIVERED, "Current Tier 39 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER41SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER41SUMMATIONDELIVERED, "Current Tier 41 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER43SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER43SUMMATIONDELIVERED, "Current Tier 43 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER45SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER45SUMMATIONDELIVERED, "Current Tier 45 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER47SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER47SUMMATIONDELIVERED, "Current Tier 47 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER49SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER49SUMMATIONDELIVERED, "Current Tier 49 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER51SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER51SUMMATIONDELIVERED, "Current Tier 51 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER53SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER53SUMMATIONDELIVERED, "Current Tier 53 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER55SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER55SUMMATIONDELIVERED, "Current Tier 55 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER57SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER57SUMMATIONDELIVERED, "Current Tier 57 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER59SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER59SUMMATIONDELIVERED, "Current Tier 59 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER61SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER61SUMMATIONDELIVERED, "Current Tier 61 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER63SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER63SUMMATIONDELIVERED, "Current Tier 63 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER65SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER65SUMMATIONDELIVERED, "Current Tier 65 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER67SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER67SUMMATIONDELIVERED, "Current Tier 67 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER69SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER69SUMMATIONDELIVERED, "Current Tier 69 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER71SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER71SUMMATIONDELIVERED, "Current Tier 71 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER73SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER73SUMMATIONDELIVERED, "Current Tier 73 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER75SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER75SUMMATIONDELIVERED, "Current Tier 75 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER77SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER77SUMMATIONDELIVERED, "Current Tier 77 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER79SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER79SUMMATIONDELIVERED, "Current Tier 79 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER81SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER81SUMMATIONDELIVERED, "Current Tier 81 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER83SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER83SUMMATIONDELIVERED, "Current Tier 83 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER85SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER85SUMMATIONDELIVERED, "Current Tier 85 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER87SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER87SUMMATIONDELIVERED, "Current Tier 87 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER89SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER89SUMMATIONDELIVERED, "Current Tier 89 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER91SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER91SUMMATIONDELIVERED, "Current Tier 91 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER93SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER93SUMMATIONDELIVERED, "Current Tier 93 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER95SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER95SUMMATIONDELIVERED, "Current Tier 95 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER1SUMMATIONRECEIVED, "Current Tier 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER3SUMMATIONRECEIVED, "Current Tier 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER5SUMMATIONRECEIVED, "Current Tier 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER7SUMMATIONRECEIVED, "Current Tier 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER9SUMMATIONRECEIVED, "Current Tier 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER11SUMMATIONRECEIVED, "Current Tier 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER13SUMMATIONRECEIVED, "Current Tier 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER15SUMMATIONRECEIVED, "Current Tier 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER17SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER17SUMMATIONRECEIVED, "Current Tier 17 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER19SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER19SUMMATIONRECEIVED, "Current Tier 19 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER21SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER21SUMMATIONRECEIVED, "Current Tier 21 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER23SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER23SUMMATIONRECEIVED, "Current Tier 23 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER25SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER25SUMMATIONRECEIVED, "Current Tier 25 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER27SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER27SUMMATIONRECEIVED, "Current Tier 27 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER29SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER29SUMMATIONRECEIVED, "Current Tier 29 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER31SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER31SUMMATIONRECEIVED, "Current Tier 31 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER33SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER33SUMMATIONRECEIVED, "Current Tier 33 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER35SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER35SUMMATIONRECEIVED, "Current Tier 35 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER37SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER37SUMMATIONRECEIVED, "Current Tier 37 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER39SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER39SUMMATIONRECEIVED, "Current Tier 39 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER41SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER41SUMMATIONRECEIVED, "Current Tier 41 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER43SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER43SUMMATIONRECEIVED, "Current Tier 43 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER45SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER45SUMMATIONRECEIVED, "Current Tier 45 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER47SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER47SUMMATIONRECEIVED, "Current Tier 47 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER49SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER49SUMMATIONRECEIVED, "Current Tier 49 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER51SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER51SUMMATIONRECEIVED, "Current Tier 51 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER53SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER53SUMMATIONRECEIVED, "Current Tier 53 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER55SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER55SUMMATIONRECEIVED, "Current Tier 55 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER57SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER57SUMMATIONRECEIVED, "Current Tier 57 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER59SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER59SUMMATIONRECEIVED, "Current Tier 59 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER61SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER61SUMMATIONRECEIVED, "Current Tier 61 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER63SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER63SUMMATIONRECEIVED, "Current Tier 63 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER65SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER65SUMMATIONRECEIVED, "Current Tier 65 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER67SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER67SUMMATIONRECEIVED, "Current Tier 67 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER69SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER69SUMMATIONRECEIVED, "Current Tier 69 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER71SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER71SUMMATIONRECEIVED, "Current Tier 71 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER73SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER73SUMMATIONRECEIVED, "Current Tier 73 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER75SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER75SUMMATIONRECEIVED, "Current Tier 75 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER77SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER77SUMMATIONRECEIVED, "Current Tier 77 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER79SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER79SUMMATIONRECEIVED, "Current Tier 79 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER81SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER81SUMMATIONRECEIVED, "Current Tier 81 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER83SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER83SUMMATIONRECEIVED, "Current Tier 83 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER85SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER85SUMMATIONRECEIVED, "Current Tier 85 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER87SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER87SUMMATIONRECEIVED, "Current Tier 87 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER89SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER89SUMMATIONRECEIVED, "Current Tier 89 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER91SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER91SUMMATIONRECEIVED, "Current Tier 91 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER93SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER93SUMMATIONRECEIVED, "Current Tier 93 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER95SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER95SUMMATIONRECEIVED, "Current Tier 95 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CPP1SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CPP1SUMMATIONDELIVERED, "CPP 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CPP2SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CPP2SUMMATIONDELIVERED, "CPP 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_STATUS, new ZclAttribute(this, ATTR_STATUS, "Status", ZclDataType.BITMAP_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_REMAININGBATTERYLIFE, new ZclAttribute(this, ATTR_REMAININGBATTERYLIFE, "Remaining Battery Life", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_HOURSINOPERATION, new ZclAttribute(this, ATTR_HOURSINOPERATION, "Hours In Operation", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_HOURSINFAULT, new ZclAttribute(this, ATTR_HOURSINFAULT, "Hours In Fault", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_EXTENDEDSTATUS, new ZclAttribute(this, ATTR_EXTENDEDSTATUS, "Extended Status", ZclDataType.BITMAP_64_BIT, true, true, false, false));
-        attributeMap.put(ATTR_REMAININGBATTERYLIFEINDAYS, new ZclAttribute(this, ATTR_REMAININGBATTERYLIFEINDAYS, "Remaining Battery Life In Days", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTMETERID, new ZclAttribute(this, ATTR_CURRENTMETERID, "Current Meter ID", ZclDataType.OCTET_STRING, true, true, false, false));
-        attributeMap.put(ATTR_AMBIENTCONSUMPTIONINDICATOR, new ZclAttribute(this, ATTR_AMBIENTCONSUMPTIONINDICATOR, "Ambient Consumption Indicator", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_UNITOFMEASURE, new ZclAttribute(this, ATTR_UNITOFMEASURE, "Unit Of Measure", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_MULTIPLIER, new ZclAttribute(this, ATTR_MULTIPLIER, "Multiplier", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_DIVISOR, new ZclAttribute(this, ATTR_DIVISOR, "Divisor", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_SUMMATIONFORMATTING, new ZclAttribute(this, ATTR_SUMMATIONFORMATTING, "Summation Formatting", ZclDataType.BITMAP_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_DEMANDFORMATTING, new ZclAttribute(this, ATTR_DEMANDFORMATTING, "Demand Formatting", ZclDataType.BITMAP_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_HISTORICALCONSUMPTIONFORMATTING, new ZclAttribute(this, ATTR_HISTORICALCONSUMPTIONFORMATTING, "Historical Consumption Formatting", ZclDataType.BITMAP_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_METERINGDEVICETYPE, new ZclAttribute(this, ATTR_METERINGDEVICETYPE, "Metering Device Type", ZclDataType.BITMAP_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_SITEID, new ZclAttribute(this, ATTR_SITEID, "Site ID", ZclDataType.OCTET_STRING, true, true, false, false));
-        attributeMap.put(ATTR_METERSERIALNUMBER, new ZclAttribute(this, ATTR_METERSERIALNUMBER, "Meter Serial Number", ZclDataType.OCTET_STRING, true, true, false, false));
-        attributeMap.put(ATTR_ENERGYCARRIERUNITOFMEASURE, new ZclAttribute(this, ATTR_ENERGYCARRIERUNITOFMEASURE, "Energy Carrier Unit Of Measure", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_ENERGYCARRIERSUMMATIONFORMATTING, new ZclAttribute(this, ATTR_ENERGYCARRIERSUMMATIONFORMATTING, "Energy Carrier Summation Formatting", ZclDataType.BITMAP_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_ENERGYCARRIERDEMANDFORMATTING, new ZclAttribute(this, ATTR_ENERGYCARRIERDEMANDFORMATTING, "Energy Carrier Demand Formatting", ZclDataType.BITMAP_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_TEMPERATUREUNITOFMEASURE, new ZclAttribute(this, ATTR_TEMPERATUREUNITOFMEASURE, "Temperature Unit Of Measure", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_TEMPERATUREFORMATTING, new ZclAttribute(this, ATTR_TEMPERATUREFORMATTING, "Temperature Formatting", ZclDataType.BITMAP_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_MODULESERIALNUMBER, new ZclAttribute(this, ATTR_MODULESERIALNUMBER, "Module Serial Number", ZclDataType.OCTET_STRING, true, true, false, false));
-        attributeMap.put(ATTR_OPERATINGTARIFFLABELDELIVERED, new ZclAttribute(this, ATTR_OPERATINGTARIFFLABELDELIVERED, "Operating Tariff Label Delivered", ZclDataType.OCTET_STRING, true, true, false, false));
-        attributeMap.put(ATTR_OPERATINGTARIFFLABELRECEIVED, new ZclAttribute(this, ATTR_OPERATINGTARIFFLABELRECEIVED, "Operating Tariff Label Received", ZclDataType.OCTET_STRING, true, true, false, false));
-        attributeMap.put(ATTR_CUSTOMERIDNUMBER, new ZclAttribute(this, ATTR_CUSTOMERIDNUMBER, "Customer ID Number", ZclDataType.OCTET_STRING, true, true, false, false));
-        attributeMap.put(ATTR_ALTERNATIVEUNITOFMEASURE, new ZclAttribute(this, ATTR_ALTERNATIVEUNITOFMEASURE, "Alternative Unit Of Measure", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_ALTERNATIVEDEMANDFORMATTING, new ZclAttribute(this, ATTR_ALTERNATIVEDEMANDFORMATTING, "Alternative Demand Formatting", ZclDataType.BITMAP_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_ALTERNATIVECONSUMPTIONFORMATTING, new ZclAttribute(this, ATTR_ALTERNATIVECONSUMPTIONFORMATTING, "Alternative Consumption Formatting", ZclDataType.BITMAP_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_INSTANTANEOUSDEMAND, new ZclAttribute(this, ATTR_INSTANTANEOUSDEMAND, "Instantaneous Demand", ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTDAYCONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTDAYCONSUMPTIONDELIVERED, "Current Day Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTDAYCONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTDAYCONSUMPTIONRECEIVED, "Current Day Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAYCONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSDAYCONSUMPTIONDELIVERED, "Previous Day Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAYCONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSDAYCONSUMPTIONRECEIVED, "Previous Day Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTPARTIALPROFILEINTERVALSTARTTIMEDELIVERED, new ZclAttribute(this, ATTR_CURRENTPARTIALPROFILEINTERVALSTARTTIMEDELIVERED, "Current Partial Profile Interval Start Time Delivered", ZclDataType.UTCTIME, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTPARTIALPROFILEINTERVALSTARTTIMERECEIVED, new ZclAttribute(this, ATTR_CURRENTPARTIALPROFILEINTERVALSTARTTIMERECEIVED, "Current Partial Profile Interval Start Time Received", ZclDataType.UTCTIME, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTPARTIALPROFILEINTERVALVALUEDELIVERED, new ZclAttribute(this, ATTR_CURRENTPARTIALPROFILEINTERVALVALUEDELIVERED, "Current Partial Profile Interval Value Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTPARTIALPROFILEINTERVALVALUERECEIVED, new ZclAttribute(this, ATTR_CURRENTPARTIALPROFILEINTERVALVALUERECEIVED, "Current Partial Profile Interval Value Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTDAYMAXPRESSURE, new ZclAttribute(this, ATTR_CURRENTDAYMAXPRESSURE, "Current Day Max Pressure", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTDAYMINPRESSURE, new ZclAttribute(this, ATTR_CURRENTDAYMINPRESSURE, "Current Day Min Pressure", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAYMAXPRESSURE, new ZclAttribute(this, ATTR_PREVIOUSDAYMAXPRESSURE, "Previous Day Max Pressure", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAYMINPRESSURE, new ZclAttribute(this, ATTR_PREVIOUSDAYMINPRESSURE, "Previous Day Min Pressure", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTDAYMAXDEMAND, new ZclAttribute(this, ATTR_CURRENTDAYMAXDEMAND, "Current Day Max Demand", ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAYMAXDEMAND, new ZclAttribute(this, ATTR_PREVIOUSDAYMAXDEMAND, "Previous Day Max Demand", ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTMONTHMAXDEMAND, new ZclAttribute(this, ATTR_CURRENTMONTHMAXDEMAND, "Current Month Max Demand", ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTYEARMAXDEMAND, new ZclAttribute(this, ATTR_CURRENTYEARMAXDEMAND, "Current Year Max Demand", ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTDAYMAXENERGYCARRIERDEMAND, new ZclAttribute(this, ATTR_CURRENTDAYMAXENERGYCARRIERDEMAND, "Current Day Max Energy Carrier Demand", ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAYMAXENERGYCARRIERDEMAND, new ZclAttribute(this, ATTR_PREVIOUSDAYMAXENERGYCARRIERDEMAND, "Previous Day Max Energy Carrier Demand", ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTMONTHMAXENERGYCARRIERDEMAND, new ZclAttribute(this, ATTR_CURRENTMONTHMAXENERGYCARRIERDEMAND, "Current Month Max Energy Carrier Demand", ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTMONTHMINENERGYCARRIERDEMAND, new ZclAttribute(this, ATTR_CURRENTMONTHMINENERGYCARRIERDEMAND, "Current Month Min Energy Carrier Demand", ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTYEARMAXENERGYCARRIERDEMAND, new ZclAttribute(this, ATTR_CURRENTYEARMAXENERGYCARRIERDEMAND, "Current Year Max Energy Carrier Demand", ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTYEARMINENERGYCARRIERDEMAND, new ZclAttribute(this, ATTR_CURRENTYEARMINENERGYCARRIERDEMAND, "Current Year Min Energy Carrier Demand", ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAY2CONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSDAY2CONSUMPTIONDELIVERED, "Previous Day 2 Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAY4CONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSDAY4CONSUMPTIONDELIVERED, "Previous Day 4 Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAY6CONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSDAY6CONSUMPTIONDELIVERED, "Previous Day 6 Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAY8CONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSDAY8CONSUMPTIONDELIVERED, "Previous Day 8 Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAY10CONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSDAY10CONSUMPTIONDELIVERED, "Previous Day 10 Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAY12CONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSDAY12CONSUMPTIONDELIVERED, "Previous Day 12 Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAY14CONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSDAY14CONSUMPTIONDELIVERED, "Previous Day 14 Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAY16CONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSDAY16CONSUMPTIONDELIVERED, "Previous Day 16 Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAY2CONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSDAY2CONSUMPTIONRECEIVED, "Previous Day 2 Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAY4CONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSDAY4CONSUMPTIONRECEIVED, "Previous Day 4 Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAY6CONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSDAY6CONSUMPTIONRECEIVED, "Previous Day 6 Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAY8CONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSDAY8CONSUMPTIONRECEIVED, "Previous Day 8 Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAY10CONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSDAY10CONSUMPTIONRECEIVED, "Previous Day 10 Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAY12CONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSDAY12CONSUMPTIONRECEIVED, "Previous Day 12 Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAY14CONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSDAY14CONSUMPTIONRECEIVED, "Previous Day 14 Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAY16CONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSDAY16CONSUMPTIONRECEIVED, "Previous Day 16 Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTWEEKCONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTWEEKCONSUMPTIONDELIVERED, "Current Week Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTWEEKCONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTWEEKCONSUMPTIONRECEIVED, "Current Week Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSWEEK1CONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSWEEK1CONSUMPTIONDELIVERED, "Previous Week 1 Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSWEEK3CONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSWEEK3CONSUMPTIONDELIVERED, "Previous Week 3 Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSWEEK5CONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSWEEK5CONSUMPTIONDELIVERED, "Previous Week 5 Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSWEEK7CONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSWEEK7CONSUMPTIONDELIVERED, "Previous Week 7 Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSWEEK9CONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSWEEK9CONSUMPTIONDELIVERED, "Previous Week 9 Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSWEEK1CONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSWEEK1CONSUMPTIONRECEIVED, "Previous Week 1 Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSWEEK3CONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSWEEK3CONSUMPTIONRECEIVED, "Previous Week 3 Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSWEEK5CONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSWEEK5CONSUMPTIONRECEIVED, "Previous Week 5 Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSWEEK7CONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSWEEK7CONSUMPTIONRECEIVED, "Previous Week 7 Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSWEEK9CONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSWEEK9CONSUMPTIONRECEIVED, "Previous Week 9 Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTMONTHCONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTMONTHCONSUMPTIONDELIVERED, "Current Month Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTMONTHCONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTMONTHCONSUMPTIONRECEIVED, "Current Month Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH1CONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSMONTH1CONSUMPTIONDELIVERED, "Previous Month 1 Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH3CONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSMONTH3CONSUMPTIONDELIVERED, "Previous Month 3 Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH5CONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSMONTH5CONSUMPTIONDELIVERED, "Previous Month 5 Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH7CONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSMONTH7CONSUMPTIONDELIVERED, "Previous Month 7 Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH9CONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSMONTH9CONSUMPTIONDELIVERED, "Previous Month 9 Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH11CONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSMONTH11CONSUMPTIONDELIVERED, "Previous Month 11 Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH13CONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSMONTH13CONSUMPTIONDELIVERED, "Previous Month 13 Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH15CONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSMONTH15CONSUMPTIONDELIVERED, "Previous Month 15 Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH17CONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSMONTH17CONSUMPTIONDELIVERED, "Previous Month 17 Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH19CONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSMONTH19CONSUMPTIONDELIVERED, "Previous Month 19 Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH21CONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSMONTH21CONSUMPTIONDELIVERED, "Previous Month 21 Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH23CONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSMONTH23CONSUMPTIONDELIVERED, "Previous Month 23 Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH25CONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSMONTH25CONSUMPTIONDELIVERED, "Previous Month 25 Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH1CONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSMONTH1CONSUMPTIONRECEIVED, "Previous Month 1 Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH3CONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSMONTH3CONSUMPTIONRECEIVED, "Previous Month 3 Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH5CONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSMONTH5CONSUMPTIONRECEIVED, "Previous Month 5 Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH7CONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSMONTH7CONSUMPTIONRECEIVED, "Previous Month 7 Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH9CONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSMONTH9CONSUMPTIONRECEIVED, "Previous Month 9 Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH11CONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSMONTH11CONSUMPTIONRECEIVED, "Previous Month 11 Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH13CONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSMONTH13CONSUMPTIONRECEIVED, "Previous Month 13 Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH15CONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSMONTH15CONSUMPTIONRECEIVED, "Previous Month 15 Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH17CONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSMONTH17CONSUMPTIONRECEIVED, "Previous Month 17 Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH19CONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSMONTH19CONSUMPTIONRECEIVED, "Previous Month 19 Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH21CONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSMONTH21CONSUMPTIONRECEIVED, "Previous Month 21 Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH23CONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSMONTH23CONSUMPTIONRECEIVED, "Previous Month 23 Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH25CONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSMONTH25CONSUMPTIONRECEIVED, "Previous Month 25 Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_HISTORICALFREEZETIME, new ZclAttribute(this, ATTR_HISTORICALFREEZETIME, "Historical Freeze Time", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_MAXNUMBEROFPERIODSDELIVERED, new ZclAttribute(this, ATTR_MAXNUMBEROFPERIODSDELIVERED, "Max Number Of Periods Delivered", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTDEMANDDELIVERED, new ZclAttribute(this, ATTR_CURRENTDEMANDDELIVERED, "Current Demand Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_DEMANDLIMIT, new ZclAttribute(this, ATTR_DEMANDLIMIT, "Demand Limit", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_DEMANDINTEGRATIONPERIOD, new ZclAttribute(this, ATTR_DEMANDINTEGRATIONPERIOD, "Demand Integration Period", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_NUMBEROFDEMANDSUBINTERVALS, new ZclAttribute(this, ATTR_NUMBEROFDEMANDSUBINTERVALS, "Number Of Demand Subintervals", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_DEMANDLIMITARMDURATION, new ZclAttribute(this, ATTR_DEMANDLIMITARMDURATION, "Demand Limit Arm Duration", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_LOADLIMITSUPPLYSTATE, new ZclAttribute(this, ATTR_LOADLIMITSUPPLYSTATE, "Load Limit Supply State", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_LOADLIMITCOUNTER, new ZclAttribute(this, ATTR_LOADLIMITCOUNTER, "Load Limit Counter", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_SUPPLYTAMPERSTATE, new ZclAttribute(this, ATTR_SUPPLYTAMPERSTATE, "Supply Tamper State", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_SUPPLYDEPLETIONSTATE, new ZclAttribute(this, ATTR_SUPPLYDEPLETIONSTATE, "Supply Depletion State", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_SUPPLYUNCONTROLLEDFLOWSTATE, new ZclAttribute(this, ATTR_SUPPLYUNCONTROLLEDFLOWSTATE, "Supply Uncontrolled Flow State", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK1SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK1SUMMATIONDELIVERED, "Current No Tier Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK2SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK2SUMMATIONDELIVERED, "Current No Tier Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK3SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK3SUMMATIONDELIVERED, "Current No Tier Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK4SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK4SUMMATIONDELIVERED, "Current No Tier Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK5SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK5SUMMATIONDELIVERED, "Current No Tier Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK6SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK6SUMMATIONDELIVERED, "Current No Tier Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK7SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK7SUMMATIONDELIVERED, "Current No Tier Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK8SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK8SUMMATIONDELIVERED, "Current No Tier Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK9SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK9SUMMATIONDELIVERED, "Current No Tier Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK10SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK10SUMMATIONDELIVERED, "Current No Tier Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK11SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK11SUMMATIONDELIVERED, "Current No Tier Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK12SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK12SUMMATIONDELIVERED, "Current No Tier Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK13SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK13SUMMATIONDELIVERED, "Current No Tier Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK14SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK14SUMMATIONDELIVERED, "Current No Tier Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK15SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK15SUMMATIONDELIVERED, "Current No Tier Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK16SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK16SUMMATIONDELIVERED, "Current No Tier Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK1SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK1SUMMATIONDELIVERED, "Current Tier 1 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK2SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK2SUMMATIONDELIVERED, "Current Tier 1 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK3SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK3SUMMATIONDELIVERED, "Current Tier 1 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK4SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK4SUMMATIONDELIVERED, "Current Tier 1 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK5SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK5SUMMATIONDELIVERED, "Current Tier 1 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK6SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK6SUMMATIONDELIVERED, "Current Tier 1 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK7SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK7SUMMATIONDELIVERED, "Current Tier 1 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK8SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK8SUMMATIONDELIVERED, "Current Tier 1 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK9SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK9SUMMATIONDELIVERED, "Current Tier 1 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK10SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK10SUMMATIONDELIVERED, "Current Tier 1 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK11SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK11SUMMATIONDELIVERED, "Current Tier 1 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK12SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK12SUMMATIONDELIVERED, "Current Tier 1 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK13SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK13SUMMATIONDELIVERED, "Current Tier 1 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK14SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK14SUMMATIONDELIVERED, "Current Tier 1 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK15SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK15SUMMATIONDELIVERED, "Current Tier 1 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK16SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK16SUMMATIONDELIVERED, "Current Tier 1 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK1SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK1SUMMATIONDELIVERED, "Current Tier 2 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK2SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK2SUMMATIONDELIVERED, "Current Tier 2 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK3SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK3SUMMATIONDELIVERED, "Current Tier 2 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK4SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK4SUMMATIONDELIVERED, "Current Tier 2 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK5SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK5SUMMATIONDELIVERED, "Current Tier 2 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK6SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK6SUMMATIONDELIVERED, "Current Tier 2 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK7SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK7SUMMATIONDELIVERED, "Current Tier 2 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK8SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK8SUMMATIONDELIVERED, "Current Tier 2 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK9SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK9SUMMATIONDELIVERED, "Current Tier 2 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK10SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK10SUMMATIONDELIVERED, "Current Tier 2 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK11SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK11SUMMATIONDELIVERED, "Current Tier 2 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK12SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK12SUMMATIONDELIVERED, "Current Tier 2 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK13SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK13SUMMATIONDELIVERED, "Current Tier 2 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK14SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK14SUMMATIONDELIVERED, "Current Tier 2 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK15SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK15SUMMATIONDELIVERED, "Current Tier 2 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK16SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK16SUMMATIONDELIVERED, "Current Tier 2 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK1SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK1SUMMATIONDELIVERED, "Current Tier 3 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK2SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK2SUMMATIONDELIVERED, "Current Tier 3 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK3SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK3SUMMATIONDELIVERED, "Current Tier 3 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK4SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK4SUMMATIONDELIVERED, "Current Tier 3 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK5SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK5SUMMATIONDELIVERED, "Current Tier 3 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK6SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK6SUMMATIONDELIVERED, "Current Tier 3 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK7SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK7SUMMATIONDELIVERED, "Current Tier 3 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK8SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK8SUMMATIONDELIVERED, "Current Tier 3 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK9SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK9SUMMATIONDELIVERED, "Current Tier 3 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK10SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK10SUMMATIONDELIVERED, "Current Tier 3 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK11SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK11SUMMATIONDELIVERED, "Current Tier 3 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK12SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK12SUMMATIONDELIVERED, "Current Tier 3 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK13SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK13SUMMATIONDELIVERED, "Current Tier 3 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK14SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK14SUMMATIONDELIVERED, "Current Tier 3 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK15SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK15SUMMATIONDELIVERED, "Current Tier 3 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK16SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK16SUMMATIONDELIVERED, "Current Tier 3 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK1SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK1SUMMATIONDELIVERED, "Current Tier 4 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK2SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK2SUMMATIONDELIVERED, "Current Tier 4 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK3SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK3SUMMATIONDELIVERED, "Current Tier 4 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK4SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK4SUMMATIONDELIVERED, "Current Tier 4 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK5SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK5SUMMATIONDELIVERED, "Current Tier 4 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK6SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK6SUMMATIONDELIVERED, "Current Tier 4 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK7SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK7SUMMATIONDELIVERED, "Current Tier 4 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK8SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK8SUMMATIONDELIVERED, "Current Tier 4 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK9SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK9SUMMATIONDELIVERED, "Current Tier 4 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK10SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK10SUMMATIONDELIVERED, "Current Tier 4 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK11SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK11SUMMATIONDELIVERED, "Current Tier 4 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK12SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK12SUMMATIONDELIVERED, "Current Tier 4 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK13SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK13SUMMATIONDELIVERED, "Current Tier 4 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK14SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK14SUMMATIONDELIVERED, "Current Tier 4 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK15SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK15SUMMATIONDELIVERED, "Current Tier 4 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK16SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK16SUMMATIONDELIVERED, "Current Tier 4 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK1SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK1SUMMATIONDELIVERED, "Current Tier 5 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK2SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK2SUMMATIONDELIVERED, "Current Tier 5 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK3SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK3SUMMATIONDELIVERED, "Current Tier 5 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK4SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK4SUMMATIONDELIVERED, "Current Tier 5 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK5SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK5SUMMATIONDELIVERED, "Current Tier 5 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK6SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK6SUMMATIONDELIVERED, "Current Tier 5 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK7SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK7SUMMATIONDELIVERED, "Current Tier 5 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK8SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK8SUMMATIONDELIVERED, "Current Tier 5 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK9SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK9SUMMATIONDELIVERED, "Current Tier 5 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK10SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK10SUMMATIONDELIVERED, "Current Tier 5 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK11SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK11SUMMATIONDELIVERED, "Current Tier 5 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK12SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK12SUMMATIONDELIVERED, "Current Tier 5 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK13SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK13SUMMATIONDELIVERED, "Current Tier 5 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK14SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK14SUMMATIONDELIVERED, "Current Tier 5 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK15SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK15SUMMATIONDELIVERED, "Current Tier 5 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK16SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK16SUMMATIONDELIVERED, "Current Tier 5 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK1SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK1SUMMATIONDELIVERED, "Current Tier 6 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK2SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK2SUMMATIONDELIVERED, "Current Tier 6 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK3SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK3SUMMATIONDELIVERED, "Current Tier 6 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK4SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK4SUMMATIONDELIVERED, "Current Tier 6 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK5SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK5SUMMATIONDELIVERED, "Current Tier 6 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK6SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK6SUMMATIONDELIVERED, "Current Tier 6 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK7SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK7SUMMATIONDELIVERED, "Current Tier 6 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK8SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK8SUMMATIONDELIVERED, "Current Tier 6 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK9SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK9SUMMATIONDELIVERED, "Current Tier 6 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK10SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK10SUMMATIONDELIVERED, "Current Tier 6 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK11SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK11SUMMATIONDELIVERED, "Current Tier 6 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK12SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK12SUMMATIONDELIVERED, "Current Tier 6 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK13SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK13SUMMATIONDELIVERED, "Current Tier 6 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK14SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK14SUMMATIONDELIVERED, "Current Tier 6 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK15SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK15SUMMATIONDELIVERED, "Current Tier 6 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK16SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK16SUMMATIONDELIVERED, "Current Tier 6 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK1SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK1SUMMATIONDELIVERED, "Current Tier 7 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK2SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK2SUMMATIONDELIVERED, "Current Tier 7 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK3SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK3SUMMATIONDELIVERED, "Current Tier 7 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK4SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK4SUMMATIONDELIVERED, "Current Tier 7 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK5SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK5SUMMATIONDELIVERED, "Current Tier 7 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK6SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK6SUMMATIONDELIVERED, "Current Tier 7 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK7SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK7SUMMATIONDELIVERED, "Current Tier 7 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK8SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK8SUMMATIONDELIVERED, "Current Tier 7 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK9SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK9SUMMATIONDELIVERED, "Current Tier 7 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK10SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK10SUMMATIONDELIVERED, "Current Tier 7 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK11SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK11SUMMATIONDELIVERED, "Current Tier 7 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK12SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK12SUMMATIONDELIVERED, "Current Tier 7 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK13SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK13SUMMATIONDELIVERED, "Current Tier 7 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK14SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK14SUMMATIONDELIVERED, "Current Tier 7 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK15SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK15SUMMATIONDELIVERED, "Current Tier 7 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK16SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK16SUMMATIONDELIVERED, "Current Tier 7 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK1SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK1SUMMATIONDELIVERED, "Current Tier 8 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK2SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK2SUMMATIONDELIVERED, "Current Tier 8 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK3SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK3SUMMATIONDELIVERED, "Current Tier 8 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK4SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK4SUMMATIONDELIVERED, "Current Tier 8 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK5SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK5SUMMATIONDELIVERED, "Current Tier 8 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK6SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK6SUMMATIONDELIVERED, "Current Tier 8 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK7SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK7SUMMATIONDELIVERED, "Current Tier 8 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK8SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK8SUMMATIONDELIVERED, "Current Tier 8 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK9SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK9SUMMATIONDELIVERED, "Current Tier 8 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK10SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK10SUMMATIONDELIVERED, "Current Tier 8 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK11SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK11SUMMATIONDELIVERED, "Current Tier 8 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK12SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK12SUMMATIONDELIVERED, "Current Tier 8 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK13SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK13SUMMATIONDELIVERED, "Current Tier 8 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK14SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK14SUMMATIONDELIVERED, "Current Tier 8 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK15SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK15SUMMATIONDELIVERED, "Current Tier 8 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK16SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK16SUMMATIONDELIVERED, "Current Tier 8 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK1SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK1SUMMATIONDELIVERED, "Current Tier 9 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK2SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK2SUMMATIONDELIVERED, "Current Tier 9 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK3SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK3SUMMATIONDELIVERED, "Current Tier 9 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK4SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK4SUMMATIONDELIVERED, "Current Tier 9 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK5SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK5SUMMATIONDELIVERED, "Current Tier 9 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK6SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK6SUMMATIONDELIVERED, "Current Tier 9 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK7SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK7SUMMATIONDELIVERED, "Current Tier 9 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK8SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK8SUMMATIONDELIVERED, "Current Tier 9 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK9SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK9SUMMATIONDELIVERED, "Current Tier 9 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK10SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK10SUMMATIONDELIVERED, "Current Tier 9 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK11SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK11SUMMATIONDELIVERED, "Current Tier 9 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK12SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK12SUMMATIONDELIVERED, "Current Tier 9 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK13SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK13SUMMATIONDELIVERED, "Current Tier 9 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK14SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK14SUMMATIONDELIVERED, "Current Tier 9 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK15SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK15SUMMATIONDELIVERED, "Current Tier 9 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK16SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK16SUMMATIONDELIVERED, "Current Tier 9 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK1SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK1SUMMATIONDELIVERED, "Current Tier 10 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK2SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK2SUMMATIONDELIVERED, "Current Tier 10 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK3SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK3SUMMATIONDELIVERED, "Current Tier 10 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK4SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK4SUMMATIONDELIVERED, "Current Tier 10 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK5SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK5SUMMATIONDELIVERED, "Current Tier 10 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK6SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK6SUMMATIONDELIVERED, "Current Tier 10 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK7SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK7SUMMATIONDELIVERED, "Current Tier 10 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK8SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK8SUMMATIONDELIVERED, "Current Tier 10 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK9SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK9SUMMATIONDELIVERED, "Current Tier 10 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK10SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK10SUMMATIONDELIVERED, "Current Tier 10 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK11SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK11SUMMATIONDELIVERED, "Current Tier 10 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK12SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK12SUMMATIONDELIVERED, "Current Tier 10 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK13SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK13SUMMATIONDELIVERED, "Current Tier 10 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK14SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK14SUMMATIONDELIVERED, "Current Tier 10 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK15SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK15SUMMATIONDELIVERED, "Current Tier 10 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK16SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK16SUMMATIONDELIVERED, "Current Tier 10 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK1SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK1SUMMATIONDELIVERED, "Current Tier 11 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK2SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK2SUMMATIONDELIVERED, "Current Tier 11 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK3SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK3SUMMATIONDELIVERED, "Current Tier 11 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK4SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK4SUMMATIONDELIVERED, "Current Tier 11 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK5SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK5SUMMATIONDELIVERED, "Current Tier 11 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK6SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK6SUMMATIONDELIVERED, "Current Tier 11 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK7SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK7SUMMATIONDELIVERED, "Current Tier 11 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK8SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK8SUMMATIONDELIVERED, "Current Tier 11 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK9SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK9SUMMATIONDELIVERED, "Current Tier 11 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK10SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK10SUMMATIONDELIVERED, "Current Tier 11 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK11SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK11SUMMATIONDELIVERED, "Current Tier 11 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK12SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK12SUMMATIONDELIVERED, "Current Tier 11 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK13SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK13SUMMATIONDELIVERED, "Current Tier 11 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK14SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK14SUMMATIONDELIVERED, "Current Tier 11 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK15SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK15SUMMATIONDELIVERED, "Current Tier 11 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK16SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK16SUMMATIONDELIVERED, "Current Tier 11 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK1SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK1SUMMATIONDELIVERED, "Current Tier 12 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK2SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK2SUMMATIONDELIVERED, "Current Tier 12 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK3SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK3SUMMATIONDELIVERED, "Current Tier 12 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK4SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK4SUMMATIONDELIVERED, "Current Tier 12 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK5SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK5SUMMATIONDELIVERED, "Current Tier 12 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK6SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK6SUMMATIONDELIVERED, "Current Tier 12 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK7SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK7SUMMATIONDELIVERED, "Current Tier 12 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK8SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK8SUMMATIONDELIVERED, "Current Tier 12 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK9SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK9SUMMATIONDELIVERED, "Current Tier 12 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK10SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK10SUMMATIONDELIVERED, "Current Tier 12 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK11SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK11SUMMATIONDELIVERED, "Current Tier 12 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK12SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK12SUMMATIONDELIVERED, "Current Tier 12 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK13SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK13SUMMATIONDELIVERED, "Current Tier 12 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK14SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK14SUMMATIONDELIVERED, "Current Tier 12 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK15SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK15SUMMATIONDELIVERED, "Current Tier 12 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK16SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK16SUMMATIONDELIVERED, "Current Tier 12 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK1SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK1SUMMATIONDELIVERED, "Current Tier 13 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK2SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK2SUMMATIONDELIVERED, "Current Tier 13 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK3SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK3SUMMATIONDELIVERED, "Current Tier 13 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK4SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK4SUMMATIONDELIVERED, "Current Tier 13 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK5SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK5SUMMATIONDELIVERED, "Current Tier 13 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK6SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK6SUMMATIONDELIVERED, "Current Tier 13 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK7SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK7SUMMATIONDELIVERED, "Current Tier 13 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK8SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK8SUMMATIONDELIVERED, "Current Tier 13 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK9SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK9SUMMATIONDELIVERED, "Current Tier 13 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK10SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK10SUMMATIONDELIVERED, "Current Tier 13 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK11SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK11SUMMATIONDELIVERED, "Current Tier 13 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK12SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK12SUMMATIONDELIVERED, "Current Tier 13 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK13SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK13SUMMATIONDELIVERED, "Current Tier 13 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK14SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK14SUMMATIONDELIVERED, "Current Tier 13 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK15SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK15SUMMATIONDELIVERED, "Current Tier 13 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK16SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK16SUMMATIONDELIVERED, "Current Tier 13 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK1SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK1SUMMATIONDELIVERED, "Current Tier 14 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK2SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK2SUMMATIONDELIVERED, "Current Tier 14 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK3SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK3SUMMATIONDELIVERED, "Current Tier 14 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK4SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK4SUMMATIONDELIVERED, "Current Tier 14 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK5SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK5SUMMATIONDELIVERED, "Current Tier 14 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK6SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK6SUMMATIONDELIVERED, "Current Tier 14 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK7SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK7SUMMATIONDELIVERED, "Current Tier 14 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK8SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK8SUMMATIONDELIVERED, "Current Tier 14 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK9SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK9SUMMATIONDELIVERED, "Current Tier 14 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK10SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK10SUMMATIONDELIVERED, "Current Tier 14 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK11SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK11SUMMATIONDELIVERED, "Current Tier 14 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK12SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK12SUMMATIONDELIVERED, "Current Tier 14 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK13SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK13SUMMATIONDELIVERED, "Current Tier 14 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK14SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK14SUMMATIONDELIVERED, "Current Tier 14 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK15SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK15SUMMATIONDELIVERED, "Current Tier 14 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK16SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK16SUMMATIONDELIVERED, "Current Tier 14 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK1SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK1SUMMATIONDELIVERED, "Current Tier 15 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK2SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK2SUMMATIONDELIVERED, "Current Tier 15 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK3SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK3SUMMATIONDELIVERED, "Current Tier 15 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK4SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK4SUMMATIONDELIVERED, "Current Tier 15 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK5SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK5SUMMATIONDELIVERED, "Current Tier 15 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK6SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK6SUMMATIONDELIVERED, "Current Tier 15 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK7SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK7SUMMATIONDELIVERED, "Current Tier 15 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK8SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK8SUMMATIONDELIVERED, "Current Tier 15 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK9SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK9SUMMATIONDELIVERED, "Current Tier 15 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK10SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK10SUMMATIONDELIVERED, "Current Tier 15 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK11SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK11SUMMATIONDELIVERED, "Current Tier 15 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK12SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK12SUMMATIONDELIVERED, "Current Tier 15 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK13SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK13SUMMATIONDELIVERED, "Current Tier 15 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK14SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK14SUMMATIONDELIVERED, "Current Tier 15 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK15SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK15SUMMATIONDELIVERED, "Current Tier 15 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK16SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK16SUMMATIONDELIVERED, "Current Tier 15 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_GENERICALARMMASK, new ZclAttribute(this, ATTR_GENERICALARMMASK, "Generic Alarm Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
-        attributeMap.put(ATTR_ELECTRICITYALARMMASK, new ZclAttribute(this, ATTR_ELECTRICITYALARMMASK, "Electricity Alarm Mask", ZclDataType.BITMAP_32_BIT, false, true, true, true));
-        attributeMap.put(ATTR_GENERICFLOWPRESSUREALARMMASK, new ZclAttribute(this, ATTR_GENERICFLOWPRESSUREALARMMASK, "Generic Flow /pressure Alarm Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
-        attributeMap.put(ATTR_WATERSPECIFICALARMMASK, new ZclAttribute(this, ATTR_WATERSPECIFICALARMMASK, "Water Specific Alarm Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
-        attributeMap.put(ATTR_HEATANDCOOLINGSPECIFICALARMMASK, new ZclAttribute(this, ATTR_HEATANDCOOLINGSPECIFICALARMMASK, "Heat And Cooling Specific Alarm Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
-        attributeMap.put(ATTR_GASSPECIFICALARMMASK, new ZclAttribute(this, ATTR_GASSPECIFICALARMMASK, "Gas Specific Alarm Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
-        attributeMap.put(ATTR_EXTENDEDGENERICALARMMASK, new ZclAttribute(this, ATTR_EXTENDEDGENERICALARMMASK, "Extended Generic Alarm Mask", ZclDataType.BITMAP_48_BIT, false, true, true, true));
-        attributeMap.put(ATTR_MANUFACTUREALARMMASK, new ZclAttribute(this, ATTR_MANUFACTUREALARMMASK, "Manufacture Alarm Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK1SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK1SUMMATIONRECEIVED, "Current No Tier Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK2SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK2SUMMATIONRECEIVED, "Current No Tier Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK3SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK3SUMMATIONRECEIVED, "Current No Tier Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK4SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK4SUMMATIONRECEIVED, "Current No Tier Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK5SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK5SUMMATIONRECEIVED, "Current No Tier Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK6SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK6SUMMATIONRECEIVED, "Current No Tier Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK7SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK7SUMMATIONRECEIVED, "Current No Tier Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK8SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK8SUMMATIONRECEIVED, "Current No Tier Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK9SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK9SUMMATIONRECEIVED, "Current No Tier Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK10SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK10SUMMATIONRECEIVED, "Current No Tier Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK11SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK11SUMMATIONRECEIVED, "Current No Tier Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK12SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK12SUMMATIONRECEIVED, "Current No Tier Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK13SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK13SUMMATIONRECEIVED, "Current No Tier Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK14SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK14SUMMATIONRECEIVED, "Current No Tier Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK15SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK15SUMMATIONRECEIVED, "Current No Tier Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTNOTIERBLOCK16SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK16SUMMATIONRECEIVED, "Current No Tier Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK1SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK1SUMMATIONRECEIVED, "Current Tier 1 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK2SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK2SUMMATIONRECEIVED, "Current Tier 1 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK3SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK3SUMMATIONRECEIVED, "Current Tier 1 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK4SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK4SUMMATIONRECEIVED, "Current Tier 1 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK5SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK5SUMMATIONRECEIVED, "Current Tier 1 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK6SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK6SUMMATIONRECEIVED, "Current Tier 1 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK7SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK7SUMMATIONRECEIVED, "Current Tier 1 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK8SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK8SUMMATIONRECEIVED, "Current Tier 1 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK9SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK9SUMMATIONRECEIVED, "Current Tier 1 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK10SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK10SUMMATIONRECEIVED, "Current Tier 1 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK11SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK11SUMMATIONRECEIVED, "Current Tier 1 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK12SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK12SUMMATIONRECEIVED, "Current Tier 1 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK13SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK13SUMMATIONRECEIVED, "Current Tier 1 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK14SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK14SUMMATIONRECEIVED, "Current Tier 1 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK15SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK15SUMMATIONRECEIVED, "Current Tier 1 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER1BLOCK16SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK16SUMMATIONRECEIVED, "Current Tier 1 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK1SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK1SUMMATIONRECEIVED, "Current Tier 2 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK2SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK2SUMMATIONRECEIVED, "Current Tier 2 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK3SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK3SUMMATIONRECEIVED, "Current Tier 2 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK4SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK4SUMMATIONRECEIVED, "Current Tier 2 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK5SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK5SUMMATIONRECEIVED, "Current Tier 2 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK6SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK6SUMMATIONRECEIVED, "Current Tier 2 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK7SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK7SUMMATIONRECEIVED, "Current Tier 2 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK8SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK8SUMMATIONRECEIVED, "Current Tier 2 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK9SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK9SUMMATIONRECEIVED, "Current Tier 2 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK10SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK10SUMMATIONRECEIVED, "Current Tier 2 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK11SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK11SUMMATIONRECEIVED, "Current Tier 2 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK12SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK12SUMMATIONRECEIVED, "Current Tier 2 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK13SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK13SUMMATIONRECEIVED, "Current Tier 2 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK14SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK14SUMMATIONRECEIVED, "Current Tier 2 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK15SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK15SUMMATIONRECEIVED, "Current Tier 2 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER2BLOCK16SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK16SUMMATIONRECEIVED, "Current Tier 2 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK1SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK1SUMMATIONRECEIVED, "Current Tier 3 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK2SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK2SUMMATIONRECEIVED, "Current Tier 3 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK3SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK3SUMMATIONRECEIVED, "Current Tier 3 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK4SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK4SUMMATIONRECEIVED, "Current Tier 3 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK5SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK5SUMMATIONRECEIVED, "Current Tier 3 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK6SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK6SUMMATIONRECEIVED, "Current Tier 3 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK7SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK7SUMMATIONRECEIVED, "Current Tier 3 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK8SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK8SUMMATIONRECEIVED, "Current Tier 3 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK9SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK9SUMMATIONRECEIVED, "Current Tier 3 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK10SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK10SUMMATIONRECEIVED, "Current Tier 3 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK11SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK11SUMMATIONRECEIVED, "Current Tier 3 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK12SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK12SUMMATIONRECEIVED, "Current Tier 3 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK13SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK13SUMMATIONRECEIVED, "Current Tier 3 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK14SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK14SUMMATIONRECEIVED, "Current Tier 3 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK15SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK15SUMMATIONRECEIVED, "Current Tier 3 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER3BLOCK16SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK16SUMMATIONRECEIVED, "Current Tier 3 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK1SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK1SUMMATIONRECEIVED, "Current Tier 4 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK2SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK2SUMMATIONRECEIVED, "Current Tier 4 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK3SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK3SUMMATIONRECEIVED, "Current Tier 4 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK4SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK4SUMMATIONRECEIVED, "Current Tier 4 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK5SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK5SUMMATIONRECEIVED, "Current Tier 4 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK6SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK6SUMMATIONRECEIVED, "Current Tier 4 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK7SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK7SUMMATIONRECEIVED, "Current Tier 4 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK8SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK8SUMMATIONRECEIVED, "Current Tier 4 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK9SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK9SUMMATIONRECEIVED, "Current Tier 4 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK10SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK10SUMMATIONRECEIVED, "Current Tier 4 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK11SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK11SUMMATIONRECEIVED, "Current Tier 4 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK12SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK12SUMMATIONRECEIVED, "Current Tier 4 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK13SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK13SUMMATIONRECEIVED, "Current Tier 4 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK14SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK14SUMMATIONRECEIVED, "Current Tier 4 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK15SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK15SUMMATIONRECEIVED, "Current Tier 4 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER4BLOCK16SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK16SUMMATIONRECEIVED, "Current Tier 4 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK1SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK1SUMMATIONRECEIVED, "Current Tier 5 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK2SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK2SUMMATIONRECEIVED, "Current Tier 5 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK3SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK3SUMMATIONRECEIVED, "Current Tier 5 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK4SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK4SUMMATIONRECEIVED, "Current Tier 5 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK5SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK5SUMMATIONRECEIVED, "Current Tier 5 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK6SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK6SUMMATIONRECEIVED, "Current Tier 5 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK7SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK7SUMMATIONRECEIVED, "Current Tier 5 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK8SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK8SUMMATIONRECEIVED, "Current Tier 5 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK9SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK9SUMMATIONRECEIVED, "Current Tier 5 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK10SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK10SUMMATIONRECEIVED, "Current Tier 5 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK11SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK11SUMMATIONRECEIVED, "Current Tier 5 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK12SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK12SUMMATIONRECEIVED, "Current Tier 5 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK13SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK13SUMMATIONRECEIVED, "Current Tier 5 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK14SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK14SUMMATIONRECEIVED, "Current Tier 5 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK15SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK15SUMMATIONRECEIVED, "Current Tier 5 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER5BLOCK16SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK16SUMMATIONRECEIVED, "Current Tier 5 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK1SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK1SUMMATIONRECEIVED, "Current Tier 6 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK2SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK2SUMMATIONRECEIVED, "Current Tier 6 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK3SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK3SUMMATIONRECEIVED, "Current Tier 6 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK4SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK4SUMMATIONRECEIVED, "Current Tier 6 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK5SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK5SUMMATIONRECEIVED, "Current Tier 6 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK6SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK6SUMMATIONRECEIVED, "Current Tier 6 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK7SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK7SUMMATIONRECEIVED, "Current Tier 6 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK8SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK8SUMMATIONRECEIVED, "Current Tier 6 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK9SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK9SUMMATIONRECEIVED, "Current Tier 6 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK10SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK10SUMMATIONRECEIVED, "Current Tier 6 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK11SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK11SUMMATIONRECEIVED, "Current Tier 6 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK12SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK12SUMMATIONRECEIVED, "Current Tier 6 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK13SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK13SUMMATIONRECEIVED, "Current Tier 6 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK14SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK14SUMMATIONRECEIVED, "Current Tier 6 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK15SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK15SUMMATIONRECEIVED, "Current Tier 6 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER6BLOCK16SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK16SUMMATIONRECEIVED, "Current Tier 6 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK1SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK1SUMMATIONRECEIVED, "Current Tier 7 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK2SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK2SUMMATIONRECEIVED, "Current Tier 7 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK3SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK3SUMMATIONRECEIVED, "Current Tier 7 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK4SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK4SUMMATIONRECEIVED, "Current Tier 7 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK5SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK5SUMMATIONRECEIVED, "Current Tier 7 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK6SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK6SUMMATIONRECEIVED, "Current Tier 7 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK7SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK7SUMMATIONRECEIVED, "Current Tier 7 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK8SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK8SUMMATIONRECEIVED, "Current Tier 7 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK9SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK9SUMMATIONRECEIVED, "Current Tier 7 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK10SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK10SUMMATIONRECEIVED, "Current Tier 7 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK11SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK11SUMMATIONRECEIVED, "Current Tier 7 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK12SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK12SUMMATIONRECEIVED, "Current Tier 7 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK13SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK13SUMMATIONRECEIVED, "Current Tier 7 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK14SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK14SUMMATIONRECEIVED, "Current Tier 7 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK15SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK15SUMMATIONRECEIVED, "Current Tier 7 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER7BLOCK16SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK16SUMMATIONRECEIVED, "Current Tier 7 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK1SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK1SUMMATIONRECEIVED, "Current Tier 8 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK2SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK2SUMMATIONRECEIVED, "Current Tier 8 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK3SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK3SUMMATIONRECEIVED, "Current Tier 8 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK4SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK4SUMMATIONRECEIVED, "Current Tier 8 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK5SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK5SUMMATIONRECEIVED, "Current Tier 8 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK6SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK6SUMMATIONRECEIVED, "Current Tier 8 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK7SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK7SUMMATIONRECEIVED, "Current Tier 8 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK8SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK8SUMMATIONRECEIVED, "Current Tier 8 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK9SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK9SUMMATIONRECEIVED, "Current Tier 8 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK10SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK10SUMMATIONRECEIVED, "Current Tier 8 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK11SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK11SUMMATIONRECEIVED, "Current Tier 8 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK12SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK12SUMMATIONRECEIVED, "Current Tier 8 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK13SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK13SUMMATIONRECEIVED, "Current Tier 8 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK14SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK14SUMMATIONRECEIVED, "Current Tier 8 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK15SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK15SUMMATIONRECEIVED, "Current Tier 8 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER8BLOCK16SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK16SUMMATIONRECEIVED, "Current Tier 8 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK1SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK1SUMMATIONRECEIVED, "Current Tier 9 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK2SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK2SUMMATIONRECEIVED, "Current Tier 9 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK3SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK3SUMMATIONRECEIVED, "Current Tier 9 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK4SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK4SUMMATIONRECEIVED, "Current Tier 9 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK5SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK5SUMMATIONRECEIVED, "Current Tier 9 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK6SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK6SUMMATIONRECEIVED, "Current Tier 9 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK7SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK7SUMMATIONRECEIVED, "Current Tier 9 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK8SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK8SUMMATIONRECEIVED, "Current Tier 9 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK9SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK9SUMMATIONRECEIVED, "Current Tier 9 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK10SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK10SUMMATIONRECEIVED, "Current Tier 9 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK11SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK11SUMMATIONRECEIVED, "Current Tier 9 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK12SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK12SUMMATIONRECEIVED, "Current Tier 9 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK13SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK13SUMMATIONRECEIVED, "Current Tier 9 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK14SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK14SUMMATIONRECEIVED, "Current Tier 9 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK15SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK15SUMMATIONRECEIVED, "Current Tier 9 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER9BLOCK16SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK16SUMMATIONRECEIVED, "Current Tier 9 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK1SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK1SUMMATIONRECEIVED, "Current Tier 10 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK2SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK2SUMMATIONRECEIVED, "Current Tier 10 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK3SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK3SUMMATIONRECEIVED, "Current Tier 10 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK4SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK4SUMMATIONRECEIVED, "Current Tier 10 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK5SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK5SUMMATIONRECEIVED, "Current Tier 10 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK6SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK6SUMMATIONRECEIVED, "Current Tier 10 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK7SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK7SUMMATIONRECEIVED, "Current Tier 10 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK8SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK8SUMMATIONRECEIVED, "Current Tier 10 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK9SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK9SUMMATIONRECEIVED, "Current Tier 10 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK10SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK10SUMMATIONRECEIVED, "Current Tier 10 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK11SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK11SUMMATIONRECEIVED, "Current Tier 10 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK12SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK12SUMMATIONRECEIVED, "Current Tier 10 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK13SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK13SUMMATIONRECEIVED, "Current Tier 10 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK14SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK14SUMMATIONRECEIVED, "Current Tier 10 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK15SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK15SUMMATIONRECEIVED, "Current Tier 10 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER10BLOCK16SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK16SUMMATIONRECEIVED, "Current Tier 10 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK1SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK1SUMMATIONRECEIVED, "Current Tier 11 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK2SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK2SUMMATIONRECEIVED, "Current Tier 11 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK3SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK3SUMMATIONRECEIVED, "Current Tier 11 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK4SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK4SUMMATIONRECEIVED, "Current Tier 11 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK5SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK5SUMMATIONRECEIVED, "Current Tier 11 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK6SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK6SUMMATIONRECEIVED, "Current Tier 11 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK7SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK7SUMMATIONRECEIVED, "Current Tier 11 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK8SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK8SUMMATIONRECEIVED, "Current Tier 11 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK9SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK9SUMMATIONRECEIVED, "Current Tier 11 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK10SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK10SUMMATIONRECEIVED, "Current Tier 11 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK11SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK11SUMMATIONRECEIVED, "Current Tier 11 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK12SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK12SUMMATIONRECEIVED, "Current Tier 11 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK13SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK13SUMMATIONRECEIVED, "Current Tier 11 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK14SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK14SUMMATIONRECEIVED, "Current Tier 11 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK15SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK15SUMMATIONRECEIVED, "Current Tier 11 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER11BLOCK16SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK16SUMMATIONRECEIVED, "Current Tier 11 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK1SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK1SUMMATIONRECEIVED, "Current Tier 12 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK2SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK2SUMMATIONRECEIVED, "Current Tier 12 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK3SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK3SUMMATIONRECEIVED, "Current Tier 12 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK4SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK4SUMMATIONRECEIVED, "Current Tier 12 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK5SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK5SUMMATIONRECEIVED, "Current Tier 12 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK6SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK6SUMMATIONRECEIVED, "Current Tier 12 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK7SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK7SUMMATIONRECEIVED, "Current Tier 12 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK8SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK8SUMMATIONRECEIVED, "Current Tier 12 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK9SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK9SUMMATIONRECEIVED, "Current Tier 12 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK10SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK10SUMMATIONRECEIVED, "Current Tier 12 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK11SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK11SUMMATIONRECEIVED, "Current Tier 12 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK12SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK12SUMMATIONRECEIVED, "Current Tier 12 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK13SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK13SUMMATIONRECEIVED, "Current Tier 12 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK14SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK14SUMMATIONRECEIVED, "Current Tier 12 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK15SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK15SUMMATIONRECEIVED, "Current Tier 12 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER12BLOCK16SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK16SUMMATIONRECEIVED, "Current Tier 12 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK1SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK1SUMMATIONRECEIVED, "Current Tier 13 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK2SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK2SUMMATIONRECEIVED, "Current Tier 13 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK3SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK3SUMMATIONRECEIVED, "Current Tier 13 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK4SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK4SUMMATIONRECEIVED, "Current Tier 13 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK5SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK5SUMMATIONRECEIVED, "Current Tier 13 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK6SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK6SUMMATIONRECEIVED, "Current Tier 13 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK7SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK7SUMMATIONRECEIVED, "Current Tier 13 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK8SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK8SUMMATIONRECEIVED, "Current Tier 13 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK9SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK9SUMMATIONRECEIVED, "Current Tier 13 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK10SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK10SUMMATIONRECEIVED, "Current Tier 13 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK11SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK11SUMMATIONRECEIVED, "Current Tier 13 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK12SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK12SUMMATIONRECEIVED, "Current Tier 13 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK13SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK13SUMMATIONRECEIVED, "Current Tier 13 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK14SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK14SUMMATIONRECEIVED, "Current Tier 13 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK15SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK15SUMMATIONRECEIVED, "Current Tier 13 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER13BLOCK16SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK16SUMMATIONRECEIVED, "Current Tier 13 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK1SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK1SUMMATIONRECEIVED, "Current Tier 14 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK2SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK2SUMMATIONRECEIVED, "Current Tier 14 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK3SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK3SUMMATIONRECEIVED, "Current Tier 14 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK4SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK4SUMMATIONRECEIVED, "Current Tier 14 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK5SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK5SUMMATIONRECEIVED, "Current Tier 14 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK6SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK6SUMMATIONRECEIVED, "Current Tier 14 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK7SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK7SUMMATIONRECEIVED, "Current Tier 14 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK8SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK8SUMMATIONRECEIVED, "Current Tier 14 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK9SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK9SUMMATIONRECEIVED, "Current Tier 14 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK10SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK10SUMMATIONRECEIVED, "Current Tier 14 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK11SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK11SUMMATIONRECEIVED, "Current Tier 14 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK12SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK12SUMMATIONRECEIVED, "Current Tier 14 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK13SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK13SUMMATIONRECEIVED, "Current Tier 14 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK14SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK14SUMMATIONRECEIVED, "Current Tier 14 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK15SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK15SUMMATIONRECEIVED, "Current Tier 14 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER14BLOCK16SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK16SUMMATIONRECEIVED, "Current Tier 14 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK1SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK1SUMMATIONRECEIVED, "Current Tier 15 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK2SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK2SUMMATIONRECEIVED, "Current Tier 15 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK3SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK3SUMMATIONRECEIVED, "Current Tier 15 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK4SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK4SUMMATIONRECEIVED, "Current Tier 15 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK5SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK5SUMMATIONRECEIVED, "Current Tier 15 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK6SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK6SUMMATIONRECEIVED, "Current Tier 15 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK7SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK7SUMMATIONRECEIVED, "Current Tier 15 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK8SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK8SUMMATIONRECEIVED, "Current Tier 15 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK9SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK9SUMMATIONRECEIVED, "Current Tier 15 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK10SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK10SUMMATIONRECEIVED, "Current Tier 15 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK11SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK11SUMMATIONRECEIVED, "Current Tier 15 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK12SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK12SUMMATIONRECEIVED, "Current Tier 15 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK13SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK13SUMMATIONRECEIVED, "Current Tier 15 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK14SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK14SUMMATIONRECEIVED, "Current Tier 15 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK15SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK15SUMMATIONRECEIVED, "Current Tier 15 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTTIER15BLOCK16SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK16SUMMATIONRECEIVED, "Current Tier 15 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_BILLTODATEDELIVERED, new ZclAttribute(this, ATTR_BILLTODATEDELIVERED, "Bill To Date Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_BILLTODATETIMESTAMPDELIVERED, new ZclAttribute(this, ATTR_BILLTODATETIMESTAMPDELIVERED, "Bill To Date Time Stamp Delivered", ZclDataType.UTCTIME, true, true, false, false));
-        attributeMap.put(ATTR_PROJECTEDBILLDELIVERED, new ZclAttribute(this, ATTR_PROJECTEDBILLDELIVERED, "Projected Bill Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PROJECTEDBILLTIMESTAMPDELIVERED, new ZclAttribute(this, ATTR_PROJECTEDBILLTIMESTAMPDELIVERED, "Projected Bill Time Stamp Delivered", ZclDataType.UTCTIME, true, true, false, false));
-        attributeMap.put(ATTR_BILLDELIVEREDTRAILINGDIGIT, new ZclAttribute(this, ATTR_BILLDELIVEREDTRAILINGDIGIT, "Bill Delivered Trailing Digit", ZclDataType.BITMAP_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_BILLTODATERECEIVED, new ZclAttribute(this, ATTR_BILLTODATERECEIVED, "Bill To Date Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_BILLTODATETIMESTAMPRECEIVED, new ZclAttribute(this, ATTR_BILLTODATETIMESTAMPRECEIVED, "Bill To Date Time Stamp Received", ZclDataType.UTCTIME, true, true, false, false));
-        attributeMap.put(ATTR_PROJECTEDBILLRECEIVED, new ZclAttribute(this, ATTR_PROJECTEDBILLRECEIVED, "Projected Bill Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PROJECTEDBILLTIMESTAMPRECEIVED, new ZclAttribute(this, ATTR_PROJECTEDBILLTIMESTAMPRECEIVED, "Projected Bill Time Stamp Received", ZclDataType.UTCTIME, true, true, false, false));
-        attributeMap.put(ATTR_BILLRECEIVEDTRAILINGDIGIT, new ZclAttribute(this, ATTR_BILLRECEIVEDTRAILINGDIGIT, "Bill Received Trailing Digit", ZclDataType.BITMAP_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_PROPOSEDCHANGESUPPLYIMPLEMENTATIONTIME, new ZclAttribute(this, ATTR_PROPOSEDCHANGESUPPLYIMPLEMENTATIONTIME, "Proposed Change Supply Implementation Time", ZclDataType.UTCTIME, true, true, false, false));
-        attributeMap.put(ATTR_PROPOSEDCHANGESUPPLYSTATUS, new ZclAttribute(this, ATTR_PROPOSEDCHANGESUPPLYSTATUS, "Proposed Change Supply Status", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_UNCONTROLLEDFLOWTHRESHOLD, new ZclAttribute(this, ATTR_UNCONTROLLEDFLOWTHRESHOLD, "Uncontrolled Flow Threshold", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_UNCONTROLLEDFLOWTHRESHOLDUNITOFMEASURE, new ZclAttribute(this, ATTR_UNCONTROLLEDFLOWTHRESHOLDUNITOFMEASURE, "Uncontrolled Flow Threshold Unit Of Measure", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_UNCONTROLLEDFLOWTHRESHOLDMULTIPLIER, new ZclAttribute(this, ATTR_UNCONTROLLEDFLOWTHRESHOLDMULTIPLIER, "Uncontrolled Flow Threshold Multiplier", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_UNCONTROLLEDFLOWTHRESHOLDDIVISOR, new ZclAttribute(this, ATTR_UNCONTROLLEDFLOWTHRESHOLDDIVISOR, "Uncontrolled Flow Threshold Divisor", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_FLOWSTABILIZATIONPERIOD, new ZclAttribute(this, ATTR_FLOWSTABILIZATIONPERIOD, "Flow Stabilization Period", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_FLOWMEASUREMENTPERIOD, new ZclAttribute(this, ATTR_FLOWMEASUREMENTPERIOD, "Flow Measurement Period", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_ALTERNATIVEINSTANTANEOUSDEMAND, new ZclAttribute(this, ATTR_ALTERNATIVEINSTANTANEOUSDEMAND, "Alternative Instantaneous Demand", ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTDAYALTERNATIVECONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTDAYALTERNATIVECONSUMPTIONDELIVERED, "Current Day Alternative Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTDAYALTERNATIVECONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTDAYALTERNATIVECONSUMPTIONRECEIVED, "Current Day Alternative Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAYALTERNATIVECONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSDAYALTERNATIVECONSUMPTIONDELIVERED, "Previous Day Alternative Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAYALTERNATIVECONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSDAYALTERNATIVECONSUMPTIONRECEIVED, "Previous Day Alternative Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMEDELIVERED, new ZclAttribute(this, ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMEDELIVERED, "Current Alternative Partial Profile Interval Start Time Delivered", ZclDataType.UTCTIME, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMERECEIVED, new ZclAttribute(this, ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMERECEIVED, "Current Alternative Partial Profile Interval Start Time Received", ZclDataType.UTCTIME, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALVALUEDELIVERED, new ZclAttribute(this, ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALVALUEDELIVERED, "Current Alternative Partial Profile Interval Value Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALVALUERECEIVED, new ZclAttribute(this, ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALVALUERECEIVED, "Current Alternative Partial Profile Interval Value Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTDAYALTERNATIVEMAXPRESSURE, new ZclAttribute(this, ATTR_CURRENTDAYALTERNATIVEMAXPRESSURE, "Current Day Alternative Max Pressure", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTDAYALTERNATIVEMINPRESSURE, new ZclAttribute(this, ATTR_CURRENTDAYALTERNATIVEMINPRESSURE, "Current Day Alternative Min Pressure", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAYALTERNATIVEMAXPRESSURE, new ZclAttribute(this, ATTR_PREVIOUSDAYALTERNATIVEMAXPRESSURE, "Previous Day Alternative Max Pressure", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAYALTERNATIVEMINPRESSURE, new ZclAttribute(this, ATTR_PREVIOUSDAYALTERNATIVEMINPRESSURE, "Previous Day Alternative Min Pressure", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTDAYALTERNATIVEMAXDEMAND, new ZclAttribute(this, ATTR_CURRENTDAYALTERNATIVEMAXDEMAND, "Current Day Alternative Max Demand", ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAYALTERNATIVEMAXDEMAND, new ZclAttribute(this, ATTR_PREVIOUSDAYALTERNATIVEMAXDEMAND, "Previous Day Alternative Max Demand", ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTMONTHALTERNATIVEMAXDEMAND, new ZclAttribute(this, ATTR_CURRENTMONTHALTERNATIVEMAXDEMAND, "Current Month Alternative Max Demand", ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTYEARALTERNATIVEMAXDEMAND, new ZclAttribute(this, ATTR_CURRENTYEARALTERNATIVEMAXDEMAND, "Current Year Alternative Max Demand", ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAY2ALTERNATIVECONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSDAY2ALTERNATIVECONSUMPTIONDELIVERED, "Previous Day 2 Alternative Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAY4ALTERNATIVECONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSDAY4ALTERNATIVECONSUMPTIONDELIVERED, "Previous Day 4 Alternative Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAY6ALTERNATIVECONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSDAY6ALTERNATIVECONSUMPTIONDELIVERED, "Previous Day 6 Alternative Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAY8ALTERNATIVECONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSDAY8ALTERNATIVECONSUMPTIONDELIVERED, "Previous Day 8 Alternative Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAY10ALTERNATIVECONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSDAY10ALTERNATIVECONSUMPTIONDELIVERED, "Previous Day 10 Alternative Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAY12ALTERNATIVECONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSDAY12ALTERNATIVECONSUMPTIONDELIVERED, "Previous Day 12 Alternative Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAY2ALTERNATIVECONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSDAY2ALTERNATIVECONSUMPTIONRECEIVED, "Previous Day 2 Alternative Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAY4ALTERNATIVECONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSDAY4ALTERNATIVECONSUMPTIONRECEIVED, "Previous Day 4 Alternative Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAY6ALTERNATIVECONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSDAY6ALTERNATIVECONSUMPTIONRECEIVED, "Previous Day 6 Alternative Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAY8ALTERNATIVECONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSDAY8ALTERNATIVECONSUMPTIONRECEIVED, "Previous Day 8 Alternative Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAY10ALTERNATIVECONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSDAY10ALTERNATIVECONSUMPTIONRECEIVED, "Previous Day 10 Alternative Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSDAY12ALTERNATIVECONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSDAY12ALTERNATIVECONSUMPTIONRECEIVED, "Previous Day 12 Alternative Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTWEEKALTERNATIVECONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTWEEKALTERNATIVECONSUMPTIONDELIVERED, "Current Week Alternative Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTWEEKALTERNATIVECONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTWEEKALTERNATIVECONSUMPTIONRECEIVED, "Current Week Alternative Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSWEEK1ALTERNATIVECONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSWEEK1ALTERNATIVECONSUMPTIONDELIVERED, "Previous Week 1 Alternative Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSWEEK3ALTERNATIVECONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSWEEK3ALTERNATIVECONSUMPTIONDELIVERED, "Previous Week 3 Alternative Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSWEEK5ALTERNATIVECONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSWEEK5ALTERNATIVECONSUMPTIONDELIVERED, "Previous Week 5 Alternative Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSWEEK7ALTERNATIVECONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSWEEK7ALTERNATIVECONSUMPTIONDELIVERED, "Previous Week 7 Alternative Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSWEEK9ALTERNATIVECONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSWEEK9ALTERNATIVECONSUMPTIONDELIVERED, "Previous Week 9 Alternative Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSWEEK1ALTERNATIVECONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSWEEK1ALTERNATIVECONSUMPTIONRECEIVED, "Previous Week 1 Alternative Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSWEEK3ALTERNATIVECONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSWEEK3ALTERNATIVECONSUMPTIONRECEIVED, "Previous Week 3 Alternative Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSWEEK5ALTERNATIVECONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSWEEK5ALTERNATIVECONSUMPTIONRECEIVED, "Previous Week 5 Alternative Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSWEEK7ALTERNATIVECONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSWEEK7ALTERNATIVECONSUMPTIONRECEIVED, "Previous Week 7 Alternative Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSWEEK9ALTERNATIVECONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSWEEK9ALTERNATIVECONSUMPTIONRECEIVED, "Previous Week 9 Alternative Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTMONTHALTERNATIVECONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTMONTHALTERNATIVECONSUMPTIONDELIVERED, "Current Month Alternative Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_CURRENTMONTHALTERNATIVECONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTMONTHALTERNATIVECONSUMPTIONRECEIVED, "Current Month Alternative Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH1ALTERNATIVECONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSMONTH1ALTERNATIVECONSUMPTIONDELIVERED, "Previous Month 1 Alternative Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH3ALTERNATIVECONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSMONTH3ALTERNATIVECONSUMPTIONDELIVERED, "Previous Month 3 Alternative Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH5ALTERNATIVECONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSMONTH5ALTERNATIVECONSUMPTIONDELIVERED, "Previous Month 5 Alternative Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH7ALTERNATIVECONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSMONTH7ALTERNATIVECONSUMPTIONDELIVERED, "Previous Month 7 Alternative Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH9ALTERNATIVECONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSMONTH9ALTERNATIVECONSUMPTIONDELIVERED, "Previous Month 9 Alternative Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH11ALTERNATIVECONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSMONTH11ALTERNATIVECONSUMPTIONDELIVERED, "Previous Month 11 Alternative Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH13ALTERNATIVECONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSMONTH13ALTERNATIVECONSUMPTIONDELIVERED, "Previous Month 13 Alternative Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH15ALTERNATIVECONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSMONTH15ALTERNATIVECONSUMPTIONDELIVERED, "Previous Month 15 Alternative Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH17ALTERNATIVECONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSMONTH17ALTERNATIVECONSUMPTIONDELIVERED, "Previous Month 17 Alternative Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH19ALTERNATIVECONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSMONTH19ALTERNATIVECONSUMPTIONDELIVERED, "Previous Month 19 Alternative Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH21ALTERNATIVECONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSMONTH21ALTERNATIVECONSUMPTIONDELIVERED, "Previous Month 21 Alternative Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH23ALTERNATIVECONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSMONTH23ALTERNATIVECONSUMPTIONDELIVERED, "Previous Month 23 Alternative Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH25ALTERNATIVECONSUMPTIONDELIVERED, new ZclAttribute(this, ATTR_PREVIOUSMONTH25ALTERNATIVECONSUMPTIONDELIVERED, "Previous Month 25 Alternative Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH1ALTERNATIVECONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSMONTH1ALTERNATIVECONSUMPTIONRECEIVED, "Previous Month 1 Alternative Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH3ALTERNATIVECONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSMONTH3ALTERNATIVECONSUMPTIONRECEIVED, "Previous Month 3 Alternative Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH5ALTERNATIVECONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSMONTH5ALTERNATIVECONSUMPTIONRECEIVED, "Previous Month 5 Alternative Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH7ALTERNATIVECONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSMONTH7ALTERNATIVECONSUMPTIONRECEIVED, "Previous Month 7 Alternative Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH9ALTERNATIVECONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSMONTH9ALTERNATIVECONSUMPTIONRECEIVED, "Previous Month 9 Alternative Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH11ALTERNATIVECONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSMONTH11ALTERNATIVECONSUMPTIONRECEIVED, "Previous Month 11 Alternative Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH13ALTERNATIVECONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSMONTH13ALTERNATIVECONSUMPTIONRECEIVED, "Previous Month 13 Alternative Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH15ALTERNATIVECONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSMONTH15ALTERNATIVECONSUMPTIONRECEIVED, "Previous Month 15 Alternative Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH17ALTERNATIVECONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSMONTH17ALTERNATIVECONSUMPTIONRECEIVED, "Previous Month 17 Alternative Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH19ALTERNATIVECONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSMONTH19ALTERNATIVECONSUMPTIONRECEIVED, "Previous Month 19 Alternative Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH21ALTERNATIVECONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSMONTH21ALTERNATIVECONSUMPTIONRECEIVED, "Previous Month 21 Alternative Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH23ALTERNATIVECONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSMONTH23ALTERNATIVECONSUMPTIONRECEIVED, "Previous Month 23 Alternative Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_PREVIOUSMONTH25ALTERNATIVECONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_PREVIOUSMONTH25ALTERNATIVECONSUMPTIONRECEIVED, "Previous Month 25 Alternative Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTSUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTSUMMATIONDELIVERED,
+                "Current Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTSUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTSUMMATIONRECEIVED,
+                "Current Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_CURRENTMAXDEMANDDELIVERED, new ZclAttribute(this, ATTR_CURRENTMAXDEMANDDELIVERED,
+                "Current Max Demand Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_CURRENTMAXDEMANDRECEIVED, new ZclAttribute(this, ATTR_CURRENTMAXDEMANDRECEIVED,
+                "Current Max Demand Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_DFTSUMMATION, new ZclAttribute(this, ATTR_DFTSUMMATION, "Dft Summation",
+                ZclDataType.UNSIGNED_48_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_DAILYFREEZETIME, new ZclAttribute(this, ATTR_DAILYFREEZETIME, "Daily Freeze Time",
+                ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_POWERFACTOR, new ZclAttribute(this, ATTR_POWERFACTOR, "Power Factor",
+                ZclDataType.SIGNED_8_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_READINGSNAPSHOTTIME, new ZclAttribute(this, ATTR_READINGSNAPSHOTTIME,
+                "Reading Snapshot Time", ZclDataType.UTCTIME, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTMAXDEMANDDELIVEREDTIME, new ZclAttribute(this, ATTR_CURRENTMAXDEMANDDELIVEREDTIME,
+                "Current Max Demand Delivered Time", ZclDataType.UTCTIME, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTMAXDEMANDRECEIVEDTIME, new ZclAttribute(this, ATTR_CURRENTMAXDEMANDRECEIVEDTIME,
+                "Current Max Demand Received Time", ZclDataType.UTCTIME, true, true, false, false));
+        attributeMap.put(ATTR_DEFAULTUPDATEPERIOD, new ZclAttribute(this, ATTR_DEFAULTUPDATEPERIOD,
+                "Default Update Period", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_FASTPOLLUPDATEPERIOD, new ZclAttribute(this, ATTR_FASTPOLLUPDATEPERIOD,
+                "Fast Poll Update Period", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_CURRENTBLOCKPERIODCONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTBLOCKPERIODCONSUMPTIONDELIVERED,
+                        "Current Block Period Consumption Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, false, true,
+                        false, false));
+        attributeMap.put(ATTR_DAILYCONSUMPTIONTARGET, new ZclAttribute(this, ATTR_DAILYCONSUMPTIONTARGET,
+                "Daily Consumption Target", ZclDataType.UNSIGNED_24_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_CURRENTBLOCK, new ZclAttribute(this, ATTR_CURRENTBLOCK, "Current Block",
+                ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
+        attributeMap.put(ATTR_PROFILEINTERVALPERIOD, new ZclAttribute(this, ATTR_PROFILEINTERVALPERIOD,
+                "Profile Interval Period", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
+        attributeMap.put(ATTR_INTERVALREADREPORTINGPERIOD, new ZclAttribute(this, ATTR_INTERVALREADREPORTINGPERIOD,
+                "Interval Read Reporting Period", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_PRESETREADINGTIME, new ZclAttribute(this, ATTR_PRESETREADINGTIME, "Preset Reading Time",
+                ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_VOLUMEPERREPORT, new ZclAttribute(this, ATTR_VOLUMEPERREPORT, "Volume Per Report",
+                ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_FLOWRESTRICTION, new ZclAttribute(this, ATTR_FLOWRESTRICTION, "Flow Restriction",
+                ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_SUPPLYSTATUS, new ZclAttribute(this, ATTR_SUPPLYSTATUS, "Supply Status",
+                ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
+        attributeMap.put(ATTR_CURRENTINLETENERGYCARRIERSUMMATION,
+                new ZclAttribute(this, ATTR_CURRENTINLETENERGYCARRIERSUMMATION,
+                        "Current Inlet Energy Carrier Summation", ZclDataType.UNSIGNED_48_BIT_INTEGER, false, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTOUTLETENERGYCARRIERSUMMATION,
+                new ZclAttribute(this, ATTR_CURRENTOUTLETENERGYCARRIERSUMMATION,
+                        "Current Outlet Energy Carrier Summation", ZclDataType.UNSIGNED_48_BIT_INTEGER, false, true,
+                        false, false));
+        attributeMap.put(ATTR_INLETTEMPERATURE, new ZclAttribute(this, ATTR_INLETTEMPERATURE, "Inlet Temperature",
+                ZclDataType.SIGNED_24_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_OUTLETTEMPERATURE, new ZclAttribute(this, ATTR_OUTLETTEMPERATURE, "Outlet Temperature",
+                ZclDataType.SIGNED_24_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_CONTROLTEMPERATURE, new ZclAttribute(this, ATTR_CONTROLTEMPERATURE, "Control Temperature",
+                ZclDataType.SIGNED_24_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_CURRENTINLETENERGYCARRIERDEMAND,
+                new ZclAttribute(this, ATTR_CURRENTINLETENERGYCARRIERDEMAND, "Current Inlet Energy Carrier Demand",
+                        ZclDataType.SIGNED_24_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_CURRENTOUTLETENERGYCARRIERDEMAND,
+                new ZclAttribute(this, ATTR_CURRENTOUTLETENERGYCARRIERDEMAND, "Current Outlet Energy Carrier Demand",
+                        ZclDataType.SIGNED_24_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSBLOCKPERIODCONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSBLOCKPERIODCONSUMPTIONDELIVERED,
+                        "Previous Block Period Consumption Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, false, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTBLOCKPERIODCONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTBLOCKPERIODCONSUMPTIONRECEIVED,
+                        "Current Block Period Consumption Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, false, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTBLOCKRECEIVED, new ZclAttribute(this, ATTR_CURRENTBLOCKRECEIVED,
+                "Current Block Received", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
+        attributeMap.put(ATTR_DFTSUMMATIONRECEIVED, new ZclAttribute(this, ATTR_DFTSUMMATIONRECEIVED,
+                "Dft Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_ACTIVEREGISTERTIERDELIVERED, new ZclAttribute(this, ATTR_ACTIVEREGISTERTIERDELIVERED,
+                "Active Register Tier Delivered", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
+        attributeMap.put(ATTR_ACTIVEREGISTERTIERRECEIVED, new ZclAttribute(this, ATTR_ACTIVEREGISTERTIERRECEIVED,
+                "Active Register Tier Received", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
+        attributeMap.put(ATTR_LASTBLOCKSWITCHTIME, new ZclAttribute(this, ATTR_LASTBLOCKSWITCHTIME,
+                "Last Block Switch Time", ZclDataType.UTCTIME, false, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER1SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1SUMMATIONDELIVERED, "Current Tier 1 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER3SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3SUMMATIONDELIVERED, "Current Tier 3 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER5SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5SUMMATIONDELIVERED, "Current Tier 5 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER7SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7SUMMATIONDELIVERED, "Current Tier 7 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER9SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9SUMMATIONDELIVERED, "Current Tier 9 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER11SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11SUMMATIONDELIVERED, "Current Tier 11 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER13SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13SUMMATIONDELIVERED, "Current Tier 13 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER15SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15SUMMATIONDELIVERED, "Current Tier 15 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER17SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER17SUMMATIONDELIVERED, "Current Tier 17 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER19SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER19SUMMATIONDELIVERED, "Current Tier 19 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER21SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER21SUMMATIONDELIVERED, "Current Tier 21 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER23SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER23SUMMATIONDELIVERED, "Current Tier 23 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER25SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER25SUMMATIONDELIVERED, "Current Tier 25 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER27SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER27SUMMATIONDELIVERED, "Current Tier 27 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER29SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER29SUMMATIONDELIVERED, "Current Tier 29 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER31SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER31SUMMATIONDELIVERED, "Current Tier 31 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER33SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER33SUMMATIONDELIVERED, "Current Tier 33 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER35SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER35SUMMATIONDELIVERED, "Current Tier 35 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER37SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER37SUMMATIONDELIVERED, "Current Tier 37 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER39SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER39SUMMATIONDELIVERED, "Current Tier 39 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER41SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER41SUMMATIONDELIVERED, "Current Tier 41 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER43SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER43SUMMATIONDELIVERED, "Current Tier 43 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER45SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER45SUMMATIONDELIVERED, "Current Tier 45 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER47SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER47SUMMATIONDELIVERED, "Current Tier 47 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER49SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER49SUMMATIONDELIVERED, "Current Tier 49 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER51SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER51SUMMATIONDELIVERED, "Current Tier 51 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER53SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER53SUMMATIONDELIVERED, "Current Tier 53 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER55SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER55SUMMATIONDELIVERED, "Current Tier 55 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER57SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER57SUMMATIONDELIVERED, "Current Tier 57 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER59SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER59SUMMATIONDELIVERED, "Current Tier 59 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER61SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER61SUMMATIONDELIVERED, "Current Tier 61 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER63SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER63SUMMATIONDELIVERED, "Current Tier 63 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER65SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER65SUMMATIONDELIVERED, "Current Tier 65 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER67SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER67SUMMATIONDELIVERED, "Current Tier 67 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER69SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER69SUMMATIONDELIVERED, "Current Tier 69 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER71SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER71SUMMATIONDELIVERED, "Current Tier 71 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER73SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER73SUMMATIONDELIVERED, "Current Tier 73 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER75SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER75SUMMATIONDELIVERED, "Current Tier 75 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER77SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER77SUMMATIONDELIVERED, "Current Tier 77 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER79SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER79SUMMATIONDELIVERED, "Current Tier 79 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER81SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER81SUMMATIONDELIVERED, "Current Tier 81 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER83SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER83SUMMATIONDELIVERED, "Current Tier 83 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER85SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER85SUMMATIONDELIVERED, "Current Tier 85 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER87SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER87SUMMATIONDELIVERED, "Current Tier 87 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER89SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER89SUMMATIONDELIVERED, "Current Tier 89 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER91SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER91SUMMATIONDELIVERED, "Current Tier 91 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER93SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER93SUMMATIONDELIVERED, "Current Tier 93 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER95SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER95SUMMATIONDELIVERED, "Current Tier 95 Summation Delivered",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER1SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER1SUMMATIONRECEIVED,
+                "Current Tier 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER3SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER3SUMMATIONRECEIVED,
+                "Current Tier 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER5SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER5SUMMATIONRECEIVED,
+                "Current Tier 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER7SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER7SUMMATIONRECEIVED,
+                "Current Tier 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER9SUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTTIER9SUMMATIONRECEIVED,
+                "Current Tier 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER11SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11SUMMATIONRECEIVED, "Current Tier 11 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER13SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13SUMMATIONRECEIVED, "Current Tier 13 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER15SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15SUMMATIONRECEIVED, "Current Tier 15 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER17SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER17SUMMATIONRECEIVED, "Current Tier 17 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER19SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER19SUMMATIONRECEIVED, "Current Tier 19 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER21SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER21SUMMATIONRECEIVED, "Current Tier 21 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER23SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER23SUMMATIONRECEIVED, "Current Tier 23 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER25SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER25SUMMATIONRECEIVED, "Current Tier 25 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER27SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER27SUMMATIONRECEIVED, "Current Tier 27 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER29SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER29SUMMATIONRECEIVED, "Current Tier 29 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER31SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER31SUMMATIONRECEIVED, "Current Tier 31 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER33SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER33SUMMATIONRECEIVED, "Current Tier 33 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER35SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER35SUMMATIONRECEIVED, "Current Tier 35 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER37SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER37SUMMATIONRECEIVED, "Current Tier 37 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER39SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER39SUMMATIONRECEIVED, "Current Tier 39 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER41SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER41SUMMATIONRECEIVED, "Current Tier 41 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER43SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER43SUMMATIONRECEIVED, "Current Tier 43 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER45SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER45SUMMATIONRECEIVED, "Current Tier 45 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER47SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER47SUMMATIONRECEIVED, "Current Tier 47 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER49SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER49SUMMATIONRECEIVED, "Current Tier 49 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER51SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER51SUMMATIONRECEIVED, "Current Tier 51 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER53SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER53SUMMATIONRECEIVED, "Current Tier 53 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER55SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER55SUMMATIONRECEIVED, "Current Tier 55 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER57SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER57SUMMATIONRECEIVED, "Current Tier 57 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER59SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER59SUMMATIONRECEIVED, "Current Tier 59 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER61SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER61SUMMATIONRECEIVED, "Current Tier 61 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER63SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER63SUMMATIONRECEIVED, "Current Tier 63 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER65SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER65SUMMATIONRECEIVED, "Current Tier 65 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER67SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER67SUMMATIONRECEIVED, "Current Tier 67 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER69SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER69SUMMATIONRECEIVED, "Current Tier 69 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER71SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER71SUMMATIONRECEIVED, "Current Tier 71 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER73SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER73SUMMATIONRECEIVED, "Current Tier 73 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER75SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER75SUMMATIONRECEIVED, "Current Tier 75 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER77SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER77SUMMATIONRECEIVED, "Current Tier 77 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER79SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER79SUMMATIONRECEIVED, "Current Tier 79 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER81SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER81SUMMATIONRECEIVED, "Current Tier 81 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER83SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER83SUMMATIONRECEIVED, "Current Tier 83 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER85SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER85SUMMATIONRECEIVED, "Current Tier 85 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER87SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER87SUMMATIONRECEIVED, "Current Tier 87 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER89SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER89SUMMATIONRECEIVED, "Current Tier 89 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER91SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER91SUMMATIONRECEIVED, "Current Tier 91 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER93SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER93SUMMATIONRECEIVED, "Current Tier 93 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTTIER95SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER95SUMMATIONRECEIVED, "Current Tier 95 Summation Received",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CPP1SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CPP1SUMMATIONDELIVERED,
+                "CPP 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CPP2SUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CPP2SUMMATIONDELIVERED,
+                "CPP 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_STATUS,
+                new ZclAttribute(this, ATTR_STATUS, "Status", ZclDataType.BITMAP_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_REMAININGBATTERYLIFE, new ZclAttribute(this, ATTR_REMAININGBATTERYLIFE,
+                "Remaining Battery Life", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_HOURSINOPERATION, new ZclAttribute(this, ATTR_HOURSINOPERATION, "Hours In Operation",
+                ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_HOURSINFAULT, new ZclAttribute(this, ATTR_HOURSINFAULT, "Hours In Fault",
+                ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_EXTENDEDSTATUS, new ZclAttribute(this, ATTR_EXTENDEDSTATUS, "Extended Status",
+                ZclDataType.BITMAP_64_BIT, true, true, false, false));
+        attributeMap.put(ATTR_REMAININGBATTERYLIFEINDAYS, new ZclAttribute(this, ATTR_REMAININGBATTERYLIFEINDAYS,
+                "Remaining Battery Life In Days", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTMETERID, new ZclAttribute(this, ATTR_CURRENTMETERID, "Current Meter ID",
+                ZclDataType.OCTET_STRING, true, true, false, false));
+        attributeMap.put(ATTR_AMBIENTCONSUMPTIONINDICATOR, new ZclAttribute(this, ATTR_AMBIENTCONSUMPTIONINDICATOR,
+                "Ambient Consumption Indicator", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_UNITOFMEASURE, new ZclAttribute(this, ATTR_UNITOFMEASURE, "Unit Of Measure",
+                ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_MULTIPLIER, new ZclAttribute(this, ATTR_MULTIPLIER, "Multiplier",
+                ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_DIVISOR, new ZclAttribute(this, ATTR_DIVISOR, "Divisor",
+                ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_SUMMATIONFORMATTING, new ZclAttribute(this, ATTR_SUMMATIONFORMATTING,
+                "Summation Formatting", ZclDataType.BITMAP_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_DEMANDFORMATTING, new ZclAttribute(this, ATTR_DEMANDFORMATTING, "Demand Formatting",
+                ZclDataType.BITMAP_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_HISTORICALCONSUMPTIONFORMATTING,
+                new ZclAttribute(this, ATTR_HISTORICALCONSUMPTIONFORMATTING, "Historical Consumption Formatting",
+                        ZclDataType.BITMAP_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_METERINGDEVICETYPE, new ZclAttribute(this, ATTR_METERINGDEVICETYPE,
+                "Metering Device Type", ZclDataType.BITMAP_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_SITEID,
+                new ZclAttribute(this, ATTR_SITEID, "Site ID", ZclDataType.OCTET_STRING, true, true, false, false));
+        attributeMap.put(ATTR_METERSERIALNUMBER, new ZclAttribute(this, ATTR_METERSERIALNUMBER, "Meter Serial Number",
+                ZclDataType.OCTET_STRING, true, true, false, false));
+        attributeMap.put(ATTR_ENERGYCARRIERUNITOFMEASURE, new ZclAttribute(this, ATTR_ENERGYCARRIERUNITOFMEASURE,
+                "Energy Carrier Unit Of Measure", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_ENERGYCARRIERSUMMATIONFORMATTING,
+                new ZclAttribute(this, ATTR_ENERGYCARRIERSUMMATIONFORMATTING, "Energy Carrier Summation Formatting",
+                        ZclDataType.BITMAP_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_ENERGYCARRIERDEMANDFORMATTING, new ZclAttribute(this, ATTR_ENERGYCARRIERDEMANDFORMATTING,
+                "Energy Carrier Demand Formatting", ZclDataType.BITMAP_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_TEMPERATUREUNITOFMEASURE, new ZclAttribute(this, ATTR_TEMPERATUREUNITOFMEASURE,
+                "Temperature Unit Of Measure", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_TEMPERATUREFORMATTING, new ZclAttribute(this, ATTR_TEMPERATUREFORMATTING,
+                "Temperature Formatting", ZclDataType.BITMAP_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_MODULESERIALNUMBER, new ZclAttribute(this, ATTR_MODULESERIALNUMBER,
+                "Module Serial Number", ZclDataType.OCTET_STRING, true, true, false, false));
+        attributeMap.put(ATTR_OPERATINGTARIFFLABELDELIVERED, new ZclAttribute(this, ATTR_OPERATINGTARIFFLABELDELIVERED,
+                "Operating Tariff Label Delivered", ZclDataType.OCTET_STRING, true, true, false, false));
+        attributeMap.put(ATTR_OPERATINGTARIFFLABELRECEIVED, new ZclAttribute(this, ATTR_OPERATINGTARIFFLABELRECEIVED,
+                "Operating Tariff Label Received", ZclDataType.OCTET_STRING, true, true, false, false));
+        attributeMap.put(ATTR_CUSTOMERIDNUMBER, new ZclAttribute(this, ATTR_CUSTOMERIDNUMBER, "Customer ID Number",
+                ZclDataType.OCTET_STRING, true, true, false, false));
+        attributeMap.put(ATTR_ALTERNATIVEUNITOFMEASURE, new ZclAttribute(this, ATTR_ALTERNATIVEUNITOFMEASURE,
+                "Alternative Unit Of Measure", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_ALTERNATIVEDEMANDFORMATTING, new ZclAttribute(this, ATTR_ALTERNATIVEDEMANDFORMATTING,
+                "Alternative Demand Formatting", ZclDataType.BITMAP_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_ALTERNATIVECONSUMPTIONFORMATTING,
+                new ZclAttribute(this, ATTR_ALTERNATIVECONSUMPTIONFORMATTING, "Alternative Consumption Formatting",
+                        ZclDataType.BITMAP_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_INSTANTANEOUSDEMAND, new ZclAttribute(this, ATTR_INSTANTANEOUSDEMAND,
+                "Instantaneous Demand", ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTDAYCONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTDAYCONSUMPTIONDELIVERED, "Current Day Consumption Delivered",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTDAYCONSUMPTIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTDAYCONSUMPTIONRECEIVED,
+                "Current Day Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAYCONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAYCONSUMPTIONDELIVERED, "Previous Day Consumption Delivered",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAYCONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAYCONSUMPTIONRECEIVED, "Previous Day Consumption Received",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTPARTIALPROFILEINTERVALSTARTTIMEDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTPARTIALPROFILEINTERVALSTARTTIMEDELIVERED,
+                        "Current Partial Profile Interval Start Time Delivered", ZclDataType.UTCTIME, true, true, false,
+                        false));
+        attributeMap.put(ATTR_CURRENTPARTIALPROFILEINTERVALSTARTTIMERECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTPARTIALPROFILEINTERVALSTARTTIMERECEIVED,
+                        "Current Partial Profile Interval Start Time Received", ZclDataType.UTCTIME, true, true, false,
+                        false));
+        attributeMap.put(ATTR_CURRENTPARTIALPROFILEINTERVALVALUEDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTPARTIALPROFILEINTERVALVALUEDELIVERED,
+                        "Current Partial Profile Interval Value Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_CURRENTPARTIALPROFILEINTERVALVALUERECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTPARTIALPROFILEINTERVALVALUERECEIVED,
+                        "Current Partial Profile Interval Value Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_CURRENTDAYMAXPRESSURE, new ZclAttribute(this, ATTR_CURRENTDAYMAXPRESSURE,
+                "Current Day Max Pressure", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTDAYMINPRESSURE, new ZclAttribute(this, ATTR_CURRENTDAYMINPRESSURE,
+                "Current Day Min Pressure", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAYMAXPRESSURE, new ZclAttribute(this, ATTR_PREVIOUSDAYMAXPRESSURE,
+                "Previous Day Max Pressure", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAYMINPRESSURE, new ZclAttribute(this, ATTR_PREVIOUSDAYMINPRESSURE,
+                "Previous Day Min Pressure", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTDAYMAXDEMAND, new ZclAttribute(this, ATTR_CURRENTDAYMAXDEMAND,
+                "Current Day Max Demand", ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAYMAXDEMAND, new ZclAttribute(this, ATTR_PREVIOUSDAYMAXDEMAND,
+                "Previous Day Max Demand", ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTMONTHMAXDEMAND, new ZclAttribute(this, ATTR_CURRENTMONTHMAXDEMAND,
+                "Current Month Max Demand", ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTYEARMAXDEMAND, new ZclAttribute(this, ATTR_CURRENTYEARMAXDEMAND,
+                "Current Year Max Demand", ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTDAYMAXENERGYCARRIERDEMAND,
+                new ZclAttribute(this, ATTR_CURRENTDAYMAXENERGYCARRIERDEMAND, "Current Day Max Energy Carrier Demand",
+                        ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAYMAXENERGYCARRIERDEMAND,
+                new ZclAttribute(this, ATTR_PREVIOUSDAYMAXENERGYCARRIERDEMAND, "Previous Day Max Energy Carrier Demand",
+                        ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTMONTHMAXENERGYCARRIERDEMAND,
+                new ZclAttribute(this, ATTR_CURRENTMONTHMAXENERGYCARRIERDEMAND,
+                        "Current Month Max Energy Carrier Demand", ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false,
+                        false));
+        attributeMap.put(ATTR_CURRENTMONTHMINENERGYCARRIERDEMAND,
+                new ZclAttribute(this, ATTR_CURRENTMONTHMINENERGYCARRIERDEMAND,
+                        "Current Month Min Energy Carrier Demand", ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false,
+                        false));
+        attributeMap.put(ATTR_CURRENTYEARMAXENERGYCARRIERDEMAND,
+                new ZclAttribute(this, ATTR_CURRENTYEARMAXENERGYCARRIERDEMAND, "Current Year Max Energy Carrier Demand",
+                        ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTYEARMINENERGYCARRIERDEMAND,
+                new ZclAttribute(this, ATTR_CURRENTYEARMINENERGYCARRIERDEMAND, "Current Year Min Energy Carrier Demand",
+                        ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAY2CONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAY2CONSUMPTIONDELIVERED, "Previous Day 2 Consumption Delivered",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAY4CONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAY4CONSUMPTIONDELIVERED, "Previous Day 4 Consumption Delivered",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAY6CONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAY6CONSUMPTIONDELIVERED, "Previous Day 6 Consumption Delivered",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAY8CONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAY8CONSUMPTIONDELIVERED, "Previous Day 8 Consumption Delivered",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAY10CONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAY10CONSUMPTIONDELIVERED, "Previous Day 10 Consumption Delivered",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAY12CONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAY12CONSUMPTIONDELIVERED, "Previous Day 12 Consumption Delivered",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAY14CONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAY14CONSUMPTIONDELIVERED, "Previous Day 14 Consumption Delivered",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAY16CONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAY16CONSUMPTIONDELIVERED, "Previous Day 16 Consumption Delivered",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAY2CONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAY2CONSUMPTIONRECEIVED, "Previous Day 2 Consumption Received",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAY4CONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAY4CONSUMPTIONRECEIVED, "Previous Day 4 Consumption Received",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAY6CONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAY6CONSUMPTIONRECEIVED, "Previous Day 6 Consumption Received",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAY8CONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAY8CONSUMPTIONRECEIVED, "Previous Day 8 Consumption Received",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAY10CONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAY10CONSUMPTIONRECEIVED, "Previous Day 10 Consumption Received",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAY12CONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAY12CONSUMPTIONRECEIVED, "Previous Day 12 Consumption Received",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAY14CONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAY14CONSUMPTIONRECEIVED, "Previous Day 14 Consumption Received",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAY16CONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAY16CONSUMPTIONRECEIVED, "Previous Day 16 Consumption Received",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTWEEKCONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTWEEKCONSUMPTIONDELIVERED, "Current Week Consumption Delivered",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTWEEKCONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTWEEKCONSUMPTIONRECEIVED, "Current Week Consumption Received",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSWEEK1CONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSWEEK1CONSUMPTIONDELIVERED, "Previous Week 1 Consumption Delivered",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSWEEK3CONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSWEEK3CONSUMPTIONDELIVERED, "Previous Week 3 Consumption Delivered",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSWEEK5CONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSWEEK5CONSUMPTIONDELIVERED, "Previous Week 5 Consumption Delivered",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSWEEK7CONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSWEEK7CONSUMPTIONDELIVERED, "Previous Week 7 Consumption Delivered",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSWEEK9CONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSWEEK9CONSUMPTIONDELIVERED, "Previous Week 9 Consumption Delivered",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSWEEK1CONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSWEEK1CONSUMPTIONRECEIVED, "Previous Week 1 Consumption Received",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSWEEK3CONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSWEEK3CONSUMPTIONRECEIVED, "Previous Week 3 Consumption Received",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSWEEK5CONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSWEEK5CONSUMPTIONRECEIVED, "Previous Week 5 Consumption Received",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSWEEK7CONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSWEEK7CONSUMPTIONRECEIVED, "Previous Week 7 Consumption Received",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSWEEK9CONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSWEEK9CONSUMPTIONRECEIVED, "Previous Week 9 Consumption Received",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTMONTHCONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTMONTHCONSUMPTIONDELIVERED, "Current Month Consumption Delivered",
+                        ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTMONTHCONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTMONTHCONSUMPTIONRECEIVED, "Current Month Consumption Received",
+                        ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH1CONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH1CONSUMPTIONDELIVERED,
+                        "Previous Month 1 Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH3CONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH3CONSUMPTIONDELIVERED,
+                        "Previous Month 3 Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH5CONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH5CONSUMPTIONDELIVERED,
+                        "Previous Month 5 Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH7CONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH7CONSUMPTIONDELIVERED,
+                        "Previous Month 7 Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH9CONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH9CONSUMPTIONDELIVERED,
+                        "Previous Month 9 Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH11CONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH11CONSUMPTIONDELIVERED,
+                        "Previous Month 11 Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH13CONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH13CONSUMPTIONDELIVERED,
+                        "Previous Month 13 Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH15CONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH15CONSUMPTIONDELIVERED,
+                        "Previous Month 15 Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH17CONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH17CONSUMPTIONDELIVERED,
+                        "Previous Month 17 Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH19CONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH19CONSUMPTIONDELIVERED,
+                        "Previous Month 19 Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH21CONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH21CONSUMPTIONDELIVERED,
+                        "Previous Month 21 Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH23CONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH23CONSUMPTIONDELIVERED,
+                        "Previous Month 23 Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH25CONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH25CONSUMPTIONDELIVERED,
+                        "Previous Month 25 Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH1CONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH1CONSUMPTIONRECEIVED, "Previous Month 1 Consumption Received",
+                        ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH3CONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH3CONSUMPTIONRECEIVED, "Previous Month 3 Consumption Received",
+                        ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH5CONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH5CONSUMPTIONRECEIVED, "Previous Month 5 Consumption Received",
+                        ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH7CONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH7CONSUMPTIONRECEIVED, "Previous Month 7 Consumption Received",
+                        ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH9CONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH9CONSUMPTIONRECEIVED, "Previous Month 9 Consumption Received",
+                        ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH11CONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH11CONSUMPTIONRECEIVED,
+                        "Previous Month 11 Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH13CONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH13CONSUMPTIONRECEIVED,
+                        "Previous Month 13 Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH15CONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH15CONSUMPTIONRECEIVED,
+                        "Previous Month 15 Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH17CONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH17CONSUMPTIONRECEIVED,
+                        "Previous Month 17 Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH19CONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH19CONSUMPTIONRECEIVED,
+                        "Previous Month 19 Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH21CONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH21CONSUMPTIONRECEIVED,
+                        "Previous Month 21 Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH23CONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH23CONSUMPTIONRECEIVED,
+                        "Previous Month 23 Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH25CONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH25CONSUMPTIONRECEIVED,
+                        "Previous Month 25 Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_HISTORICALFREEZETIME, new ZclAttribute(this, ATTR_HISTORICALFREEZETIME,
+                "Historical Freeze Time", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_MAXNUMBEROFPERIODSDELIVERED, new ZclAttribute(this, ATTR_MAXNUMBEROFPERIODSDELIVERED,
+                "Max Number Of Periods Delivered", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTDEMANDDELIVERED, new ZclAttribute(this, ATTR_CURRENTDEMANDDELIVERED,
+                "Current Demand Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_DEMANDLIMIT, new ZclAttribute(this, ATTR_DEMANDLIMIT, "Demand Limit",
+                ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_DEMANDINTEGRATIONPERIOD, new ZclAttribute(this, ATTR_DEMANDINTEGRATIONPERIOD,
+                "Demand Integration Period", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_NUMBEROFDEMANDSUBINTERVALS, new ZclAttribute(this, ATTR_NUMBEROFDEMANDSUBINTERVALS,
+                "Number Of Demand Subintervals", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_DEMANDLIMITARMDURATION, new ZclAttribute(this, ATTR_DEMANDLIMITARMDURATION,
+                "Demand Limit Arm Duration", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_LOADLIMITSUPPLYSTATE, new ZclAttribute(this, ATTR_LOADLIMITSUPPLYSTATE,
+                "Load Limit Supply State", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_LOADLIMITCOUNTER, new ZclAttribute(this, ATTR_LOADLIMITCOUNTER, "Load Limit Counter",
+                ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_SUPPLYTAMPERSTATE, new ZclAttribute(this, ATTR_SUPPLYTAMPERSTATE, "Supply Tamper State",
+                ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_SUPPLYDEPLETIONSTATE, new ZclAttribute(this, ATTR_SUPPLYDEPLETIONSTATE,
+                "Supply Depletion State", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_SUPPLYUNCONTROLLEDFLOWSTATE, new ZclAttribute(this, ATTR_SUPPLYUNCONTROLLEDFLOWSTATE,
+                "Supply Uncontrolled Flow State", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK1SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK1SUMMATIONDELIVERED,
+                        "Current No Tier Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK2SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK2SUMMATIONDELIVERED,
+                        "Current No Tier Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK3SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK3SUMMATIONDELIVERED,
+                        "Current No Tier Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK4SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK4SUMMATIONDELIVERED,
+                        "Current No Tier Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK5SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK5SUMMATIONDELIVERED,
+                        "Current No Tier Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK6SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK6SUMMATIONDELIVERED,
+                        "Current No Tier Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK7SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK7SUMMATIONDELIVERED,
+                        "Current No Tier Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK8SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK8SUMMATIONDELIVERED,
+                        "Current No Tier Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK9SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK9SUMMATIONDELIVERED,
+                        "Current No Tier Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK10SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK10SUMMATIONDELIVERED,
+                        "Current No Tier Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK11SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK11SUMMATIONDELIVERED,
+                        "Current No Tier Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK12SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK12SUMMATIONDELIVERED,
+                        "Current No Tier Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK13SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK13SUMMATIONDELIVERED,
+                        "Current No Tier Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK14SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK14SUMMATIONDELIVERED,
+                        "Current No Tier Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK15SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK15SUMMATIONDELIVERED,
+                        "Current No Tier Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK16SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK16SUMMATIONDELIVERED,
+                        "Current No Tier Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK1SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK1SUMMATIONDELIVERED,
+                        "Current Tier 1 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK2SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK2SUMMATIONDELIVERED,
+                        "Current Tier 1 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK3SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK3SUMMATIONDELIVERED,
+                        "Current Tier 1 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK4SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK4SUMMATIONDELIVERED,
+                        "Current Tier 1 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK5SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK5SUMMATIONDELIVERED,
+                        "Current Tier 1 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK6SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK6SUMMATIONDELIVERED,
+                        "Current Tier 1 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK7SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK7SUMMATIONDELIVERED,
+                        "Current Tier 1 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK8SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK8SUMMATIONDELIVERED,
+                        "Current Tier 1 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK9SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK9SUMMATIONDELIVERED,
+                        "Current Tier 1 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK10SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK10SUMMATIONDELIVERED,
+                        "Current Tier 1 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK11SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK11SUMMATIONDELIVERED,
+                        "Current Tier 1 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK12SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK12SUMMATIONDELIVERED,
+                        "Current Tier 1 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK13SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK13SUMMATIONDELIVERED,
+                        "Current Tier 1 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK14SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK14SUMMATIONDELIVERED,
+                        "Current Tier 1 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK15SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK15SUMMATIONDELIVERED,
+                        "Current Tier 1 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK16SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK16SUMMATIONDELIVERED,
+                        "Current Tier 1 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK1SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK1SUMMATIONDELIVERED,
+                        "Current Tier 2 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK2SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK2SUMMATIONDELIVERED,
+                        "Current Tier 2 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK3SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK3SUMMATIONDELIVERED,
+                        "Current Tier 2 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK4SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK4SUMMATIONDELIVERED,
+                        "Current Tier 2 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK5SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK5SUMMATIONDELIVERED,
+                        "Current Tier 2 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK6SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK6SUMMATIONDELIVERED,
+                        "Current Tier 2 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK7SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK7SUMMATIONDELIVERED,
+                        "Current Tier 2 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK8SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK8SUMMATIONDELIVERED,
+                        "Current Tier 2 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK9SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK9SUMMATIONDELIVERED,
+                        "Current Tier 2 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK10SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK10SUMMATIONDELIVERED,
+                        "Current Tier 2 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK11SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK11SUMMATIONDELIVERED,
+                        "Current Tier 2 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK12SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK12SUMMATIONDELIVERED,
+                        "Current Tier 2 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK13SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK13SUMMATIONDELIVERED,
+                        "Current Tier 2 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK14SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK14SUMMATIONDELIVERED,
+                        "Current Tier 2 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK15SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK15SUMMATIONDELIVERED,
+                        "Current Tier 2 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK16SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK16SUMMATIONDELIVERED,
+                        "Current Tier 2 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK1SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK1SUMMATIONDELIVERED,
+                        "Current Tier 3 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK2SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK2SUMMATIONDELIVERED,
+                        "Current Tier 3 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK3SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK3SUMMATIONDELIVERED,
+                        "Current Tier 3 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK4SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK4SUMMATIONDELIVERED,
+                        "Current Tier 3 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK5SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK5SUMMATIONDELIVERED,
+                        "Current Tier 3 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK6SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK6SUMMATIONDELIVERED,
+                        "Current Tier 3 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK7SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK7SUMMATIONDELIVERED,
+                        "Current Tier 3 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK8SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK8SUMMATIONDELIVERED,
+                        "Current Tier 3 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK9SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK9SUMMATIONDELIVERED,
+                        "Current Tier 3 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK10SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK10SUMMATIONDELIVERED,
+                        "Current Tier 3 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK11SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK11SUMMATIONDELIVERED,
+                        "Current Tier 3 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK12SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK12SUMMATIONDELIVERED,
+                        "Current Tier 3 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK13SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK13SUMMATIONDELIVERED,
+                        "Current Tier 3 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK14SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK14SUMMATIONDELIVERED,
+                        "Current Tier 3 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK15SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK15SUMMATIONDELIVERED,
+                        "Current Tier 3 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK16SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK16SUMMATIONDELIVERED,
+                        "Current Tier 3 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK1SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK1SUMMATIONDELIVERED,
+                        "Current Tier 4 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK2SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK2SUMMATIONDELIVERED,
+                        "Current Tier 4 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK3SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK3SUMMATIONDELIVERED,
+                        "Current Tier 4 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK4SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK4SUMMATIONDELIVERED,
+                        "Current Tier 4 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK5SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK5SUMMATIONDELIVERED,
+                        "Current Tier 4 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK6SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK6SUMMATIONDELIVERED,
+                        "Current Tier 4 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK7SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK7SUMMATIONDELIVERED,
+                        "Current Tier 4 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK8SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK8SUMMATIONDELIVERED,
+                        "Current Tier 4 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK9SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK9SUMMATIONDELIVERED,
+                        "Current Tier 4 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK10SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK10SUMMATIONDELIVERED,
+                        "Current Tier 4 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK11SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK11SUMMATIONDELIVERED,
+                        "Current Tier 4 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK12SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK12SUMMATIONDELIVERED,
+                        "Current Tier 4 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK13SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK13SUMMATIONDELIVERED,
+                        "Current Tier 4 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK14SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK14SUMMATIONDELIVERED,
+                        "Current Tier 4 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK15SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK15SUMMATIONDELIVERED,
+                        "Current Tier 4 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK16SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK16SUMMATIONDELIVERED,
+                        "Current Tier 4 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK1SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK1SUMMATIONDELIVERED,
+                        "Current Tier 5 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK2SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK2SUMMATIONDELIVERED,
+                        "Current Tier 5 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK3SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK3SUMMATIONDELIVERED,
+                        "Current Tier 5 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK4SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK4SUMMATIONDELIVERED,
+                        "Current Tier 5 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK5SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK5SUMMATIONDELIVERED,
+                        "Current Tier 5 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK6SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK6SUMMATIONDELIVERED,
+                        "Current Tier 5 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK7SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK7SUMMATIONDELIVERED,
+                        "Current Tier 5 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK8SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK8SUMMATIONDELIVERED,
+                        "Current Tier 5 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK9SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK9SUMMATIONDELIVERED,
+                        "Current Tier 5 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK10SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK10SUMMATIONDELIVERED,
+                        "Current Tier 5 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK11SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK11SUMMATIONDELIVERED,
+                        "Current Tier 5 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK12SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK12SUMMATIONDELIVERED,
+                        "Current Tier 5 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK13SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK13SUMMATIONDELIVERED,
+                        "Current Tier 5 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK14SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK14SUMMATIONDELIVERED,
+                        "Current Tier 5 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK15SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK15SUMMATIONDELIVERED,
+                        "Current Tier 5 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK16SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK16SUMMATIONDELIVERED,
+                        "Current Tier 5 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK1SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK1SUMMATIONDELIVERED,
+                        "Current Tier 6 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK2SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK2SUMMATIONDELIVERED,
+                        "Current Tier 6 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK3SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK3SUMMATIONDELIVERED,
+                        "Current Tier 6 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK4SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK4SUMMATIONDELIVERED,
+                        "Current Tier 6 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK5SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK5SUMMATIONDELIVERED,
+                        "Current Tier 6 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK6SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK6SUMMATIONDELIVERED,
+                        "Current Tier 6 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK7SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK7SUMMATIONDELIVERED,
+                        "Current Tier 6 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK8SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK8SUMMATIONDELIVERED,
+                        "Current Tier 6 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK9SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK9SUMMATIONDELIVERED,
+                        "Current Tier 6 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK10SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK10SUMMATIONDELIVERED,
+                        "Current Tier 6 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK11SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK11SUMMATIONDELIVERED,
+                        "Current Tier 6 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK12SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK12SUMMATIONDELIVERED,
+                        "Current Tier 6 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK13SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK13SUMMATIONDELIVERED,
+                        "Current Tier 6 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK14SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK14SUMMATIONDELIVERED,
+                        "Current Tier 6 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK15SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK15SUMMATIONDELIVERED,
+                        "Current Tier 6 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK16SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK16SUMMATIONDELIVERED,
+                        "Current Tier 6 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK1SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK1SUMMATIONDELIVERED,
+                        "Current Tier 7 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK2SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK2SUMMATIONDELIVERED,
+                        "Current Tier 7 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK3SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK3SUMMATIONDELIVERED,
+                        "Current Tier 7 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK4SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK4SUMMATIONDELIVERED,
+                        "Current Tier 7 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK5SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK5SUMMATIONDELIVERED,
+                        "Current Tier 7 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK6SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK6SUMMATIONDELIVERED,
+                        "Current Tier 7 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK7SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK7SUMMATIONDELIVERED,
+                        "Current Tier 7 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK8SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK8SUMMATIONDELIVERED,
+                        "Current Tier 7 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK9SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK9SUMMATIONDELIVERED,
+                        "Current Tier 7 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK10SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK10SUMMATIONDELIVERED,
+                        "Current Tier 7 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK11SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK11SUMMATIONDELIVERED,
+                        "Current Tier 7 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK12SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK12SUMMATIONDELIVERED,
+                        "Current Tier 7 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK13SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK13SUMMATIONDELIVERED,
+                        "Current Tier 7 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK14SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK14SUMMATIONDELIVERED,
+                        "Current Tier 7 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK15SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK15SUMMATIONDELIVERED,
+                        "Current Tier 7 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK16SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK16SUMMATIONDELIVERED,
+                        "Current Tier 7 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK1SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK1SUMMATIONDELIVERED,
+                        "Current Tier 8 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK2SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK2SUMMATIONDELIVERED,
+                        "Current Tier 8 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK3SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK3SUMMATIONDELIVERED,
+                        "Current Tier 8 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK4SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK4SUMMATIONDELIVERED,
+                        "Current Tier 8 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK5SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK5SUMMATIONDELIVERED,
+                        "Current Tier 8 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK6SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK6SUMMATIONDELIVERED,
+                        "Current Tier 8 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK7SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK7SUMMATIONDELIVERED,
+                        "Current Tier 8 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK8SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK8SUMMATIONDELIVERED,
+                        "Current Tier 8 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK9SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK9SUMMATIONDELIVERED,
+                        "Current Tier 8 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK10SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK10SUMMATIONDELIVERED,
+                        "Current Tier 8 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK11SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK11SUMMATIONDELIVERED,
+                        "Current Tier 8 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK12SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK12SUMMATIONDELIVERED,
+                        "Current Tier 8 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK13SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK13SUMMATIONDELIVERED,
+                        "Current Tier 8 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK14SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK14SUMMATIONDELIVERED,
+                        "Current Tier 8 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK15SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK15SUMMATIONDELIVERED,
+                        "Current Tier 8 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK16SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK16SUMMATIONDELIVERED,
+                        "Current Tier 8 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK1SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK1SUMMATIONDELIVERED,
+                        "Current Tier 9 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK2SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK2SUMMATIONDELIVERED,
+                        "Current Tier 9 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK3SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK3SUMMATIONDELIVERED,
+                        "Current Tier 9 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK4SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK4SUMMATIONDELIVERED,
+                        "Current Tier 9 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK5SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK5SUMMATIONDELIVERED,
+                        "Current Tier 9 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK6SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK6SUMMATIONDELIVERED,
+                        "Current Tier 9 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK7SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK7SUMMATIONDELIVERED,
+                        "Current Tier 9 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK8SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK8SUMMATIONDELIVERED,
+                        "Current Tier 9 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK9SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK9SUMMATIONDELIVERED,
+                        "Current Tier 9 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK10SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK10SUMMATIONDELIVERED,
+                        "Current Tier 9 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK11SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK11SUMMATIONDELIVERED,
+                        "Current Tier 9 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK12SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK12SUMMATIONDELIVERED,
+                        "Current Tier 9 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK13SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK13SUMMATIONDELIVERED,
+                        "Current Tier 9 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK14SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK14SUMMATIONDELIVERED,
+                        "Current Tier 9 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK15SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK15SUMMATIONDELIVERED,
+                        "Current Tier 9 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK16SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK16SUMMATIONDELIVERED,
+                        "Current Tier 9 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK1SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK1SUMMATIONDELIVERED,
+                        "Current Tier 10 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK2SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK2SUMMATIONDELIVERED,
+                        "Current Tier 10 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK3SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK3SUMMATIONDELIVERED,
+                        "Current Tier 10 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK4SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK4SUMMATIONDELIVERED,
+                        "Current Tier 10 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK5SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK5SUMMATIONDELIVERED,
+                        "Current Tier 10 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK6SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK6SUMMATIONDELIVERED,
+                        "Current Tier 10 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK7SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK7SUMMATIONDELIVERED,
+                        "Current Tier 10 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK8SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK8SUMMATIONDELIVERED,
+                        "Current Tier 10 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK9SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK9SUMMATIONDELIVERED,
+                        "Current Tier 10 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK10SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK10SUMMATIONDELIVERED,
+                        "Current Tier 10 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK11SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK11SUMMATIONDELIVERED,
+                        "Current Tier 10 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK12SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK12SUMMATIONDELIVERED,
+                        "Current Tier 10 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK13SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK13SUMMATIONDELIVERED,
+                        "Current Tier 10 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK14SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK14SUMMATIONDELIVERED,
+                        "Current Tier 10 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK15SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK15SUMMATIONDELIVERED,
+                        "Current Tier 10 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK16SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK16SUMMATIONDELIVERED,
+                        "Current Tier 10 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK1SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK1SUMMATIONDELIVERED,
+                        "Current Tier 11 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK2SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK2SUMMATIONDELIVERED,
+                        "Current Tier 11 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK3SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK3SUMMATIONDELIVERED,
+                        "Current Tier 11 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK4SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK4SUMMATIONDELIVERED,
+                        "Current Tier 11 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK5SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK5SUMMATIONDELIVERED,
+                        "Current Tier 11 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK6SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK6SUMMATIONDELIVERED,
+                        "Current Tier 11 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK7SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK7SUMMATIONDELIVERED,
+                        "Current Tier 11 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK8SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK8SUMMATIONDELIVERED,
+                        "Current Tier 11 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK9SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK9SUMMATIONDELIVERED,
+                        "Current Tier 11 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK10SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK10SUMMATIONDELIVERED,
+                        "Current Tier 11 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK11SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK11SUMMATIONDELIVERED,
+                        "Current Tier 11 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK12SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK12SUMMATIONDELIVERED,
+                        "Current Tier 11 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK13SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK13SUMMATIONDELIVERED,
+                        "Current Tier 11 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK14SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK14SUMMATIONDELIVERED,
+                        "Current Tier 11 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK15SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK15SUMMATIONDELIVERED,
+                        "Current Tier 11 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK16SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK16SUMMATIONDELIVERED,
+                        "Current Tier 11 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK1SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK1SUMMATIONDELIVERED,
+                        "Current Tier 12 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK2SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK2SUMMATIONDELIVERED,
+                        "Current Tier 12 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK3SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK3SUMMATIONDELIVERED,
+                        "Current Tier 12 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK4SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK4SUMMATIONDELIVERED,
+                        "Current Tier 12 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK5SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK5SUMMATIONDELIVERED,
+                        "Current Tier 12 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK6SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK6SUMMATIONDELIVERED,
+                        "Current Tier 12 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK7SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK7SUMMATIONDELIVERED,
+                        "Current Tier 12 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK8SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK8SUMMATIONDELIVERED,
+                        "Current Tier 12 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK9SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK9SUMMATIONDELIVERED,
+                        "Current Tier 12 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK10SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK10SUMMATIONDELIVERED,
+                        "Current Tier 12 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK11SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK11SUMMATIONDELIVERED,
+                        "Current Tier 12 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK12SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK12SUMMATIONDELIVERED,
+                        "Current Tier 12 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK13SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK13SUMMATIONDELIVERED,
+                        "Current Tier 12 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK14SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK14SUMMATIONDELIVERED,
+                        "Current Tier 12 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK15SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK15SUMMATIONDELIVERED,
+                        "Current Tier 12 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK16SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK16SUMMATIONDELIVERED,
+                        "Current Tier 12 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK1SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK1SUMMATIONDELIVERED,
+                        "Current Tier 13 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK2SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK2SUMMATIONDELIVERED,
+                        "Current Tier 13 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK3SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK3SUMMATIONDELIVERED,
+                        "Current Tier 13 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK4SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK4SUMMATIONDELIVERED,
+                        "Current Tier 13 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK5SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK5SUMMATIONDELIVERED,
+                        "Current Tier 13 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK6SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK6SUMMATIONDELIVERED,
+                        "Current Tier 13 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK7SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK7SUMMATIONDELIVERED,
+                        "Current Tier 13 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK8SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK8SUMMATIONDELIVERED,
+                        "Current Tier 13 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK9SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK9SUMMATIONDELIVERED,
+                        "Current Tier 13 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK10SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK10SUMMATIONDELIVERED,
+                        "Current Tier 13 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK11SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK11SUMMATIONDELIVERED,
+                        "Current Tier 13 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK12SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK12SUMMATIONDELIVERED,
+                        "Current Tier 13 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK13SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK13SUMMATIONDELIVERED,
+                        "Current Tier 13 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK14SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK14SUMMATIONDELIVERED,
+                        "Current Tier 13 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK15SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK15SUMMATIONDELIVERED,
+                        "Current Tier 13 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK16SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK16SUMMATIONDELIVERED,
+                        "Current Tier 13 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK1SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK1SUMMATIONDELIVERED,
+                        "Current Tier 14 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK2SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK2SUMMATIONDELIVERED,
+                        "Current Tier 14 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK3SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK3SUMMATIONDELIVERED,
+                        "Current Tier 14 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK4SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK4SUMMATIONDELIVERED,
+                        "Current Tier 14 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK5SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK5SUMMATIONDELIVERED,
+                        "Current Tier 14 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK6SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK6SUMMATIONDELIVERED,
+                        "Current Tier 14 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK7SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK7SUMMATIONDELIVERED,
+                        "Current Tier 14 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK8SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK8SUMMATIONDELIVERED,
+                        "Current Tier 14 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK9SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK9SUMMATIONDELIVERED,
+                        "Current Tier 14 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK10SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK10SUMMATIONDELIVERED,
+                        "Current Tier 14 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK11SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK11SUMMATIONDELIVERED,
+                        "Current Tier 14 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK12SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK12SUMMATIONDELIVERED,
+                        "Current Tier 14 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK13SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK13SUMMATIONDELIVERED,
+                        "Current Tier 14 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK14SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK14SUMMATIONDELIVERED,
+                        "Current Tier 14 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK15SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK15SUMMATIONDELIVERED,
+                        "Current Tier 14 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK16SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK16SUMMATIONDELIVERED,
+                        "Current Tier 14 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK1SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK1SUMMATIONDELIVERED,
+                        "Current Tier 15 Block 1 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK2SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK2SUMMATIONDELIVERED,
+                        "Current Tier 15 Block 2 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK3SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK3SUMMATIONDELIVERED,
+                        "Current Tier 15 Block 3 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK4SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK4SUMMATIONDELIVERED,
+                        "Current Tier 15 Block 4 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK5SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK5SUMMATIONDELIVERED,
+                        "Current Tier 15 Block 5 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK6SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK6SUMMATIONDELIVERED,
+                        "Current Tier 15 Block 6 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK7SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK7SUMMATIONDELIVERED,
+                        "Current Tier 15 Block 7 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK8SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK8SUMMATIONDELIVERED,
+                        "Current Tier 15 Block 8 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK9SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK9SUMMATIONDELIVERED,
+                        "Current Tier 15 Block 9 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK10SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK10SUMMATIONDELIVERED,
+                        "Current Tier 15 Block 10 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK11SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK11SUMMATIONDELIVERED,
+                        "Current Tier 15 Block 11 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK12SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK12SUMMATIONDELIVERED,
+                        "Current Tier 15 Block 12 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK13SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK13SUMMATIONDELIVERED,
+                        "Current Tier 15 Block 13 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK14SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK14SUMMATIONDELIVERED,
+                        "Current Tier 15 Block 14 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK15SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK15SUMMATIONDELIVERED,
+                        "Current Tier 15 Block 15 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK16SUMMATIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK16SUMMATIONDELIVERED,
+                        "Current Tier 15 Block 16 Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_GENERICALARMMASK, new ZclAttribute(this, ATTR_GENERICALARMMASK, "Generic Alarm Mask",
+                ZclDataType.BITMAP_16_BIT, false, true, true, true));
+        attributeMap.put(ATTR_ELECTRICITYALARMMASK, new ZclAttribute(this, ATTR_ELECTRICITYALARMMASK,
+                "Electricity Alarm Mask", ZclDataType.BITMAP_32_BIT, false, true, true, true));
+        attributeMap.put(ATTR_GENERICFLOWPRESSUREALARMMASK, new ZclAttribute(this, ATTR_GENERICFLOWPRESSUREALARMMASK,
+                "Generic Flow /pressure Alarm Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
+        attributeMap.put(ATTR_WATERSPECIFICALARMMASK, new ZclAttribute(this, ATTR_WATERSPECIFICALARMMASK,
+                "Water Specific Alarm Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
+        attributeMap.put(ATTR_HEATANDCOOLINGSPECIFICALARMMASK,
+                new ZclAttribute(this, ATTR_HEATANDCOOLINGSPECIFICALARMMASK, "Heat And Cooling Specific Alarm Mask",
+                        ZclDataType.BITMAP_16_BIT, false, true, true, true));
+        attributeMap.put(ATTR_GASSPECIFICALARMMASK, new ZclAttribute(this, ATTR_GASSPECIFICALARMMASK,
+                "Gas Specific Alarm Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
+        attributeMap.put(ATTR_EXTENDEDGENERICALARMMASK, new ZclAttribute(this, ATTR_EXTENDEDGENERICALARMMASK,
+                "Extended Generic Alarm Mask", ZclDataType.BITMAP_48_BIT, false, true, true, true));
+        attributeMap.put(ATTR_MANUFACTUREALARMMASK, new ZclAttribute(this, ATTR_MANUFACTUREALARMMASK,
+                "Manufacture Alarm Mask", ZclDataType.BITMAP_16_BIT, false, true, true, true));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK1SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK1SUMMATIONRECEIVED,
+                        "Current No Tier Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK2SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK2SUMMATIONRECEIVED,
+                        "Current No Tier Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK3SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK3SUMMATIONRECEIVED,
+                        "Current No Tier Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK4SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK4SUMMATIONRECEIVED,
+                        "Current No Tier Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK5SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK5SUMMATIONRECEIVED,
+                        "Current No Tier Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK6SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK6SUMMATIONRECEIVED,
+                        "Current No Tier Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK7SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK7SUMMATIONRECEIVED,
+                        "Current No Tier Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK8SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK8SUMMATIONRECEIVED,
+                        "Current No Tier Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK9SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK9SUMMATIONRECEIVED,
+                        "Current No Tier Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK10SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK10SUMMATIONRECEIVED,
+                        "Current No Tier Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK11SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK11SUMMATIONRECEIVED,
+                        "Current No Tier Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK12SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK12SUMMATIONRECEIVED,
+                        "Current No Tier Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK13SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK13SUMMATIONRECEIVED,
+                        "Current No Tier Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK14SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK14SUMMATIONRECEIVED,
+                        "Current No Tier Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK15SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK15SUMMATIONRECEIVED,
+                        "Current No Tier Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTNOTIERBLOCK16SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTNOTIERBLOCK16SUMMATIONRECEIVED,
+                        "Current No Tier Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK1SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK1SUMMATIONRECEIVED,
+                        "Current Tier 1 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK2SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK2SUMMATIONRECEIVED,
+                        "Current Tier 1 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK3SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK3SUMMATIONRECEIVED,
+                        "Current Tier 1 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK4SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK4SUMMATIONRECEIVED,
+                        "Current Tier 1 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK5SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK5SUMMATIONRECEIVED,
+                        "Current Tier 1 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK6SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK6SUMMATIONRECEIVED,
+                        "Current Tier 1 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK7SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK7SUMMATIONRECEIVED,
+                        "Current Tier 1 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK8SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK8SUMMATIONRECEIVED,
+                        "Current Tier 1 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK9SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK9SUMMATIONRECEIVED,
+                        "Current Tier 1 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK10SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK10SUMMATIONRECEIVED,
+                        "Current Tier 1 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK11SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK11SUMMATIONRECEIVED,
+                        "Current Tier 1 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK12SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK12SUMMATIONRECEIVED,
+                        "Current Tier 1 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK13SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK13SUMMATIONRECEIVED,
+                        "Current Tier 1 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK14SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK14SUMMATIONRECEIVED,
+                        "Current Tier 1 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK15SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK15SUMMATIONRECEIVED,
+                        "Current Tier 1 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER1BLOCK16SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER1BLOCK16SUMMATIONRECEIVED,
+                        "Current Tier 1 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK1SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK1SUMMATIONRECEIVED,
+                        "Current Tier 2 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK2SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK2SUMMATIONRECEIVED,
+                        "Current Tier 2 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK3SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK3SUMMATIONRECEIVED,
+                        "Current Tier 2 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK4SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK4SUMMATIONRECEIVED,
+                        "Current Tier 2 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK5SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK5SUMMATIONRECEIVED,
+                        "Current Tier 2 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK6SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK6SUMMATIONRECEIVED,
+                        "Current Tier 2 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK7SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK7SUMMATIONRECEIVED,
+                        "Current Tier 2 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK8SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK8SUMMATIONRECEIVED,
+                        "Current Tier 2 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK9SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK9SUMMATIONRECEIVED,
+                        "Current Tier 2 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK10SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK10SUMMATIONRECEIVED,
+                        "Current Tier 2 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK11SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK11SUMMATIONRECEIVED,
+                        "Current Tier 2 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK12SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK12SUMMATIONRECEIVED,
+                        "Current Tier 2 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK13SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK13SUMMATIONRECEIVED,
+                        "Current Tier 2 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK14SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK14SUMMATIONRECEIVED,
+                        "Current Tier 2 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK15SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK15SUMMATIONRECEIVED,
+                        "Current Tier 2 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER2BLOCK16SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER2BLOCK16SUMMATIONRECEIVED,
+                        "Current Tier 2 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK1SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK1SUMMATIONRECEIVED,
+                        "Current Tier 3 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK2SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK2SUMMATIONRECEIVED,
+                        "Current Tier 3 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK3SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK3SUMMATIONRECEIVED,
+                        "Current Tier 3 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK4SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK4SUMMATIONRECEIVED,
+                        "Current Tier 3 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK5SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK5SUMMATIONRECEIVED,
+                        "Current Tier 3 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK6SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK6SUMMATIONRECEIVED,
+                        "Current Tier 3 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK7SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK7SUMMATIONRECEIVED,
+                        "Current Tier 3 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK8SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK8SUMMATIONRECEIVED,
+                        "Current Tier 3 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK9SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK9SUMMATIONRECEIVED,
+                        "Current Tier 3 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK10SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK10SUMMATIONRECEIVED,
+                        "Current Tier 3 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK11SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK11SUMMATIONRECEIVED,
+                        "Current Tier 3 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK12SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK12SUMMATIONRECEIVED,
+                        "Current Tier 3 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK13SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK13SUMMATIONRECEIVED,
+                        "Current Tier 3 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK14SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK14SUMMATIONRECEIVED,
+                        "Current Tier 3 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK15SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK15SUMMATIONRECEIVED,
+                        "Current Tier 3 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER3BLOCK16SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER3BLOCK16SUMMATIONRECEIVED,
+                        "Current Tier 3 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK1SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK1SUMMATIONRECEIVED,
+                        "Current Tier 4 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK2SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK2SUMMATIONRECEIVED,
+                        "Current Tier 4 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK3SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK3SUMMATIONRECEIVED,
+                        "Current Tier 4 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK4SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK4SUMMATIONRECEIVED,
+                        "Current Tier 4 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK5SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK5SUMMATIONRECEIVED,
+                        "Current Tier 4 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK6SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK6SUMMATIONRECEIVED,
+                        "Current Tier 4 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK7SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK7SUMMATIONRECEIVED,
+                        "Current Tier 4 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK8SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK8SUMMATIONRECEIVED,
+                        "Current Tier 4 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK9SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK9SUMMATIONRECEIVED,
+                        "Current Tier 4 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK10SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK10SUMMATIONRECEIVED,
+                        "Current Tier 4 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK11SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK11SUMMATIONRECEIVED,
+                        "Current Tier 4 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK12SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK12SUMMATIONRECEIVED,
+                        "Current Tier 4 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK13SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK13SUMMATIONRECEIVED,
+                        "Current Tier 4 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK14SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK14SUMMATIONRECEIVED,
+                        "Current Tier 4 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK15SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK15SUMMATIONRECEIVED,
+                        "Current Tier 4 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER4BLOCK16SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER4BLOCK16SUMMATIONRECEIVED,
+                        "Current Tier 4 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK1SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK1SUMMATIONRECEIVED,
+                        "Current Tier 5 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK2SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK2SUMMATIONRECEIVED,
+                        "Current Tier 5 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK3SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK3SUMMATIONRECEIVED,
+                        "Current Tier 5 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK4SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK4SUMMATIONRECEIVED,
+                        "Current Tier 5 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK5SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK5SUMMATIONRECEIVED,
+                        "Current Tier 5 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK6SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK6SUMMATIONRECEIVED,
+                        "Current Tier 5 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK7SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK7SUMMATIONRECEIVED,
+                        "Current Tier 5 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK8SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK8SUMMATIONRECEIVED,
+                        "Current Tier 5 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK9SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK9SUMMATIONRECEIVED,
+                        "Current Tier 5 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK10SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK10SUMMATIONRECEIVED,
+                        "Current Tier 5 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK11SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK11SUMMATIONRECEIVED,
+                        "Current Tier 5 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK12SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK12SUMMATIONRECEIVED,
+                        "Current Tier 5 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK13SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK13SUMMATIONRECEIVED,
+                        "Current Tier 5 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK14SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK14SUMMATIONRECEIVED,
+                        "Current Tier 5 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK15SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK15SUMMATIONRECEIVED,
+                        "Current Tier 5 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER5BLOCK16SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER5BLOCK16SUMMATIONRECEIVED,
+                        "Current Tier 5 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK1SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK1SUMMATIONRECEIVED,
+                        "Current Tier 6 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK2SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK2SUMMATIONRECEIVED,
+                        "Current Tier 6 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK3SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK3SUMMATIONRECEIVED,
+                        "Current Tier 6 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK4SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK4SUMMATIONRECEIVED,
+                        "Current Tier 6 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK5SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK5SUMMATIONRECEIVED,
+                        "Current Tier 6 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK6SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK6SUMMATIONRECEIVED,
+                        "Current Tier 6 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK7SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK7SUMMATIONRECEIVED,
+                        "Current Tier 6 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK8SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK8SUMMATIONRECEIVED,
+                        "Current Tier 6 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK9SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK9SUMMATIONRECEIVED,
+                        "Current Tier 6 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK10SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK10SUMMATIONRECEIVED,
+                        "Current Tier 6 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK11SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK11SUMMATIONRECEIVED,
+                        "Current Tier 6 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK12SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK12SUMMATIONRECEIVED,
+                        "Current Tier 6 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK13SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK13SUMMATIONRECEIVED,
+                        "Current Tier 6 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK14SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK14SUMMATIONRECEIVED,
+                        "Current Tier 6 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK15SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK15SUMMATIONRECEIVED,
+                        "Current Tier 6 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER6BLOCK16SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER6BLOCK16SUMMATIONRECEIVED,
+                        "Current Tier 6 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK1SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK1SUMMATIONRECEIVED,
+                        "Current Tier 7 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK2SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK2SUMMATIONRECEIVED,
+                        "Current Tier 7 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK3SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK3SUMMATIONRECEIVED,
+                        "Current Tier 7 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK4SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK4SUMMATIONRECEIVED,
+                        "Current Tier 7 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK5SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK5SUMMATIONRECEIVED,
+                        "Current Tier 7 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK6SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK6SUMMATIONRECEIVED,
+                        "Current Tier 7 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK7SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK7SUMMATIONRECEIVED,
+                        "Current Tier 7 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK8SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK8SUMMATIONRECEIVED,
+                        "Current Tier 7 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK9SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK9SUMMATIONRECEIVED,
+                        "Current Tier 7 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK10SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK10SUMMATIONRECEIVED,
+                        "Current Tier 7 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK11SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK11SUMMATIONRECEIVED,
+                        "Current Tier 7 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK12SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK12SUMMATIONRECEIVED,
+                        "Current Tier 7 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK13SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK13SUMMATIONRECEIVED,
+                        "Current Tier 7 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK14SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK14SUMMATIONRECEIVED,
+                        "Current Tier 7 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK15SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK15SUMMATIONRECEIVED,
+                        "Current Tier 7 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER7BLOCK16SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER7BLOCK16SUMMATIONRECEIVED,
+                        "Current Tier 7 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK1SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK1SUMMATIONRECEIVED,
+                        "Current Tier 8 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK2SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK2SUMMATIONRECEIVED,
+                        "Current Tier 8 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK3SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK3SUMMATIONRECEIVED,
+                        "Current Tier 8 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK4SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK4SUMMATIONRECEIVED,
+                        "Current Tier 8 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK5SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK5SUMMATIONRECEIVED,
+                        "Current Tier 8 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK6SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK6SUMMATIONRECEIVED,
+                        "Current Tier 8 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK7SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK7SUMMATIONRECEIVED,
+                        "Current Tier 8 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK8SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK8SUMMATIONRECEIVED,
+                        "Current Tier 8 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK9SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK9SUMMATIONRECEIVED,
+                        "Current Tier 8 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK10SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK10SUMMATIONRECEIVED,
+                        "Current Tier 8 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK11SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK11SUMMATIONRECEIVED,
+                        "Current Tier 8 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK12SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK12SUMMATIONRECEIVED,
+                        "Current Tier 8 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK13SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK13SUMMATIONRECEIVED,
+                        "Current Tier 8 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK14SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK14SUMMATIONRECEIVED,
+                        "Current Tier 8 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK15SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK15SUMMATIONRECEIVED,
+                        "Current Tier 8 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER8BLOCK16SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER8BLOCK16SUMMATIONRECEIVED,
+                        "Current Tier 8 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK1SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK1SUMMATIONRECEIVED,
+                        "Current Tier 9 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK2SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK2SUMMATIONRECEIVED,
+                        "Current Tier 9 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK3SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK3SUMMATIONRECEIVED,
+                        "Current Tier 9 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK4SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK4SUMMATIONRECEIVED,
+                        "Current Tier 9 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK5SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK5SUMMATIONRECEIVED,
+                        "Current Tier 9 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK6SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK6SUMMATIONRECEIVED,
+                        "Current Tier 9 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK7SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK7SUMMATIONRECEIVED,
+                        "Current Tier 9 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK8SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK8SUMMATIONRECEIVED,
+                        "Current Tier 9 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK9SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK9SUMMATIONRECEIVED,
+                        "Current Tier 9 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK10SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK10SUMMATIONRECEIVED,
+                        "Current Tier 9 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK11SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK11SUMMATIONRECEIVED,
+                        "Current Tier 9 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK12SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK12SUMMATIONRECEIVED,
+                        "Current Tier 9 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK13SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK13SUMMATIONRECEIVED,
+                        "Current Tier 9 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK14SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK14SUMMATIONRECEIVED,
+                        "Current Tier 9 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK15SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK15SUMMATIONRECEIVED,
+                        "Current Tier 9 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER9BLOCK16SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER9BLOCK16SUMMATIONRECEIVED,
+                        "Current Tier 9 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK1SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK1SUMMATIONRECEIVED,
+                        "Current Tier 10 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK2SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK2SUMMATIONRECEIVED,
+                        "Current Tier 10 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK3SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK3SUMMATIONRECEIVED,
+                        "Current Tier 10 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK4SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK4SUMMATIONRECEIVED,
+                        "Current Tier 10 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK5SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK5SUMMATIONRECEIVED,
+                        "Current Tier 10 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK6SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK6SUMMATIONRECEIVED,
+                        "Current Tier 10 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK7SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK7SUMMATIONRECEIVED,
+                        "Current Tier 10 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK8SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK8SUMMATIONRECEIVED,
+                        "Current Tier 10 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK9SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK9SUMMATIONRECEIVED,
+                        "Current Tier 10 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK10SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK10SUMMATIONRECEIVED,
+                        "Current Tier 10 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK11SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK11SUMMATIONRECEIVED,
+                        "Current Tier 10 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK12SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK12SUMMATIONRECEIVED,
+                        "Current Tier 10 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK13SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK13SUMMATIONRECEIVED,
+                        "Current Tier 10 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK14SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK14SUMMATIONRECEIVED,
+                        "Current Tier 10 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK15SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK15SUMMATIONRECEIVED,
+                        "Current Tier 10 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER10BLOCK16SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER10BLOCK16SUMMATIONRECEIVED,
+                        "Current Tier 10 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK1SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK1SUMMATIONRECEIVED,
+                        "Current Tier 11 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK2SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK2SUMMATIONRECEIVED,
+                        "Current Tier 11 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK3SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK3SUMMATIONRECEIVED,
+                        "Current Tier 11 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK4SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK4SUMMATIONRECEIVED,
+                        "Current Tier 11 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK5SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK5SUMMATIONRECEIVED,
+                        "Current Tier 11 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK6SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK6SUMMATIONRECEIVED,
+                        "Current Tier 11 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK7SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK7SUMMATIONRECEIVED,
+                        "Current Tier 11 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK8SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK8SUMMATIONRECEIVED,
+                        "Current Tier 11 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK9SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK9SUMMATIONRECEIVED,
+                        "Current Tier 11 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK10SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK10SUMMATIONRECEIVED,
+                        "Current Tier 11 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK11SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK11SUMMATIONRECEIVED,
+                        "Current Tier 11 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK12SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK12SUMMATIONRECEIVED,
+                        "Current Tier 11 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK13SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK13SUMMATIONRECEIVED,
+                        "Current Tier 11 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK14SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK14SUMMATIONRECEIVED,
+                        "Current Tier 11 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK15SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK15SUMMATIONRECEIVED,
+                        "Current Tier 11 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER11BLOCK16SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER11BLOCK16SUMMATIONRECEIVED,
+                        "Current Tier 11 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK1SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK1SUMMATIONRECEIVED,
+                        "Current Tier 12 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK2SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK2SUMMATIONRECEIVED,
+                        "Current Tier 12 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK3SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK3SUMMATIONRECEIVED,
+                        "Current Tier 12 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK4SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK4SUMMATIONRECEIVED,
+                        "Current Tier 12 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK5SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK5SUMMATIONRECEIVED,
+                        "Current Tier 12 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK6SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK6SUMMATIONRECEIVED,
+                        "Current Tier 12 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK7SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK7SUMMATIONRECEIVED,
+                        "Current Tier 12 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK8SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK8SUMMATIONRECEIVED,
+                        "Current Tier 12 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK9SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK9SUMMATIONRECEIVED,
+                        "Current Tier 12 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK10SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK10SUMMATIONRECEIVED,
+                        "Current Tier 12 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK11SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK11SUMMATIONRECEIVED,
+                        "Current Tier 12 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK12SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK12SUMMATIONRECEIVED,
+                        "Current Tier 12 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK13SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK13SUMMATIONRECEIVED,
+                        "Current Tier 12 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK14SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK14SUMMATIONRECEIVED,
+                        "Current Tier 12 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK15SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK15SUMMATIONRECEIVED,
+                        "Current Tier 12 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER12BLOCK16SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER12BLOCK16SUMMATIONRECEIVED,
+                        "Current Tier 12 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK1SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK1SUMMATIONRECEIVED,
+                        "Current Tier 13 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK2SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK2SUMMATIONRECEIVED,
+                        "Current Tier 13 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK3SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK3SUMMATIONRECEIVED,
+                        "Current Tier 13 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK4SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK4SUMMATIONRECEIVED,
+                        "Current Tier 13 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK5SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK5SUMMATIONRECEIVED,
+                        "Current Tier 13 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK6SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK6SUMMATIONRECEIVED,
+                        "Current Tier 13 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK7SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK7SUMMATIONRECEIVED,
+                        "Current Tier 13 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK8SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK8SUMMATIONRECEIVED,
+                        "Current Tier 13 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK9SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK9SUMMATIONRECEIVED,
+                        "Current Tier 13 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK10SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK10SUMMATIONRECEIVED,
+                        "Current Tier 13 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK11SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK11SUMMATIONRECEIVED,
+                        "Current Tier 13 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK12SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK12SUMMATIONRECEIVED,
+                        "Current Tier 13 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK13SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK13SUMMATIONRECEIVED,
+                        "Current Tier 13 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK14SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK14SUMMATIONRECEIVED,
+                        "Current Tier 13 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK15SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK15SUMMATIONRECEIVED,
+                        "Current Tier 13 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER13BLOCK16SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER13BLOCK16SUMMATIONRECEIVED,
+                        "Current Tier 13 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK1SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK1SUMMATIONRECEIVED,
+                        "Current Tier 14 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK2SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK2SUMMATIONRECEIVED,
+                        "Current Tier 14 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK3SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK3SUMMATIONRECEIVED,
+                        "Current Tier 14 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK4SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK4SUMMATIONRECEIVED,
+                        "Current Tier 14 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK5SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK5SUMMATIONRECEIVED,
+                        "Current Tier 14 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK6SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK6SUMMATIONRECEIVED,
+                        "Current Tier 14 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK7SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK7SUMMATIONRECEIVED,
+                        "Current Tier 14 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK8SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK8SUMMATIONRECEIVED,
+                        "Current Tier 14 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK9SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK9SUMMATIONRECEIVED,
+                        "Current Tier 14 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK10SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK10SUMMATIONRECEIVED,
+                        "Current Tier 14 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK11SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK11SUMMATIONRECEIVED,
+                        "Current Tier 14 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK12SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK12SUMMATIONRECEIVED,
+                        "Current Tier 14 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK13SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK13SUMMATIONRECEIVED,
+                        "Current Tier 14 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK14SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK14SUMMATIONRECEIVED,
+                        "Current Tier 14 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK15SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK15SUMMATIONRECEIVED,
+                        "Current Tier 14 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER14BLOCK16SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER14BLOCK16SUMMATIONRECEIVED,
+                        "Current Tier 14 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK1SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK1SUMMATIONRECEIVED,
+                        "Current Tier 15 Block 1 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK2SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK2SUMMATIONRECEIVED,
+                        "Current Tier 15 Block 2 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK3SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK3SUMMATIONRECEIVED,
+                        "Current Tier 15 Block 3 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK4SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK4SUMMATIONRECEIVED,
+                        "Current Tier 15 Block 4 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK5SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK5SUMMATIONRECEIVED,
+                        "Current Tier 15 Block 5 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK6SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK6SUMMATIONRECEIVED,
+                        "Current Tier 15 Block 6 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK7SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK7SUMMATIONRECEIVED,
+                        "Current Tier 15 Block 7 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK8SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK8SUMMATIONRECEIVED,
+                        "Current Tier 15 Block 8 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK9SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK9SUMMATIONRECEIVED,
+                        "Current Tier 15 Block 9 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK10SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK10SUMMATIONRECEIVED,
+                        "Current Tier 15 Block 10 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK11SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK11SUMMATIONRECEIVED,
+                        "Current Tier 15 Block 11 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK12SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK12SUMMATIONRECEIVED,
+                        "Current Tier 15 Block 12 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK13SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK13SUMMATIONRECEIVED,
+                        "Current Tier 15 Block 13 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK14SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK14SUMMATIONRECEIVED,
+                        "Current Tier 15 Block 14 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK15SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK15SUMMATIONRECEIVED,
+                        "Current Tier 15 Block 15 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_CURRENTTIER15BLOCK16SUMMATIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTTIER15BLOCK16SUMMATIONRECEIVED,
+                        "Current Tier 15 Block 16 Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_BILLTODATEDELIVERED, new ZclAttribute(this, ATTR_BILLTODATEDELIVERED,
+                "Bill To Date Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_BILLTODATETIMESTAMPDELIVERED, new ZclAttribute(this, ATTR_BILLTODATETIMESTAMPDELIVERED,
+                "Bill To Date Time Stamp Delivered", ZclDataType.UTCTIME, true, true, false, false));
+        attributeMap.put(ATTR_PROJECTEDBILLDELIVERED, new ZclAttribute(this, ATTR_PROJECTEDBILLDELIVERED,
+                "Projected Bill Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PROJECTEDBILLTIMESTAMPDELIVERED,
+                new ZclAttribute(this, ATTR_PROJECTEDBILLTIMESTAMPDELIVERED, "Projected Bill Time Stamp Delivered",
+                        ZclDataType.UTCTIME, true, true, false, false));
+        attributeMap.put(ATTR_BILLDELIVEREDTRAILINGDIGIT, new ZclAttribute(this, ATTR_BILLDELIVEREDTRAILINGDIGIT,
+                "Bill Delivered Trailing Digit", ZclDataType.BITMAP_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_BILLTODATERECEIVED, new ZclAttribute(this, ATTR_BILLTODATERECEIVED,
+                "Bill To Date Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_BILLTODATETIMESTAMPRECEIVED, new ZclAttribute(this, ATTR_BILLTODATETIMESTAMPRECEIVED,
+                "Bill To Date Time Stamp Received", ZclDataType.UTCTIME, true, true, false, false));
+        attributeMap.put(ATTR_PROJECTEDBILLRECEIVED, new ZclAttribute(this, ATTR_PROJECTEDBILLRECEIVED,
+                "Projected Bill Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PROJECTEDBILLTIMESTAMPRECEIVED,
+                new ZclAttribute(this, ATTR_PROJECTEDBILLTIMESTAMPRECEIVED, "Projected Bill Time Stamp Received",
+                        ZclDataType.UTCTIME, true, true, false, false));
+        attributeMap.put(ATTR_BILLRECEIVEDTRAILINGDIGIT, new ZclAttribute(this, ATTR_BILLRECEIVEDTRAILINGDIGIT,
+                "Bill Received Trailing Digit", ZclDataType.BITMAP_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_PROPOSEDCHANGESUPPLYIMPLEMENTATIONTIME,
+                new ZclAttribute(this, ATTR_PROPOSEDCHANGESUPPLYIMPLEMENTATIONTIME,
+                        "Proposed Change Supply Implementation Time", ZclDataType.UTCTIME, true, true, false, false));
+        attributeMap.put(ATTR_PROPOSEDCHANGESUPPLYSTATUS, new ZclAttribute(this, ATTR_PROPOSEDCHANGESUPPLYSTATUS,
+                "Proposed Change Supply Status", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_UNCONTROLLEDFLOWTHRESHOLD, new ZclAttribute(this, ATTR_UNCONTROLLEDFLOWTHRESHOLD,
+                "Uncontrolled Flow Threshold", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_UNCONTROLLEDFLOWTHRESHOLDUNITOFMEASURE,
+                new ZclAttribute(this, ATTR_UNCONTROLLEDFLOWTHRESHOLDUNITOFMEASURE,
+                        "Uncontrolled Flow Threshold Unit Of Measure", ZclDataType.ENUMERATION_8_BIT, true, true, false,
+                        false));
+        attributeMap.put(ATTR_UNCONTROLLEDFLOWTHRESHOLDMULTIPLIER,
+                new ZclAttribute(this, ATTR_UNCONTROLLEDFLOWTHRESHOLDMULTIPLIER,
+                        "Uncontrolled Flow Threshold Multiplier", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_UNCONTROLLEDFLOWTHRESHOLDDIVISOR,
+                new ZclAttribute(this, ATTR_UNCONTROLLEDFLOWTHRESHOLDDIVISOR, "Uncontrolled Flow Threshold Divisor",
+                        ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_FLOWSTABILIZATIONPERIOD, new ZclAttribute(this, ATTR_FLOWSTABILIZATIONPERIOD,
+                "Flow Stabilization Period", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_FLOWMEASUREMENTPERIOD, new ZclAttribute(this, ATTR_FLOWMEASUREMENTPERIOD,
+                "Flow Measurement Period", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_ALTERNATIVEINSTANTANEOUSDEMAND,
+                new ZclAttribute(this, ATTR_ALTERNATIVEINSTANTANEOUSDEMAND, "Alternative Instantaneous Demand",
+                        ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTDAYALTERNATIVECONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTDAYALTERNATIVECONSUMPTIONDELIVERED,
+                        "Current Day Alternative Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_CURRENTDAYALTERNATIVECONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTDAYALTERNATIVECONSUMPTIONRECEIVED,
+                        "Current Day Alternative Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true,
+                        false, false));
+        attributeMap.put(ATTR_PREVIOUSDAYALTERNATIVECONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAYALTERNATIVECONSUMPTIONDELIVERED,
+                        "Previous Day Alternative Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAYALTERNATIVECONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAYALTERNATIVECONSUMPTIONRECEIVED,
+                        "Previous Day Alternative Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMEDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMEDELIVERED,
+                        "Current Alternative Partial Profile Interval Start Time Delivered", ZclDataType.UTCTIME, true,
+                        true, false, false));
+        attributeMap.put(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMERECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMERECEIVED,
+                        "Current Alternative Partial Profile Interval Start Time Received", ZclDataType.UTCTIME, true,
+                        true, false, false));
+        attributeMap.put(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALVALUEDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALVALUEDELIVERED,
+                        "Current Alternative Partial Profile Interval Value Delivered",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALVALUERECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALVALUERECEIVED,
+                        "Current Alternative Partial Profile Interval Value Received",
+                        ZclDataType.UNSIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTDAYALTERNATIVEMAXPRESSURE,
+                new ZclAttribute(this, ATTR_CURRENTDAYALTERNATIVEMAXPRESSURE, "Current Day Alternative Max Pressure",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTDAYALTERNATIVEMINPRESSURE,
+                new ZclAttribute(this, ATTR_CURRENTDAYALTERNATIVEMINPRESSURE, "Current Day Alternative Min Pressure",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAYALTERNATIVEMAXPRESSURE,
+                new ZclAttribute(this, ATTR_PREVIOUSDAYALTERNATIVEMAXPRESSURE, "Previous Day Alternative Max Pressure",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAYALTERNATIVEMINPRESSURE,
+                new ZclAttribute(this, ATTR_PREVIOUSDAYALTERNATIVEMINPRESSURE, "Previous Day Alternative Min Pressure",
+                        ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTDAYALTERNATIVEMAXDEMAND,
+                new ZclAttribute(this, ATTR_CURRENTDAYALTERNATIVEMAXDEMAND, "Current Day Alternative Max Demand",
+                        ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAYALTERNATIVEMAXDEMAND,
+                new ZclAttribute(this, ATTR_PREVIOUSDAYALTERNATIVEMAXDEMAND, "Previous Day Alternative Max Demand",
+                        ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTMONTHALTERNATIVEMAXDEMAND,
+                new ZclAttribute(this, ATTR_CURRENTMONTHALTERNATIVEMAXDEMAND, "Current Month Alternative Max Demand",
+                        ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_CURRENTYEARALTERNATIVEMAXDEMAND,
+                new ZclAttribute(this, ATTR_CURRENTYEARALTERNATIVEMAXDEMAND, "Current Year Alternative Max Demand",
+                        ZclDataType.SIGNED_24_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAY2ALTERNATIVECONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAY2ALTERNATIVECONSUMPTIONDELIVERED,
+                        "Previous Day 2 Alternative Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAY4ALTERNATIVECONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAY4ALTERNATIVECONSUMPTIONDELIVERED,
+                        "Previous Day 4 Alternative Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAY6ALTERNATIVECONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAY6ALTERNATIVECONSUMPTIONDELIVERED,
+                        "Previous Day 6 Alternative Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAY8ALTERNATIVECONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAY8ALTERNATIVECONSUMPTIONDELIVERED,
+                        "Previous Day 8 Alternative Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAY10ALTERNATIVECONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAY10ALTERNATIVECONSUMPTIONDELIVERED,
+                        "Previous Day 10 Alternative Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAY12ALTERNATIVECONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAY12ALTERNATIVECONSUMPTIONDELIVERED,
+                        "Previous Day 12 Alternative Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAY2ALTERNATIVECONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAY2ALTERNATIVECONSUMPTIONRECEIVED,
+                        "Previous Day 2 Alternative Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAY4ALTERNATIVECONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAY4ALTERNATIVECONSUMPTIONRECEIVED,
+                        "Previous Day 4 Alternative Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAY6ALTERNATIVECONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAY6ALTERNATIVECONSUMPTIONRECEIVED,
+                        "Previous Day 6 Alternative Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAY8ALTERNATIVECONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAY8ALTERNATIVECONSUMPTIONRECEIVED,
+                        "Previous Day 8 Alternative Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAY10ALTERNATIVECONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAY10ALTERNATIVECONSUMPTIONRECEIVED,
+                        "Previous Day 10 Alternative Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSDAY12ALTERNATIVECONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSDAY12ALTERNATIVECONSUMPTIONRECEIVED,
+                        "Previous Day 12 Alternative Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_CURRENTWEEKALTERNATIVECONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTWEEKALTERNATIVECONSUMPTIONDELIVERED,
+                        "Current Week Alternative Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_CURRENTWEEKALTERNATIVECONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTWEEKALTERNATIVECONSUMPTIONRECEIVED,
+                        "Current Week Alternative Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSWEEK1ALTERNATIVECONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSWEEK1ALTERNATIVECONSUMPTIONDELIVERED,
+                        "Previous Week 1 Alternative Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSWEEK3ALTERNATIVECONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSWEEK3ALTERNATIVECONSUMPTIONDELIVERED,
+                        "Previous Week 3 Alternative Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSWEEK5ALTERNATIVECONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSWEEK5ALTERNATIVECONSUMPTIONDELIVERED,
+                        "Previous Week 5 Alternative Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSWEEK7ALTERNATIVECONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSWEEK7ALTERNATIVECONSUMPTIONDELIVERED,
+                        "Previous Week 7 Alternative Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSWEEK9ALTERNATIVECONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSWEEK9ALTERNATIVECONSUMPTIONDELIVERED,
+                        "Previous Week 9 Alternative Consumption Delivered", ZclDataType.UNSIGNED_24_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSWEEK1ALTERNATIVECONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSWEEK1ALTERNATIVECONSUMPTIONRECEIVED,
+                        "Previous Week 1 Alternative Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSWEEK3ALTERNATIVECONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSWEEK3ALTERNATIVECONSUMPTIONRECEIVED,
+                        "Previous Week 3 Alternative Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSWEEK5ALTERNATIVECONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSWEEK5ALTERNATIVECONSUMPTIONRECEIVED,
+                        "Previous Week 5 Alternative Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSWEEK7ALTERNATIVECONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSWEEK7ALTERNATIVECONSUMPTIONRECEIVED,
+                        "Previous Week 7 Alternative Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSWEEK9ALTERNATIVECONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSWEEK9ALTERNATIVECONSUMPTIONRECEIVED,
+                        "Previous Week 9 Alternative Consumption Received", ZclDataType.UNSIGNED_24_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_CURRENTMONTHALTERNATIVECONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_CURRENTMONTHALTERNATIVECONSUMPTIONDELIVERED,
+                        "Current Month Alternative Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_CURRENTMONTHALTERNATIVECONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_CURRENTMONTHALTERNATIVECONSUMPTIONRECEIVED,
+                        "Current Month Alternative Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH1ALTERNATIVECONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH1ALTERNATIVECONSUMPTIONDELIVERED,
+                        "Previous Month 1 Alternative Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH3ALTERNATIVECONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH3ALTERNATIVECONSUMPTIONDELIVERED,
+                        "Previous Month 3 Alternative Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH5ALTERNATIVECONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH5ALTERNATIVECONSUMPTIONDELIVERED,
+                        "Previous Month 5 Alternative Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH7ALTERNATIVECONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH7ALTERNATIVECONSUMPTIONDELIVERED,
+                        "Previous Month 7 Alternative Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH9ALTERNATIVECONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH9ALTERNATIVECONSUMPTIONDELIVERED,
+                        "Previous Month 9 Alternative Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH11ALTERNATIVECONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH11ALTERNATIVECONSUMPTIONDELIVERED,
+                        "Previous Month 11 Alternative Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER,
+                        true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH13ALTERNATIVECONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH13ALTERNATIVECONSUMPTIONDELIVERED,
+                        "Previous Month 13 Alternative Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER,
+                        true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH15ALTERNATIVECONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH15ALTERNATIVECONSUMPTIONDELIVERED,
+                        "Previous Month 15 Alternative Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER,
+                        true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH17ALTERNATIVECONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH17ALTERNATIVECONSUMPTIONDELIVERED,
+                        "Previous Month 17 Alternative Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER,
+                        true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH19ALTERNATIVECONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH19ALTERNATIVECONSUMPTIONDELIVERED,
+                        "Previous Month 19 Alternative Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER,
+                        true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH21ALTERNATIVECONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH21ALTERNATIVECONSUMPTIONDELIVERED,
+                        "Previous Month 21 Alternative Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER,
+                        true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH23ALTERNATIVECONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH23ALTERNATIVECONSUMPTIONDELIVERED,
+                        "Previous Month 23 Alternative Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER,
+                        true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH25ALTERNATIVECONSUMPTIONDELIVERED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH25ALTERNATIVECONSUMPTIONDELIVERED,
+                        "Previous Month 25 Alternative Consumption Delivered", ZclDataType.UNSIGNED_32_BIT_INTEGER,
+                        true, true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH1ALTERNATIVECONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH1ALTERNATIVECONSUMPTIONRECEIVED,
+                        "Previous Month 1 Alternative Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH3ALTERNATIVECONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH3ALTERNATIVECONSUMPTIONRECEIVED,
+                        "Previous Month 3 Alternative Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH5ALTERNATIVECONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH5ALTERNATIVECONSUMPTIONRECEIVED,
+                        "Previous Month 5 Alternative Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH7ALTERNATIVECONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH7ALTERNATIVECONSUMPTIONRECEIVED,
+                        "Previous Month 7 Alternative Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH9ALTERNATIVECONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH9ALTERNATIVECONSUMPTIONRECEIVED,
+                        "Previous Month 9 Alternative Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH11ALTERNATIVECONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH11ALTERNATIVECONSUMPTIONRECEIVED,
+                        "Previous Month 11 Alternative Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH13ALTERNATIVECONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH13ALTERNATIVECONSUMPTIONRECEIVED,
+                        "Previous Month 13 Alternative Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH15ALTERNATIVECONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH15ALTERNATIVECONSUMPTIONRECEIVED,
+                        "Previous Month 15 Alternative Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH17ALTERNATIVECONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH17ALTERNATIVECONSUMPTIONRECEIVED,
+                        "Previous Month 17 Alternative Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH19ALTERNATIVECONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH19ALTERNATIVECONSUMPTIONRECEIVED,
+                        "Previous Month 19 Alternative Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH21ALTERNATIVECONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH21ALTERNATIVECONSUMPTIONRECEIVED,
+                        "Previous Month 21 Alternative Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH23ALTERNATIVECONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH23ALTERNATIVECONSUMPTIONRECEIVED,
+                        "Previous Month 23 Alternative Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true,
+                        true, false, false));
+        attributeMap.put(ATTR_PREVIOUSMONTH25ALTERNATIVECONSUMPTIONRECEIVED,
+                new ZclAttribute(this, ATTR_PREVIOUSMONTH25ALTERNATIVECONSUMPTIONRECEIVED,
+                        "Previous Month 25 Alternative Consumption Received", ZclDataType.UNSIGNED_32_BIT_INTEGER, true,
+                        true, false, false));
 
         return attributeMap;
     }
@@ -3656,11 +5888,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentSummationDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTSUMMATIONDELIVERED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentSummationDeliveredReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTSUMMATIONDELIVERED), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -4037,10 +6272,12 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setReadingSnapshotTimeReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+    public Future<CommandResult> setReadingSnapshotTimeReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
         return setReporting(serverAttributes.get(ATTR_READINGSNAPSHOTTIME), minInterval, maxInterval, reportableChange);
     }
 
@@ -4106,11 +6343,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentMaxDemandDeliveredTimeReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTMAXDEMANDDELIVEREDTIME), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentMaxDemandDeliveredTimeReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTMAXDEMANDDELIVEREDTIME), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -4175,11 +6415,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentMaxDemandReceivedTimeReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTMAXDEMANDRECEIVEDTIME), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentMaxDemandReceivedTimeReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTMAXDEMANDRECEIVEDTIME), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -5562,11 +7805,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier1SummationDeliveredReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER1SUMMATIONDELIVERED + (arrayOffset - 1) * 2), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier1SummationDeliveredReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER1SUMMATIONDELIVERED + (arrayOffset - 1) * 2),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5629,11 +7875,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier1SummationReceivedReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER1SUMMATIONRECEIVED + (arrayOffset - 1) * 2), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier1SummationReceivedReporting(final int arrayOffset, final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER1SUMMATIONRECEIVED + (arrayOffset - 1) * 2),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -5704,11 +7953,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCpp1SummationDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CPP1SUMMATIONDELIVERED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCpp1SummationDeliveredReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CPP1SUMMATIONDELIVERED), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -5779,11 +8031,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCpp2SummationDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CPP2SUMMATIONDELIVERED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCpp2SummationDeliveredReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CPP2SUMMATIONDELIVERED), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -5859,7 +8114,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
     public Future<CommandResult> setStatusReporting(final int minInterval, final int maxInterval) {
@@ -5931,11 +8187,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setRemainingBatteryLifeReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_REMAININGBATTERYLIFE), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setRemainingBatteryLifeReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_REMAININGBATTERYLIFE), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -6000,10 +8259,12 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setHoursInOperationReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+    public Future<CommandResult> setHoursInOperationReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
         return setReporting(serverAttributes.get(ATTR_HOURSINOPERATION), minInterval, maxInterval, reportableChange);
     }
 
@@ -6069,10 +8330,12 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setHoursInFaultReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+    public Future<CommandResult> setHoursInFaultReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
         return setReporting(serverAttributes.get(ATTR_HOURSINFAULT), minInterval, maxInterval, reportableChange);
     }
 
@@ -6155,7 +8418,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
     public Future<CommandResult> setExtendedStatusReporting(final int minInterval, final int maxInterval) {
@@ -6227,11 +8491,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setRemainingBatteryLifeInDaysReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_REMAININGBATTERYLIFEINDAYS), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setRemainingBatteryLifeInDaysReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_REMAININGBATTERYLIFEINDAYS), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -6295,7 +8562,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
     public Future<CommandResult> setCurrentMeterIdReporting(final int minInterval, final int maxInterval) {
@@ -6369,7 +8637,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
     public Future<CommandResult> setAmbientConsumptionIndicatorReporting(final int minInterval, final int maxInterval) {
@@ -6449,7 +8718,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
     public Future<CommandResult> setUnitOfMeasureReporting(final int minInterval, final int maxInterval) {
@@ -6527,10 +8797,12 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setMultiplierReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+    public Future<CommandResult> setMultiplierReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
         return setReporting(serverAttributes.get(ATTR_MULTIPLIER), minInterval, maxInterval, reportableChange);
     }
 
@@ -6608,10 +8880,12 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setDivisorReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+    public Future<CommandResult> setDivisorReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
         return setReporting(serverAttributes.get(ATTR_DIVISOR), minInterval, maxInterval, reportableChange);
     }
 
@@ -6679,7 +8953,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
     public Future<CommandResult> setSummationFormattingReporting(final int minInterval, final int maxInterval) {
@@ -6747,7 +9022,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
     public Future<CommandResult> setDemandFormattingReporting(final int minInterval, final int maxInterval) {
@@ -6818,10 +9094,12 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
-    public Future<CommandResult> setHistoricalConsumptionFormattingReporting(final int minInterval, final int maxInterval) {
+    public Future<CommandResult> setHistoricalConsumptionFormattingReporting(final int minInterval,
+            final int maxInterval) {
         return setReporting(serverAttributes.get(ATTR_HISTORICALCONSUMPTIONFORMATTING), minInterval, maxInterval);
     }
 
@@ -6889,7 +9167,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
     public Future<CommandResult> setMeteringDeviceTypeReporting(final int minInterval, final int maxInterval) {
@@ -6972,7 +9251,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
     public Future<CommandResult> setSiteIdReporting(final int minInterval, final int maxInterval) {
@@ -7043,7 +9323,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
     public Future<CommandResult> setMeterSerialNumberReporting(final int minInterval, final int maxInterval) {
@@ -7114,7 +9395,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
     public Future<CommandResult> setEnergyCarrierUnitOfMeasureReporting(final int minInterval, final int maxInterval) {
@@ -7185,10 +9467,12 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
-    public Future<CommandResult> setEnergyCarrierSummationFormattingReporting(final int minInterval, final int maxInterval) {
+    public Future<CommandResult> setEnergyCarrierSummationFormattingReporting(final int minInterval,
+            final int maxInterval) {
         return setReporting(serverAttributes.get(ATTR_ENERGYCARRIERSUMMATIONFORMATTING), minInterval, maxInterval);
     }
 
@@ -7253,10 +9537,12 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
-    public Future<CommandResult> setEnergyCarrierDemandFormattingReporting(final int minInterval, final int maxInterval) {
+    public Future<CommandResult> setEnergyCarrierDemandFormattingReporting(final int minInterval,
+            final int maxInterval) {
         return setReporting(serverAttributes.get(ATTR_ENERGYCARRIERDEMANDFORMATTING), minInterval, maxInterval);
     }
 
@@ -7321,7 +9607,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
     public Future<CommandResult> setTemperatureUnitOfMeasureReporting(final int minInterval, final int maxInterval) {
@@ -7389,7 +9676,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
     public Future<CommandResult> setTemperatureFormattingReporting(final int minInterval, final int maxInterval) {
@@ -7463,7 +9751,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
     public Future<CommandResult> setModuleSerialNumberReporting(final int minInterval, final int maxInterval) {
@@ -7540,10 +9829,12 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
-    public Future<CommandResult> setOperatingTariffLabelDeliveredReporting(final int minInterval, final int maxInterval) {
+    public Future<CommandResult> setOperatingTariffLabelDeliveredReporting(final int minInterval,
+            final int maxInterval) {
         return setReporting(serverAttributes.get(ATTR_OPERATINGTARIFFLABELDELIVERED), minInterval, maxInterval);
     }
 
@@ -7617,10 +9908,12 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
-    public Future<CommandResult> setOperatingTariffLabelReceivedReporting(final int minInterval, final int maxInterval) {
+    public Future<CommandResult> setOperatingTariffLabelReceivedReporting(final int minInterval,
+            final int maxInterval) {
         return setReporting(serverAttributes.get(ATTR_OPERATINGTARIFFLABELRECEIVED), minInterval, maxInterval);
     }
 
@@ -7691,7 +9984,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
     public Future<CommandResult> setCustomerIdNumberReporting(final int minInterval, final int maxInterval) {
@@ -7759,7 +10053,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
     public Future<CommandResult> setAlternativeUnitOfMeasureReporting(final int minInterval, final int maxInterval) {
@@ -7830,7 +10125,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
     public Future<CommandResult> setAlternativeDemandFormattingReporting(final int minInterval, final int maxInterval) {
@@ -7889,10 +10185,12 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
-    public Future<CommandResult> setAlternativeConsumptionFormattingReporting(final int minInterval, final int maxInterval) {
+    public Future<CommandResult> setAlternativeConsumptionFormattingReporting(final int minInterval,
+            final int maxInterval) {
         return setReporting(serverAttributes.get(ATTR_ALTERNATIVECONSUMPTIONFORMATTING), minInterval, maxInterval);
     }
 
@@ -7970,10 +10268,12 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setInstantaneousDemandReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+    public Future<CommandResult> setInstantaneousDemandReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
         return setReporting(serverAttributes.get(ATTR_INSTANTANEOUSDEMAND), minInterval, maxInterval, reportableChange);
     }
 
@@ -8048,11 +10348,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentDayConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTDAYCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentDayConsumptionDeliveredReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTDAYCONSUMPTIONDELIVERED), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -8126,11 +10429,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentDayConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTDAYCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentDayConsumptionReceivedReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTDAYCONSUMPTIONRECEIVED), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -8204,11 +10510,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setPreviousDayConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAYCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setPreviousDayConsumptionDeliveredReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAYCONSUMPTIONDELIVERED), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -8282,11 +10591,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setPreviousDayConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAYCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setPreviousDayConsumptionReceivedReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAYCONSUMPTIONRECEIVED), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -8308,7 +10620,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Partial Profile Interval Start Time Delivered</i> attribute [attribute ID <b>0x0405</b>].
+     * Synchronously get the <i>Current Partial Profile Interval Start Time Delivered</i> attribute [attribute ID
+     * <b>0x0405</b>].
      * <p>
      * CurrentPartialProfileIntervalStartTimeDelivered represents the start time of the
      * current Load Profile interval being accumulated for commodity delivered.
@@ -8330,7 +10643,8 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Calendar getCurrentPartialProfileIntervalStartTimeDelivered(final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTPARTIALPROFILEINTERVALSTARTTIMEDELIVERED).isLastValueCurrent(refreshPeriod)) {
+        if (serverAttributes.get(ATTR_CURRENTPARTIALPROFILEINTERVALSTARTTIMEDELIVERED)
+                .isLastValueCurrent(refreshPeriod)) {
             return (Calendar) serverAttributes.get(ATTR_CURRENTPARTIALPROFILEINTERVALSTARTTIMEDELIVERED).getLastValue();
         }
 
@@ -8338,7 +10652,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Partial Profile Interval Start Time Delivered</i> attribute [attribute ID <b>0x0405</b>].
+     * Set reporting for the <i>Current Partial Profile Interval Start Time Delivered</i> attribute [attribute ID
+     * <b>0x0405</b>].
      * <p>
      * CurrentPartialProfileIntervalStartTimeDelivered represents the start time of the
      * current Load Profile interval being accumulated for commodity delivered.
@@ -8351,11 +10666,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentPartialProfileIntervalStartTimeDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTPARTIALPROFILEINTERVALSTARTTIMEDELIVERED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentPartialProfileIntervalStartTimeDeliveredReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTPARTIALPROFILEINTERVALSTARTTIMEDELIVERED), minInterval,
+                maxInterval, reportableChange);
     }
 
     /**
@@ -8377,7 +10695,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Partial Profile Interval Start Time Received</i> attribute [attribute ID <b>0x0406</b>].
+     * Synchronously get the <i>Current Partial Profile Interval Start Time Received</i> attribute [attribute ID
+     * <b>0x0406</b>].
      * <p>
      * CurrentPartialProfileIntervalStartTimeReceived represents the start time of the
      * current Load Profile interval being accumulated for commodity received.
@@ -8399,7 +10718,8 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Calendar getCurrentPartialProfileIntervalStartTimeReceived(final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTPARTIALPROFILEINTERVALSTARTTIMERECEIVED).isLastValueCurrent(refreshPeriod)) {
+        if (serverAttributes.get(ATTR_CURRENTPARTIALPROFILEINTERVALSTARTTIMERECEIVED)
+                .isLastValueCurrent(refreshPeriod)) {
             return (Calendar) serverAttributes.get(ATTR_CURRENTPARTIALPROFILEINTERVALSTARTTIMERECEIVED).getLastValue();
         }
 
@@ -8407,7 +10727,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Partial Profile Interval Start Time Received</i> attribute [attribute ID <b>0x0406</b>].
+     * Set reporting for the <i>Current Partial Profile Interval Start Time Received</i> attribute [attribute ID
+     * <b>0x0406</b>].
      * <p>
      * CurrentPartialProfileIntervalStartTimeReceived represents the start time of the
      * current Load Profile interval being accumulated for commodity received.
@@ -8420,11 +10741,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentPartialProfileIntervalStartTimeReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTPARTIALPROFILEINTERVALSTARTTIMERECEIVED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentPartialProfileIntervalStartTimeReceivedReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTPARTIALPROFILEINTERVALSTARTTIMERECEIVED), minInterval,
+                maxInterval, reportableChange);
     }
 
     /**
@@ -8446,7 +10770,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Partial Profile Interval Value Delivered</i> attribute [attribute ID <b>0x0407</b>].
+     * Synchronously get the <i>Current Partial Profile Interval Value Delivered</i> attribute [attribute ID
+     * <b>0x0407</b>].
      * <p>
      * CurrentPartialProfileIntervalValueDelivered represents the value of the current
      * Load Profile interval being accumulated for commodity delivered.
@@ -8476,7 +10801,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Partial Profile Interval Value Delivered</i> attribute [attribute ID <b>0x0407</b>].
+     * Set reporting for the <i>Current Partial Profile Interval Value Delivered</i> attribute [attribute ID
+     * <b>0x0407</b>].
      * <p>
      * CurrentPartialProfileIntervalValueDelivered represents the value of the current
      * Load Profile interval being accumulated for commodity delivered.
@@ -8489,11 +10815,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentPartialProfileIntervalValueDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTPARTIALPROFILEINTERVALVALUEDELIVERED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentPartialProfileIntervalValueDeliveredReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTPARTIALPROFILEINTERVALVALUEDELIVERED), minInterval,
+                maxInterval, reportableChange);
     }
 
     /**
@@ -8515,7 +10844,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Partial Profile Interval Value Received</i> attribute [attribute ID <b>0x0408</b>].
+     * Synchronously get the <i>Current Partial Profile Interval Value Received</i> attribute [attribute ID
+     * <b>0x0408</b>].
      * <p>
      * CurrentPartialProfileIntervalValueReceived represents the value of the current
      * Load Profile interval being accumulated for commodity received.
@@ -8545,7 +10875,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Partial Profile Interval Value Received</i> attribute [attribute ID <b>0x0408</b>].
+     * Set reporting for the <i>Current Partial Profile Interval Value Received</i> attribute [attribute ID
+     * <b>0x0408</b>].
      * <p>
      * CurrentPartialProfileIntervalValueReceived represents the value of the current
      * Load Profile interval being accumulated for commodity received.
@@ -8558,11 +10889,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentPartialProfileIntervalValueReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTPARTIALPROFILEINTERVALVALUERECEIVED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentPartialProfileIntervalValueReceivedReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTPARTIALPROFILEINTERVALVALUERECEIVED), minInterval,
+                maxInterval, reportableChange);
     }
 
     /**
@@ -8627,11 +10961,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentDayMaxPressureReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTDAYMAXPRESSURE), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentDayMaxPressureReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTDAYMAXPRESSURE), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -8696,11 +11033,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentDayMinPressureReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTDAYMINPRESSURE), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentDayMinPressureReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTDAYMINPRESSURE), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -8765,11 +11105,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setPreviousDayMaxPressureReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAYMAXPRESSURE), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setPreviousDayMaxPressureReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAYMAXPRESSURE), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -8834,11 +11177,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setPreviousDayMinPressureReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAYMINPRESSURE), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setPreviousDayMinPressureReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAYMINPRESSURE), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -8903,10 +11249,12 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentDayMaxDemandReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+    public Future<CommandResult> setCurrentDayMaxDemandReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
         return setReporting(serverAttributes.get(ATTR_CURRENTDAYMAXDEMAND), minInterval, maxInterval, reportableChange);
     }
 
@@ -8972,11 +11320,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setPreviousDayMaxDemandReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAYMAXDEMAND), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setPreviousDayMaxDemandReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAYMAXDEMAND), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -9038,11 +11389,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentMonthMaxDemandReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTMONTHMAXDEMAND), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentMonthMaxDemandReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTMONTHMAXDEMAND), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -9104,11 +11458,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentYearMaxDemandReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTYEARMAXDEMAND), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentYearMaxDemandReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTYEARMAXDEMAND), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -9173,11 +11530,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentDayMaxEnergyCarrierDemandReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTDAYMAXENERGYCARRIERDEMAND), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentDayMaxEnergyCarrierDemandReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTDAYMAXENERGYCARRIERDEMAND), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -9242,11 +11602,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setPreviousDayMaxEnergyCarrierDemandReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAYMAXENERGYCARRIERDEMAND), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setPreviousDayMaxEnergyCarrierDemandReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAYMAXENERGYCARRIERDEMAND), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -9311,11 +11674,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentMonthMaxEnergyCarrierDemandReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTMONTHMAXENERGYCARRIERDEMAND), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentMonthMaxEnergyCarrierDemandReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTMONTHMAXENERGYCARRIERDEMAND), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -9380,11 +11746,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentMonthMinEnergyCarrierDemandReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTMONTHMINENERGYCARRIERDEMAND), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentMonthMinEnergyCarrierDemandReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTMONTHMINENERGYCARRIERDEMAND), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -9449,11 +11818,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentYearMaxEnergyCarrierDemandReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTYEARMAXENERGYCARRIERDEMAND), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentYearMaxEnergyCarrierDemandReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTYEARMAXENERGYCARRIERDEMAND), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -9518,11 +11890,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentYearMinEnergyCarrierDemandReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTYEARMINENERGYCARRIERDEMAND), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentYearMinEnergyCarrierDemandReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTYEARMINENERGYCARRIERDEMAND), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -9576,7 +11951,8 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getPreviousDayConsumptionDelivered(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_PREVIOUSDAY2CONSUMPTIONDELIVERED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+        if (serverAttributes.get(ATTR_PREVIOUSDAY2CONSUMPTIONDELIVERED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
             return (Integer) serverAttributes.get(ATTR_PREVIOUSDAY2CONSUMPTIONDELIVERED + arrayOffset).getLastValue();
         }
 
@@ -9600,11 +11976,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setPreviousDay2ConsumptionDeliveredReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAY2CONSUMPTIONDELIVERED + (arrayOffset - 1) * 2), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setPreviousDay2ConsumptionDeliveredReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAY2CONSUMPTIONDELIVERED + (arrayOffset - 1) * 2),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -9658,7 +12037,8 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getPreviousDayConsumptionReceived(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_PREVIOUSDAY2CONSUMPTIONRECEIVED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+        if (serverAttributes.get(ATTR_PREVIOUSDAY2CONSUMPTIONRECEIVED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
             return (Integer) serverAttributes.get(ATTR_PREVIOUSDAY2CONSUMPTIONRECEIVED + arrayOffset).getLastValue();
         }
 
@@ -9682,11 +12062,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setPreviousDay2ConsumptionReceivedReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAY2CONSUMPTIONRECEIVED + (arrayOffset - 1) * 2), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setPreviousDay2ConsumptionReceivedReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAY2CONSUMPTIONRECEIVED + (arrayOffset - 1) * 2),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -9760,11 +12143,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentWeekConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTWEEKCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentWeekConsumptionDeliveredReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTWEEKCONSUMPTIONDELIVERED), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -9838,11 +12224,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentWeekConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTWEEKCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentWeekConsumptionReceivedReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTWEEKCONSUMPTIONRECEIVED), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -9871,7 +12260,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Previous Week {{count}} Consumption Delivered</i> attribute [attribute ID <b>0x0432</b>].
+     * Synchronously get the <i>Previous Week {{count}} Consumption Delivered</i> attribute [attribute ID
+     * <b>0x0432</b>].
      * <p>
      * PreviousWeekNConsumptionDelivered represents the summed value of Energy, Gas, or
      * Water delivered to the premises within the previous week period starting at the
@@ -9896,7 +12286,8 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getPreviousWeekConsumptionDelivered(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_PREVIOUSWEEK1CONSUMPTIONDELIVERED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+        if (serverAttributes.get(ATTR_PREVIOUSWEEK1CONSUMPTIONDELIVERED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
             return (Integer) serverAttributes.get(ATTR_PREVIOUSWEEK1CONSUMPTIONDELIVERED + arrayOffset).getLastValue();
         }
 
@@ -9904,7 +12295,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Previous Week {{count}} Consumption Delivered</i> attribute [attribute ID <b>0x0432</b>].
+     * Set reporting for the <i>Previous Week {{count}} Consumption Delivered</i> attribute [attribute ID
+     * <b>0x0432</b>].
      * <p>
      * PreviousWeekNConsumptionDelivered represents the summed value of Energy, Gas, or
      * Water delivered to the premises within the previous week period starting at the
@@ -9920,11 +12312,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setPreviousWeek1ConsumptionDeliveredReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_PREVIOUSWEEK1CONSUMPTIONDELIVERED + (arrayOffset - 1) * 2), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setPreviousWeek1ConsumptionDeliveredReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSWEEK1CONSUMPTIONDELIVERED + (arrayOffset - 1) * 2),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -9978,7 +12373,8 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getPreviousWeekConsumptionReceived(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_PREVIOUSWEEK1CONSUMPTIONRECEIVED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+        if (serverAttributes.get(ATTR_PREVIOUSWEEK1CONSUMPTIONRECEIVED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
             return (Integer) serverAttributes.get(ATTR_PREVIOUSWEEK1CONSUMPTIONRECEIVED + arrayOffset).getLastValue();
         }
 
@@ -10002,11 +12398,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setPreviousWeek1ConsumptionReceivedReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_PREVIOUSWEEK1CONSUMPTIONRECEIVED + (arrayOffset - 1) * 2), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setPreviousWeek1ConsumptionReceivedReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSWEEK1CONSUMPTIONRECEIVED + (arrayOffset - 1) * 2),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -10080,11 +12479,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentMonthConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTMONTHCONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentMonthConsumptionDeliveredReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTMONTHCONSUMPTIONDELIVERED), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -10158,11 +12560,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentMonthConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTMONTHCONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentMonthConsumptionReceivedReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTMONTHCONSUMPTIONRECEIVED), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -10191,7 +12596,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Previous Month {{count}} Consumption Delivered</i> attribute [attribute ID <b>0x0442</b>].
+     * Synchronously get the <i>Previous Month {{count}} Consumption Delivered</i> attribute [attribute ID
+     * <b>0x0442</b>].
      * <p>
      * PreviousMonthNConsumptionDelivered represents the summed value of Energy, Gas, or
      * Water delivered to the premises within the previous Month period starting at the
@@ -10216,7 +12622,8 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getPreviousMonthConsumptionDelivered(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_PREVIOUSMONTH1CONSUMPTIONDELIVERED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+        if (serverAttributes.get(ATTR_PREVIOUSMONTH1CONSUMPTIONDELIVERED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
             return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH1CONSUMPTIONDELIVERED + arrayOffset).getLastValue();
         }
 
@@ -10224,7 +12631,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Previous Month {{count}} Consumption Delivered</i> attribute [attribute ID <b>0x0442</b>].
+     * Set reporting for the <i>Previous Month {{count}} Consumption Delivered</i> attribute [attribute ID
+     * <b>0x0442</b>].
      * <p>
      * PreviousMonthNConsumptionDelivered represents the summed value of Energy, Gas, or
      * Water delivered to the premises within the previous Month period starting at the
@@ -10240,11 +12648,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setPreviousMonth1ConsumptionDeliveredReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH1CONSUMPTIONDELIVERED + (arrayOffset - 1) * 2), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setPreviousMonth1ConsumptionDeliveredReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH1CONSUMPTIONDELIVERED + (arrayOffset - 1) * 2),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -10273,7 +12684,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Previous Month {{count}} Consumption Received</i> attribute [attribute ID <b>0x0443</b>].
+     * Synchronously get the <i>Previous Month {{count}} Consumption Received</i> attribute [attribute ID
+     * <b>0x0443</b>].
      * <p>
      * PreviousMonthNConsumptionReceived represents the summed value of Energy, Gas, or
      * Water received from the premises within the previous month period starting at the
@@ -10298,7 +12710,8 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getPreviousMonthConsumptionReceived(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_PREVIOUSMONTH1CONSUMPTIONRECEIVED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
+        if (serverAttributes.get(ATTR_PREVIOUSMONTH1CONSUMPTIONRECEIVED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
             return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH1CONSUMPTIONRECEIVED + arrayOffset).getLastValue();
         }
 
@@ -10306,7 +12719,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Previous Month {{count}} Consumption Received</i> attribute [attribute ID <b>0x0443</b>].
+     * Set reporting for the <i>Previous Month {{count}} Consumption Received</i> attribute [attribute ID
+     * <b>0x0443</b>].
      * <p>
      * PreviousMonthNConsumptionReceived represents the summed value of Energy, Gas, or
      * Water received from the premises within the previous month period starting at the
@@ -10322,11 +12736,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setPreviousMonth1ConsumptionReceivedReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH1CONSUMPTIONRECEIVED + (arrayOffset - 1) * 2), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setPreviousMonth1ConsumptionReceivedReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH1CONSUMPTIONRECEIVED + (arrayOffset - 1) * 2),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -10397,11 +12814,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setHistoricalFreezeTimeReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_HISTORICALFREEZETIME), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setHistoricalFreezeTimeReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_HISTORICALFREEZETIME), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -10475,11 +12895,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setMaxNumberOfPeriodsDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_MAXNUMBEROFPERIODSDELIVERED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setMaxNumberOfPeriodsDeliveredReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_MAXNUMBEROFPERIODSDELIVERED), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -10553,11 +12976,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentDemandDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTDEMANDDELIVERED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentDemandDeliveredReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTDEMANDDELIVERED), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -10625,10 +13051,12 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setDemandLimitReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+    public Future<CommandResult> setDemandLimitReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
         return setReporting(serverAttributes.get(ATTR_DEMANDLIMIT), minInterval, maxInterval, reportableChange);
     }
 
@@ -10697,11 +13125,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setDemandIntegrationPeriodReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_DEMANDINTEGRATIONPERIOD), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setDemandIntegrationPeriodReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_DEMANDINTEGRATIONPERIOD), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -10775,11 +13206,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setNumberOfDemandSubintervalsReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_NUMBEROFDEMANDSUBINTERVALS), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setNumberOfDemandSubintervalsReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_NUMBEROFDEMANDSUBINTERVALS), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -10850,11 +13284,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setDemandLimitArmDurationReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_DEMANDLIMITARMDURATION), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setDemandLimitArmDurationReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_DEMANDLIMITARMDURATION), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -10918,7 +13355,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
     public Future<CommandResult> setLoadLimitSupplyStateReporting(final int minInterval, final int maxInterval) {
@@ -10987,10 +13425,12 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setLoadLimitCounterReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+    public Future<CommandResult> setLoadLimitCounterReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
         return setReporting(serverAttributes.get(ATTR_LOADLIMITCOUNTER), minInterval, maxInterval, reportableChange);
     }
 
@@ -11055,7 +13495,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
     public Future<CommandResult> setSupplyTamperStateReporting(final int minInterval, final int maxInterval) {
@@ -11123,7 +13564,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
     public Future<CommandResult> setSupplyDepletionStateReporting(final int minInterval, final int maxInterval) {
@@ -11191,7 +13633,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
     public Future<CommandResult> setSupplyUncontrolledFlowStateReporting(final int minInterval, final int maxInterval) {
@@ -11219,7 +13662,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current No Tier Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0700</b>].
+     * Synchronously get the <i>Current No Tier Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x0700</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -11239,15 +13683,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentNoTierBlockSummationDelivered(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTNOTIERBLOCK1SUMMATIONDELIVERED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTNOTIERBLOCK1SUMMATIONDELIVERED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTNOTIERBLOCK1SUMMATIONDELIVERED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTNOTIERBLOCK1SUMMATIONDELIVERED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTNOTIERBLOCK1SUMMATIONDELIVERED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current No Tier Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0700</b>].
+     * Set reporting for the <i>Current No Tier Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x0700</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11258,11 +13705,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentNoTierBlock1SummationDeliveredReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTNOTIERBLOCK1SUMMATIONDELIVERED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentNoTierBlock1SummationDeliveredReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTNOTIERBLOCK1SUMMATIONDELIVERED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -11286,7 +13736,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 1 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0710</b>].
+     * Synchronously get the <i>Current Tier 1 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x0710</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -11306,15 +13757,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier1BlockSummationDelivered(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER1BLOCK1SUMMATIONDELIVERED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER1BLOCK1SUMMATIONDELIVERED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER1BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER1BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER1BLOCK1SUMMATIONDELIVERED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 1 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0710</b>].
+     * Set reporting for the <i>Current Tier 1 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x0710</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11325,11 +13779,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier1Block1SummationDeliveredReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER1BLOCK1SUMMATIONDELIVERED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier1Block1SummationDeliveredReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER1BLOCK1SUMMATIONDELIVERED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -11353,7 +13810,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 2 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0720</b>].
+     * Synchronously get the <i>Current Tier 2 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x0720</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -11373,15 +13831,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier2BlockSummationDelivered(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER2BLOCK1SUMMATIONDELIVERED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER2BLOCK1SUMMATIONDELIVERED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER2BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER2BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER2BLOCK1SUMMATIONDELIVERED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 2 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0720</b>].
+     * Set reporting for the <i>Current Tier 2 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x0720</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11392,11 +13853,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier2Block1SummationDeliveredReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER2BLOCK1SUMMATIONDELIVERED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier2Block1SummationDeliveredReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER2BLOCK1SUMMATIONDELIVERED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -11420,7 +13884,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 3 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0730</b>].
+     * Synchronously get the <i>Current Tier 3 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x0730</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -11440,15 +13905,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier3BlockSummationDelivered(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER3BLOCK1SUMMATIONDELIVERED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER3BLOCK1SUMMATIONDELIVERED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER3BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER3BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER3BLOCK1SUMMATIONDELIVERED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 3 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0730</b>].
+     * Set reporting for the <i>Current Tier 3 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x0730</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11459,11 +13927,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier3Block1SummationDeliveredReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER3BLOCK1SUMMATIONDELIVERED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier3Block1SummationDeliveredReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER3BLOCK1SUMMATIONDELIVERED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -11487,7 +13958,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 4 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0740</b>].
+     * Synchronously get the <i>Current Tier 4 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x0740</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -11507,15 +13979,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier4BlockSummationDelivered(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER4BLOCK1SUMMATIONDELIVERED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER4BLOCK1SUMMATIONDELIVERED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER4BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER4BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER4BLOCK1SUMMATIONDELIVERED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 4 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0740</b>].
+     * Set reporting for the <i>Current Tier 4 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x0740</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11526,11 +14001,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier4Block1SummationDeliveredReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER4BLOCK1SUMMATIONDELIVERED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier4Block1SummationDeliveredReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER4BLOCK1SUMMATIONDELIVERED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -11554,7 +14032,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 5 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0750</b>].
+     * Synchronously get the <i>Current Tier 5 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x0750</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -11574,15 +14053,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier5BlockSummationDelivered(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER5BLOCK1SUMMATIONDELIVERED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER5BLOCK1SUMMATIONDELIVERED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER5BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER5BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER5BLOCK1SUMMATIONDELIVERED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 5 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0750</b>].
+     * Set reporting for the <i>Current Tier 5 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x0750</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11593,11 +14075,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier5Block1SummationDeliveredReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER5BLOCK1SUMMATIONDELIVERED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier5Block1SummationDeliveredReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER5BLOCK1SUMMATIONDELIVERED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -11621,7 +14106,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 6 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0760</b>].
+     * Synchronously get the <i>Current Tier 6 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x0760</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -11641,15 +14127,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier6BlockSummationDelivered(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER6BLOCK1SUMMATIONDELIVERED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER6BLOCK1SUMMATIONDELIVERED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER6BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER6BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER6BLOCK1SUMMATIONDELIVERED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 6 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0760</b>].
+     * Set reporting for the <i>Current Tier 6 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x0760</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11660,11 +14149,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier6Block1SummationDeliveredReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER6BLOCK1SUMMATIONDELIVERED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier6Block1SummationDeliveredReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER6BLOCK1SUMMATIONDELIVERED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -11688,7 +14180,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 7 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0770</b>].
+     * Synchronously get the <i>Current Tier 7 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x0770</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -11708,15 +14201,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier7BlockSummationDelivered(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER7BLOCK1SUMMATIONDELIVERED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER7BLOCK1SUMMATIONDELIVERED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER7BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER7BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER7BLOCK1SUMMATIONDELIVERED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 7 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0770</b>].
+     * Set reporting for the <i>Current Tier 7 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x0770</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11727,11 +14223,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier7Block1SummationDeliveredReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER7BLOCK1SUMMATIONDELIVERED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier7Block1SummationDeliveredReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER7BLOCK1SUMMATIONDELIVERED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -11755,7 +14254,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 8 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0780</b>].
+     * Synchronously get the <i>Current Tier 8 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x0780</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -11775,15 +14275,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier8BlockSummationDelivered(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER8BLOCK1SUMMATIONDELIVERED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER8BLOCK1SUMMATIONDELIVERED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER8BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER8BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER8BLOCK1SUMMATIONDELIVERED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 8 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0780</b>].
+     * Set reporting for the <i>Current Tier 8 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x0780</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11794,11 +14297,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier8Block1SummationDeliveredReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER8BLOCK1SUMMATIONDELIVERED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier8Block1SummationDeliveredReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER8BLOCK1SUMMATIONDELIVERED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -11822,7 +14328,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 9 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0790</b>].
+     * Synchronously get the <i>Current Tier 9 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x0790</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -11842,15 +14349,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier9BlockSummationDelivered(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER9BLOCK1SUMMATIONDELIVERED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER9BLOCK1SUMMATIONDELIVERED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER9BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER9BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER9BLOCK1SUMMATIONDELIVERED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 9 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x0790</b>].
+     * Set reporting for the <i>Current Tier 9 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x0790</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11861,11 +14371,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier9Block1SummationDeliveredReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER9BLOCK1SUMMATIONDELIVERED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier9Block1SummationDeliveredReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER9BLOCK1SUMMATIONDELIVERED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -11889,7 +14402,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 10 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07A0</b>].
+     * Synchronously get the <i>Current Tier 10 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x07A0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -11909,15 +14423,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier10BlockSummationDelivered(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER10BLOCK1SUMMATIONDELIVERED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER10BLOCK1SUMMATIONDELIVERED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER10BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER10BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER10BLOCK1SUMMATIONDELIVERED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 10 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07A0</b>].
+     * Set reporting for the <i>Current Tier 10 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x07A0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11928,11 +14445,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier10Block1SummationDeliveredReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER10BLOCK1SUMMATIONDELIVERED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier10Block1SummationDeliveredReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER10BLOCK1SUMMATIONDELIVERED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -11956,7 +14476,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 11 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07B0</b>].
+     * Synchronously get the <i>Current Tier 11 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x07B0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -11976,15 +14497,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier11BlockSummationDelivered(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER11BLOCK1SUMMATIONDELIVERED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER11BLOCK1SUMMATIONDELIVERED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER11BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER11BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER11BLOCK1SUMMATIONDELIVERED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 11 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07B0</b>].
+     * Set reporting for the <i>Current Tier 11 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x07B0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -11995,11 +14519,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier11Block1SummationDeliveredReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER11BLOCK1SUMMATIONDELIVERED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier11Block1SummationDeliveredReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER11BLOCK1SUMMATIONDELIVERED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -12023,7 +14550,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 12 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07C0</b>].
+     * Synchronously get the <i>Current Tier 12 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x07C0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -12043,15 +14571,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier12BlockSummationDelivered(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER12BLOCK1SUMMATIONDELIVERED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER12BLOCK1SUMMATIONDELIVERED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER12BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER12BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER12BLOCK1SUMMATIONDELIVERED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 12 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07C0</b>].
+     * Set reporting for the <i>Current Tier 12 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x07C0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -12062,11 +14593,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier12Block1SummationDeliveredReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER12BLOCK1SUMMATIONDELIVERED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier12Block1SummationDeliveredReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER12BLOCK1SUMMATIONDELIVERED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -12090,7 +14624,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 13 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07D0</b>].
+     * Synchronously get the <i>Current Tier 13 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x07D0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -12110,15 +14645,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier13BlockSummationDelivered(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER13BLOCK1SUMMATIONDELIVERED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER13BLOCK1SUMMATIONDELIVERED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER13BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER13BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER13BLOCK1SUMMATIONDELIVERED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 13 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07D0</b>].
+     * Set reporting for the <i>Current Tier 13 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x07D0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -12129,11 +14667,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier13Block1SummationDeliveredReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER13BLOCK1SUMMATIONDELIVERED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier13Block1SummationDeliveredReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER13BLOCK1SUMMATIONDELIVERED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -12157,7 +14698,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 14 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07E0</b>].
+     * Synchronously get the <i>Current Tier 14 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x07E0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -12177,15 +14719,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier14BlockSummationDelivered(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER14BLOCK1SUMMATIONDELIVERED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER14BLOCK1SUMMATIONDELIVERED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER14BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER14BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER14BLOCK1SUMMATIONDELIVERED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 14 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07E0</b>].
+     * Set reporting for the <i>Current Tier 14 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x07E0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -12196,11 +14741,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier14Block1SummationDeliveredReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER14BLOCK1SUMMATIONDELIVERED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier14Block1SummationDeliveredReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER14BLOCK1SUMMATIONDELIVERED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -12224,7 +14772,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 15 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07F0</b>].
+     * Synchronously get the <i>Current Tier 15 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x07F0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -12244,15 +14793,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier15BlockSummationDelivered(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER15BLOCK1SUMMATIONDELIVERED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER15BLOCK1SUMMATIONDELIVERED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER15BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER15BLOCK1SUMMATIONDELIVERED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER15BLOCK1SUMMATIONDELIVERED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 15 Block {{count}} Summation Delivered</i> attribute [attribute ID <b>0x07F0</b>].
+     * Set reporting for the <i>Current Tier 15 Block {{count}} Summation Delivered</i> attribute [attribute ID
+     * <b>0x07F0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -12263,11 +14815,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier15Block1SummationDeliveredReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER15BLOCK1SUMMATIONDELIVERED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier15Block1SummationDeliveredReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER15BLOCK1SUMMATIONDELIVERED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -12755,7 +15310,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current No Tier Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0900</b>].
+     * Synchronously get the <i>Current No Tier Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x0900</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -12775,15 +15331,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentNoTierBlockSummationReceived(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTNOTIERBLOCK1SUMMATIONRECEIVED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTNOTIERBLOCK1SUMMATIONRECEIVED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTNOTIERBLOCK1SUMMATIONRECEIVED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTNOTIERBLOCK1SUMMATIONRECEIVED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTNOTIERBLOCK1SUMMATIONRECEIVED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current No Tier Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0900</b>].
+     * Set reporting for the <i>Current No Tier Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x0900</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -12794,11 +15353,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentNoTierBlock1SummationReceivedReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTNOTIERBLOCK1SUMMATIONRECEIVED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentNoTierBlock1SummationReceivedReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTNOTIERBLOCK1SUMMATIONRECEIVED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -12822,7 +15384,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 1 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0910</b>].
+     * Synchronously get the <i>Current Tier 1 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x0910</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -12842,15 +15405,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier1BlockSummationReceived(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER1BLOCK1SUMMATIONRECEIVED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER1BLOCK1SUMMATIONRECEIVED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER1BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER1BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER1BLOCK1SUMMATIONRECEIVED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 1 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0910</b>].
+     * Set reporting for the <i>Current Tier 1 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x0910</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -12861,11 +15427,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier1Block1SummationReceivedReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER1BLOCK1SUMMATIONRECEIVED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier1Block1SummationReceivedReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER1BLOCK1SUMMATIONRECEIVED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -12889,7 +15458,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 2 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0920</b>].
+     * Synchronously get the <i>Current Tier 2 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x0920</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -12909,15 +15479,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier2BlockSummationReceived(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER2BLOCK1SUMMATIONRECEIVED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER2BLOCK1SUMMATIONRECEIVED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER2BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER2BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER2BLOCK1SUMMATIONRECEIVED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 2 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0920</b>].
+     * Set reporting for the <i>Current Tier 2 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x0920</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -12928,11 +15501,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier2Block1SummationReceivedReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER2BLOCK1SUMMATIONRECEIVED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier2Block1SummationReceivedReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER2BLOCK1SUMMATIONRECEIVED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -12956,7 +15532,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 3 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0930</b>].
+     * Synchronously get the <i>Current Tier 3 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x0930</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -12976,15 +15553,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier3BlockSummationReceived(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER3BLOCK1SUMMATIONRECEIVED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER3BLOCK1SUMMATIONRECEIVED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER3BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER3BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER3BLOCK1SUMMATIONRECEIVED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 3 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0930</b>].
+     * Set reporting for the <i>Current Tier 3 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x0930</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -12995,11 +15575,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier3Block1SummationReceivedReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER3BLOCK1SUMMATIONRECEIVED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier3Block1SummationReceivedReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER3BLOCK1SUMMATIONRECEIVED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -13023,7 +15606,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 4 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0940</b>].
+     * Synchronously get the <i>Current Tier 4 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x0940</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -13043,15 +15627,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier4BlockSummationReceived(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER4BLOCK1SUMMATIONRECEIVED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER4BLOCK1SUMMATIONRECEIVED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER4BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER4BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER4BLOCK1SUMMATIONRECEIVED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 4 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0940</b>].
+     * Set reporting for the <i>Current Tier 4 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x0940</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13062,11 +15649,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier4Block1SummationReceivedReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER4BLOCK1SUMMATIONRECEIVED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier4Block1SummationReceivedReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER4BLOCK1SUMMATIONRECEIVED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -13090,7 +15680,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 5 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0950</b>].
+     * Synchronously get the <i>Current Tier 5 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x0950</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -13110,15 +15701,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier5BlockSummationReceived(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER5BLOCK1SUMMATIONRECEIVED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER5BLOCK1SUMMATIONRECEIVED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER5BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER5BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER5BLOCK1SUMMATIONRECEIVED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 5 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0950</b>].
+     * Set reporting for the <i>Current Tier 5 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x0950</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13129,11 +15723,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier5Block1SummationReceivedReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER5BLOCK1SUMMATIONRECEIVED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier5Block1SummationReceivedReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER5BLOCK1SUMMATIONRECEIVED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -13157,7 +15754,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 6 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0960</b>].
+     * Synchronously get the <i>Current Tier 6 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x0960</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -13177,15 +15775,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier6BlockSummationReceived(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER6BLOCK1SUMMATIONRECEIVED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER6BLOCK1SUMMATIONRECEIVED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER6BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER6BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER6BLOCK1SUMMATIONRECEIVED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 6 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0960</b>].
+     * Set reporting for the <i>Current Tier 6 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x0960</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13196,11 +15797,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier6Block1SummationReceivedReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER6BLOCK1SUMMATIONRECEIVED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier6Block1SummationReceivedReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER6BLOCK1SUMMATIONRECEIVED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -13224,7 +15828,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 7 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0970</b>].
+     * Synchronously get the <i>Current Tier 7 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x0970</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -13244,15 +15849,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier7BlockSummationReceived(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER7BLOCK1SUMMATIONRECEIVED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER7BLOCK1SUMMATIONRECEIVED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER7BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER7BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER7BLOCK1SUMMATIONRECEIVED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 7 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0970</b>].
+     * Set reporting for the <i>Current Tier 7 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x0970</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13263,11 +15871,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier7Block1SummationReceivedReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER7BLOCK1SUMMATIONRECEIVED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier7Block1SummationReceivedReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER7BLOCK1SUMMATIONRECEIVED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -13291,7 +15902,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 8 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0980</b>].
+     * Synchronously get the <i>Current Tier 8 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x0980</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -13311,15 +15923,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier8BlockSummationReceived(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER8BLOCK1SUMMATIONRECEIVED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER8BLOCK1SUMMATIONRECEIVED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER8BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER8BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER8BLOCK1SUMMATIONRECEIVED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 8 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0980</b>].
+     * Set reporting for the <i>Current Tier 8 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x0980</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13330,11 +15945,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier8Block1SummationReceivedReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER8BLOCK1SUMMATIONRECEIVED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier8Block1SummationReceivedReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER8BLOCK1SUMMATIONRECEIVED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -13358,7 +15976,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 9 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0990</b>].
+     * Synchronously get the <i>Current Tier 9 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x0990</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -13378,15 +15997,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier9BlockSummationReceived(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER9BLOCK1SUMMATIONRECEIVED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER9BLOCK1SUMMATIONRECEIVED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER9BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER9BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER9BLOCK1SUMMATIONRECEIVED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 9 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x0990</b>].
+     * Set reporting for the <i>Current Tier 9 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x0990</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13397,11 +16019,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier9Block1SummationReceivedReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER9BLOCK1SUMMATIONRECEIVED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier9Block1SummationReceivedReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER9BLOCK1SUMMATIONRECEIVED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -13425,7 +16050,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 10 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09A0</b>].
+     * Synchronously get the <i>Current Tier 10 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x09A0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -13445,15 +16071,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier10BlockSummationReceived(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER10BLOCK1SUMMATIONRECEIVED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER10BLOCK1SUMMATIONRECEIVED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER10BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER10BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER10BLOCK1SUMMATIONRECEIVED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 10 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09A0</b>].
+     * Set reporting for the <i>Current Tier 10 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x09A0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13464,11 +16093,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier10Block1SummationReceivedReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER10BLOCK1SUMMATIONRECEIVED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier10Block1SummationReceivedReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER10BLOCK1SUMMATIONRECEIVED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -13492,7 +16124,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 11 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09B0</b>].
+     * Synchronously get the <i>Current Tier 11 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x09B0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -13512,15 +16145,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier11BlockSummationReceived(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER11BLOCK1SUMMATIONRECEIVED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER11BLOCK1SUMMATIONRECEIVED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER11BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER11BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER11BLOCK1SUMMATIONRECEIVED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 11 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09B0</b>].
+     * Set reporting for the <i>Current Tier 11 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x09B0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13531,11 +16167,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier11Block1SummationReceivedReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER11BLOCK1SUMMATIONRECEIVED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier11Block1SummationReceivedReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER11BLOCK1SUMMATIONRECEIVED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -13559,7 +16198,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 12 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09C0</b>].
+     * Synchronously get the <i>Current Tier 12 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x09C0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -13579,15 +16219,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier12BlockSummationReceived(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER12BLOCK1SUMMATIONRECEIVED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER12BLOCK1SUMMATIONRECEIVED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER12BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER12BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER12BLOCK1SUMMATIONRECEIVED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 12 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09C0</b>].
+     * Set reporting for the <i>Current Tier 12 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x09C0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13598,11 +16241,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier12Block1SummationReceivedReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER12BLOCK1SUMMATIONRECEIVED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier12Block1SummationReceivedReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER12BLOCK1SUMMATIONRECEIVED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -13626,7 +16272,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 13 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09D0</b>].
+     * Synchronously get the <i>Current Tier 13 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x09D0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -13646,15 +16293,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier13BlockSummationReceived(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER13BLOCK1SUMMATIONRECEIVED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER13BLOCK1SUMMATIONRECEIVED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER13BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER13BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER13BLOCK1SUMMATIONRECEIVED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 13 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09D0</b>].
+     * Set reporting for the <i>Current Tier 13 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x09D0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13665,11 +16315,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier13Block1SummationReceivedReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER13BLOCK1SUMMATIONRECEIVED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier13Block1SummationReceivedReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER13BLOCK1SUMMATIONRECEIVED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -13693,7 +16346,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 14 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09E0</b>].
+     * Synchronously get the <i>Current Tier 14 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x09E0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -13713,15 +16367,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier14BlockSummationReceived(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER14BLOCK1SUMMATIONRECEIVED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER14BLOCK1SUMMATIONRECEIVED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER14BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER14BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER14BLOCK1SUMMATIONRECEIVED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 14 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09E0</b>].
+     * Set reporting for the <i>Current Tier 14 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x09E0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13732,11 +16389,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier14Block1SummationReceivedReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER14BLOCK1SUMMATIONRECEIVED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier14Block1SummationReceivedReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER14BLOCK1SUMMATIONRECEIVED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -13760,7 +16420,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Tier 15 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09F0</b>].
+     * Synchronously get the <i>Current Tier 15 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x09F0</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -13780,15 +16441,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentTier15BlockSummationReceived(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTTIER15BLOCK1SUMMATIONRECEIVED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTTIER15BLOCK1SUMMATIONRECEIVED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTTIER15BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTTIER15BLOCK1SUMMATIONRECEIVED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTTIER15BLOCK1SUMMATIONRECEIVED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Current Tier 15 Block {{count}} Summation Received</i> attribute [attribute ID <b>0x09F0</b>].
+     * Set reporting for the <i>Current Tier 15 Block {{count}} Summation Received</i> attribute [attribute ID
+     * <b>0x09F0</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -13799,11 +16463,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentTier15Block1SummationReceivedReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTTIER15BLOCK1SUMMATIONRECEIVED + arrayOffset - 1), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentTier15Block1SummationReceivedReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTTIER15BLOCK1SUMMATIONRECEIVED + arrayOffset - 1),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -13871,10 +16538,12 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setBillToDateDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+    public Future<CommandResult> setBillToDateDeliveredReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
         return setReporting(serverAttributes.get(ATTR_BILLTODATEDELIVERED), minInterval, maxInterval, reportableChange);
     }
 
@@ -13940,11 +16609,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setBillToDateTimeStampDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_BILLTODATETIMESTAMPDELIVERED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setBillToDateTimeStampDeliveredReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_BILLTODATETIMESTAMPDELIVERED), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -14015,11 +16687,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setProjectedBillDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_PROJECTEDBILLDELIVERED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setProjectedBillDeliveredReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_PROJECTEDBILLDELIVERED), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -14084,11 +16759,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setProjectedBillTimeStampDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_PROJECTEDBILLTIMESTAMPDELIVERED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setProjectedBillTimeStampDeliveredReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_PROJECTEDBILLTIMESTAMPDELIVERED), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -14161,7 +16839,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
     public Future<CommandResult> setBillDeliveredTrailingDigitReporting(final int minInterval, final int maxInterval) {
@@ -14233,10 +16912,12 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setBillToDateReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+    public Future<CommandResult> setBillToDateReceivedReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
         return setReporting(serverAttributes.get(ATTR_BILLTODATERECEIVED), minInterval, maxInterval, reportableChange);
     }
 
@@ -14299,11 +16980,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setBillToDateTimeStampReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_BILLTODATETIMESTAMPRECEIVED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setBillToDateTimeStampReceivedReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_BILLTODATETIMESTAMPRECEIVED), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -14374,11 +17058,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setProjectedBillReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_PROJECTEDBILLRECEIVED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setProjectedBillReceivedReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_PROJECTEDBILLRECEIVED), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -14443,11 +17130,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setProjectedBillTimeStampReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_PROJECTEDBILLTIMESTAMPRECEIVED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setProjectedBillTimeStampReceivedReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_PROJECTEDBILLTIMESTAMPRECEIVED), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -14520,7 +17210,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
     public Future<CommandResult> setBillReceivedTrailingDigitReporting(final int minInterval, final int maxInterval) {
@@ -14592,11 +17283,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setProposedChangeSupplyImplementationTimeReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_PROPOSEDCHANGESUPPLYIMPLEMENTATIONTIME), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setProposedChangeSupplyImplementationTimeReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_PROPOSEDCHANGESUPPLYIMPLEMENTATIONTIME), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -14660,7 +17354,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
     public Future<CommandResult> setProposedChangeSupplyStatusReporting(final int minInterval, final int maxInterval) {
@@ -14732,11 +17427,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setUncontrolledFlowThresholdReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_UNCONTROLLEDFLOWTHRESHOLD), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setUncontrolledFlowThresholdReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_UNCONTROLLEDFLOWTHRESHOLD), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -14800,11 +17498,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
-    public Future<CommandResult> setUncontrolledFlowThresholdUnitOfMeasureReporting(final int minInterval, final int maxInterval) {
-        return setReporting(serverAttributes.get(ATTR_UNCONTROLLEDFLOWTHRESHOLDUNITOFMEASURE), minInterval, maxInterval);
+    public Future<CommandResult> setUncontrolledFlowThresholdUnitOfMeasureReporting(final int minInterval,
+            final int maxInterval) {
+        return setReporting(serverAttributes.get(ATTR_UNCONTROLLEDFLOWTHRESHOLDUNITOFMEASURE), minInterval,
+                maxInterval);
     }
 
     /**
@@ -14875,11 +17576,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setUncontrolledFlowThresholdMultiplierReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_UNCONTROLLEDFLOWTHRESHOLDMULTIPLIER), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setUncontrolledFlowThresholdMultiplierReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_UNCONTROLLEDFLOWTHRESHOLDMULTIPLIER), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -14950,11 +17654,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setUncontrolledFlowThresholdDivisorReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_UNCONTROLLEDFLOWTHRESHOLDDIVISOR), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setUncontrolledFlowThresholdDivisorReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_UNCONTROLLEDFLOWTHRESHOLDDIVISOR), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -15019,11 +17726,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setFlowStabilizationPeriodReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_FLOWSTABILIZATIONPERIOD), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setFlowStabilizationPeriodReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_FLOWSTABILIZATIONPERIOD), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -15091,11 +17801,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setFlowMeasurementPeriodReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_FLOWMEASUREMENTPERIOD), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setFlowMeasurementPeriodReporting(final int minInterval, final int maxInterval,
+            final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_FLOWMEASUREMENTPERIOD), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -15172,11 +17885,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setAlternativeInstantaneousDemandReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_ALTERNATIVEINSTANTANEOUSDEMAND), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setAlternativeInstantaneousDemandReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_ALTERNATIVEINSTANTANEOUSDEMAND), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -15201,7 +17917,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Day Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C01</b>].
+     * Synchronously get the <i>Current Day Alternative Consumption Delivered</i> attribute [attribute ID
+     * <b>0x0C01</b>].
      * <p>
      * CurrentDayAlternativeConsumptionDelivered represents the summed value delivered
      * to the premises since the Historical Freeze Time (HFT). If optionally provided,
@@ -15234,7 +17951,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Day Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C01</b>].
+     * Set reporting for the <i>Current Day Alternative Consumption Delivered</i> attribute [attribute ID
+     * <b>0x0C01</b>].
      * <p>
      * CurrentDayAlternativeConsumptionDelivered represents the summed value delivered
      * to the premises since the Historical Freeze Time (HFT). If optionally provided,
@@ -15250,11 +17968,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentDayAlternativeConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTDAYALTERNATIVECONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentDayAlternativeConsumptionDeliveredReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTDAYALTERNATIVECONSUMPTIONDELIVERED), minInterval,
+                maxInterval, reportableChange);
     }
 
     /**
@@ -15328,11 +18049,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentDayAlternativeConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTDAYALTERNATIVECONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentDayAlternativeConsumptionReceivedReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTDAYALTERNATIVECONSUMPTIONRECEIVED), minInterval,
+                maxInterval, reportableChange);
     }
 
     /**
@@ -15357,7 +18081,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Previous Day Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C03</b>].
+     * Synchronously get the <i>Previous Day Alternative Consumption Delivered</i> attribute [attribute ID
+     * <b>0x0C03</b>].
      * <p>
      * PreviousDayAlternativeConsumptionDelivered represents the summed value
      * delivered to the premises within the previous 24 hour period starting at the
@@ -15390,7 +18115,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Previous Day Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C03</b>].
+     * Set reporting for the <i>Previous Day Alternative Consumption Delivered</i> attribute [attribute ID
+     * <b>0x0C03</b>].
      * <p>
      * PreviousDayAlternativeConsumptionDelivered represents the summed value
      * delivered to the premises within the previous 24 hour period starting at the
@@ -15406,11 +18132,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setPreviousDayAlternativeConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAYALTERNATIVECONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setPreviousDayAlternativeConsumptionDeliveredReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAYALTERNATIVECONSUMPTIONDELIVERED), minInterval,
+                maxInterval, reportableChange);
     }
 
     /**
@@ -15435,7 +18164,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Previous Day Alternative Consumption Received</i> attribute [attribute ID <b>0x0C04</b>].
+     * Synchronously get the <i>Previous Day Alternative Consumption Received</i> attribute [attribute ID
+     * <b>0x0C04</b>].
      * <p>
      * PreviousDayAlternativeConsumptionReceived represents the summed value received
      * from the premises within the previous 24 hour period starting at the Historical Freeze
@@ -15468,7 +18198,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Previous Day Alternative Consumption Received</i> attribute [attribute ID <b>0x0C04</b>].
+     * Set reporting for the <i>Previous Day Alternative Consumption Received</i> attribute [attribute ID
+     * <b>0x0C04</b>].
      * <p>
      * PreviousDayAlternativeConsumptionReceived represents the summed value received
      * from the premises within the previous 24 hour period starting at the Historical Freeze
@@ -15484,15 +18215,19 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setPreviousDayAlternativeConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAYALTERNATIVECONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setPreviousDayAlternativeConsumptionReceivedReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAYALTERNATIVECONSUMPTIONRECEIVED), minInterval,
+                maxInterval, reportableChange);
     }
 
     /**
-     * Get the <i>Current Alternative Partial Profile Interval Start Time Delivered</i> attribute [attribute ID <b>0x0C05</b>].
+     * Get the <i>Current Alternative Partial Profile Interval Start Time Delivered</i> attribute [attribute ID
+     * <b>0x0C05</b>].
      * <p>
      * CurrentAlternativePartialProfileIntervalStartTimeDelivered represents the
      * start time of the current Load Profile interval being accumulated for commodity
@@ -15511,7 +18246,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Alternative Partial Profile Interval Start Time Delivered</i> attribute [attribute ID <b>0x0C05</b>].
+     * Synchronously get the <i>Current Alternative Partial Profile Interval Start Time Delivered</i> attribute
+     * [attribute ID <b>0x0C05</b>].
      * <p>
      * CurrentAlternativePartialProfileIntervalStartTimeDelivered represents the
      * start time of the current Load Profile interval being accumulated for commodity
@@ -15534,15 +18270,19 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Calendar getCurrentAlternativePartialProfileIntervalStartTimeDelivered(final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMEDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMEDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMEDELIVERED)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMEDELIVERED)
+                    .getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMEDELIVERED));
+        return (Calendar) readSync(
+                serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMEDELIVERED));
     }
 
     /**
-     * Set reporting for the <i>Current Alternative Partial Profile Interval Start Time Delivered</i> attribute [attribute ID <b>0x0C05</b>].
+     * Set reporting for the <i>Current Alternative Partial Profile Interval Start Time Delivered</i> attribute
+     * [attribute ID <b>0x0C05</b>].
      * <p>
      * CurrentAlternativePartialProfileIntervalStartTimeDelivered represents the
      * start time of the current Load Profile interval being accumulated for commodity
@@ -15556,15 +18296,19 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentAlternativePartialProfileIntervalStartTimeDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMEDELIVERED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentAlternativePartialProfileIntervalStartTimeDeliveredReporting(
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMEDELIVERED),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
-     * Get the <i>Current Alternative Partial Profile Interval Start Time Received</i> attribute [attribute ID <b>0x0C06</b>].
+     * Get the <i>Current Alternative Partial Profile Interval Start Time Received</i> attribute [attribute ID
+     * <b>0x0C06</b>].
      * <p>
      * CurrentAlternativePartialProfileIntervalStartTimeReceived represents the
      * start time of the current Load Profile interval being accumulated for commodity
@@ -15583,7 +18327,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Alternative Partial Profile Interval Start Time Received</i> attribute [attribute ID <b>0x0C06</b>].
+     * Synchronously get the <i>Current Alternative Partial Profile Interval Start Time Received</i> attribute
+     * [attribute ID <b>0x0C06</b>].
      * <p>
      * CurrentAlternativePartialProfileIntervalStartTimeReceived represents the
      * start time of the current Load Profile interval being accumulated for commodity
@@ -15606,15 +18351,19 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Calendar getCurrentAlternativePartialProfileIntervalStartTimeReceived(final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMERECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Calendar) serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMERECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMERECEIVED)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMERECEIVED)
+                    .getLastValue();
         }
 
-        return (Calendar) readSync(serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMERECEIVED));
+        return (Calendar) readSync(
+                serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMERECEIVED));
     }
 
     /**
-     * Set reporting for the <i>Current Alternative Partial Profile Interval Start Time Received</i> attribute [attribute ID <b>0x0C06</b>].
+     * Set reporting for the <i>Current Alternative Partial Profile Interval Start Time Received</i> attribute
+     * [attribute ID <b>0x0C06</b>].
      * <p>
      * CurrentAlternativePartialProfileIntervalStartTimeReceived represents the
      * start time of the current Load Profile interval being accumulated for commodity
@@ -15628,15 +18377,19 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentAlternativePartialProfileIntervalStartTimeReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMERECEIVED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentAlternativePartialProfileIntervalStartTimeReceivedReporting(
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALSTARTTIMERECEIVED),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
-     * Get the <i>Current Alternative Partial Profile Interval Value Delivered</i> attribute [attribute ID <b>0x0C07</b>].
+     * Get the <i>Current Alternative Partial Profile Interval Value Delivered</i> attribute [attribute ID
+     * <b>0x0C07</b>].
      * <p>
      * CurrentAlternativePartialProfileIntervalValueDelivered represents the value of
      * the current Load Profile interval being accumulated for commodity delivered.
@@ -15654,7 +18407,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Alternative Partial Profile Interval Value Delivered</i> attribute [attribute ID <b>0x0C07</b>].
+     * Synchronously get the <i>Current Alternative Partial Profile Interval Value Delivered</i> attribute [attribute ID
+     * <b>0x0C07</b>].
      * <p>
      * CurrentAlternativePartialProfileIntervalValueDelivered represents the value of
      * the current Load Profile interval being accumulated for commodity delivered.
@@ -15676,15 +18430,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentAlternativePartialProfileIntervalValueDelivered(final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALVALUEDELIVERED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALVALUEDELIVERED).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALVALUEDELIVERED)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALVALUEDELIVERED)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALVALUEDELIVERED));
     }
 
     /**
-     * Set reporting for the <i>Current Alternative Partial Profile Interval Value Delivered</i> attribute [attribute ID <b>0x0C07</b>].
+     * Set reporting for the <i>Current Alternative Partial Profile Interval Value Delivered</i> attribute [attribute ID
+     * <b>0x0C07</b>].
      * <p>
      * CurrentAlternativePartialProfileIntervalValueDelivered represents the value of
      * the current Load Profile interval being accumulated for commodity delivered.
@@ -15697,15 +18454,19 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentAlternativePartialProfileIntervalValueDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALVALUEDELIVERED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentAlternativePartialProfileIntervalValueDeliveredReporting(
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALVALUEDELIVERED),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
-     * Get the <i>Current Alternative Partial Profile Interval Value Received</i> attribute [attribute ID <b>0x0C08</b>].
+     * Get the <i>Current Alternative Partial Profile Interval Value Received</i> attribute [attribute ID
+     * <b>0x0C08</b>].
      * <p>
      * CurrentAlternativePartialProfileIntervalValueReceived represents the value of
      * the current Load Profile interval being accumulated for commodity received.
@@ -15723,7 +18484,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Alternative Partial Profile Interval Value Received</i> attribute [attribute ID <b>0x0C08</b>].
+     * Synchronously get the <i>Current Alternative Partial Profile Interval Value Received</i> attribute [attribute ID
+     * <b>0x0C08</b>].
      * <p>
      * CurrentAlternativePartialProfileIntervalValueReceived represents the value of
      * the current Load Profile interval being accumulated for commodity received.
@@ -15745,15 +18507,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getCurrentAlternativePartialProfileIntervalValueReceived(final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALVALUERECEIVED).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALVALUERECEIVED).getLastValue();
+        if (serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALVALUERECEIVED)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALVALUERECEIVED)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALVALUERECEIVED));
     }
 
     /**
-     * Set reporting for the <i>Current Alternative Partial Profile Interval Value Received</i> attribute [attribute ID <b>0x0C08</b>].
+     * Set reporting for the <i>Current Alternative Partial Profile Interval Value Received</i> attribute [attribute ID
+     * <b>0x0C08</b>].
      * <p>
      * CurrentAlternativePartialProfileIntervalValueReceived represents the value of
      * the current Load Profile interval being accumulated for commodity received.
@@ -15766,11 +18531,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentAlternativePartialProfileIntervalValueReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALVALUERECEIVED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentAlternativePartialProfileIntervalValueReceivedReporting(
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTALTERNATIVEPARTIALPROFILEINTERVALVALUERECEIVED),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -15835,11 +18603,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentDayAlternativeMaxPressureReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTDAYALTERNATIVEMAXPRESSURE), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentDayAlternativeMaxPressureReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTDAYALTERNATIVEMAXPRESSURE), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -15904,11 +18675,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentDayAlternativeMinPressureReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTDAYALTERNATIVEMINPRESSURE), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentDayAlternativeMinPressureReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTDAYALTERNATIVEMINPRESSURE), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -15973,11 +18747,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setPreviousDayAlternativeMaxPressureReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAYALTERNATIVEMAXPRESSURE), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setPreviousDayAlternativeMaxPressureReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAYALTERNATIVEMAXPRESSURE), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -16042,11 +18819,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setPreviousDayAlternativeMinPressureReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAYALTERNATIVEMINPRESSURE), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setPreviousDayAlternativeMinPressureReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAYALTERNATIVEMINPRESSURE), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -16111,11 +18891,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentDayAlternativeMaxDemandReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTDAYALTERNATIVEMAXDEMAND), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentDayAlternativeMaxDemandReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTDAYALTERNATIVEMAXDEMAND), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -16180,11 +18963,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setPreviousDayAlternativeMaxDemandReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAYALTERNATIVEMAXDEMAND), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setPreviousDayAlternativeMaxDemandReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAYALTERNATIVEMAXDEMAND), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -16249,11 +19035,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentMonthAlternativeMaxDemandReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTMONTHALTERNATIVEMAXDEMAND), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentMonthAlternativeMaxDemandReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTMONTHALTERNATIVEMAXDEMAND), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -16318,11 +19107,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentYearAlternativeMaxDemandReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTYEARALTERNATIVEMAXDEMAND), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentYearAlternativeMaxDemandReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTYEARALTERNATIVEMAXDEMAND), minInterval, maxInterval,
+                reportableChange);
     }
 
     /**
@@ -16351,7 +19143,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Previous Day {{count}} Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C20</b>].
+     * Synchronously get the <i>Previous Day {{count}} Alternative Consumption Delivered</i> attribute [attribute ID
+     * <b>0x0C20</b>].
      * <p>
      * PreviousDayNAlternativeConsumptionDelivered represents the summed value
      * delivered to the premises within the previous 24 hour period starting at the Historical
@@ -16376,15 +19169,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getPreviousDayAlternativeConsumptionDelivered(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_PREVIOUSDAY2ALTERNATIVECONSUMPTIONDELIVERED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_PREVIOUSDAY2ALTERNATIVECONSUMPTIONDELIVERED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSDAY2ALTERNATIVECONSUMPTIONDELIVERED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSDAY2ALTERNATIVECONSUMPTIONDELIVERED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSDAY2ALTERNATIVECONSUMPTIONDELIVERED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Previous Day {{count}} Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C20</b>].
+     * Set reporting for the <i>Previous Day {{count}} Alternative Consumption Delivered</i> attribute [attribute ID
+     * <b>0x0C20</b>].
      * <p>
      * PreviousDayNAlternativeConsumptionDelivered represents the summed value
      * delivered to the premises within the previous 24 hour period starting at the Historical
@@ -16400,11 +19196,15 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setPreviousDay2AlternativeConsumptionDeliveredReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAY2ALTERNATIVECONSUMPTIONDELIVERED + (arrayOffset - 1) * 2), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setPreviousDay2AlternativeConsumptionDeliveredReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(
+                serverAttributes.get(ATTR_PREVIOUSDAY2ALTERNATIVECONSUMPTIONDELIVERED + (arrayOffset - 1) * 2),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -16433,7 +19233,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Previous Day {{count}} Alternative Consumption Received</i> attribute [attribute ID <b>0x0C21</b>].
+     * Synchronously get the <i>Previous Day {{count}} Alternative Consumption Received</i> attribute [attribute ID
+     * <b>0x0C21</b>].
      * <p>
      * PreviousDayNAlternativeConsumptionReceived represents the summed value received
      * from the premises within the previous 24 hour period starting at the Historical Freeze
@@ -16458,15 +19259,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getPreviousDayAlternativeConsumptionReceived(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_PREVIOUSDAY2ALTERNATIVECONSUMPTIONRECEIVED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_PREVIOUSDAY2ALTERNATIVECONSUMPTIONRECEIVED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSDAY2ALTERNATIVECONSUMPTIONRECEIVED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSDAY2ALTERNATIVECONSUMPTIONRECEIVED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSDAY2ALTERNATIVECONSUMPTIONRECEIVED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Previous Day {{count}} Alternative Consumption Received</i> attribute [attribute ID <b>0x0C21</b>].
+     * Set reporting for the <i>Previous Day {{count}} Alternative Consumption Received</i> attribute [attribute ID
+     * <b>0x0C21</b>].
      * <p>
      * PreviousDayNAlternativeConsumptionReceived represents the summed value received
      * from the premises within the previous 24 hour period starting at the Historical Freeze
@@ -16482,11 +19286,15 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setPreviousDay2AlternativeConsumptionReceivedReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_PREVIOUSDAY2ALTERNATIVECONSUMPTIONRECEIVED + (arrayOffset - 1) * 2), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setPreviousDay2AlternativeConsumptionReceivedReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(
+                serverAttributes.get(ATTR_PREVIOUSDAY2ALTERNATIVECONSUMPTIONRECEIVED + (arrayOffset - 1) * 2),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -16511,7 +19319,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Week Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C30</b>].
+     * Synchronously get the <i>Current Week Alternative Consumption Delivered</i> attribute [attribute ID
+     * <b>0x0C30</b>].
      * <p>
      * CurrentWeekAlternativeConsumptionDelivered represents the summed value
      * delivered to the premises since the Historical Freeze Time (HFT) on Monday to the last
@@ -16544,7 +19353,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Week Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C30</b>].
+     * Set reporting for the <i>Current Week Alternative Consumption Delivered</i> attribute [attribute ID
+     * <b>0x0C30</b>].
      * <p>
      * CurrentWeekAlternativeConsumptionDelivered represents the summed value
      * delivered to the premises since the Historical Freeze Time (HFT) on Monday to the last
@@ -16560,11 +19370,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentWeekAlternativeConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTWEEKALTERNATIVECONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentWeekAlternativeConsumptionDeliveredReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTWEEKALTERNATIVECONSUMPTIONDELIVERED), minInterval,
+                maxInterval, reportableChange);
     }
 
     /**
@@ -16589,7 +19402,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Week Alternative Consumption Received</i> attribute [attribute ID <b>0x0C31</b>].
+     * Synchronously get the <i>Current Week Alternative Consumption Received</i> attribute [attribute ID
+     * <b>0x0C31</b>].
      * <p>
      * CurrentWeekAlternativeConsumptionReceived represents the summed value received
      * from the premises since the Historical Freeze Time (HFT) on Monday to the last HFT read.
@@ -16622,7 +19436,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Week Alternative Consumption Received</i> attribute [attribute ID <b>0x0C31</b>].
+     * Set reporting for the <i>Current Week Alternative Consumption Received</i> attribute [attribute ID
+     * <b>0x0C31</b>].
      * <p>
      * CurrentWeekAlternativeConsumptionReceived represents the summed value received
      * from the premises since the Historical Freeze Time (HFT) on Monday to the last HFT read.
@@ -16638,11 +19453,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentWeekAlternativeConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTWEEKALTERNATIVECONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentWeekAlternativeConsumptionReceivedReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTWEEKALTERNATIVECONSUMPTIONRECEIVED), minInterval,
+                maxInterval, reportableChange);
     }
 
     /**
@@ -16671,7 +19489,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Previous Week {{count}} Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C32</b>].
+     * Synchronously get the <i>Previous Week {{count}} Alternative Consumption Delivered</i> attribute [attribute ID
+     * <b>0x0C32</b>].
      * <p>
      * PreviousWeekNAlternativeConsumptionDelivered represents the summed value
      * delivered to the premises within the previous week period starting at the Historical
@@ -16696,15 +19515,19 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getPreviousWeekAlternativeConsumptionDelivered(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_PREVIOUSWEEK1ALTERNATIVECONSUMPTIONDELIVERED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_PREVIOUSWEEK1ALTERNATIVECONSUMPTIONDELIVERED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSWEEK1ALTERNATIVECONSUMPTIONDELIVERED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSWEEK1ALTERNATIVECONSUMPTIONDELIVERED + arrayOffset)
+                    .getLastValue();
         }
 
-        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSWEEK1ALTERNATIVECONSUMPTIONDELIVERED + arrayOffset));
+        return (Integer) readSync(
+                serverAttributes.get(ATTR_PREVIOUSWEEK1ALTERNATIVECONSUMPTIONDELIVERED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Previous Week {{count}} Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C32</b>].
+     * Set reporting for the <i>Previous Week {{count}} Alternative Consumption Delivered</i> attribute [attribute ID
+     * <b>0x0C32</b>].
      * <p>
      * PreviousWeekNAlternativeConsumptionDelivered represents the summed value
      * delivered to the premises within the previous week period starting at the Historical
@@ -16720,11 +19543,15 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setPreviousWeek1AlternativeConsumptionDeliveredReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_PREVIOUSWEEK1ALTERNATIVECONSUMPTIONDELIVERED + (arrayOffset - 1) * 2), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setPreviousWeek1AlternativeConsumptionDeliveredReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(
+                serverAttributes.get(ATTR_PREVIOUSWEEK1ALTERNATIVECONSUMPTIONDELIVERED + (arrayOffset - 1) * 2),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -16753,7 +19580,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Previous Week {{count}} Alternative Consumption Received</i> attribute [attribute ID <b>0x0C33</b>].
+     * Synchronously get the <i>Previous Week {{count}} Alternative Consumption Received</i> attribute [attribute ID
+     * <b>0x0C33</b>].
      * <p>
      * PreviousWeekNAlternativeConsumptionReceived represents the summed value
      * received from the premises within the previous week period starting at the Historical
@@ -16778,15 +19606,18 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getPreviousWeekAlternativeConsumptionReceived(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_PREVIOUSWEEK1ALTERNATIVECONSUMPTIONRECEIVED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_PREVIOUSWEEK1ALTERNATIVECONSUMPTIONRECEIVED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSWEEK1ALTERNATIVECONSUMPTIONRECEIVED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSWEEK1ALTERNATIVECONSUMPTIONRECEIVED + arrayOffset)
+                    .getLastValue();
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSWEEK1ALTERNATIVECONSUMPTIONRECEIVED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Previous Week {{count}} Alternative Consumption Received</i> attribute [attribute ID <b>0x0C33</b>].
+     * Set reporting for the <i>Previous Week {{count}} Alternative Consumption Received</i> attribute [attribute ID
+     * <b>0x0C33</b>].
      * <p>
      * PreviousWeekNAlternativeConsumptionReceived represents the summed value
      * received from the premises within the previous week period starting at the Historical
@@ -16802,11 +19633,15 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setPreviousWeek1AlternativeConsumptionReceivedReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_PREVIOUSWEEK1ALTERNATIVECONSUMPTIONRECEIVED + (arrayOffset - 1) * 2), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setPreviousWeek1AlternativeConsumptionReceivedReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(
+                serverAttributes.get(ATTR_PREVIOUSWEEK1ALTERNATIVECONSUMPTIONRECEIVED + (arrayOffset - 1) * 2),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -16832,7 +19667,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Month Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C40</b>].
+     * Synchronously get the <i>Current Month Alternative Consumption Delivered</i> attribute [attribute ID
+     * <b>0x0C40</b>].
      * <p>
      * CurrentMonthAlternativeConsumptionDelivered represents the summed value
      * delivered to the premises since the Historical Freeze Time (HFT) on the 1st of the month
@@ -16866,7 +19702,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Month Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C40</b>].
+     * Set reporting for the <i>Current Month Alternative Consumption Delivered</i> attribute [attribute ID
+     * <b>0x0C40</b>].
      * <p>
      * CurrentMonthAlternativeConsumptionDelivered represents the summed value
      * delivered to the premises since the Historical Freeze Time (HFT) on the 1st of the month
@@ -16883,11 +19720,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentMonthAlternativeConsumptionDeliveredReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTMONTHALTERNATIVECONSUMPTIONDELIVERED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentMonthAlternativeConsumptionDeliveredReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTMONTHALTERNATIVECONSUMPTIONDELIVERED), minInterval,
+                maxInterval, reportableChange);
     }
 
     /**
@@ -16913,7 +19753,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Current Month Alternative Consumption Received</i> attribute [attribute ID <b>0x0C41</b>].
+     * Synchronously get the <i>Current Month Alternative Consumption Received</i> attribute [attribute ID
+     * <b>0x0C41</b>].
      * <p>
      * CurrentMonthAlternativeConsumptionReceived represents the summed value received
      * from the premises since the Historical Freeze Time (HFT) on the 1st of the month to the
@@ -16947,7 +19788,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Set reporting for the <i>Current Month Alternative Consumption Received</i> attribute [attribute ID <b>0x0C41</b>].
+     * Set reporting for the <i>Current Month Alternative Consumption Received</i> attribute [attribute ID
+     * <b>0x0C41</b>].
      * <p>
      * CurrentMonthAlternativeConsumptionReceived represents the summed value received
      * from the premises since the Historical Freeze Time (HFT) on the 1st of the month to the
@@ -16964,11 +19806,14 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setCurrentMonthAlternativeConsumptionReceivedReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_CURRENTMONTHALTERNATIVECONSUMPTIONRECEIVED), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setCurrentMonthAlternativeConsumptionReceivedReporting(final int minInterval,
+            final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_CURRENTMONTHALTERNATIVECONSUMPTIONRECEIVED), minInterval,
+                maxInterval, reportableChange);
     }
 
     /**
@@ -16992,7 +19837,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Previous Month {{count}} Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C42</b>].
+     * Synchronously get the <i>Previous Month {{count}} Alternative Consumption Delivered</i> attribute [attribute ID
+     * <b>0x0C42</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -17012,15 +19858,19 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getPreviousMonthAlternativeConsumptionDelivered(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_PREVIOUSMONTH1ALTERNATIVECONSUMPTIONDELIVERED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH1ALTERNATIVECONSUMPTIONDELIVERED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSMONTH1ALTERNATIVECONSUMPTIONDELIVERED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH1ALTERNATIVECONSUMPTIONDELIVERED + arrayOffset)
+                    .getLastValue();
         }
 
-        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSMONTH1ALTERNATIVECONSUMPTIONDELIVERED + arrayOffset));
+        return (Integer) readSync(
+                serverAttributes.get(ATTR_PREVIOUSMONTH1ALTERNATIVECONSUMPTIONDELIVERED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Previous Month {{count}} Alternative Consumption Delivered</i> attribute [attribute ID <b>0x0C42</b>].
+     * Set reporting for the <i>Previous Month {{count}} Alternative Consumption Delivered</i> attribute [attribute ID
+     * <b>0x0C42</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -17031,11 +19881,15 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setPreviousMonth1AlternativeConsumptionDeliveredReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH1ALTERNATIVECONSUMPTIONDELIVERED + (arrayOffset - 1) * 2), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setPreviousMonth1AlternativeConsumptionDeliveredReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(
+                serverAttributes.get(ATTR_PREVIOUSMONTH1ALTERNATIVECONSUMPTIONDELIVERED + (arrayOffset - 1) * 2),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -17059,7 +19913,8 @@ public class ZclMeteringCluster extends ZclCluster {
     }
 
     /**
-     * Synchronously get the <i>Previous Month {{count}} Alternative Consumption Received</i> attribute [attribute ID <b>0x0C43</b>].
+     * Synchronously get the <i>Previous Month {{count}} Alternative Consumption Received</i> attribute [attribute ID
+     * <b>0x0C43</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -17079,15 +19934,19 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     @Deprecated
     public Integer getPreviousMonthAlternativeConsumptionReceived(final int arrayOffset, final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_PREVIOUSMONTH1ALTERNATIVECONSUMPTIONRECEIVED + arrayOffset).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH1ALTERNATIVECONSUMPTIONRECEIVED + arrayOffset).getLastValue();
+        if (serverAttributes.get(ATTR_PREVIOUSMONTH1ALTERNATIVECONSUMPTIONRECEIVED + arrayOffset)
+                .isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_PREVIOUSMONTH1ALTERNATIVECONSUMPTIONRECEIVED + arrayOffset)
+                    .getLastValue();
         }
 
-        return (Integer) readSync(serverAttributes.get(ATTR_PREVIOUSMONTH1ALTERNATIVECONSUMPTIONRECEIVED + arrayOffset));
+        return (Integer) readSync(
+                serverAttributes.get(ATTR_PREVIOUSMONTH1ALTERNATIVECONSUMPTIONRECEIVED + arrayOffset));
     }
 
     /**
-     * Set reporting for the <i>Previous Month {{count}} Alternative Consumption Received</i> attribute [attribute ID <b>0x0C43</b>].
+     * Set reporting for the <i>Previous Month {{count}} Alternative Consumption Received</i> attribute [attribute ID
+     * <b>0x0C43</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -17098,11 +19957,15 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxInterval maximum reporting period
      * @param reportableChange {@link Object} delta required to trigger report
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
+     * @deprecated As of release 1.2.0, replaced by
+     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setPreviousMonth1AlternativeConsumptionReceivedReporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_PREVIOUSMONTH1ALTERNATIVECONSUMPTIONRECEIVED + (arrayOffset - 1) * 2), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setPreviousMonth1AlternativeConsumptionReceivedReporting(final int arrayOffset,
+            final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(
+                serverAttributes.get(ATTR_PREVIOUSMONTH1ALTERNATIVECONSUMPTIONRECEIVED + (arrayOffset - 1) * 2),
+                minInterval, maxInterval, reportableChange);
     }
 
     /**
@@ -17194,7 +20057,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param snapshotSchedulePayload {@link SnapshotSchedulePayload} Snapshot Schedule Payload
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> scheduleSnapshot(Integer issuerEventId, Integer commandIndex, Integer totalNumberOfCommands, SnapshotSchedulePayload snapshotSchedulePayload) {
+    public Future<CommandResult> scheduleSnapshot(Integer issuerEventId, Integer commandIndex,
+            Integer totalNumberOfCommands, SnapshotSchedulePayload snapshotSchedulePayload) {
         ScheduleSnapshot command = new ScheduleSnapshot();
 
         // Set the fields
@@ -17234,7 +20098,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param snapshotCause {@link Integer} Snapshot Cause
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> getSnapshot(Calendar earliestStartTime, Calendar latestEndTime, Integer snapshotOffset, Integer snapshotCause) {
+    public Future<CommandResult> getSnapshot(Calendar earliestStartTime, Calendar latestEndTime, Integer snapshotOffset,
+            Integer snapshotCause) {
         GetSnapshot command = new GetSnapshot();
 
         // Set the fields
@@ -17261,7 +20126,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param maxNumberOfSamples {@link Integer} Max Number Of Samples
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> startSampling(Integer issuerEventId, Calendar startSamplingTime, Integer sampleType, Integer sampleRequestInterval, Integer maxNumberOfSamples) {
+    public Future<CommandResult> startSampling(Integer issuerEventId, Calendar startSamplingTime, Integer sampleType,
+            Integer sampleRequestInterval, Integer maxNumberOfSamples) {
         StartSampling command = new StartSampling();
 
         // Set the fields
@@ -17287,7 +20153,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param numberOfSamples {@link Integer} Number Of Samples
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> getSampledData(Integer sampleId, Calendar earliestSampleTime, Integer sampleType, Integer numberOfSamples) {
+    public Future<CommandResult> getSampledData(Integer sampleId, Calendar earliestSampleTime, Integer sampleType,
+            Integer numberOfSamples) {
         GetSampledData command = new GetSampledData();
 
         // Set the fields
@@ -17353,7 +20220,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param supplyControlBits {@link Integer} Supply Control Bits
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> changeSupply(Integer providerId, Integer issuerEventId, Calendar requestDateTime, Calendar implementationDateTime, Integer proposedSupplyStatus, Integer supplyControlBits) {
+    public Future<CommandResult> changeSupply(Integer providerId, Integer issuerEventId, Calendar requestDateTime,
+            Calendar implementationDateTime, Integer proposedSupplyStatus, Integer supplyControlBits) {
         ChangeSupply command = new ChangeSupply();
 
         // Set the fields
@@ -17400,7 +20268,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param loadLimitSupplyState {@link Integer} Load Limit Supply State
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> setSupplyStatus(Integer issuerEventId, Integer supplyTamperState, Integer supplyDepletionState, Integer supplyUncontrolledFlowState, Integer loadLimitSupplyState) {
+    public Future<CommandResult> setSupplyStatus(Integer issuerEventId, Integer supplyTamperState,
+            Integer supplyDepletionState, Integer supplyUncontrolledFlowState, Integer loadLimitSupplyState) {
         SetSupplyStatus command = new SetSupplyStatus();
 
         // Set the fields
@@ -17429,7 +20298,9 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param measurementPeriod {@link Integer} Measurement Period
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> setUncontrolledFlowThreshold(Integer providerId, Integer issuerEventId, Integer uncontrolledFlowThreshold, Integer unitOfMeasure, Integer multiplier, Integer divisor, Integer stabilisationPeriod, Integer measurementPeriod) {
+    public Future<CommandResult> setUncontrolledFlowThreshold(Integer providerId, Integer issuerEventId,
+            Integer uncontrolledFlowThreshold, Integer unitOfMeasure, Integer multiplier, Integer divisor,
+            Integer stabilisationPeriod, Integer measurementPeriod) {
         SetUncontrolledFlowThreshold command = new SetUncontrolledFlowThreshold();
 
         // Set the fields
@@ -17457,7 +20328,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param intervals {@link Integer} Intervals
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> getProfileResponse(Calendar endTime, Integer status, Integer profileIntervalPeriod, Integer numberOfPeriodsDelivered, Integer intervals) {
+    public Future<CommandResult> getProfileResponse(Calendar endTime, Integer status, Integer profileIntervalPeriod,
+            Integer numberOfPeriodsDelivered, Integer intervals) {
         GetProfileResponse command = new GetProfileResponse();
 
         // Set the fields
@@ -17501,7 +20373,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param fastPollModeEndtime {@link Calendar} Fast Poll Mode Endtime
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> requestFastPollModeResponse(Integer appliedUpdatePeriod, Calendar fastPollModeEndtime) {
+    public Future<CommandResult> requestFastPollModeResponse(Integer appliedUpdatePeriod,
+            Calendar fastPollModeEndtime) {
         RequestFastPollModeResponse command = new RequestFastPollModeResponse();
 
         // Set the fields
@@ -17521,7 +20394,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param snapshotResponsePayload {@link SnapshotResponsePayload} Snapshot Response Payload
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> scheduleSnapshotResponse(Integer issuerEventId, SnapshotResponsePayload snapshotResponsePayload) {
+    public Future<CommandResult> scheduleSnapshotResponse(Integer issuerEventId,
+            SnapshotResponsePayload snapshotResponsePayload) {
         ScheduleSnapshotResponse command = new ScheduleSnapshotResponse();
 
         // Set the fields
@@ -17567,7 +20441,9 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param snapshotPayload {@link Integer} Snapshot Payload
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> publishSnapshot(Integer snapshotId, Calendar snapshotTime, Integer totalSnapshotsFound, Integer commandIndex, Integer totalNumberOfCommands, Integer snapshotCause, Integer snapshotPayloadType, Integer snapshotPayload) {
+    public Future<CommandResult> publishSnapshot(Integer snapshotId, Calendar snapshotTime, Integer totalSnapshotsFound,
+            Integer commandIndex, Integer totalNumberOfCommands, Integer snapshotCause, Integer snapshotPayloadType,
+            Integer snapshotPayload) {
         PublishSnapshot command = new PublishSnapshot();
 
         // Set the fields
@@ -17597,7 +20473,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param samples {@link Integer} Samples
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> getSampledDataResponse(Integer sampleId, Calendar sampleStartTime, Integer sampleType, Integer sampleRequestInterval, Integer numberOfSamples, Integer samples) {
+    public Future<CommandResult> getSampledDataResponse(Integer sampleId, Calendar sampleStartTime, Integer sampleType,
+            Integer sampleRequestInterval, Integer numberOfSamples, Integer samples) {
         GetSampledDataResponse command = new GetSampledDataResponse();
 
         // Set the fields
@@ -17623,7 +20500,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param notificationScheme {@link Integer} Notification Scheme
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> configureMirror(Integer issuerEventId, Integer reportingInterval, Boolean mirrorNotificationReporting, Integer notificationScheme) {
+    public Future<CommandResult> configureMirror(Integer issuerEventId, Integer reportingInterval,
+            Boolean mirrorNotificationReporting, Integer notificationScheme) {
         ConfigureMirror command = new ConfigureMirror();
 
         // Set the fields
@@ -17647,7 +20525,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param notificationFlagOrder {@link Integer} Notification Flag Order
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> configureNotificationScheme(Integer issuerEventId, Integer notificationScheme, Integer notificationFlagOrder) {
+    public Future<CommandResult> configureNotificationScheme(Integer issuerEventId, Integer notificationScheme,
+            Integer notificationFlagOrder) {
         ConfigureNotificationScheme command = new ConfigureNotificationScheme();
 
         // Set the fields
@@ -17670,7 +20549,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param subPayload {@link NotificationCommandSubPayload} Sub Payload
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> configureNotificationFlags(Integer issuerEventId, Integer notificationScheme, Integer notificationFlagAttributeId, NotificationCommandSubPayload subPayload) {
+    public Future<CommandResult> configureNotificationFlags(Integer issuerEventId, Integer notificationScheme,
+            Integer notificationFlagAttributeId, NotificationCommandSubPayload subPayload) {
         ConfigureNotificationFlags command = new ConfigureNotificationFlags();
 
         // Set the fields
@@ -17695,7 +20575,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param notificationFlagsN {@link Integer} Notification Flags N
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> getNotifiedMessage(Integer notificationScheme, Integer notificationFlagAttributeId, Integer notificationFlagsN) {
+    public Future<CommandResult> getNotifiedMessage(Integer notificationScheme, Integer notificationFlagAttributeId,
+            Integer notificationFlagsN) {
         GetNotifiedMessage command = new GetNotifiedMessage();
 
         // Set the fields
@@ -17717,7 +20598,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param supplyStatus {@link Integer} Supply Status
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> supplyStatusResponse(Integer providerId, Integer issuerEventId, Calendar implementationDateTime, Integer supplyStatus) {
+    public Future<CommandResult> supplyStatusResponse(Integer providerId, Integer issuerEventId,
+            Calendar implementationDateTime, Integer supplyStatus) {
         SupplyStatusResponse command = new SupplyStatusResponse();
 
         // Set the fields

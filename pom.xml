@@ -4,7 +4,7 @@
 
 	<groupId>com.zsmartsystems</groupId>
 	<artifactId>zigbee</artifactId>
-	<version>1.2.8</version>
+	<version>1.2.8-PATCH</version>
 	<packaging>pom</packaging>
 
 	<name>ZssBee</name>

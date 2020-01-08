@@ -30,6 +30,7 @@ import com.zsmartsystems.zigbee.security.ZigBeeCryptoSuites;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclCommandListener;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclKeyEstablishmentCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.keyestablishment.ConfirmKeyDataRequestCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.keyestablishment.EphemeralDataRequestCommand;
@@ -399,6 +400,9 @@ public class ZclKeyEstablishmentServer implements ZclCommandListener {
 
             setState(KeyEstablishmentState.COMPLETE);
             stopCbke();
+
+            // Send the default response since we don't handle this in the main handler
+            keCluster.sendDefaultResponse(request, ZclStatus.SUCCESS);
         }
     }
 
@@ -417,6 +421,9 @@ public class ZclKeyEstablishmentServer implements ZclCommandListener {
 
             setState(KeyEstablishmentState.FAILED);
             stopCbke();
+
+            // Send the default response since we don't handle this in the main handler
+            keCluster.sendDefaultResponse(request, ZclStatus.SUCCESS);
         }
     }
 

@@ -454,6 +454,17 @@ public class ZigBeeEndpoint {
             return;
         }
 
+        // Ensure security is used if required
+        if (cluster.getApsSecurityRequired() && !command.getApsSecurity()) {
+            logger.debug("{}: Endpoint {}. Cluster '{}' requires security but command is not secured", getIeeeAddress(),
+                    getEndpointId(), cluster.getClusterName());
+            DefaultResponse response = ZclCluster.createDefaultResponse(command, ZclStatus.UNSECURED);
+            if (response != null) {
+                sendTransaction(response);
+            }
+            return;
+        }
+
         cluster.handleCommand(command);
     }
 

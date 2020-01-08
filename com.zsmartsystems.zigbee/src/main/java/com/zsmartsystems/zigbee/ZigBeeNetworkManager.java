@@ -1019,6 +1019,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         ZigBeeNode node = getNode(apsFrame.getSourceAddress());
         if (node == null) {
             logger.debug("Unknown remote node {}", String.format("%04X", apsFrame.getSourceAddress()));
+            if (zclHeader.getDirection() == ZclCommandDirection.CLIENT_TO_SERVER) {
+                createDefaultResponse(apsFrame, zclHeader, ZclStatus.FAILURE);
+            }
             return null;
         }
 
@@ -1026,6 +1029,9 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         if (endpoint == null) {
             logger.debug("{}: Endpoint {}. Unknown remote endpoint", node.getIeeeAddress(),
                     apsFrame.getSourceEndpoint());
+            if (zclHeader.getDirection() == ZclCommandDirection.CLIENT_TO_SERVER) {
+                createDefaultResponse(apsFrame, zclHeader, ZclStatus.FAILURE);
+            }
             return null;
         }
 
