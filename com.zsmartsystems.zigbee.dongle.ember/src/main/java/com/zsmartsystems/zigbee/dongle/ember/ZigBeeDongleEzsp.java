@@ -458,8 +458,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         // Add the endpoint
         logger.debug("EZSP Adding Endpoint: ProfileID={}, DeviceID={}", String.format("%04X", defaultProfileId),
                 String.format("%04X", defaultDeviceId));
-        logger.debug("EZSP Adding Endpoint: Input Clusters   {}", inputClusters);
-        logger.debug("EZSP Adding Endpoint: Output Clusters  {}", outputClusters);
+        logger.debug("EZSP Adding Endpoint: Input Clusters   {}", printClusterList(inputClusters));
+        logger.debug("EZSP Adding Endpoint: Output Clusters  {}", printClusterList(outputClusters));
         ncp.addEndpoint(1, defaultDeviceId, defaultProfileId, inputClusters, outputClusters);
 
         // Now initialise the network
@@ -1416,6 +1416,17 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         }
 
         return key;
+    }
+
+    private String printClusterList(int[] clusterIds) {
+        StringBuilder builder = new StringBuilder(clusterIds.length * 5);
+        for (Integer clusterId : clusterIds) {
+            if (builder.length() != 0) {
+                builder.append(' ');
+            }
+            builder.append(String.format("%04X", clusterId));
+        }
+        return builder.toString();
     }
 
     /**
