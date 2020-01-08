@@ -602,8 +602,23 @@ public class ZigBeeNodeTest {
         nodeResponse.setSourceAddress(new ZigBeeEndpointAddress(123));
         nodeResponse.setDestinationAddress(new ZigBeeEndpointAddress(0));
         responses.put(ZdoCommandType.MANAGEMENT_BIND_REQUEST.getClusterId(), nodeResponse);
-
         Future<ZigBeeStatus> future = node.updateBindingTable();
         assertEquals(ZigBeeStatus.UNSUPPORTED, future.get());
+
+        nodeResponse = new ManagementBindResponse();
+        nodeResponse.setStatus(ZdoStatus.NOT_PERMITTED);
+        nodeResponse.setSourceAddress(new ZigBeeEndpointAddress(123));
+        nodeResponse.setDestinationAddress(new ZigBeeEndpointAddress(0));
+        responses.put(ZdoCommandType.MANAGEMENT_BIND_REQUEST.getClusterId(), nodeResponse);
+        future = node.updateBindingTable();
+        assertEquals(ZigBeeStatus.INVALID_STATE, future.get());
+
+        nodeResponse = new ManagementBindResponse();
+        nodeResponse.setStatus(ZdoStatus.NO_DESCRIPTOR); // Random error
+        nodeResponse.setSourceAddress(new ZigBeeEndpointAddress(123));
+        nodeResponse.setDestinationAddress(new ZigBeeEndpointAddress(0));
+        responses.put(ZdoCommandType.MANAGEMENT_BIND_REQUEST.getClusterId(), nodeResponse);
+        future = node.updateBindingTable();
+        assertEquals(ZigBeeStatus.FAILURE, future.get());
     }
 }
