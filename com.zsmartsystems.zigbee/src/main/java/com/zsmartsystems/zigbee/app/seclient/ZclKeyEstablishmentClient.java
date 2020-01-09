@@ -574,6 +574,9 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
 
             setState(KeyEstablishmentState.COMPLETE);
             stopCbke(0);
+
+            // Send the default response since we don't handle this in the main handler
+            keCluster.sendDefaultResponse(response, ZclStatus.SUCCESS);
         }
     }
 
@@ -602,6 +605,9 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
             logger.debug("{}: CBKE Terminate Key establishment client: Terminate status={}, suite={}, wait={} seconds",
                     ieeeAddress, status, suite, waitTime);
             stopCbke(waitTime);
+
+            // Send the default response since we don't handle this in the main handler
+            keCluster.sendDefaultResponse(response, ZclStatus.SUCCESS);
         }
     }
 
