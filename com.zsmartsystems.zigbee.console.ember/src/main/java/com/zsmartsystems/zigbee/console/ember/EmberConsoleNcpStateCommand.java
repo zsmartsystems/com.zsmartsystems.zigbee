@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -99,14 +99,13 @@ public class EmberConsoleNcpStateCommand extends EmberConsoleAbstractCommand {
         out.println("Ember NCP state    : " + status);
         out.println("Local Node Type    : " + nwkParameterResponse.getNodeType());
         out.println("IEEE Address       : " + ieeeAddress);
-        out.println("NWK Address        : " + nwkAddress);
+        out.println("NWK Address        : " + String.format("%04X", nwkAddress));
         out.println("Network PAN Id     : " + String.format("%04X", nwkParameters.getPanId()));
         out.println("Network EPAN Id    : " + nwkParameters.getExtendedPanId());
         out.println("Radio Channel      : " + nwkParameters.getRadioChannel());
-        out.println("Network Manager Id : " + nwkParameters.getNwkManagerId());
+        out.println("Network Manager Id : " + String.format("%04X", nwkParameters.getNwkManagerId()));
         out.println("Radio TX Power     : " + nwkParameters.getRadioTxPower());
         out.println("Join Method        : " + nwkParameters.getJoinMethod());
-
         out.println("Board Name         : " + mfgBoard);
         out.println("Manufacturer Name  : " + mfgName);
         out.println("Stack Version      : " + printVersion(version.getStackVersion()));
@@ -114,6 +113,10 @@ public class EmberConsoleNcpStateCommand extends EmberConsoleAbstractCommand {
     }
 
     private String printVersion(int version) {
+        if (version == 0xFFFF) {
+            return "";
+        }
+
         StringBuilder builder = new StringBuilder(60);
         for (int cnt = 3; cnt >= 0; cnt--) {
             builder.append((version >> (cnt * 4)) & 0x0F);

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -95,6 +95,8 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportProgressState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.MacCapabilitiesType;
 
 /**
  * Implementation of the Silabs Ember NCP (Network Co-Processor) EZSP dongle implementation.
@@ -106,6 +108,11 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     private static final int POLL_FRAME_ID = EzspNetworkStateRequest.FRAME_ID;
     private static final int WAIT_FOR_ONLINE = 5000;
+
+    /**
+     * Response to the getBootloaderVersion if no bootloader is available
+     */
+    private static final int BOOTLOADER_INVALID_VERSION = 0xFFFF;
 
     /**
      * The {@link Logger}.
@@ -388,7 +395,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     @Override
     public ZigBeeStatus initialize() {
-        logger.debug("EZSP dongle initialize with protocol {}.", protocol);
+        logger.debug("EZSP Dongle: Initialize with protocol {}.", protocol);
+        zigbeeTransportReceive.setTransportState(ZigBeeTransportState.INITIALISING);
 
         if (protocol != EmberSerialProtocol.NONE && !initialiseEzspProtocol()) {
             return ZigBeeStatus.COMMUNICATION_ERROR;
@@ -430,18 +438,18 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         ncp.getNetworkParameters();
 
-        logger.debug("EZSP dongle initialize done");
+        logger.debug("EZSP Dongle: initialize done");
 
         return ZigBeeStatus.SUCCESS;
     }
 
     @Override
     public ZigBeeStatus startup(boolean reinitialize) {
-        logger.debug("EZSP dongle startup. reinitialize={}", reinitialize);
+        logger.debug("EZSP Dongle: Startup - reinitialize={}", reinitialize);
 
-        // If ashHandler is null then the serial port didn't initialise
+        // If frameHandler is null then the serial port didn't initialise or startup has not been called
         if (frameHandler == null) {
-            logger.error("Initialising Ember Dongle but low level handler is not initialised.");
+            logger.error("EZSP Dongle: Startup found low level handler is not initialised.");
             return ZigBeeStatus.INVALID_STATE;
         }
 
@@ -450,8 +458,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         // Add the endpoint
         logger.debug("EZSP Adding Endpoint: ProfileID={}, DeviceID={}", String.format("%04X", defaultProfileId),
                 String.format("%04X", defaultDeviceId));
-        logger.debug("EZSP Adding Endpoint: Input Clusters   {}", inputClusters);
-        logger.debug("EZSP Adding Endpoint: Output Clusters  {}", outputClusters);
+        logger.debug("EZSP Adding Endpoint: Input Clusters   {}", printClusterList(inputClusters));
+        logger.debug("EZSP Adding Endpoint: Output Clusters  {}", printClusterList(outputClusters));
         ncp.addEndpoint(1, defaultDeviceId, defaultProfileId, inputClusters, outputClusters);
 
         // Now initialise the network
@@ -460,7 +468,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             logger.debug("EZSP dongle initialize done - response {}", initResponse);
         }
 
-        // print current security state to debug logs
+        // Print current security state to debug logs
         ncp.getCurrentSecurityState();
 
         scheduleNetworkStatePolling();
@@ -500,13 +508,16 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         if (address != 0xFFFE) {
             nwkAddress = address;
         }
-        logger.debug("EZSP Initialisation complete. NWK Address = {}, State = {}", String.format("%04X", nwkAddress),
+        logger.debug("EZSP Dongle: Startup complete. NWK Address = {}, State = {}", String.format("%04X", nwkAddress),
                 networkState);
 
+        // At this stage, we will now take note of the EzspStackStatusHandler notifications
+        boolean joinedNetwork = (networkState == EmberNetworkStatus.EMBER_JOINED_NETWORK
+                || networkState == EmberNetworkStatus.EMBER_JOINED_NETWORK_NO_PARENT);
         initialised = true;
+        handleLinkStateChange(joinedNetwork);
 
-        return (networkState == EmberNetworkStatus.EMBER_JOINED_NETWORK) ? ZigBeeStatus.SUCCESS
-                : ZigBeeStatus.BAD_RESPONSE;
+        return joinedNetwork ? ZigBeeStatus.SUCCESS : ZigBeeStatus.BAD_RESPONSE;
     }
 
     /**
@@ -596,14 +607,12 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     @Override
     public void shutdown() {
+        logger.debug("EZSP Dongle: Shutdown");
         if (frameHandler == null) {
+            logger.debug("EZSP Dongle: Shutdown frameHandler is null");
             return;
         }
-        logger.debug("Ember NCP Shutdown");
         frameHandler.setClosing();
-        frameHandler.close();
-        serialPort.close();
-        frameHandler = null;
 
         if (mfglibListener != null) {
             mfglibListener = null;
@@ -616,6 +625,10 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         if (executorService != null) {
             executorService.shutdownNow();
         }
+
+        frameHandler.close();
+        serialPort.close();
+        frameHandler = null;
     }
 
     /**
@@ -728,9 +741,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
             transaction = new EzspSingleResponseTransaction(emberMulticast, EzspSendMulticastResponse.class);
         } else {
-            logger.debug("EZSP message not sent: {}", apsFrame);
-            // ZigBeeGroupAddress groupAddress = (ZigBeeGroupAddress) zclCommand.getDestinationAddress();
-            // apsFrame.setGroupId(groupAddress.getGroupId());
+            logger.debug("EZSP message not sent as unknown address mode: {}", apsFrame);
             return;
         }
 
@@ -772,14 +783,25 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     }
 
     @Override
+    public void setNodeDescriptor(IeeeAddress ieeeAddress, NodeDescriptor nodeDescriptor) {
+        // Update the extendedTimeout flag in the address table.
+        // Users should ensure the address table is large enough to hold all nodes on the network.
+        logger.debug("{}: NodeDescriptor passed to Ember NCP {}", ieeeAddress, nodeDescriptor);
+        if (!nodeDescriptor.getMacCapabilities().contains(MacCapabilitiesType.RECEIVER_ON_WHEN_IDLE)) {
+            EmberNcp ncp = getEmberNcp();
+            ncp.setExtendedTimeout(ieeeAddress, true);
+        }
+    }
+
+    @Override
     public void handlePacket(EzspFrame response) {
         if (response.getFrameId() != POLL_FRAME_ID) {
-            logger.debug("RX EZSP: " + response.toString());
+            logger.debug("RX EZSP: {}", response);
         }
 
         if (response instanceof EzspIncomingMessageHandler) {
             if (nwkAddress == null) {
-                logger.debug("Ignoring received frame as stack still initialising");
+                logger.debug("Ignoring received frame as stack is still initialising");
                 return;
             }
             EzspIncomingMessageHandler incomingMessage = (EzspIncomingMessageHandler) response;
@@ -928,9 +950,13 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     @Override
     public void handleLinkStateChange(final boolean linkState) {
+        logger.debug("Ember: Link State change to {}, initialised={}, networkStateUp={}", linkState, initialised,
+                networkStateUp);
+
         // Only act on changes to OFFLINE once we have completed initialisation
         // changes to ONLINE have to work during init because they mark the end of the initialisation
-        if (!initialised && !linkState || linkState == networkStateUp) {
+        if (!initialised || linkState == networkStateUp) {
+            logger.debug("Ember: Link State change to {} ignored.", linkState);
             return;
         }
         networkStateUp = linkState;
@@ -939,6 +965,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             @Override
             public void run() {
                 if (linkState) {
+                    logger.debug("Ember: Link State up running");
+
                     EmberNcp ncp = getEmberNcp();
                     int addr = ncp.getNwkAddress();
                     if (addr != 0xFFFE) {
@@ -1138,11 +1166,11 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     private boolean initialiseEzspProtocol() {
         if (frameHandler != null) {
-            logger.error("Attempt to initialise Ember dongle when already initialised");
+            logger.error("EZSP Dongle: Attempt to initialise Ember dongle when already initialised");
             return false;
         }
         if (!serialPort.open()) {
-            logger.error("Unable to open Ember serial port");
+            logger.error("EZSP Dongle: Unable to open serial port");
             return false;
         }
 
@@ -1156,7 +1184,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             case NONE:
                 return true;
             default:
-                logger.error("Unknown Ember serial protocol {}", protocol);
+                logger.error("EZSP Dongle: Unknown serial protocol {}", protocol);
                 return false;
         }
 
@@ -1176,14 +1204,14 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         // Any failure to respond here indicates a failure of the ASH or EZSP layers to initialise
         EzspVersionResponse version = ncp.getVersion(4);
         if (version == null) {
-            logger.debug("Version returned null. ASH/EZSP not initialised.");
+            logger.debug("EZSP Dongle: Version returned null. ASH/EZSP not initialised.");
             return false;
         }
 
         if (version.getProtocolVersion() != EzspFrame.getEzspVersion()) {
             // The device supports a different version that we current have set
             if (!EzspFrame.setEzspVersion(version.getProtocolVersion())) {
-                logger.error("NCP requires unsupported version of EZSP (required = V{}, supported = V{})",
+                logger.error("EZSP Dongle: NCP requires unsupported version of EZSP (required = V{}, supported = V{})",
                         version.getProtocolVersion(), EzspFrame.getEzspVersion());
                 return false;
             }
@@ -1204,6 +1232,20 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 builder.append('.');
             }
         }
+
+        int bootloaderVersion = ncp.getBootloaderVersion();
+        builder.append(", Bootloader Version=");
+        if (bootloaderVersion == BOOTLOADER_INVALID_VERSION) {
+            builder.append("NONE");
+        } else {
+            builder.append((bootloaderVersion >> 12) & 0x0F);
+            builder.append('.');
+            builder.append((bootloaderVersion >> 8) & 0x0F);
+
+            builder.append(" build ");
+            builder.append(bootloaderVersion & 0xFF);
+        }
+
         versionString = builder.toString();
 
         return true;
@@ -1222,6 +1264,12 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         // Initialise the EZSP protocol so we can start the bootloader
         // If this fails, then we continue on the assumption that the bootloader may already be running
         if (initialiseEzspProtocol()) {
+            EmberNcp ncp = getEmberNcp();
+            if (ncp.getBootloaderVersion() == BOOTLOADER_INVALID_VERSION) {
+                logger.debug("EZSP bootload failed: No bootloader present");
+                return false;
+            }
+
             // Send the bootload command, but ignore the response since there doesn't seem to be one
             // despite what the documentation seems to indicate
             EzspLaunchStandaloneBootloaderRequest bootloadCommand = new EzspLaunchStandaloneBootloaderRequest();
@@ -1262,7 +1310,12 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         if (versionIndex == -1) {
             return "";
         }
-        return versionString.substring(versionIndex + 14);
+        String version = versionString.substring(versionIndex + 14);
+        versionIndex = version.indexOf(',');
+        if (versionIndex == -1) {
+            return version;
+        }
+        return version.substring(0, versionIndex);
     }
 
     @Override
@@ -1342,9 +1395,12 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
      * Converts from an {@link EmberKeyStruct} to {@link ZigBeeKey}
      *
      * @param emberKey the {@link EmberKeyStruct} read from the NCP
-     * @return the {@link ZigBeeKey} used by the framework
+     * @return the {@link ZigBeeKey} used by the framework. May be null if the key is invalid.
      */
     private ZigBeeKey emberKeyToZigBeeKey(EmberKeyStruct emberKey) {
+        if (emberKey == null) {
+            return null;
+        }
         ZigBeeKey key = new ZigBeeKey(emberKey.getKey().getContents());
         if (emberKey.getBitmask().contains(EmberKeyStructBitmask.EMBER_KEY_HAS_PARTNER_EUI64)) {
             key.setAddress(emberKey.getPartnerEUI64());
@@ -1360,6 +1416,17 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         }
 
         return key;
+    }
+
+    private String printClusterList(int[] clusterIds) {
+        StringBuilder builder = new StringBuilder(clusterIds.length * 5);
+        for (Integer clusterId : clusterIds) {
+            if (builder.length() != 0) {
+                builder.append(' ');
+            }
+            builder.append(String.format("%04X", clusterId));
+        }
+        return builder.toString();
     }
 
     /**

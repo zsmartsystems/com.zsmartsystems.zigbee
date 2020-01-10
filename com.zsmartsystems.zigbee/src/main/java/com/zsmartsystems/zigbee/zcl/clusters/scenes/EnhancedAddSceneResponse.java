@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -18,12 +18,12 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 /**
  * Enhanced Add Scene Response value object class.
  * <p>
- * Cluster: <b>Scenes</b>. Command ID 0x00 is sent <b>FROM</b> the server.
+ * Cluster: <b>Scenes</b>. Command ID 0x40 is sent <b>FROM</b> the server.
  * This command is a <b>specific</b> command used for the Scenes cluster.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-09-20T08:23:22Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-15T22:10:14Z")
 public class EnhancedAddSceneResponse extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -33,7 +33,7 @@ public class EnhancedAddSceneResponse extends ZclCommand {
     /**
      * The command ID.
      */
-    public static int COMMAND_ID = 0x00;
+    public static int COMMAND_ID = 0x40;
 
     /**
      * Status command message field.

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import org.junit.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
@@ -27,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
 
 /**
- * 
+ *
  * @author Chris Jackson
  *
  */
@@ -38,7 +39,7 @@ public class ZigBeeOtaUpgradeExtensionTest {
         ZigBeeOtaUpgradeExtension extension = new ZigBeeOtaUpgradeExtension();
 
         assertEquals(ZigBeeStatus.SUCCESS, extension.extensionInitialize(networkManager));
-        Mockito.verify(networkManager, Mockito.times(1)).addSupportedCluster(ZclOtaUpgradeCluster.CLUSTER_ID);
+        Mockito.verify(networkManager, Mockito.times(1)).addSupportedServerCluster(ZclOtaUpgradeCluster.CLUSTER_ID);
         Mockito.verify(networkManager, Mockito.times(1)).addNetworkNodeListener(extension);
 
         assertEquals(ZigBeeStatus.SUCCESS, extension.extensionStartup());
@@ -58,7 +59,7 @@ public class ZigBeeOtaUpgradeExtensionTest {
         Mockito.when(cluster.getClusterId()).thenReturn(ZclOtaUpgradeCluster.CLUSTER_ID);
         Mockito.when(endpoint1.getOutputCluster(ZclOtaUpgradeCluster.CLUSTER_ID)).thenReturn(cluster);
         extension.nodeAdded(node);
-        Mockito.verify(endpoint1, Mockito.times(1)).addApplication(Mockito.any(ZclOtaUpgradeServer.class));
+        Mockito.verify(endpoint1, Mockito.times(1)).addApplication(ArgumentMatchers.any(ZclOtaUpgradeServer.class));
 
         ZigBeeApplication application = Mockito.mock(ZigBeeApplication.class);
         ZigBeeEndpoint endpoint2 = Mockito.mock(ZigBeeEndpoint.class);

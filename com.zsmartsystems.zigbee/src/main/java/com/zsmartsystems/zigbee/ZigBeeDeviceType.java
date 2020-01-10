@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -17,7 +17,7 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-14T15:24:57Z")
 public enum ZigBeeDeviceType {
 
     /**
@@ -91,6 +91,66 @@ public enum ZigBeeDeviceType {
     CONSUMPTION_AWARENESS_DEVICE(0x000D),
 
     /**
+     * Data Collection Unit
+     */
+    DATA_COLLECTION_UNIT(0x0010),
+
+    /**
+     * ZigBee SIM Card
+     */
+    ZIGBEE_SIM_CARD(0x0020),
+
+    /**
+     * ZigBee Mobile Terminal
+     */
+    ZIGBEE_MOBILE_TERMINAL(0x0021),
+
+    /**
+     * ZigBee Global Platform Card
+     */
+    ZIGBEE_GLOBAL_PLATFORM_CARD(0x0026),
+
+    /**
+     * Customer Handheld Device
+     */
+    CUSTOMER_HANDHELD_DEVICE(0x0030),
+
+    /**
+     * Retail Associate Handheld Device
+     */
+    RETAIL_ASSOCIATE_HANDHELD_DEVICE(0x0031),
+
+    /**
+     * Intelligent Shopping Cart
+     */
+    INTELLIGENT_SHOPPING_CART(0x0032),
+
+    /**
+     * Electronic Shelf Label
+     */
+    ELECTRONIC_SHELF_LABEL(0x0033),
+
+    /**
+     * Customer Information Point
+     */
+    CUSTOMER_INFORMATION_POINT(0x0034),
+
+    /**
+     * Customer Card
+     */
+    CUSTOMER_CARD(0x0035),
+
+    /**
+     * Constructed BACnet Device
+     */
+    CONSTRUCTED_BACNET_DEVICE(0x004A),
+
+    /**
+     * BACnet Tunneled Device
+     */
+    BACNET_TUNNELED_DEVICE(0x004B),
+
+    /**
      * Home Gateway
      */
     HOME_GATEWAY(0x0050),
@@ -109,6 +169,46 @@ public enum ZigBeeDeviceType {
      * Meter Interface
      */
     METER_INTERFACE(0x0053),
+
+    /**
+     * ZGP Proxy
+     */
+    ZGP_PROXY(0x0060),
+
+    /**
+     * ZGP Proxy Basic
+     */
+    ZGP_PROXY_BASIC(0x0061),
+
+    /**
+     * ZGP Target Plus
+     */
+    ZGP_TARGET_PLUS(0x0062),
+
+    /**
+     * ZGP Target
+     */
+    ZGP_TARGET(0x0063),
+
+    /**
+     * ZGP Commissioning Tool
+     */
+    ZGP_COMMISSIONING_TOOL(0x0064),
+
+    /**
+     * ZGP Combo
+     */
+    ZGP_COMBO(0x0065),
+
+    /**
+     * ZGP Combo Basic
+     */
+    ZGP_COMBO_BASIC(0x0066),
+
+    /**
+     * Environmental Sensor
+     */
+    ENVIRONMENTAL_SENSOR(0x0067),
 
     /**
      * On/Off Light
@@ -151,6 +251,56 @@ public enum ZigBeeDeviceType {
     OCCUPANCY_SENSOR(0x0107),
 
     /**
+     * On/Off Ballast
+     */
+    ON_OFF_BALLAST(0x0108),
+
+    /**
+     * Dimmable Ballast
+     */
+    DIMMABLE_BALLAST(0x0109),
+
+    /**
+     * On/off plug-in unit
+     */
+    ON_OFF_PLUG_IN_UNIT(0x010A),
+
+    /**
+     * Dimmable plug-in unit
+     */
+    DIMMABLE_PLUG_IN_UNIT(0x010B),
+
+    /**
+     * Color temperature light
+     */
+    COLOR_TEMPERATURE_LIGHT(0x010C),
+
+    /**
+     * Extended color light
+     */
+    EXTENDED_COLOR_LIGHT(0x010D),
+
+    /**
+     * Light level sensor
+     */
+    LIGHT_LEVEL_SENSOR(0x010E),
+
+    /**
+     * ZigBee Access Point
+     */
+    ZIGBEE_ACCESS_POINT(0x0120),
+
+    /**
+     * ZigBee Information node
+     */
+    ZIGBEE_INFORMATION_NODE(0x0121),
+
+    /**
+     * ZigBee Information Terminal
+     */
+    ZIGBEE_INFORMATION_TERMINAL(0x0122),
+
+    /**
      * Shade
      */
     SHADE(0x0200),
@@ -171,14 +321,39 @@ public enum ZigBeeDeviceType {
     WINDOW_COVERING_CONTROLLER(0x0203),
 
     /**
-     * Extended Color Light
+     * Barrier Device
      */
-    EXTENDED_COLOR_LIGHT(0x0210),
+    BARRIER_DEVICE(0x0204),
 
     /**
-     * Color Temperature Light
+     * Barrier Device Controller
      */
-    COLOR_TEMPERATURE_LIGHT(0x0220),
+    BARRIER_DEVICE_CONTROLLER(0x0205),
+
+    /**
+     * Point of sale
+     */
+    POINT_OF_SALE(0x0220),
+
+    /**
+     * Ticketing machine
+     */
+    TICKETING_MACHINE(0x0221),
+
+    /**
+     * Pay controller
+     */
+    PAY_CONTROLLER(0x0222),
+
+    /**
+     * Billing unit
+     */
+    BILLING_UNIT(0x0223),
+
+    /**
+     * Charging unit
+     */
+    CHARGING_UNIT(0x0224),
 
     /**
      * Heating/Cooling Unit
@@ -283,7 +458,52 @@ public enum ZigBeeDeviceType {
     /**
      * Remote Communications Device
      */
-    REMOTE_COMMUNICATIONS_DEVICE(0x0508);
+    REMOTE_COMMUNICATIONS_DEVICE(0x0508),
+
+    /**
+     * ERL Interface
+     */
+    ERL_INTERFACE(0x0509),
+
+    /**
+     * Electric Vehicle Station Equipment
+     */
+    ELECTRIC_VEHICLE_STATION_EQUIPMENT(0x050A),
+
+    /**
+     * Color controller
+     */
+    COLOR_CONTROLLER(0x0800),
+
+    /**
+     * Color scene controller
+     */
+    COLOR_SCENE_CONTROLLER(0x0810),
+
+    /**
+     * Non-color controller
+     */
+    NON_COLOR_CONTROLLER(0x0820),
+
+    /**
+     * Non-color scene controller
+     */
+    NON_COLOR_SCENE_CONTROLLER(0x0830),
+
+    /**
+     * Control bridge
+     */
+    CONTROL_BRIDGE(0x0840),
+
+    /**
+     * On/off sensor
+     */
+    ON_OFF_SENSOR(0x0850),
+
+    /**
+     * Generic Multifunction Healthcare Device
+     */
+    GENERIC_MULTIFUNCTION_HEALTHCARE_DEVICE(0x0F00);
 
     /**
      * A mapping between the integer code and its corresponding ZigBeeDeviceType type to facilitate lookup by value.

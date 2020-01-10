@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -963,7 +963,7 @@ public class CommandGenerator extends ClassGenerator {
         out.println("    /**");
         out.println("     * The maximum supported version of EZSP");
         out.println("     */");
-        out.println("    private static final int EZSP_MAX_VERSION = 7;");
+        out.println("    private static final int EZSP_MAX_VERSION = 8;");
         out.println();
         out.println("    /**");
         out.println("     * The current version of EZSP being used");
@@ -978,12 +978,12 @@ public class CommandGenerator extends ClassGenerator {
         out.println("    /**");
         out.println("     * EZSP Frame Control Request flag");
         out.println("     */");
-        out.println("    protected static final int EZSP_FC_REQUEST = 0x00;");
+        out.println("    protected static final int EZSP_FC_REQUEST = 0x0000;");
         out.println();
         out.println("    /**");
         out.println("     * EZSP Frame Control Response flag");
         out.println("     */");
-        out.println("    protected static final int EZSP_FC_RESPONSE = 0x80;");
+        out.println("    protected static final int EZSP_FC_RESPONSE = 0x0080;");
         out.println();
         for (Command command : commandMap.values()) {
             String reference = camelCaseToConstant(
@@ -1060,18 +1060,24 @@ public class CommandGenerator extends ClassGenerator {
         out.println("     * @return the {@link EzspFrameResponse} or null if the response can't be created.");
         out.println("     */");
         out.println("    public static EzspFrameResponse createHandler(int[] data) {");
-        out.println("        Class<?> ezspClass = null;");
+        out.println("        int frameId;");
         out.println();
         out.println("        try {");
-        out.println("            if (data[2] != 0xFF) {");
-        out.println("                ezspClass = ezspHandlerMap.get(data[2]);");
+        out.println("            if (ezspVersion >= 8) {");
+        out.println("                frameId = data[3] + (data[4] << 8);");
         out.println("            } else {");
-        out.println("                ezspClass = ezspHandlerMap.get(data[4]);");
+        out.println("                if (data[2] != 0xFF) {");
+        out.println("                    frameId = data[2];");
+        out.println("                } else {");
+        out.println("                    frameId = data[4];");
+        out.println("                }");
         out.println("            }");
         out.println("        } catch (ArrayIndexOutOfBoundsException e) {");
         out.println("            logger.debug(\"Error detecting the EZSP frame type\", e);");
+        out.println("            return null;");
         out.println("        }");
         out.println();
+        out.println("        Class<?> ezspClass = ezspHandlerMap.get(frameId);");
         out.println("        if (ezspClass == null) {");
         out.println("            return null;");
         out.println("        }");

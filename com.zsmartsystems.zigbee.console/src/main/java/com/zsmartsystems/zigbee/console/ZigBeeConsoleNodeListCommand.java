@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -60,8 +60,9 @@ public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
         }
 
         Collections.sort(nodeIds);
-        String tableHeader = String.format("%-7s  %-4s  %-17s  %-13s  %-3s  %-25s  %-25s  %-15s  %-15s", "Network",
-                "Addr", "IEEE Address", "Logical Type", "EP", "Profile", "Device Type", "Manufacturer", "Model");
+        String tableHeader = String.format("%-7s  %-4s  %-16s  %-12s  %-9s  %-3s  %-25s  %-25s  %-15s  %-15s",
+                "Network", "Addr", "IEEE Address", "Logical Type", "State", "EP", "Profile", "Device Type",
+                "Manufacturer", "Model");
         out.println(tableHeader);
 
         for (Integer nodeId : nodeIds) {
@@ -70,9 +71,9 @@ public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
     }
 
     private void printNode(ZigBeeNode node, PrintStream out) {
-        String nodeInfo = String.format("%7d  %04X  %-17s  %-13s ", node.getNetworkAddress(), node.getNetworkAddress(),
-                node.getIeeeAddress(), node.getLogicalType());
-        String nodeInfoPadding = String.format("%7s  %4s  %17s  %13s ", "", "", "", "");
+        String nodeInfo = String.format("%7d  %04X  %-16s  %-12s  %-9s", node.getNetworkAddress(),
+                node.getNetworkAddress(), node.getIeeeAddress(), node.getLogicalType(), node.getNodeState());
+        String nodeInfoPadding = String.format("%7s  %4s  %16s  %12s  %9s", "", "", "", "", "");
 
         List<ZigBeeEndpoint> endpoints = new ArrayList<>(node.getEndpoints());
         Collections.sort(endpoints, (ep1, ep2) -> ep1.getEndpointId() - ep2.getEndpointId());

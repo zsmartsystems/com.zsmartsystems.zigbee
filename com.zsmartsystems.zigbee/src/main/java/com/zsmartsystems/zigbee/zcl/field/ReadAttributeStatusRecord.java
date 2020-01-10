@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -135,7 +135,20 @@ public class ReadAttributeStatusRecord implements ZclListItemField {
 
     @Override
     public String toString() {
-        return "ReadAttributeStatusRecord [status=" + status + ", attributeIdentifier=" + attributeIdentifier
-                + ", attributeDataType=" + attributeDataType + ", attributeValue=" + attributeValue + "]";
+        StringBuilder builder = new StringBuilder(150);
+
+        builder.append("ReadAttributeStatusRecord [status=");
+        builder.append(status);
+        builder.append(", attributeIdentifier=");
+        builder.append(attributeIdentifier);
+        if (status == ZclStatus.SUCCESS) {
+            builder.append(", attributeDataType=");
+            builder.append(attributeDataType);
+            builder.append(", attributeValue=");
+            builder.append(attributeValue);
+        }
+        builder.append(']');
+
+        return builder.toString();
     }
 }

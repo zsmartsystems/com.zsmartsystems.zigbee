@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,10 +10,16 @@ package com.zsmartsystems.zigbee.security;
 import java.util.Set;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 
 /**
- * Interface defining the Certificate Based Key Exchange security algorithm methods.
+ * Interface defining the Certificate Based Key Exchange security provider.
+ * <p>
+ * The CBKE provider provides methods to get the provider capabilities. To perform a CBKE, the user must call
+ * {@link #getCbkeKeyExchange} to get a key exchange algorithm provider. The ZigBeeCbkeProvider may only be able to
+ * support a limited number of simultaneous key exchanges, and therefore {@link #getCbkeKeyExchange} may fail with
+ * {@link ZigBeeStatus#NO_RESOURCES} if too many exchanges are requested at once.
  *
  * @author Chris Jackson
  *
@@ -32,27 +38,9 @@ public interface ZigBeeCbkeProvider {
      * each type is added, only the last will be used.
      *
      * @param certificate the {@link ZigBeeCryptoCertificate} to be added to the provider, signed by the CA
-     * @return true if the certificate was added successfully
+     * @return {@link ZigBeeStatus} defining success or failure if the certificate was added successfully
      */
-    public boolean addCertificate(ZigBeeCbkeCertificate certificate);
-
-    /**
-     * Sets the partner certificate as part of the CBKE.
-     *
-     * @param suite the {@link ZigBeeCryptoSuites}
-     * @param partnerCertificate a {@link ByteArray} containing the partner certificate
-     * @return true if the data was stored
-     */
-    public boolean addPartnerCertificate(ZigBeeCryptoSuites suite, ByteArray partnerCertificate);
-
-    /**
-     * Sets the partner ephemeral data as part of the CBKE.
-     *
-     * @param suite the {@link ZigBeeCryptoSuites}
-     * @param partnerEphemeralData a {@link ByteArray} containing the partner Ephemeral data
-     * @return true if the data was stored
-     */
-    public boolean addPartnerEphemeralData(ZigBeeCryptoSuites suite, ByteArray partnerEphemeralData);
+    public ZigBeeStatus addCertificate(ZigBeeCbkeCertificate certificate);
 
     /**
      * Gets a list of supported crypto suites. This is the suites that may be used - ie the algorithms are supported. It
@@ -78,40 +66,28 @@ public interface ZigBeeCbkeProvider {
     public ByteArray getCertificate(ZigBeeCryptoSuites suite);
 
     /**
-     * Gets the ephemeral data for specified certificate type
+     * Gets a {@link ZigBeeCbkeExchange} to perform the CBKE cryptographic algorithms as an initiator (Client). If the
+     * provider does not support multiple key exchanges, then this method may return null and the user should wait an
+     * appropriate amount of time before trying again.
+     * <p>
+     * Once the {@link ZigBeeCbkeExchange} has been returned here, it must be released by calling
+     * {@link ZigBeeCbkeExchange#complete
      *
-     * @param suite the {@link ZigBeeCryptoSuites} to get
-     * @return the ephemeral data as a {@link ByteArray}, or null if there was an error (eg no certificate available for
-     *         the requested type).
+     * @return a {@link ZigBeeCbkeExchange}, or null if no resources are available.
      */
-    public ByteArray getCbkeEphemeralData(ZigBeeCryptoSuites suite);
+    public ZigBeeCbkeExchange getCbkeKeyExchangeInitiator();
 
     /**
-     * Gets the Secure Message Authentication Code for the initiator. This should be sent to the remote.
+     * Gets a {@link ZigBeeCbkeExchange} to perform the CBKE cryptographic algorithms as a responder (Server). If the
+     * provider does not support multiple key exchanges, then this method may return null and the user should wait an
+     * appropriate amount of time before trying again.
+     * <p>
+     * Once the {@link ZigBeeCbkeExchange} has been returned here, it must be released by calling
+     * {@link ZigBeeCbkeExchange#complete
      *
-     * @param suite the {@link ZigBeeCryptoSuites} to get
-     * @return the initiator secure message authentication code as a {@link ByteArray}
+     * @return a {@link ZigBeeCbkeExchange}, or null if no resources are available.
      */
-    public ByteArray getInitiatorMac(ZigBeeCryptoSuites suite);
-
-    /**
-     * Gets the Secure Message Authentication Code for the responder. This should be compared with the response from the
-     * remote.
-     *
-     * @param suite the {@link ZigBeeCryptoSuites} to get
-     * @return the responder secure message authentication code as a {@link ByteArray}
-     */
-    public ByteArray getResponderMac(ZigBeeCryptoSuites suite);
-
-    /**
-     * Tells the provider that the key exchange is complete. If success is true, then the provider shall store the key
-     * in the dongle key table.
-     *
-     * @param suite the {@link ZigBeeCryptoSuites} being used
-     * @param success true if the key exchange was successful and the provider should store the key
-     * @return true if the key was stored
-     */
-    public boolean completeKeyExchange(ZigBeeCryptoSuites suite, boolean success);
+    public ZigBeeCbkeExchange getCbkeKeyExchangeResponder();
 
     /**
      * Gets the time that the provider will take to generate the ephemeral data. This is passed to the partner to allow

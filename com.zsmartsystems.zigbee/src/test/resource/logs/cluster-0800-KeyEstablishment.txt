@@ -1,0 +1,7 @@
+# This file contains commands that will be parsed, and processed in the tests.
+# The format must be two lines, with a ZigBeeApsFrame frame followed by the ZigBeeCommand it translates to
+# Comments can be added with the # on the first character and empty lines are allowed
+
+ZigBeeApsFrame [sourceAddress=0000/1, destinationAddress=0000/1, profile=0109, cluster=0800, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=E7, payload=09 03 00 01 00 0B 10 03 06 86 17 05 EC 70 57 8B DE E5 0A 43 9E 9A 18 8F CE 40 4B 08 63 EE EE EE EE EE EE EE EE 54 45 53 54 53 45 43 41 01 09 00 0F 00 00 00 00 00 00]
+InitiateKeyEstablishmentResponse [Key Establishment: 0000/1 -> 0000/1, cluster=0800, TID=03, requestedKeyEstablishmentSuite=1, ephemeralDataGenerateTime=11, confirmKeyGenerateTime=16, identity=ByteArray [value=03 06 86 17 05 EC 70 57 8B DE E5 0A 43 9E 9A 18 8F CE 40 4B 08 63 EE EE EE EE EE EE EE EE 54 45 53 54 53 45 43 41 01 09 00 0F 00 00 00 00 00 00]]
+

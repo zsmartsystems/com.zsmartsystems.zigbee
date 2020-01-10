@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,14 +9,19 @@ package com.zsmartsystems.zigbee.dongle.ember;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddEndpointRequest;
@@ -58,6 +63,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetParentChildPara
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetParentChildParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetPolicyRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetPolicyResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetValueRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetValueResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLeaveNetworkRequest;
@@ -72,6 +79,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspReadCountersRespon
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspScanCompleteHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetConfigurationValueRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetConfigurationValueResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetExtendedTimeoutRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetExtendedTimeoutResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetManufacturerCodeRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetManufacturerCodeResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPolicyRequest;
@@ -128,7 +137,7 @@ public class EmberNcp {
     /**
      * The protocol handler used to send and receive EZSP packets
      */
-    private EzspProtocolHandler protocolHandler;
+    private final EzspProtocolHandler protocolHandler;
 
     /**
      * The status value from the last request
@@ -196,6 +205,10 @@ public class EmberNcp {
     /**
      * Causes the stack to leave the current network. This generates a stackStatusHandler callback to indicate that the
      * network is down. The radio will not be used until after sending a formNetwork or joinNetwork command.
+     * <p>
+     * Note that the user must wait for the network state to change to {@link EmberNetworkStatus#EMBER_NO_NETWORK}
+     * otherwise the state may remain in {@link EmberNetworkStatus#EMBER_LEAVING_NETWORK} and attempts to reinitialise
+     * the NCP will result in {@link EmberStatus#EMBER_INVALID_CALL}.
      *
      * @return {@link EmberStatus} if success or failure
      */
@@ -634,13 +647,16 @@ public class EmberNcp {
     /**
      * Gets the 16 bit network node id of the local node
      *
-     * @return the network address of the local node
+     * @return the network address of the local node or 0xFFFE if the network address is not known
      */
     public int getNwkAddress() {
         EzspGetNodeIdRequest request = new EzspGetNodeIdRequest();
         EzspTransaction transaction = protocolHandler
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetNodeIdResponse.class));
         EzspGetNodeIdResponse response = (EzspGetNodeIdResponse) transaction.getResponse();
+        if (response == null) {
+            return 0xFFFE;
+        }
         return response.getNodeId();
     }
 
@@ -799,7 +815,11 @@ public class EmberNcp {
     }
 
     /**
-     * Perform an active scan
+     * Perform an active scan. The radio will try to send beacon request on each channel.
+     * <p>
+     * During the scan, the CSMA/CA mechanism will be used to detect whether the radio channel is free at that moment.
+     * If some of the radio channels in the environment are too busy for the device to perform the scan, the NCP returns
+     * EMBER_MAC_COMMAND_TRANSMIT_FAILURE. A clearer RF environment might mitigate this issue.
      *
      * @param channelMask the channel mask on which to perform the scan.
      * @param scanDuration Sets the exponent of the number of scan periods, where a scan period is 960 symbols. The scan
@@ -807,7 +827,7 @@ public class EmberNcp {
      * @return a List of {@link EzspNetworkFoundHandler} on success. If there was an error during the scan, null is
      *         returned.
      */
-    public List<EzspNetworkFoundHandler> doActiveScan(int channelMask, int scanDuration) {
+    public Collection<EzspNetworkFoundHandler> doActiveScan(int channelMask, int scanDuration) {
         EzspStartScanRequest activeScan = new EzspStartScanRequest();
         activeScan.setChannelMask(channelMask);
         activeScan.setDuration(scanDuration);
@@ -826,14 +846,15 @@ public class EmberNcp {
             return null;
         }
 
-        List<EzspNetworkFoundHandler> networksFound = new ArrayList<>();
-        for (EzspFrameResponse network : transaction.getResponses()) {
-            if (network instanceof EzspNetworkFoundHandler) {
-                networksFound.add((EzspNetworkFoundHandler) network);
+        Map<ExtendedPanId, EzspNetworkFoundHandler> networksFound = new HashMap<>();
+        for (EzspFrameResponse response : transaction.getResponses()) {
+            if (response instanceof EzspNetworkFoundHandler) {
+                EzspNetworkFoundHandler network = (EzspNetworkFoundHandler) response;
+                networksFound.put(network.getNetworkFound().getExtendedPanId(), network);
             }
         }
 
-        return networksFound;
+        return networksFound.values();
     }
 
     /**
@@ -869,6 +890,47 @@ public class EmberNcp {
         lastStatus = scanCompleteResponse.getStatus();
 
         return channels;
+    }
+
+    /**
+     * Tells the stack whether or not the normal interval between retransmissions of a retried unicast message should be
+     * increased by EMBER_INDIRECT_TRANSMISSION_TIMEOUT. The interval needs to be increased when sending to a sleepy
+     * node so that the message is not retransmitted until the destination has had time to wake up and poll its parent.
+     * The stack will automatically extend the timeout:
+     * <ul>
+     * <li>For our own sleepy children.
+     * <li>When an address response is received from a parent on behalf of its child.
+     * <li>When an indirect transaction expiry route error is received.
+     * <li>When an end device announcement is received from a sleepy node.
+     * </ul>
+     *
+     * @param remoteEui64 the {@link IeeeAddress} of the remote node
+     * @param extendedTimeout true if the node should be set with an extended timeout
+     * @return the {@link ZigBeeStatus} of the request
+     */
+    public ZigBeeStatus setExtendedTimeout(IeeeAddress remoteEui64, boolean extendedTimeout) {
+        EzspSetExtendedTimeoutRequest request = new EzspSetExtendedTimeoutRequest();
+        request.setRemoteEui64(remoteEui64);
+        request.setExtendedTimeout(extendedTimeout);
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspSetExtendedTimeoutResponse.class));
+        EzspSetExtendedTimeoutResponse response = (EzspSetExtendedTimeoutResponse) transaction.getResponse();
+        return (response == null) ? ZigBeeStatus.FAILURE : ZigBeeStatus.SUCCESS;
+    }
+
+    /**
+     * Detects if the standalone bootloader is installed, and if so returns the installed version. If not return 0xffff.
+     * A returned version of 0x1234 would indicate version 1.2 build 34.
+     *
+     * @return the bootloader version. A returned version of 0x1234 would indicate version 1.2 build 34.
+     */
+    public int getBootloaderVersion() {
+        EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest request = new EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest();
+        EzspTransaction transaction = protocolHandler.sendEzspTransaction(new EzspSingleResponseTransaction(request,
+                EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse.class));
+        EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse response = (EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse) transaction
+                .getResponse();
+        return (response == null) ? 0xFFFF : response.getBootloaderVersion();
     }
 
     private String intArrayToString(int[] payload) {

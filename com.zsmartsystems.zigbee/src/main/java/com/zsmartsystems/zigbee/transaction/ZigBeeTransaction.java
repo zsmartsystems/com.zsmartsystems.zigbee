@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -13,9 +13,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.CommandResult;
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportProgressState;
+import com.zsmartsystems.zigbee.zcl.ZclCommand;
 
 /**
  * Transaction class to handle the sending of commands and timeout in the event there is no response.
@@ -91,12 +93,17 @@ public class ZigBeeTransaction {
     /**
      * The {@link ZigBeeTransactionMatcher} used to match the response to the command
      */
-    private ZigBeeTransactionMatcher responseMatcher;
+    private final ZigBeeTransactionMatcher responseMatcher;
 
     /**
      * The {@link ZigBeeCommand} that we are sending
      */
-    private ZigBeeCommand command;
+    private final ZigBeeCommand command;
+
+    /**
+     * The @{link {@link IeeeAddress} of the device that we are sending the command of this transaction to
+     */
+    private IeeeAddress ieeeAddress;
 
     /**
      * The task used for transaction timeouts
@@ -145,7 +152,8 @@ public class ZigBeeTransaction {
      *
      * @param transactionManager the {@link ZigBeeTransactionManager} through which the transaction is being sent.
      * @param command the {@link ZigBeeCommand}.
-     * @param responseMatcher the {@link ZigBeeTransactionMatcher} to match the response and complete the transaction.
+     * @param responseMatcher the {@link ZigBeeTransactionMatcher} to match the response and complete the
+     *            transaction.
      *            May be null if no response is expected.
      */
     public ZigBeeTransaction(ZigBeeTransactionManager transactionManager, final ZigBeeCommand command,
@@ -266,7 +274,7 @@ public class ZigBeeTransaction {
      * @return the current timeout in milliseconds
      */
     public int getTimerPeriod2() {
-        return timeout1;
+        return timeout2;
     }
 
     /**
@@ -277,7 +285,7 @@ public class ZigBeeTransaction {
      * @param timeout the timeout to set in milliseconds
      */
     public void setTimerPeriod2(int timeout) {
-        this.timeout1 = timeout;
+        this.timeout2 = timeout;
     }
 
     /**
@@ -296,6 +304,24 @@ public class ZigBeeTransaction {
      */
     protected ZigBeeTransactionFuture getFuture() {
         return transactionFuture;
+    }
+
+    /**
+     * Gets the {@link IeeeAddress} of the device for which the transaction is targeted at
+     *
+     * @return {@link IeeeAddress} of the device for which the transaction is targeted at
+     */
+    public IeeeAddress getIeeeAddress() {
+        return ieeeAddress;
+    }
+
+    /**
+     * Sets the {@link IeeeAddress} of the device for which the transaction is targeted at
+     *
+     * @param ieeeAddress the {@link IeeeAddress} of the device for which the transaction is targeted at
+     */
+    public void setIeeeAddress(IeeeAddress ieeeAddress) {
+        this.ieeeAddress = ieeeAddress;
     }
 
     /**
@@ -360,9 +386,11 @@ public class ZigBeeTransaction {
         timeoutTask = transactionManager.scheduleTask(new Runnable() {
             @Override
             public void run() {
-                if (state == TransactionState.RESPONDED) {
+                if (transactionFuture.isCancelled() || state == TransactionState.RESPONDED) {
                     // Even though this transaction has timed out waiting for the transport,
                     // we did receive a response that completed the transaction at application level
+                    // Additionally, if the future was cancelled, we assume this was done by the application
+                    // so it's treated as complete.
                     completeTransaction(completionCommand);
                 } else {
                     cancelTransaction();
@@ -372,6 +400,10 @@ public class ZigBeeTransaction {
     }
 
     private void completeTransaction(ZigBeeCommand receivedCommand) {
+        if (isTransactionComplete()) {
+            return;
+        }
+
         state = TransactionState.COMPLETE;
         if (timeoutTask != null) {
             timeoutTask.cancel(false);
@@ -387,12 +419,20 @@ public class ZigBeeTransaction {
     }
 
     private void cancelTransaction() {
+        if (isTransactionComplete()) {
+            return;
+        }
+
         state = TransactionState.FAILED;
         if (timeoutTask != null) {
             timeoutTask.cancel(false);
         }
 
         transactionManager.transactionComplete(this, TransactionState.FAILED);
+    }
+
+    private boolean isTransactionComplete() {
+        return (state == TransactionState.COMPLETE || state == TransactionState.FAILED);
     }
 
     /**
@@ -437,8 +477,9 @@ public class ZigBeeTransaction {
                     }
                     break;
                 case RX_ACK:
-                    // The remote device confirmed receipt of the command
-                    if (responseMatcher == null || state == TransactionState.RESPONDED) {
+                    // The remote device confirmed receipt of the command (ie APS ACK received)
+                    if (responseMatcher == null || state == TransactionState.RESPONDED
+                            || (command instanceof ZclCommand && ((ZclCommand) command).isDisableDefaultResponse())) {
                         // We've already received a response that completed the application level transaction,
                         // or we weren't waiting for a response - either way, we're done.
                         completeTransaction(completionCommand);
@@ -459,7 +500,7 @@ public class ZigBeeTransaction {
     @Override
     public String toString() {
         String queuedTime = queueTime == null ? "-" : Long.toString(System.currentTimeMillis() - queueTime);
-        return "ZigBeeTransaction [queueTime=" + queuedTime + ", state=" + state + ", sendCnt=" + sendCnt + ", command="
-                + command + "]";
+        return "ZigBeeTransaction [ieeeAddress=" + ieeeAddress + " queueTime=" + queuedTime + ", state=" + state
+                + ", sendCnt=" + sendCnt + ", command=" + command + "]";
     }
 }

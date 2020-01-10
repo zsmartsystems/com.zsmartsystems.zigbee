@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,12 +10,16 @@ package com.zsmartsystems.zigbee.dongle.ember;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -44,6 +48,9 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspTrustCenterJoinHan
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberDeviceUpdate;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberIncomingMessageType;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyStruct;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspPolicyId;
@@ -57,6 +64,8 @@ import com.zsmartsystems.zigbee.transport.ZigBeePort;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportProgressState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.MacCapabilitiesType;
 
 /**
  * Tests for {@link ZigBeeDongleEzsp}
@@ -69,6 +78,7 @@ public class ZigBeeDongleEzspTest {
 
     @Test
     public void setEmberNcpResetProvider() {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
 
         dongle.setEmberNcpResetProvider(Mockito.mock(EmberNcpResetProvider.class));
@@ -76,6 +86,7 @@ public class ZigBeeDongleEzspTest {
 
     @Test
     public void setZigBeeExtendedPanId() {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
 
         dongle.setZigBeeExtendedPanId(new ExtendedPanId("123456789abcdef"));
@@ -84,6 +95,7 @@ public class ZigBeeDongleEzspTest {
 
     @Test
     public void setZigBeePanId() {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
         dongle.setPollRate(1);
         dongle.setPollRate(0);
@@ -94,6 +106,7 @@ public class ZigBeeDongleEzspTest {
 
     @Test
     public void testEzspVersions() {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         EzspFrame.setEzspVersion(4);
         assertEquals(4, EzspFrame.getEzspVersion());
         assertFalse(EzspFrame.setEzspVersion(3));
@@ -104,13 +117,16 @@ public class ZigBeeDongleEzspTest {
         assertEquals(5, EzspFrame.getEzspVersion());
         assertTrue(EzspFrame.setEzspVersion(7));
         assertEquals(7, EzspFrame.getEzspVersion());
-        assertFalse(EzspFrame.setEzspVersion(8));
-        assertEquals(7, EzspFrame.getEzspVersion());
+        assertTrue(EzspFrame.setEzspVersion(8));
+        assertEquals(8, EzspFrame.getEzspVersion());
+        assertFalse(EzspFrame.setEzspVersion(9));
+        assertEquals(8, EzspFrame.getEzspVersion());
         EzspFrame.setEzspVersion(4);
     }
 
     @Test
     public void setTcJoinMode() {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ArgumentCaptor<EzspPolicyId> policyId = ArgumentCaptor.forClass(EzspPolicyId.class);
         ArgumentCaptor<EzspDecisionId> decisionId = ArgumentCaptor.forClass(EzspDecisionId.class);
 
@@ -153,6 +169,7 @@ public class ZigBeeDongleEzspTest {
 
     @Test
     public void setClusters() throws Exception {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ArgumentCaptor<EzspPolicyId> policyId = ArgumentCaptor.forClass(EzspPolicyId.class);
         ArgumentCaptor<EzspDecisionId> decisionId = ArgumentCaptor.forClass(EzspDecisionId.class);
 
@@ -193,6 +210,7 @@ public class ZigBeeDongleEzspTest {
 
     @Test
     public void testEzspStackStatusHandler() throws Exception {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ZigBeeTransportReceive transport = Mockito.mock(ZigBeeTransportReceive.class);
 
         final EmberNcp ncp = Mockito.mock(EmberNcp.class);
@@ -205,19 +223,30 @@ public class ZigBeeDongleEzspTest {
         };
         dongle.setZigBeeTransportReceive(transport);
 
-        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "initialised", true);
-
+        // initialised is false so no transport state update
         EzspStackStatusHandler response = Mockito.mock(EzspStackStatusHandler.class);
-        Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_NETWORK_BUSY);
+        Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_NETWORK_UP);
+        dongle.handlePacket(response);
         Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(0))
                 .setTransportState(ArgumentMatchers.any(ZigBeeTransportState.class));
 
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "initialised", true);
+
+        // busy is ignored
+        response = Mockito.mock(EzspStackStatusHandler.class);
+        Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_NETWORK_BUSY);
+        dongle.handlePacket(response);
+        Mockito.verify(transport, Mockito.timeout(TIMEOUT).times(0))
+                .setTransportState(ArgumentMatchers.any(ZigBeeTransportState.class));
+
+        // transport state is updated to online now that we're initialised
         response = Mockito.mock(EzspStackStatusHandler.class);
         Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_NETWORK_UP);
         dongle.handlePacket(response);
         Mockito.verify(transport, Mockito.timeout(TIMEOUT)).setTransportState(ZigBeeTransportState.ONLINE);
         assertEquals(Integer.valueOf(1243), dongle.getNwkAddress());
 
+        // network state should set offline if the network state is down
         response = Mockito.mock(EzspStackStatusHandler.class);
         Mockito.when(response.getStatus()).thenReturn(EmberStatus.EMBER_NETWORK_DOWN);
         dongle.handlePacket(response);
@@ -226,6 +255,7 @@ public class ZigBeeDongleEzspTest {
 
     @Test
     public void testEzspTrustCenterJoinHandler() throws Exception {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ZigBeeTransportReceive transport = Mockito.mock(ZigBeeTransportReceive.class);
 
         final EmberNcp ncp = Mockito.mock(EmberNcp.class);
@@ -281,6 +311,7 @@ public class ZigBeeDongleEzspTest {
 
     @Test
     public void testEzspChildJoinHandler() throws Exception {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ZigBeeTransportReceive transport = Mockito.mock(ZigBeeTransportReceive.class);
 
         final EmberNcp ncp = Mockito.mock(EmberNcp.class);
@@ -314,6 +345,7 @@ public class ZigBeeDongleEzspTest {
 
     @Test
     public void setZigBeeChannel() {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
 
         assertEquals(ZigBeeStatus.INVALID_ARGUMENTS, dongle.setZigBeeChannel(ZigBeeChannel.CHANNEL_03));
@@ -327,6 +359,7 @@ public class ZigBeeDongleEzspTest {
 
     @Test
     public void testEzspMessageSentHandler() throws Exception {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ZigBeeTransportReceive transport = Mockito.mock(ZigBeeTransportReceive.class);
 
         final EmberNcp ncp = Mockito.mock(EmberNcp.class);
@@ -354,6 +387,7 @@ public class ZigBeeDongleEzspTest {
 
     @Test
     public void getCounters() throws Exception {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
 
         assertNotNull(dongle.getCounters());
@@ -374,6 +408,7 @@ public class ZigBeeDongleEzspTest {
 
     @Test
     public void sendCommandUnicast() throws Exception {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
 
         EzspProtocolHandler handler = Mockito.mock(EzspProtocolHandler.class);
@@ -398,6 +433,7 @@ public class ZigBeeDongleEzspTest {
 
     @Test
     public void sendCommandBroadcast() throws Exception {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
 
         EzspProtocolHandler handler = Mockito.mock(EzspProtocolHandler.class);
@@ -422,15 +458,21 @@ public class ZigBeeDongleEzspTest {
 
     @Test
     public void getFirmwareVersion() throws Exception {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
 
         assertEquals("", dongle.getFirmwareVersion());
         TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "versionString", "Stack Version=123.456");
         assertEquals("123.456", dongle.getFirmwareVersion());
+
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "versionString",
+                "Stack Version=123.456, Bootloader Version=0.1 build 23");
+        assertEquals("123.456", dongle.getFirmwareVersion());
     }
 
     @Test
     public void scheduleNetworkStatePolling() throws Exception {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
 
         ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
@@ -461,6 +503,7 @@ public class ZigBeeDongleEzspTest {
 
     @Test
     public void shutdown() throws Exception {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
         TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "serialPort", Mockito.mock(ZigBeePort.class));
         TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "frameHandler", Mockito.mock(EzspProtocolHandler.class));
@@ -470,6 +513,7 @@ public class ZigBeeDongleEzspTest {
 
     @Test
     public void testEzspIncomingMessageHandler() throws Exception {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ZigBeeTransportReceive zigbeeTransportReceive = Mockito.mock(ZigBeeTransportReceive.class);
         ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null);
         dongle.setZigBeeTransportReceive(zigbeeTransportReceive);
@@ -541,5 +585,53 @@ public class ZigBeeDongleEzspTest {
         Mockito.verify(zigbeeTransportReceive, Mockito.times(6))
                 .receiveCommand(ArgumentMatchers.any(ZigBeeApsFrame.class));
 
+    }
+
+    @Test
+    public void setNodeDescriptor() throws Exception {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        final EmberNcp ncp = Mockito.mock(EmberNcp.class);
+        ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null) {
+            @Override
+            public EmberNcp getEmberNcp() {
+                return ncp;
+            }
+        };
+
+        Set<NodeDescriptor.MacCapabilitiesType> macCapabilities = new HashSet<>();
+        macCapabilities.add(MacCapabilitiesType.RECEIVER_ON_WHEN_IDLE);
+        NodeDescriptor nodeDescriptor = Mockito.mock(NodeDescriptor.class);
+        Mockito.when(nodeDescriptor.getMacCapabilities()).thenReturn(macCapabilities);
+        dongle.setNodeDescriptor(new IeeeAddress("1234567890ABCDEF"), nodeDescriptor);
+        Mockito.verify(ncp, Mockito.timeout(TIMEOUT).times(0)).setExtendedTimeout(new IeeeAddress("1234567890ABCDEF"),
+                true);
+
+        macCapabilities.clear();
+        dongle.setNodeDescriptor(new IeeeAddress("1234567890ABCDEF"), nodeDescriptor);
+        Mockito.verify(ncp, Mockito.timeout(TIMEOUT).times(1)).setExtendedTimeout(new IeeeAddress("1234567890ABCDEF"),
+                true);
+    }
+
+    @Test
+    public void getTcLinkKey() {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        final EmberNcp ncp = Mockito.mock(EmberNcp.class);
+        ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null) {
+            @Override
+            public EmberNcp getEmberNcp() {
+                return ncp;
+            }
+        };
+
+        EmberKeyStruct emberKey = Mockito.mock(EmberKeyStruct.class);
+        EmberKeyData emberKeyData = new EmberKeyData();
+        emberKeyData.setContents(new int[16]);
+        Mockito.when(ncp.getKey(EmberKeyType.EMBER_TRUST_CENTER_LINK_KEY)).thenReturn(null);
+        Mockito.when(ncp.getKey(EmberKeyType.EMBER_CURRENT_NETWORK_KEY)).thenReturn(emberKey);
+        Mockito.when(emberKey.getBitmask()).thenReturn(Collections.emptySet());
+        Mockito.when(emberKey.getKey()).thenReturn(emberKeyData);
+
+        assertNull(dongle.getTcLinkKey());
+        assertNotNull(dongle.getZigBeeNetworkKey());
     }
 }

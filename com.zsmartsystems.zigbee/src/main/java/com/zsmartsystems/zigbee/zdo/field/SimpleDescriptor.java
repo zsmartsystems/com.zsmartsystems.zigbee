@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -162,9 +162,37 @@ public class SimpleDescriptor {
 
     @Override
     public String toString() {
-        return "SimpleDescriptor [endpoint=" + endpoint + ", profileId=" + String.format("%04X", profileId)
-                + ", deviceId=" + deviceId + ", deviceVersion=" + deviceVersion + ", inputClusterList="
-                + inputClusterList + ", outputClusterList=" + outputClusterList + "]";
+        StringBuilder builder = new StringBuilder(200);
+        builder.append("SimpleDescriptor [endpoint=");
+        builder.append(endpoint);
+        builder.append(", profileId=");
+        builder.append(String.format("%04X", profileId));
+        builder.append(", deviceId=");
+        builder.append(String.format("%04X", deviceId));
+        builder.append(", deviceVersion=");
+        builder.append(deviceVersion);
+
+        builder.append(", inputClusterList=");
+        appendClusterList(builder, inputClusterList);
+
+        builder.append(", outputClusterList=");
+        appendClusterList(builder, outputClusterList);
+        builder.append(']');
+
+        return builder.toString();
     }
 
+    private void appendClusterList(StringBuilder builder, List<Integer> clusterList) {
+        boolean first = true;
+        builder.append('[');
+        for (int cluster : clusterList) {
+            if (!first) {
+                builder.append(", ");
+            } else {
+                first = false;
+            }
+            builder.append(String.format("%04X", cluster));
+        }
+        builder.append(']');
+    }
 }

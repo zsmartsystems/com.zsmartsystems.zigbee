@@ -1,11 +1,13 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  */
 package com.zsmartsystems.zigbee.database;
+
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -14,6 +16,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -133,5 +136,23 @@ public class ZigBeeNetworkDatabaseManagerTest {
 
         databaseManager.shutdown();
         Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).times(1)).removeNetworkNodeListener(databaseManager);
+    }
+
+    @Test
+    public void timerConfiguration() throws Exception {
+        ZigBeeNetworkManager networkManager = Mockito.mock(ZigBeeNetworkManager.class);
+        ZigBeeNetworkDatabaseManager databaseManager = new ZigBeeNetworkDatabaseManager(networkManager);
+
+        databaseManager.setDeferredWriteTime(10);
+        assertEquals(10,
+                TestUtilities.getField(ZigBeeNetworkDatabaseManager.class, databaseManager, "deferredWriteTime"));
+        databaseManager.setMaxDeferredWriteTime(5);
+        assertEquals(5,
+                TestUtilities.getField(ZigBeeNetworkDatabaseManager.class, databaseManager, "deferredWriteTime"));
+        assertEquals(TimeUnit.MILLISECONDS.toNanos(5),
+                TestUtilities.getField(ZigBeeNetworkDatabaseManager.class, databaseManager, "deferredWriteTimeout"));
+        databaseManager.setDeferredWriteTime(3);
+        assertEquals(3,
+                TestUtilities.getField(ZigBeeNetworkDatabaseManager.class, databaseManager, "deferredWriteTime"));
     }
 }

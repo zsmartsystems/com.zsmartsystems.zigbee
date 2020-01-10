@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.TestUtilities;
@@ -75,6 +74,7 @@ public class AshFrameHandlerTest {
 
     @Test
     public void testReceivePacket() {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         int[] response = getPacket(new int[] { 0x01, 0x02, 0x03, 0x04, 0x7E });
         assertNotNull(response);
         assertEquals(4, response.length);
@@ -83,6 +83,7 @@ public class AshFrameHandlerTest {
 
     @Test
     public void testReceivePacket_FlagStart() {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         int[] response = getPacket(new int[] { 0x7E, 0x01, 0x02, 0x03, 0x04, 0x7E });
         assertNotNull(response);
         assertEquals(4, response.length);
@@ -91,6 +92,7 @@ public class AshFrameHandlerTest {
 
     @Test
     public void testReceivePacket_IgnoreXonXoff() {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         int[] response = getPacket(new int[] { 0x7E, 0x01, 0x02, 0x11, 0x03, 0x13, 0x04, 0x7E });
         assertNotNull(response);
         assertEquals(4, response.length);
@@ -99,6 +101,7 @@ public class AshFrameHandlerTest {
 
     @Test
     public void testReceivePacket_Cancel() {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         int[] response = getPacket(new int[] { 0x7E, 0x01, 0x02, 0x1A, 0x03, 0x04, 0x05, 0x06, 0x07, 0x7E });
         assertNotNull(response);
         assertEquals(5, response.length);
@@ -107,6 +110,7 @@ public class AshFrameHandlerTest {
 
     @Test
     public void testReceivePacket_Substitute() {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         int[] response = getPacket(new int[] { 0x7E, 0x01, 0x02, 0x18, 0x03, 0x04, 0x7E, 0x05, 0x06, 0x07, 0x7E });
         assertNotNull(response);
         assertEquals(3, response.length);
@@ -115,6 +119,7 @@ public class AshFrameHandlerTest {
 
     @Test
     public void testRunning() {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         EzspFrameHandler ezspHandler = Mockito.mock(EzspFrameHandler.class);
         AshFrameHandler frameHandler = new AshFrameHandler(ezspHandler);
         frameHandler.start(Mockito.mock(ZigBeePort.class));
@@ -131,6 +136,7 @@ public class AshFrameHandlerTest {
 
     @Test
     public void testReceivePacketx() {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         int[] response = getPacket(
                 new int[] { 0x44, 0x0E, 0xA1, 0x57, 0x54, 0x45, 0x15, 0x58, 0x94, 0x6C, 0x1B, 0x6E, 0x35, 0x27, 0xEA,
                         0x61, 0xE0, 0x60, 0x31, 0xFB, 0x04, 0xF3, 0xA7, 0x9D, 0x86, 0x86, 0xB0, 0x3E, 0x29, 0x7E });
@@ -198,6 +204,7 @@ public class AshFrameHandlerTest {
 
     @Test
     public void testGetCounters() {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         AshFrameHandler frameHandler = new AshFrameHandler(null);
 
         assertNotNull(frameHandler.getCounters());
@@ -215,6 +222,7 @@ public class AshFrameHandlerTest {
 
     @Test
     public void testTimeout() throws NoSuchFieldException, SecurityException, Exception {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ZigBeePort port = new TestPort(null, null);
 
         EzspFrameHandler ezspHandler = Mockito.mock(EzspFrameHandler.class);
@@ -228,8 +236,6 @@ public class AshFrameHandlerTest {
         TestUtilities.setField(AshFrameHandler.class, frameHandler, "receiveTimeout", 0);
         TestUtilities.setField(AshFrameHandler.class, frameHandler, "stateConnected", true);
 
-        ArgumentCaptor<Boolean> stateCapture = ArgumentCaptor.forClass(Boolean.class);
-
         EzspVersionRequest request = new EzspVersionRequest();
         request.setSequenceNumber(3);
         request.setDesiredProtocolVersion(4);
@@ -239,12 +245,12 @@ public class AshFrameHandlerTest {
 
         assertNull(transaction.getResponse());
 
-        Mockito.verify(ezspHandler, Mockito.timeout(TIMEOUT).times(1)).handleLinkStateChange(stateCapture.capture());
-        assertFalse(stateCapture.getValue());
+        Mockito.verify(ezspHandler, Mockito.timeout(TIMEOUT).times(1)).handleLinkStateChange(false);
     }
 
     @Test
     public void testErrorToOffline() {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         int[] data = new int[] { 0xC2, 0x02, 0x52, 0x98, 0xDE, 0x7E, 0xC1, 0x02, 0x0B, 0x0A, 0x52, 0x7E, 0xC2, 0x02,
                 0x52, 0x98, 0xDE, 0x7E };
 
@@ -255,18 +261,18 @@ public class AshFrameHandlerTest {
         }
         ByteArrayInputStream stream = new ByteArrayInputStream(bytedata);
         ZigBeePort port = new TestPort(stream, null);
-        ArgumentCaptor<Boolean> stateCapture = ArgumentCaptor.forClass(Boolean.class);
 
         EzspFrameHandler ezspHandler = Mockito.mock(EzspFrameHandler.class);
         AshFrameHandler frameHandler = new AshFrameHandler(ezspHandler);
 
         frameHandler.start(port);
         frameHandler.connect();
-        Mockito.verify(ezspHandler, Mockito.timeout(TIMEOUT).times(1)).handleLinkStateChange(stateCapture.capture());
+        Mockito.verify(ezspHandler, Mockito.timeout(TIMEOUT).times(1)).handleLinkStateChange(true);
     }
 
     @Test
     public void handleReset() throws Exception {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         // PoR reset is ignored
         // Software Reset V1 ignored
         // Software Reset V2 goes online and state to connected
@@ -295,13 +301,12 @@ public class AshFrameHandlerTest {
         }
         ByteArrayInputStream stream = new ByteArrayInputStream(bytedata);
         ZigBeePort port = new TestPort(stream, null);
-        ArgumentCaptor<Boolean> stateCapture = ArgumentCaptor.forClass(Boolean.class);
 
         EzspFrameHandler ezspHandler = Mockito.mock(EzspFrameHandler.class);
         AshFrameHandler frameHandler = new AshFrameHandler(ezspHandler);
 
         frameHandler.start(port);
 
-        Mockito.verify(ezspHandler, Mockito.timeout(TIMEOUT)).handleLinkStateChange(stateCapture.capture());
+        Mockito.verify(ezspHandler, Mockito.timeout(TIMEOUT)).handleLinkStateChange(true);
     }
 }

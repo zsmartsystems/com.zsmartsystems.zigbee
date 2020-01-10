@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -101,6 +101,17 @@ public class ZclAttributeTest {
         TestUtilities.setField(ZclAttribute.class, attribute, "lastValue", Integer.valueOf(8888));
         assertEquals(Integer.valueOf(8888), attribute.readValue(Long.MAX_VALUE));
         Mockito.verify(cluster, Mockito.times(1)).readAttributeValue(123);
+    }
+
+    @Test
+    public void reportValue() {
+        ZclCluster cluster = Mockito.mock(ZclCluster.class);
+        ZclAttribute attribute = new ZclAttribute(cluster, 123, "Test Name", ZclDataType.UNSIGNED_8_BIT_INTEGER, false,
+                false, false, false);
+
+        Integer value = Integer.valueOf(888);
+        attribute.reportValue(value);
+        Mockito.verify(cluster, Mockito.times(1)).reportAttribute(123, ZclDataType.UNSIGNED_8_BIT_INTEGER, value);
     }
 
     @Test

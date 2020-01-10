@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -342,7 +342,7 @@ public class ZigBeeDongleTelegesis
     private final int defaultS10 = 0x56A9;
 
     /**
-     * Map used to correlate the Telegesis sequence IDs with the APS counter we use to correlate messages in the stack
+     * Map used to correlate the Telegesis sequence IDs with the Transaction ID we use to correlate messages in the stack
      */
     private Map<Integer, Integer> messageIdMap = new ConcurrentHashMap<>();
 
@@ -415,7 +415,14 @@ public class ZigBeeDongleTelegesis
             builder.append(productInfo.getFirmwareRevision());
             versionString = builder.toString();
 
+            if (!productInfo.getFirmwareRevision().startsWith("309")) {
+                logger.error("Telegesis driver will not work with R{}, R309 is required",
+                        productInfo.getFirmwareRevision());
+                return ZigBeeStatus.FAILURE;
+            }
             ieeeAddress = productInfo.getIeeeAddress();
+        } else {
+            logger.info("Unable to read Telegesis dongle firmware version");
         }
 
         return ZigBeeStatus.SUCCESS;
@@ -671,7 +678,7 @@ public class ZigBeeDongleTelegesis
             TelegesisSendUnicastCommand unicastCommand = new TelegesisSendUnicastCommand();
             unicastCommand.setAddress(apsFrame.getDestinationAddress());
             unicastCommand.setDestEp(apsFrame.getDestinationEndpoint());
-            unicastCommand.setSourceEp(0);
+            unicastCommand.setSourceEp(apsFrame.getSourceEndpoint());
             unicastCommand.setProfileId(apsFrame.getProfile());
             unicastCommand.setClusterId(apsFrame.getCluster());
             unicastCommand.setMessageData(apsFrame.getPayload());

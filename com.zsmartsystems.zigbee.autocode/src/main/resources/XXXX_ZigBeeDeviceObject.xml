@@ -23,6 +23,7 @@
         <description>The IEEE_addr_req is generated from a Local Device wishing to inquire as to the 64-bit IEEE address of the Remote Device based on their known 16-bit address. The destination addressing on this command shall be unicast.</description>
         <field type="NWK_ADDRESS">
             <name>NWK Addr Of Interest</name>
+            <format>hex[4]</format>
         </field>
         <field type="UNSIGNED_8_BIT_INTEGER">
             <name>Request Type</name>
@@ -39,6 +40,7 @@
         <description>The Node_Desc_req command is generated from a local device wishing to inquire as to the node descriptor of a remote device. This command shall be unicast either to the remote device itself or to an alternative device that contains the discovery information of the remote device.</description>
         <field type="NWK_ADDRESS">
             <name>NWK Addr Of Interest</name>
+            <format>hex[4]</format>
         </field>
         <response command="NodeDescriptorResponse">
             <matcher commandField="NwkAddrOfInterest" responseField="NwkAddrOfInterest" />
@@ -49,6 +51,7 @@
         <description>The Power_Desc_req command is generated from a local device wishing to inquire as to the power descriptor of a remote device. This command shall be unicast either to the remote device itself or to an alternative device that contains the discovery information of the remote device.</description>
         <field type="NWK_ADDRESS">
             <name>NWK Addr Of Interest</name>
+            <format>hex[4]</format>
         </field>
         <response command="PowerDescriptorResponse">
             <matcher commandField="NwkAddrOfInterest" responseField="NwkAddrOfInterest" />
@@ -59,6 +62,7 @@
         <description>The Simple_Desc_req command is generated from a local device wishing to inquire as to the simple descriptor of a remote device on a specified endpoint. This command shall be unicast either to the remote device itself or to an alternative device that contains the discovery information of the remote device.</description>
         <field type="NWK_ADDRESS">
             <name>NWK Addr Of Interest</name>
+            <format>hex[4]</format>
         </field>
         <field type="UNSIGNED_8_BIT_INTEGER">
             <name>Endpoint</name>
@@ -73,6 +77,7 @@
         <description>The Active_EP_req command is generated from a local device wishing to acquire the list of endpoints on a remote device with simple descriptors. This command shall be unicast either to the remote device itself or to an alternative device that contains the discovery information of the remote device.</description>
         <field type="NWK_ADDRESS">
             <name>NWK Addr Of Interest</name>
+            <format>hex[4]</format>
         </field>
         <response command="ActiveEndpointsResponse">
             <matcher commandField="NwkAddrOfInterest" responseField="NwkAddrOfInterest" />
@@ -83,9 +88,11 @@
         <description>The Match_Desc_req command is generated from a local device wishing to find remote devices supporting a specific simple descriptor match criterion. This command shall either be broadcast to all devices for which macRxOnWhenIdle = TRUE, or unicast. If the command is unicast, it shall be directed either to the remote device itself or to an alternative device that contains the discovery information of the remote device.</description>
         <field type="NWK_ADDRESS">
             <name>NWK Addr Of Interest</name>
+            <format>hex[4]</format>
         </field>
         <field type="UNSIGNED_16_BIT_INTEGER">
             <name>Profile ID</name>
+            <format>hex[4]</format>
         </field>
         <field type="UNSIGNED_8_BIT_INTEGER">
             <name>In Cluster Count</name>
@@ -107,6 +114,7 @@
         <description>The Complex_Desc_req command is generated from a local device wishing to inquire as to the complex descriptor of a remote device. This command shall be unicast either to the remote device itself or to an alternative device that contains the discovery information of the remote device.</description>
         <field type="NWK_ADDRESS">
             <name>NWK Addr Of Interest</name>
+            <format>hex[4]</format>
         </field>
         <response command="ComplexDescriptorResponse">
             <matcher commandField="NwkAddrOfInterest" responseField="NwkAddrOfInterest" />
@@ -117,6 +125,7 @@
         <description>The User_Desc_req command is generated from a local device wishing to inquire as to the user descriptor of a remote device. This command shall be unicast either to the remote device itself or to an alternative device that contains the discovery information of the remote device.</description>
         <field type="NWK_ADDRESS">
             <name>NWK Addr Of Interest</name>
+            <format>hex[4]</format>
         </field>
         <response command="UserDescriptorResponse">
             <matcher commandField="NwkAddrOfInterest" responseField="NwkAddrOfInterest" />
@@ -131,12 +140,14 @@
         <description>The Device_annce is provided to enable ZigBee devices on the network to notify other ZigBee devices that the device has joined or re-joined the network, identifying the device&apos;s 64-bit IEEE address and new 16-bit NWK address, and informing the Remote Devices of the capability of the ZigBee device. This command shall be invoked for all ZigBee end devices upon join or rejoin. This command may also be invoked by ZigBee routers upon join or rejoin as part of NWK address conflict resolution. The destination addressing on this primitive is broadcast to all devices for which macRxOnWhenIdle = TRUE.</description>
         <field type="NWK_ADDRESS">
             <name>NWK Addr Of Interest</name>
+            <format>hex[4]</format>
         </field>
         <field type="IEEE_ADDRESS">
             <name>IEEE Addr</name>
         </field>
         <field type="BITMAP_8_BIT">
             <name>Capability</name>
+             <format>hex[2]</format>
         </field>
     </command>
     <command code="0x0014" source="client">
@@ -180,6 +191,7 @@
         <description>The Extended_Simple_Desc_req command is generated from a local device wishing to inquire as to the simple descriptor of a remote device on a specified endpoint. This command shall be unicast either to the remote device itself or to an alternative device that contains the discovery information of the remote device. The Extended_Simple_Desc_req is intended for use with devices which employ a larger number of application input or output clusters than can be described by the Simple_Desc_req.</description>
         <field type="NWK_ADDRESS">
             <name>NWK Addr Of Interest</name>
+            <format>hex[4]</format>
         </field>
         <field type="UNSIGNED_8_BIT_INTEGER">
             <name>Endpoint</name>
@@ -206,6 +218,7 @@
         </field>
         <field type="UNSIGNED_16_BIT_INTEGER">
             <name>Profile ID</name>
+            <format>hex[4]</format>
         </field>
         <field type="UNSIGNED_8_BIT_INTEGER">
             <name>In Cluster Count</name>
@@ -334,6 +347,7 @@
         <description>The Mgmt_NWK_Disc_req is generated from a Local Device requesting that the Remote Device execute a Scan to report back networks in the vicinity of the Local Device. The destination addressing on this command shall be unicast.</description>
         <field type="BITMAP_32_BIT">
             <name>Scan Channels</name>
+            <format>hex[8]</format>
         </field>
         <field type="UNSIGNED_8_BIT_INTEGER">
             <name>Scan Duration</name>
@@ -392,6 +406,7 @@
         </field>
         <field type="BITMAP_8_BIT">
             <name>Capability Information</name>
+            <format>hex[2]</format>
         </field>
     </command>
     <command code="0x0036" source="client">
@@ -415,6 +430,7 @@
         <description>This command is provided to allow updating of network configuration parameters or to request information from devices on network conditions in the local operating environment. The destination addressing on this primitive shall be unicast or broadcast to all devices for which macRxOnWhenIdle = TRUE.</description>
         <field type="BITMAP_32_BIT">
             <name>Scan Channels</name>
+            <format>hex[8]</format>
         </field>
         <field type="UNSIGNED_8_BIT_INTEGER">
             <name>Scan Duration</name>
@@ -483,6 +499,7 @@
         </field>
         <field type="NWK_ADDRESS">
             <name>NWK Addr Of Interest</name>
+            <format>hex[4]</format>
         </field>
         <field type="NODE_DESCRIPTOR">
             <name>Node Descriptor</name>
@@ -496,6 +513,7 @@
         </field>
         <field type="NWK_ADDRESS">
             <name>NWK Addr Of Interest</name>
+            <format>hex[4]</format>
         </field>
         <field type="POWER_DESCRIPTOR">
             <name>Power Descriptor</name>
@@ -509,6 +527,7 @@
         </field>
         <field type="NWK_ADDRESS">
             <name>NWK Addr Of Interest</name>
+             <format>hex[4]</format>
         </field>
         <field type="UNSIGNED_8_BIT_INTEGER">
             <name>Length</name>
@@ -525,6 +544,7 @@
         </field>
         <field type="NWK_ADDRESS">
             <name>NWK Addr Of Interest</name>
+            <format>hex[4]</format>
         </field>
         <field type="UNSIGNED_8_BIT_INTEGER">
             <name>Active Ep Cnt</name>
@@ -542,6 +562,7 @@
         </field>
         <field type="NWK_ADDRESS">
             <name>NWK Addr Of Interest</name>
+             <format>hex[4]</format>
         </field>
         <field type="UNSIGNED_8_BIT_INTEGER">
             <name>Match Length</name>
@@ -559,6 +580,7 @@
         </field>
         <field type="NWK_ADDRESS">
             <name>NWK Addr Of Interest</name>
+             <format>hex[4]</format>
         </field>
         <field type="UNSIGNED_8_BIT_INTEGER">
             <name>Length</name>
@@ -575,6 +597,7 @@
         </field>
         <field type="NWK_ADDRESS">
             <name>NWK Addr Of Interest</name>
+            <format>hex[4]</format>
         </field>
         <field type="UNSIGNED_8_BIT_INTEGER">
             <name>Length</name>
@@ -801,6 +824,7 @@
         </field>
         <field type="UNSIGNED_32_BIT_INTEGER">
             <name>Scanned Channels</name>
+            <format>hex[8]</format>
         </field>
         <field type="UNSIGNED_16_BIT_INTEGER">
             <name>Total Transmissions</name>

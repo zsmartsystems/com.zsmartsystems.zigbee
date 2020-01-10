@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -42,6 +42,7 @@ public class ZigBeeBasicServerExtensionTest {
         ZigBeeBasicServerExtension basicServer = new ZigBeeBasicServerExtension();
         assertEquals(ZigBeeStatus.SUCCESS, basicServer.extensionInitialize(networkManager));
         assertEquals(ZigBeeStatus.SUCCESS, basicServer.extensionStartup());
+        Mockito.verify(networkManager, Mockito.times(1)).addSupportedServerCluster(ZclBasicCluster.CLUSTER_ID);
         Mockito.verify(networkManager, Mockito.times(1)).addNetworkNodeListener(basicServer);
 
         assertTrue(basicServer.setAttribute(ZclBasicCluster.ATTR_MODELIDENTIFIER, "ModelId"));

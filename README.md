@@ -256,6 +256,7 @@ The console application takes the following parameters -:
 |-d,--dongle <dongle type>    | Set the dongle type to use (EMBER | CC2531 | TELEGESIS | CONBEE | XBEE)   |
 |-e,--epan <EPAN ID>          | Set the ZigBee EPAN ID                                                    |
 |-f,--flow <type>             | Set the flow control (NONE | HARDWARE | SOFTWARE)                         |
+|-h,--profile <profile>       | Set the default profile ID                                                |
 |-l,--linkkey <key>           | Set the ZigBee Link key (defaults to well known ZHA key)                  |
 |-n,--nwkkey <key>            | Set the ZigBee Network key (defaults to randon value)                     |
 |-o,--nwkkeyoutcnt <counter>  | Set the ZigBee Network key outgoing frame counter                         |

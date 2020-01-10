@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -64,7 +64,7 @@ public class ZigBeeConsoleLinkKeyCommand extends ZigBeeConsoleAbstractCommand {
         }
 
         ZigBeeStatus result = networkManager.setZigBeeLinkKey(key);
-        out.println("Link key " + key.toString() + " was " + (result == ZigBeeStatus.SUCCESS ? "" : "not") + " set.");
+        out.println("Link key set to " + key.toString() + " completed with state " + result);
     }
 
 }

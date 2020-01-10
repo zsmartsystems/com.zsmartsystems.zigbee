@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,12 +9,15 @@ package com.zsmartsystems.zigbee.transaction;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.LinkedList;
+import java.util.Objects;
 import java.util.concurrent.Future;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.CommandResult;
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransaction.TransactionState;
 
 /**
@@ -85,6 +88,12 @@ public class ZigBeeTransactionQueue {
     private int outstandingTransactions = 0;
 
     /**
+     * The {@link IeeeAddress} of the device for which this queue has transactions ({@code null} in case of a default,
+     * broadcast, or multicast queue)
+     */
+    private final IeeeAddress deviceIeeeAdress;
+
+    /**
      * The profile for this queue
      */
     private ZigBeeTransactionProfile profile = new ZigBeeTransactionProfile();
@@ -101,6 +110,18 @@ public class ZigBeeTransactionQueue {
      */
     protected ZigBeeTransactionQueue(String queueName) {
         this.queueName = queueName;
+        this.deviceIeeeAdress = null;
+    }
+
+    /**
+     * Constructs a {@link ZigBeeTransactionQueue}
+     *
+     * @param queueName a queue name - used for logging to differentiate multiple queues
+     * @param deviceIeeeAddress - the {@link IEEEAddress} of the device for which this queue holds transactions
+     */
+    protected ZigBeeTransactionQueue(String queueName, IeeeAddress deviceIeeeAddress) {
+        this.queueName = queueName;
+        this.deviceIeeeAdress = deviceIeeeAddress;
     }
 
     /**
@@ -162,6 +183,15 @@ public class ZigBeeTransactionQueue {
     }
 
     /**
+     * Gets the {@link IeeeAddress} of the device for which this queue has transactions
+     *
+     * @return the IEEE address or {@code null} if this queue is a default, broadcast or multicast queue
+     */
+    public IeeeAddress getDeviceIeeeAdress() {
+        return deviceIeeeAdress;
+    }
+
+    /**
      * Adds a {@link ZigBeeTransaction} to the queue, returning a {@link CommandResult} Future that will be fulfilled
      * once the transaction completes.
      * Once the queue has been shutdown with {@link #shutdown()} no further transactions will be accepted and this
@@ -177,6 +207,8 @@ public class ZigBeeTransactionQueue {
         if (transaction.getFuture() == null) {
             transaction.setFuture(new ZigBeeTransactionFuture());
         }
+
+        transaction.setIeeeAddress(deviceIeeeAdress);
 
         // Is this the first time this transaction has been added to the queue or is this a retry
         if (transaction.getSendCnt() == 0) {
@@ -273,9 +305,35 @@ public class ZigBeeTransactionQueue {
         }
     }
 
+    /**
+     * Rewrites all transactions in the queue to have the network address of the passed node as destination address.
+     *
+     * @param newAddress the new address where the transactions should be send to
+     */
+    protected void rewriteDestinationAddresses(Integer newAddress) {
+        LinkedList<ZigBeeTransaction> transactions = new LinkedList<>();
+
+        synchronized (queue) {
+            ZigBeeTransaction zt = null;
+            while ((zt = queue.poll()) != null) {
+                if (!Objects.equals(zt.getDestinationAddress().getAddress(), newAddress)) {
+                    logger.debug("Rewriting transaction destination address from {} to {} in transaction={}",
+                            zt.getDestinationAddress().getAddress(), newAddress, zt);
+                    zt.getDestinationAddress().setAddress(newAddress);
+                }
+                transactions.add(zt);
+            }
+
+            for (ZigBeeTransaction trans : transactions) {
+                queue.add(trans);
+            }
+        }
+    }
+
     @Override
     public String toString() {
-        return "ZigBeeTransactionQueue [queueName=" + queueName + ", sleepy=" + sleepy + ", outstandingTransactions="
-                + outstandingTransactions + ", profile=" + profile + "]";
+        return "ZigBeeTransactionQueue [queueName=" + queueName + ", deviceIeeeAddress=" + deviceIeeeAdress
+                + ", sleepy=" + sleepy + ", outstandingTransactions=" + outstandingTransactions + ", profile=" + profile
+                + "]";
     }
 }

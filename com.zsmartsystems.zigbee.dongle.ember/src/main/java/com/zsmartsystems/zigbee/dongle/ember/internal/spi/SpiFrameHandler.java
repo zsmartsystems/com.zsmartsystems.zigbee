@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -689,7 +689,6 @@ public class SpiFrameHandler implements EzspProtocolHandler {
     @Override
     public Future<EzspFrame> sendEzspRequestAsync(final EzspTransaction ezspTransaction) {
         class TransactionWaiter implements Callable<EzspFrame>, SpiListener {
-            // private EzspFrame response = null;
             private boolean complete = false;
 
             @Override
@@ -714,7 +713,7 @@ public class SpiFrameHandler implements EzspProtocolHandler {
                 // Remove the listener
                 removeTransactionListener(this);
 
-                return null;// response;
+                return ezspTransaction.getResponse();
             }
 
             @Override
@@ -787,7 +786,7 @@ public class SpiFrameHandler implements EzspProtocolHandler {
     }
 
     /**
-     * Wait for the requested {@link EzspFrameResponse} to be received
+     * Wait for the requested {@link EzspFrameResponse} to be received.
      *
      * @param eventClass Request {@link EzspFrameResponse} to wait for
      * @return response {@link Future} {@link EzspFrameResponse}

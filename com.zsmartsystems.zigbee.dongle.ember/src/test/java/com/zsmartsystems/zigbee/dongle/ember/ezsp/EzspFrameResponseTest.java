@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -25,6 +25,7 @@ public class EzspFrameResponseTest {
 
     @Test
     public void testResponseV4() {
+        EzspFrame.setEzspVersion(4);
         EzspVersionResponse response = new EzspVersionResponse(new int[] { 0x01, 0x80, 0x00, 0x04, 0x02, 0x00, 0x59 });
         System.out.println(response);
 
@@ -34,6 +35,7 @@ public class EzspFrameResponseTest {
 
     @Test
     public void testResponseV5() {
+        EzspFrame.setEzspVersion(4);
         EzspVersionResponse response = new EzspVersionResponse(
                 new int[] { 0x01, 0x80, 0xFF, 0x00, 0x00, 0x05, 0x02, 0x10, 0x5A });
         System.out.println(response);
@@ -43,7 +45,20 @@ public class EzspFrameResponseTest {
     }
 
     @Test
+    public void testResponseV8() {
+        EzspFrame.setEzspVersion(4);
+        EzspFrame.setEzspVersion(8);
+        EzspVersionResponse response = new EzspVersionResponse(
+                new int[] { 0x01, 0x80, 0x01, 0x00, 0x00, 0x08, 0x02, 0x00, 0x67 });
+        System.out.println(response);
+
+        assertEquals(8, response.getProtocolVersion());
+        assertEquals(0x6700, response.getStackVersion());
+    }
+
+    @Test
     public void testResponse() {
+        EzspFrame.setEzspVersion(4);
         EzspNoCallbacksResponse response = new EzspNoCallbacksResponse(new int[] { 0x2C, 0x88, 0x07 });
         System.out.println(response);
         assertFalse(response.isCallbackPending());

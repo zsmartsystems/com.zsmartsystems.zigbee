@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,11 +7,8 @@
  */
 package com.zsmartsystems.zigbee.transaction;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
 
 import java.util.concurrent.Future;
 
@@ -20,6 +17,7 @@ import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
+import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransaction.TransactionState;
 
 /**
@@ -113,5 +111,24 @@ public class ZigBeeTransactionQueueTest {
         Mockito.verify(transactionShutdown, Mockito.times(1)).cancel();
 
         assertTrue(queue.isEmpty());
+    }
+
+    @Test
+    public void testRewriteTransactions() {
+        ZigBeeTransactionQueue queue = new ZigBeeTransactionQueue("QueueName", null);
+        int oldAddress = 1;
+        int newAddress = 2;
+
+        ZigBeeCommand command = new ZigBeeCommand();
+        command.setDestinationAddress(new ZigBeeEndpointAddress(oldAddress));
+        ZigBeeTransaction transaction = new ZigBeeTransaction(mock(ZigBeeTransactionManager.class), command,
+                mock(ZigBeeTransactionMatcher.class));
+        queue.addToQueue(transaction);
+
+        queue.rewriteDestinationAddresses(newAddress);
+
+        ZigBeeTransaction rewrittenTransaction = queue.getTransaction();
+
+        assertEquals(newAddress, rewrittenTransaction.getDestinationAddress().getAddress());
     }
 }

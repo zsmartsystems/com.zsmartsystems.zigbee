@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -240,8 +240,29 @@ public class ZigBeeBaseFieldGenerator extends ZigBeeBaseClassGenerator {
             if (getAutoSized(fields, stringToLowerCamelCase(field.name)) != null) {
                 continue;
             }
+
             out.println("        builder.append(\", " + stringToLowerCamelCase(field.name) + "=\");");
-            out.println("        builder.append(" + stringToLowerCamelCase(field.name) + ");");
+            if (field.format != null) {
+                String displayType;
+                String modifier = "";
+                if (field.format.contains("[") & field.format.contains("]")) {
+                    displayType = field.format.substring(0, field.format.indexOf('['));
+                    modifier = "0" + Integer
+                            .parseInt(field.format.substring(field.format.indexOf('[') + 1, field.format.indexOf(']')));
+                } else {
+                    displayType = field.format;
+                }
+                switch (displayType) {
+                    case "hex":
+                        out.println("        builder.append(String.format(\"%" + modifier + "X\", "
+                                + stringToLowerCamelCase(field.name) + "));");
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                out.println("        builder.append(" + stringToLowerCamelCase(field.name) + ");");
+            }
         }
         out.println("        builder.append(\']\');");
         out.println("        return builder.toString();");

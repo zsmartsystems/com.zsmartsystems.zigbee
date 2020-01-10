@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
 
@@ -144,13 +145,14 @@ public class ZigBeeEndpoint {
     }
 
     /**
-     * Gets input cluster IDs. This lists the IDs of all clusters the device
-     * supports as a server.
+     * Gets input cluster IDs. This lists the IDs of all clusters the device supports as a server.
+     * <p>
+     * This method returns a copy of the IDs and modification of the collection will not impact the supported clusters.
      *
      * @return the {@link Collection} of input cluster IDs
      */
     public Collection<Integer> getInputClusterIds() {
-        return inputClusters.keySet();
+        return new TreeSet<Integer>(inputClusters.keySet());
     }
 
     /**
@@ -223,13 +225,14 @@ public class ZigBeeEndpoint {
     }
 
     /**
-     * Gets output cluster IDs. This provides the IDs of all clusters the endpoint
-     * supports as a client.
+     * Gets output cluster IDs. This provides the IDs of all clusters the endpoint supports as a client.
+     * <p>
+     * This method returns a copy of the IDs and modification of the collection will not impact the supported clusters.
      *
      * @return the {@link Collection} of output cluster IDs
      */
     public Collection<Integer> getOutputClusterIds() {
-        return outputClusters.keySet();
+        return new TreeSet<Integer>(outputClusters.keySet());
     }
 
     /**
@@ -238,7 +241,7 @@ public class ZigBeeEndpoint {
      *
      * @param outputClusterIds the output cluster IDs
      */
-    public void setOutputClusterIds(List<Integer> outputClusterIds) {
+    public void setOutputClusterIds(Collection<Integer> outputClusterIds) {
         outputClusters.clear();
 
         logger.debug("{}: Setting output clusters {}", getEndpointAddress(), printClusterList(outputClusterIds));
@@ -289,8 +292,8 @@ public class ZigBeeEndpoint {
         ZclClusterType clusterType = ZclClusterType.getValueById(clusterId);
         if (clusterType == null) {
             // Unsupported cluster
-            logger.debug("{}: Unsupported cluster {} - using ZclCustomCluster", getEndpointAddress(),
-                    String.format("%04X", clusterId));
+            logger.debug("{}: Endpoint {}. Unsupported cluster {} - using ZclCustomCluster", getIeeeAddress(),
+                    getEndpointId(), String.format("%04X", clusterId));
             return new ZclCustomCluster(this, clusterId, "");
         }
 
@@ -302,14 +305,15 @@ public class ZigBeeEndpoint {
             cluster = constructor.newInstance(this);
         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
                 | IllegalArgumentException | InvocationTargetException e) {
-            logger.debug("{}: Error instantiating cluster {}", getEndpointAddress(), clusterType);
+            logger.debug("{}: Endpoint {}. Error instantiating cluster {}", getIeeeAddress(), getEndpointId(),
+                    clusterType);
             return null;
         }
 
         return cluster;
     }
 
-    private void updateClusters(Map<Integer, ZclCluster> clusters, List<Integer> newList, boolean isInput) {
+    private void updateClusters(Map<Integer, ZclCluster> clusters, Collection<Integer> newList, boolean isInput) {
         // Get a list any clusters that are no longer in the list
         List<Integer> removeIds = new ArrayList<>();
         for (ZclCluster cluster : clusters.values()) {
@@ -323,7 +327,8 @@ public class ZigBeeEndpoint {
 
         // Remove clusters no longer in use
         for (int id : removeIds) {
-            logger.debug("{}: Removing cluster {}", getEndpointAddress(), String.format("%04X", id));
+            logger.debug("{}: Endpoint {}. Removing cluster {}", getIeeeAddress(), getEndpointId(),
+                    String.format("%04X", id));
             clusters.remove(id);
         }
 
@@ -333,16 +338,17 @@ public class ZigBeeEndpoint {
                 // Get the cluster type
                 ZclCluster clusterClass = getClusterClass(id);
                 if (clusterClass == null) {
-                    logger.debug("{}: Cluster {} not created", getEndpointAddress(), String.format("%04X", id));
+                    logger.debug("{}: Endpoint {}. Cluster {} not created", getIeeeAddress(), getEndpointId(),
+                            String.format("%04X", id));
                     continue;
                 }
 
                 if (isInput) {
-                    logger.debug("{}: Setting server cluster {} {}", getEndpointAddress(),
+                    logger.debug("{}: Endpoint {}. Setting server cluster {} {}", getIeeeAddress(), getEndpointId(),
                             String.format("%04X", clusterClass.getClusterId()), clusterClass.getClusterName());
                     clusterClass.setServer();
                 } else {
-                    logger.debug("{}: Setting client cluster {} {}", getEndpointAddress(),
+                    logger.debug("{}: Endpoint {}. Setting client cluster {} {}", getIeeeAddress(), getEndpointId(),
                             String.format("%04X", clusterClass.getClusterId()), clusterClass.getClusterName());
                     clusterClass.setClient();
                 }
@@ -422,14 +428,25 @@ public class ZigBeeEndpoint {
         if (!command.getSourceAddress().equals(getEndpointAddress())) {
             return;
         }
-        logger.trace("{}: ZigBeeEndpoint.commandReceived({})", getEndpointAddress(), command);
+        logger.trace("{}: Endpoint {}. ZigBeeEndpoint.commandReceived({})", getIeeeAddress(), getEndpointId(), command);
 
         // Get the cluster
         ZclCluster cluster = getReceiveCluster(command.getClusterId(), command.getCommandDirection());
         if (cluster == null) {
-            logger.debug("{}: Cluster {} not found for received endpoint command", getEndpointAddress(),
-                    String.format("%04X", command.getClusterId()));
+            logger.debug("{}: Endpoint {}. Cluster {} not found for received endpoint command", getIeeeAddress(),
+                    getEndpointId(), String.format("%04X", command.getClusterId()));
             DefaultResponse response = ZclCluster.createDefaultResponse(command, ZclStatus.UNSUPPORTED_CLUSTER);
+            if (response != null) {
+                sendTransaction(response);
+            }
+            return;
+        }
+
+        // Ensure security is used if required
+        if (cluster.getApsSecurityRequired() && !command.getApsSecurity()) {
+            logger.debug("{}: Endpoint {}. Cluster '{}' requires security but command is not secured", getIeeeAddress(),
+                    getEndpointId(), cluster.getClusterName());
+            DefaultResponse response = ZclCluster.createDefaultResponse(command, ZclStatus.UNSECURED);
             if (response != null) {
                 sendTransaction(response);
             }
@@ -442,24 +459,26 @@ public class ZigBeeEndpoint {
     /**
      * Updates the endpoint with information in the provided endpoint.
      * <p>
-     * Clusters will only be added to the endpoint since this allows device discovery to progressivelymissing
+     * Clusters will only be added to the endpoint since this allows device discovery to complete progressively.
      *
      * @param endpoint the endpoint from which to update this endpoint
      * @return true if the endpoint was updated
      */
     public boolean updateEndpoint(ZigBeeEndpoint endpoint) {
         if (!(endpoint.getIeeeAddress().equals(getIeeeAddress()) && endpoint.getEndpointId() == getEndpointId())) {
-            logger.debug("{}: Updating endpoint from {} not allowed", getIeeeAddress(), endpoint.getIeeeAddress());
+            logger.debug("{}: Endpoint {}. Updating from {} not allowed", getIeeeAddress(), getEndpointId(),
+                    endpoint.getIeeeAddress());
             return false;
         }
 
         boolean updated = false;
-        logger.debug("{}: Updating endpoint {}", getIeeeAddress(), getEndpointId());
+        logger.debug("{}: Endpoint {} updating", getIeeeAddress(), getEndpointId());
 
         if (!endpoint.getInputClusterIds().equals(getInputClusterIds())) {
             for (Integer clusterId : endpoint.getInputClusterIds()) {
                 if (!inputClusters.containsKey(clusterId)) {
-                    logger.debug("{}: Adding input cluster {}", getEndpointAddress(), String.format("%04X", clusterId));
+                    logger.debug("{}: Endpoint {}. Adding input cluster {}", getEndpointAddress(), getEndpointId(),
+                            String.format("%04X", clusterId));
 
                     inputClusters.put(clusterId, endpoint.getInputCluster(clusterId));
                     updated = true;
@@ -469,7 +488,7 @@ public class ZigBeeEndpoint {
         if (!endpoint.getOutputClusterIds().equals(getOutputClusterIds())) {
             for (Integer clusterId : endpoint.getOutputClusterIds()) {
                 if (!outputClusters.containsKey(clusterId)) {
-                    logger.debug("{}: Adding output cluster {}", getEndpointAddress(),
+                    logger.debug("{}: Endpoint {}. Adding output cluster {}", getEndpointAddress(), getEndpointId(),
                             String.format("%04X", clusterId));
 
                     outputClusters.put(clusterId, endpoint.getOutputCluster(clusterId));
@@ -530,8 +549,8 @@ public class ZigBeeEndpoint {
                     cluster.setDao(clusterDao);
                     inputClusters.put(clusterDao.getClusterId(), cluster);
                 } else {
-                    logger.debug("Unknown input cluster found with id={}, will skip it",
-                            String.format("%04X", clusterDao.getClusterId()));
+                    logger.debug("{}: Endpoint {}. Unknown input cluster found with id={}, will skip it",
+                            getIeeeAddress(), getEndpointId(), String.format("%04X", clusterDao.getClusterId()));
                 }
             }
         }
@@ -542,8 +561,8 @@ public class ZigBeeEndpoint {
                     cluster.setDao(clusterDao);
                     outputClusters.put(clusterDao.getClusterId(), cluster);
                 } else {
-                    logger.debug("Unknown output cluster found with id={}, will skip it",
-                            String.format("%04X", clusterDao.getClusterId()));
+                    logger.debug("{}: Endpoint {}. Unknown output cluster found with id={}, will skip it",
+                            getIeeeAddress(), getEndpointId(), String.format("%04X", clusterDao.getClusterId()));
                 }
             }
         }
@@ -579,7 +598,7 @@ public class ZigBeeEndpoint {
                 + getOutputClusterIds().toString() + "]";
     }
 
-    private String printClusterList(List<Integer> clusterIds) {
+    private String printClusterList(Collection<Integer> clusterIds) {
         StringBuilder builder = new StringBuilder(clusterIds.size() * 6 + 4);
 
         builder.append('[');

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -20,10 +20,13 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.TestUtilities;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
+import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransaction.TransactionState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportProgressState;
+import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OffCommand;
 
 /**
@@ -114,7 +117,8 @@ public class ZigBeeTransactionTest {
         assertFalse(transactionFuture.isDone());
         assertFalse(transactionFuture.isCancelled());
 
-        // Correct TID
+        // Correct TID - sent twice to ensure we're only notified once
+        transaction.transactionStatusReceived(ZigBeeTransportProgressState.TX_NAK, 12);
         transaction.transactionStatusReceived(ZigBeeTransportProgressState.TX_NAK, 12);
 
         Mockito.verify(transactionManager, Mockito.times(1)).transactionComplete(transaction, TransactionState.FAILED);
@@ -161,6 +165,42 @@ public class ZigBeeTransactionTest {
     }
 
     @Test
+    public void testMatchedAfterRxAck() {
+        ZigBeeTransactionManager transactionManager = Mockito.mock(ZigBeeTransactionManager.class);
+        ZigBeeCommand command = Mockito.mock(ZigBeeCommand.class);
+        Mockito.when(command.getTransactionId()).thenReturn(12);
+        ZigBeeTransactionMatcher matcher = Mockito.mock(ZigBeeTransactionMatcher.class);
+
+        ZigBeeCommand request = Mockito.mock(ZigBeeCommand.class);
+        Mockito.when(matcher.isTransactionMatch(command, request)).thenReturn(true);
+
+        ZigBeeTransactionFuture transactionFuture = new ZigBeeTransactionFuture();
+
+        ZigBeeTransaction transaction = new ZigBeeTransaction(transactionManager, command, matcher);
+        transaction.setFuture(transactionFuture);
+
+        assertEquals(command, transaction.startTransaction());
+        Mockito.verify(transactionManager, Mockito.times(1)).scheduleTask(ArgumentMatchers.any(Runnable.class),
+                ArgumentMatchers.anyLong());
+
+        transaction.transactionStatusReceived(ZigBeeTransportProgressState.TX_ACK, 12);
+
+        Mockito.verify(transactionManager, Mockito.times(1)).scheduleTask(ArgumentMatchers.any(Runnable.class),
+                ArgumentMatchers.eq(8000L));
+
+        Mockito.verify(transactionManager, Mockito.never()).transactionComplete(transaction, TransactionState.COMPLETE);
+
+        transaction.transactionStatusReceived(ZigBeeTransportProgressState.RX_ACK, 12);
+        transaction.transactionStatusReceived(ZigBeeTransportProgressState.RX_ACK, 12);
+        Mockito.verify(transactionManager, Mockito.never()).transactionComplete(transaction, TransactionState.COMPLETE);
+
+        transaction.commandReceived(request);
+
+        Mockito.verify(transactionManager, Mockito.times(1)).transactionComplete(transaction,
+                TransactionState.COMPLETE);
+    }
+
+    @Test
     public void testMatchedBeforeRxAck() {
         ZigBeeTransactionManager transactionManager = Mockito.mock(ZigBeeTransactionManager.class);
         ZigBeeCommand command = Mockito.mock(ZigBeeCommand.class);
@@ -187,6 +227,44 @@ public class ZigBeeTransactionTest {
         // We've updated state with TX_ACK, but not RX_ACK,
         // so providing the application response here should not complete the transaction
         transaction.commandReceived(request);
+        Mockito.verify(transactionManager, Mockito.never()).transactionComplete(transaction, TransactionState.COMPLETE);
+
+        transaction.transactionStatusReceived(ZigBeeTransportProgressState.RX_ACK, 12);
+
+        Mockito.verify(transactionManager, Mockito.times(1)).transactionComplete(transaction,
+                TransactionState.COMPLETE);
+    }
+
+    @Test
+    public void testZclNoDefaultResponse() {
+        ZigBeeTransactionManager transactionManager = Mockito.mock(ZigBeeTransactionManager.class);
+        ZclCommand command = Mockito.mock(ZclCommand.class);
+        Mockito.when(command.isDisableDefaultResponse()).thenReturn(true);
+        Mockito.when(command.getTransactionId()).thenReturn(12);
+        Mockito.when(command.getDestinationAddress()).thenReturn(new ZigBeeEndpointAddress(1234, 5));
+        ZigBeeTransactionMatcher matcher = Mockito.mock(ZigBeeTransactionMatcher.class);
+
+        ZigBeeCommand request = Mockito.mock(ZigBeeCommand.class);
+        Mockito.when(matcher.isTransactionMatch(command, request)).thenReturn(true);
+
+        ZigBeeTransactionFuture transactionFuture = new ZigBeeTransactionFuture();
+
+        ZigBeeTransaction transaction = new ZigBeeTransaction(transactionManager, command, matcher);
+        transaction.setFuture(transactionFuture);
+
+        assertEquals(new ZigBeeEndpointAddress(1234, 5), transaction.getDestinationAddress());
+
+        assertEquals(command, transaction.startTransaction());
+        Mockito.verify(transactionManager, Mockito.times(1)).scheduleTask(ArgumentMatchers.any(Runnable.class),
+                ArgumentMatchers.anyLong());
+
+        Mockito.verify(transactionManager, Mockito.never()).transactionComplete(transaction, TransactionState.COMPLETE);
+
+        transaction.transactionStatusReceived(ZigBeeTransportProgressState.TX_ACK, 12);
+
+        Mockito.verify(transactionManager, Mockito.times(1)).scheduleTask(ArgumentMatchers.any(Runnable.class),
+                ArgumentMatchers.eq(8000L));
+
         Mockito.verify(transactionManager, Mockito.never()).transactionComplete(transaction, TransactionState.COMPLETE);
 
         transaction.transactionStatusReceived(ZigBeeTransportProgressState.RX_ACK, 12);
@@ -304,6 +382,10 @@ public class ZigBeeTransactionTest {
     public void getTimeout() {
         ZigBeeTransaction transaction = new ZigBeeTransaction(null, null, null);
         System.out.println(transaction);
+        transaction.setTimerPeriod1(1);
+        transaction.setTimerPeriod2(2);
+        assertEquals(1, transaction.getTimerPeriod1());
+        assertEquals(2, transaction.getTimerPeriod2());
         assertNull(transaction.getQueueTime());
         transaction.setQueueTime();
         System.out.println(transaction);
@@ -316,6 +398,9 @@ public class ZigBeeTransactionTest {
         int timeout2 = transaction.getTimerPeriod1();
         transaction.setTimerPeriod1(timeout2 + 23);
         assertEquals(timeout2 + 23, transaction.getTimerPeriod1());
+
+        // No response matcher, so it should be ignored
+        transaction.commandReceived(null);
     }
 
     @Test
@@ -324,5 +409,14 @@ public class ZigBeeTransactionTest {
         assertNull(transaction.getTransactionId());
         transaction.setTransactionId(1);
         assertEquals(Integer.valueOf(1), transaction.getTransactionId());
+    }
+
+    @Test
+    public void setIeeeAddress() {
+        ZigBeeTransaction transaction = new ZigBeeTransaction(null, new OffCommand(), null);
+        assertNull(transaction.getIeeeAddress());
+        IeeeAddress address = new IeeeAddress();
+        transaction.setIeeeAddress(address);
+        assertEquals(address, transaction.getIeeeAddress());
     }
 }

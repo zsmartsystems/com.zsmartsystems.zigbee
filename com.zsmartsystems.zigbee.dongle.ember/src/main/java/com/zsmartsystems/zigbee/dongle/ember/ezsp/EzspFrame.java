@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -58,7 +58,7 @@ public abstract class EzspFrame {
     /**
      * The maximum supported version of EZSP
      */
-    private static final int EZSP_MAX_VERSION = 7;
+    private static final int EZSP_MAX_VERSION = 8;
 
     /**
      * The current version of EZSP being used
@@ -73,12 +73,12 @@ public abstract class EzspFrame {
     /**
      * EZSP Frame Control Request flag
      */
-    protected static final int EZSP_FC_REQUEST = 0x00;
+    protected static final int EZSP_FC_REQUEST = 0x0000;
 
     /**
      * EZSP Frame Control Response flag
      */
-    protected static final int EZSP_FC_RESPONSE = 0x80;
+    protected static final int EZSP_FC_RESPONSE = 0x0080;
 
     protected static final int FRAME_ID_ADD_ENDPOINT = 0x02;
     protected static final int FRAME_ID_ADD_OR_UPDATE_KEY_TABLE_ENTRY = 0x66;
@@ -413,18 +413,24 @@ public abstract class EzspFrame {
      * @return the {@link EzspFrameResponse} or null if the response can't be created.
      */
     public static EzspFrameResponse createHandler(int[] data) {
-        Class<?> ezspClass = null;
+        int frameId;
 
         try {
-            if (data[2] != 0xFF) {
-                ezspClass = ezspHandlerMap.get(data[2]);
+            if (ezspVersion >= 8) {
+                frameId = data[3] + (data[4] << 8);
             } else {
-                ezspClass = ezspHandlerMap.get(data[4]);
+                if (data[2] != 0xFF) {
+                    frameId = data[2];
+                } else {
+                    frameId = data[4];
+                }
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             logger.debug("Error detecting the EZSP frame type", e);
+            return null;
         }
 
+        Class<?> ezspClass = ezspHandlerMap.get(frameId);
         if (ezspClass == null) {
             return null;
         }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -201,6 +201,16 @@ public class ZclAttribute {
      */
     public Future<CommandResult> writeValue(Object value) {
         return cluster.writeAttribute(id, dataType, value);
+    }
+
+    /**
+     * Report the attribute value to the remote cluster.
+     *
+     * @param value the value to set (as {@link Object})
+     * @return command future {@link CommandResult}
+     */
+    public Future<CommandResult> reportValue(Object value) {
+        return cluster.reportAttribute(id, dataType, value);
     }
 
     /**

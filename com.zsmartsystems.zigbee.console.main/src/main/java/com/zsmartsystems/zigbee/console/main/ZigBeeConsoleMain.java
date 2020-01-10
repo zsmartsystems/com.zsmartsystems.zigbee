@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -24,7 +27,12 @@ import org.apache.log4j.xml.DOMConfigurator;
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.ZigBeeProfileType;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
+import com.zsmartsystems.zigbee.app.basic.ZigBeeBasicServerExtension;
+import com.zsmartsystems.zigbee.app.discovery.ZigBeeDiscoveryExtension;
+import com.zsmartsystems.zigbee.app.iasclient.ZigBeeIasCieExtension;
+import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaUpgradeExtension;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleMmoHashCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpChildrenCommand;
@@ -56,7 +64,12 @@ import com.zsmartsystems.zigbee.transport.TransportConfigOption;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 import com.zsmartsystems.zigbee.transport.ZigBeePort.FlowControl;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclColorControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclIasZoneCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclPressureMeasurementCluster;
 
 /**
  * The ZigBee test console. Simple console used for testing the framework.
@@ -80,7 +93,20 @@ public class ZigBeeConsoleMain {
 
         final String serialPortName;
         final String dongleName;
-        final Integer serialBaud;
+        final int serialBaud;
+        final int defaultProfileId;
+
+        final Set<Integer> supportedClientClusters = new TreeSet<>();
+        supportedClientClusters.addAll(Stream
+                .of(ZclBasicCluster.CLUSTER_ID, ZclOnOffCluster.CLUSTER_ID, ZclLevelControlCluster.CLUSTER_ID,
+                        ZclColorControlCluster.CLUSTER_ID, ZclPressureMeasurementCluster.CLUSTER_ID)
+                .collect(Collectors.toSet()));
+
+        final Set<Integer> supportedServerClusters = new TreeSet<>();
+        supportedServerClusters.addAll(Stream
+                .of(ZclBasicCluster.CLUSTER_ID, ZclOnOffCluster.CLUSTER_ID, ZclLevelControlCluster.CLUSTER_ID,
+                        ZclColorControlCluster.CLUSTER_ID, ZclPressureMeasurementCluster.CLUSTER_ID)
+                .collect(Collectors.toSet()));
 
         final TransportConfig transportOptions = new TransportConfig();
         boolean resetNetwork;
@@ -102,13 +128,15 @@ public class ZigBeeConsoleMain {
         options.addOption(
                 Option.builder("e").longOpt("epan").hasArg().argName("EPAN ID").desc("Set the ZigBee EPAN ID").build());
         options.addOption(Option.builder("n").longOpt("nwkkey").hasArg().argName("key")
-                .desc("Set the ZigBee Network key (defaults to randon value)").build());
+                .desc("Set the ZigBee Network key (defaults to random value)").build());
         options.addOption(Option.builder("o").longOpt("nwkkeyoutcnt").hasArg().argName("counter")
                 .desc("Set the ZigBee Network key outgoing frame counter").build());
         options.addOption(Option.builder("l").longOpt("linkkey").hasArg().argName("key")
                 .desc("Set the ZigBee Link key (defaults to well known ZHA key)").build());
         options.addOption(Option.builder("t").longOpt("linkkeyoutcnt").hasArg().argName("counter")
                 .desc("Set the ZigBee Link key outgoing frame counter").build());
+        options.addOption(Option.builder("h").longOpt("profile").hasArg().argName("profile")
+                .desc("Set the default profile ID").build());
         options.addOption(Option.builder("r").longOpt("reset").desc("Reset the ZigBee dongle").build());
         options.addOption(Option.builder("?").longOpt("help").desc("Print usage information").build());
 
@@ -130,6 +158,11 @@ public class ZigBeeConsoleMain {
             if (!cmdline.hasOption("port")) {
                 System.err.println("Serial port must be specified with the 'port' option");
                 return;
+            }
+            if (cmdline.hasOption("profile")) {
+                defaultProfileId = parseDecimalOrHexInt(cmdline.getOptionValue("profile"));
+            } else {
+                defaultProfileId = ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getKey();
             }
 
             dongleName = cmdline.getOptionValue("dongle");
@@ -319,6 +352,8 @@ public class ZigBeeConsoleMain {
             networkManager.setZigBeeLinkKey(linkKey);
         }
 
+        networkManager.setDefaultProfileId(defaultProfileId);
+
         // Add the default ZigBeeAlliance09 HA link key
 
         transportOptions.addOption(TransportConfigOption.TRUST_CENTRE_LINK_KEY, new ZigBeeKey(new int[] { 0x5A, 0x69,
@@ -328,13 +363,23 @@ public class ZigBeeConsoleMain {
 
         dongle.updateTransportConfig(transportOptions);
 
+        // Add the extensions to the network
+        networkManager.addExtension(new ZigBeeIasCieExtension());
+        networkManager.addExtension(new ZigBeeOtaUpgradeExtension());
+        networkManager.addExtension(new ZigBeeBasicServerExtension());
+
+        ZigBeeDiscoveryExtension discoveryExtension = new ZigBeeDiscoveryExtension();
+        discoveryExtension.setUpdatePeriod(0);
+        networkManager.addExtension(discoveryExtension);
+
+        supportedClientClusters.stream().forEach(clusterId -> networkManager.addSupportedClientCluster(clusterId));
+        supportedServerClusters.stream().forEach(clusterId -> networkManager.addSupportedServerCluster(clusterId));
+
         if (networkManager.startup(resetNetwork) != ZigBeeStatus.SUCCESS) {
             System.out.println("ZigBee console starting up ... [FAIL]");
         } else {
             System.out.println("ZigBee console starting up ... [OK]");
         }
-
-        networkManager.addSupportedCluster(ZclIasZoneCluster.CLUSTER_ID);
 
         if (dongleName.toUpperCase().equals("CC2531")) {
             ZigBeeDongleTiCc2531 tiDongle = (ZigBeeDongleTiCc2531) dongle;

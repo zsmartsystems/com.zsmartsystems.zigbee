@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -592,6 +592,65 @@ public class ZclClusterTest {
     }
 
     @Test
+    public void reportAttribute() {
+        createEndpoint();
+        Future future = Mockito.mock(Future.class);
+
+        ZclOnOffCluster cluster = new ZclOnOffCluster(endpoint);
+
+        cluster.reportAttribute(1, ZclDataType.SIGNED_16_BIT_INTEGER, Integer.valueOf(12345));
+        Mockito.when(endpoint.sendTransaction(commandCapture.capture(), matcherCapture.capture())).thenReturn(future);
+
+        ReportAttributesCommand command = (ReportAttributesCommand) commandCapture.getAllValues().get(0);
+        System.out.println(command);
+        List<AttributeReport> records = command.getReports();
+        assertEquals(1, records.size());
+        AttributeReport record = records.get(0);
+        assertEquals(1, record.getAttributeIdentifier());
+        assertEquals(ZclDataType.SIGNED_16_BIT_INTEGER, record.getAttributeDataType());
+        assertEquals(12345, record.getAttributeValue());
+    }
+
+    @Test
+    public void reportAttributes() {
+        createEndpoint();
+        Future future = Mockito.mock(Future.class);
+
+        ZclOnOffCluster cluster = new ZclOnOffCluster(endpoint);
+
+        List<AttributeReport> attributes = new ArrayList<>();
+
+        AttributeReport attribute = new AttributeReport();
+        attribute.setAttributeIdentifier(1);
+        attribute.setAttributeDataType(ZclDataType.BOOLEAN);
+        attribute.setAttributeValue(Boolean.TRUE);
+        attributes.add(attribute);
+
+        attribute = new AttributeReport();
+        attribute.setAttributeIdentifier(2);
+        attribute.setAttributeDataType(ZclDataType.SIGNED_16_BIT_INTEGER);
+        attribute.setAttributeValue(Integer.valueOf(123));
+        attributes.add(attribute);
+
+        cluster.reportAttributes(attributes);
+        Mockito.when(endpoint.sendTransaction(commandCapture.capture(), matcherCapture.capture())).thenReturn(future);
+
+        ReportAttributesCommand command = (ReportAttributesCommand) commandCapture.getAllValues().get(0);
+        System.out.println(command);
+        List<AttributeReport> records = command.getReports();
+        assertEquals(2, records.size());
+        AttributeReport record = records.get(0);
+        assertEquals(1, record.getAttributeIdentifier());
+        assertEquals(ZclDataType.BOOLEAN, record.getAttributeDataType());
+        assertEquals(true, record.getAttributeValue());
+
+        record = records.get(1);
+        assertEquals(2, record.getAttributeIdentifier());
+        assertEquals(ZclDataType.SIGNED_16_BIT_INTEGER, record.getAttributeDataType());
+        assertEquals(Integer.valueOf(123), record.getAttributeValue());
+    }
+
+    @Test
     public void setDao() {
         createEndpoint();
 
@@ -695,7 +754,7 @@ public class ZclClusterTest {
         identifiers.add(2);
 
         ReadAttributesCommand readCommand = new ReadAttributesCommand();
-        readCommand.setClusterId(ZclBasicCluster.CLUSTER_ID);
+        readCommand.setClusterId(ZclOnOffCluster.CLUSTER_ID);
         readCommand.setSourceAddress(new ZigBeeEndpointAddress(1234));
         readCommand.setDestinationAddress(new ZigBeeEndpointAddress(5678));
         readCommand.setCommandDirection(ZclCommandDirection.CLIENT_TO_SERVER);
@@ -706,7 +765,7 @@ public class ZclClusterTest {
         assertEquals(1, commandCapture.getAllValues().size());
         ReadAttributesResponse readResponse = (ReadAttributesResponse) commandCapture.getValue();
         System.out.println(readResponse);
-        assertEquals(Integer.valueOf(ZclBasicCluster.CLUSTER_ID), readResponse.getClusterId());
+        assertEquals(Integer.valueOf(ZclOnOffCluster.CLUSTER_ID), readResponse.getClusterId());
         assertEquals(ZclCommandDirection.SERVER_TO_CLIENT, readResponse.getCommandDirection());
         assertEquals(1, readResponse.getRecords().size());
         assertEquals(Integer.valueOf(55), readResponse.getTransactionId());

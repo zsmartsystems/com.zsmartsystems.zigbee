@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -22,10 +22,12 @@ import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.scenes.AddSceneCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.scenes.AddSceneResponse;
-import com.zsmartsystems.zigbee.zcl.clusters.scenes.EhancedViewSceneResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.scenes.CopySceneCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.scenes.CopySceneResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.scenes.EnhancedAddSceneCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.scenes.EnhancedAddSceneResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.scenes.EnhancedViewSceneCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.scenes.EnhancedViewSceneResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.scenes.GetSceneMembershipCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.scenes.GetSceneMembershipResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.scenes.RecallSceneCommand;
@@ -54,7 +56,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-16T08:52:33Z")
 public class ZclScenesCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -137,8 +139,9 @@ public class ZclScenesCluster extends ZclCluster {
         commandMap.put(0x0003, RemoveAllScenesResponse.class);
         commandMap.put(0x0004, StoreSceneResponse.class);
         commandMap.put(0x0006, GetSceneMembershipResponse.class);
-        commandMap.put(0x0000, EnhancedAddSceneResponse.class);
-        commandMap.put(0x0001, EhancedViewSceneResponse.class);
+        commandMap.put(0x0040, EnhancedAddSceneResponse.class);
+        commandMap.put(0x0041, EnhancedViewSceneResponse.class);
+        commandMap.put(0x0042, CopySceneResponse.class);
 
         return commandMap;
     }
@@ -156,6 +159,7 @@ public class ZclScenesCluster extends ZclCluster {
         commandMap.put(0x0006, GetSceneMembershipCommand.class);
         commandMap.put(0x0040, EnhancedAddSceneCommand.class);
         commandMap.put(0x0041, EnhancedViewSceneCommand.class);
+        commandMap.put(0x0042, CopySceneCommand.class);
 
         return commandMap;
     }
@@ -765,6 +769,32 @@ public class ZclScenesCluster extends ZclCluster {
     }
 
     /**
+     * The Copy Scene Command
+     * <p>
+     * The Copy Scene command allows a device to efficiently copy scenes from one group/scene
+     * identifier pair to another group/scene identifier pair.
+     *
+     * @param mode {@link Integer} Mode
+     * @param groupIdFrom {@link Integer} Group ID From
+     * @param sceneIdFrom {@link Integer} Scene ID From
+     * @param groupIdTo {@link Integer} Group ID To
+     * @param sceneIdTo {@link Integer} Scene ID To
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> copySceneCommand(Integer mode, Integer groupIdFrom, Integer sceneIdFrom, Integer groupIdTo, Integer sceneIdTo) {
+        CopySceneCommand command = new CopySceneCommand();
+
+        // Set the fields
+        command.setMode(mode);
+        command.setGroupIdFrom(groupIdFrom);
+        command.setSceneIdFrom(sceneIdFrom);
+        command.setGroupIdTo(groupIdTo);
+        command.setSceneIdTo(sceneIdTo);
+
+        return send(command);
+    }
+
+    /**
      * The Add Scene Response
      *
      * @param status {@link Integer} Status
@@ -906,7 +936,7 @@ public class ZclScenesCluster extends ZclCluster {
     }
 
     /**
-     * The Ehanced View Scene Response
+     * The Enhanced View Scene Response
      *
      * @param status {@link Integer} Status
      * @param groupId {@link Integer} Group ID
@@ -916,8 +946,8 @@ public class ZclScenesCluster extends ZclCluster {
      * @param extensionFieldSets {@link List<ExtensionFieldSet>} Extension Field Sets
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> ehancedViewSceneResponse(Integer status, Integer groupId, Integer sceneId, Integer transitionTime, String sceneName, List<ExtensionFieldSet> extensionFieldSets) {
-        EhancedViewSceneResponse command = new EhancedViewSceneResponse();
+    public Future<CommandResult> enhancedViewSceneResponse(Integer status, Integer groupId, Integer sceneId, Integer transitionTime, String sceneName, List<ExtensionFieldSet> extensionFieldSets) {
+        EnhancedViewSceneResponse command = new EnhancedViewSceneResponse();
 
         // Set the fields
         command.setStatus(status);
@@ -926,6 +956,25 @@ public class ZclScenesCluster extends ZclCluster {
         command.setTransitionTime(transitionTime);
         command.setSceneName(sceneName);
         command.setExtensionFieldSets(extensionFieldSets);
+
+        return send(command);
+    }
+
+    /**
+     * The Copy Scene Response
+     *
+     * @param status {@link Integer} Status
+     * @param groupId {@link Integer} Group ID
+     * @param sceneId {@link Integer} Scene ID
+     * @return the {@link Future<CommandResult>} command result future
+     */
+    public Future<CommandResult> copySceneResponse(Integer status, Integer groupId, Integer sceneId) {
+        CopySceneResponse command = new CopySceneResponse();
+
+        // Set the fields
+        command.setStatus(status);
+        command.setGroupId(groupId);
+        command.setSceneId(sceneId);
 
         return send(command);
     }

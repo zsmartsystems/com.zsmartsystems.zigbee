@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -15,14 +15,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.ExecutionException;
 
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
@@ -30,25 +29,19 @@ import com.zsmartsystems.zigbee.ZigBeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeCommandListener;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
+import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeGroupAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
 import com.zsmartsystems.zigbee.ZigBeeNetworkState;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
-import com.zsmartsystems.zigbee.app.basic.ZigBeeBasicServerExtension;
-import com.zsmartsystems.zigbee.app.discovery.ZigBeeDiscoveryExtension;
-import com.zsmartsystems.zigbee.app.iasclient.ZigBeeIasCieExtension;
-import com.zsmartsystems.zigbee.app.otaserver.ZclOtaUpgradeServer;
-import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaFile;
-import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaServerStatus;
-import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaStatusCallback;
-import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaUpgradeExtension;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeReadCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeSupportedCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeWriteCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleBindCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleBindingTableCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleCbkeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleChannelCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommandsSupportedCommand;
@@ -67,6 +60,7 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleOtaUpgradeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingConfigCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingSubscribeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingUnsubscribeCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleSmartEnergyCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleUnbindCommand;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
@@ -79,10 +73,14 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.GetGroupMembershipResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.ViewGroupResponse;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
+import com.zsmartsystems.zigbee.zdo.ZdoStatus;
+import com.zsmartsystems.zigbee.zdo.command.ManagementLqiRequest;
+import com.zsmartsystems.zigbee.zdo.command.ManagementLqiResponse;
 
 /**
  * ZigBee command line console is an example usage of the ZigBee console.
@@ -142,15 +140,6 @@ public final class ZigBeeConsole {
         // Calculate the used memory
         initialMemory = runtime.totalMemory() - runtime.freeMemory();
 
-        // Add the extensions to the network
-        networkManager.addExtension(new ZigBeeIasCieExtension());
-        networkManager.addExtension(new ZigBeeOtaUpgradeExtension());
-        networkManager.addExtension(new ZigBeeBasicServerExtension());
-
-        ZigBeeDiscoveryExtension discoveryExtension = new ZigBeeDiscoveryExtension();
-        discoveryExtension.setUpdatePeriod(60);
-        networkManager.addExtension(discoveryExtension);
-
         createCommands(newCommands, transportCommands);
 
         commands.put("groupadd", new GroupAddCommand());
@@ -172,9 +161,6 @@ public final class ZigBeeConsole {
         commands.put("listen", new ListenCommand());
         commands.put("unlisten", new UnlistenCommand());
 
-        commands.put("ota", new OtaCommand());
-        commands.put("otafile", new OtaFileCommand());
-
         commands.put("lqi", new LqiCommand());
         commands.put("enroll", new EnrollCommand());
 
@@ -187,6 +173,8 @@ public final class ZigBeeConsole {
 
         commands.put("stress", new StressCommand());
         commands.put("memory", new MemoryCommand());
+        commands.put("lqipoll", new LqiPollCommand());
+        commands.put("reinitialize", new ReinitializeCommand());
 
         newCommands.put("nodes", new ZigBeeConsoleNodeListCommand());
         newCommands.put("endpoint", new ZigBeeConsoleDescribeEndpointCommand());
@@ -218,6 +206,9 @@ public final class ZigBeeConsole {
 
         newCommands.put("otaupgrade", new ZigBeeConsoleOtaUpgradeCommand());
         newCommands.put("channel", new ZigBeeConsoleChannelCommand());
+
+        newCommands.put("smartenergy", new ZigBeeConsoleSmartEnergyCommand());
+        newCommands.put("cbke", new ZigBeeConsoleCbkeCommand());
 
         zigBeeApi = new ZigBeeApi(networkManager);
 
@@ -991,111 +982,7 @@ public final class ZigBeeConsole {
             return true;
         }
     }
-
-    /**
-     * Support for OTA server.
-     */
-    private class OtaCommand implements ConsoleCommand {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getDescription() {
-            return "Upgrade the firmware of a node using the OTA server.";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getSyntax() {
-            return "ota [ENDPOINT] [COMPLETE | FILE]";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, final PrintStream out) throws Exception {
-            if (args.length != 3) {
-                return false;
-            }
-
-            final ZigBeeEndpoint endpoint = getDevice(zigbeeApi, args[1]);
-            if (endpoint == null) {
-                print("Endpoint not found.", out);
-                return false;
-            }
-
-            // Check if the OTA server is already set
-            ZclOtaUpgradeServer otaServer = (ZclOtaUpgradeServer) endpoint
-                    .getApplication(ZclOtaUpgradeCluster.CLUSTER_ID);
-            if (otaServer == null) {
-                // Create and add the server
-                otaServer = new ZclOtaUpgradeServer();
-
-                endpoint.addApplication(otaServer);
-
-                otaServer.addListener(new ZigBeeOtaStatusCallback() {
-                    @Override
-                    public void otaStatusUpdate(ZigBeeOtaServerStatus status, int percent) {
-                        print("OTA status callback: " + status + ", percent=" + percent, out);
-                    }
-                });
-            }
-
-            if (args[2].toLowerCase().equals("complete")) {
-                otaServer.completeUpgrade();
-            } else {
-                Path file = FileSystems.getDefault().getPath("./", args[2]);
-                byte[] fileData = Files.readAllBytes(file);
-                ZigBeeOtaFile otaFile = new ZigBeeOtaFile(fileData);
-                print("OTA File: " + otaFile, out);
-
-                otaServer.setFirmware(otaFile);
-            }
-            return true;
-        }
-    }
-
-    /**
-     * Support for OTA server.
-     */
-    private class OtaFileCommand implements ConsoleCommand {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getDescription() {
-            return "Dump information about an OTA file.";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getSyntax() {
-            return "ota [FILE]";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length != 2) {
-                return false;
-            }
-
-            Path file = FileSystems.getDefault().getPath("./", args[1]);
-            byte[] fileData = Files.readAllBytes(file);
-
-            ZigBeeOtaFile otaFile = new ZigBeeOtaFile(fileData);
-            print("OTA File: " + otaFile, out);
-            return true;
-        }
-    }
-
+    
     /**
      * Writes an attribute to a device.
      */
@@ -1753,6 +1640,108 @@ public final class ZigBeeConsole {
             System.out.println("Free memory         : " + runtime.freeMemory());
             System.out.println("Used memory at start: " + initialMemory);
             System.out.println("Used memory in bytes: " + memory);
+
+            return true;
+        }
+    }
+
+    private class LqiPollCommand implements ConsoleCommand {
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getDescription() {
+            return "Poll LQI values";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getSyntax() {
+            return "lqipoll NODEID";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, final PrintStream out) throws Exception {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    int cnts = 1000;
+                    int errors = 0;
+                    int cnt = 0;
+                    List<Integer> lqi = new ArrayList<>();
+                    while (cnt < cnts) {
+                        print("LQI Poll CNT: " + cnt++, out);
+                        final ManagementLqiRequest neighborRequest = new ManagementLqiRequest();
+                        neighborRequest.setDestinationAddress(new ZigBeeEndpointAddress(0));
+                        neighborRequest.setStartIndex(0);
+
+                        CommandResult response;
+                        try {
+                            response = networkManager.sendTransaction(neighborRequest, neighborRequest).get();
+                            final ManagementLqiResponse neighborResponse = response.getResponse();
+
+                            if (neighborResponse == null || neighborResponse.getStatus() != ZdoStatus.SUCCESS) {
+                                errors++;
+                                continue;
+                            }
+                            if (neighborResponse.getNeighborTableList().isEmpty()) {
+                                print("No neighbors", out);
+                                continue;
+                            }
+                            lqi.add(neighborResponse.getNeighborTableList().get(0).getLqi());
+                        } catch (InterruptedException | ExecutionException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
+                    IntSummaryStatistics stats = lqi.stream().mapToInt((x) -> x).summaryStatistics();
+
+                    print("LQI Polling Complete", out);
+                    print("Errors: " + errors, out);
+                    print("Min   : " + stats.getMin(), out);
+                    print("Max   : " + stats.getMax(), out);
+                    print("Avg   : " + stats.getAverage(), out);
+
+                }
+            }).start();
+
+            return true;
+        }
+    }
+
+    private class ReinitializeCommand implements ConsoleCommand {
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getDescription() {
+            return "Put system back into initialise state";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getSyntax() {
+            return "";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, final PrintStream out) throws Exception {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    networkManager.reinitialize();
+                }
+            }).start();
 
             return true;
         }

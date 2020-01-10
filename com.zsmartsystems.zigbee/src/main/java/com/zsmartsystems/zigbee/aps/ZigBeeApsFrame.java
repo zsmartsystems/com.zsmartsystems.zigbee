@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -184,7 +184,7 @@ public class ZigBeeApsFrame {
 
     /**
      * Gets the source address for the frame
-     * 
+     *
      * @return the source network address for the frame
      */
     public int getSourceAddress() {
@@ -193,7 +193,7 @@ public class ZigBeeApsFrame {
 
     /**
      * Sets the source address for the frame
-     * 
+     *
      * @param sourceAddress the source network address
      */
     public void setSourceAddress(int sourceAddress) {
@@ -397,14 +397,8 @@ public class ZigBeeApsFrame {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder(164);
-        builder.append("ZigBeeApsFrame [sourceAddress=");
-        builder.append(sourceAddress);
-        builder.append('/');
-        builder.append(sourceEndpoint);
-        builder.append(", destinationAddress=");
-        builder.append(destinationAddress);
-        builder.append('/');
-        builder.append(destinationEndpoint);
+        builder.append(String.format("ZigBeeApsFrame [sourceAddress=%04X/%d", sourceAddress, sourceEndpoint));
+        builder.append(String.format(", destinationAddress=%04X/%d", destinationAddress, destinationEndpoint));
         builder.append(String.format(", profile=%04X", profile));
         builder.append(String.format(", cluster=%04X", cluster));
         builder.append(", addressMode=");
@@ -432,4 +426,23 @@ public class ZigBeeApsFrame {
         return builder.toString();
     }
 
+    /**
+     * Calling this method indicates that transmission of a fragment has completed.
+     * It moves the fragment base and decrease outstanding fragments counter.
+     */
+    public void oneFragmentCompleted() {
+        fragmentBase++;
+        if (fragmentOutstanding > 0) {
+            fragmentOutstanding--;
+        }
+    }
+
+    /**
+     * Calling this method indicates that a fragment has been sent. It increases outstanding fragments counter.
+     */
+    public void oneFragmentSent() {
+        if (fragmentOutstanding <= fragmentTotal) {
+            this.fragmentOutstanding++;
+        }
+    }
 }

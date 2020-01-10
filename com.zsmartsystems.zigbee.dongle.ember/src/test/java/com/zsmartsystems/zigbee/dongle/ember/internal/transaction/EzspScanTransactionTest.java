@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -18,6 +18,7 @@ import java.util.Set;
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspEnergyScanResultHandler;
@@ -27,7 +28,6 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStartScanRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStartScanResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspNetworkScanType;
-import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspMultiResponseTransaction;
 
 /**
  *
@@ -37,6 +37,7 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspMultiRespo
 public class EzspScanTransactionTest extends EzspFrameTest {
     @Test
     public void testScanTransaction() {
+        EzspFrame.setEzspVersion(4);
         EzspStartScanRequest energyScan = new EzspStartScanRequest();
         energyScan.setChannelMask(ZigBeeChannelMask.CHANNEL_MASK_2GHZ);
         energyScan.setDuration(1);

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -17,6 +17,7 @@ import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.serialization.ZigBeeDeserializer;
 import com.zsmartsystems.zigbee.serialization.ZigBeeSerializer;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
 
 /**
  * Defines the interface for data passed to the transport layer (ie dongle) from the ZigBee stack framework.
@@ -220,5 +221,17 @@ public interface ZigBeeTransportTransmit {
      * @param defaultDeviceId the device ID.
      */
     default void setDefaultDeviceId(int defaultDeviceId) {
+    }
+
+    /**
+     * Provides the node descriptor to the transport layer. The {@link NodeDescriptor} contains information that may be
+     * of use to the transport layer and this is provided when available.
+     * <p>
+     * The transport layer can assume that this will only be set once {@link #initialize} has been called.
+     *
+     * @param ieeeAddress the {@link IeeeAddress} of the node
+     * @param nodeDescriptor the {@link NodeDescriptor} of the node
+     */
+    default void setNodeDescriptor(IeeeAddress ieeeAddress, NodeDescriptor nodeDescriptor) {
     }
 }

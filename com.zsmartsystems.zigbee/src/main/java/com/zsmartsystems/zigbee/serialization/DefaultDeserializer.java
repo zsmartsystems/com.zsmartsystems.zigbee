@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2019 by the respective copyright holders.
+ * Copyright (c) 2016-2020 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -186,7 +186,7 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 int cntX16 = (payload.length - index) / 2;
                 List<Integer> arrayX16 = new ArrayList<Integer>(cntX16);
                 for (int arrayIndex = 0; arrayIndex < cntX16; arrayIndex++) {
-                    arrayX16.add(Integer.valueOf(payload[index++]));
+                    arrayX16.add(Integer.valueOf(payload[index++] + (payload[index++] << 8)));
                 }
                 value[0] = arrayX16;
                 break;
