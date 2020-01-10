@@ -38,6 +38,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.prepayment.SetLowCreditWarningLevel
 import com.zsmartsystems.zigbee.zcl.clusters.prepayment.SetMaximumCreditLimit;
 import com.zsmartsystems.zigbee.zcl.clusters.prepayment.SetOverallDebtCap;
 import com.zsmartsystems.zigbee.zcl.clusters.prepayment.TopUpPayload;
+import com.zsmartsystems.zigbee.zcl.clusters.prepayment.ZclPrepaymentCommand;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -64,7 +65,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
 public class ZclPrepaymentCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -788,6 +789,28 @@ public class ZclPrepaymentCluster extends ZclCluster {
      */
     public ZclPrepaymentCluster(final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
+    }
+
+    /**
+     * Sends a {@link ZclPrepaymentCommand} and returns the {@link Future} to the result which will complete when the remote
+     * device response is received, or the request times out.
+     *
+     * @param command the {@link ZclPrepaymentCommand} to send
+     * @return the command result future
+     */
+    public Future<CommandResult> sendCommand(ZclPrepaymentCommand command) {
+        return super.sendCommand(command);
+    }
+
+    /**
+     * Sends a response to the command. This method sets all the common elements of the response based on the command -
+     * eg transactionId, direction, address...
+     *
+     * @param command the {@link ZclPrepaymentCommand} to which the response is being sent
+     * @param response the {@link ZclPrepaymentCommand} to send
+     */
+    public void sendResponse(ZclPrepaymentCommand command, ZclPrepaymentCommand response) {
+        super.sendResponse(command, response);
     }
 
     /**
@@ -9421,7 +9444,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setSiteId(siteId);
         command.setMeterSerialNumber(meterSerialNumber);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9457,7 +9480,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setDebtRecoveryAmount(debtRecoveryAmount);
         command.setDebtRecoveryBalancePercentage(debtRecoveryBalancePercentage);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9480,7 +9503,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setEmergencyCreditLimit(emergencyCreditLimit);
         command.setEmergencyCreditThreshold(emergencyCreditThreshold);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9500,7 +9523,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setOriginatingDevice(originatingDevice);
         command.setTopUpCode(topUpCode);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9524,7 +9547,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setCreditAdjustmentType(creditAdjustmentType);
         command.setCreditAdjustmentValue(creditAdjustmentValue);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9550,7 +9573,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setProposedPaymentControlConfiguration(proposedPaymentControlConfiguration);
         command.setCutOffValue(cutOffValue);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9573,7 +9596,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setSnapshotOffset(snapshotOffset);
         command.setSnapshotCause(snapshotCause);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9593,7 +9616,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setLatestEndTime(latestEndTime);
         command.setNumberOfRecords(numberOfRecords);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9611,7 +9634,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         // Set the fields
         command.setLowCreditWarningLevel(lowCreditWarningLevel);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9632,7 +9655,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setNumberOfDebts(numberOfDebts);
         command.setDebtType(debtType);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9658,7 +9681,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setMaximumCreditLevel(maximumCreditLevel);
         command.setMaximumCreditPerTopUp(maximumCreditPerTopUp);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9682,7 +9705,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setImplementationDateTime(implementationDateTime);
         command.setOverallDebtCap(overallDebtCap);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9714,7 +9737,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setSnapshotPayloadType(snapshotPayloadType);
         command.setSnapshotPayload(snapshotPayload);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9737,7 +9760,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setEmergencyCreditLimit(emergencyCreditLimit);
         command.setEmergencyCreditThreshold(emergencyCreditThreshold);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9760,7 +9783,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setSourceOfTopUp(sourceOfTopUp);
         command.setCreditRemaining(creditRemaining);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9781,7 +9804,7 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setTotalNumberOfCommands(totalNumberOfCommands);
         command.setTopUpPayload(topUpPayload);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -9802,6 +9825,6 @@ public class ZclPrepaymentCluster extends ZclCluster {
         command.setTotalNumberOfCommands(totalNumberOfCommands);
         command.setDebtPayload(debtPayload);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

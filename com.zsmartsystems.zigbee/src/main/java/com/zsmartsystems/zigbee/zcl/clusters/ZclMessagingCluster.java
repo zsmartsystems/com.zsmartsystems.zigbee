@@ -27,6 +27,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.messaging.DisplayProtectedMessageCo
 import com.zsmartsystems.zigbee.zcl.clusters.messaging.GetLastMessage;
 import com.zsmartsystems.zigbee.zcl.clusters.messaging.GetMessageCancellation;
 import com.zsmartsystems.zigbee.zcl.clusters.messaging.MessageConfirmation;
+import com.zsmartsystems.zigbee.zcl.clusters.messaging.ZclMessagingCommand;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 
 /**
@@ -40,7 +41,7 @@ import com.zsmartsystems.zigbee.zcl.field.ByteArray;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
 public class ZclMessagingCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -100,6 +101,28 @@ public class ZclMessagingCluster extends ZclCluster {
     }
 
     /**
+     * Sends a {@link ZclMessagingCommand} and returns the {@link Future} to the result which will complete when the remote
+     * device response is received, or the request times out.
+     *
+     * @param command the {@link ZclMessagingCommand} to send
+     * @return the command result future
+     */
+    public Future<CommandResult> sendCommand(ZclMessagingCommand command) {
+        return super.sendCommand(command);
+    }
+
+    /**
+     * Sends a response to the command. This method sets all the common elements of the response based on the command -
+     * eg transactionId, direction, address...
+     *
+     * @param command the {@link ZclMessagingCommand} to which the response is being sent
+     * @param response the {@link ZclMessagingCommand} to send
+     */
+    public void sendResponse(ZclMessagingCommand command, ZclMessagingCommand response) {
+        super.sendResponse(command, response);
+    }
+
+    /**
      * The Display Message Command
      *
      * @param messageId {@link Integer} Message ID
@@ -121,7 +144,7 @@ public class ZclMessagingCluster extends ZclCluster {
         command.setMessage(message);
         command.setExtendedMessageControl(extendedMessageControl);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -143,7 +166,7 @@ public class ZclMessagingCluster extends ZclCluster {
         command.setMessageId(messageId);
         command.setMessageControl(messageControl);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -171,7 +194,7 @@ public class ZclMessagingCluster extends ZclCluster {
         command.setMessage(message);
         command.setExtendedMessageControl(extendedMessageControl);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -189,7 +212,7 @@ public class ZclMessagingCluster extends ZclCluster {
         // Set the fields
         command.setImplementationTime(implementationTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -218,7 +241,7 @@ public class ZclMessagingCluster extends ZclCluster {
         command.setMessage(message);
         command.setOptionalExtendedMessageControl(optionalExtendedMessageControl);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -244,7 +267,7 @@ public class ZclMessagingCluster extends ZclCluster {
         command.setMessageConfirmationControl(messageConfirmationControl);
         command.setMessageConfirmationResponse(messageConfirmationResponse);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -263,7 +286,7 @@ public class ZclMessagingCluster extends ZclCluster {
         // Set the fields
         command.setEarliestImplementationTime(earliestImplementationTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -281,6 +304,6 @@ public class ZclMessagingCluster extends ZclCluster {
         // Set the fields
         command.setImplementationDateTime(implementationDateTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

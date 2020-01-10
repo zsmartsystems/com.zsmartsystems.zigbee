@@ -83,6 +83,7 @@ public abstract class ZigBeeBaseClassGenerator {
         fixedCaseAcronyms.add("MAC");
         fixedCaseAcronyms.add("MMO");
         fixedCaseAcronyms.add("NWK");
+        fixedCaseAcronyms.add("OTA");
         fixedCaseAcronyms.add("PIN");
         fixedCaseAcronyms.add("PIR");
         fixedCaseAcronyms.add("RMS");
@@ -94,6 +95,8 @@ public abstract class ZigBeeBaseClassGenerator {
         fixedCaseAcronyms.add("WD");
         fixedCaseAcronyms.add("XY");
         fixedCaseAcronyms.add("ZCL");
+        fixedCaseAcronyms.add("ZED");
+        fixedCaseAcronyms.add("ZR");
 
         fixedCaseAcronyms.add("may");
         fixedCaseAcronyms.add("shall");

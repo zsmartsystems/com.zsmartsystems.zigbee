@@ -38,6 +38,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.greenpower.GpTranslationTableReques
 import com.zsmartsystems.zigbee.zcl.clusters.greenpower.GpTranslationTableUpdate;
 import com.zsmartsystems.zigbee.zcl.clusters.greenpower.GpTranslationTableUpdateTranslation;
 import com.zsmartsystems.zigbee.zcl.clusters.greenpower.GpTunnelingStop;
+import com.zsmartsystems.zigbee.zcl.clusters.greenpower.ZclGreenPowerCommand;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -48,7 +49,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-03T12:48:45Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
 public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -276,6 +277,28 @@ public class ZclGreenPowerCluster extends ZclCluster {
      */
     public ZclGreenPowerCluster(final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
+    }
+
+    /**
+     * Sends a {@link ZclGreenPowerCommand} and returns the {@link Future} to the result which will complete when the remote
+     * device response is received, or the request times out.
+     *
+     * @param command the {@link ZclGreenPowerCommand} to send
+     * @return the command result future
+     */
+    public Future<CommandResult> sendCommand(ZclGreenPowerCommand command) {
+        return super.sendCommand(command);
+    }
+
+    /**
+     * Sends a response to the command. This method sets all the common elements of the response based on the command -
+     * eg transactionId, direction, address...
+     *
+     * @param command the {@link ZclGreenPowerCommand} to which the response is being sent
+     * @param response the {@link ZclGreenPowerCommand} to send
+     */
+    public void sendResponse(ZclGreenPowerCommand command, ZclGreenPowerCommand response) {
+        super.sendResponse(command, response);
     }
 
     /**
@@ -1085,7 +1108,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setGppShortAddress(gppShortAddress);
         command.setGppDistance(gppDistance);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1112,7 +1135,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setGpdIeee(gpdIeee);
         command.setEndpoint(endpoint);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1142,7 +1165,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setGppShortAddress(gppShortAddress);
         command.setGppDistance(gppDistance);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1182,7 +1205,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setGppLink(gppLink);
         command.setMic(mic);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1207,7 +1230,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setGpmAddrForPairing(gpmAddrForPairing);
         command.setSinkEndpoint(sinkEndpoint);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1232,7 +1255,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setEndpoint(endpoint);
         command.setTranslations(translations);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1250,7 +1273,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
         // Set the fields
         command.setStartIndex(startIndex);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1317,7 +1340,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setClusterListServer(clusterListServer);
         command.setClusterListClient(clusterListClient);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1343,7 +1366,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setEndpoint(endpoint);
         command.setIndex(index);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1373,7 +1396,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setEntriesCount(entriesCount);
         command.setProxyTableEntries(proxyTableEntries);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1398,7 +1421,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setGpdIeee(gpdIeee);
         command.setGpdSecurityFrameCounter(gpdSecurityFrameCounter);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1440,7 +1463,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setAssignedAlias(assignedAlias);
         command.setForwardingRadius(forwardingRadius);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1463,7 +1486,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setCommissioningWindow(commissioningWindow);
         command.setChannel(channel);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1495,7 +1518,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setGpdCommandId(gpdCommandId);
         command.setGpdCommandPayload(gpdCommandPayload);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1520,7 +1543,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setSinkTableEntriesCount(sinkTableEntriesCount);
         command.setSinkTableEntries(sinkTableEntries);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1545,6 +1568,6 @@ public class ZclGreenPowerCluster extends ZclCluster {
         command.setEndpoint(endpoint);
         command.setIndex(index);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

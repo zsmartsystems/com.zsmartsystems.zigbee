@@ -35,6 +35,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.rssilocation.RssiResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.rssilocation.SendPingsCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.rssilocation.SetAbsoluteLocationCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.rssilocation.SetDeviceConfigurationCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.rssilocation.ZclRssiLocationCommand;
 import com.zsmartsystems.zigbee.zcl.field.NeighborInformation;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -47,7 +48,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
 public class ZclRssiLocationCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -227,6 +228,28 @@ public class ZclRssiLocationCluster extends ZclCluster {
      */
     public ZclRssiLocationCluster(final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
+    }
+
+    /**
+     * Sends a {@link ZclRssiLocationCommand} and returns the {@link Future} to the result which will complete when the remote
+     * device response is received, or the request times out.
+     *
+     * @param command the {@link ZclRssiLocationCommand} to send
+     * @return the command result future
+     */
+    public Future<CommandResult> sendCommand(ZclRssiLocationCommand command) {
+        return super.sendCommand(command);
+    }
+
+    /**
+     * Sends a response to the command. This method sets all the common elements of the response based on the command -
+     * eg transactionId, direction, address...
+     *
+     * @param command the {@link ZclRssiLocationCommand} to which the response is being sent
+     * @param response the {@link ZclRssiLocationCommand} to send
+     */
+    public void sendResponse(ZclRssiLocationCommand command, ZclRssiLocationCommand response) {
+        super.sendResponse(command, response);
     }
 
     /**
@@ -1271,7 +1294,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
         command.setPower(power);
         command.setPathLossExponent(pathLossExponent);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1294,7 +1317,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
         command.setNumberRssiMeasurements(numberRssiMeasurements);
         command.setReportingPeriod(reportingPeriod);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1309,7 +1332,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
         // Set the fields
         command.setTargetAddress(targetAddress);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1328,7 +1351,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
         command.setNumberResponses(numberResponses);
         command.setTargetAddress(targetAddress);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1353,7 +1376,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
         command.setRssi(rssi);
         command.setNumberRssiMeasurements(numberRssiMeasurements);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1372,7 +1395,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
         command.setNumberRssiMeasurements(numberRssiMeasurements);
         command.setCalculationPeriod(calculationPeriod);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1393,7 +1416,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
         command.setCoordinate2(coordinate2);
         command.setCoordinate3(coordinate3);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1418,7 +1441,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
         command.setNumberRssiMeasurements(numberRssiMeasurements);
         command.setReportingPeriod(reportingPeriod);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1451,7 +1474,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
         command.setQualityMeasure(qualityMeasure);
         command.setLocationAge(locationAge);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1482,7 +1505,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
         command.setQualityMeasure(qualityMeasure);
         command.setLocationAge(locationAge);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1491,7 +1514,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> compactLocationDataNotificationCommand() {
-        return send(new CompactLocationDataNotificationCommand());
+        return sendCommand(new CompactLocationDataNotificationCommand());
     }
 
     /**
@@ -1506,7 +1529,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
         // Set the fields
         command.setLocationType(locationType);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1515,7 +1538,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> rssiRequestCommand() {
-        return send(new RssiRequestCommand());
+        return sendCommand(new RssiRequestCommand());
     }
 
     /**
@@ -1534,7 +1557,7 @@ public class ZclRssiLocationCluster extends ZclCluster {
         command.setNumberOfNeighbors(numberOfNeighbors);
         command.setNeighborsInformation(neighborsInformation);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1549,6 +1572,6 @@ public class ZclRssiLocationCluster extends ZclCluster {
         // Set the fields
         command.setRequestingAddress(requestingAddress);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

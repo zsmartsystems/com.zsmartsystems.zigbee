@@ -25,6 +25,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.windowcovering.WindowCoveringGoToTi
 import com.zsmartsystems.zigbee.zcl.clusters.windowcovering.WindowCoveringGoToTiltValue;
 import com.zsmartsystems.zigbee.zcl.clusters.windowcovering.WindowCoveringStop;
 import com.zsmartsystems.zigbee.zcl.clusters.windowcovering.WindowCoveringUpOpen;
+import com.zsmartsystems.zigbee.zcl.clusters.windowcovering.ZclWindowCoveringCommand;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -35,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
 public class ZclWindowCoveringCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -231,6 +232,28 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      */
     public ZclWindowCoveringCluster(final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
+    }
+
+    /**
+     * Sends a {@link ZclWindowCoveringCommand} and returns the {@link Future} to the result which will complete when the remote
+     * device response is received, or the request times out.
+     *
+     * @param command the {@link ZclWindowCoveringCommand} to send
+     * @return the command result future
+     */
+    public Future<CommandResult> sendCommand(ZclWindowCoveringCommand command) {
+        return super.sendCommand(command);
+    }
+
+    /**
+     * Sends a response to the command. This method sets all the common elements of the response based on the command -
+     * eg transactionId, direction, address...
+     *
+     * @param command the {@link ZclWindowCoveringCommand} to which the response is being sent
+     * @param response the {@link ZclWindowCoveringCommand} to send
+     */
+    public void sendResponse(ZclWindowCoveringCommand command, ZclWindowCoveringCommand response) {
+        super.sendResponse(command, response);
     }
 
     /**
@@ -1682,7 +1705,7 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> windowCoveringUpOpen() {
-        return send(new WindowCoveringUpOpen());
+        return sendCommand(new WindowCoveringUpOpen());
     }
 
     /**
@@ -1693,7 +1716,7 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> windowCoveringDownClose() {
-        return send(new WindowCoveringDownClose());
+        return sendCommand(new WindowCoveringDownClose());
     }
 
     /**
@@ -1704,7 +1727,7 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> windowCoveringStop() {
-        return send(new WindowCoveringStop());
+        return sendCommand(new WindowCoveringStop());
     }
 
     /**
@@ -1721,7 +1744,7 @@ public class ZclWindowCoveringCluster extends ZclCluster {
         // Set the fields
         command.setLiftValue(liftValue);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1738,7 +1761,7 @@ public class ZclWindowCoveringCluster extends ZclCluster {
         // Set the fields
         command.setPercentageLiftValue(percentageLiftValue);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1755,7 +1778,7 @@ public class ZclWindowCoveringCluster extends ZclCluster {
         // Set the fields
         command.setTiltValue(tiltValue);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1772,6 +1795,6 @@ public class ZclWindowCoveringCluster extends ZclCluster {
         // Set the fields
         command.setPercentageTiltValue(percentageTiltValue);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

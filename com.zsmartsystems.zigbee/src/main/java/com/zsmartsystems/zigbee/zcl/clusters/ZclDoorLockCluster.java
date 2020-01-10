@@ -26,6 +26,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.doorlock.UnlockDoorCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.doorlock.UnlockDoorResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.doorlock.UnlockWithTimeout;
 import com.zsmartsystems.zigbee.zcl.clusters.doorlock.UnlockWithTimeoutResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.doorlock.ZclDoorLockCommand;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -55,7 +56,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
 public class ZclDoorLockCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -400,6 +401,28 @@ public class ZclDoorLockCluster extends ZclCluster {
      */
     public ZclDoorLockCluster(final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
+    }
+
+    /**
+     * Sends a {@link ZclDoorLockCommand} and returns the {@link Future} to the result which will complete when the remote
+     * device response is received, or the request times out.
+     *
+     * @param command the {@link ZclDoorLockCommand} to send
+     * @return the command result future
+     */
+    public Future<CommandResult> sendCommand(ZclDoorLockCommand command) {
+        return super.sendCommand(command);
+    }
+
+    /**
+     * Sends a response to the command. This method sets all the common elements of the response based on the command -
+     * eg transactionId, direction, address...
+     *
+     * @param command the {@link ZclDoorLockCommand} to which the response is being sent
+     * @param response the {@link ZclDoorLockCommand} to send
+     */
+    public void sendResponse(ZclDoorLockCommand command, ZclDoorLockCommand response) {
+        super.sendResponse(command, response);
     }
 
     /**
@@ -3409,7 +3432,7 @@ public class ZclDoorLockCluster extends ZclCluster {
         // Set the fields
         command.setPinCode(pinCode);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -3433,7 +3456,7 @@ public class ZclDoorLockCluster extends ZclCluster {
         // Set the fields
         command.setPinCode(pinCode);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -3452,7 +3475,7 @@ public class ZclDoorLockCluster extends ZclCluster {
         // Set the fields
         command.setPin(pin);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -3476,7 +3499,7 @@ public class ZclDoorLockCluster extends ZclCluster {
         command.setTimeoutInSeconds(timeoutInSeconds);
         command.setPin(pin);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -3498,7 +3521,7 @@ public class ZclDoorLockCluster extends ZclCluster {
         // Set the fields
         command.setStatus(status);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -3520,7 +3543,7 @@ public class ZclDoorLockCluster extends ZclCluster {
         // Set the fields
         command.setStatus(status);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -3542,7 +3565,7 @@ public class ZclDoorLockCluster extends ZclCluster {
         // Set the fields
         command.setStatus(status);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -3563,6 +3586,6 @@ public class ZclDoorLockCluster extends ZclCluster {
         // Set the fields
         command.setStatus(status);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

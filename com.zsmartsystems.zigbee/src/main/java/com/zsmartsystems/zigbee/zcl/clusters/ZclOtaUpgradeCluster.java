@@ -30,6 +30,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QuerySpecificFileCommand
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.QuerySpecificFileResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.UpgradeEndCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.UpgradeEndResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ZclOtaUpgradeCommand;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -63,7 +64,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
 public class ZclOtaUpgradeCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -221,6 +222,28 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
     }
 
     /**
+     * Sends a {@link ZclOtaUpgradeCommand} and returns the {@link Future} to the result which will complete when the remote
+     * device response is received, or the request times out.
+     *
+     * @param command the {@link ZclOtaUpgradeCommand} to send
+     * @return the command result future
+     */
+    public Future<CommandResult> sendCommand(ZclOtaUpgradeCommand command) {
+        return super.sendCommand(command);
+    }
+
+    /**
+     * Sends a response to the command. This method sets all the common elements of the response based on the command -
+     * eg transactionId, direction, address...
+     *
+     * @param command the {@link ZclOtaUpgradeCommand} to which the response is being sent
+     * @param response the {@link ZclOtaUpgradeCommand} to send
+     */
+    public void sendResponse(ZclOtaUpgradeCommand command, ZclOtaUpgradeCommand response) {
+        super.sendResponse(command, response);
+    }
+
+    /**
      * The Image Notify Command
      * <p>
      * The purpose of sending Image Notify command is so the server has a way to notify client
@@ -254,7 +277,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         command.setImageType(imageType);
         command.setNewFileVersion(newFileVersion);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -292,7 +315,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         command.setFileVersion(fileVersion);
         command.setHardwareVersion(hardwareVersion);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -327,7 +350,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         command.setFileVersion(fileVersion);
         command.setImageSize(imageSize);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -370,7 +393,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         command.setRequestNodeAddress(requestNodeAddress);
         command.setBlockRequestDelay(blockRequestDelay);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -417,7 +440,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         command.setResponseSpacing(responseSpacing);
         command.setRequestNodeAddress(requestNodeAddress);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -462,7 +485,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         command.setFileOffset(fileOffset);
         command.setImageData(imageData);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -501,7 +524,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         command.setImageType(imageType);
         command.setFileVersion(fileVersion);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -536,7 +559,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         command.setCurrentTime(currentTime);
         command.setUpgradeTime(upgradeTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -567,7 +590,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         command.setFileVersion(fileVersion);
         command.setZigbeeStackVersion(zigbeeStackVersion);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -600,6 +623,6 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
         command.setFileVersion(fileVersion);
         command.setImageSize(imageSize);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

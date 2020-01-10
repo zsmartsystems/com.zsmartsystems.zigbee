@@ -21,6 +21,7 @@ import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.InitiateNormalOperationModeCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.InitiateTestModeCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZclIasZoneCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneEnrollRequestCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneEnrollResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneStatusChangeNotificationCommand;
@@ -35,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
 public class ZclIasZoneCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -160,6 +161,28 @@ public class ZclIasZoneCluster extends ZclCluster {
      */
     public ZclIasZoneCluster(final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
+    }
+
+    /**
+     * Sends a {@link ZclIasZoneCommand} and returns the {@link Future} to the result which will complete when the remote
+     * device response is received, or the request times out.
+     *
+     * @param command the {@link ZclIasZoneCommand} to send
+     * @return the command result future
+     */
+    public Future<CommandResult> sendCommand(ZclIasZoneCommand command) {
+        return super.sendCommand(command);
+    }
+
+    /**
+     * Sends a response to the command. This method sets all the common elements of the response based on the command -
+     * eg transactionId, direction, address...
+     *
+     * @param command the {@link ZclIasZoneCommand} to which the response is being sent
+     * @param response the {@link ZclIasZoneCommand} to send
+     */
+    public void sendResponse(ZclIasZoneCommand command, ZclIasZoneCommand response) {
+        super.sendResponse(command, response);
     }
 
     /**
@@ -744,7 +767,7 @@ public class ZclIasZoneCluster extends ZclCluster {
         command.setEnrollResponseCode(enrollResponseCode);
         command.setZoneId(zoneId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -760,7 +783,7 @@ public class ZclIasZoneCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> initiateNormalOperationModeCommand() {
-        return send(new InitiateNormalOperationModeCommand());
+        return sendCommand(new InitiateNormalOperationModeCommand());
     }
 
     /**
@@ -796,7 +819,7 @@ public class ZclIasZoneCluster extends ZclCluster {
         command.setTestModeDuration(testModeDuration);
         command.setCurrentZoneSensitivityLevel(currentZoneSensitivityLevel);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -820,7 +843,7 @@ public class ZclIasZoneCluster extends ZclCluster {
         command.setZoneId(zoneId);
         command.setDelay(delay);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -841,6 +864,6 @@ public class ZclIasZoneCluster extends ZclCluster {
         command.setZoneType(zoneType);
         command.setManufacturerCode(manufacturerCode);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

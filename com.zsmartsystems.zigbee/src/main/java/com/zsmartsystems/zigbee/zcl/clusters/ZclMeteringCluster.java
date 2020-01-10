@@ -51,6 +51,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.metering.StartSamplingResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.metering.SupplyStatusResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.metering.TakeSnapshot;
 import com.zsmartsystems.zigbee.zcl.clusters.metering.TakeSnapshotResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.metering.ZclMeteringCommand;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -66,7 +67,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
 public class ZclMeteringCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -3583,6 +3584,28 @@ public class ZclMeteringCluster extends ZclCluster {
      */
     public ZclMeteringCluster(final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
+    }
+
+    /**
+     * Sends a {@link ZclMeteringCommand} and returns the {@link Future} to the result which will complete when the remote
+     * device response is received, or the request times out.
+     *
+     * @param command the {@link ZclMeteringCommand} to send
+     * @return the command result future
+     */
+    public Future<CommandResult> sendCommand(ZclMeteringCommand command) {
+        return super.sendCommand(command);
+    }
+
+    /**
+     * Sends a response to the command. This method sets all the common elements of the response based on the command -
+     * eg transactionId, direction, address...
+     *
+     * @param command the {@link ZclMeteringCommand} to which the response is being sent
+     * @param response the {@link ZclMeteringCommand} to send
+     */
+    public void sendResponse(ZclMeteringCommand command, ZclMeteringCommand response) {
+        super.sendResponse(command, response);
     }
 
     /**
@@ -17124,7 +17147,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setEndTime(endTime);
         command.setNumberOfPeriods(numberOfPeriods);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17142,7 +17165,7 @@ public class ZclMeteringCluster extends ZclCluster {
         // Set the fields
         command.setEndpointId(endpointId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17160,7 +17183,7 @@ public class ZclMeteringCluster extends ZclCluster {
         // Set the fields
         command.setRemovedEndpointId(removedEndpointId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17180,7 +17203,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setFastPollUpdatePeriod(fastPollUpdatePeriod);
         command.setDuration(duration);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17203,7 +17226,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setTotalNumberOfCommands(totalNumberOfCommands);
         command.setSnapshotSchedulePayload(snapshotSchedulePayload);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17220,7 +17243,7 @@ public class ZclMeteringCluster extends ZclCluster {
         // Set the fields
         command.setSnapshotCause(snapshotCause);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17243,7 +17266,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setSnapshotOffset(snapshotOffset);
         command.setSnapshotCause(snapshotCause);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17271,7 +17294,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setSampleRequestInterval(sampleRequestInterval);
         command.setMaxNumberOfSamples(maxNumberOfSamples);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17296,7 +17319,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setSampleType(sampleType);
         command.setNumberOfSamples(numberOfSamples);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17316,7 +17339,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setNotificationScheme(notificationScheme);
         command.setNotificationFlags(notificationFlags);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17336,7 +17359,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setProviderId(providerId);
         command.setIssuerEventId(issuerEventId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17364,7 +17387,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setProposedSupplyStatus(proposedSupplyStatus);
         command.setSupplyControlBits(supplyControlBits);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17384,7 +17407,7 @@ public class ZclMeteringCluster extends ZclCluster {
         // Set the fields
         command.setProposedSupplyStatus(proposedSupplyStatus);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17410,7 +17433,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setSupplyUncontrolledFlowState(supplyUncontrolledFlowState);
         command.setLoadLimitSupplyState(loadLimitSupplyState);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17442,7 +17465,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setStabilisationPeriod(stabilisationPeriod);
         command.setMeasurementPeriod(measurementPeriod);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17467,7 +17490,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setNumberOfPeriodsDelivered(numberOfPeriodsDelivered);
         command.setIntervals(intervals);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17478,7 +17501,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> requestMirror() {
-        return send(new RequestMirror());
+        return sendCommand(new RequestMirror());
     }
 
     /**
@@ -17489,7 +17512,7 @@ public class ZclMeteringCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> removeMirror() {
-        return send(new RemoveMirror());
+        return sendCommand(new RemoveMirror());
     }
 
     /**
@@ -17508,7 +17531,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setAppliedUpdatePeriod(appliedUpdatePeriod);
         command.setFastPollModeEndtime(fastPollModeEndtime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17528,7 +17551,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setIssuerEventId(issuerEventId);
         command.setSnapshotResponsePayload(snapshotResponsePayload);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17548,7 +17571,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setSnapshotId(snapshotId);
         command.setSnapshotConfirmation(snapshotConfirmation);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17580,7 +17603,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setSnapshotPayloadType(snapshotPayloadType);
         command.setSnapshotPayload(snapshotPayload);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17608,7 +17631,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setNumberOfSamples(numberOfSamples);
         command.setSamples(samples);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17632,7 +17655,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setMirrorNotificationReporting(mirrorNotificationReporting);
         command.setNotificationScheme(notificationScheme);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17655,7 +17678,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setNotificationScheme(notificationScheme);
         command.setNotificationFlagOrder(notificationFlagOrder);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17679,7 +17702,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setNotificationFlagAttributeId(notificationFlagAttributeId);
         command.setSubPayload(subPayload);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17703,7 +17726,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setNotificationFlagAttributeId(notificationFlagAttributeId);
         command.setNotificationFlagsN(notificationFlagsN);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17726,7 +17749,7 @@ public class ZclMeteringCluster extends ZclCluster {
         command.setImplementationDateTime(implementationDateTime);
         command.setSupplyStatus(supplyStatus);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -17744,6 +17767,6 @@ public class ZclMeteringCluster extends ZclCluster {
         // Set the fields
         command.setSampleId(sampleId);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

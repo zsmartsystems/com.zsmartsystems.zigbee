@@ -54,8 +54,9 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
         final String packagePath = getPackagePath(sourceRootPath, packageRoot);
         final File packageFile = getPackageFile(packagePath + (packageZclCluster).replace('.', '/'));
 
-        final String className = "Zcl" + stringToUpperCamelCase(cluster.name) + "Cluster";
-        final PrintWriter out = getClassOut(packageFile, className);
+        final String clusterClassName = "Zcl" + stringToUpperCamelCase(cluster.name) + "Cluster";
+        final String commandClassName = "Zcl" + stringToUpperCamelCase(cluster.name) + "Command";
+        final PrintWriter out = getClassOut(packageFile, clusterClassName);
 
         outputLicense(out);
 
@@ -104,7 +105,7 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
         }
 
         if (addAttributeTypes) {
-            importsAdd("com.zsmartsystems.zigbee.zcl.protocol.ZclDataType");
+            importsAdd(packageRoot + packageZclProtocol + ".ZclDataType");
         }
 
         importsAdd(packageRoot + packageZcl + ".ZclCluster");
@@ -115,8 +116,8 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
 
         if (!cluster.commands.isEmpty()) {
             importsAdd(packageRoot + packageZcl + ".ZclCommand");
+            importsAdd(getZclClusterCommandPackage(cluster) + "." + commandClassName);
         }
-        // imports.add(packageRoot + packageZcl + ".ZclCommandMessage");
         importsAdd("javax.annotation.Generated");
 
         // imports.add(packageRoot + ".ZigBeeDestination");
@@ -147,7 +148,7 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
         out.println(" */");
         // outputClassJavaDoc(out);
         outputClassGenerated(out);
-        out.println("public class " + className + " extends ZclCluster {");
+        out.println("public class " + clusterClassName + " extends ZclCluster {");
 
         out.println("    /**");
         out.println("     * The ZigBee Cluster Library Cluster ID");
@@ -237,17 +238,48 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
 
             out.println("        return commandMap;");
             out.println("    }");
-            out.println();
         }
 
+        out.println();
         out.println("    /**");
         out.println("     * Default constructor to create a " + cluster.name + " cluster.");
         out.println("     *");
         out.println("     * @param zigbeeEndpoint the {@link ZigBeeEndpoint} this cluster is contained within");
         out.println("     */");
-        out.println("    public " + className + "(final ZigBeeEndpoint zigbeeEndpoint) {");
+        out.println("    public " + clusterClassName + "(final ZigBeeEndpoint zigbeeEndpoint) {");
         out.println("        super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);");
         out.println("    }");
+
+        if (!cluster.commands.isEmpty()) {
+            out.println();
+            out.println("    /**");
+            out.println(
+                    "     * Sends a {@link " + commandClassName
+                            + "} and returns the {@link Future} to the result which will complete when the remote");
+            out.println("     * device response is received, or the request times out.");
+            out.println("     *");
+            out.println("     * @param command the {@link " + commandClassName + "} to send");
+            out.println("     * @return the command result future");
+            out.println("     */");
+            out.println("    public Future<CommandResult> sendCommand(" + commandClassName + " command) {");
+            out.println("        return super.sendCommand(command);");
+            out.println("    }");
+            out.println();
+            out.println("    /**");
+            out.println(
+                    "     * Sends a response to the command. This method sets all the common elements of the response based on the command -");
+            out.println("     * eg transactionId, direction, address...");
+            out.println("     *");
+            out.println(
+                    "     * @param command the {@link " + commandClassName + "} to which the response is being sent");
+            out.println("     * @param response the {@link " + commandClassName + "} to send");
+            out.println("     */");
+            out.println(
+                    "    public void sendResponse(" + commandClassName + " command, " + commandClassName
+                            + " response) {");
+            out.println("        super.sendResponse(command, response);");
+            out.println("    }");
+        }
 
         for (final ZigBeeXmlAttribute attribute : cluster.attributes) {
             if (attribute.side.equals("client")) {
@@ -262,16 +294,15 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
 
             if (attribute.writable) {
                 outputAttributeJavaDoc(out, "Set", attribute, zclDataType);
+                out.println("    @Deprecated");
                 if (attribute.arrayStart != null && attribute.arrayCount != null && attribute.arrayCount > 0) {
                     String name = attribute.name.replaceAll("\\{\\{count\\}\\}", "");
-                    out.println("    @Deprecated");
                     out.println("    public Future<CommandResult> set" + stringToUpperCamelCase(name).replace("_", "")
                             + "(final int arrayOffset, final " + getDataTypeClass(attribute) + " value) {");
                     name = attribute.name.replaceAll("\\{\\{count\\}\\}", Integer.toString(attribute.arrayStart));
                     out.println(
                             "        return write(serverAttributes.get(" + getEnum(name) + " + arrayOffset), value);");
                 } else {
-                    out.println("    @Deprecated");
                     out.println("    public Future<CommandResult> set"
                             + stringToUpperCamelCase(attribute.name).replace("_", "") + "(final "
                             + getDataTypeClass(attribute) + " value) {");
@@ -282,9 +313,9 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
 
             // if (attribute.attributeAccess.toLowerCase().contains("read")) {
             outputAttributeJavaDoc(out, "Get", attribute, zclDataType);
+            out.println("    @Deprecated");
             if (attribute.arrayStart != null && attribute.arrayCount != null && attribute.arrayCount > 0) {
                 String name = attribute.name.replaceAll("\\{\\{count\\}\\}", "");
-                out.println("    @Deprecated");
                 out.println("    public Future<CommandResult> get" + stringToUpperCamelCase(name).replace("_", "")
                         + "Async(final int arrayOffset) {");
                 out.println("        if (arrayOffset < " + attribute.arrayStart + " || arrayOffset > "
@@ -295,7 +326,6 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
                 name = attribute.name.replaceAll("\\{\\{count\\}\\}", Integer.toString(attribute.arrayStart));
                 out.println("        return read(serverAttributes.get(" + getEnum(name) + " + arrayOffset));");
             } else {
-                out.println("    @Deprecated");
                 out.println("    public Future<CommandResult> get"
                         + stringToUpperCamelCase(attribute.name).replace("_", "") + "Async() {");
                 out.println("        return read(serverAttributes.get(" + getEnum(attribute.name) + "));");
@@ -304,9 +334,9 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
 
             // TODO: Needs to document the counter
             outputAttributeJavaDoc(out, "Synchronously get", attribute, zclDataType);
+            out.println("    @Deprecated");
             if (attribute.arrayStart != null && attribute.arrayCount != null && attribute.arrayCount > 0) {
                 String name = attribute.name.replaceAll("\\{\\{count\\}\\}", "");
-                out.println("    @Deprecated");
                 out.println("    public " + getDataTypeClass(attribute) + " get"
                         + stringToUpperCamelCase(name).replace("_", "")
                         + "(final int arrayOffset, final long refreshPeriod) {");
@@ -320,7 +350,6 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
                 out.println("        return (" + getDataTypeClass(attribute) + ") readSync(serverAttributes.get("
                         + getEnum(name) + " + arrayOffset));");
             } else {
-                out.println("    @Deprecated");
                 out.println("    public " + getDataTypeClass(attribute) + " get"
                         + stringToUpperCamelCase(attribute.name).replace("_", "") + "(final long refreshPeriod) {");
                 out.println("        if (serverAttributes.get(" + getEnum(attribute.name)
@@ -347,28 +376,26 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
                         offset = "(arrayOffset - 1) * " + attribute.arrayStep;
                     }
 
+                    out.println("    @Deprecated");
                     if (zclDataType.analogue) {
-                        out.println("    @Deprecated");
                         out.println("    public Future<CommandResult> set" + stringToUpperCamelCase(name)
                                 + "Reporting(final int arrayOffset, final int minInterval, final int maxInterval, final Object reportableChange) {");
                         out.println("        return setReporting(serverAttributes.get(" + getEnum(name) + " + " + offset
                                 + "), minInterval, maxInterval, reportableChange);");
                     } else {
-                        out.println("    @Deprecated");
                         out.println("    public Future<CommandResult> set" + stringToUpperCamelCase(name)
                                 + "Reporting(final int arrayOffset, final int minInterval, final int maxInterval) {");
                         out.println("        return setReporting(serverAttributes.get(" + getEnum(name) + " + " + offset
                                 + "), minInterval, maxInterval);");
                     }
                 } else {
+                    out.println("    @Deprecated");
                     if (zclDataType.analogue) {
-                        out.println("    @Deprecated");
                         out.println("    public Future<CommandResult> set" + stringToUpperCamelCase(attribute.name)
                                 + "Reporting(final int minInterval, final int maxInterval, final Object reportableChange) {");
                         out.println("        return setReporting(serverAttributes.get(" + getEnum(attribute.name)
                                 + "), minInterval, maxInterval, reportableChange);");
                     } else {
-                        out.println("    @Deprecated");
                         out.println("    public Future<CommandResult> set" + stringToUpperCamelCase(attribute.name)
                                 + "Reporting(final int minInterval, final int maxInterval) {");
                         out.println("        return setReporting(serverAttributes.get(" + getEnum(attribute.name)
@@ -410,7 +437,7 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
 
             out.println(") {");
             if (fields.size() == 0) {
-                out.println("        return send(new " + stringToUpperCamelCase(command.name) + "());");
+                out.println("        return sendCommand(new " + stringToUpperCamelCase(command.name) + "());");
             } else {
                 out.println("        " + stringToUpperCamelCase(command.name) + " command = new "
                         + stringToUpperCamelCase(command.name) + "();");
@@ -422,7 +449,7 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
                             + stringToLowerCamelCase(field.name) + ");");
                 }
                 out.println();
-                out.println("        return send(command);");
+                out.println("        return sendCommand(command);");
             }
             out.println("    }");
         }

@@ -26,6 +26,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.StepCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.StepWithOnOffCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.StopCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.StopWithOnOffCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.ZclLevelControlCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -51,7 +52,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T17:34:01Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T17:52:58Z")
 public class ZclLevelControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -161,6 +162,28 @@ public class ZclLevelControlCluster extends ZclCluster {
      */
     public ZclLevelControlCluster(final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
+    }
+
+    /**
+     * Sends a {@link ZclLevelControlCommand} and returns the {@link Future} to the result which will complete when the remote
+     * device response is received, or the request times out.
+     *
+     * @param command the {@link ZclLevelControlCommand} to send
+     * @return the command result future
+     */
+    public Future<CommandResult> sendCommand(ZclLevelControlCommand command) {
+        return super.sendCommand(command);
+    }
+
+    /**
+     * Sends a response to the command. This method sets all the common elements of the response based on the command -
+     * eg transactionId, direction, address...
+     *
+     * @param command the {@link ZclLevelControlCommand} to which the response is being sent
+     * @param response the {@link ZclLevelControlCommand} to send
+     */
+    public void sendResponse(ZclLevelControlCommand command, ZclLevelControlCommand response) {
+        super.sendResponse(command, response);
     }
 
     /**
@@ -775,7 +798,7 @@ public class ZclLevelControlCluster extends ZclCluster {
         command.setLevel(level);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -792,7 +815,7 @@ public class ZclLevelControlCluster extends ZclCluster {
         command.setMoveMode(moveMode);
         command.setRate(rate);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -811,7 +834,7 @@ public class ZclLevelControlCluster extends ZclCluster {
         command.setStepSize(stepSize);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -825,7 +848,7 @@ public class ZclLevelControlCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> stopCommand() {
-        return send(new StopCommand());
+        return sendCommand(new StopCommand());
     }
 
     /**
@@ -852,7 +875,7 @@ public class ZclLevelControlCluster extends ZclCluster {
         command.setLevel(level);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -869,7 +892,7 @@ public class ZclLevelControlCluster extends ZclCluster {
         command.setMoveMode(moveMode);
         command.setRate(rate);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -888,7 +911,7 @@ public class ZclLevelControlCluster extends ZclCluster {
         command.setStepSize(stepSize);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -897,6 +920,6 @@ public class ZclLevelControlCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> stopWithOnOffCommand() {
-        return send(new StopWithOnOffCommand());
+        return sendCommand(new StopWithOnOffCommand());
     }
 }

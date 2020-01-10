@@ -22,6 +22,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.electricalmeasurement.GetMeasuremen
 import com.zsmartsystems.zigbee.zcl.clusters.electricalmeasurement.GetMeasurementProfileResponseCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.electricalmeasurement.GetProfileInfoCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.electricalmeasurement.GetProfileInfoResponseCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.electricalmeasurement.ZclElectricalMeasurementCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -41,7 +42,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
 public class ZclElectricalMeasurementCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -411,6 +412,28 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      */
     public ZclElectricalMeasurementCluster(final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
+    }
+
+    /**
+     * Sends a {@link ZclElectricalMeasurementCommand} and returns the {@link Future} to the result which will complete when the remote
+     * device response is received, or the request times out.
+     *
+     * @param command the {@link ZclElectricalMeasurementCommand} to send
+     * @return the command result future
+     */
+    public Future<CommandResult> sendCommand(ZclElectricalMeasurementCommand command) {
+        return super.sendCommand(command);
+    }
+
+    /**
+     * Sends a response to the command. This method sets all the common elements of the response based on the command -
+     * eg transactionId, direction, address...
+     *
+     * @param command the {@link ZclElectricalMeasurementCommand} to which the response is being sent
+     * @param response the {@link ZclElectricalMeasurementCommand} to send
+     */
+    public void sendResponse(ZclElectricalMeasurementCommand command, ZclElectricalMeasurementCommand response) {
+        super.sendResponse(command, response);
     }
 
     /**
@@ -7945,7 +7968,7 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> getProfileInfoCommand() {
-        return send(new GetProfileInfoCommand());
+        return sendCommand(new GetProfileInfoCommand());
     }
 
     /**
@@ -7967,7 +7990,7 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
         command.setStartTime(startTime);
         command.setNumberOfIntervals(numberOfIntervals);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -7992,7 +8015,7 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
         command.setMaxNumberOfIntervals(maxNumberOfIntervals);
         command.setListOfAttributes(listOfAttributes);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -8021,6 +8044,6 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
         command.setAttributeId(attributeId);
         command.setIntervals(intervals);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

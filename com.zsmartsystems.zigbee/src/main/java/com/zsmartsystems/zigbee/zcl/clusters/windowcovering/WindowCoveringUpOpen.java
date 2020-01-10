@@ -9,7 +9,6 @@ package com.zsmartsystems.zigbee.zcl.clusters.windowcovering;
 
 import javax.annotation.Generated;
 
-import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 
 /**
@@ -22,8 +21,8 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
-public class WindowCoveringUpOpen extends ZclCommand {
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+public class WindowCoveringUpOpen extends ZclWindowCoveringCommand {
     /**
      * The cluster ID to which this command belongs.
      */

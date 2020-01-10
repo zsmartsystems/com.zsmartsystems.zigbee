@@ -26,6 +26,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.commissioning.RestoreStartupParamet
 import com.zsmartsystems.zigbee.zcl.clusters.commissioning.RestoreStartupParametersResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.commissioning.SaveStartupParametersCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.commissioning.SaveStartupParametersResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.commissioning.ZclCommissioningCommand;
 
 /**
  * <b>Commissioning</b> cluster implementation (<i>Cluster ID 0x0015</i>).
@@ -35,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.commissioning.SaveStartupParameters
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
 public class ZclCommissioningCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -95,6 +96,28 @@ public class ZclCommissioningCluster extends ZclCluster {
     }
 
     /**
+     * Sends a {@link ZclCommissioningCommand} and returns the {@link Future} to the result which will complete when the remote
+     * device response is received, or the request times out.
+     *
+     * @param command the {@link ZclCommissioningCommand} to send
+     * @return the command result future
+     */
+    public Future<CommandResult> sendCommand(ZclCommissioningCommand command) {
+        return super.sendCommand(command);
+    }
+
+    /**
+     * Sends a response to the command. This method sets all the common elements of the response based on the command -
+     * eg transactionId, direction, address...
+     *
+     * @param command the {@link ZclCommissioningCommand} to which the response is being sent
+     * @param response the {@link ZclCommissioningCommand} to send
+     */
+    public void sendResponse(ZclCommissioningCommand command, ZclCommissioningCommand response) {
+        super.sendResponse(command, response);
+    }
+
+    /**
      * The Restart Device Command
      *
      * @param option {@link Integer} Option
@@ -110,7 +133,7 @@ public class ZclCommissioningCluster extends ZclCluster {
         command.setDelay(delay);
         command.setJitter(jitter);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -127,7 +150,7 @@ public class ZclCommissioningCluster extends ZclCluster {
         command.setOption(option);
         command.setIndex(index);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -144,7 +167,7 @@ public class ZclCommissioningCluster extends ZclCluster {
         command.setOption(option);
         command.setIndex(index);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -161,7 +184,7 @@ public class ZclCommissioningCluster extends ZclCluster {
         command.setOption(option);
         command.setIndex(index);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -176,7 +199,7 @@ public class ZclCommissioningCluster extends ZclCluster {
         // Set the fields
         command.setStatus(status);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -191,7 +214,7 @@ public class ZclCommissioningCluster extends ZclCluster {
         // Set the fields
         command.setStatus(status);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -206,7 +229,7 @@ public class ZclCommissioningCluster extends ZclCluster {
         // Set the fields
         command.setStatus(status);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -221,6 +244,6 @@ public class ZclCommissioningCluster extends ZclCluster {
         // Set the fields
         command.setStatus(status);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

@@ -53,6 +53,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.price.PublishPriceCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.price.PublishPriceMatrixCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.price.PublishTariffInformationCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.price.PublishTierLabelsCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.price.ZclPriceCommand;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -71,7 +72,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
 public class ZclPriceCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -4778,6 +4779,28 @@ public class ZclPriceCluster extends ZclCluster {
      */
     public ZclPriceCluster(final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
+    }
+
+    /**
+     * Sends a {@link ZclPriceCommand} and returns the {@link Future} to the result which will complete when the remote
+     * device response is received, or the request times out.
+     *
+     * @param command the {@link ZclPriceCommand} to send
+     * @return the command result future
+     */
+    public Future<CommandResult> sendCommand(ZclPriceCommand command) {
+        return super.sendCommand(command);
+    }
+
+    /**
+     * Sends a response to the command. This method sets all the common elements of the response based on the command -
+     * eg transactionId, direction, address...
+     *
+     * @param command the {@link ZclPriceCommand} to which the response is being sent
+     * @param response the {@link ZclPriceCommand} to send
+     */
+    public void sendResponse(ZclPriceCommand command, ZclPriceCommand response) {
+        super.sendResponse(command, response);
     }
 
     /**
@@ -11410,7 +11433,7 @@ public class ZclPriceCluster extends ZclCluster {
         // Set the fields
         command.setCommandOptions(commandOptions);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11432,7 +11455,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setStartTime(startTime);
         command.setNumberOfEvents(numberOfEvents);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11457,7 +11480,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setPriceAckTime(priceAckTime);
         command.setControl(control);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11481,7 +11504,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setNumberOfEvents(numberOfEvents);
         command.setTariffType(tariffType);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11506,7 +11529,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setMinIssuerEventId(minIssuerEventId);
         command.setNumberOfCommands(numberOfCommands);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11531,7 +11554,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setMinIssuerEventId(minIssuerEventId);
         command.setNumberOfCommands(numberOfCommands);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11560,7 +11583,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setNumberOfCommands(numberOfCommands);
         command.setTariffType(tariffType);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11580,7 +11603,7 @@ public class ZclPriceCluster extends ZclCluster {
         // Set the fields
         command.setIssuerTariffId(issuerTariffId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11600,7 +11623,7 @@ public class ZclPriceCluster extends ZclCluster {
         // Set the fields
         command.setIssuerTariffId(issuerTariffId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11625,7 +11648,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setNumberOfCommands(numberOfCommands);
         command.setTariffType(tariffType);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11643,7 +11666,7 @@ public class ZclPriceCluster extends ZclCluster {
         // Set the fields
         command.setIssuerTariffId(issuerTariffId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11667,7 +11690,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setNumberOfCommands(numberOfCommands);
         command.setTariffType(tariffType);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11691,7 +11714,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setNumberOfCommands(numberOfCommands);
         command.setTariffType(tariffType);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11711,7 +11734,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setIssuerEventId(issuerEventId);
         command.setCppAuth(cppAuth);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11731,7 +11754,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setLatestEndTime(latestEndTime);
         command.setNumberOfRecords(numberOfRecords);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11745,7 +11768,7 @@ public class ZclPriceCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> getCurrencyConversionCommand() {
-        return send(new GetCurrencyConversionCommand());
+        return sendCommand(new GetCurrencyConversionCommand());
     }
 
     /**
@@ -11758,7 +11781,7 @@ public class ZclPriceCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> getTariffCancellationCommand() {
-        return send(new GetTariffCancellationCommand());
+        return sendCommand(new GetTariffCancellationCommand());
     }
 
     /**
@@ -11842,7 +11865,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setExtendedPriceTier(extendedPriceTier);
         command.setExtendedRegisterTier(extendedRegisterTier);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11884,7 +11907,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setTariffType(tariffType);
         command.setTariffResolutionPeriod(tariffResolutionPeriod);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11910,7 +11933,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setConversionFactor(conversionFactor);
         command.setConversionFactorTrailingDigit(conversionFactorTrailingDigit);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11937,7 +11960,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setCalorificValueUnit(calorificValueUnit);
         command.setCalorificValueTrailingDigit(calorificValueTrailingDigit);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -11990,7 +12013,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setBlockThresholdMultiplier(blockThresholdMultiplier);
         command.setBlockThresholdDivisor(blockThresholdDivisor);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -12035,7 +12058,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setSubPayloadControl(subPayloadControl);
         command.setPriceMatrixSubPayload(priceMatrixSubPayload);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -12078,7 +12101,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setSubPayloadControl(subPayloadControl);
         command.setBlockThresholdSubPayload(blockThresholdSubPayload);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -12109,7 +12132,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setCo2ValueUnit(co2ValueUnit);
         command.setCo2ValueTrailingDigit(co2ValueTrailingDigit);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -12141,7 +12164,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setTierId(tierId);
         command.setTierLabel(tierLabel);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -12174,7 +12197,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setBillingPeriodDurationType(billingPeriodDurationType);
         command.setTariffType(tariffType);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -12214,7 +12237,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setCurrency(currency);
         command.setBillTrailingDigit(billTrailingDigit);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -12250,7 +12273,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setCppPriceTier(cppPriceTier);
         command.setCppAuth(cppAuth);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -12285,7 +12308,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setCreditPaymentDate(creditPaymentDate);
         command.setCreditPaymentRef(creditPaymentRef);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -12317,7 +12340,7 @@ public class ZclPriceCluster extends ZclCluster {
         command.setConversionFactorTrailingDigit(conversionFactorTrailingDigit);
         command.setCurrencyChangeControlFlags(currencyChangeControlFlags);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -12343,6 +12366,6 @@ public class ZclPriceCluster extends ZclCluster {
         command.setIssuerTariffId(issuerTariffId);
         command.setTariffType(tariffType);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

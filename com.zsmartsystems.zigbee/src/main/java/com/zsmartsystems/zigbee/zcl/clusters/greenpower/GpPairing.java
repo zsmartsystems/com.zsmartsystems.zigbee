@@ -11,7 +11,6 @@ import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
-import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
@@ -29,8 +28,8 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-03T12:48:45Z")
-public class GpPairing extends ZclCommand {
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+public class GpPairing extends ZclGreenPowerCommand {
     /**
      * The cluster ID to which this command belongs.
      */
