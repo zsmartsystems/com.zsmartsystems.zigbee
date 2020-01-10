@@ -13,15 +13,15 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 
 /**
- * Stop 2 Command value object class.
+ * Stop (with On/Off) Command value object class.
  * <p>
  * Cluster: <b>Level Control</b>. Command ID 0x07 is sent <b>TO</b> the server.
  * This command is a <b>specific</b> command used for the Level Control cluster.
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:41:54Z")
-public class Stop2Command extends ZclCommand {
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-09-24T18:34:07Z")
+public class StopWithOnOffCommand extends ZclCommand {
     /**
      * The cluster ID to which this command belongs.
      */
@@ -35,7 +35,7 @@ public class Stop2Command extends ZclCommand {
     /**
      * Default constructor.
      */
-    public Stop2Command() {
+    public StopWithOnOffCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
@@ -44,8 +44,8 @@ public class Stop2Command extends ZclCommand {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(15);
-        builder.append("Stop2Command [");
+        final StringBuilder builder = new StringBuilder(23);
+        builder.append("StopWithOnOffCommand [");
         builder.append(super.toString());
         builder.append(']');
         return builder.toString();

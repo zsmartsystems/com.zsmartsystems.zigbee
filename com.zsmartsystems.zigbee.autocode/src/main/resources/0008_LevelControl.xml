@@ -72,7 +72,7 @@
         </field>
     </command>
     <command code="0x07" source="client">
-        <name>Stop 2 Command</name>
+        <name>Stop (with On/Off) Command</name>
     </command>
 
     <attribute code="0x0000" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="false" writable="false" reportable="true">
