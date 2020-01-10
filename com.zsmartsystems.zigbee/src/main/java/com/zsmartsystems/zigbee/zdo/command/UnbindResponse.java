@@ -30,7 +30,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoStatus;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class UnbindResponse extends ZdoResponse {
     /**
      * The ZDO cluster ID.
@@ -39,9 +39,25 @@ public class UnbindResponse extends ZdoResponse {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public UnbindResponse() {
         clusterId = CLUSTER_ID;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param status {@link ZdoStatus} Status
+     */
+    public UnbindResponse(
+            ZdoStatus status) {
+
+        clusterId = CLUSTER_ID;
+
+        this.status = status;
     }
 
     @Override

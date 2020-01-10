@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class AckTransferDataServerToClient extends ZclSmartEnergyTunnelingCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -64,12 +64,34 @@ public class AckTransferDataServerToClient extends ZclSmartEnergyTunnelingComman
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public AckTransferDataServerToClient() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param tunnelId {@link Integer} Tunnel ID
+     * @param numberOfBytesLeft {@link Integer} Number Of Bytes Left
+     */
+    public AckTransferDataServerToClient(
+            Integer tunnelId,
+            Integer numberOfBytesLeft) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.tunnelId = tunnelId;
+        this.numberOfBytesLeft = numberOfBytesLeft;
     }
 
     /**
@@ -95,7 +117,9 @@ public class AckTransferDataServerToClient extends ZclSmartEnergyTunnelingComman
      * tunnel.
      *
      * @param tunnelId the Tunnel ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTunnelId(final Integer tunnelId) {
         this.tunnelId = tunnelId;
     }
@@ -129,7 +153,9 @@ public class AckTransferDataServerToClient extends ZclSmartEnergyTunnelingComman
      * sender may continue its data transfer.
      *
      * @param numberOfBytesLeft the Number Of Bytes Left
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNumberOfBytesLeft(final Integer numberOfBytesLeft) {
         this.numberOfBytesLeft = numberOfBytesLeft;
     }

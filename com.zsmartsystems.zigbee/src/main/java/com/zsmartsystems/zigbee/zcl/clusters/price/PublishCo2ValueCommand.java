@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class PublishCo2ValueCommand extends ZclPriceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -111,12 +111,49 @@ public class PublishCo2ValueCommand extends ZclPriceCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public PublishCo2ValueCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param providerId {@link Integer} Provider ID
+     * @param issuerEventId {@link Integer} Issuer Event ID
+     * @param startTime {@link Calendar} Start Time
+     * @param tariffType {@link Integer} Tariff Type
+     * @param co2Value {@link Integer} CO2 Value
+     * @param co2ValueUnit {@link Integer} CO2 Value Unit
+     * @param co2ValueTrailingDigit {@link Integer} CO2 Value Trailing Digit
+     */
+    public PublishCo2ValueCommand(
+            Integer providerId,
+            Integer issuerEventId,
+            Calendar startTime,
+            Integer tariffType,
+            Integer co2Value,
+            Integer co2ValueUnit,
+            Integer co2ValueTrailingDigit) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.providerId = providerId;
+        this.issuerEventId = issuerEventId;
+        this.startTime = startTime;
+        this.tariffType = tariffType;
+        this.co2Value = co2Value;
+        this.co2ValueUnit = co2ValueUnit;
+        this.co2ValueTrailingDigit = co2ValueTrailingDigit;
     }
 
     /**
@@ -140,7 +177,9 @@ public class PublishCo2ValueCommand extends ZclPriceCommand {
      * providers may be available.
      *
      * @param providerId the Provider ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProviderId(final Integer providerId) {
         this.providerId = providerId;
     }
@@ -172,7 +211,9 @@ public class PublishCo2ValueCommand extends ZclPriceCommand {
      * value in the Issuer Event ID field that is larger than older information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
     }
@@ -206,7 +247,9 @@ public class PublishCo2ValueCommand extends ZclPriceCommand {
      * cancellation mechanism).
      *
      * @param startTime the Start Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStartTime(final Calendar startTime) {
         this.startTime = startTime;
     }
@@ -234,7 +277,9 @@ public class PublishCo2ValueCommand extends ZclPriceCommand {
      * nibble is reserved.
      *
      * @param tariffType the Tariff Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTariffType(final Integer tariffType) {
         this.tariffType = tariffType;
     }
@@ -272,7 +317,9 @@ public class PublishCo2ValueCommand extends ZclPriceCommand {
      * indicates field not used.
      *
      * @param co2Value the CO2 Value
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCo2Value(final Integer co2Value) {
         this.co2Value = co2Value;
     }
@@ -290,7 +337,9 @@ public class PublishCo2ValueCommand extends ZclPriceCommand {
      * Sets CO2 Value Unit.
      *
      * @param co2ValueUnit the CO2 Value Unit
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCo2ValueUnit(final Integer co2ValueUnit) {
         this.co2ValueUnit = co2ValueUnit;
     }
@@ -308,7 +357,9 @@ public class PublishCo2ValueCommand extends ZclPriceCommand {
      * Sets CO2 Value Trailing Digit.
      *
      * @param co2ValueTrailingDigit the CO2 Value Trailing Digit
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCo2ValueTrailingDigit(final Integer co2ValueTrailingDigit) {
         this.co2ValueTrailingDigit = co2ValueTrailingDigit;
     }

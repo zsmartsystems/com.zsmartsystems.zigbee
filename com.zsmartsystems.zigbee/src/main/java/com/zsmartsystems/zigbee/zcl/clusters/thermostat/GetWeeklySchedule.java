@@ -22,7 +22,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class GetWeeklySchedule extends ZclThermostatCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -46,12 +46,34 @@ public class GetWeeklySchedule extends ZclThermostatCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public GetWeeklySchedule() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param daysToReturn {@link Integer} Days To Return
+     * @param modeToReturn {@link Integer} Mode To Return
+     */
+    public GetWeeklySchedule(
+            Integer daysToReturn,
+            Integer modeToReturn) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.daysToReturn = daysToReturn;
+        this.modeToReturn = modeToReturn;
     }
 
     /**
@@ -67,7 +89,9 @@ public class GetWeeklySchedule extends ZclThermostatCommand {
      * Sets Days To Return.
      *
      * @param daysToReturn the Days To Return
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDaysToReturn(final Integer daysToReturn) {
         this.daysToReturn = daysToReturn;
     }
@@ -85,7 +109,9 @@ public class GetWeeklySchedule extends ZclThermostatCommand {
      * Sets Mode To Return.
      *
      * @param modeToReturn the Mode To Return
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setModeToReturn(final Integer modeToReturn) {
         this.modeToReturn = modeToReturn;
     }

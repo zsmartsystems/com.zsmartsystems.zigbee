@@ -18,7 +18,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:02:05Z")
 public class BlockThresholdSubPayload implements ZigBeeSerializable {
     /**
      * Tier Number Of Block Thresholds structure field.
@@ -31,6 +31,28 @@ public class BlockThresholdSubPayload implements ZigBeeSerializable {
     private Integer blockThreshold;
 
 
+    /**
+     * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
+     */
+    @Deprecated
+    public BlockThresholdSubPayload() {
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param tierNumberOfBlockThresholds {@link Integer} Tier Number Of Block Thresholds
+     * @param blockThreshold {@link Integer} Block Threshold
+     */
+    public BlockThresholdSubPayload(
+            Integer tierNumberOfBlockThresholds,
+            Integer blockThreshold) {
+
+        this.tierNumberOfBlockThresholds = tierNumberOfBlockThresholds;
+        this.blockThreshold = blockThreshold;
+    }
 
     /**
      * Gets Tier Number Of Block Thresholds.
@@ -45,7 +67,9 @@ public class BlockThresholdSubPayload implements ZigBeeSerializable {
      * Sets Tier Number Of Block Thresholds.
      *
      * @param tierNumberOfBlockThresholds the Tier Number Of Block Thresholds
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTierNumberOfBlockThresholds(final Integer tierNumberOfBlockThresholds) {
         this.tierNumberOfBlockThresholds = tierNumberOfBlockThresholds;
     }
@@ -63,7 +87,9 @@ public class BlockThresholdSubPayload implements ZigBeeSerializable {
      * Sets Block Threshold.
      *
      * @param blockThreshold the Block Threshold
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setBlockThreshold(final Integer blockThreshold) {
         this.blockThreshold = blockThreshold;
     }

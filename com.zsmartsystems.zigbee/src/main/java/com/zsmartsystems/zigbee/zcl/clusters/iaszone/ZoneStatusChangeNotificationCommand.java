@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class ZoneStatusChangeNotificationCommand extends ZclIasZoneCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -72,12 +72,40 @@ public class ZoneStatusChangeNotificationCommand extends ZclIasZoneCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public ZoneStatusChangeNotificationCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param zoneStatus {@link Integer} Zone Status
+     * @param extendedStatus {@link Integer} Extended Status
+     * @param zoneId {@link Integer} Zone ID
+     * @param delay {@link Integer} Delay
+     */
+    public ZoneStatusChangeNotificationCommand(
+            Integer zoneStatus,
+            Integer extendedStatus,
+            Integer zoneId,
+            Integer delay) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.zoneStatus = zoneStatus;
+        this.extendedStatus = extendedStatus;
+        this.zoneId = zoneId;
+        this.delay = delay;
     }
 
     /**
@@ -97,7 +125,9 @@ public class ZoneStatusChangeNotificationCommand extends ZclIasZoneCommand {
      * The Zone Status field shall be the current value of the ZoneStatus attribute.
      *
      * @param zoneStatus the Zone Status
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneStatus(final Integer zoneStatus) {
         this.zoneStatus = zoneStatus;
     }
@@ -121,7 +151,9 @@ public class ZoneStatusChangeNotificationCommand extends ZclIasZoneCommand {
      * set to zero.
      *
      * @param extendedStatus the Extended Status
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setExtendedStatus(final Integer extendedStatus) {
         this.extendedStatus = extendedStatus;
     }
@@ -143,7 +175,9 @@ public class ZoneStatusChangeNotificationCommand extends ZclIasZoneCommand {
      * Zone ID is the index of the Zone in the CIE's zone table.
      *
      * @param zoneId the Zone ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneId(final Integer zoneId) {
         this.zoneId = zoneId;
     }
@@ -173,7 +207,9 @@ public class ZoneStatusChangeNotificationCommand extends ZclIasZoneCommand {
      * event was detected and when it could be reported to the client.
      *
      * @param delay the Delay
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDelay(final Integer delay) {
         this.delay = delay;
     }

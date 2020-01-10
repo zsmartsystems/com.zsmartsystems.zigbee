@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class CancelLoadControlEvent extends ZclDemandResponseAndLoadControlCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -96,12 +96,43 @@ public class CancelLoadControlEvent extends ZclDemandResponseAndLoadControlComma
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public CancelLoadControlEvent() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param issuerEventId {@link Integer} Issuer Event ID
+     * @param deviceClass {@link Integer} Device Class
+     * @param utilityEnrollmentGroup {@link Integer} Utility Enrollment Group
+     * @param cancelControl {@link Integer} Cancel Control
+     * @param effectiveTime {@link Calendar} Effective Time
+     */
+    public CancelLoadControlEvent(
+            Integer issuerEventId,
+            Integer deviceClass,
+            Integer utilityEnrollmentGroup,
+            Integer cancelControl,
+            Calendar effectiveTime) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.issuerEventId = issuerEventId;
+        this.deviceClass = deviceClass;
+        this.utilityEnrollmentGroup = utilityEnrollmentGroup;
+        this.cancelControl = cancelControl;
+        this.effectiveTime = effectiveTime;
     }
 
     /**
@@ -129,7 +160,9 @@ public class CancelLoadControlEvent extends ZclDemandResponseAndLoadControlComma
      * Event was issued.
      *
      * @param issuerEventId the Issuer Event ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
     }
@@ -163,7 +196,9 @@ public class CancelLoadControlEvent extends ZclDemandResponseAndLoadControlComma
      * devices that are subject to load shed.)
      *
      * @param deviceClass the Device Class
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDeviceClass(final Integer deviceClass) {
         this.deviceClass = deviceClass;
     }
@@ -199,7 +234,9 @@ public class CancelLoadControlEvent extends ZclDemandResponseAndLoadControlComma
      * further details.
      *
      * @param utilityEnrollmentGroup the Utility Enrollment Group
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setUtilityEnrollmentGroup(final Integer utilityEnrollmentGroup) {
         this.utilityEnrollmentGroup = utilityEnrollmentGroup;
     }
@@ -217,7 +254,9 @@ public class CancelLoadControlEvent extends ZclDemandResponseAndLoadControlComma
      * Sets Cancel Control.
      *
      * @param cancelControl the Cancel Control
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCancelControl(final Integer cancelControl) {
         this.cancelControl = cancelControl;
     }
@@ -255,7 +294,9 @@ public class CancelLoadControlEvent extends ZclDemandResponseAndLoadControlComma
      * correspond to the remainder of the event.
      *
      * @param effectiveTime the Effective Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setEffectiveTime(final Calendar effectiveTime) {
         this.effectiveTime = effectiveTime;
     }

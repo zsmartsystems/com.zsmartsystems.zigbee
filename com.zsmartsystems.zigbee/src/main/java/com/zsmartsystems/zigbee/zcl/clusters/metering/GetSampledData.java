@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class GetSampledData extends ZclMeteringCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -77,12 +77,40 @@ public class GetSampledData extends ZclMeteringCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public GetSampledData() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param sampleId {@link Integer} Sample ID
+     * @param earliestSampleTime {@link Calendar} Earliest Sample Time
+     * @param sampleType {@link Integer} Sample Type
+     * @param numberOfSamples {@link Integer} Number Of Samples
+     */
+    public GetSampledData(
+            Integer sampleId,
+            Calendar earliestSampleTime,
+            Integer sampleType,
+            Integer numberOfSamples) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.sampleId = sampleId;
+        this.earliestSampleTime = earliestSampleTime;
+        this.sampleType = sampleType;
+        this.numberOfSamples = numberOfSamples;
     }
 
     /**
@@ -104,7 +132,9 @@ public class GetSampledData extends ZclMeteringCommand {
      * match response data with the appropriate request.
      *
      * @param sampleId the Sample ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSampleId(final Integer sampleId) {
         this.sampleId = sampleId;
     }
@@ -130,7 +160,9 @@ public class GetSampledData extends ZclMeteringCommand {
      * returned.
      *
      * @param earliestSampleTime the Earliest Sample Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setEarliestSampleTime(final Calendar earliestSampleTime) {
         this.earliestSampleTime = earliestSampleTime;
     }
@@ -152,7 +184,9 @@ public class GetSampledData extends ZclMeteringCommand {
      * An 8 bit enumeration that identifies the required type of sampled data.
      *
      * @param sampleType the Sample Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSampleType(final Integer sampleType) {
         this.sampleType = sampleType;
     }
@@ -182,7 +216,9 @@ public class GetSampledData extends ZclMeteringCommand {
      * are available for the time period, only those available are returned.
      *
      * @param numberOfSamples the Number Of Samples
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNumberOfSamples(final Integer numberOfSamples) {
         this.numberOfSamples = numberOfSamples;
     }

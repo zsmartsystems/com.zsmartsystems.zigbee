@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class SetUncontrolledFlowThreshold extends ZclMeteringCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -112,12 +112,52 @@ public class SetUncontrolledFlowThreshold extends ZclMeteringCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public SetUncontrolledFlowThreshold() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param providerId {@link Integer} Provider ID
+     * @param issuerEventId {@link Integer} Issuer Event ID
+     * @param uncontrolledFlowThreshold {@link Integer} Uncontrolled Flow Threshold
+     * @param unitOfMeasure {@link Integer} Unit Of Measure
+     * @param multiplier {@link Integer} Multiplier
+     * @param divisor {@link Integer} Divisor
+     * @param stabilisationPeriod {@link Integer} Stabilisation Period
+     * @param measurementPeriod {@link Integer} Measurement Period
+     */
+    public SetUncontrolledFlowThreshold(
+            Integer providerId,
+            Integer issuerEventId,
+            Integer uncontrolledFlowThreshold,
+            Integer unitOfMeasure,
+            Integer multiplier,
+            Integer divisor,
+            Integer stabilisationPeriod,
+            Integer measurementPeriod) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.providerId = providerId;
+        this.issuerEventId = issuerEventId;
+        this.uncontrolledFlowThreshold = uncontrolledFlowThreshold;
+        this.unitOfMeasure = unitOfMeasure;
+        this.multiplier = multiplier;
+        this.divisor = divisor;
+        this.stabilisationPeriod = stabilisationPeriod;
+        this.measurementPeriod = measurementPeriod;
     }
 
     /**
@@ -139,7 +179,9 @@ public class SetUncontrolledFlowThreshold extends ZclMeteringCommand {
      * whom this command relates.
      *
      * @param providerId the Provider ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProviderId(final Integer providerId) {
         this.providerId = providerId;
     }
@@ -171,7 +213,9 @@ public class SetUncontrolledFlowThreshold extends ZclMeteringCommand {
      * the Issuer Event ID field that is larger than older information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
     }
@@ -195,7 +239,9 @@ public class SetUncontrolledFlowThreshold extends ZclMeteringCommand {
      * flow. A value of 0x0000 indicates the feature in unused.
      *
      * @param uncontrolledFlowThreshold the Uncontrolled Flow Threshold
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setUncontrolledFlowThreshold(final Integer uncontrolledFlowThreshold) {
         this.uncontrolledFlowThreshold = uncontrolledFlowThreshold;
     }
@@ -223,7 +269,9 @@ public class SetUncontrolledFlowThreshold extends ZclMeteringCommand {
      * Metering cluster.
      *
      * @param unitOfMeasure the Unit Of Measure
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setUnitOfMeasure(final Integer unitOfMeasure) {
         this.unitOfMeasure = unitOfMeasure;
     }
@@ -249,7 +297,9 @@ public class SetUncontrolledFlowThreshold extends ZclMeteringCommand {
      * value. A value of 0x0000 is not allowed.
      *
      * @param multiplier the Multiplier
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setMultiplier(final Integer multiplier) {
         this.multiplier = multiplier;
     }
@@ -275,7 +325,9 @@ public class SetUncontrolledFlowThreshold extends ZclMeteringCommand {
      * threshold value. A value of 0x0000 is not allowed.
      *
      * @param divisor the Divisor
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDivisor(final Integer divisor) {
         this.divisor = divisor;
     }
@@ -299,7 +351,9 @@ public class SetUncontrolledFlowThreshold extends ZclMeteringCommand {
      * defined in units of tenths of a second.
      *
      * @param stabilisationPeriod the Stabilisation Period
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStabilisationPeriod(final Integer stabilisationPeriod) {
         this.stabilisationPeriod = stabilisationPeriod;
     }
@@ -325,7 +379,9 @@ public class SetUncontrolledFlowThreshold extends ZclMeteringCommand {
      * second.
      *
      * @param measurementPeriod the Measurement Period
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setMeasurementPeriod(final Integer measurementPeriod) {
         this.measurementPeriod = measurementPeriod;
     }

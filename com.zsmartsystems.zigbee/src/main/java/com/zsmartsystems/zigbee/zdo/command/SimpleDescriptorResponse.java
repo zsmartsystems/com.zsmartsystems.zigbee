@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zdo.field.SimpleDescriptor;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-15T18:21:05Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class SimpleDescriptorResponse extends ZdoResponse {
     /**
      * The ZDO cluster ID.
@@ -50,9 +50,34 @@ public class SimpleDescriptorResponse extends ZdoResponse {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public SimpleDescriptorResponse() {
         clusterId = CLUSTER_ID;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param status {@link ZdoStatus} Status
+     * @param nwkAddrOfInterest {@link Integer} NWK Addr Of Interest
+     * @param length {@link Integer} Length
+     * @param simpleDescriptor {@link SimpleDescriptor} Simple Descriptor
+     */
+    public SimpleDescriptorResponse(
+            ZdoStatus status,
+            Integer nwkAddrOfInterest,
+            Integer length,
+            SimpleDescriptor simpleDescriptor) {
+
+        clusterId = CLUSTER_ID;
+
+        this.status = status;
+        this.nwkAddrOfInterest = nwkAddrOfInterest;
+        this.length = length;
+        this.simpleDescriptor = simpleDescriptor;
     }
 
     /**
@@ -68,7 +93,9 @@ public class SimpleDescriptorResponse extends ZdoResponse {
      * Sets NWK Addr Of Interest.
      *
      * @param nwkAddrOfInterest the NWK Addr Of Interest
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
         this.nwkAddrOfInterest = nwkAddrOfInterest;
     }
@@ -86,7 +113,9 @@ public class SimpleDescriptorResponse extends ZdoResponse {
      * Sets Length.
      *
      * @param length the Length
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setLength(final Integer length) {
         this.length = length;
     }
@@ -104,7 +133,9 @@ public class SimpleDescriptorResponse extends ZdoResponse {
      * Sets Simple Descriptor.
      *
      * @param simpleDescriptor the Simple Descriptor
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSimpleDescriptor(final SimpleDescriptor simpleDescriptor) {
         this.simpleDescriptor = simpleDescriptor;
     }

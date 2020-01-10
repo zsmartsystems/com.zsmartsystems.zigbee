@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class TakeSnapshotResponse extends ZclMeteringCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -55,12 +55,34 @@ public class TakeSnapshotResponse extends ZclMeteringCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public TakeSnapshotResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param snapshotId {@link Integer} Snapshot ID
+     * @param snapshotConfirmation {@link Integer} Snapshot Confirmation
+     */
+    public TakeSnapshotResponse(
+            Integer snapshotId,
+            Integer snapshotConfirmation) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.snapshotId = snapshotId;
+        this.snapshotConfirmation = snapshotConfirmation;
     }
 
     /**
@@ -82,7 +104,9 @@ public class TakeSnapshotResponse extends ZclMeteringCommand {
      * in this field indicates the TakeSnapshot command for which this response is generated.
      *
      * @param snapshotId the Snapshot ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSnapshotId(final Integer snapshotId) {
         this.snapshotId = snapshotId;
     }
@@ -106,7 +130,9 @@ public class TakeSnapshotResponse extends ZclMeteringCommand {
      * snapshot.
      *
      * @param snapshotConfirmation the Snapshot Confirmation
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSnapshotConfirmation(final Integer snapshotConfirmation) {
         this.snapshotConfirmation = snapshotConfirmation;
     }

@@ -65,7 +65,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
 public class ZclPrepaymentCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -9434,7 +9434,16 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param siteId {@link ByteArray} Site ID
      * @param meterSerialNumber {@link ByteArray} Meter Serial Number
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.selectAvailableEmergencyCredit(parameters ...)</code>
+     * with <code>cluster.sendCommand(new selectAvailableEmergencyCredit(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> selectAvailableEmergencyCredit(Calendar commandIssueDateTime, Integer originatingDevice, ByteArray siteId, ByteArray meterSerialNumber) {
         SelectAvailableEmergencyCredit command = new SelectAvailableEmergencyCredit();
 
@@ -9464,7 +9473,16 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param debtRecoveryAmount {@link Integer} Debt Recovery Amount
      * @param debtRecoveryBalancePercentage {@link Integer} Debt Recovery Balance Percentage
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.changeDebt(parameters ...)</code>
+     * with <code>cluster.sendCommand(new changeDebt(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> changeDebt(Integer issuerEventId, ByteArray debtLabel, Integer debtAmount, Integer debtRecoveryMethod, Integer debtAmountType, Calendar debtRecoveryStartTime, Integer debtRecoveryCollectionTime, Integer debtRecoveryFrequency, Integer debtRecoveryAmount, Integer debtRecoveryBalancePercentage) {
         ChangeDebt command = new ChangeDebt();
 
@@ -9493,7 +9511,16 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param emergencyCreditLimit {@link Integer} Emergency Credit Limit
      * @param emergencyCreditThreshold {@link Integer} Emergency Credit Threshold
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.emergencyCreditSetup(parameters ...)</code>
+     * with <code>cluster.sendCommand(new emergencyCreditSetup(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> emergencyCreditSetup(Integer issuerEventId, Calendar startTime, Integer emergencyCreditLimit, Integer emergencyCreditThreshold) {
         EmergencyCreditSetup command = new EmergencyCreditSetup();
 
@@ -9515,7 +9542,16 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param originatingDevice {@link Integer} Originating Device
      * @param topUpCode {@link ByteArray} Top Up Code
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.consumerTopUp(parameters ...)</code>
+     * with <code>cluster.sendCommand(new consumerTopUp(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> consumerTopUp(Integer originatingDevice, ByteArray topUpCode) {
         ConsumerTopUp command = new ConsumerTopUp();
 
@@ -9537,7 +9573,16 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param creditAdjustmentType {@link Integer} Credit Adjustment Type
      * @param creditAdjustmentValue {@link Integer} Credit Adjustment Value
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.creditAdjustment(parameters ...)</code>
+     * with <code>cluster.sendCommand(new creditAdjustment(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> creditAdjustment(Integer issuerEventId, Calendar startTime, Integer creditAdjustmentType, Integer creditAdjustmentValue) {
         CreditAdjustment command = new CreditAdjustment();
 
@@ -9562,7 +9607,16 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param proposedPaymentControlConfiguration {@link Integer} Proposed Payment Control Configuration
      * @param cutOffValue {@link Integer} Cut Off Value
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.changePaymentMode(parameters ...)</code>
+     * with <code>cluster.sendCommand(new changePaymentMode(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> changePaymentMode(Integer providerId, Integer issuerEventId, Calendar implementationDateTime, Integer proposedPaymentControlConfiguration, Integer cutOffValue) {
         ChangePaymentMode command = new ChangePaymentMode();
 
@@ -9586,7 +9640,16 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param snapshotOffset {@link Integer} Snapshot Offset
      * @param snapshotCause {@link Integer} Snapshot Cause
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getPrepaySnapshot(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getPrepaySnapshot(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getPrepaySnapshot(Calendar earliestStartTime, Calendar latestEndTime, Integer snapshotOffset, Integer snapshotCause) {
         GetPrepaySnapshot command = new GetPrepaySnapshot();
 
@@ -9608,7 +9671,16 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param latestEndTime {@link Calendar} Latest End Time
      * @param numberOfRecords {@link Integer} Number Of Records
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getTopUpLog(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getTopUpLog(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getTopUpLog(Calendar latestEndTime, Integer numberOfRecords) {
         GetTopUpLog command = new GetTopUpLog();
 
@@ -9627,7 +9699,16 @@ public class ZclPrepaymentCluster extends ZclCluster {
      *
      * @param lowCreditWarningLevel {@link Integer} Low Credit Warning Level
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.setLowCreditWarningLevel(parameters ...)</code>
+     * with <code>cluster.sendCommand(new setLowCreditWarningLevel(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> setLowCreditWarningLevel(Integer lowCreditWarningLevel) {
         SetLowCreditWarningLevel command = new SetLowCreditWarningLevel();
 
@@ -9646,7 +9727,16 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param numberOfDebts {@link Integer} Number Of Debts
      * @param debtType {@link Integer} Debt Type
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getDebtRepaymentLog(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getDebtRepaymentLog(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getDebtRepaymentLog(Calendar latestEndTime, Integer numberOfDebts, Integer debtType) {
         GetDebtRepaymentLog command = new GetDebtRepaymentLog();
 
@@ -9670,7 +9760,16 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param maximumCreditLevel {@link Integer} Maximum Credit Level
      * @param maximumCreditPerTopUp {@link Integer} Maximum Credit Per Top Up
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.setMaximumCreditLimit(parameters ...)</code>
+     * with <code>cluster.sendCommand(new setMaximumCreditLimit(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> setMaximumCreditLimit(Integer providerId, Integer issuerEventId, Calendar implementationDateTime, Integer maximumCreditLevel, Integer maximumCreditPerTopUp) {
         SetMaximumCreditLimit command = new SetMaximumCreditLimit();
 
@@ -9695,7 +9794,16 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param implementationDateTime {@link Calendar} Implementation Date Time
      * @param overallDebtCap {@link Integer} Overall Debt Cap
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.setOverallDebtCap(parameters ...)</code>
+     * with <code>cluster.sendCommand(new setOverallDebtCap(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> setOverallDebtCap(Integer providerId, Integer issuerEventId, Calendar implementationDateTime, Integer overallDebtCap) {
         SetOverallDebtCap command = new SetOverallDebtCap();
 
@@ -9723,7 +9831,16 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param snapshotPayloadType {@link Integer} Snapshot Payload Type
      * @param snapshotPayload {@link Integer} Snapshot Payload
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.publishPrepaySnapshot(parameters ...)</code>
+     * with <code>cluster.sendCommand(new publishPrepaySnapshot(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> publishPrepaySnapshot(Integer snapshotId, Calendar snapshotTime, Integer totalSnapshotsFound, Integer commandIndex, Integer totalNumberOfCommands, Integer snapshotCause, Integer snapshotPayloadType, Integer snapshotPayload) {
         PublishPrepaySnapshot command = new PublishPrepaySnapshot();
 
@@ -9750,7 +9867,16 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param emergencyCreditLimit {@link Integer} Emergency Credit Limit
      * @param emergencyCreditThreshold {@link Integer} Emergency Credit Threshold
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.changePaymentModeResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new changePaymentModeResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> changePaymentModeResponse(Integer friendlyCredit, Integer friendlyCreditCalendarId, Integer emergencyCreditLimit, Integer emergencyCreditThreshold) {
         ChangePaymentModeResponse command = new ChangePaymentModeResponse();
 
@@ -9773,7 +9899,16 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param sourceOfTopUp {@link Integer} Source Of Top Up
      * @param creditRemaining {@link Integer} Credit Remaining
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.consumerTopUpResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new consumerTopUpResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> consumerTopUpResponse(Integer resultType, Integer topUpValue, Integer sourceOfTopUp, Integer creditRemaining) {
         ConsumerTopUpResponse command = new ConsumerTopUpResponse();
 
@@ -9795,7 +9930,16 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param totalNumberOfCommands {@link Integer} Total Number Of Commands
      * @param topUpPayload {@link TopUpPayload} Top Up Payload
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.publishTopUpLog(parameters ...)</code>
+     * with <code>cluster.sendCommand(new publishTopUpLog(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> publishTopUpLog(Integer commandIndex, Integer totalNumberOfCommands, TopUpPayload topUpPayload) {
         PublishTopUpLog command = new PublishTopUpLog();
 
@@ -9816,7 +9960,16 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param totalNumberOfCommands {@link Integer} Total Number Of Commands
      * @param debtPayload {@link DebtPayload} Debt Payload
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.publishDebtLog(parameters ...)</code>
+     * with <code>cluster.sendCommand(new publishDebtLog(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> publishDebtLog(Integer commandIndex, Integer totalNumberOfCommands, DebtPayload debtPayload) {
         PublishDebtLog command = new PublishDebtLog();
 

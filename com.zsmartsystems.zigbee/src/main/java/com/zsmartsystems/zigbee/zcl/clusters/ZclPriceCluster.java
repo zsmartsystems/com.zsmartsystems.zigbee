@@ -72,7 +72,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
 public class ZclPriceCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -11426,7 +11426,16 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param commandOptions {@link Integer} Command Options
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getCurrentPriceCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getCurrentPriceCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getCurrentPriceCommand(Integer commandOptions) {
         GetCurrentPriceCommand command = new GetCurrentPriceCommand();
 
@@ -11447,7 +11456,16 @@ public class ZclPriceCluster extends ZclCluster {
      * @param startTime {@link Calendar} Start Time
      * @param numberOfEvents {@link Integer} Number Of Events
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getScheduledPricesCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getScheduledPricesCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getScheduledPricesCommand(Calendar startTime, Integer numberOfEvents) {
         GetScheduledPricesCommand command = new GetScheduledPricesCommand();
 
@@ -11470,7 +11488,16 @@ public class ZclPriceCluster extends ZclCluster {
      * @param priceAckTime {@link Calendar} Price Ack Time
      * @param control {@link Integer} Control
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.priceAcknowledgementCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new priceAcknowledgementCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> priceAcknowledgementCommand(Integer providerId, Integer issuerEventId, Calendar priceAckTime, Integer control) {
         PriceAcknowledgementCommand command = new PriceAcknowledgementCommand();
 
@@ -11495,7 +11522,16 @@ public class ZclPriceCluster extends ZclCluster {
      * @param numberOfEvents {@link Integer} Number Of Events
      * @param tariffType {@link Integer} Tariff Type
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getBlockPeriodCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getBlockPeriodCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getBlockPeriodCommand(Calendar startTime, Integer numberOfEvents, Integer tariffType) {
         GetBlockPeriodCommand command = new GetBlockPeriodCommand();
 
@@ -11520,7 +11556,16 @@ public class ZclPriceCluster extends ZclCluster {
      * @param minIssuerEventId {@link Integer} Min . Issuer Event ID
      * @param numberOfCommands {@link Integer} Number Of Commands
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getConversionFactorCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getConversionFactorCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getConversionFactorCommand(Calendar earliestStartTime, Integer minIssuerEventId, Integer numberOfCommands) {
         GetConversionFactorCommand command = new GetConversionFactorCommand();
 
@@ -11545,7 +11590,16 @@ public class ZclPriceCluster extends ZclCluster {
      * @param minIssuerEventId {@link Integer} Min . Issuer Event ID
      * @param numberOfCommands {@link Integer} Number Of Commands
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getCalorificValueCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getCalorificValueCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getCalorificValueCommand(Calendar earliestStartTime, Integer minIssuerEventId, Integer numberOfCommands) {
         GetCalorificValueCommand command = new GetCalorificValueCommand();
 
@@ -11573,7 +11627,16 @@ public class ZclPriceCluster extends ZclCluster {
      * @param numberOfCommands {@link Integer} Number Of Commands
      * @param tariffType {@link Integer} Tariff Type
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getTariffInformationCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getTariffInformationCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getTariffInformationCommand(Calendar earliestStartTime, Integer minIssuerEventId, Integer numberOfCommands, Integer tariffType) {
         GetTariffInformationCommand command = new GetTariffInformationCommand();
 
@@ -11596,7 +11659,16 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param issuerTariffId {@link Integer} Issuer Tariff ID
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getPriceMatrixCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getPriceMatrixCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getPriceMatrixCommand(Integer issuerTariffId) {
         GetPriceMatrixCommand command = new GetPriceMatrixCommand();
 
@@ -11616,7 +11688,16 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param issuerTariffId {@link Integer} Issuer Tariff ID
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getBlockThresholdsCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getBlockThresholdsCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getBlockThresholdsCommand(Integer issuerTariffId) {
         GetBlockThresholdsCommand command = new GetBlockThresholdsCommand();
 
@@ -11638,7 +11719,16 @@ public class ZclPriceCluster extends ZclCluster {
      * @param numberOfCommands {@link Integer} Number Of Commands
      * @param tariffType {@link Integer} Tariff Type
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getCo2ValueCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getCo2ValueCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getCo2ValueCommand(Calendar earliestStartTime, Integer minIssuerEventId, Integer numberOfCommands, Integer tariffType) {
         GetCo2ValueCommand command = new GetCo2ValueCommand();
 
@@ -11659,7 +11749,16 @@ public class ZclPriceCluster extends ZclCluster {
      *
      * @param issuerTariffId {@link Integer} Issuer Tariff ID
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getTierLabelsCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getTierLabelsCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getTierLabelsCommand(Integer issuerTariffId) {
         GetTierLabelsCommand command = new GetTierLabelsCommand();
 
@@ -11680,7 +11779,16 @@ public class ZclPriceCluster extends ZclCluster {
      * @param numberOfCommands {@link Integer} Number Of Commands
      * @param tariffType {@link Integer} Tariff Type
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getBillingPeriodCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getBillingPeriodCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getBillingPeriodCommand(Calendar earliestStartTime, Integer minIssuerEventId, Integer numberOfCommands, Integer tariffType) {
         GetBillingPeriodCommand command = new GetBillingPeriodCommand();
 
@@ -11704,7 +11812,16 @@ public class ZclPriceCluster extends ZclCluster {
      * @param numberOfCommands {@link Integer} Number Of Commands
      * @param tariffType {@link Integer} Tariff Type
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getConsolidatedBillCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getConsolidatedBillCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getConsolidatedBillCommand(Calendar earliestStartTime, Integer minIssuerEventId, Integer numberOfCommands, Integer tariffType) {
         GetConsolidatedBillCommand command = new GetConsolidatedBillCommand();
 
@@ -11726,7 +11843,16 @@ public class ZclPriceCluster extends ZclCluster {
      * @param issuerEventId {@link Integer} Issuer Event ID
      * @param cppAuth {@link Integer} Cpp Auth
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.cppEventResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new cppEventResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> cppEventResponse(Integer issuerEventId, Integer cppAuth) {
         CppEventResponse command = new CppEventResponse();
 
@@ -11746,7 +11872,16 @@ public class ZclPriceCluster extends ZclCluster {
      * @param latestEndTime {@link Calendar} Latest End Time
      * @param numberOfRecords {@link Integer} Number Of Records
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getCreditPaymentCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getCreditPaymentCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getCreditPaymentCommand(Calendar latestEndTime, Integer numberOfRecords) {
         GetCreditPaymentCommand command = new GetCreditPaymentCommand();
 
@@ -11766,7 +11901,16 @@ public class ZclPriceCluster extends ZclCluster {
      * there are no currency conversion factor updates available
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getCurrencyConversionCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getCurrencyConversionCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getCurrencyConversionCommand() {
         return sendCommand(new GetCurrencyConversionCommand());
     }
@@ -11779,7 +11923,16 @@ public class ZclPriceCluster extends ZclCluster {
      * if there is no CancelTariff command available.
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getTariffCancellationCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getTariffCancellationCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getTariffCancellationCommand() {
         return sendCommand(new GetTariffCancellationCommand());
     }
@@ -11835,7 +11988,16 @@ public class ZclPriceCluster extends ZclCluster {
      * @param extendedPriceTier {@link Integer} Extended Price Tier
      * @param extendedRegisterTier {@link Integer} Extended Register Tier
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.publishPriceCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new publishPriceCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> publishPriceCommand(Integer providerId, ByteArray rateLabel, Integer issuerEventId, Calendar currentTime, Integer unitOfMeasure, Integer currency, Integer priceTrailingDigitAndTier, Integer numberOfPriceTiers, Calendar startTime, Integer duration, Integer price, Integer priceRatio, Integer generationPrice, Integer generationPriceRatio, Integer alternateCostDelivered, Integer alternateCostUnit, Integer alternateCostTrailingDigit, Integer numberOfBlockThresholds, Integer priceControl, Integer numberOfGenerationTiers, Integer generationTier, Integer extendedNumberOfPriceTiers, Integer extendedPriceTier, Integer extendedRegisterTier) {
         PublishPriceCommand command = new PublishPriceCommand();
 
@@ -11893,7 +12055,16 @@ public class ZclPriceCluster extends ZclCluster {
      * @param tariffType {@link Integer} Tariff Type
      * @param tariffResolutionPeriod {@link Integer} Tariff Resolution Period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.publishBlockPeriodCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new publishBlockPeriodCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> publishBlockPeriodCommand(Integer providerId, Integer issuerEventId, Calendar blockPeriodStartTime, Integer blockPeriodDuration, Integer blockPeriodControl, Integer blockPeriodDurationType, Integer tariffType, Integer tariffResolutionPeriod) {
         PublishBlockPeriodCommand command = new PublishBlockPeriodCommand();
 
@@ -11923,7 +12094,16 @@ public class ZclPriceCluster extends ZclCluster {
      * @param conversionFactor {@link Integer} Conversion Factor
      * @param conversionFactorTrailingDigit {@link Integer} Conversion Factor Trailing Digit
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.publishConversionFactorCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new publishConversionFactorCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> publishConversionFactorCommand(Integer issuerEventId, Calendar startTime, Integer conversionFactor, Integer conversionFactorTrailingDigit) {
         PublishConversionFactorCommand command = new PublishConversionFactorCommand();
 
@@ -11949,7 +12129,16 @@ public class ZclPriceCluster extends ZclCluster {
      * @param calorificValueUnit {@link Integer} Calorific Value Unit
      * @param calorificValueTrailingDigit {@link Integer} Calorific Value Trailing Digit
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.publishCalorificValueCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new publishCalorificValueCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> publishCalorificValueCommand(Integer issuerEventId, Calendar startTime, Integer calorificValue, Integer calorificValueUnit, Integer calorificValueTrailingDigit) {
         PublishCalorificValueCommand command = new PublishCalorificValueCommand();
 
@@ -11992,7 +12181,16 @@ public class ZclPriceCluster extends ZclCluster {
      * @param blockThresholdMultiplier {@link Integer} Block Threshold Multiplier
      * @param blockThresholdDivisor {@link Integer} Block Threshold Divisor
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.publishTariffInformationCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new publishTariffInformationCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> publishTariffInformationCommand(Integer providerId, Integer issuerEventId, Integer issuerTariffId, Calendar startTime, Integer tariffType, ByteArray tariffLabel, Integer numberOfPriceTiers, Integer numberOfBlockThresholds, Integer unitOfMeasure, Integer currency, Integer priceTrailingDigit, Integer standingCharge, Integer tierBlockMode, Integer blockThresholdMultiplier, Integer blockThresholdDivisor) {
         PublishTariffInformationCommand command = new PublishTariffInformationCommand();
 
@@ -12044,7 +12242,16 @@ public class ZclPriceCluster extends ZclCluster {
      * @param subPayloadControl {@link Integer} Sub Payload Control
      * @param priceMatrixSubPayload {@link PriceMatrixSubPayload} Price Matrix Sub Payload
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.publishPriceMatrixCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new publishPriceMatrixCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> publishPriceMatrixCommand(Integer providerId, Integer issuerEventId, Calendar startTime, Integer issuerTariffId, Integer commandIndex, Integer totalNumberOfCommands, Integer subPayloadControl, PriceMatrixSubPayload priceMatrixSubPayload) {
         PublishPriceMatrixCommand command = new PublishPriceMatrixCommand();
 
@@ -12087,7 +12294,16 @@ public class ZclPriceCluster extends ZclCluster {
      * @param subPayloadControl {@link Integer} Sub Payload Control
      * @param blockThresholdSubPayload {@link BlockThresholdSubPayload} Block Threshold Sub Payload
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.publishBlockThresholdsCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new publishBlockThresholdsCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> publishBlockThresholdsCommand(Integer providerId, Integer issuerEventId, Calendar startTime, Integer issuerTariffId, Integer commandIndex, Integer totalNumberOfCommands, Integer subPayloadControl, BlockThresholdSubPayload blockThresholdSubPayload) {
         PublishBlockThresholdsCommand command = new PublishBlockThresholdsCommand();
 
@@ -12119,7 +12335,16 @@ public class ZclPriceCluster extends ZclCluster {
      * @param co2ValueUnit {@link Integer} CO2 Value Unit
      * @param co2ValueTrailingDigit {@link Integer} CO2 Value Trailing Digit
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.publishCo2ValueCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new publishCo2ValueCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> publishCo2ValueCommand(Integer providerId, Integer issuerEventId, Calendar startTime, Integer tariffType, Integer co2Value, Integer co2ValueUnit, Integer co2ValueTrailingDigit) {
         PublishCo2ValueCommand command = new PublishCo2ValueCommand();
 
@@ -12150,7 +12375,16 @@ public class ZclPriceCluster extends ZclCluster {
      * @param tierId {@link Integer} Tier ID
      * @param tierLabel {@link ByteArray} Tier Label
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.publishTierLabelsCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new publishTierLabelsCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> publishTierLabelsCommand(Integer providerId, Integer issuerEventId, Integer issuerTariffId, Integer commandIndex, Integer totalNumberOfCommands, Integer numberOfLabels, Integer tierId, ByteArray tierLabel) {
         PublishTierLabelsCommand command = new PublishTierLabelsCommand();
 
@@ -12185,7 +12419,16 @@ public class ZclPriceCluster extends ZclCluster {
      * @param billingPeriodDurationType {@link Integer} Billing Period Duration Type
      * @param tariffType {@link Integer} Tariff Type
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.publishBillingPeriodCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new publishBillingPeriodCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> publishBillingPeriodCommand(Integer providerId, Integer issuerEventId, Calendar billingPeriodStartTime, Integer billingPeriodDuration, Integer billingPeriodDurationType, Integer tariffType) {
         PublishBillingPeriodCommand command = new PublishBillingPeriodCommand();
 
@@ -12222,7 +12465,16 @@ public class ZclPriceCluster extends ZclCluster {
      * @param currency {@link Integer} Currency
      * @param billTrailingDigit {@link Integer} Bill Trailing Digit
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.publishConsolidatedBillCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new publishConsolidatedBillCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> publishConsolidatedBillCommand(Integer providerId, Integer issuerEventId, Calendar billingPeriodStartTime, Integer billingPeriodDuration, Integer billingPeriodDurationType, Integer tariffType, Integer consolidatedBill, Integer currency, Integer billTrailingDigit) {
         PublishConsolidatedBillCommand command = new PublishConsolidatedBillCommand();
 
@@ -12260,7 +12512,16 @@ public class ZclPriceCluster extends ZclCluster {
      * @param cppPriceTier {@link Integer} Cpp Price Tier
      * @param cppAuth {@link Integer} Cpp Auth
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.publishCppEventCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new publishCppEventCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> publishCppEventCommand(Integer providerId, Integer issuerEventId, Calendar startTime, Integer durationInMinutes, Integer tariffType, Integer cppPriceTier, Integer cppAuth) {
         PublishCppEventCommand command = new PublishCppEventCommand();
 
@@ -12294,7 +12555,16 @@ public class ZclPriceCluster extends ZclCluster {
      * @param creditPaymentDate {@link Calendar} Credit Payment Date
      * @param creditPaymentRef {@link ByteArray} Credit Payment Ref
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.publishCreditPaymentCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new publishCreditPaymentCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> publishCreditPaymentCommand(Integer providerId, Integer issuerEventId, Calendar creditPaymentDueDate, Integer creditPaymentOverdueAmount, Integer creditPaymentStatus, Integer creditPayment, Calendar creditPaymentDate, ByteArray creditPaymentRef) {
         PublishCreditPaymentCommand command = new PublishCreditPaymentCommand();
 
@@ -12326,7 +12596,16 @@ public class ZclPriceCluster extends ZclCluster {
      * @param conversionFactorTrailingDigit {@link Integer} Conversion Factor Trailing Digit
      * @param currencyChangeControlFlags {@link Integer} Currency Change Control Flags
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.publishCurrencyConversionCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new publishCurrencyConversionCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> publishCurrencyConversionCommand(Integer providerId, Integer issuerEventId, Calendar startTime, Integer oldCurrency, Integer newCurrency, Integer conversionFactor, Integer conversionFactorTrailingDigit, Integer currencyChangeControlFlags) {
         PublishCurrencyConversionCommand command = new PublishCurrencyConversionCommand();
 
@@ -12357,7 +12636,16 @@ public class ZclPriceCluster extends ZclCluster {
      * @param issuerTariffId {@link Integer} Issuer Tariff ID
      * @param tariffType {@link Integer} Tariff Type
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.cancelTariffCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new cancelTariffCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> cancelTariffCommand(Integer providerId, Integer issuerTariffId, Integer tariffType) {
         CancelTariffCommand command = new CancelTariffCommand();
 

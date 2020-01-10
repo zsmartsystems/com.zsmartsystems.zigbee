@@ -22,7 +22,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-13T19:23:13Z")
 public class RemoveBackupBindTableRequest extends ZdoRequest {
     /**
      * The ZDO cluster ID.
@@ -31,10 +31,13 @@ public class RemoveBackupBindTableRequest extends ZdoRequest {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
     public RemoveBackupBindTableRequest() {
         clusterId = CLUSTER_ID;
     }
+
 
     @Override
     public String toString() {

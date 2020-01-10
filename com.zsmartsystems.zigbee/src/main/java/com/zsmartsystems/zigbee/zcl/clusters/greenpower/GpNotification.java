@@ -31,7 +31,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class GpNotification extends ZclGreenPowerCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -90,12 +90,55 @@ public class GpNotification extends ZclGreenPowerCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public GpNotification() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param options {@link Integer} Options
+     * @param gpdSrcId {@link Integer} Gpd Src ID
+     * @param gpdIeee {@link IeeeAddress} Gpd IEEE
+     * @param gpdEndpoint {@link Integer} Gpd Endpoint
+     * @param gpdSecurityFrameCounter {@link Integer} Gpd Security Frame Counter
+     * @param gpdCommandId {@link Integer} Gpd Command ID
+     * @param gpdCommandPayload {@link ByteArray} Gpd Command Payload
+     * @param gppShortAddress {@link Integer} Gpp Short Address
+     * @param gppDistance {@link Integer} Gpp Distance
+     */
+    public GpNotification(
+            Integer options,
+            Integer gpdSrcId,
+            IeeeAddress gpdIeee,
+            Integer gpdEndpoint,
+            Integer gpdSecurityFrameCounter,
+            Integer gpdCommandId,
+            ByteArray gpdCommandPayload,
+            Integer gppShortAddress,
+            Integer gppDistance) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.options = options;
+        this.gpdSrcId = gpdSrcId;
+        this.gpdIeee = gpdIeee;
+        this.gpdEndpoint = gpdEndpoint;
+        this.gpdSecurityFrameCounter = gpdSecurityFrameCounter;
+        this.gpdCommandId = gpdCommandId;
+        this.gpdCommandPayload = gpdCommandPayload;
+        this.gppShortAddress = gppShortAddress;
+        this.gppDistance = gppDistance;
     }
 
     /**
@@ -111,7 +154,9 @@ public class GpNotification extends ZclGreenPowerCommand {
      * Sets Options.
      *
      * @param options the Options
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setOptions(final Integer options) {
         this.options = options;
     }
@@ -129,7 +174,9 @@ public class GpNotification extends ZclGreenPowerCommand {
      * Sets Gpd Src ID.
      *
      * @param gpdSrcId the Gpd Src ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setGpdSrcId(final Integer gpdSrcId) {
         this.gpdSrcId = gpdSrcId;
     }
@@ -147,7 +194,9 @@ public class GpNotification extends ZclGreenPowerCommand {
      * Sets Gpd IEEE.
      *
      * @param gpdIeee the Gpd IEEE
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setGpdIeee(final IeeeAddress gpdIeee) {
         this.gpdIeee = gpdIeee;
     }
@@ -165,7 +214,9 @@ public class GpNotification extends ZclGreenPowerCommand {
      * Sets Gpd Endpoint.
      *
      * @param gpdEndpoint the Gpd Endpoint
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setGpdEndpoint(final Integer gpdEndpoint) {
         this.gpdEndpoint = gpdEndpoint;
     }
@@ -183,7 +234,9 @@ public class GpNotification extends ZclGreenPowerCommand {
      * Sets Gpd Security Frame Counter.
      *
      * @param gpdSecurityFrameCounter the Gpd Security Frame Counter
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setGpdSecurityFrameCounter(final Integer gpdSecurityFrameCounter) {
         this.gpdSecurityFrameCounter = gpdSecurityFrameCounter;
     }
@@ -201,7 +254,9 @@ public class GpNotification extends ZclGreenPowerCommand {
      * Sets Gpd Command ID.
      *
      * @param gpdCommandId the Gpd Command ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setGpdCommandId(final Integer gpdCommandId) {
         this.gpdCommandId = gpdCommandId;
     }
@@ -219,7 +274,9 @@ public class GpNotification extends ZclGreenPowerCommand {
      * Sets Gpd Command Payload.
      *
      * @param gpdCommandPayload the Gpd Command Payload
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setGpdCommandPayload(final ByteArray gpdCommandPayload) {
         this.gpdCommandPayload = gpdCommandPayload;
     }
@@ -237,7 +294,9 @@ public class GpNotification extends ZclGreenPowerCommand {
      * Sets Gpp Short Address.
      *
      * @param gppShortAddress the Gpp Short Address
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setGppShortAddress(final Integer gppShortAddress) {
         this.gppShortAddress = gppShortAddress;
     }
@@ -255,7 +314,9 @@ public class GpNotification extends ZclGreenPowerCommand {
      * Sets Gpp Distance.
      *
      * @param gppDistance the Gpp Distance
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setGppDistance(final Integer gppDistance) {
         this.gppDistance = gppDistance;
     }

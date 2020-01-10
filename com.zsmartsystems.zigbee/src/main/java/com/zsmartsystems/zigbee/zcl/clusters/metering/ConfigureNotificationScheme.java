@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class ConfigureNotificationScheme extends ZclMeteringCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -68,12 +68,37 @@ public class ConfigureNotificationScheme extends ZclMeteringCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public ConfigureNotificationScheme() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param issuerEventId {@link Integer} Issuer Event ID
+     * @param notificationScheme {@link Integer} Notification Scheme
+     * @param notificationFlagOrder {@link Integer} Notification Flag Order
+     */
+    public ConfigureNotificationScheme(
+            Integer issuerEventId,
+            Integer notificationScheme,
+            Integer notificationFlagOrder) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.issuerEventId = issuerEventId;
+        this.notificationScheme = notificationScheme;
+        this.notificationFlagOrder = notificationFlagOrder;
     }
 
     /**
@@ -103,7 +128,9 @@ public class ConfigureNotificationScheme extends ZclMeteringCommand {
      * information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
     }
@@ -127,7 +154,9 @@ public class ConfigureNotificationScheme extends ZclMeteringCommand {
      * mapping to ZCL or Smart Energy Standard commands.
      *
      * @param notificationScheme the Notification Scheme
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNotificationScheme(final Integer notificationScheme) {
         this.notificationScheme = notificationScheme;
     }
@@ -151,7 +180,9 @@ public class ConfigureNotificationScheme extends ZclMeteringCommand {
      * (and order) to be returned in a MirrorReportAttributeResponse command.
      *
      * @param notificationFlagOrder the Notification Flag Order
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNotificationFlagOrder(final Integer notificationFlagOrder) {
         this.notificationFlagOrder = notificationFlagOrder;
     }

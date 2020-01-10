@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class ColorLoopSetCommand extends ZclColorControlCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -64,12 +64,43 @@ public class ColorLoopSetCommand extends ZclColorControlCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public ColorLoopSetCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param updateFlags {@link Integer} Update Flags
+     * @param action {@link Integer} Action
+     * @param direction {@link Integer} Direction
+     * @param transitionTime {@link Integer} Transition Time
+     * @param startHue {@link Integer} Start Hue
+     */
+    public ColorLoopSetCommand(
+            Integer updateFlags,
+            Integer action,
+            Integer direction,
+            Integer transitionTime,
+            Integer startHue) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.updateFlags = updateFlags;
+        this.action = action;
+        this.direction = direction;
+        this.transitionTime = transitionTime;
+        this.startHue = startHue;
     }
 
     /**
@@ -85,7 +116,9 @@ public class ColorLoopSetCommand extends ZclColorControlCommand {
      * Sets Update Flags.
      *
      * @param updateFlags the Update Flags
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setUpdateFlags(final Integer updateFlags) {
         this.updateFlags = updateFlags;
     }
@@ -103,7 +136,9 @@ public class ColorLoopSetCommand extends ZclColorControlCommand {
      * Sets Action.
      *
      * @param action the Action
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setAction(final Integer action) {
         this.action = action;
     }
@@ -121,7 +156,9 @@ public class ColorLoopSetCommand extends ZclColorControlCommand {
      * Sets Direction.
      *
      * @param direction the Direction
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDirection(final Integer direction) {
         this.direction = direction;
     }
@@ -139,7 +176,9 @@ public class ColorLoopSetCommand extends ZclColorControlCommand {
      * Sets Transition Time.
      *
      * @param transitionTime the Transition Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTransitionTime(final Integer transitionTime) {
         this.transitionTime = transitionTime;
     }
@@ -157,7 +196,9 @@ public class ColorLoopSetCommand extends ZclColorControlCommand {
      * Sets Start Hue.
      *
      * @param startHue the Start Hue
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStartHue(final Integer startHue) {
         this.startHue = startHue;
     }

@@ -22,7 +22,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class ResetStartupParametersCommand extends ZclCommissioningCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -46,12 +46,34 @@ public class ResetStartupParametersCommand extends ZclCommissioningCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public ResetStartupParametersCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param option {@link Integer} Option
+     * @param index {@link Integer} Index
+     */
+    public ResetStartupParametersCommand(
+            Integer option,
+            Integer index) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.option = option;
+        this.index = index;
     }
 
     /**
@@ -67,7 +89,9 @@ public class ResetStartupParametersCommand extends ZclCommissioningCommand {
      * Sets Option.
      *
      * @param option the Option
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setOption(final Integer option) {
         this.option = option;
     }
@@ -85,7 +109,9 @@ public class ResetStartupParametersCommand extends ZclCommissioningCommand {
      * Sets Index.
      *
      * @param index the Index
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIndex(final Integer index) {
         this.index = index;
     }

@@ -30,7 +30,7 @@ import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class ManagementRoutingResponse extends ZdoResponse {
     /**
      * The ZDO cluster ID.
@@ -54,9 +54,34 @@ public class ManagementRoutingResponse extends ZdoResponse {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public ManagementRoutingResponse() {
         clusterId = CLUSTER_ID;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param status {@link ZdoStatus} Status
+     * @param routingTableEntries {@link Integer} Routing Table Entries
+     * @param startIndex {@link Integer} Start Index
+     * @param routingTableList {@link List<RoutingTable>} Routing Table List
+     */
+    public ManagementRoutingResponse(
+            ZdoStatus status,
+            Integer routingTableEntries,
+            Integer startIndex,
+            List<RoutingTable> routingTableList) {
+
+        clusterId = CLUSTER_ID;
+
+        this.status = status;
+        this.routingTableEntries = routingTableEntries;
+        this.startIndex = startIndex;
+        this.routingTableList = routingTableList;
     }
 
     /**
@@ -72,7 +97,9 @@ public class ManagementRoutingResponse extends ZdoResponse {
      * Sets Routing Table Entries.
      *
      * @param routingTableEntries the Routing Table Entries
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setRoutingTableEntries(final Integer routingTableEntries) {
         this.routingTableEntries = routingTableEntries;
     }
@@ -90,7 +117,9 @@ public class ManagementRoutingResponse extends ZdoResponse {
      * Sets Start Index.
      *
      * @param startIndex the Start Index
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;
     }
@@ -108,7 +137,9 @@ public class ManagementRoutingResponse extends ZdoResponse {
      * Sets Routing Table List.
      *
      * @param routingTableList the Routing Table List
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setRoutingTableList(final List<RoutingTable> routingTableList) {
         this.routingTableList = routingTableList;
     }

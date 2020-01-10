@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class StepColorTemperatureCommand extends ZclColorControlCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -64,12 +64,43 @@ public class StepColorTemperatureCommand extends ZclColorControlCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public StepColorTemperatureCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param stepMode {@link Integer} Step Mode
+     * @param stepSize {@link Integer} Step Size
+     * @param transitionTime {@link Integer} Transition Time
+     * @param colorTemperatureMinimum {@link Integer} Color Temperature Minimum
+     * @param colorTemperatureMaximum {@link Integer} Color Temperature Maximum
+     */
+    public StepColorTemperatureCommand(
+            Integer stepMode,
+            Integer stepSize,
+            Integer transitionTime,
+            Integer colorTemperatureMinimum,
+            Integer colorTemperatureMaximum) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.stepMode = stepMode;
+        this.stepSize = stepSize;
+        this.transitionTime = transitionTime;
+        this.colorTemperatureMinimum = colorTemperatureMinimum;
+        this.colorTemperatureMaximum = colorTemperatureMaximum;
     }
 
     /**
@@ -85,7 +116,9 @@ public class StepColorTemperatureCommand extends ZclColorControlCommand {
      * Sets Step Mode.
      *
      * @param stepMode the Step Mode
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStepMode(final Integer stepMode) {
         this.stepMode = stepMode;
     }
@@ -103,7 +136,9 @@ public class StepColorTemperatureCommand extends ZclColorControlCommand {
      * Sets Step Size.
      *
      * @param stepSize the Step Size
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStepSize(final Integer stepSize) {
         this.stepSize = stepSize;
     }
@@ -121,7 +156,9 @@ public class StepColorTemperatureCommand extends ZclColorControlCommand {
      * Sets Transition Time.
      *
      * @param transitionTime the Transition Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTransitionTime(final Integer transitionTime) {
         this.transitionTime = transitionTime;
     }
@@ -139,7 +176,9 @@ public class StepColorTemperatureCommand extends ZclColorControlCommand {
      * Sets Color Temperature Minimum.
      *
      * @param colorTemperatureMinimum the Color Temperature Minimum
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setColorTemperatureMinimum(final Integer colorTemperatureMinimum) {
         this.colorTemperatureMinimum = colorTemperatureMinimum;
     }
@@ -157,7 +196,9 @@ public class StepColorTemperatureCommand extends ZclColorControlCommand {
      * Sets Color Temperature Maximum.
      *
      * @param colorTemperatureMaximum the Color Temperature Maximum
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setColorTemperatureMaximum(final Integer colorTemperatureMaximum) {
         this.colorTemperatureMaximum = colorTemperatureMaximum;
     }

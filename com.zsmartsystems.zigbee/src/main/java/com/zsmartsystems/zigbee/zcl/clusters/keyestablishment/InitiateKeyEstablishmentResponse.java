@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class InitiateKeyEstablishmentResponse extends ZclKeyEstablishmentCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -74,12 +74,40 @@ public class InitiateKeyEstablishmentResponse extends ZclKeyEstablishmentCommand
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public InitiateKeyEstablishmentResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param requestedKeyEstablishmentSuite {@link Integer} Requested Key Establishment Suite
+     * @param ephemeralDataGenerateTime {@link Integer} Ephemeral Data Generate Time
+     * @param confirmKeyGenerateTime {@link Integer} Confirm Key Generate Time
+     * @param identity {@link ByteArray} Identity
+     */
+    public InitiateKeyEstablishmentResponse(
+            Integer requestedKeyEstablishmentSuite,
+            Integer ephemeralDataGenerateTime,
+            Integer confirmKeyGenerateTime,
+            ByteArray identity) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.requestedKeyEstablishmentSuite = requestedKeyEstablishmentSuite;
+        this.ephemeralDataGenerateTime = ephemeralDataGenerateTime;
+        this.confirmKeyGenerateTime = confirmKeyGenerateTime;
+        this.identity = identity;
     }
 
     /**
@@ -103,7 +131,9 @@ public class InitiateKeyEstablishmentResponse extends ZclKeyEstablishmentCommand
      * indicating the requested suite, all other bits shall be set to zero.
      *
      * @param requestedKeyEstablishmentSuite the Requested Key Establishment Suite
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setRequestedKeyEstablishmentSuite(final Integer requestedKeyEstablishmentSuite) {
         this.requestedKeyEstablishmentSuite = requestedKeyEstablishmentSuite;
     }
@@ -127,7 +157,9 @@ public class InitiateKeyEstablishmentResponse extends ZclKeyEstablishmentCommand
      * generate the Ephemeral Data Response message. The valid range is 0x00 to 0xFE.
      *
      * @param ephemeralDataGenerateTime the Ephemeral Data Generate Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setEphemeralDataGenerateTime(final Integer ephemeralDataGenerateTime) {
         this.ephemeralDataGenerateTime = ephemeralDataGenerateTime;
     }
@@ -151,7 +183,9 @@ public class InitiateKeyEstablishmentResponse extends ZclKeyEstablishmentCommand
      * to generate the Confirm Key Response message. The valid range is 0x00 to 0xFE.
      *
      * @param confirmKeyGenerateTime the Confirm Key Generate Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setConfirmKeyGenerateTime(final Integer confirmKeyGenerateTime) {
         this.confirmKeyGenerateTime = confirmKeyGenerateTime;
     }
@@ -175,7 +209,9 @@ public class InitiateKeyEstablishmentResponse extends ZclKeyEstablishmentCommand
      * Octets containing the implicit certificate CERTU .
      *
      * @param identity the Identity
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIdentity(final ByteArray identity) {
         this.identity = identity;
     }

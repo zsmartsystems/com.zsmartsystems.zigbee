@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class MirrorRemoved extends ZclMeteringCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -47,12 +47,31 @@ public class MirrorRemoved extends ZclMeteringCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public MirrorRemoved() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param removedEndpointId {@link Integer} Removed Endpoint ID
+     */
+    public MirrorRemoved(
+            Integer removedEndpointId) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.removedEndpointId = removedEndpointId;
     }
 
     /**
@@ -74,7 +93,9 @@ public class MirrorRemoved extends ZclMeteringCommand {
      * Devices meter data.
      *
      * @param removedEndpointId the Removed Endpoint ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setRemovedEndpointId(final Integer removedEndpointId) {
         this.removedEndpointId = removedEndpointId;
     }

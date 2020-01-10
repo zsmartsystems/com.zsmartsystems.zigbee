@@ -32,7 +32,7 @@ import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class ManagementPermitJoiningRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * The ZDO cluster ID.
@@ -51,9 +51,28 @@ public class ManagementPermitJoiningRequest extends ZdoRequest implements ZigBee
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public ManagementPermitJoiningRequest() {
         clusterId = CLUSTER_ID;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param permitDuration {@link Integer} Permit Duration
+     * @param tcSignificance {@link Boolean} Tc_Significance
+     */
+    public ManagementPermitJoiningRequest(
+            Integer permitDuration,
+            Boolean tcSignificance) {
+
+        clusterId = CLUSTER_ID;
+
+        this.permitDuration = permitDuration;
+        this.tcSignificance = tcSignificance;
     }
 
     /**
@@ -69,7 +88,9 @@ public class ManagementPermitJoiningRequest extends ZdoRequest implements ZigBee
      * Sets Permit Duration.
      *
      * @param permitDuration the Permit Duration
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setPermitDuration(final Integer permitDuration) {
         this.permitDuration = permitDuration;
     }
@@ -87,7 +108,9 @@ public class ManagementPermitJoiningRequest extends ZdoRequest implements ZigBee
      * Sets Tc_Significance.
      *
      * @param tcSignificance the Tc_Significance
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTcSignificance(final Boolean tcSignificance) {
         this.tcSignificance = tcSignificance;
     }

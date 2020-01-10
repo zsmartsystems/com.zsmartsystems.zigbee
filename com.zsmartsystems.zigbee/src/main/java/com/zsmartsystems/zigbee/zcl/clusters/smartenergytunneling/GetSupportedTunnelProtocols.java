@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class GetSupportedTunnelProtocols extends ZclSmartEnergyTunnelingCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -53,12 +53,31 @@ public class GetSupportedTunnelProtocols extends ZclSmartEnergyTunnelingCommand 
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public GetSupportedTunnelProtocols() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param protocolOffset {@link Integer} Protocol Offset
+     */
+    public GetSupportedTunnelProtocols(
+            Integer protocolOffset) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.protocolOffset = protocolOffset;
     }
 
     /**
@@ -92,7 +111,9 @@ public class GetSupportedTunnelProtocols extends ZclSmartEnergyTunnelingCommand 
      * available protocol should be the first returned in the next response.
      *
      * @param protocolOffset the Protocol Offset
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProtocolOffset(final Integer protocolOffset) {
         this.protocolOffset = protocolOffset;
     }

@@ -18,7 +18,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T21:54:11Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:02:05Z")
 public class GpPairingConfigurationGroupList implements ZigBeeSerializable {
     /**
      * Sink Group structure field.
@@ -31,6 +31,28 @@ public class GpPairingConfigurationGroupList implements ZigBeeSerializable {
     private Integer alias;
 
 
+    /**
+     * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
+     */
+    @Deprecated
+    public GpPairingConfigurationGroupList() {
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param sinkGroup {@link Integer} Sink Group
+     * @param alias {@link Integer} Alias
+     */
+    public GpPairingConfigurationGroupList(
+            Integer sinkGroup,
+            Integer alias) {
+
+        this.sinkGroup = sinkGroup;
+        this.alias = alias;
+    }
 
     /**
      * Gets Sink Group.
@@ -45,7 +67,9 @@ public class GpPairingConfigurationGroupList implements ZigBeeSerializable {
      * Sets Sink Group.
      *
      * @param sinkGroup the Sink Group
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSinkGroup(final Integer sinkGroup) {
         this.sinkGroup = sinkGroup;
     }
@@ -63,7 +87,9 @@ public class GpPairingConfigurationGroupList implements ZigBeeSerializable {
      * Sets Alias.
      *
      * @param alias the Alias
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setAlias(final Integer alias) {
         this.alias = alias;
     }

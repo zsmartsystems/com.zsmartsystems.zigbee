@@ -32,7 +32,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class SetWeeklySchedule extends ZclThermostatCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -76,12 +76,46 @@ public class SetWeeklySchedule extends ZclThermostatCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public SetWeeklySchedule() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param numberOfTransitions {@link Integer} Number Of Transitions
+     * @param dayOfWeek {@link Integer} Day Of Week
+     * @param mode {@link Integer} Mode
+     * @param transition {@link Integer} Transition
+     * @param heatSet {@link Integer} Heat Set
+     * @param coolSet {@link Integer} Cool Set
+     */
+    public SetWeeklySchedule(
+            Integer numberOfTransitions,
+            Integer dayOfWeek,
+            Integer mode,
+            Integer transition,
+            Integer heatSet,
+            Integer coolSet) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.numberOfTransitions = numberOfTransitions;
+        this.dayOfWeek = dayOfWeek;
+        this.mode = mode;
+        this.transition = transition;
+        this.heatSet = heatSet;
+        this.coolSet = coolSet;
     }
 
     /**
@@ -97,7 +131,9 @@ public class SetWeeklySchedule extends ZclThermostatCommand {
      * Sets Number Of Transitions.
      *
      * @param numberOfTransitions the Number Of Transitions
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNumberOfTransitions(final Integer numberOfTransitions) {
         this.numberOfTransitions = numberOfTransitions;
     }
@@ -115,7 +151,9 @@ public class SetWeeklySchedule extends ZclThermostatCommand {
      * Sets Day Of Week.
      *
      * @param dayOfWeek the Day Of Week
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDayOfWeek(final Integer dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
     }
@@ -133,7 +171,9 @@ public class SetWeeklySchedule extends ZclThermostatCommand {
      * Sets Mode.
      *
      * @param mode the Mode
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setMode(final Integer mode) {
         this.mode = mode;
     }
@@ -151,7 +191,9 @@ public class SetWeeklySchedule extends ZclThermostatCommand {
      * Sets Transition.
      *
      * @param transition the Transition
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTransition(final Integer transition) {
         this.transition = transition;
     }
@@ -169,7 +211,9 @@ public class SetWeeklySchedule extends ZclThermostatCommand {
      * Sets Heat Set.
      *
      * @param heatSet the Heat Set
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setHeatSet(final Integer heatSet) {
         this.heatSet = heatSet;
     }
@@ -187,7 +231,9 @@ public class SetWeeklySchedule extends ZclThermostatCommand {
      * Sets Cool Set.
      *
      * @param coolSet the Cool Set
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCoolSet(final Integer coolSet) {
         this.coolSet = coolSet;
     }

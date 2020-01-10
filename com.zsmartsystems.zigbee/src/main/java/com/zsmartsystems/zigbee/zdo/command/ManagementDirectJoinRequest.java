@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-15T09:28:31Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class ManagementDirectJoinRequest extends ZdoRequest {
     /**
      * The ZDO cluster ID.
@@ -46,9 +46,28 @@ public class ManagementDirectJoinRequest extends ZdoRequest {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public ManagementDirectJoinRequest() {
         clusterId = CLUSTER_ID;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param deviceAddress {@link IeeeAddress} Device Address
+     * @param capabilityInformation {@link Integer} Capability Information
+     */
+    public ManagementDirectJoinRequest(
+            IeeeAddress deviceAddress,
+            Integer capabilityInformation) {
+
+        clusterId = CLUSTER_ID;
+
+        this.deviceAddress = deviceAddress;
+        this.capabilityInformation = capabilityInformation;
     }
 
     /**
@@ -64,7 +83,9 @@ public class ManagementDirectJoinRequest extends ZdoRequest {
      * Sets Device Address.
      *
      * @param deviceAddress the Device Address
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDeviceAddress(final IeeeAddress deviceAddress) {
         this.deviceAddress = deviceAddress;
     }
@@ -82,7 +103,9 @@ public class ManagementDirectJoinRequest extends ZdoRequest {
      * Sets Capability Information.
      *
      * @param capabilityInformation the Capability Information
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCapabilityInformation(final Integer capabilityInformation) {
         this.capabilityInformation = capabilityInformation;
     }

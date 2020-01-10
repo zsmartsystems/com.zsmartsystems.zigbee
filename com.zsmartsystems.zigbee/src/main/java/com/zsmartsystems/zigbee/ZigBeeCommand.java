@@ -27,7 +27,7 @@ public class ZigBeeCommand {
     /**
      * The destination address.
      */
-    private ZigBeeAddress destinationAddress;
+    protected ZigBeeAddress destinationAddress;
 
     /**
      * The cluster ID

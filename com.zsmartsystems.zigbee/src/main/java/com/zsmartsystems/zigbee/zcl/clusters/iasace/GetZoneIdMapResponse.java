@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class GetZoneIdMapResponse extends ZclIasAceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -120,12 +120,76 @@ public class GetZoneIdMapResponse extends ZclIasAceCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public GetZoneIdMapResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param zoneIdMapSection0 {@link Integer} Zone ID Map Section 0
+     * @param zoneIdMapSection1 {@link Integer} Zone ID Map Section 1
+     * @param zoneIdMapSection2 {@link Integer} Zone ID Map Section 2
+     * @param zoneIdMapSection3 {@link Integer} Zone ID Map Section 3
+     * @param zoneIdMapSection4 {@link Integer} Zone ID Map Section 4
+     * @param zoneIdMapSection5 {@link Integer} Zone ID Map Section 5
+     * @param zoneIdMapSection6 {@link Integer} Zone ID Map Section 6
+     * @param zoneIdMapSection7 {@link Integer} Zone ID Map Section 7
+     * @param zoneIdMapSection8 {@link Integer} Zone ID Map Section 8
+     * @param zoneIdMapSection9 {@link Integer} Zone ID Map Section 9
+     * @param zoneIdMapSection10 {@link Integer} Zone ID Map Section 10
+     * @param zoneIdMapSection11 {@link Integer} Zone ID Map Section 11
+     * @param zoneIdMapSection12 {@link Integer} Zone ID Map Section 12
+     * @param zoneIdMapSection13 {@link Integer} Zone ID Map Section 13
+     * @param zoneIdMapSection14 {@link Integer} Zone ID Map Section 14
+     * @param zoneIdMapSection15 {@link Integer} Zone ID Map Section 15
+     */
+    public GetZoneIdMapResponse(
+            Integer zoneIdMapSection0,
+            Integer zoneIdMapSection1,
+            Integer zoneIdMapSection2,
+            Integer zoneIdMapSection3,
+            Integer zoneIdMapSection4,
+            Integer zoneIdMapSection5,
+            Integer zoneIdMapSection6,
+            Integer zoneIdMapSection7,
+            Integer zoneIdMapSection8,
+            Integer zoneIdMapSection9,
+            Integer zoneIdMapSection10,
+            Integer zoneIdMapSection11,
+            Integer zoneIdMapSection12,
+            Integer zoneIdMapSection13,
+            Integer zoneIdMapSection14,
+            Integer zoneIdMapSection15) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.zoneIdMapSection0 = zoneIdMapSection0;
+        this.zoneIdMapSection1 = zoneIdMapSection1;
+        this.zoneIdMapSection2 = zoneIdMapSection2;
+        this.zoneIdMapSection3 = zoneIdMapSection3;
+        this.zoneIdMapSection4 = zoneIdMapSection4;
+        this.zoneIdMapSection5 = zoneIdMapSection5;
+        this.zoneIdMapSection6 = zoneIdMapSection6;
+        this.zoneIdMapSection7 = zoneIdMapSection7;
+        this.zoneIdMapSection8 = zoneIdMapSection8;
+        this.zoneIdMapSection9 = zoneIdMapSection9;
+        this.zoneIdMapSection10 = zoneIdMapSection10;
+        this.zoneIdMapSection11 = zoneIdMapSection11;
+        this.zoneIdMapSection12 = zoneIdMapSection12;
+        this.zoneIdMapSection13 = zoneIdMapSection13;
+        this.zoneIdMapSection14 = zoneIdMapSection14;
+        this.zoneIdMapSection15 = zoneIdMapSection15;
     }
 
     /**
@@ -141,7 +205,9 @@ public class GetZoneIdMapResponse extends ZclIasAceCommand {
      * Sets Zone ID Map Section 0.
      *
      * @param zoneIdMapSection0 the Zone ID Map Section 0
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneIdMapSection0(final Integer zoneIdMapSection0) {
         this.zoneIdMapSection0 = zoneIdMapSection0;
     }
@@ -159,7 +225,9 @@ public class GetZoneIdMapResponse extends ZclIasAceCommand {
      * Sets Zone ID Map Section 1.
      *
      * @param zoneIdMapSection1 the Zone ID Map Section 1
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneIdMapSection1(final Integer zoneIdMapSection1) {
         this.zoneIdMapSection1 = zoneIdMapSection1;
     }
@@ -177,7 +245,9 @@ public class GetZoneIdMapResponse extends ZclIasAceCommand {
      * Sets Zone ID Map Section 2.
      *
      * @param zoneIdMapSection2 the Zone ID Map Section 2
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneIdMapSection2(final Integer zoneIdMapSection2) {
         this.zoneIdMapSection2 = zoneIdMapSection2;
     }
@@ -195,7 +265,9 @@ public class GetZoneIdMapResponse extends ZclIasAceCommand {
      * Sets Zone ID Map Section 3.
      *
      * @param zoneIdMapSection3 the Zone ID Map Section 3
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneIdMapSection3(final Integer zoneIdMapSection3) {
         this.zoneIdMapSection3 = zoneIdMapSection3;
     }
@@ -213,7 +285,9 @@ public class GetZoneIdMapResponse extends ZclIasAceCommand {
      * Sets Zone ID Map Section 4.
      *
      * @param zoneIdMapSection4 the Zone ID Map Section 4
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneIdMapSection4(final Integer zoneIdMapSection4) {
         this.zoneIdMapSection4 = zoneIdMapSection4;
     }
@@ -231,7 +305,9 @@ public class GetZoneIdMapResponse extends ZclIasAceCommand {
      * Sets Zone ID Map Section 5.
      *
      * @param zoneIdMapSection5 the Zone ID Map Section 5
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneIdMapSection5(final Integer zoneIdMapSection5) {
         this.zoneIdMapSection5 = zoneIdMapSection5;
     }
@@ -249,7 +325,9 @@ public class GetZoneIdMapResponse extends ZclIasAceCommand {
      * Sets Zone ID Map Section 6.
      *
      * @param zoneIdMapSection6 the Zone ID Map Section 6
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneIdMapSection6(final Integer zoneIdMapSection6) {
         this.zoneIdMapSection6 = zoneIdMapSection6;
     }
@@ -267,7 +345,9 @@ public class GetZoneIdMapResponse extends ZclIasAceCommand {
      * Sets Zone ID Map Section 7.
      *
      * @param zoneIdMapSection7 the Zone ID Map Section 7
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneIdMapSection7(final Integer zoneIdMapSection7) {
         this.zoneIdMapSection7 = zoneIdMapSection7;
     }
@@ -285,7 +365,9 @@ public class GetZoneIdMapResponse extends ZclIasAceCommand {
      * Sets Zone ID Map Section 8.
      *
      * @param zoneIdMapSection8 the Zone ID Map Section 8
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneIdMapSection8(final Integer zoneIdMapSection8) {
         this.zoneIdMapSection8 = zoneIdMapSection8;
     }
@@ -303,7 +385,9 @@ public class GetZoneIdMapResponse extends ZclIasAceCommand {
      * Sets Zone ID Map Section 9.
      *
      * @param zoneIdMapSection9 the Zone ID Map Section 9
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneIdMapSection9(final Integer zoneIdMapSection9) {
         this.zoneIdMapSection9 = zoneIdMapSection9;
     }
@@ -321,7 +405,9 @@ public class GetZoneIdMapResponse extends ZclIasAceCommand {
      * Sets Zone ID Map Section 10.
      *
      * @param zoneIdMapSection10 the Zone ID Map Section 10
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneIdMapSection10(final Integer zoneIdMapSection10) {
         this.zoneIdMapSection10 = zoneIdMapSection10;
     }
@@ -339,7 +425,9 @@ public class GetZoneIdMapResponse extends ZclIasAceCommand {
      * Sets Zone ID Map Section 11.
      *
      * @param zoneIdMapSection11 the Zone ID Map Section 11
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneIdMapSection11(final Integer zoneIdMapSection11) {
         this.zoneIdMapSection11 = zoneIdMapSection11;
     }
@@ -357,7 +445,9 @@ public class GetZoneIdMapResponse extends ZclIasAceCommand {
      * Sets Zone ID Map Section 12.
      *
      * @param zoneIdMapSection12 the Zone ID Map Section 12
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneIdMapSection12(final Integer zoneIdMapSection12) {
         this.zoneIdMapSection12 = zoneIdMapSection12;
     }
@@ -375,7 +465,9 @@ public class GetZoneIdMapResponse extends ZclIasAceCommand {
      * Sets Zone ID Map Section 13.
      *
      * @param zoneIdMapSection13 the Zone ID Map Section 13
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneIdMapSection13(final Integer zoneIdMapSection13) {
         this.zoneIdMapSection13 = zoneIdMapSection13;
     }
@@ -393,7 +485,9 @@ public class GetZoneIdMapResponse extends ZclIasAceCommand {
      * Sets Zone ID Map Section 14.
      *
      * @param zoneIdMapSection14 the Zone ID Map Section 14
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneIdMapSection14(final Integer zoneIdMapSection14) {
         this.zoneIdMapSection14 = zoneIdMapSection14;
     }
@@ -411,7 +505,9 @@ public class GetZoneIdMapResponse extends ZclIasAceCommand {
      * Sets Zone ID Map Section 15.
      *
      * @param zoneIdMapSection15 the Zone ID Map Section 15
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneIdMapSection15(final Integer zoneIdMapSection15) {
         this.zoneIdMapSection15 = zoneIdMapSection15;
     }

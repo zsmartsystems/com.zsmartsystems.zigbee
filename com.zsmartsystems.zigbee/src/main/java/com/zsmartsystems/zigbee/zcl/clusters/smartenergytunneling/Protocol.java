@@ -18,7 +18,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:02:05Z")
 public class Protocol implements ZigBeeSerializable {
     /**
      * Manufacturer Code structure field.
@@ -31,6 +31,28 @@ public class Protocol implements ZigBeeSerializable {
     private Integer protocolId;
 
 
+    /**
+     * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
+     */
+    @Deprecated
+    public Protocol() {
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param manufacturerCode {@link Integer} Manufacturer Code
+     * @param protocolId {@link Integer} Protocol ID
+     */
+    public Protocol(
+            Integer manufacturerCode,
+            Integer protocolId) {
+
+        this.manufacturerCode = manufacturerCode;
+        this.protocolId = protocolId;
+    }
 
     /**
      * Gets Manufacturer Code.
@@ -45,7 +67,9 @@ public class Protocol implements ZigBeeSerializable {
      * Sets Manufacturer Code.
      *
      * @param manufacturerCode the Manufacturer Code
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
     }
@@ -63,7 +87,9 @@ public class Protocol implements ZigBeeSerializable {
      * Sets Protocol ID.
      *
      * @param protocolId the Protocol ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProtocolId(final Integer protocolId) {
         this.protocolId = protocolId;
     }

@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class GpProxyCommissioningMode extends ZclGreenPowerCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -55,12 +55,37 @@ public class GpProxyCommissioningMode extends ZclGreenPowerCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public GpProxyCommissioningMode() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param options {@link Integer} Options
+     * @param commissioningWindow {@link Integer} Commissioning Window
+     * @param channel {@link Integer} Channel
+     */
+    public GpProxyCommissioningMode(
+            Integer options,
+            Integer commissioningWindow,
+            Integer channel) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.options = options;
+        this.commissioningWindow = commissioningWindow;
+        this.channel = channel;
     }
 
     /**
@@ -76,7 +101,9 @@ public class GpProxyCommissioningMode extends ZclGreenPowerCommand {
      * Sets Options.
      *
      * @param options the Options
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setOptions(final Integer options) {
         this.options = options;
     }
@@ -94,7 +121,9 @@ public class GpProxyCommissioningMode extends ZclGreenPowerCommand {
      * Sets Commissioning Window.
      *
      * @param commissioningWindow the Commissioning Window
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCommissioningWindow(final Integer commissioningWindow) {
         this.commissioningWindow = commissioningWindow;
     }
@@ -112,7 +141,9 @@ public class GpProxyCommissioningMode extends ZclGreenPowerCommand {
      * Sets Channel.
      *
      * @param channel the Channel
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setChannel(final Integer channel) {
         this.channel = channel;
     }

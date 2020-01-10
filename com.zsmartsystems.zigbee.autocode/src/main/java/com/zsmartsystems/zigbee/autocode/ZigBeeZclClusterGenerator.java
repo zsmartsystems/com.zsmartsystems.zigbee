@@ -41,7 +41,6 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
             try {
                 generateZclClusterClasses(cluster, packageRoot, new File(sourceRootPath));
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -423,7 +422,18 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
             }
 
             out.println("     * @return the {@link Future<CommandResult>} command result future");
+            out.println("     * @deprecated As of release 1.3.0.");
+            out.println("     * Use extended ZclCommand class constructors to instantiate the command");
+            out.println("     * and {@link #sendCommand} or {@link #sendResponse} to send the command.");
+            out.println("     * This provides further control when sending the command by allowing customisation");
+            out.println("     * of the command (for example by disabling the <i>DefaultResponse</i>.");
+            out.println("     * <p>");
+            out.println("     * e.g. replace <code>cluster." + stringToLowerCamelCase(command.name)
+                    + "(parameters ...)</code>");
+            out.println("     * with <code>cluster.sendCommand(new " + stringToLowerCamelCase(command.name)
+                    + "(parameters ...))</code>");
             out.println("     */");
+            out.println("    @Deprecated");
             out.print("    public Future<CommandResult> " + stringToLowerCamelCase(command.name) + "(");
 
             boolean first = true;
@@ -458,6 +468,7 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
 
         out.flush();
         out.close();
+
     }
 
     private void createInitializeAttributes(PrintWriter out, String clusterName, List<ZigBeeXmlAttribute> attributes) {

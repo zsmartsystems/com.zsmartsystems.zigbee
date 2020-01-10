@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class GpSinkCommissioningMode extends ZclGreenPowerCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -59,12 +59,40 @@ public class GpSinkCommissioningMode extends ZclGreenPowerCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public GpSinkCommissioningMode() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param options {@link Integer} Options
+     * @param gpmAddrForSecurity {@link Integer} Gpm Addr For Security
+     * @param gpmAddrForPairing {@link Integer} Gpm Addr For Pairing
+     * @param sinkEndpoint {@link Integer} Sink Endpoint
+     */
+    public GpSinkCommissioningMode(
+            Integer options,
+            Integer gpmAddrForSecurity,
+            Integer gpmAddrForPairing,
+            Integer sinkEndpoint) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.options = options;
+        this.gpmAddrForSecurity = gpmAddrForSecurity;
+        this.gpmAddrForPairing = gpmAddrForPairing;
+        this.sinkEndpoint = sinkEndpoint;
     }
 
     /**
@@ -80,7 +108,9 @@ public class GpSinkCommissioningMode extends ZclGreenPowerCommand {
      * Sets Options.
      *
      * @param options the Options
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setOptions(final Integer options) {
         this.options = options;
     }
@@ -98,7 +128,9 @@ public class GpSinkCommissioningMode extends ZclGreenPowerCommand {
      * Sets Gpm Addr For Security.
      *
      * @param gpmAddrForSecurity the Gpm Addr For Security
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setGpmAddrForSecurity(final Integer gpmAddrForSecurity) {
         this.gpmAddrForSecurity = gpmAddrForSecurity;
     }
@@ -116,7 +148,9 @@ public class GpSinkCommissioningMode extends ZclGreenPowerCommand {
      * Sets Gpm Addr For Pairing.
      *
      * @param gpmAddrForPairing the Gpm Addr For Pairing
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setGpmAddrForPairing(final Integer gpmAddrForPairing) {
         this.gpmAddrForPairing = gpmAddrForPairing;
     }
@@ -134,7 +168,9 @@ public class GpSinkCommissioningMode extends ZclGreenPowerCommand {
      * Sets Sink Endpoint.
      *
      * @param sinkEndpoint the Sink Endpoint
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSinkEndpoint(final Integer sinkEndpoint) {
         this.sinkEndpoint = sinkEndpoint;
     }

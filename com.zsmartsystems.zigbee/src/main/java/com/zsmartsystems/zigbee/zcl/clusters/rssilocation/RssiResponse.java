@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class RssiResponse extends ZclRssiLocationCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -67,12 +67,46 @@ public class RssiResponse extends ZclRssiLocationCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public RssiResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param replyingDevice {@link IeeeAddress} Replying Device
+     * @param coordinate1 {@link Integer} Coordinate 1
+     * @param coordinate2 {@link Integer} Coordinate 2
+     * @param coordinate3 {@link Integer} Coordinate 3
+     * @param rssi {@link Integer} RSSI
+     * @param numberRssiMeasurements {@link Integer} Number RSSI Measurements
+     */
+    public RssiResponse(
+            IeeeAddress replyingDevice,
+            Integer coordinate1,
+            Integer coordinate2,
+            Integer coordinate3,
+            Integer rssi,
+            Integer numberRssiMeasurements) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.replyingDevice = replyingDevice;
+        this.coordinate1 = coordinate1;
+        this.coordinate2 = coordinate2;
+        this.coordinate3 = coordinate3;
+        this.rssi = rssi;
+        this.numberRssiMeasurements = numberRssiMeasurements;
     }
 
     /**
@@ -88,7 +122,9 @@ public class RssiResponse extends ZclRssiLocationCommand {
      * Sets Replying Device.
      *
      * @param replyingDevice the Replying Device
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setReplyingDevice(final IeeeAddress replyingDevice) {
         this.replyingDevice = replyingDevice;
     }
@@ -106,7 +142,9 @@ public class RssiResponse extends ZclRssiLocationCommand {
      * Sets Coordinate 1.
      *
      * @param coordinate1 the Coordinate 1
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCoordinate1(final Integer coordinate1) {
         this.coordinate1 = coordinate1;
     }
@@ -124,7 +162,9 @@ public class RssiResponse extends ZclRssiLocationCommand {
      * Sets Coordinate 2.
      *
      * @param coordinate2 the Coordinate 2
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCoordinate2(final Integer coordinate2) {
         this.coordinate2 = coordinate2;
     }
@@ -142,7 +182,9 @@ public class RssiResponse extends ZclRssiLocationCommand {
      * Sets Coordinate 3.
      *
      * @param coordinate3 the Coordinate 3
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCoordinate3(final Integer coordinate3) {
         this.coordinate3 = coordinate3;
     }
@@ -160,7 +202,9 @@ public class RssiResponse extends ZclRssiLocationCommand {
      * Sets RSSI.
      *
      * @param rssi the RSSI
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setRssi(final Integer rssi) {
         this.rssi = rssi;
     }
@@ -178,7 +222,9 @@ public class RssiResponse extends ZclRssiLocationCommand {
      * Sets Number RSSI Measurements.
      *
      * @param numberRssiMeasurements the Number RSSI Measurements
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNumberRssiMeasurements(final Integer numberRssiMeasurements) {
         this.numberRssiMeasurements = numberRssiMeasurements;
     }

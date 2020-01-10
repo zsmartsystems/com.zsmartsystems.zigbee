@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class StartSamplingResponse extends ZclMeteringCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -53,12 +53,31 @@ public class StartSamplingResponse extends ZclMeteringCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public StartSamplingResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param sampleId {@link Integer} Sample ID
+     */
+    public StartSamplingResponse(
+            Integer sampleId) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.sampleId = sampleId;
     }
 
     /**
@@ -94,7 +113,9 @@ public class StartSamplingResponse extends ZclMeteringCommand {
      * (automatically started) Profile mechanism.
      *
      * @param sampleId the Sample ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSampleId(final Integer sampleId) {
         this.sampleId = sampleId;
     }

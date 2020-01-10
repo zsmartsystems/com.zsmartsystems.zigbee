@@ -63,7 +63,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
 public class ZclKeyEstablishmentCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -266,7 +266,16 @@ public class ZclKeyEstablishmentCluster extends ZclCluster {
      * @param confirmKeyGenerateTime {@link Integer} Confirm Key Generate Time
      * @param identity {@link ByteArray} Identity
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.initiateKeyEstablishmentRequestCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new initiateKeyEstablishmentRequestCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> initiateKeyEstablishmentRequestCommand(Integer keyEstablishmentSuite, Integer ephemeralDataGenerateTime, Integer confirmKeyGenerateTime, ByteArray identity) {
         InitiateKeyEstablishmentRequestCommand command = new InitiateKeyEstablishmentRequestCommand();
 
@@ -287,7 +296,16 @@ public class ZclKeyEstablishmentCluster extends ZclCluster {
      *
      * @param ephemeralData {@link ByteArray} Ephemeral Data
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.ephemeralDataRequestCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new ephemeralDataRequestCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> ephemeralDataRequestCommand(ByteArray ephemeralData) {
         EphemeralDataRequestCommand command = new EphemeralDataRequestCommand();
 
@@ -307,7 +325,16 @@ public class ZclKeyEstablishmentCluster extends ZclCluster {
      *
      * @param secureMessageAuthenticationCode {@link ByteArray} Secure Message Authentication Code
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.confirmKeyDataRequestCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new confirmKeyDataRequestCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> confirmKeyDataRequestCommand(ByteArray secureMessageAuthenticationCode) {
         ConfirmKeyDataRequestCommand command = new ConfirmKeyDataRequestCommand();
 
@@ -330,7 +357,16 @@ public class ZclKeyEstablishmentCluster extends ZclCluster {
      * @param confirmKeyGenerateTime {@link Integer} Confirm Key Generate Time
      * @param identity {@link ByteArray} Identity
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.initiateKeyEstablishmentResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new initiateKeyEstablishmentResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> initiateKeyEstablishmentResponse(Integer requestedKeyEstablishmentSuite, Integer ephemeralDataGenerateTime, Integer confirmKeyGenerateTime, ByteArray identity) {
         InitiateKeyEstablishmentResponse command = new InitiateKeyEstablishmentResponse();
 
@@ -351,7 +387,16 @@ public class ZclKeyEstablishmentCluster extends ZclCluster {
      *
      * @param ephemeralData {@link ByteArray} Ephemeral Data
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.ephemeralDataResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new ephemeralDataResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> ephemeralDataResponse(ByteArray ephemeralData) {
         EphemeralDataResponse command = new EphemeralDataResponse();
 
@@ -371,7 +416,16 @@ public class ZclKeyEstablishmentCluster extends ZclCluster {
      *
      * @param secureMessageAuthenticationCode {@link ByteArray} Secure Message Authentication Code
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.confirmKeyResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new confirmKeyResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> confirmKeyResponse(ByteArray secureMessageAuthenticationCode) {
         ConfirmKeyResponse command = new ConfirmKeyResponse();
 
@@ -391,7 +445,16 @@ public class ZclKeyEstablishmentCluster extends ZclCluster {
      * @param waitTime {@link Integer} Wait Time
      * @param keyEstablishmentSuite {@link Integer} Key Establishment Suite
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.terminateKeyEstablishment(parameters ...)</code>
+     * with <code>cluster.sendCommand(new terminateKeyEstablishment(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> terminateKeyEstablishment(Integer statusCode, Integer waitTime, Integer keyEstablishmentSuite) {
         TerminateKeyEstablishment command = new TerminateKeyEstablishment();
 

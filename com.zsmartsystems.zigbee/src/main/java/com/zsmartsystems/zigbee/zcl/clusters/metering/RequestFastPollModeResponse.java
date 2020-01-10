@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class RequestFastPollModeResponse extends ZclMeteringCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -62,12 +62,34 @@ public class RequestFastPollModeResponse extends ZclMeteringCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public RequestFastPollModeResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param appliedUpdatePeriod {@link Integer} Applied Update Period
+     * @param fastPollModeEndtime {@link Calendar} Fast Poll Mode Endtime
+     */
+    public RequestFastPollModeResponse(
+            Integer appliedUpdatePeriod,
+            Calendar fastPollModeEndtime) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.appliedUpdatePeriod = appliedUpdatePeriod;
+        this.fastPollModeEndtime = fastPollModeEndtime;
     }
 
     /**
@@ -95,7 +117,9 @@ public class RequestFastPollModeResponse extends ZclMeteringCommand {
      * Attribute and less than or equal to the Requested Fast Poll Rate.
      *
      * @param appliedUpdatePeriod the Applied Update Period
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setAppliedUpdatePeriod(final Integer appliedUpdatePeriod) {
         this.appliedUpdatePeriod = appliedUpdatePeriod;
     }
@@ -125,7 +149,9 @@ public class RequestFastPollModeResponse extends ZclMeteringCommand {
      * would make it possible to be in fast poll mode longer than 15 minutes.
      *
      * @param fastPollModeEndtime the Fast Poll Mode Endtime
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setFastPollModeEndtime(final Calendar fastPollModeEndtime) {
         this.fastPollModeEndtime = fastPollModeEndtime;
     }

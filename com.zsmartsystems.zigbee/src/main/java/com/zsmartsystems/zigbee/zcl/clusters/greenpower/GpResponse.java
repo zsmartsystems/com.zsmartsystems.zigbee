@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class GpResponse extends ZclGreenPowerCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -81,12 +81,52 @@ public class GpResponse extends ZclGreenPowerCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public GpResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param options {@link Integer} Options
+     * @param tempMasterShortAddress {@link Integer} Temp Master Short Address
+     * @param tempMasterTxChannel {@link Integer} Temp Master Tx Channel
+     * @param gpdSrcId {@link Integer} Gpd Src ID
+     * @param gpdIeee {@link IeeeAddress} Gpd IEEE
+     * @param endpoint {@link Integer} Endpoint
+     * @param gpdCommandId {@link Integer} Gpd Command ID
+     * @param gpdCommandPayload {@link ByteArray} Gpd Command Payload
+     */
+    public GpResponse(
+            Integer options,
+            Integer tempMasterShortAddress,
+            Integer tempMasterTxChannel,
+            Integer gpdSrcId,
+            IeeeAddress gpdIeee,
+            Integer endpoint,
+            Integer gpdCommandId,
+            ByteArray gpdCommandPayload) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.options = options;
+        this.tempMasterShortAddress = tempMasterShortAddress;
+        this.tempMasterTxChannel = tempMasterTxChannel;
+        this.gpdSrcId = gpdSrcId;
+        this.gpdIeee = gpdIeee;
+        this.endpoint = endpoint;
+        this.gpdCommandId = gpdCommandId;
+        this.gpdCommandPayload = gpdCommandPayload;
     }
 
     /**
@@ -102,7 +142,9 @@ public class GpResponse extends ZclGreenPowerCommand {
      * Sets Options.
      *
      * @param options the Options
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setOptions(final Integer options) {
         this.options = options;
     }
@@ -120,7 +162,9 @@ public class GpResponse extends ZclGreenPowerCommand {
      * Sets Temp Master Short Address.
      *
      * @param tempMasterShortAddress the Temp Master Short Address
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTempMasterShortAddress(final Integer tempMasterShortAddress) {
         this.tempMasterShortAddress = tempMasterShortAddress;
     }
@@ -138,7 +182,9 @@ public class GpResponse extends ZclGreenPowerCommand {
      * Sets Temp Master Tx Channel.
      *
      * @param tempMasterTxChannel the Temp Master Tx Channel
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTempMasterTxChannel(final Integer tempMasterTxChannel) {
         this.tempMasterTxChannel = tempMasterTxChannel;
     }
@@ -156,7 +202,9 @@ public class GpResponse extends ZclGreenPowerCommand {
      * Sets Gpd Src ID.
      *
      * @param gpdSrcId the Gpd Src ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setGpdSrcId(final Integer gpdSrcId) {
         this.gpdSrcId = gpdSrcId;
     }
@@ -174,7 +222,9 @@ public class GpResponse extends ZclGreenPowerCommand {
      * Sets Gpd IEEE.
      *
      * @param gpdIeee the Gpd IEEE
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setGpdIeee(final IeeeAddress gpdIeee) {
         this.gpdIeee = gpdIeee;
     }
@@ -192,7 +242,9 @@ public class GpResponse extends ZclGreenPowerCommand {
      * Sets Endpoint.
      *
      * @param endpoint the Endpoint
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setEndpoint(final Integer endpoint) {
         this.endpoint = endpoint;
     }
@@ -210,7 +262,9 @@ public class GpResponse extends ZclGreenPowerCommand {
      * Sets Gpd Command ID.
      *
      * @param gpdCommandId the Gpd Command ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setGpdCommandId(final Integer gpdCommandId) {
         this.gpdCommandId = gpdCommandId;
     }
@@ -228,7 +282,9 @@ public class GpResponse extends ZclGreenPowerCommand {
      * Sets Gpd Command Payload.
      *
      * @param gpdCommandPayload the Gpd Command Payload
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setGpdCommandPayload(final ByteArray gpdCommandPayload) {
         this.gpdCommandPayload = gpdCommandPayload;
     }

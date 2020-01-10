@@ -67,7 +67,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
 public class ZclMeteringCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -17138,7 +17138,16 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param endTime {@link Calendar} End Time
      * @param numberOfPeriods {@link Integer} Number Of Periods
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getProfile(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getProfile(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getProfile(Integer intervalChannel, Calendar endTime, Integer numberOfPeriods) {
         GetProfile command = new GetProfile();
 
@@ -17158,7 +17167,16 @@ public class ZclMeteringCluster extends ZclCluster {
      *
      * @param endpointId {@link Integer} Endpoint ID
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.requestMirrorResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new requestMirrorResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> requestMirrorResponse(Integer endpointId) {
         RequestMirrorResponse command = new RequestMirrorResponse();
 
@@ -17176,7 +17194,16 @@ public class ZclMeteringCluster extends ZclCluster {
      *
      * @param removedEndpointId {@link Integer} Removed Endpoint ID
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.mirrorRemoved(parameters ...)</code>
+     * with <code>cluster.sendCommand(new mirrorRemoved(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> mirrorRemoved(Integer removedEndpointId) {
         MirrorRemoved command = new MirrorRemoved();
 
@@ -17195,7 +17222,16 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param fastPollUpdatePeriod {@link Integer} Fast Poll Update Period
      * @param duration {@link Integer} Duration
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.requestFastPollMode(parameters ...)</code>
+     * with <code>cluster.sendCommand(new requestFastPollMode(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> requestFastPollMode(Integer fastPollUpdatePeriod, Integer duration) {
         RequestFastPollMode command = new RequestFastPollMode();
 
@@ -17216,7 +17252,16 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param totalNumberOfCommands {@link Integer} Total Number of Commands
      * @param snapshotSchedulePayload {@link SnapshotSchedulePayload} Snapshot Schedule Payload
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.scheduleSnapshot(parameters ...)</code>
+     * with <code>cluster.sendCommand(new scheduleSnapshot(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> scheduleSnapshot(Integer issuerEventId, Integer commandIndex, Integer totalNumberOfCommands, SnapshotSchedulePayload snapshotSchedulePayload) {
         ScheduleSnapshot command = new ScheduleSnapshot();
 
@@ -17236,7 +17281,16 @@ public class ZclMeteringCluster extends ZclCluster {
      *
      * @param snapshotCause {@link Integer} Snapshot Cause
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.takeSnapshot(parameters ...)</code>
+     * with <code>cluster.sendCommand(new takeSnapshot(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> takeSnapshot(Integer snapshotCause) {
         TakeSnapshot command = new TakeSnapshot();
 
@@ -17256,7 +17310,16 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param snapshotOffset {@link Integer} Snapshot Offset
      * @param snapshotCause {@link Integer} Snapshot Cause
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getSnapshot(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getSnapshot(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getSnapshot(Calendar earliestStartTime, Calendar latestEndTime, Integer snapshotOffset, Integer snapshotCause) {
         GetSnapshot command = new GetSnapshot();
 
@@ -17283,7 +17346,16 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param sampleRequestInterval {@link Integer} Sample Request Interval
      * @param maxNumberOfSamples {@link Integer} Max Number Of Samples
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.startSampling(parameters ...)</code>
+     * with <code>cluster.sendCommand(new startSampling(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> startSampling(Integer issuerEventId, Calendar startSamplingTime, Integer sampleType, Integer sampleRequestInterval, Integer maxNumberOfSamples) {
         StartSampling command = new StartSampling();
 
@@ -17309,7 +17381,16 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param sampleType {@link Integer} Sample Type
      * @param numberOfSamples {@link Integer} Number Of Samples
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getSampledData(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getSampledData(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getSampledData(Integer sampleId, Calendar earliestSampleTime, Integer sampleType, Integer numberOfSamples) {
         GetSampledData command = new GetSampledData();
 
@@ -17331,7 +17412,16 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param notificationScheme {@link Integer} Notification Scheme
      * @param notificationFlags {@link Integer} Notification Flags
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.mirrorReportAttributeResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new mirrorReportAttributeResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> mirrorReportAttributeResponse(Integer notificationScheme, Integer notificationFlags) {
         MirrorReportAttributeResponse command = new MirrorReportAttributeResponse();
 
@@ -17351,7 +17441,16 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param providerId {@link Integer} Provider ID
      * @param issuerEventId {@link Integer} Issuer Event ID
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.resetLoadLimitCounter(parameters ...)</code>
+     * with <code>cluster.sendCommand(new resetLoadLimitCounter(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> resetLoadLimitCounter(Integer providerId, Integer issuerEventId) {
         ResetLoadLimitCounter command = new ResetLoadLimitCounter();
 
@@ -17375,7 +17474,16 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param proposedSupplyStatus {@link Integer} Proposed Supply Status
      * @param supplyControlBits {@link Integer} Supply Control Bits
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.changeSupply(parameters ...)</code>
+     * with <code>cluster.sendCommand(new changeSupply(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> changeSupply(Integer providerId, Integer issuerEventId, Calendar requestDateTime, Calendar implementationDateTime, Integer proposedSupplyStatus, Integer supplyControlBits) {
         ChangeSupply command = new ChangeSupply();
 
@@ -17400,7 +17508,16 @@ public class ZclMeteringCluster extends ZclCluster {
      *
      * @param proposedSupplyStatus {@link Integer} Proposed Supply Status
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.localChangeSupply(parameters ...)</code>
+     * with <code>cluster.sendCommand(new localChangeSupply(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> localChangeSupply(Integer proposedSupplyStatus) {
         LocalChangeSupply command = new LocalChangeSupply();
 
@@ -17422,7 +17539,16 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param supplyUncontrolledFlowState {@link Integer} Supply Uncontrolled Flow State
      * @param loadLimitSupplyState {@link Integer} Load Limit Supply State
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.setSupplyStatus(parameters ...)</code>
+     * with <code>cluster.sendCommand(new setSupplyStatus(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> setSupplyStatus(Integer issuerEventId, Integer supplyTamperState, Integer supplyDepletionState, Integer supplyUncontrolledFlowState, Integer loadLimitSupplyState) {
         SetSupplyStatus command = new SetSupplyStatus();
 
@@ -17451,7 +17577,16 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param stabilisationPeriod {@link Integer} Stabilisation Period
      * @param measurementPeriod {@link Integer} Measurement Period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.setUncontrolledFlowThreshold(parameters ...)</code>
+     * with <code>cluster.sendCommand(new setUncontrolledFlowThreshold(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> setUncontrolledFlowThreshold(Integer providerId, Integer issuerEventId, Integer uncontrolledFlowThreshold, Integer unitOfMeasure, Integer multiplier, Integer divisor, Integer stabilisationPeriod, Integer measurementPeriod) {
         SetUncontrolledFlowThreshold command = new SetUncontrolledFlowThreshold();
 
@@ -17479,7 +17614,16 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param numberOfPeriodsDelivered {@link Integer} Number Of Periods Delivered
      * @param intervals {@link Integer} Intervals
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getProfileResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getProfileResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getProfileResponse(Calendar endTime, Integer status, Integer profileIntervalPeriod, Integer numberOfPeriodsDelivered, Integer intervals) {
         GetProfileResponse command = new GetProfileResponse();
 
@@ -17499,7 +17643,16 @@ public class ZclMeteringCluster extends ZclCluster {
      * This command is used to request the ESI to mirror Metering Device data.
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.requestMirror(parameters ...)</code>
+     * with <code>cluster.sendCommand(new requestMirror(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> requestMirror() {
         return sendCommand(new RequestMirror());
     }
@@ -17510,7 +17663,16 @@ public class ZclMeteringCluster extends ZclCluster {
      * This command is used to request the ESI to remove its mirror of Metering Device data.
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.removeMirror(parameters ...)</code>
+     * with <code>cluster.sendCommand(new removeMirror(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> removeMirror() {
         return sendCommand(new RemoveMirror());
     }
@@ -17523,7 +17685,16 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param appliedUpdatePeriod {@link Integer} Applied Update Period
      * @param fastPollModeEndtime {@link Calendar} Fast Poll Mode Endtime
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.requestFastPollModeResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new requestFastPollModeResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> requestFastPollModeResponse(Integer appliedUpdatePeriod, Calendar fastPollModeEndtime) {
         RequestFastPollModeResponse command = new RequestFastPollModeResponse();
 
@@ -17543,7 +17714,16 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param issuerEventId {@link Integer} Issuer Event ID
      * @param snapshotResponsePayload {@link SnapshotResponsePayload} Snapshot Response Payload
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.scheduleSnapshotResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new scheduleSnapshotResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> scheduleSnapshotResponse(Integer issuerEventId, SnapshotResponsePayload snapshotResponsePayload) {
         ScheduleSnapshotResponse command = new ScheduleSnapshotResponse();
 
@@ -17563,7 +17743,16 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param snapshotId {@link Integer} Snapshot ID
      * @param snapshotConfirmation {@link Integer} Snapshot Confirmation
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.takeSnapshotResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new takeSnapshotResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> takeSnapshotResponse(Integer snapshotId, Integer snapshotConfirmation) {
         TakeSnapshotResponse command = new TakeSnapshotResponse();
 
@@ -17589,7 +17778,16 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param snapshotPayloadType {@link Integer} Snapshot Payload Type
      * @param snapshotPayload {@link Integer} Snapshot Payload
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.publishSnapshot(parameters ...)</code>
+     * with <code>cluster.sendCommand(new publishSnapshot(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> publishSnapshot(Integer snapshotId, Calendar snapshotTime, Integer totalSnapshotsFound, Integer commandIndex, Integer totalNumberOfCommands, Integer snapshotCause, Integer snapshotPayloadType, Integer snapshotPayload) {
         PublishSnapshot command = new PublishSnapshot();
 
@@ -17619,7 +17817,16 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param numberOfSamples {@link Integer} Number Of Samples
      * @param samples {@link Integer} Samples
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getSampledDataResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getSampledDataResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getSampledDataResponse(Integer sampleId, Calendar sampleStartTime, Integer sampleType, Integer sampleRequestInterval, Integer numberOfSamples, Integer samples) {
         GetSampledDataResponse command = new GetSampledDataResponse();
 
@@ -17645,7 +17852,16 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param mirrorNotificationReporting {@link Boolean} Mirror Notification Reporting
      * @param notificationScheme {@link Integer} Notification Scheme
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.configureMirror(parameters ...)</code>
+     * with <code>cluster.sendCommand(new configureMirror(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> configureMirror(Integer issuerEventId, Integer reportingInterval, Boolean mirrorNotificationReporting, Integer notificationScheme) {
         ConfigureMirror command = new ConfigureMirror();
 
@@ -17669,7 +17885,16 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param notificationScheme {@link Integer} Notification Scheme
      * @param notificationFlagOrder {@link Integer} Notification Flag Order
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.configureNotificationScheme(parameters ...)</code>
+     * with <code>cluster.sendCommand(new configureNotificationScheme(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> configureNotificationScheme(Integer issuerEventId, Integer notificationScheme, Integer notificationFlagOrder) {
         ConfigureNotificationScheme command = new ConfigureNotificationScheme();
 
@@ -17692,7 +17917,16 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param notificationFlagAttributeId {@link Integer} Notification Flag Attribute ID
      * @param subPayload {@link NotificationCommandSubPayload} Sub Payload
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.configureNotificationFlags(parameters ...)</code>
+     * with <code>cluster.sendCommand(new configureNotificationFlags(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> configureNotificationFlags(Integer issuerEventId, Integer notificationScheme, Integer notificationFlagAttributeId, NotificationCommandSubPayload subPayload) {
         ConfigureNotificationFlags command = new ConfigureNotificationFlags();
 
@@ -17717,7 +17951,16 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param notificationFlagAttributeId {@link Integer} Notification Flag Attribute ID
      * @param notificationFlagsN {@link Integer} Notification Flags N
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getNotifiedMessage(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getNotifiedMessage(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getNotifiedMessage(Integer notificationScheme, Integer notificationFlagAttributeId, Integer notificationFlagsN) {
         GetNotifiedMessage command = new GetNotifiedMessage();
 
@@ -17739,7 +17982,16 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param implementationDateTime {@link Calendar} Implementation Date Time
      * @param supplyStatus {@link Integer} Supply Status
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.supplyStatusResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new supplyStatusResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> supplyStatusResponse(Integer providerId, Integer issuerEventId, Calendar implementationDateTime, Integer supplyStatus) {
         SupplyStatusResponse command = new SupplyStatusResponse();
 
@@ -17760,7 +18012,16 @@ public class ZclMeteringCluster extends ZclCluster {
      *
      * @param sampleId {@link Integer} Sample ID
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.startSamplingResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new startSamplingResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> startSamplingResponse(Integer sampleId) {
         StartSamplingResponse command = new StartSamplingResponse();
 

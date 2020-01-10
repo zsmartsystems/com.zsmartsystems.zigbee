@@ -62,7 +62,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
 public class ZclGroupsCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -235,7 +235,16 @@ public class ZclGroupsCluster extends ZclCluster {
      * @param groupId {@link Integer} Group ID
      * @param groupName {@link String} Group Name
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.addGroupCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new addGroupCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> addGroupCommand(Integer groupId, String groupName) {
         AddGroupCommand command = new AddGroupCommand();
 
@@ -255,7 +264,16 @@ public class ZclGroupsCluster extends ZclCluster {
      *
      * @param groupId {@link Integer} Group ID
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.viewGroupCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new viewGroupCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> viewGroupCommand(Integer groupId) {
         ViewGroupCommand command = new ViewGroupCommand();
 
@@ -274,7 +292,16 @@ public class ZclGroupsCluster extends ZclCluster {
      * @param groupCount {@link Integer} Group Count
      * @param groupList {@link List<Integer>} Group List
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getGroupMembershipCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getGroupMembershipCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getGroupMembershipCommand(Integer groupCount, List<Integer> groupList) {
         GetGroupMembershipCommand command = new GetGroupMembershipCommand();
 
@@ -293,7 +320,16 @@ public class ZclGroupsCluster extends ZclCluster {
      *
      * @param groupId {@link Integer} Group ID
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.removeGroupCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new removeGroupCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> removeGroupCommand(Integer groupId) {
         RemoveGroupCommand command = new RemoveGroupCommand();
 
@@ -310,7 +346,16 @@ public class ZclGroupsCluster extends ZclCluster {
      * or entities to remove all group associations.
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.removeAllGroupsCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new removeAllGroupsCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> removeAllGroupsCommand() {
         return sendCommand(new RemoveAllGroupsCommand());
     }
@@ -326,7 +371,16 @@ public class ZclGroupsCluster extends ZclCluster {
      * @param groupId {@link Integer} Group ID
      * @param groupName {@link String} Group Name
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.addGroupIfIdentifyingCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new addGroupIfIdentifyingCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> addGroupIfIdentifyingCommand(Integer groupId, String groupName) {
         AddGroupIfIdentifyingCommand command = new AddGroupIfIdentifyingCommand();
 
@@ -346,7 +400,16 @@ public class ZclGroupsCluster extends ZclCluster {
      * @param status {@link Integer} Status
      * @param groupId {@link Integer} Group ID
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.addGroupResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new addGroupResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> addGroupResponse(Integer status, Integer groupId) {
         AddGroupResponse command = new AddGroupResponse();
 
@@ -367,7 +430,16 @@ public class ZclGroupsCluster extends ZclCluster {
      * @param groupId {@link Integer} Group ID
      * @param groupName {@link String} Group Name
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.viewGroupResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new viewGroupResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> viewGroupResponse(Integer status, Integer groupId, String groupName) {
         ViewGroupResponse command = new ViewGroupResponse();
 
@@ -389,7 +461,16 @@ public class ZclGroupsCluster extends ZclCluster {
      * @param groupCount {@link Integer} Group Count
      * @param groupList {@link List<Integer>} Group List
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getGroupMembershipResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getGroupMembershipResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getGroupMembershipResponse(Integer capacity, Integer groupCount, List<Integer> groupList) {
         GetGroupMembershipResponse command = new GetGroupMembershipResponse();
 
@@ -410,7 +491,16 @@ public class ZclGroupsCluster extends ZclCluster {
      * @param status {@link Integer} Status
      * @param groupId {@link Integer} Group ID
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.removeGroupResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new removeGroupResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> removeGroupResponse(Integer status, Integer groupId) {
         RemoveGroupResponse command = new RemoveGroupResponse();
 

@@ -21,7 +21,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:02:05Z")
 public class TopUpPayload implements ZigBeeSerializable {
     /**
      * Top Up Code structure field.
@@ -39,6 +39,31 @@ public class TopUpPayload implements ZigBeeSerializable {
     private Calendar topUpTime;
 
 
+    /**
+     * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
+     */
+    @Deprecated
+    public TopUpPayload() {
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param topUpCode {@link ByteArray} Top Up Code
+     * @param topUpAmount {@link Integer} Top Up Amount
+     * @param topUpTime {@link Calendar} Top Up Time
+     */
+    public TopUpPayload(
+            ByteArray topUpCode,
+            Integer topUpAmount,
+            Calendar topUpTime) {
+
+        this.topUpCode = topUpCode;
+        this.topUpAmount = topUpAmount;
+        this.topUpTime = topUpTime;
+    }
 
     /**
      * Gets Top Up Code.
@@ -53,7 +78,9 @@ public class TopUpPayload implements ZigBeeSerializable {
      * Sets Top Up Code.
      *
      * @param topUpCode the Top Up Code
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTopUpCode(final ByteArray topUpCode) {
         this.topUpCode = topUpCode;
     }
@@ -71,7 +98,9 @@ public class TopUpPayload implements ZigBeeSerializable {
      * Sets Top Up Amount.
      *
      * @param topUpAmount the Top Up Amount
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTopUpAmount(final Integer topUpAmount) {
         this.topUpAmount = topUpAmount;
     }
@@ -89,7 +118,9 @@ public class TopUpPayload implements ZigBeeSerializable {
      * Sets Top Up Time.
      *
      * @param topUpTime the Top Up Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTopUpTime(final Calendar topUpTime) {
         this.topUpTime = topUpTime;
     }

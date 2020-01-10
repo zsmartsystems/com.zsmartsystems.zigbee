@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class GetNotifiedMessage extends ZclMeteringCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -64,12 +64,37 @@ public class GetNotifiedMessage extends ZclMeteringCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public GetNotifiedMessage() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param notificationScheme {@link Integer} Notification Scheme
+     * @param notificationFlagAttributeId {@link Integer} Notification Flag Attribute ID
+     * @param notificationFlagsN {@link Integer} Notification Flags N
+     */
+    public GetNotifiedMessage(
+            Integer notificationScheme,
+            Integer notificationFlagAttributeId,
+            Integer notificationFlagsN) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.notificationScheme = notificationScheme;
+        this.notificationFlagAttributeId = notificationFlagAttributeId;
+        this.notificationFlagsN = notificationFlagsN;
     }
 
     /**
@@ -91,7 +116,9 @@ public class GetNotifiedMessage extends ZclMeteringCommand {
      * mapping to ZCL or Smart Energy Standard commands.
      *
      * @param notificationScheme the Notification Scheme
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNotificationScheme(final Integer notificationScheme) {
         this.notificationScheme = notificationScheme;
     }
@@ -115,7 +142,9 @@ public class GetNotifiedMessage extends ZclMeteringCommand {
      * that is included in this command.
      *
      * @param notificationFlagAttributeId the Notification Flag Attribute ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNotificationFlagAttributeId(final Integer notificationFlagAttributeId) {
         this.notificationFlagAttributeId = notificationFlagAttributeId;
     }
@@ -137,7 +166,9 @@ public class GetNotifiedMessage extends ZclMeteringCommand {
      * The Notification Flags attribute/parameter indicating the command being requested.
      *
      * @param notificationFlagsN the Notification Flags N
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNotificationFlagsN(final Integer notificationFlagsN) {
         this.notificationFlagsN = notificationFlagsN;
     }

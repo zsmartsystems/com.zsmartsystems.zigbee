@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class ChangePaymentModeResponse extends ZclPrepaymentCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -58,12 +58,40 @@ public class ChangePaymentModeResponse extends ZclPrepaymentCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public ChangePaymentModeResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param friendlyCredit {@link Integer} Friendly Credit
+     * @param friendlyCreditCalendarId {@link Integer} Friendly Credit Calendar ID
+     * @param emergencyCreditLimit {@link Integer} Emergency Credit Limit
+     * @param emergencyCreditThreshold {@link Integer} Emergency Credit Threshold
+     */
+    public ChangePaymentModeResponse(
+            Integer friendlyCredit,
+            Integer friendlyCreditCalendarId,
+            Integer emergencyCreditLimit,
+            Integer emergencyCreditThreshold) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.friendlyCredit = friendlyCredit;
+        this.friendlyCreditCalendarId = friendlyCreditCalendarId;
+        this.emergencyCreditLimit = emergencyCreditLimit;
+        this.emergencyCreditThreshold = emergencyCreditThreshold;
     }
 
     /**
@@ -79,7 +107,9 @@ public class ChangePaymentModeResponse extends ZclPrepaymentCommand {
      * Sets Friendly Credit.
      *
      * @param friendlyCredit the Friendly Credit
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setFriendlyCredit(final Integer friendlyCredit) {
         this.friendlyCredit = friendlyCredit;
     }
@@ -97,7 +127,9 @@ public class ChangePaymentModeResponse extends ZclPrepaymentCommand {
      * Sets Friendly Credit Calendar ID.
      *
      * @param friendlyCreditCalendarId the Friendly Credit Calendar ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setFriendlyCreditCalendarId(final Integer friendlyCreditCalendarId) {
         this.friendlyCreditCalendarId = friendlyCreditCalendarId;
     }
@@ -115,7 +147,9 @@ public class ChangePaymentModeResponse extends ZclPrepaymentCommand {
      * Sets Emergency Credit Limit.
      *
      * @param emergencyCreditLimit the Emergency Credit Limit
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setEmergencyCreditLimit(final Integer emergencyCreditLimit) {
         this.emergencyCreditLimit = emergencyCreditLimit;
     }
@@ -133,7 +167,9 @@ public class ChangePaymentModeResponse extends ZclPrepaymentCommand {
      * Sets Emergency Credit Threshold.
      *
      * @param emergencyCreditThreshold the Emergency Credit Threshold
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setEmergencyCreditThreshold(final Integer emergencyCreditThreshold) {
         this.emergencyCreditThreshold = emergencyCreditThreshold;
     }

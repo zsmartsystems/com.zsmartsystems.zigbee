@@ -20,7 +20,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:02:05Z")
 public class SnapshotSchedulePayload implements ZigBeeSerializable {
     /**
      * Snapshot Schedule ID structure field.
@@ -48,6 +48,37 @@ public class SnapshotSchedulePayload implements ZigBeeSerializable {
     private Integer snapshotCause;
 
 
+    /**
+     * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
+     */
+    @Deprecated
+    public SnapshotSchedulePayload() {
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param snapshotScheduleId {@link Integer} Snapshot Schedule ID
+     * @param snapshotStartTime {@link Calendar} Snapshot Start Time
+     * @param snapshotSchedule {@link Integer} Snapshot Schedule
+     * @param snapshotPayloadType {@link Integer} Snapshot Payload Type
+     * @param snapshotCause {@link Integer} Snapshot Cause
+     */
+    public SnapshotSchedulePayload(
+            Integer snapshotScheduleId,
+            Calendar snapshotStartTime,
+            Integer snapshotSchedule,
+            Integer snapshotPayloadType,
+            Integer snapshotCause) {
+
+        this.snapshotScheduleId = snapshotScheduleId;
+        this.snapshotStartTime = snapshotStartTime;
+        this.snapshotSchedule = snapshotSchedule;
+        this.snapshotPayloadType = snapshotPayloadType;
+        this.snapshotCause = snapshotCause;
+    }
 
     /**
      * Gets Snapshot Schedule ID.
@@ -62,7 +93,9 @@ public class SnapshotSchedulePayload implements ZigBeeSerializable {
      * Sets Snapshot Schedule ID.
      *
      * @param snapshotScheduleId the Snapshot Schedule ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSnapshotScheduleId(final Integer snapshotScheduleId) {
         this.snapshotScheduleId = snapshotScheduleId;
     }
@@ -80,7 +113,9 @@ public class SnapshotSchedulePayload implements ZigBeeSerializable {
      * Sets Snapshot Start Time.
      *
      * @param snapshotStartTime the Snapshot Start Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSnapshotStartTime(final Calendar snapshotStartTime) {
         this.snapshotStartTime = snapshotStartTime;
     }
@@ -98,7 +133,9 @@ public class SnapshotSchedulePayload implements ZigBeeSerializable {
      * Sets Snapshot Schedule.
      *
      * @param snapshotSchedule the Snapshot Schedule
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSnapshotSchedule(final Integer snapshotSchedule) {
         this.snapshotSchedule = snapshotSchedule;
     }
@@ -116,7 +153,9 @@ public class SnapshotSchedulePayload implements ZigBeeSerializable {
      * Sets Snapshot Payload Type.
      *
      * @param snapshotPayloadType the Snapshot Payload Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSnapshotPayloadType(final Integer snapshotPayloadType) {
         this.snapshotPayloadType = snapshotPayloadType;
     }
@@ -134,7 +173,9 @@ public class SnapshotSchedulePayload implements ZigBeeSerializable {
      * Sets Snapshot Cause.
      *
      * @param snapshotCause the Snapshot Cause
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSnapshotCause(final Integer snapshotCause) {
         this.snapshotCause = snapshotCause;
     }

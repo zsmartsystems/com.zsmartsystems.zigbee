@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class ResetAlarmCommand extends ZclAlarmsCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -50,12 +50,34 @@ public class ResetAlarmCommand extends ZclAlarmsCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public ResetAlarmCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param alarmCode {@link Integer} Alarm Code
+     * @param clusterIdentifier {@link Integer} Cluster Identifier
+     */
+    public ResetAlarmCommand(
+            Integer alarmCode,
+            Integer clusterIdentifier) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.alarmCode = alarmCode;
+        this.clusterIdentifier = clusterIdentifier;
     }
 
     /**
@@ -71,7 +93,9 @@ public class ResetAlarmCommand extends ZclAlarmsCommand {
      * Sets Alarm Code.
      *
      * @param alarmCode the Alarm Code
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setAlarmCode(final Integer alarmCode) {
         this.alarmCode = alarmCode;
     }
@@ -89,7 +113,9 @@ public class ResetAlarmCommand extends ZclAlarmsCommand {
      * Sets Cluster Identifier.
      *
      * @param clusterIdentifier the Cluster Identifier
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setClusterIdentifier(final Integer clusterIdentifier) {
         this.clusterIdentifier = clusterIdentifier;
     }

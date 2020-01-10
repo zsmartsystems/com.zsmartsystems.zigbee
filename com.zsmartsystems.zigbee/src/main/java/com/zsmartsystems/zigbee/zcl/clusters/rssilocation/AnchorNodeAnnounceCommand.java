@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class AnchorNodeAnnounceCommand extends ZclRssiLocationCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -57,12 +57,40 @@ public class AnchorNodeAnnounceCommand extends ZclRssiLocationCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public AnchorNodeAnnounceCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param anchorNodeAddress {@link IeeeAddress} Anchor Node Address
+     * @param coordinate1 {@link Integer} Coordinate 1
+     * @param coordinate2 {@link Integer} Coordinate 2
+     * @param coordinate3 {@link Integer} Coordinate 3
+     */
+    public AnchorNodeAnnounceCommand(
+            IeeeAddress anchorNodeAddress,
+            Integer coordinate1,
+            Integer coordinate2,
+            Integer coordinate3) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.anchorNodeAddress = anchorNodeAddress;
+        this.coordinate1 = coordinate1;
+        this.coordinate2 = coordinate2;
+        this.coordinate3 = coordinate3;
     }
 
     /**
@@ -78,7 +106,9 @@ public class AnchorNodeAnnounceCommand extends ZclRssiLocationCommand {
      * Sets Anchor Node Address.
      *
      * @param anchorNodeAddress the Anchor Node Address
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setAnchorNodeAddress(final IeeeAddress anchorNodeAddress) {
         this.anchorNodeAddress = anchorNodeAddress;
     }
@@ -96,7 +126,9 @@ public class AnchorNodeAnnounceCommand extends ZclRssiLocationCommand {
      * Sets Coordinate 1.
      *
      * @param coordinate1 the Coordinate 1
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCoordinate1(final Integer coordinate1) {
         this.coordinate1 = coordinate1;
     }
@@ -114,7 +146,9 @@ public class AnchorNodeAnnounceCommand extends ZclRssiLocationCommand {
      * Sets Coordinate 2.
      *
      * @param coordinate2 the Coordinate 2
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCoordinate2(final Integer coordinate2) {
         this.coordinate2 = coordinate2;
     }
@@ -132,7 +166,9 @@ public class AnchorNodeAnnounceCommand extends ZclRssiLocationCommand {
      * Sets Coordinate 3.
      *
      * @param coordinate3 the Coordinate 3
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCoordinate3(final Integer coordinate3) {
         this.coordinate3 = coordinate3;
     }

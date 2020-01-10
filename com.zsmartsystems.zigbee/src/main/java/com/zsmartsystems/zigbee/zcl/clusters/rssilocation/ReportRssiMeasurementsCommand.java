@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class ReportRssiMeasurementsCommand extends ZclRssiLocationCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -55,12 +55,37 @@ public class ReportRssiMeasurementsCommand extends ZclRssiLocationCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public ReportRssiMeasurementsCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param reportingAddress {@link IeeeAddress} Reporting Address
+     * @param numberOfNeighbors {@link Integer} Number Of Neighbors
+     * @param neighborsInformation {@link List<NeighborInformation>} Neighbors Information
+     */
+    public ReportRssiMeasurementsCommand(
+            IeeeAddress reportingAddress,
+            Integer numberOfNeighbors,
+            List<NeighborInformation> neighborsInformation) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.reportingAddress = reportingAddress;
+        this.numberOfNeighbors = numberOfNeighbors;
+        this.neighborsInformation = neighborsInformation;
     }
 
     /**
@@ -76,7 +101,9 @@ public class ReportRssiMeasurementsCommand extends ZclRssiLocationCommand {
      * Sets Reporting Address.
      *
      * @param reportingAddress the Reporting Address
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setReportingAddress(final IeeeAddress reportingAddress) {
         this.reportingAddress = reportingAddress;
     }
@@ -94,7 +121,9 @@ public class ReportRssiMeasurementsCommand extends ZclRssiLocationCommand {
      * Sets Number Of Neighbors.
      *
      * @param numberOfNeighbors the Number Of Neighbors
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNumberOfNeighbors(final Integer numberOfNeighbors) {
         this.numberOfNeighbors = numberOfNeighbors;
     }
@@ -112,7 +141,9 @@ public class ReportRssiMeasurementsCommand extends ZclRssiLocationCommand {
      * Sets Neighbors Information.
      *
      * @param neighborsInformation the Neighbors Information
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNeighborsInformation(final List<NeighborInformation> neighborsInformation) {
         this.neighborsInformation = neighborsInformation;
     }

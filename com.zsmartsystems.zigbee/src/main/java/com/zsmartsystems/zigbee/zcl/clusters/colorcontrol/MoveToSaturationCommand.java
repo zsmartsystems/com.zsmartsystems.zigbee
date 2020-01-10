@@ -22,7 +22,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class MoveToSaturationCommand extends ZclColorControlCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -46,12 +46,34 @@ public class MoveToSaturationCommand extends ZclColorControlCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public MoveToSaturationCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param saturation {@link Integer} Saturation
+     * @param transitionTime {@link Integer} Transition Time
+     */
+    public MoveToSaturationCommand(
+            Integer saturation,
+            Integer transitionTime) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.saturation = saturation;
+        this.transitionTime = transitionTime;
     }
 
     /**
@@ -67,7 +89,9 @@ public class MoveToSaturationCommand extends ZclColorControlCommand {
      * Sets Saturation.
      *
      * @param saturation the Saturation
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSaturation(final Integer saturation) {
         this.saturation = saturation;
     }
@@ -85,7 +109,9 @@ public class MoveToSaturationCommand extends ZclColorControlCommand {
      * Sets Transition Time.
      *
      * @param transitionTime the Transition Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTransitionTime(final Integer transitionTime) {
         this.transitionTime = transitionTime;
     }

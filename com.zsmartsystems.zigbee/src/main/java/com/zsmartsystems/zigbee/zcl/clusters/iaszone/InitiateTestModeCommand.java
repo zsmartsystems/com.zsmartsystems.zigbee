@@ -40,7 +40,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class InitiateTestModeCommand extends ZclIasZoneCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -73,12 +73,34 @@ public class InitiateTestModeCommand extends ZclIasZoneCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public InitiateTestModeCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param testModeDuration {@link Integer} Test Mode Duration
+     * @param currentZoneSensitivityLevel {@link Integer} Current Zone Sensitivity Level
+     */
+    public InitiateTestModeCommand(
+            Integer testModeDuration,
+            Integer currentZoneSensitivityLevel) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.testModeDuration = testModeDuration;
+        this.currentZoneSensitivityLevel = currentZoneSensitivityLevel;
     }
 
     /**
@@ -100,7 +122,9 @@ public class InitiateTestModeCommand extends ZclIasZoneCommand {
      * test mode.
      *
      * @param testModeDuration the Test Mode Duration
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTestModeDuration(final Integer testModeDuration) {
         this.testModeDuration = testModeDuration;
     }
@@ -130,7 +154,9 @@ public class InitiateTestModeCommand extends ZclIasZoneCommand {
      * CurrentZoneSensitivityLevel Attribute.
      *
      * @param currentZoneSensitivityLevel the Current Zone Sensitivity Level
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCurrentZoneSensitivityLevel(final Integer currentZoneSensitivityLevel) {
         this.currentZoneSensitivityLevel = currentZoneSensitivityLevel;
     }

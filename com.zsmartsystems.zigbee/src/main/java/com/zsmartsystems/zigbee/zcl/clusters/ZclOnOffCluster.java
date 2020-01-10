@@ -34,7 +34,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
 public class ZclOnOffCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -589,7 +589,16 @@ public class ZclOnOffCluster extends ZclCluster {
      * receipt of the Off command, the OnTime attribute shall be set to 0x0000.
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.offCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new offCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> offCommand() {
         return sendCommand(new OffCommand());
     }
@@ -603,7 +612,16 @@ public class ZclOnOffCluster extends ZclCluster {
      * device shall set the OffWaitTime attribute to 0x0000.
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.onCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new onCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> onCommand() {
         return sendCommand(new OnCommand());
     }
@@ -619,7 +637,16 @@ public class ZclOnOffCluster extends ZclCluster {
      * be set to 0x0000.
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.toggleCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new toggleCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> toggleCommand() {
         return sendCommand(new ToggleCommand());
     }
@@ -633,7 +660,16 @@ public class ZclOnOffCluster extends ZclCluster {
      * @param effectIdentifier {@link Integer} Effect Identifier
      * @param effectVariant {@link Integer} Effect Variant
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.offWithEffectCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new offWithEffectCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> offWithEffectCommand(Integer effectIdentifier, Integer effectVariant) {
         OffWithEffectCommand command = new OffWithEffectCommand();
 
@@ -651,7 +687,16 @@ public class ZclOnOffCluster extends ZclCluster {
      * was turned off.
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.onWithRecallGlobalSceneCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new onWithRecallGlobalSceneCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> onWithRecallGlobalSceneCommand() {
         return sendCommand(new OnWithRecallGlobalSceneCommand());
     }
@@ -669,7 +714,16 @@ public class ZclOnOffCluster extends ZclCluster {
      * @param onTime {@link Integer} On Time
      * @param offWaitTime {@link Integer} Off Wait Time
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.onWithTimedOffCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new onWithTimedOffCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> onWithTimedOffCommand(Integer onOffControl, Integer onTime, Integer offWaitTime) {
         OnWithTimedOffCommand command = new OnWithTimedOffCommand();
 

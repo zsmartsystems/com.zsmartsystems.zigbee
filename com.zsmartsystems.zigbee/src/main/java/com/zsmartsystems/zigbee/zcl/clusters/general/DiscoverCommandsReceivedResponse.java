@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class DiscoverCommandsReceivedResponse extends ZclGeneralCommand {
     /**
      * The command ID.
@@ -46,11 +46,32 @@ public class DiscoverCommandsReceivedResponse extends ZclGeneralCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public DiscoverCommandsReceivedResponse() {
         commandId = COMMAND_ID;
         genericCommand = true;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param discoveryComplete {@link Boolean} Discovery Complete
+     * @param commandIdentifiers {@link List<Integer>} Command Identifiers
+     */
+    public DiscoverCommandsReceivedResponse(
+            Boolean discoveryComplete,
+            List<Integer> commandIdentifiers) {
+
+        commandId = COMMAND_ID;
+        genericCommand = true;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.discoveryComplete = discoveryComplete;
+        this.commandIdentifiers = commandIdentifiers;
     }
 
     /**
@@ -79,7 +100,9 @@ public class DiscoverCommandsReceivedResponse extends ZclGeneralCommand {
      * Sets Discovery Complete.
      *
      * @param discoveryComplete the Discovery Complete
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDiscoveryComplete(final Boolean discoveryComplete) {
         this.discoveryComplete = discoveryComplete;
     }
@@ -97,7 +120,9 @@ public class DiscoverCommandsReceivedResponse extends ZclGeneralCommand {
      * Sets Command Identifiers.
      *
      * @param commandIdentifiers the Command Identifiers
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCommandIdentifiers(final List<Integer> commandIdentifiers) {
         this.commandIdentifiers = commandIdentifiers;
     }

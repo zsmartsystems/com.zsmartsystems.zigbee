@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class ConsumerTopUpResponse extends ZclPrepaymentCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -58,12 +58,40 @@ public class ConsumerTopUpResponse extends ZclPrepaymentCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public ConsumerTopUpResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param resultType {@link Integer} Result Type
+     * @param topUpValue {@link Integer} Top Up Value
+     * @param sourceOfTopUp {@link Integer} Source Of Top Up
+     * @param creditRemaining {@link Integer} Credit Remaining
+     */
+    public ConsumerTopUpResponse(
+            Integer resultType,
+            Integer topUpValue,
+            Integer sourceOfTopUp,
+            Integer creditRemaining) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.resultType = resultType;
+        this.topUpValue = topUpValue;
+        this.sourceOfTopUp = sourceOfTopUp;
+        this.creditRemaining = creditRemaining;
     }
 
     /**
@@ -79,7 +107,9 @@ public class ConsumerTopUpResponse extends ZclPrepaymentCommand {
      * Sets Result Type.
      *
      * @param resultType the Result Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setResultType(final Integer resultType) {
         this.resultType = resultType;
     }
@@ -97,7 +127,9 @@ public class ConsumerTopUpResponse extends ZclPrepaymentCommand {
      * Sets Top Up Value.
      *
      * @param topUpValue the Top Up Value
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTopUpValue(final Integer topUpValue) {
         this.topUpValue = topUpValue;
     }
@@ -115,7 +147,9 @@ public class ConsumerTopUpResponse extends ZclPrepaymentCommand {
      * Sets Source Of Top Up.
      *
      * @param sourceOfTopUp the Source Of Top Up
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSourceOfTopUp(final Integer sourceOfTopUp) {
         this.sourceOfTopUp = sourceOfTopUp;
     }
@@ -133,7 +167,9 @@ public class ConsumerTopUpResponse extends ZclPrepaymentCommand {
      * Sets Credit Remaining.
      *
      * @param creditRemaining the Credit Remaining
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCreditRemaining(final Integer creditRemaining) {
         this.creditRemaining = creditRemaining;
     }

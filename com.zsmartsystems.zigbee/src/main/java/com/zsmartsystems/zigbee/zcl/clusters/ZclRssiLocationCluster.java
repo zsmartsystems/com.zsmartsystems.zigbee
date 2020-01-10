@@ -48,7 +48,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
 public class ZclRssiLocationCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -1283,7 +1283,16 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param power {@link Integer} Power
      * @param pathLossExponent {@link Integer} Path Loss Exponent
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.setAbsoluteLocationCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new setAbsoluteLocationCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> setAbsoluteLocationCommand(Integer coordinate1, Integer coordinate2, Integer coordinate3, Integer power, Integer pathLossExponent) {
         SetAbsoluteLocationCommand command = new SetAbsoluteLocationCommand();
 
@@ -1306,7 +1315,16 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param numberRssiMeasurements {@link Integer} Number RSSI Measurements
      * @param reportingPeriod {@link Integer} Reporting Period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.setDeviceConfigurationCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new setDeviceConfigurationCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> setDeviceConfigurationCommand(Integer power, Integer pathLossExponent, Integer calculationPeriod, Integer numberRssiMeasurements, Integer reportingPeriod) {
         SetDeviceConfigurationCommand command = new SetDeviceConfigurationCommand();
 
@@ -1325,7 +1343,16 @@ public class ZclRssiLocationCluster extends ZclCluster {
      *
      * @param targetAddress {@link IeeeAddress} Target Address
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getDeviceConfigurationCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getDeviceConfigurationCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getDeviceConfigurationCommand(IeeeAddress targetAddress) {
         GetDeviceConfigurationCommand command = new GetDeviceConfigurationCommand();
 
@@ -1342,7 +1369,16 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param numberResponses {@link Integer} Number Responses
      * @param targetAddress {@link IeeeAddress} Target Address
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getLocationDataCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getLocationDataCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getLocationDataCommand(Integer header, Integer numberResponses, IeeeAddress targetAddress) {
         GetLocationDataCommand command = new GetLocationDataCommand();
 
@@ -1364,7 +1400,16 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param rssi {@link Integer} RSSI
      * @param numberRssiMeasurements {@link Integer} Number RSSI Measurements
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.rssiResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new rssiResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> rssiResponse(IeeeAddress replyingDevice, Integer coordinate1, Integer coordinate2, Integer coordinate3, Integer rssi, Integer numberRssiMeasurements) {
         RssiResponse command = new RssiResponse();
 
@@ -1386,7 +1431,16 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param numberRssiMeasurements {@link Integer} Number RSSI Measurements
      * @param calculationPeriod {@link Integer} Calculation Period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.sendPingsCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new sendPingsCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> sendPingsCommand(IeeeAddress targetAddress, Integer numberRssiMeasurements, Integer calculationPeriod) {
         SendPingsCommand command = new SendPingsCommand();
 
@@ -1406,7 +1460,16 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param coordinate2 {@link Integer} Coordinate 2
      * @param coordinate3 {@link Integer} Coordinate 3
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.anchorNodeAnnounceCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new anchorNodeAnnounceCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> anchorNodeAnnounceCommand(IeeeAddress anchorNodeAddress, Integer coordinate1, Integer coordinate2, Integer coordinate3) {
         AnchorNodeAnnounceCommand command = new AnchorNodeAnnounceCommand();
 
@@ -1429,7 +1492,16 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param numberRssiMeasurements {@link Integer} Number RSSI Measurements
      * @param reportingPeriod {@link Integer} Reporting Period
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.deviceConfigurationResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new deviceConfigurationResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> deviceConfigurationResponse(Integer status, Integer power, Integer pathLossExponent, Integer calculationPeriod, Integer numberRssiMeasurements, Integer reportingPeriod) {
         DeviceConfigurationResponse command = new DeviceConfigurationResponse();
 
@@ -1458,7 +1530,16 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param qualityMeasure {@link Integer} Quality Measure
      * @param locationAge {@link Integer} Location Age
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.locationDataResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new locationDataResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> locationDataResponse(Integer status, Integer locationType, Integer coordinate1, Integer coordinate2, Integer coordinate3, Integer power, Integer pathLossExponent, Integer locationMethod, Integer qualityMeasure, Integer locationAge) {
         LocationDataResponse command = new LocationDataResponse();
 
@@ -1490,7 +1571,16 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param qualityMeasure {@link Integer} Quality Measure
      * @param locationAge {@link Integer} Location Age
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.locationDataNotificationCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new locationDataNotificationCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> locationDataNotificationCommand(Integer locationType, Integer coordinate1, Integer coordinate2, Integer coordinate3, Integer power, Integer pathLossExponent, Integer locationMethod, Integer qualityMeasure, Integer locationAge) {
         LocationDataNotificationCommand command = new LocationDataNotificationCommand();
 
@@ -1512,7 +1602,16 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The Compact Location Data Notification Command
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.compactLocationDataNotificationCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new compactLocationDataNotificationCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> compactLocationDataNotificationCommand() {
         return sendCommand(new CompactLocationDataNotificationCommand());
     }
@@ -1522,7 +1621,16 @@ public class ZclRssiLocationCluster extends ZclCluster {
      *
      * @param locationType {@link Integer} Location Type
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.rssiPingCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new rssiPingCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> rssiPingCommand(Integer locationType) {
         RssiPingCommand command = new RssiPingCommand();
 
@@ -1536,7 +1644,16 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * The RSSI Request Command
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.rssiRequestCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new rssiRequestCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> rssiRequestCommand() {
         return sendCommand(new RssiRequestCommand());
     }
@@ -1548,7 +1665,16 @@ public class ZclRssiLocationCluster extends ZclCluster {
      * @param numberOfNeighbors {@link Integer} Number Of Neighbors
      * @param neighborsInformation {@link List<NeighborInformation>} Neighbors Information
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.reportRssiMeasurementsCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new reportRssiMeasurementsCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> reportRssiMeasurementsCommand(IeeeAddress reportingAddress, Integer numberOfNeighbors, List<NeighborInformation> neighborsInformation) {
         ReportRssiMeasurementsCommand command = new ReportRssiMeasurementsCommand();
 
@@ -1565,7 +1691,16 @@ public class ZclRssiLocationCluster extends ZclCluster {
      *
      * @param requestingAddress {@link IeeeAddress} Requesting Address
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.requestOwnLocationCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new requestOwnLocationCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> requestOwnLocationCommand(IeeeAddress requestingAddress) {
         RequestOwnLocationCommand command = new RequestOwnLocationCommand();
 

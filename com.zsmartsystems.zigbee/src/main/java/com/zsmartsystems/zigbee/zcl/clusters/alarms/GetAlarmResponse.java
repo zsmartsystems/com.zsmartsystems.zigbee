@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class GetAlarmResponse extends ZclAlarmsCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -62,12 +62,40 @@ public class GetAlarmResponse extends ZclAlarmsCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public GetAlarmResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param status {@link Integer} Status
+     * @param alarmCode {@link Integer} Alarm Code
+     * @param clusterIdentifier {@link Integer} Cluster Identifier
+     * @param timestamp {@link Integer} Timestamp
+     */
+    public GetAlarmResponse(
+            Integer status,
+            Integer alarmCode,
+            Integer clusterIdentifier,
+            Integer timestamp) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.status = status;
+        this.alarmCode = alarmCode;
+        this.clusterIdentifier = clusterIdentifier;
+        this.timestamp = timestamp;
     }
 
     /**
@@ -83,7 +111,9 @@ public class GetAlarmResponse extends ZclAlarmsCommand {
      * Sets Status.
      *
      * @param status the Status
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStatus(final Integer status) {
         this.status = status;
     }
@@ -101,7 +131,9 @@ public class GetAlarmResponse extends ZclAlarmsCommand {
      * Sets Alarm Code.
      *
      * @param alarmCode the Alarm Code
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setAlarmCode(final Integer alarmCode) {
         this.alarmCode = alarmCode;
     }
@@ -119,7 +151,9 @@ public class GetAlarmResponse extends ZclAlarmsCommand {
      * Sets Cluster Identifier.
      *
      * @param clusterIdentifier the Cluster Identifier
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setClusterIdentifier(final Integer clusterIdentifier) {
         this.clusterIdentifier = clusterIdentifier;
     }
@@ -137,7 +171,9 @@ public class GetAlarmResponse extends ZclAlarmsCommand {
      * Sets Timestamp.
      *
      * @param timestamp the Timestamp
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTimestamp(final Integer timestamp) {
         this.timestamp = timestamp;
     }

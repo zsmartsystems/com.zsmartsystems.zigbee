@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class GetScheduledPricesCommand extends ZclPriceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -62,12 +62,34 @@ public class GetScheduledPricesCommand extends ZclPriceCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public GetScheduledPricesCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param startTime {@link Calendar} Start Time
+     * @param numberOfEvents {@link Integer} Number Of Events
+     */
+    public GetScheduledPricesCommand(
+            Calendar startTime,
+            Integer numberOfEvents) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.startTime = startTime;
+        this.numberOfEvents = numberOfEvents;
     }
 
     /**
@@ -91,7 +113,9 @@ public class GetScheduledPricesCommand extends ZclPriceCommand {
      * that StartTime with the current time stamp.
      *
      * @param startTime the Start Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStartTime(final Calendar startTime) {
         this.startTime = startTime;
     }
@@ -121,7 +145,9 @@ public class GetScheduledPricesCommand extends ZclPriceCommand {
      * listed in the device’s event table).
      *
      * @param numberOfEvents the Number Of Events
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNumberOfEvents(final Integer numberOfEvents) {
         this.numberOfEvents = numberOfEvents;
     }

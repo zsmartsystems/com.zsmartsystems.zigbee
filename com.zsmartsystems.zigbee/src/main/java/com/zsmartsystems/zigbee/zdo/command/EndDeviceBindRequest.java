@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-17T19:20:35Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class EndDeviceBindRequest extends ZdoRequest {
     /**
      * The ZDO cluster ID.
@@ -68,9 +68,40 @@ public class EndDeviceBindRequest extends ZdoRequest {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public EndDeviceBindRequest() {
         clusterId = CLUSTER_ID;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param bindingTarget {@link Integer} Binding Target
+     * @param srcAddress {@link IeeeAddress} Src Address
+     * @param srcEndpoint {@link Integer} Src Endpoint
+     * @param profileId {@link Integer} Profile ID
+     * @param inClusterList {@link List<Integer>} In Cluster List
+     * @param outClusterList {@link List<Integer>} Out Cluster List
+     */
+    public EndDeviceBindRequest(
+            Integer bindingTarget,
+            IeeeAddress srcAddress,
+            Integer srcEndpoint,
+            Integer profileId,
+            List<Integer> inClusterList,
+            List<Integer> outClusterList) {
+
+        clusterId = CLUSTER_ID;
+
+        this.bindingTarget = bindingTarget;
+        this.srcAddress = srcAddress;
+        this.srcEndpoint = srcEndpoint;
+        this.profileId = profileId;
+        this.inClusterList = inClusterList;
+        this.outClusterList = outClusterList;
     }
 
     /**
@@ -86,7 +117,9 @@ public class EndDeviceBindRequest extends ZdoRequest {
      * Sets Binding Target.
      *
      * @param bindingTarget the Binding Target
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setBindingTarget(final Integer bindingTarget) {
         this.bindingTarget = bindingTarget;
     }
@@ -104,7 +137,9 @@ public class EndDeviceBindRequest extends ZdoRequest {
      * Sets Src Address.
      *
      * @param srcAddress the Src Address
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSrcAddress(final IeeeAddress srcAddress) {
         this.srcAddress = srcAddress;
     }
@@ -122,7 +157,9 @@ public class EndDeviceBindRequest extends ZdoRequest {
      * Sets Src Endpoint.
      *
      * @param srcEndpoint the Src Endpoint
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSrcEndpoint(final Integer srcEndpoint) {
         this.srcEndpoint = srcEndpoint;
     }
@@ -140,7 +177,9 @@ public class EndDeviceBindRequest extends ZdoRequest {
      * Sets Profile ID.
      *
      * @param profileId the Profile ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProfileId(final Integer profileId) {
         this.profileId = profileId;
     }
@@ -158,7 +197,9 @@ public class EndDeviceBindRequest extends ZdoRequest {
      * Sets In Cluster List.
      *
      * @param inClusterList the In Cluster List
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setInClusterList(final List<Integer> inClusterList) {
         this.inClusterList = inClusterList;
     }
@@ -176,7 +217,9 @@ public class EndDeviceBindRequest extends ZdoRequest {
      * Sets Out Cluster List.
      *
      * @param outClusterList the Out Cluster List
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setOutClusterList(final List<Integer> outClusterList) {
         this.outClusterList = outClusterList;
     }

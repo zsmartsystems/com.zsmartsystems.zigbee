@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class RequestFastPollMode extends ZclMeteringCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -53,12 +53,34 @@ public class RequestFastPollMode extends ZclMeteringCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public RequestFastPollMode() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param fastPollUpdatePeriod {@link Integer} Fast Poll Update Period
+     * @param duration {@link Integer} Duration
+     */
+    public RequestFastPollMode(
+            Integer fastPollUpdatePeriod,
+            Integer duration) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.fastPollUpdatePeriod = fastPollUpdatePeriod;
+        this.duration = duration;
     }
 
     /**
@@ -78,7 +100,9 @@ public class RequestFastPollMode extends ZclMeteringCommand {
      * Desired fast poll period not to be less than the FastPollUpdatePeriod attribute.
      *
      * @param fastPollUpdatePeriod the Fast Poll Update Period
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setFastPollUpdatePeriod(final Integer fastPollUpdatePeriod) {
         this.fastPollUpdatePeriod = fastPollUpdatePeriod;
     }
@@ -100,7 +124,9 @@ public class RequestFastPollMode extends ZclMeteringCommand {
      * Desired duration for the server to remain in fast poll mode not to exceed 15 minutes.
      *
      * @param duration the Duration
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDuration(final Integer duration) {
         this.duration = duration;
     }

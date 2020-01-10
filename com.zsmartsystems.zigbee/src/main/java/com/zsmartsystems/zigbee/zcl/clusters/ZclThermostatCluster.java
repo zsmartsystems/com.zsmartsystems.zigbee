@@ -35,7 +35,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
 public class ZclThermostatCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -1408,7 +1408,16 @@ public class ZclThermostatCluster extends ZclCluster {
      * @param mode {@link Integer} Mode
      * @param amount {@link Integer} Amount
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.setpointRaiseLowerCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new setpointRaiseLowerCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> setpointRaiseLowerCommand(Integer mode, Integer amount) {
         SetpointRaiseLowerCommand command = new SetpointRaiseLowerCommand();
 
@@ -1439,7 +1448,16 @@ public class ZclThermostatCluster extends ZclCluster {
      * @param heatSet {@link Integer} Heat Set
      * @param coolSet {@link Integer} Cool Set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.setWeeklySchedule(parameters ...)</code>
+     * with <code>cluster.sendCommand(new setWeeklySchedule(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> setWeeklySchedule(Integer numberOfTransitions, Integer dayOfWeek, Integer mode, Integer transition, Integer heatSet, Integer coolSet) {
         SetWeeklySchedule command = new SetWeeklySchedule();
 
@@ -1460,7 +1478,16 @@ public class ZclThermostatCluster extends ZclCluster {
      * @param daysToReturn {@link Integer} Days To Return
      * @param modeToReturn {@link Integer} Mode To Return
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getWeeklySchedule(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getWeeklySchedule(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getWeeklySchedule(Integer daysToReturn, Integer modeToReturn) {
         GetWeeklySchedule command = new GetWeeklySchedule();
 
@@ -1475,7 +1502,16 @@ public class ZclThermostatCluster extends ZclCluster {
      * The Clear Weekly Schedule
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.clearWeeklySchedule(parameters ...)</code>
+     * with <code>cluster.sendCommand(new clearWeeklySchedule(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> clearWeeklySchedule() {
         return sendCommand(new ClearWeeklySchedule());
     }
@@ -1498,7 +1534,16 @@ public class ZclThermostatCluster extends ZclCluster {
      * and send Get Relay Status Log Response with the new data
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getRelayStatusLog(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getRelayStatusLog(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getRelayStatusLog() {
         return sendCommand(new GetRelayStatusLog());
     }
@@ -1513,7 +1558,16 @@ public class ZclThermostatCluster extends ZclCluster {
      * @param heatSet {@link Integer} Heat Set
      * @param coolSet {@link Integer} Cool Set
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getWeeklyScheduleResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getWeeklyScheduleResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getWeeklyScheduleResponse(Integer numberOfTransitions, Integer dayOfWeek, Integer mode, Integer transition, Integer heatSet, Integer coolSet) {
         GetWeeklyScheduleResponse command = new GetWeeklyScheduleResponse();
 
@@ -1538,7 +1592,16 @@ public class ZclThermostatCluster extends ZclCluster {
      * @param setpoint {@link Integer} Setpoint
      * @param unreadEntries {@link Integer} Unread Entries
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getRelayStatusLogResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getRelayStatusLogResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getRelayStatusLogResponse(Integer timeOfDay, Integer relayStatus, Integer localTemperature, Integer humidity, Integer setpoint, Integer unreadEntries) {
         GetRelayStatusLogResponse command = new GetRelayStatusLogResponse();
 

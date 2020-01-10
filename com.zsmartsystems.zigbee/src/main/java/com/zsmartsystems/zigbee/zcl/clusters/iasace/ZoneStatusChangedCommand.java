@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class ZoneStatusChangedCommand extends ZclIasAceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -70,12 +70,40 @@ public class ZoneStatusChangedCommand extends ZclIasAceCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public ZoneStatusChangedCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param zoneId {@link Integer} Zone ID
+     * @param zoneStatus {@link Integer} Zone Status
+     * @param audibleNotification {@link Integer} Audible Notification
+     * @param zoneLabel {@link String} Zone Label
+     */
+    public ZoneStatusChangedCommand(
+            Integer zoneId,
+            Integer zoneStatus,
+            Integer audibleNotification,
+            String zoneLabel) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.zoneId = zoneId;
+        this.zoneStatus = zoneStatus;
+        this.audibleNotification = audibleNotification;
+        this.zoneLabel = zoneLabel;
     }
 
     /**
@@ -97,7 +125,9 @@ public class ZoneStatusChangedCommand extends ZclIasAceCommand {
      * default value shall be indicated in this field.
      *
      * @param zoneId the Zone ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneId(final Integer zoneId) {
         this.zoneId = zoneId;
     }
@@ -115,7 +145,9 @@ public class ZoneStatusChangedCommand extends ZclIasAceCommand {
      * Sets Zone Status.
      *
      * @param zoneStatus the Zone Status
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneStatus(final Integer zoneStatus) {
         this.zoneStatus = zoneStatus;
     }
@@ -133,7 +165,9 @@ public class ZoneStatusChangedCommand extends ZclIasAceCommand {
      * Sets Audible Notification.
      *
      * @param audibleNotification the Audible Notification
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setAudibleNotification(final Integer audibleNotification) {
         this.audibleNotification = audibleNotification;
     }
@@ -161,7 +195,9 @@ public class ZoneStatusChangedCommand extends ZclIasAceCommand {
      * characters in length.
      *
      * @param zoneLabel the Zone Label
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneLabel(final String zoneLabel) {
         this.zoneLabel = zoneLabel;
     }

@@ -59,7 +59,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
 public class ZclColorControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -1390,7 +1390,16 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param direction {@link Integer} Direction
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.moveToHueCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new moveToHueCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> moveToHueCommand(Integer hue, Integer direction, Integer transitionTime) {
         MoveToHueCommand command = new MoveToHueCommand();
 
@@ -1408,7 +1417,16 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param moveMode {@link Integer} Move Mode
      * @param rate {@link Integer} Rate
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.moveHueCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new moveHueCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> moveHueCommand(Integer moveMode, Integer rate) {
         MoveHueCommand command = new MoveHueCommand();
 
@@ -1426,7 +1444,16 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param stepSize {@link Integer} Step Size
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.stepHueCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new stepHueCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> stepHueCommand(Integer stepMode, Integer stepSize, Integer transitionTime) {
         StepHueCommand command = new StepHueCommand();
 
@@ -1444,7 +1471,16 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param saturation {@link Integer} Saturation
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.moveToSaturationCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new moveToSaturationCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> moveToSaturationCommand(Integer saturation, Integer transitionTime) {
         MoveToSaturationCommand command = new MoveToSaturationCommand();
 
@@ -1461,7 +1497,16 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param moveMode {@link Integer} Move Mode
      * @param rate {@link Integer} Rate
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.moveSaturationCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new moveSaturationCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> moveSaturationCommand(Integer moveMode, Integer rate) {
         MoveSaturationCommand command = new MoveSaturationCommand();
 
@@ -1479,7 +1524,16 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param stepSize {@link Integer} Step Size
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.stepSaturationCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new stepSaturationCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> stepSaturationCommand(Integer stepMode, Integer stepSize, Integer transitionTime) {
         StepSaturationCommand command = new StepSaturationCommand();
 
@@ -1498,7 +1552,16 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param saturation {@link Integer} Saturation
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.moveToHueAndSaturationCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new moveToHueAndSaturationCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> moveToHueAndSaturationCommand(Integer hue, Integer saturation, Integer transitionTime) {
         MoveToHueAndSaturationCommand command = new MoveToHueAndSaturationCommand();
 
@@ -1517,7 +1580,16 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param colorY {@link Integer} Color Y
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.moveToColorCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new moveToColorCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> moveToColorCommand(Integer colorX, Integer colorY, Integer transitionTime) {
         MoveToColorCommand command = new MoveToColorCommand();
 
@@ -1535,7 +1607,16 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param rateX {@link Integer} Rate X
      * @param rateY {@link Integer} Rate Y
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.moveColorCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new moveColorCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> moveColorCommand(Integer rateX, Integer rateY) {
         MoveColorCommand command = new MoveColorCommand();
 
@@ -1553,7 +1634,16 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param stepY {@link Integer} Step Y
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.stepColorCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new stepColorCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> stepColorCommand(Integer stepX, Integer stepY, Integer transitionTime) {
         StepColorCommand command = new StepColorCommand();
 
@@ -1578,7 +1668,16 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param colorTemperature {@link Integer} Color Temperature
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.moveToColorTemperatureCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new moveToColorTemperatureCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> moveToColorTemperatureCommand(Integer colorTemperature, Integer transitionTime) {
         MoveToColorTemperatureCommand command = new MoveToColorTemperatureCommand();
 
@@ -1606,7 +1705,16 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param direction {@link Integer} Direction
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.enhancedMoveToHueCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new enhancedMoveToHueCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> enhancedMoveToHueCommand(Integer enhancedHue, Integer direction, Integer transitionTime) {
         EnhancedMoveToHueCommand command = new EnhancedMoveToHueCommand();
 
@@ -1631,7 +1739,16 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param moveMode {@link Integer} Move Mode
      * @param rate {@link Integer} Rate
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.enhancedMoveHueCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new enhancedMoveHueCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> enhancedMoveHueCommand(Integer moveMode, Integer rate) {
         EnhancedMoveHueCommand command = new EnhancedMoveHueCommand();
 
@@ -1652,7 +1769,16 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param stepSize {@link Integer} Step Size
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.enhancedStepHueCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new enhancedStepHueCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> enhancedStepHueCommand(Integer stepMode, Integer stepSize, Integer transitionTime) {
         EnhancedStepHueCommand command = new EnhancedStepHueCommand();
 
@@ -1675,7 +1801,16 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param saturation {@link Integer} Saturation
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.enhancedMoveToHueAndSaturationCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new enhancedMoveToHueAndSaturationCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> enhancedMoveToHueAndSaturationCommand(Integer enhancedHue, Integer saturation, Integer transitionTime) {
         EnhancedMoveToHueAndSaturationCommand command = new EnhancedMoveToHueAndSaturationCommand();
 
@@ -1699,7 +1834,16 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param transitionTime {@link Integer} Transition Time
      * @param startHue {@link Integer} Start Hue
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.colorLoopSetCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new colorLoopSetCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> colorLoopSetCommand(Integer updateFlags, Integer action, Integer direction, Integer transitionTime, Integer startHue) {
         ColorLoopSetCommand command = new ColorLoopSetCommand();
 
@@ -1725,7 +1869,16 @@ public class ZclColorControlCluster extends ZclCluster {
      * Stop Move Step command, and the RemainingTime attribute shall be set to zero.
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.stopMoveStepCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new stopMoveStepCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> stopMoveStepCommand() {
         return sendCommand(new StopMoveStepCommand());
     }
@@ -1741,7 +1894,16 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param colorTemperatureMinimum {@link Integer} Color Temperature Minimum
      * @param colorTemperatureMaximum {@link Integer} Color Temperature Maximum
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.moveColorTemperatureCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new moveColorTemperatureCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> moveColorTemperatureCommand(Integer moveMode, Integer rate, Integer colorTemperatureMinimum, Integer colorTemperatureMaximum) {
         MoveColorTemperatureCommand command = new MoveColorTemperatureCommand();
 
@@ -1766,7 +1928,16 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param colorTemperatureMinimum {@link Integer} Color Temperature Minimum
      * @param colorTemperatureMaximum {@link Integer} Color Temperature Maximum
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.stepColorTemperatureCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new stepColorTemperatureCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> stepColorTemperatureCommand(Integer stepMode, Integer stepSize, Integer transitionTime, Integer colorTemperatureMinimum, Integer colorTemperatureMaximum) {
         StepColorTemperatureCommand command = new StepColorTemperatureCommand();
 

@@ -18,7 +18,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:02:05Z")
 public class NotificationCommandSubPayload implements ZigBeeSerializable {
     /**
      * Cluster ID structure field.
@@ -54,6 +54,34 @@ public class NotificationCommandSubPayload implements ZigBeeSerializable {
     private Integer commandIds;
 
 
+    /**
+     * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
+     */
+    @Deprecated
+    public NotificationCommandSubPayload() {
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param clusterId {@link Integer} Cluster ID
+     * @param manufacturerCode {@link Integer} Manufacturer Code
+     * @param numberOfCommands {@link Integer} Number Of Commands
+     * @param commandIds {@link Integer} Command IDs
+     */
+    public NotificationCommandSubPayload(
+            Integer clusterId,
+            Integer manufacturerCode,
+            Integer numberOfCommands,
+            Integer commandIds) {
+
+        this.clusterId = clusterId;
+        this.manufacturerCode = manufacturerCode;
+        this.numberOfCommands = numberOfCommands;
+        this.commandIds = commandIds;
+    }
 
     /**
      * Gets Cluster ID.
@@ -74,7 +102,9 @@ public class NotificationCommandSubPayload implements ZigBeeSerializable {
      * will be configured for this Notification scheme.
      *
      * @param clusterId the Cluster ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setClusterId(final Integer clusterId) {
         this.clusterId = clusterId;
     }
@@ -100,7 +130,9 @@ public class NotificationCommandSubPayload implements ZigBeeSerializable {
      * scheme.
      *
      * @param manufacturerCode the Manufacturer Code
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
     }
@@ -124,7 +156,9 @@ public class NotificationCommandSubPayload implements ZigBeeSerializable {
      * within this sub payload.
      *
      * @param numberOfCommands the Number Of Commands
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNumberOfCommands(final Integer numberOfCommands) {
         this.numberOfCommands = numberOfCommands;
     }
@@ -148,7 +182,9 @@ public class NotificationCommandSubPayload implements ZigBeeSerializable {
      * should be used with the cluster ID to reference the command(s).
      *
      * @param commandIds the Command IDs
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCommandIds(final Integer commandIds) {
         this.commandIds = commandIds;
     }

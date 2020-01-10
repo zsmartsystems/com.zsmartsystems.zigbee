@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class OnWithTimedOffCommand extends ZclOnOffCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -68,12 +68,37 @@ public class OnWithTimedOffCommand extends ZclOnOffCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public OnWithTimedOffCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param onOffControl {@link Integer} On Off Control
+     * @param onTime {@link Integer} On Time
+     * @param offWaitTime {@link Integer} Off Wait Time
+     */
+    public OnWithTimedOffCommand(
+            Integer onOffControl,
+            Integer onTime,
+            Integer offWaitTime) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.onOffControl = onOffControl;
+        this.onTime = onTime;
+        this.offWaitTime = offWaitTime;
     }
 
     /**
@@ -95,7 +120,9 @@ public class OnWithTimedOffCommand extends ZclOnOffCommand {
      * is to be operated.
      *
      * @param onOffControl the On Off Control
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setOnOffControl(final Integer onOffControl) {
         this.onOffControl = onOffControl;
     }
@@ -129,7 +156,9 @@ public class OnWithTimedOffCommand extends ZclOnOffCommand {
      * back “on”. This field shall be specified in the range 0x0000–0xfffe.
      *
      * @param onTime the On Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setOnTime(final Integer onTime) {
         this.onTime = onTime;
     }
@@ -147,7 +176,9 @@ public class OnWithTimedOffCommand extends ZclOnOffCommand {
      * Sets Off Wait Time.
      *
      * @param offWaitTime the Off Wait Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setOffWaitTime(final Integer offWaitTime) {
         this.offWaitTime = offWaitTime;
     }

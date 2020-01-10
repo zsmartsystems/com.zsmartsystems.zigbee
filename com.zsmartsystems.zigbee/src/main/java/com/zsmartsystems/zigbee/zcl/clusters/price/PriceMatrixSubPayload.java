@@ -18,7 +18,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:02:05Z")
 public class PriceMatrixSubPayload implements ZigBeeSerializable {
     /**
      * Tier Block ID structure field.
@@ -31,6 +31,28 @@ public class PriceMatrixSubPayload implements ZigBeeSerializable {
     private Integer price;
 
 
+    /**
+     * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
+     */
+    @Deprecated
+    public PriceMatrixSubPayload() {
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param tierBlockId {@link Integer} Tier Block ID
+     * @param price {@link Integer} Price
+     */
+    public PriceMatrixSubPayload(
+            Integer tierBlockId,
+            Integer price) {
+
+        this.tierBlockId = tierBlockId;
+        this.price = price;
+    }
 
     /**
      * Gets Tier Block ID.
@@ -45,7 +67,9 @@ public class PriceMatrixSubPayload implements ZigBeeSerializable {
      * Sets Tier Block ID.
      *
      * @param tierBlockId the Tier Block ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTierBlockId(final Integer tierBlockId) {
         this.tierBlockId = tierBlockId;
     }
@@ -63,7 +87,9 @@ public class PriceMatrixSubPayload implements ZigBeeSerializable {
      * Sets Price.
      *
      * @param price the Price
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setPrice(final Integer price) {
         this.price = price;
     }

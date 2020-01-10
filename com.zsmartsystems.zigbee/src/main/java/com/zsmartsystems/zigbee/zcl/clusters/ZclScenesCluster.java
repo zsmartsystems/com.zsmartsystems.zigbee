@@ -57,7 +57,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
 public class ZclScenesCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -619,7 +619,16 @@ public class ZclScenesCluster extends ZclCluster {
      * @param sceneName {@link String} Scene Name
      * @param extensionFieldSets {@link List<ExtensionFieldSet>} Extension Field Sets
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.addSceneCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new addSceneCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> addSceneCommand(Integer groupId, Integer sceneId, Integer transitionTime, String sceneName, List<ExtensionFieldSet> extensionFieldSets) {
         AddSceneCommand command = new AddSceneCommand();
 
@@ -641,7 +650,16 @@ public class ZclScenesCluster extends ZclCluster {
      * @param groupId {@link Integer} Group ID
      * @param sceneId {@link Integer} Scene ID
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.viewSceneCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new viewSceneCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> viewSceneCommand(Integer groupId, Integer sceneId) {
         ViewSceneCommand command = new ViewSceneCommand();
 
@@ -660,7 +678,16 @@ public class ZclScenesCluster extends ZclCluster {
      * @param groupId {@link Integer} Group ID
      * @param sceneId {@link Integer} Scene ID
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.removeSceneCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new removeSceneCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> removeSceneCommand(Integer groupId, Integer sceneId) {
         RemoveSceneCommand command = new RemoveSceneCommand();
 
@@ -678,7 +705,16 @@ public class ZclScenesCluster extends ZclCluster {
      *
      * @param groupId {@link Integer} Group ID
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.removeAllScenesCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new removeAllScenesCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> removeAllScenesCommand(Integer groupId) {
         RemoveAllScenesCommand command = new RemoveAllScenesCommand();
 
@@ -696,7 +732,16 @@ public class ZclScenesCluster extends ZclCluster {
      * @param groupId {@link Integer} Group ID
      * @param sceneId {@link Integer} Scene ID
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.storeSceneCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new storeSceneCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> storeSceneCommand(Integer groupId, Integer sceneId) {
         StoreSceneCommand command = new StoreSceneCommand();
 
@@ -715,7 +760,16 @@ public class ZclScenesCluster extends ZclCluster {
      * @param groupId {@link Integer} Group ID
      * @param sceneId {@link Integer} Scene ID
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.recallSceneCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new recallSceneCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> recallSceneCommand(Integer groupId, Integer sceneId) {
         RecallSceneCommand command = new RecallSceneCommand();
 
@@ -735,7 +789,16 @@ public class ZclScenesCluster extends ZclCluster {
      *
      * @param groupId {@link Integer} Group ID
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getSceneMembershipCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getSceneMembershipCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getSceneMembershipCommand(Integer groupId) {
         GetSceneMembershipCommand command = new GetSceneMembershipCommand();
 
@@ -757,7 +820,16 @@ public class ZclScenesCluster extends ZclCluster {
      * @param sceneName {@link String} Scene Name
      * @param extensionFieldSets {@link List<ExtensionFieldSet>} Extension Field Sets
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.enhancedAddSceneCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new enhancedAddSceneCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> enhancedAddSceneCommand(Integer groupId, Integer sceneId, Integer transitionTime, String sceneName, List<ExtensionFieldSet> extensionFieldSets) {
         EnhancedAddSceneCommand command = new EnhancedAddSceneCommand();
 
@@ -780,7 +852,16 @@ public class ZclScenesCluster extends ZclCluster {
      * @param groupId {@link Integer} Group ID
      * @param sceneId {@link Integer} Scene ID
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.enhancedViewSceneCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new enhancedViewSceneCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> enhancedViewSceneCommand(Integer groupId, Integer sceneId) {
         EnhancedViewSceneCommand command = new EnhancedViewSceneCommand();
 
@@ -803,7 +884,16 @@ public class ZclScenesCluster extends ZclCluster {
      * @param groupIdTo {@link Integer} Group ID To
      * @param sceneIdTo {@link Integer} Scene ID To
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.copySceneCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new copySceneCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> copySceneCommand(Integer mode, Integer groupIdFrom, Integer sceneIdFrom, Integer groupIdTo, Integer sceneIdTo) {
         CopySceneCommand command = new CopySceneCommand();
 
@@ -824,7 +914,16 @@ public class ZclScenesCluster extends ZclCluster {
      * @param groupId {@link Integer} Group ID
      * @param sceneId {@link Integer} Scene ID
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.addSceneResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new addSceneResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> addSceneResponse(Integer status, Integer groupId, Integer sceneId) {
         AddSceneResponse command = new AddSceneResponse();
 
@@ -846,7 +945,16 @@ public class ZclScenesCluster extends ZclCluster {
      * @param sceneName {@link String} Scene Name
      * @param extensionFieldSets {@link List<ExtensionFieldSet>} Extension Field Sets
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.viewSceneResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new viewSceneResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> viewSceneResponse(Integer status, Integer groupId, Integer sceneId, Integer transitionTime, String sceneName, List<ExtensionFieldSet> extensionFieldSets) {
         ViewSceneResponse command = new ViewSceneResponse();
 
@@ -868,7 +976,16 @@ public class ZclScenesCluster extends ZclCluster {
      * @param groupId {@link Integer} Group ID
      * @param sceneId {@link Integer} Scene ID
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.removeSceneResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new removeSceneResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> removeSceneResponse(Integer status, Integer groupId, Integer sceneId) {
         RemoveSceneResponse command = new RemoveSceneResponse();
 
@@ -886,7 +1003,16 @@ public class ZclScenesCluster extends ZclCluster {
      * @param status {@link Integer} Status
      * @param groupId {@link Integer} Group ID
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.removeAllScenesResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new removeAllScenesResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> removeAllScenesResponse(Integer status, Integer groupId) {
         RemoveAllScenesResponse command = new RemoveAllScenesResponse();
 
@@ -904,7 +1030,16 @@ public class ZclScenesCluster extends ZclCluster {
      * @param groupId {@link Integer} Group ID
      * @param sceneId {@link Integer} Scene ID
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.storeSceneResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new storeSceneResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> storeSceneResponse(Integer status, Integer groupId, Integer sceneId) {
         StoreSceneResponse command = new StoreSceneResponse();
 
@@ -925,7 +1060,16 @@ public class ZclScenesCluster extends ZclCluster {
      * @param sceneCount {@link Integer} Scene Count
      * @param sceneList {@link List<Integer>} Scene List
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getSceneMembershipResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getSceneMembershipResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getSceneMembershipResponse(Integer status, Integer capacity, Integer groupId, Integer sceneCount, List<Integer> sceneList) {
         GetSceneMembershipResponse command = new GetSceneMembershipResponse();
 
@@ -946,7 +1090,16 @@ public class ZclScenesCluster extends ZclCluster {
      * @param groupId {@link Integer} Group ID
      * @param sceneId {@link Integer} Scene ID
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.enhancedAddSceneResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new enhancedAddSceneResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> enhancedAddSceneResponse(Integer status, Integer groupId, Integer sceneId) {
         EnhancedAddSceneResponse command = new EnhancedAddSceneResponse();
 
@@ -968,7 +1121,16 @@ public class ZclScenesCluster extends ZclCluster {
      * @param sceneName {@link String} Scene Name
      * @param extensionFieldSets {@link List<ExtensionFieldSet>} Extension Field Sets
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.enhancedViewSceneResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new enhancedViewSceneResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> enhancedViewSceneResponse(Integer status, Integer groupId, Integer sceneId, Integer transitionTime, String sceneName, List<ExtensionFieldSet> extensionFieldSets) {
         EnhancedViewSceneResponse command = new EnhancedViewSceneResponse();
 
@@ -990,7 +1152,16 @@ public class ZclScenesCluster extends ZclCluster {
      * @param groupId {@link Integer} Group ID
      * @param sceneId {@link Integer} Scene ID
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.copySceneResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new copySceneResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> copySceneResponse(Integer status, Integer groupId, Integer sceneId) {
         CopySceneResponse command = new CopySceneResponse();
 

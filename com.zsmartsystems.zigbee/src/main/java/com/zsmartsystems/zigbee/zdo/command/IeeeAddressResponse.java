@@ -30,7 +30,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoStatus;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class IeeeAddressResponse extends ZdoResponse {
     /**
      * The ZDO cluster ID.
@@ -59,9 +59,37 @@ public class IeeeAddressResponse extends ZdoResponse {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public IeeeAddressResponse() {
         clusterId = CLUSTER_ID;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param status {@link ZdoStatus} Status
+     * @param ieeeAddrRemoteDev {@link IeeeAddress} IEEE Addr Remote Dev
+     * @param nwkAddrRemoteDev {@link Integer} NWK Addr Remote Dev
+     * @param startIndex {@link Integer} Start Index
+     * @param nwkAddrAssocDevList {@link List<Integer>} NWK Addr Assoc Dev List
+     */
+    public IeeeAddressResponse(
+            ZdoStatus status,
+            IeeeAddress ieeeAddrRemoteDev,
+            Integer nwkAddrRemoteDev,
+            Integer startIndex,
+            List<Integer> nwkAddrAssocDevList) {
+
+        clusterId = CLUSTER_ID;
+
+        this.status = status;
+        this.ieeeAddrRemoteDev = ieeeAddrRemoteDev;
+        this.nwkAddrRemoteDev = nwkAddrRemoteDev;
+        this.startIndex = startIndex;
+        this.nwkAddrAssocDevList = nwkAddrAssocDevList;
     }
 
     /**
@@ -77,7 +105,9 @@ public class IeeeAddressResponse extends ZdoResponse {
      * Sets IEEE Addr Remote Dev.
      *
      * @param ieeeAddrRemoteDev the IEEE Addr Remote Dev
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIeeeAddrRemoteDev(final IeeeAddress ieeeAddrRemoteDev) {
         this.ieeeAddrRemoteDev = ieeeAddrRemoteDev;
     }
@@ -95,7 +125,9 @@ public class IeeeAddressResponse extends ZdoResponse {
      * Sets NWK Addr Remote Dev.
      *
      * @param nwkAddrRemoteDev the NWK Addr Remote Dev
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNwkAddrRemoteDev(final Integer nwkAddrRemoteDev) {
         this.nwkAddrRemoteDev = nwkAddrRemoteDev;
     }
@@ -113,7 +145,9 @@ public class IeeeAddressResponse extends ZdoResponse {
      * Sets Start Index.
      *
      * @param startIndex the Start Index
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;
     }
@@ -131,7 +165,9 @@ public class IeeeAddressResponse extends ZdoResponse {
      * Sets NWK Addr Assoc Dev List.
      *
      * @param nwkAddrAssocDevList the NWK Addr Assoc Dev List
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNwkAddrAssocDevList(final List<Integer> nwkAddrAssocDevList) {
         this.nwkAddrAssocDevList = nwkAddrAssocDevList;
     }

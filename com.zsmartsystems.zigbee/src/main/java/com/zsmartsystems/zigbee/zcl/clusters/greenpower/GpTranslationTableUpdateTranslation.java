@@ -19,7 +19,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T21:54:11Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:02:05Z")
 public class GpTranslationTableUpdateTranslation implements ZigBeeSerializable {
     /**
      * Index structure field.
@@ -57,6 +57,43 @@ public class GpTranslationTableUpdateTranslation implements ZigBeeSerializable {
     private ByteArray zigbeeCommandPayload;
 
 
+    /**
+     * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
+     */
+    @Deprecated
+    public GpTranslationTableUpdateTranslation() {
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param index {@link Integer} Index
+     * @param gpdCommandId {@link Integer} Gpd Command ID
+     * @param endpoint {@link Integer} Endpoint
+     * @param profile {@link Integer} Profile
+     * @param cluster {@link Integer} Cluster
+     * @param zigbeeCommandId {@link Integer} Zigbee Command ID
+     * @param zigbeeCommandPayload {@link ByteArray} Zigbee Command Payload
+     */
+    public GpTranslationTableUpdateTranslation(
+            Integer index,
+            Integer gpdCommandId,
+            Integer endpoint,
+            Integer profile,
+            Integer cluster,
+            Integer zigbeeCommandId,
+            ByteArray zigbeeCommandPayload) {
+
+        this.index = index;
+        this.gpdCommandId = gpdCommandId;
+        this.endpoint = endpoint;
+        this.profile = profile;
+        this.cluster = cluster;
+        this.zigbeeCommandId = zigbeeCommandId;
+        this.zigbeeCommandPayload = zigbeeCommandPayload;
+    }
 
     /**
      * Gets Index.
@@ -71,7 +108,9 @@ public class GpTranslationTableUpdateTranslation implements ZigBeeSerializable {
      * Sets Index.
      *
      * @param index the Index
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIndex(final Integer index) {
         this.index = index;
     }
@@ -89,7 +128,9 @@ public class GpTranslationTableUpdateTranslation implements ZigBeeSerializable {
      * Sets Gpd Command ID.
      *
      * @param gpdCommandId the Gpd Command ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setGpdCommandId(final Integer gpdCommandId) {
         this.gpdCommandId = gpdCommandId;
     }
@@ -107,7 +148,9 @@ public class GpTranslationTableUpdateTranslation implements ZigBeeSerializable {
      * Sets Endpoint.
      *
      * @param endpoint the Endpoint
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setEndpoint(final Integer endpoint) {
         this.endpoint = endpoint;
     }
@@ -125,7 +168,9 @@ public class GpTranslationTableUpdateTranslation implements ZigBeeSerializable {
      * Sets Profile.
      *
      * @param profile the Profile
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProfile(final Integer profile) {
         this.profile = profile;
     }
@@ -143,7 +188,9 @@ public class GpTranslationTableUpdateTranslation implements ZigBeeSerializable {
      * Sets Cluster.
      *
      * @param cluster the Cluster
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCluster(final Integer cluster) {
         this.cluster = cluster;
     }
@@ -161,7 +208,9 @@ public class GpTranslationTableUpdateTranslation implements ZigBeeSerializable {
      * Sets Zigbee Command ID.
      *
      * @param zigbeeCommandId the Zigbee Command ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZigbeeCommandId(final Integer zigbeeCommandId) {
         this.zigbeeCommandId = zigbeeCommandId;
     }
@@ -179,7 +228,9 @@ public class GpTranslationTableUpdateTranslation implements ZigBeeSerializable {
      * Sets Zigbee Command Payload.
      *
      * @param zigbeeCommandPayload the Zigbee Command Payload
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZigbeeCommandPayload(final ByteArray zigbeeCommandPayload) {
         this.zigbeeCommandPayload = zigbeeCommandPayload;
     }

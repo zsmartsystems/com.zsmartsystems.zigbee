@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class TerminateKeyEstablishment extends ZclKeyEstablishmentCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -60,12 +60,37 @@ public class TerminateKeyEstablishment extends ZclKeyEstablishmentCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public TerminateKeyEstablishment() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param statusCode {@link Integer} Status Code
+     * @param waitTime {@link Integer} Wait Time
+     * @param keyEstablishmentSuite {@link Integer} Key Establishment Suite
+     */
+    public TerminateKeyEstablishment(
+            Integer statusCode,
+            Integer waitTime,
+            Integer keyEstablishmentSuite) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.statusCode = statusCode;
+        this.waitTime = waitTime;
+        this.keyEstablishmentSuite = keyEstablishmentSuite;
     }
 
     /**
@@ -81,7 +106,9 @@ public class TerminateKeyEstablishment extends ZclKeyEstablishmentCommand {
      * Sets Status Code.
      *
      * @param statusCode the Status Code
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStatusCode(final Integer statusCode) {
         this.statusCode = statusCode;
     }
@@ -105,7 +132,9 @@ public class TerminateKeyEstablishment extends ZclKeyEstablishmentCommand {
      * wait before trying to initiate key establishment again. The valid range is 0x00 to 0xFE.
      *
      * @param waitTime the Wait Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setWaitTime(final Integer waitTime) {
         this.waitTime = waitTime;
     }
@@ -129,7 +158,9 @@ public class TerminateKeyEstablishment extends ZclKeyEstablishmentCommand {
      * the list of key exchange methods that the device supports.
      *
      * @param keyEstablishmentSuite the Key Establishment Suite
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setKeyEstablishmentSuite(final Integer keyEstablishmentSuite) {
         this.keyEstablishmentSuite = keyEstablishmentSuite;
     }

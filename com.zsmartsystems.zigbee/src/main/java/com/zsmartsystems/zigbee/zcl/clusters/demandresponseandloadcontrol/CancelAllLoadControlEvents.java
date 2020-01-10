@@ -22,7 +22,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class CancelAllLoadControlEvents extends ZclDemandResponseAndLoadControlCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -41,12 +41,31 @@ public class CancelAllLoadControlEvents extends ZclDemandResponseAndLoadControlC
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public CancelAllLoadControlEvents() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param cancelControl {@link Integer} Cancel Control
+     */
+    public CancelAllLoadControlEvents(
+            Integer cancelControl) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.cancelControl = cancelControl;
     }
 
     /**
@@ -62,7 +81,9 @@ public class CancelAllLoadControlEvents extends ZclDemandResponseAndLoadControlC
      * Sets Cancel Control.
      *
      * @param cancelControl the Cancel Control
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCancelControl(final Integer cancelControl) {
         this.cancelControl = cancelControl;
     }

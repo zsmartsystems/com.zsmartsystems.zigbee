@@ -32,7 +32,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class PublishBillingPeriodCommand extends ZclPriceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -108,12 +108,46 @@ public class PublishBillingPeriodCommand extends ZclPriceCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public PublishBillingPeriodCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param providerId {@link Integer} Provider ID
+     * @param issuerEventId {@link Integer} Issuer Event ID
+     * @param billingPeriodStartTime {@link Calendar} Billing Period Start Time
+     * @param billingPeriodDuration {@link Integer} Billing Period Duration
+     * @param billingPeriodDurationType {@link Integer} Billing Period Duration Type
+     * @param tariffType {@link Integer} Tariff Type
+     */
+    public PublishBillingPeriodCommand(
+            Integer providerId,
+            Integer issuerEventId,
+            Calendar billingPeriodStartTime,
+            Integer billingPeriodDuration,
+            Integer billingPeriodDurationType,
+            Integer tariffType) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.providerId = providerId;
+        this.issuerEventId = issuerEventId;
+        this.billingPeriodStartTime = billingPeriodStartTime;
+        this.billingPeriodDuration = billingPeriodDuration;
+        this.billingPeriodDurationType = billingPeriodDurationType;
+        this.tariffType = tariffType;
     }
 
     /**
@@ -137,7 +171,9 @@ public class PublishBillingPeriodCommand extends ZclPriceCommand {
      * providers may be available.
      *
      * @param providerId the Provider ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProviderId(final Integer providerId) {
         this.providerId = providerId;
     }
@@ -169,7 +205,9 @@ public class PublishBillingPeriodCommand extends ZclPriceCommand {
      * value in the Issuer Event ID field that is larger than older information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
     }
@@ -203,7 +241,9 @@ public class PublishBillingPeriodCommand extends ZclPriceCommand {
      * cancellation mechanism).
      *
      * @param billingPeriodStartTime the Billing Period Start Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setBillingPeriodStartTime(final Calendar billingPeriodStartTime) {
         this.billingPeriodStartTime = billingPeriodStartTime;
     }
@@ -231,7 +271,9 @@ public class PublishBillingPeriodCommand extends ZclPriceCommand {
      * BillingPeriodStartTime, a new billing period will start with the same duration.
      *
      * @param billingPeriodDuration the Billing Period Duration
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setBillingPeriodDuration(final Integer billingPeriodDuration) {
         this.billingPeriodDuration = billingPeriodDuration;
     }
@@ -257,7 +299,9 @@ public class PublishBillingPeriodCommand extends ZclPriceCommand {
      * enumerated sub-field providing duration control.
      *
      * @param billingPeriodDurationType the Billing Period Duration Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setBillingPeriodDurationType(final Integer billingPeriodDurationType) {
         this.billingPeriodDurationType = billingPeriodDurationType;
     }
@@ -283,7 +327,9 @@ public class PublishBillingPeriodCommand extends ZclPriceCommand {
      * shall use the ‘Received’ Tariff). The most significant nibble is reserved.
      *
      * @param tariffType the Tariff Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTariffType(final Integer tariffType) {
         this.tariffType = tariffType;
     }

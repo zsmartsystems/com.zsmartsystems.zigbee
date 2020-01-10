@@ -33,7 +33,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class WriteAttributesUndividedCommand extends ZclGeneralCommand {
     /**
      * The command ID.
@@ -47,11 +47,29 @@ public class WriteAttributesUndividedCommand extends ZclGeneralCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public WriteAttributesUndividedCommand() {
         commandId = COMMAND_ID;
         genericCommand = true;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param records {@link List<WriteAttributeRecord>} Records
+     */
+    public WriteAttributesUndividedCommand(
+            List<WriteAttributeRecord> records) {
+
+        commandId = COMMAND_ID;
+        genericCommand = true;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.records = records;
     }
 
     /**
@@ -80,7 +98,9 @@ public class WriteAttributesUndividedCommand extends ZclGeneralCommand {
      * Sets Records.
      *
      * @param records the Records
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setRecords(final List<WriteAttributeRecord> records) {
         this.records = records;
     }

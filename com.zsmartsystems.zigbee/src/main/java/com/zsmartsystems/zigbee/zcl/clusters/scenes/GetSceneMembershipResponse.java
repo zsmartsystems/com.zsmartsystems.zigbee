@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class GetSceneMembershipResponse extends ZclScenesCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -63,12 +63,43 @@ public class GetSceneMembershipResponse extends ZclScenesCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public GetSceneMembershipResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param status {@link Integer} Status
+     * @param capacity {@link Integer} Capacity
+     * @param groupId {@link Integer} Group ID
+     * @param sceneCount {@link Integer} Scene Count
+     * @param sceneList {@link List<Integer>} Scene List
+     */
+    public GetSceneMembershipResponse(
+            Integer status,
+            Integer capacity,
+            Integer groupId,
+            Integer sceneCount,
+            List<Integer> sceneList) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.status = status;
+        this.capacity = capacity;
+        this.groupId = groupId;
+        this.sceneCount = sceneCount;
+        this.sceneList = sceneList;
     }
 
     /**
@@ -84,7 +115,9 @@ public class GetSceneMembershipResponse extends ZclScenesCommand {
      * Sets Status.
      *
      * @param status the Status
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStatus(final Integer status) {
         this.status = status;
     }
@@ -102,7 +135,9 @@ public class GetSceneMembershipResponse extends ZclScenesCommand {
      * Sets Capacity.
      *
      * @param capacity the Capacity
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCapacity(final Integer capacity) {
         this.capacity = capacity;
     }
@@ -120,7 +155,9 @@ public class GetSceneMembershipResponse extends ZclScenesCommand {
      * Sets Group ID.
      *
      * @param groupId the Group ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setGroupId(final Integer groupId) {
         this.groupId = groupId;
     }
@@ -138,7 +175,9 @@ public class GetSceneMembershipResponse extends ZclScenesCommand {
      * Sets Scene Count.
      *
      * @param sceneCount the Scene Count
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSceneCount(final Integer sceneCount) {
         this.sceneCount = sceneCount;
     }
@@ -156,7 +195,9 @@ public class GetSceneMembershipResponse extends ZclScenesCommand {
      * Sets Scene List.
      *
      * @param sceneList the Scene List
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSceneList(final List<Integer> sceneList) {
         this.sceneList = sceneList;
     }

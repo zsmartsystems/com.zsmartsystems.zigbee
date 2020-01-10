@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-13T19:23:13Z")
 public class ResetToFactoryDefaultsCommand extends ZclBasicCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -37,6 +37,8 @@ public class ResetToFactoryDefaultsCommand extends ZclBasicCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
     public ResetToFactoryDefaultsCommand() {
         clusterId = CLUSTER_ID;
@@ -44,6 +46,7 @@ public class ResetToFactoryDefaultsCommand extends ZclBasicCommand {
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
     }
+
 
     @Override
     public String toString() {

@@ -41,7 +41,7 @@ import com.zsmartsystems.zigbee.zcl.field.ByteArray;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
 public class ZclMessagingCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -132,7 +132,16 @@ public class ZclMessagingCluster extends ZclCluster {
      * @param message {@link String} Message
      * @param extendedMessageControl {@link Integer} Extended Message Control
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.displayMessageCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new displayMessageCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> displayMessageCommand(Integer messageId, Integer messageControl, Calendar startTime, Integer durationInMinutes, String message, Integer extendedMessageControl) {
         DisplayMessageCommand command = new DisplayMessageCommand();
 
@@ -158,7 +167,16 @@ public class ZclMessagingCluster extends ZclCluster {
      * @param messageId {@link Integer} Message ID
      * @param messageControl {@link Integer} Message Control
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.cancelMessageCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new cancelMessageCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> cancelMessageCommand(Integer messageId, Integer messageControl) {
         CancelMessageCommand command = new CancelMessageCommand();
 
@@ -182,7 +200,16 @@ public class ZclMessagingCluster extends ZclCluster {
      * @param message {@link String} Message
      * @param extendedMessageControl {@link Integer} Extended Message Control
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.displayProtectedMessageCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new displayProtectedMessageCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> displayProtectedMessageCommand(Integer messageId, Integer messageControl, Calendar startTime, Integer durationInMinutes, String message, Integer extendedMessageControl) {
         DisplayProtectedMessageCommand command = new DisplayProtectedMessageCommand();
 
@@ -205,7 +232,16 @@ public class ZclMessagingCluster extends ZclCluster {
      *
      * @param implementationTime {@link Calendar} Implementation Time
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.cancelAllMessagesCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new cancelAllMessagesCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> cancelAllMessagesCommand(Calendar implementationTime) {
         CancelAllMessagesCommand command = new CancelAllMessagesCommand();
 
@@ -229,7 +265,16 @@ public class ZclMessagingCluster extends ZclCluster {
      * @param message {@link String} Message
      * @param optionalExtendedMessageControl {@link Integer} Optional Extended Message Control
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getLastMessage(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getLastMessage(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getLastMessage(Integer messageId, Integer messageControl, Calendar startTime, Integer durationInMinutes, String message, Integer optionalExtendedMessageControl) {
         GetLastMessage command = new GetLastMessage();
 
@@ -257,7 +302,16 @@ public class ZclMessagingCluster extends ZclCluster {
      * @param messageConfirmationControl {@link Integer} Message Confirmation Control
      * @param messageConfirmationResponse {@link ByteArray} Message Confirmation Response
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.messageConfirmation(parameters ...)</code>
+     * with <code>cluster.sendCommand(new messageConfirmation(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> messageConfirmation(Integer messageId, Calendar confirmationTime, Integer messageConfirmationControl, ByteArray messageConfirmationResponse) {
         MessageConfirmation command = new MessageConfirmation();
 
@@ -279,7 +333,16 @@ public class ZclMessagingCluster extends ZclCluster {
      *
      * @param earliestImplementationTime {@link Calendar} Earliest Implementation Time
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getMessageCancellation(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getMessageCancellation(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getMessageCancellation(Calendar earliestImplementationTime) {
         GetMessageCancellation command = new GetMessageCancellation();
 
@@ -297,7 +360,16 @@ public class ZclMessagingCluster extends ZclCluster {
      *
      * @param implementationDateTime {@link Calendar} Implementation Date Time
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.cancelAllMessages(parameters ...)</code>
+     * with <code>cluster.sendCommand(new cancelAllMessages(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> cancelAllMessages(Calendar implementationDateTime) {
         CancelAllMessages command = new CancelAllMessages();
 

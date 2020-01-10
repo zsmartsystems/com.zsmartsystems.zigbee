@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class GetBillingPeriodCommand extends ZclPriceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -82,12 +82,40 @@ public class GetBillingPeriodCommand extends ZclPriceCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public GetBillingPeriodCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param earliestStartTime {@link Calendar} Earliest Start Time
+     * @param minIssuerEventId {@link Integer} Min . Issuer Event ID
+     * @param numberOfCommands {@link Integer} Number Of Commands
+     * @param tariffType {@link Integer} Tariff Type
+     */
+    public GetBillingPeriodCommand(
+            Calendar earliestStartTime,
+            Integer minIssuerEventId,
+            Integer numberOfCommands,
+            Integer tariffType) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.earliestStartTime = earliestStartTime;
+        this.minIssuerEventId = minIssuerEventId;
+        this.numberOfCommands = numberOfCommands;
+        this.tariffType = tariffType;
     }
 
     /**
@@ -115,7 +143,9 @@ public class GetBillingPeriodCommand extends ZclPriceCommand {
      * active and scheduled instances shall be sent with ascending ordered StartTime.
      *
      * @param earliestStartTime the Earliest Start Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setEarliestStartTime(final Calendar earliestStartTime) {
         this.earliestStartTime = earliestStartTime;
     }
@@ -143,7 +173,9 @@ public class GetBillingPeriodCommand extends ZclPriceCommand {
      * Issuer Event ID.
      *
      * @param minIssuerEventId the Min . Issuer Event ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setMinIssuerEventId(final Integer minIssuerEventId) {
         this.minIssuerEventId = minIssuerEventId;
     }
@@ -169,7 +201,9 @@ public class GetBillingPeriodCommand extends ZclPriceCommand {
      * indicate all available PublishBillingPeriod commands shall be returned.
      *
      * @param numberOfCommands the Number Of Commands
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNumberOfCommands(final Integer numberOfCommands) {
         this.numberOfCommands = numberOfCommands;
     }
@@ -199,7 +233,9 @@ public class GetBillingPeriodCommand extends ZclPriceCommand {
      * information regardless of its type. The most significant nibble is reserved.
      *
      * @param tariffType the Tariff Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTariffType(final Integer tariffType) {
         this.tariffType = tariffType;
     }

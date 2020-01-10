@@ -56,7 +56,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
 public class ZclDoorLockCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -3425,7 +3425,16 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param pinCode {@link ByteArray} PIN Code
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.lockDoorCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new lockDoorCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> lockDoorCommand(ByteArray pinCode) {
         LockDoorCommand command = new LockDoorCommand();
 
@@ -3449,7 +3458,16 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param pinCode {@link ByteArray} PIN Code
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.unlockDoorCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new unlockDoorCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> unlockDoorCommand(ByteArray pinCode) {
         UnlockDoorCommand command = new UnlockDoorCommand();
 
@@ -3468,7 +3486,16 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param pin {@link String} PIN
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.toggle(parameters ...)</code>
+     * with <code>cluster.sendCommand(new toggle(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> toggle(String pin) {
         Toggle command = new Toggle();
 
@@ -3491,7 +3518,16 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param timeoutInSeconds {@link Integer} Timeout In Seconds
      * @param pin {@link String} PIN
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.unlockWithTimeout(parameters ...)</code>
+     * with <code>cluster.sendCommand(new unlockWithTimeout(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> unlockWithTimeout(Integer timeoutInSeconds, String pin) {
         UnlockWithTimeout command = new UnlockWithTimeout();
 
@@ -3514,7 +3550,16 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param status {@link Integer} Status
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.lockDoorResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new lockDoorResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> lockDoorResponse(Integer status) {
         LockDoorResponse command = new LockDoorResponse();
 
@@ -3536,7 +3581,16 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param status {@link Integer} Status
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.unlockDoorResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new unlockDoorResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> unlockDoorResponse(Integer status) {
         UnlockDoorResponse command = new UnlockDoorResponse();
 
@@ -3558,7 +3612,16 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param status {@link Integer} Status
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.toggleResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new toggleResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> toggleResponse(Integer status) {
         ToggleResponse command = new ToggleResponse();
 
@@ -3579,7 +3642,16 @@ public class ZclDoorLockCluster extends ZclCluster {
      *
      * @param status {@link Integer} Status
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.unlockWithTimeoutResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new unlockWithTimeoutResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> unlockWithTimeoutResponse(Integer status) {
         UnlockWithTimeoutResponse command = new UnlockWithTimeoutResponse();
 

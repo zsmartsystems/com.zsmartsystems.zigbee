@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class GetMeasurementProfileCommand extends ZclElectricalMeasurementCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -54,12 +54,37 @@ public class GetMeasurementProfileCommand extends ZclElectricalMeasurementComman
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public GetMeasurementProfileCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param attributeId {@link Integer} Attribute ID
+     * @param startTime {@link Integer} Start Time
+     * @param numberOfIntervals {@link Integer} Number Of Intervals
+     */
+    public GetMeasurementProfileCommand(
+            Integer attributeId,
+            Integer startTime,
+            Integer numberOfIntervals) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.attributeId = attributeId;
+        this.startTime = startTime;
+        this.numberOfIntervals = numberOfIntervals;
     }
 
     /**
@@ -75,7 +100,9 @@ public class GetMeasurementProfileCommand extends ZclElectricalMeasurementComman
      * Sets Attribute ID.
      *
      * @param attributeId the Attribute ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setAttributeId(final Integer attributeId) {
         this.attributeId = attributeId;
     }
@@ -93,7 +120,9 @@ public class GetMeasurementProfileCommand extends ZclElectricalMeasurementComman
      * Sets Start Time.
      *
      * @param startTime the Start Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStartTime(final Integer startTime) {
         this.startTime = startTime;
     }
@@ -111,7 +140,9 @@ public class GetMeasurementProfileCommand extends ZclElectricalMeasurementComman
      * Sets Number Of Intervals.
      *
      * @param numberOfIntervals the Number Of Intervals
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNumberOfIntervals(final Integer numberOfIntervals) {
         this.numberOfIntervals = numberOfIntervals;
     }

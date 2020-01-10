@@ -36,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.commissioning.ZclCommissioningComma
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
 public class ZclCommissioningCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -124,7 +124,16 @@ public class ZclCommissioningCluster extends ZclCluster {
      * @param delay {@link Integer} Delay
      * @param jitter {@link Integer} Jitter
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.restartDeviceCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new restartDeviceCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> restartDeviceCommand(Integer option, Integer delay, Integer jitter) {
         RestartDeviceCommand command = new RestartDeviceCommand();
 
@@ -142,7 +151,16 @@ public class ZclCommissioningCluster extends ZclCluster {
      * @param option {@link Integer} Option
      * @param index {@link Integer} Index
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.saveStartupParametersCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new saveStartupParametersCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> saveStartupParametersCommand(Integer option, Integer index) {
         SaveStartupParametersCommand command = new SaveStartupParametersCommand();
 
@@ -159,7 +177,16 @@ public class ZclCommissioningCluster extends ZclCluster {
      * @param option {@link Integer} Option
      * @param index {@link Integer} Index
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.restoreStartupParametersCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new restoreStartupParametersCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> restoreStartupParametersCommand(Integer option, Integer index) {
         RestoreStartupParametersCommand command = new RestoreStartupParametersCommand();
 
@@ -176,7 +203,16 @@ public class ZclCommissioningCluster extends ZclCluster {
      * @param option {@link Integer} Option
      * @param index {@link Integer} Index
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.resetStartupParametersCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new resetStartupParametersCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> resetStartupParametersCommand(Integer option, Integer index) {
         ResetStartupParametersCommand command = new ResetStartupParametersCommand();
 
@@ -192,7 +228,16 @@ public class ZclCommissioningCluster extends ZclCluster {
      *
      * @param status {@link Integer} Status
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.restartDeviceResponseResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new restartDeviceResponseResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> restartDeviceResponseResponse(Integer status) {
         RestartDeviceResponseResponse command = new RestartDeviceResponseResponse();
 
@@ -207,7 +252,16 @@ public class ZclCommissioningCluster extends ZclCluster {
      *
      * @param status {@link Integer} Status
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.saveStartupParametersResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new saveStartupParametersResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> saveStartupParametersResponse(Integer status) {
         SaveStartupParametersResponse command = new SaveStartupParametersResponse();
 
@@ -222,7 +276,16 @@ public class ZclCommissioningCluster extends ZclCluster {
      *
      * @param status {@link Integer} Status
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.restoreStartupParametersResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new restoreStartupParametersResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> restoreStartupParametersResponse(Integer status) {
         RestoreStartupParametersResponse command = new RestoreStartupParametersResponse();
 
@@ -237,7 +300,16 @@ public class ZclCommissioningCluster extends ZclCluster {
      *
      * @param status {@link Integer} Status
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.resetStartupParametersResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new resetStartupParametersResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> resetStartupParametersResponse(Integer status) {
         ResetStartupParametersResponse command = new ResetStartupParametersResponse();
 

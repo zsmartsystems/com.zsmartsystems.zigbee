@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class ConfigureMirror extends ZclMeteringCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -84,12 +84,40 @@ public class ConfigureMirror extends ZclMeteringCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public ConfigureMirror() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param issuerEventId {@link Integer} Issuer Event ID
+     * @param reportingInterval {@link Integer} Reporting Interval
+     * @param mirrorNotificationReporting {@link Boolean} Mirror Notification Reporting
+     * @param notificationScheme {@link Integer} Notification Scheme
+     */
+    public ConfigureMirror(
+            Integer issuerEventId,
+            Integer reportingInterval,
+            Boolean mirrorNotificationReporting,
+            Integer notificationScheme) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.issuerEventId = issuerEventId;
+        this.reportingInterval = reportingInterval;
+        this.mirrorNotificationReporting = mirrorNotificationReporting;
+        this.notificationScheme = notificationScheme;
     }
 
     /**
@@ -119,7 +147,9 @@ public class ConfigureMirror extends ZclMeteringCommand {
      * information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
     }
@@ -143,7 +173,9 @@ public class ConfigureMirror extends ZclMeteringCommand {
      * intends to use the ReportAttribute command.
      *
      * @param reportingInterval the Reporting Interval
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setReportingInterval(final Integer reportingInterval) {
         this.reportingInterval = reportingInterval;
     }
@@ -185,7 +217,9 @@ public class ConfigureMirror extends ZclMeteringCommand {
      * means of a normal ReadAttribute command.
      *
      * @param mirrorNotificationReporting the Mirror Notification Reporting
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setMirrorNotificationReporting(final Boolean mirrorNotificationReporting) {
         this.mirrorNotificationReporting = mirrorNotificationReporting;
     }
@@ -209,7 +243,9 @@ public class ConfigureMirror extends ZclMeteringCommand {
      * mapping to ZCL or Smart Energy Standard commands.
      *
      * @param notificationScheme the Notification Scheme
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNotificationScheme(final Integer notificationScheme) {
         this.notificationScheme = notificationScheme;
     }

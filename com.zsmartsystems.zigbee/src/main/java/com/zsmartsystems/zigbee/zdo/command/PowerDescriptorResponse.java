@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-15T18:21:05Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class PowerDescriptorResponse extends ZdoResponse {
     /**
      * The ZDO cluster ID.
@@ -45,9 +45,31 @@ public class PowerDescriptorResponse extends ZdoResponse {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public PowerDescriptorResponse() {
         clusterId = CLUSTER_ID;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param status {@link ZdoStatus} Status
+     * @param nwkAddrOfInterest {@link Integer} NWK Addr Of Interest
+     * @param powerDescriptor {@link PowerDescriptor} Power Descriptor
+     */
+    public PowerDescriptorResponse(
+            ZdoStatus status,
+            Integer nwkAddrOfInterest,
+            PowerDescriptor powerDescriptor) {
+
+        clusterId = CLUSTER_ID;
+
+        this.status = status;
+        this.nwkAddrOfInterest = nwkAddrOfInterest;
+        this.powerDescriptor = powerDescriptor;
     }
 
     /**
@@ -63,7 +85,9 @@ public class PowerDescriptorResponse extends ZdoResponse {
      * Sets NWK Addr Of Interest.
      *
      * @param nwkAddrOfInterest the NWK Addr Of Interest
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
         this.nwkAddrOfInterest = nwkAddrOfInterest;
     }
@@ -81,7 +105,9 @@ public class PowerDescriptorResponse extends ZdoResponse {
      * Sets Power Descriptor.
      *
      * @param powerDescriptor the Power Descriptor
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setPowerDescriptor(final PowerDescriptor powerDescriptor) {
         this.powerDescriptor = powerDescriptor;
     }

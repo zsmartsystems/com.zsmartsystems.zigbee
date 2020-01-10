@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class SupportedTunnelProtocolsResponse extends ZclSmartEnergyTunnelingCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -62,12 +62,37 @@ public class SupportedTunnelProtocolsResponse extends ZclSmartEnergyTunnelingCom
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public SupportedTunnelProtocolsResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param protocolListComplete {@link Boolean} Protocol List Complete
+     * @param protocolCount {@link Integer} Protocol Count
+     * @param protocolList {@link Protocol} Protocol List
+     */
+    public SupportedTunnelProtocolsResponse(
+            Boolean protocolListComplete,
+            Integer protocolCount,
+            Protocol protocolList) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.protocolListComplete = protocolListComplete;
+        this.protocolCount = protocolCount;
+        this.protocolList = protocolList;
     }
 
     /**
@@ -91,7 +116,9 @@ public class SupportedTunnelProtocolsResponse extends ZclSmartEnergyTunnelingCom
      * indicates that the list of supported protocols is complete.
      *
      * @param protocolListComplete the Protocol List Complete
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProtocolListComplete(final Boolean protocolListComplete) {
         this.protocolListComplete = protocolListComplete;
     }
@@ -113,7 +140,9 @@ public class SupportedTunnelProtocolsResponse extends ZclSmartEnergyTunnelingCom
      * The number of Protocol fields contained in the response.
      *
      * @param protocolCount the Protocol Count
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProtocolCount(final Integer protocolCount) {
         this.protocolCount = protocolCount;
     }
@@ -131,7 +160,9 @@ public class SupportedTunnelProtocolsResponse extends ZclSmartEnergyTunnelingCom
      * Sets Protocol List.
      *
      * @param protocolList the Protocol List
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProtocolList(final Protocol protocolList) {
         this.protocolList = protocolList;
     }

@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class GetProfileInfoResponseCommand extends ZclElectricalMeasurementCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -60,12 +60,40 @@ public class GetProfileInfoResponseCommand extends ZclElectricalMeasurementComma
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public GetProfileInfoResponseCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param profileCount {@link Integer} Profile Count
+     * @param profileIntervalPeriod {@link Integer} Profile Interval Period
+     * @param maxNumberOfIntervals {@link Integer} Max Number Of Intervals
+     * @param listOfAttributes {@link Integer} List Of Attributes
+     */
+    public GetProfileInfoResponseCommand(
+            Integer profileCount,
+            Integer profileIntervalPeriod,
+            Integer maxNumberOfIntervals,
+            Integer listOfAttributes) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.profileCount = profileCount;
+        this.profileIntervalPeriod = profileIntervalPeriod;
+        this.maxNumberOfIntervals = maxNumberOfIntervals;
+        this.listOfAttributes = listOfAttributes;
     }
 
     /**
@@ -81,7 +109,9 @@ public class GetProfileInfoResponseCommand extends ZclElectricalMeasurementComma
      * Sets Profile Count.
      *
      * @param profileCount the Profile Count
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProfileCount(final Integer profileCount) {
         this.profileCount = profileCount;
     }
@@ -99,7 +129,9 @@ public class GetProfileInfoResponseCommand extends ZclElectricalMeasurementComma
      * Sets Profile Interval Period.
      *
      * @param profileIntervalPeriod the Profile Interval Period
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProfileIntervalPeriod(final Integer profileIntervalPeriod) {
         this.profileIntervalPeriod = profileIntervalPeriod;
     }
@@ -117,7 +149,9 @@ public class GetProfileInfoResponseCommand extends ZclElectricalMeasurementComma
      * Sets Max Number Of Intervals.
      *
      * @param maxNumberOfIntervals the Max Number Of Intervals
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setMaxNumberOfIntervals(final Integer maxNumberOfIntervals) {
         this.maxNumberOfIntervals = maxNumberOfIntervals;
     }
@@ -135,7 +169,9 @@ public class GetProfileInfoResponseCommand extends ZclElectricalMeasurementComma
      * Sets List Of Attributes.
      *
      * @param listOfAttributes the List Of Attributes
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setListOfAttributes(final Integer listOfAttributes) {
         this.listOfAttributes = listOfAttributes;
     }

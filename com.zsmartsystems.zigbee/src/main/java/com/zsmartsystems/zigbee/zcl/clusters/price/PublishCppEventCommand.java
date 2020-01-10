@@ -33,7 +33,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class PublishCppEventCommand extends ZclPriceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -110,12 +110,49 @@ public class PublishCppEventCommand extends ZclPriceCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public PublishCppEventCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param providerId {@link Integer} Provider ID
+     * @param issuerEventId {@link Integer} Issuer Event ID
+     * @param startTime {@link Calendar} Start Time
+     * @param durationInMinutes {@link Integer} Duration In Minutes
+     * @param tariffType {@link Integer} Tariff Type
+     * @param cppPriceTier {@link Integer} Cpp Price Tier
+     * @param cppAuth {@link Integer} Cpp Auth
+     */
+    public PublishCppEventCommand(
+            Integer providerId,
+            Integer issuerEventId,
+            Calendar startTime,
+            Integer durationInMinutes,
+            Integer tariffType,
+            Integer cppPriceTier,
+            Integer cppAuth) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.providerId = providerId;
+        this.issuerEventId = issuerEventId;
+        this.startTime = startTime;
+        this.durationInMinutes = durationInMinutes;
+        this.tariffType = tariffType;
+        this.cppPriceTier = cppPriceTier;
+        this.cppAuth = cppAuth;
     }
 
     /**
@@ -139,7 +176,9 @@ public class PublishCppEventCommand extends ZclPriceCommand {
      * providers may be available.
      *
      * @param providerId the Provider ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProviderId(final Integer providerId) {
         this.providerId = providerId;
     }
@@ -185,7 +224,9 @@ public class PublishCppEventCommand extends ZclPriceCommand {
      * the CPP event.
      *
      * @param issuerEventId the Issuer Event ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
     }
@@ -203,7 +244,9 @@ public class PublishCppEventCommand extends ZclPriceCommand {
      * Sets Start Time.
      *
      * @param startTime the Start Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStartTime(final Calendar startTime) {
         this.startTime = startTime;
     }
@@ -221,7 +264,9 @@ public class PublishCppEventCommand extends ZclPriceCommand {
      * Sets Duration In Minutes.
      *
      * @param durationInMinutes the Duration In Minutes
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDurationInMinutes(final Integer durationInMinutes) {
         this.durationInMinutes = durationInMinutes;
     }
@@ -247,7 +292,9 @@ public class PublishCppEventCommand extends ZclPriceCommand {
      * shall use the ‘Received’ Tariff). The most significant nibble is reserved.
      *
      * @param tariffType the Tariff Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTariffType(final Integer tariffType) {
         this.tariffType = tariffType;
     }
@@ -273,7 +320,9 @@ public class PublishCppEventCommand extends ZclPriceCommand {
      * normal pricing scheme. Prices ‘CPP1’ and ‘CPP2’ are reserved for this purposes.
      *
      * @param cppPriceTier the Cpp Price Tier
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCppPriceTier(final Integer cppPriceTier) {
         this.cppPriceTier = cppPriceTier;
     }
@@ -295,7 +344,9 @@ public class PublishCppEventCommand extends ZclPriceCommand {
      * An 8-bit enumeration identifying the status of the CPP event:
      *
      * @param cppAuth the Cpp Auth
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCppAuth(final Integer cppAuth) {
         this.cppAuth = cppAuth;
     }

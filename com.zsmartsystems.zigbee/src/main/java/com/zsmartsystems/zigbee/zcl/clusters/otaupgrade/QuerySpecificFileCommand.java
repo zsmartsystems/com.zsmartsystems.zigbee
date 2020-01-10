@@ -31,7 +31,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class QuerySpecificFileCommand extends ZclOtaUpgradeCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -70,12 +70,43 @@ public class QuerySpecificFileCommand extends ZclOtaUpgradeCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public QuerySpecificFileCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param requestNodeAddress {@link IeeeAddress} Request Node Address
+     * @param manufacturerCode {@link Integer} Manufacturer Code
+     * @param imageType {@link Integer} Image Type
+     * @param fileVersion {@link Integer} File Version
+     * @param zigbeeStackVersion {@link Integer} Zigbee Stack Version
+     */
+    public QuerySpecificFileCommand(
+            IeeeAddress requestNodeAddress,
+            Integer manufacturerCode,
+            Integer imageType,
+            Integer fileVersion,
+            Integer zigbeeStackVersion) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.requestNodeAddress = requestNodeAddress;
+        this.manufacturerCode = manufacturerCode;
+        this.imageType = imageType;
+        this.fileVersion = fileVersion;
+        this.zigbeeStackVersion = zigbeeStackVersion;
     }
 
     /**
@@ -91,7 +122,9 @@ public class QuerySpecificFileCommand extends ZclOtaUpgradeCommand {
      * Sets Request Node Address.
      *
      * @param requestNodeAddress the Request Node Address
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setRequestNodeAddress(final IeeeAddress requestNodeAddress) {
         this.requestNodeAddress = requestNodeAddress;
     }
@@ -109,7 +142,9 @@ public class QuerySpecificFileCommand extends ZclOtaUpgradeCommand {
      * Sets Manufacturer Code.
      *
      * @param manufacturerCode the Manufacturer Code
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
     }
@@ -127,7 +162,9 @@ public class QuerySpecificFileCommand extends ZclOtaUpgradeCommand {
      * Sets Image Type.
      *
      * @param imageType the Image Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setImageType(final Integer imageType) {
         this.imageType = imageType;
     }
@@ -145,7 +182,9 @@ public class QuerySpecificFileCommand extends ZclOtaUpgradeCommand {
      * Sets File Version.
      *
      * @param fileVersion the File Version
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setFileVersion(final Integer fileVersion) {
         this.fileVersion = fileVersion;
     }
@@ -163,7 +202,9 @@ public class QuerySpecificFileCommand extends ZclOtaUpgradeCommand {
      * Sets Zigbee Stack Version.
      *
      * @param zigbeeStackVersion the Zigbee Stack Version
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZigbeeStackVersion(final Integer zigbeeStackVersion) {
         this.zigbeeStackVersion = zigbeeStackVersion;
     }

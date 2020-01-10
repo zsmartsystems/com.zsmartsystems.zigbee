@@ -18,7 +18,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:02:05Z")
 public class SnapshotResponsePayload implements ZigBeeSerializable {
     /**
      * Snapshot Schedule ID structure field.
@@ -31,6 +31,28 @@ public class SnapshotResponsePayload implements ZigBeeSerializable {
     private Integer snapshotScheduleConfirmation;
 
 
+    /**
+     * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
+     */
+    @Deprecated
+    public SnapshotResponsePayload() {
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param snapshotScheduleId {@link Integer} Snapshot Schedule ID
+     * @param snapshotScheduleConfirmation {@link Integer} Snapshot Schedule Confirmation
+     */
+    public SnapshotResponsePayload(
+            Integer snapshotScheduleId,
+            Integer snapshotScheduleConfirmation) {
+
+        this.snapshotScheduleId = snapshotScheduleId;
+        this.snapshotScheduleConfirmation = snapshotScheduleConfirmation;
+    }
 
     /**
      * Gets Snapshot Schedule ID.
@@ -45,7 +67,9 @@ public class SnapshotResponsePayload implements ZigBeeSerializable {
      * Sets Snapshot Schedule ID.
      *
      * @param snapshotScheduleId the Snapshot Schedule ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSnapshotScheduleId(final Integer snapshotScheduleId) {
         this.snapshotScheduleId = snapshotScheduleId;
     }
@@ -63,7 +87,9 @@ public class SnapshotResponsePayload implements ZigBeeSerializable {
      * Sets Snapshot Schedule Confirmation.
      *
      * @param snapshotScheduleConfirmation the Snapshot Schedule Confirmation
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSnapshotScheduleConfirmation(final Integer snapshotScheduleConfirmation) {
         this.snapshotScheduleConfirmation = snapshotScheduleConfirmation;
     }

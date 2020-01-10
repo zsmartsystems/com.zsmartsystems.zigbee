@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class LockDoorCommand extends ZclDoorLockCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -46,12 +46,31 @@ public class LockDoorCommand extends ZclDoorLockCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public LockDoorCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param pinCode {@link ByteArray} PIN Code
+     */
+    public LockDoorCommand(
+            ByteArray pinCode) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.pinCode = pinCode;
     }
 
     /**
@@ -67,7 +86,9 @@ public class LockDoorCommand extends ZclDoorLockCommand {
      * Sets PIN Code.
      *
      * @param pinCode the PIN Code
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setPinCode(final ByteArray pinCode) {
         this.pinCode = pinCode;
     }

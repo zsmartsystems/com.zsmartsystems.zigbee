@@ -36,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
 public class ZclIasZoneCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -759,7 +759,16 @@ public class ZclIasZoneCluster extends ZclCluster {
      * @param enrollResponseCode {@link Integer} Enroll Response Code
      * @param zoneId {@link Integer} Zone ID
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.zoneEnrollResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new zoneEnrollResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> zoneEnrollResponse(Integer enrollResponseCode, Integer zoneId) {
         ZoneEnrollResponse command = new ZoneEnrollResponse();
 
@@ -781,7 +790,16 @@ public class ZclIasZoneCluster extends ZclCluster {
      * attribute Test bit to zero (i.e., “operation mode”).
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.initiateNormalOperationModeCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new initiateNormalOperationModeCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> initiateNormalOperationModeCommand() {
         return sendCommand(new InitiateNormalOperationModeCommand());
     }
@@ -811,7 +829,16 @@ public class ZclIasZoneCluster extends ZclCluster {
      * @param testModeDuration {@link Integer} Test Mode Duration
      * @param currentZoneSensitivityLevel {@link Integer} Current Zone Sensitivity Level
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.initiateTestModeCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new initiateTestModeCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> initiateTestModeCommand(Integer testModeDuration, Integer currentZoneSensitivityLevel) {
         InitiateTestModeCommand command = new InitiateTestModeCommand();
 
@@ -833,7 +860,16 @@ public class ZclIasZoneCluster extends ZclCluster {
      * @param zoneId {@link Integer} Zone ID
      * @param delay {@link Integer} Delay
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.zoneStatusChangeNotificationCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new zoneStatusChangeNotificationCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> zoneStatusChangeNotificationCommand(Integer zoneStatus, Integer extendedStatus, Integer zoneId, Integer delay) {
         ZoneStatusChangeNotificationCommand command = new ZoneStatusChangeNotificationCommand();
 
@@ -856,7 +892,16 @@ public class ZclIasZoneCluster extends ZclCluster {
      * @param zoneType {@link Integer} Zone Type
      * @param manufacturerCode {@link Integer} Manufacturer Code
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.zoneEnrollRequestCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new zoneEnrollRequestCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> zoneEnrollRequestCommand(Integer zoneType, Integer manufacturerCode) {
         ZoneEnrollRequestCommand command = new ZoneEnrollRequestCommand();
 

@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class ChangePaymentMode extends ZclPrepaymentCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -66,12 +66,43 @@ public class ChangePaymentMode extends ZclPrepaymentCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public ChangePaymentMode() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param providerId {@link Integer} Provider ID
+     * @param issuerEventId {@link Integer} Issuer Event ID
+     * @param implementationDateTime {@link Calendar} Implementation Date Time
+     * @param proposedPaymentControlConfiguration {@link Integer} Proposed Payment Control Configuration
+     * @param cutOffValue {@link Integer} Cut Off Value
+     */
+    public ChangePaymentMode(
+            Integer providerId,
+            Integer issuerEventId,
+            Calendar implementationDateTime,
+            Integer proposedPaymentControlConfiguration,
+            Integer cutOffValue) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.providerId = providerId;
+        this.issuerEventId = issuerEventId;
+        this.implementationDateTime = implementationDateTime;
+        this.proposedPaymentControlConfiguration = proposedPaymentControlConfiguration;
+        this.cutOffValue = cutOffValue;
     }
 
     /**
@@ -87,7 +118,9 @@ public class ChangePaymentMode extends ZclPrepaymentCommand {
      * Sets Provider ID.
      *
      * @param providerId the Provider ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProviderId(final Integer providerId) {
         this.providerId = providerId;
     }
@@ -105,7 +138,9 @@ public class ChangePaymentMode extends ZclPrepaymentCommand {
      * Sets Issuer Event ID.
      *
      * @param issuerEventId the Issuer Event ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
     }
@@ -123,7 +158,9 @@ public class ChangePaymentMode extends ZclPrepaymentCommand {
      * Sets Implementation Date Time.
      *
      * @param implementationDateTime the Implementation Date Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setImplementationDateTime(final Calendar implementationDateTime) {
         this.implementationDateTime = implementationDateTime;
     }
@@ -141,7 +178,9 @@ public class ChangePaymentMode extends ZclPrepaymentCommand {
      * Sets Proposed Payment Control Configuration.
      *
      * @param proposedPaymentControlConfiguration the Proposed Payment Control Configuration
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProposedPaymentControlConfiguration(final Integer proposedPaymentControlConfiguration) {
         this.proposedPaymentControlConfiguration = proposedPaymentControlConfiguration;
     }
@@ -159,7 +198,9 @@ public class ChangePaymentMode extends ZclPrepaymentCommand {
      * Sets Cut Off Value.
      *
      * @param cutOffValue the Cut Off Value
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCutOffValue(final Integer cutOffValue) {
         this.cutOffValue = cutOffValue;
     }

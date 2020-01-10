@@ -30,7 +30,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class MessageConfirmation extends ZclMessagingCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -75,12 +75,40 @@ public class MessageConfirmation extends ZclMessagingCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public MessageConfirmation() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param messageId {@link Integer} Message ID
+     * @param confirmationTime {@link Calendar} Confirmation Time
+     * @param messageConfirmationControl {@link Integer} Message Confirmation Control
+     * @param messageConfirmationResponse {@link ByteArray} Message Confirmation Response
+     */
+    public MessageConfirmation(
+            Integer messageId,
+            Calendar confirmationTime,
+            Integer messageConfirmationControl,
+            ByteArray messageConfirmationResponse) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.messageId = messageId;
+        this.confirmationTime = confirmationTime;
+        this.messageConfirmationControl = messageConfirmationControl;
+        this.messageConfirmationResponse = messageConfirmationResponse;
     }
 
     /**
@@ -100,7 +128,9 @@ public class MessageConfirmation extends ZclMessagingCommand {
      * A unique unsigned 32-bit number identifier for the message being confirmed.
      *
      * @param messageId the Message ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setMessageId(final Integer messageId) {
         this.messageId = messageId;
     }
@@ -122,7 +152,9 @@ public class MessageConfirmation extends ZclMessagingCommand {
      * UTCTime of user confirmation of message.
      *
      * @param confirmationTime the Confirmation Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setConfirmationTime(final Calendar confirmationTime) {
         this.confirmationTime = confirmationTime;
     }
@@ -146,7 +178,9 @@ public class MessageConfirmation extends ZclMessagingCommand {
      * response.
      *
      * @param messageConfirmationControl the Message Confirmation Control
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setMessageConfirmationControl(final Integer messageConfirmationControl) {
         this.messageConfirmationControl = messageConfirmationControl;
     }
@@ -172,7 +206,9 @@ public class MessageConfirmation extends ZclMessagingCommand {
      * available, a default value of 0x00 shall be used.
      *
      * @param messageConfirmationResponse the Message Confirmation Response
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setMessageConfirmationResponse(final ByteArray messageConfirmationResponse) {
         this.messageConfirmationResponse = messageConfirmationResponse;
     }

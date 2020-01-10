@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class SetSupplyStatus extends ZclMeteringCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -83,12 +83,43 @@ public class SetSupplyStatus extends ZclMeteringCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public SetSupplyStatus() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param issuerEventId {@link Integer} Issuer Event ID
+     * @param supplyTamperState {@link Integer} Supply Tamper State
+     * @param supplyDepletionState {@link Integer} Supply Depletion State
+     * @param supplyUncontrolledFlowState {@link Integer} Supply Uncontrolled Flow State
+     * @param loadLimitSupplyState {@link Integer} Load Limit Supply State
+     */
+    public SetSupplyStatus(
+            Integer issuerEventId,
+            Integer supplyTamperState,
+            Integer supplyDepletionState,
+            Integer supplyUncontrolledFlowState,
+            Integer loadLimitSupplyState) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.issuerEventId = issuerEventId;
+        this.supplyTamperState = supplyTamperState;
+        this.supplyDepletionState = supplyDepletionState;
+        this.supplyUncontrolledFlowState = supplyUncontrolledFlowState;
+        this.loadLimitSupplyState = loadLimitSupplyState;
     }
 
     /**
@@ -118,7 +149,9 @@ public class SetSupplyStatus extends ZclMeteringCommand {
      * the Issuer Event ID field that is larger than older information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
     }
@@ -142,7 +175,9 @@ public class SetSupplyStatus extends ZclMeteringCommand {
      * detection of a tamper event within the metering device.
      *
      * @param supplyTamperState the Supply Tamper State
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSupplyTamperState(final Integer supplyTamperState) {
         this.supplyTamperState = supplyTamperState;
     }
@@ -166,7 +201,9 @@ public class SetSupplyStatus extends ZclMeteringCommand {
      * detection of a depleted battery within the metering device.
      *
      * @param supplyDepletionState the Supply Depletion State
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSupplyDepletionState(final Integer supplyDepletionState) {
         this.supplyDepletionState = supplyDepletionState;
     }
@@ -190,7 +227,9 @@ public class SetSupplyStatus extends ZclMeteringCommand {
      * following detection of an uncontrolled flow event within the metering device.
      *
      * @param supplyUncontrolledFlowState the Supply Uncontrolled Flow State
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSupplyUncontrolledFlowState(final Integer supplyUncontrolledFlowState) {
         this.supplyUncontrolledFlowState = supplyUncontrolledFlowState;
     }
@@ -214,7 +253,9 @@ public class SetSupplyStatus extends ZclMeteringCommand {
      * is in a load limit state.
      *
      * @param loadLimitSupplyState the Load Limit Supply State
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setLoadLimitSupplyState(final Integer loadLimitSupplyState) {
         this.loadLimitSupplyState = loadLimitSupplyState;
     }

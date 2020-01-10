@@ -58,7 +58,10 @@ public class ZigBeeBaseFieldGenerator extends ZigBeeBaseClassGenerator {
             }
             out.println("     *");
             out.println("     * @param " + stringToLowerCamelCase(field.name) + " the " + field.name);
+            out.println(
+                    "     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.");
             out.println("     */");
+            out.println("    @Deprecated");
             out.println("    public void set" + stringToUpperCamelCase(field.name) + "(final " + getDataTypeClass(field)
                     + " " + stringToLowerCamelCase(field.name) + ") {");
             out.println("        this." + stringToLowerCamelCase(field.name) + " = "
@@ -291,6 +294,9 @@ public class ZigBeeBaseFieldGenerator extends ZigBeeBaseClassGenerator {
     }
 
     protected ZigBeeXmlField getAutoSized(List<ZigBeeXmlField> fields, String name) {
+        if (name == null) {
+            return null;
+        }
         for (ZigBeeXmlField field : fields) {
             if (field.sizer != null) {
                 System.out.println();

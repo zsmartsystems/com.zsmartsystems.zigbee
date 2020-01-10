@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class GetProfileResponse extends ZclMeteringCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -87,12 +87,43 @@ public class GetProfileResponse extends ZclMeteringCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public GetProfileResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param endTime {@link Calendar} End Time
+     * @param status {@link Integer} Status
+     * @param profileIntervalPeriod {@link Integer} Profile Interval Period
+     * @param numberOfPeriodsDelivered {@link Integer} Number Of Periods Delivered
+     * @param intervals {@link Integer} Intervals
+     */
+    public GetProfileResponse(
+            Calendar endTime,
+            Integer status,
+            Integer profileIntervalPeriod,
+            Integer numberOfPeriodsDelivered,
+            Integer intervals) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.endTime = endTime;
+        this.status = status;
+        this.profileIntervalPeriod = profileIntervalPeriod;
+        this.numberOfPeriodsDelivered = numberOfPeriodsDelivered;
+        this.intervals = intervals;
     }
 
     /**
@@ -120,7 +151,9 @@ public class GetProfileResponse extends ZclMeteringCommand {
      * the CurrentPartialProfileIntervalValue attribute.
      *
      * @param endTime the End Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setEndTime(final Calendar endTime) {
         this.endTime = endTime;
     }
@@ -138,7 +171,9 @@ public class GetProfileResponse extends ZclMeteringCommand {
      * Sets Status.
      *
      * @param status the Status
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStatus(final Integer status) {
         this.status = status;
     }
@@ -162,7 +197,9 @@ public class GetProfileResponse extends ZclMeteringCommand {
      * consumption for profiling purposes.
      *
      * @param profileIntervalPeriod the Profile Interval Period
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProfileIntervalPeriod(final Integer profileIntervalPeriod) {
         this.profileIntervalPeriod = profileIntervalPeriod;
     }
@@ -190,7 +227,9 @@ public class GetProfileResponse extends ZclMeteringCommand {
      * information as a convenience.
      *
      * @param numberOfPeriodsDelivered the Number Of Periods Delivered
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNumberOfPeriodsDelivered(final Integer numberOfPeriodsDelivered) {
         this.numberOfPeriodsDelivered = numberOfPeriodsDelivered;
     }
@@ -224,7 +263,9 @@ public class GetProfileResponse extends ZclMeteringCommand {
      * as 0xFFFFFF.
      *
      * @param intervals the Intervals
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIntervals(final Integer intervals) {
         this.intervals = intervals;
     }
