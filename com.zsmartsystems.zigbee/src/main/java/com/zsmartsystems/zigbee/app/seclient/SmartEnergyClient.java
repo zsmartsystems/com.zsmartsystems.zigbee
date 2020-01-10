@@ -560,8 +560,7 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
 
         MatchDescriptorRequest matchRequest = new MatchDescriptorRequest();
         matchRequest.setInClusterList(clusterList);
-        matchRequest.setOutClusterList(clusterList);
-        matchRequest.setDestinationAddress(new ZigBeeEndpointAddress(destination));
+        matchRequest.setOutClusterList(Collections.emptyList());
         matchRequest.setDestinationAddress(new ZigBeeEndpointAddress(destination));
         matchRequest.setProfileId(ZigBeeProfileType.ZIGBEE_SMART_ENERGY.getKey());
         matchRequest.setNwkAddrOfInterest(destination);
@@ -678,8 +677,8 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
         CommandResult response = networkManager.sendTransaction(simpleDescriptorRequest, simpleDescriptorRequest).get();
 
         final SimpleDescriptorResponse simpleDescriptorResponse = (SimpleDescriptorResponse) response.getResponse();
-        logger.debug("{}: SEP Extension: SimpleDescriptorResponse returned {}", endpoint.getIeeeAddress(),
-                simpleDescriptorResponse);
+        logger.debug("{}: SEP Extension: Endpoint {} SimpleDescriptorResponse returned {}", endpoint.getIeeeAddress(),
+                endpoint.getEndpointId(), simpleDescriptorResponse);
         if (simpleDescriptorResponse == null) {
             return ZigBeeStatus.FAILURE;
         }
@@ -771,7 +770,7 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
             case DISCOVER_METERING_SERVERS:
                 ZigBeeNode node = networkManager.getNode(response.getSourceAddress().getAddress());
                 if (node == null) {
-                    logger.debug("SEP Extension: SEP discovery Node {} is unknown - getting IEEE address.",
+                    logger.debug("{}: SEP Extension: SEP discovery node is unknown - getting IEEE address.",
                             response.getSourceAddress().getAddress());
                     // This node is unknown to us - get the long address
                     IeeeAddress ieeeAddress = requestIeeeAddress(response.getSourceAddress().getAddress());
@@ -779,18 +778,24 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
                     networkManager.updateNode(node);
                 }
 
+                // Check if this node is authorised to communicate securely
+                if (!cbkeProvider.isAuthorised(node.getIeeeAddress())) {
+                    logger.debug("{}: SEP Extension: SEP discovery node is not authorised", node.getIeeeAddress());
+                    return;
+                }
+
                 ZigBeeNode updatedNode = new ZigBeeNode(networkManager, node.getIeeeAddress(),
                         node.getNetworkAddress());
                 for (Integer endpointId : response.getMatchList()) {
                     ZigBeeEndpoint endpoint = new ZigBeeEndpoint(updatedNode, endpointId);
-                    logger.debug("SEP Extension: Metering endpoint {} being added/updated",
-                            endpoint.getEndpointAddress());
+                    logger.debug("{}: SEP Extension: Endpoint {} Metering endpoint being added/updated",
+                            node.getIeeeAddress(), endpoint.getEndpointAddress());
 
                     try {
                         requestSimpleDescriptor(endpoint);
                     } catch (InterruptedException | ExecutionException e) {
-                        logger.debug("SEP Extension: Exception getting simple descriptor from endpoint {}",
-                                endpoint.getEndpointAddress());
+                        logger.debug("{}: SEP Extension: Endpoint {} Exception getting simple descriptor",
+                                node.getIeeeAddress(), endpoint.getEndpointAddress());
                     }
                     updatedNode.addEndpoint(endpoint);
                 }
@@ -927,12 +932,12 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
             logger.debug("{}: SEP Extension: Node is not authorised", node.getIeeeAddress());
             return;
         }
-        logger.debug("{}: SEP node is authorised", node.getIeeeAddress());
+        logger.debug("{}: SEP Extension: Node is authorised", node.getIeeeAddress());
 
         for (ZigBeeEndpoint endpoint : node.getEndpoints()) {
             if (endpoint.getProfileId() != ZigBeeProfileType.ZIGBEE_SMART_ENERGY.getKey()) {
-                logger.debug("{}: SEP Extension: Endpoint {} is not SmartEnergy", node.getIeeeAddress(),
-                        endpoint.getEndpointId());
+                logger.debug("{}: SEP Extension: Endpoint {} is not SmartEnergy [{}]", node.getIeeeAddress(),
+                        endpoint.getEndpointId(), String.format("%04X", endpoint.getProfileId()));
                 continue;
             }
 
@@ -942,8 +947,8 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
                     continue;
                 }
 
-                logger.debug("{}: SEP Extension: Setting profile security for input cluster {}", node.getIeeeAddress(),
-                        clusterType);
+                logger.debug("{}: SEP Extension: Endpoint {} Setting profile security for input cluster {}",
+                        node.getIeeeAddress(), endpoint.getEndpointId(), clusterType);
                 cluster.setApsSecurityRequired(true);
             }
 
@@ -953,8 +958,8 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
                     continue;
                 }
 
-                logger.debug("{}: SEP Extension: Setting profile security for output cluster {}", node.getIeeeAddress(),
-                        clusterType);
+                logger.debug("{}: SEP Extension: Endpoint {} Setting profile security for output cluster {}",
+                        node.getIeeeAddress(), endpoint.getEndpointId(), clusterType);
                 cluster.setApsSecurityRequired(true);
             }
         }
