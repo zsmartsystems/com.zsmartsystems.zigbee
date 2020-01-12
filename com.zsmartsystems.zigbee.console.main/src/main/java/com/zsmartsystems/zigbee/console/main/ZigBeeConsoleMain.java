@@ -40,6 +40,7 @@ import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpConfigurationComman
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpCountersCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpHandlerCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpMfglibCommand;
+import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpPolicyCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpScanCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpStateCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpValueCommand;
@@ -235,6 +236,7 @@ public class ZigBeeConsoleMain {
             commands.add(EmberConsoleNcpCountersCommand.class);
             commands.add(EmberConsoleTransientKeyCommand.class);
             commands.add(EmberConsoleMmoHashCommand.class);
+            commands.add(EmberConsoleNcpPolicyCommand.class);
             commands.add(EmberConsoleNcpStateCommand.class);
             commands.add(EmberConsoleNcpValueCommand.class);
             commands.add(EmberConsoleNcpVersionCommand.class);
