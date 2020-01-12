@@ -23,6 +23,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.pollcontrol.CheckInResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.pollcontrol.FastPollStopCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.pollcontrol.SetLongPollIntervalCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.pollcontrol.SetShortPollIntervalCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.pollcontrol.ZclPollControlCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -44,7 +45,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
 public class ZclPollControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -181,6 +182,28 @@ public class ZclPollControlCluster extends ZclCluster {
      */
     public ZclPollControlCluster(final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
+    }
+
+    /**
+     * Sends a {@link ZclPollControlCommand} and returns the {@link Future} to the result which will complete when the remote
+     * device response is received, or the request times out.
+     *
+     * @param command the {@link ZclPollControlCommand} to send
+     * @return the command result future
+     */
+    public Future<CommandResult> sendCommand(ZclPollControlCommand command) {
+        return super.sendCommand(command);
+    }
+
+    /**
+     * Sends a response to the command. This method sets all the common elements of the response based on the command -
+     * eg transactionId, direction, address...
+     *
+     * @param command the {@link ZclPollControlCommand} to which the response is being sent
+     * @param response the {@link ZclPollControlCommand} to send
+     */
+    public void sendResponse(ZclPollControlCommand command, ZclPollControlCommand response) {
+        super.sendResponse(command, response);
     }
 
     /**
@@ -843,7 +866,7 @@ public class ZclPollControlCluster extends ZclCluster {
         command.setStartFastPolling(startFastPolling);
         command.setFastPollTimeout(fastPollTimeout);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -863,7 +886,7 @@ public class ZclPollControlCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> fastPollStopCommand() {
-        return send(new FastPollStopCommand());
+        return sendCommand(new FastPollStopCommand());
     }
 
     /**
@@ -886,7 +909,7 @@ public class ZclPollControlCluster extends ZclCluster {
         // Set the fields
         command.setNewLongPollInterval(newLongPollInterval);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -909,7 +932,7 @@ public class ZclPollControlCluster extends ZclCluster {
         // Set the fields
         command.setNewShortPollInterval(newShortPollInterval);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -928,6 +951,6 @@ public class ZclPollControlCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> checkInCommand() {
-        return send(new CheckInCommand());
+        return sendCommand(new CheckInCommand());
     }
 }

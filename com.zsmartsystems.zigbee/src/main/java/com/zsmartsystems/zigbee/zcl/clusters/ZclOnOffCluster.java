@@ -24,6 +24,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnWithRecallGlobalSceneCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnWithTimedOffCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.ToggleCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.onoff.ZclOnOffCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -33,7 +34,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-26T17:06:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
 public class ZclOnOffCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -127,6 +128,28 @@ public class ZclOnOffCluster extends ZclCluster {
      */
     public ZclOnOffCluster(final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
+    }
+
+    /**
+     * Sends a {@link ZclOnOffCommand} and returns the {@link Future} to the result which will complete when the remote
+     * device response is received, or the request times out.
+     *
+     * @param command the {@link ZclOnOffCommand} to send
+     * @return the command result future
+     */
+    public Future<CommandResult> sendCommand(ZclOnOffCommand command) {
+        return super.sendCommand(command);
+    }
+
+    /**
+     * Sends a response to the command. This method sets all the common elements of the response based on the command -
+     * eg transactionId, direction, address...
+     *
+     * @param command the {@link ZclOnOffCommand} to which the response is being sent
+     * @param response the {@link ZclOnOffCommand} to send
+     */
+    public void sendResponse(ZclOnOffCommand command, ZclOnOffCommand response) {
+        super.sendResponse(command, response);
     }
 
     /**
@@ -568,7 +591,7 @@ public class ZclOnOffCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> offCommand() {
-        return send(new OffCommand());
+        return sendCommand(new OffCommand());
     }
 
     /**
@@ -582,7 +605,7 @@ public class ZclOnOffCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> onCommand() {
-        return send(new OnCommand());
+        return sendCommand(new OnCommand());
     }
 
     /**
@@ -598,7 +621,7 @@ public class ZclOnOffCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> toggleCommand() {
-        return send(new ToggleCommand());
+        return sendCommand(new ToggleCommand());
     }
 
     /**
@@ -618,7 +641,7 @@ public class ZclOnOffCluster extends ZclCluster {
         command.setEffectIdentifier(effectIdentifier);
         command.setEffectVariant(effectVariant);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -630,7 +653,7 @@ public class ZclOnOffCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> onWithRecallGlobalSceneCommand() {
-        return send(new OnWithRecallGlobalSceneCommand());
+        return sendCommand(new OnWithRecallGlobalSceneCommand());
     }
 
     /**
@@ -655,6 +678,6 @@ public class ZclOnOffCluster extends ZclCluster {
         command.setOnTime(onTime);
         command.setOffWaitTime(offWaitTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

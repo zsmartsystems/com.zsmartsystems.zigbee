@@ -39,6 +39,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.scenes.StoreSceneCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.scenes.StoreSceneResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.scenes.ViewSceneCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.scenes.ViewSceneResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.scenes.ZclScenesCommand;
 import com.zsmartsystems.zigbee.zcl.field.ExtensionFieldSet;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -56,7 +57,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-11-16T08:52:33Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
 public class ZclScenesCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -171,6 +172,28 @@ public class ZclScenesCluster extends ZclCluster {
      */
     public ZclScenesCluster(final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
+    }
+
+    /**
+     * Sends a {@link ZclScenesCommand} and returns the {@link Future} to the result which will complete when the remote
+     * device response is received, or the request times out.
+     *
+     * @param command the {@link ZclScenesCommand} to send
+     * @return the command result future
+     */
+    public Future<CommandResult> sendCommand(ZclScenesCommand command) {
+        return super.sendCommand(command);
+    }
+
+    /**
+     * Sends a response to the command. This method sets all the common elements of the response based on the command -
+     * eg transactionId, direction, address...
+     *
+     * @param command the {@link ZclScenesCommand} to which the response is being sent
+     * @param response the {@link ZclScenesCommand} to send
+     */
+    public void sendResponse(ZclScenesCommand command, ZclScenesCommand response) {
+        super.sendResponse(command, response);
     }
 
     /**
@@ -607,7 +630,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setSceneName(sceneName);
         command.setExtensionFieldSets(extensionFieldSets);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -626,7 +649,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setGroupId(groupId);
         command.setSceneId(sceneId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -645,7 +668,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setGroupId(groupId);
         command.setSceneId(sceneId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -662,7 +685,7 @@ public class ZclScenesCluster extends ZclCluster {
         // Set the fields
         command.setGroupId(groupId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -681,7 +704,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setGroupId(groupId);
         command.setSceneId(sceneId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -700,7 +723,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setGroupId(groupId);
         command.setSceneId(sceneId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -719,7 +742,7 @@ public class ZclScenesCluster extends ZclCluster {
         // Set the fields
         command.setGroupId(groupId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -745,7 +768,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setSceneName(sceneName);
         command.setExtensionFieldSets(extensionFieldSets);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -765,7 +788,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setGroupId(groupId);
         command.setSceneId(sceneId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -791,7 +814,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setGroupIdTo(groupIdTo);
         command.setSceneIdTo(sceneIdTo);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -810,7 +833,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setGroupId(groupId);
         command.setSceneId(sceneId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -835,7 +858,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setSceneName(sceneName);
         command.setExtensionFieldSets(extensionFieldSets);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -854,7 +877,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setGroupId(groupId);
         command.setSceneId(sceneId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -871,7 +894,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setStatus(status);
         command.setGroupId(groupId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -890,7 +913,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setGroupId(groupId);
         command.setSceneId(sceneId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -913,7 +936,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setSceneCount(sceneCount);
         command.setSceneList(sceneList);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -932,7 +955,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setGroupId(groupId);
         command.setSceneId(sceneId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -957,7 +980,7 @@ public class ZclScenesCluster extends ZclCluster {
         command.setSceneName(sceneName);
         command.setExtensionFieldSets(extensionFieldSets);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -976,6 +999,6 @@ public class ZclScenesCluster extends ZclCluster {
         command.setGroupId(groupId);
         command.setSceneId(sceneId);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

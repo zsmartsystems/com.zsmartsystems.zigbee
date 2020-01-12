@@ -37,6 +37,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.StepColorTemperatureCo
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.StepHueCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.StepSaturationCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.StopMoveStepCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.ZclColorControlCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -58,7 +59,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
 public class ZclColorControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -288,6 +289,28 @@ public class ZclColorControlCluster extends ZclCluster {
      */
     public ZclColorControlCluster(final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
+    }
+
+    /**
+     * Sends a {@link ZclColorControlCommand} and returns the {@link Future} to the result which will complete when the remote
+     * device response is received, or the request times out.
+     *
+     * @param command the {@link ZclColorControlCommand} to send
+     * @return the command result future
+     */
+    public Future<CommandResult> sendCommand(ZclColorControlCommand command) {
+        return super.sendCommand(command);
+    }
+
+    /**
+     * Sends a response to the command. This method sets all the common elements of the response based on the command -
+     * eg transactionId, direction, address...
+     *
+     * @param command the {@link ZclColorControlCommand} to which the response is being sent
+     * @param response the {@link ZclColorControlCommand} to send
+     */
+    public void sendResponse(ZclColorControlCommand command, ZclColorControlCommand response) {
+        super.sendResponse(command, response);
     }
 
     /**
@@ -1376,7 +1399,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setDirection(direction);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1393,7 +1416,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setMoveMode(moveMode);
         command.setRate(rate);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1412,7 +1435,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setStepSize(stepSize);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1429,7 +1452,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setSaturation(saturation);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1446,7 +1469,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setMoveMode(moveMode);
         command.setRate(rate);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1465,7 +1488,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setStepSize(stepSize);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1484,7 +1507,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setSaturation(saturation);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1503,7 +1526,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setColorY(colorY);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1520,7 +1543,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setRateX(rateX);
         command.setRateY(rateY);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1539,7 +1562,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setStepY(stepY);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1563,7 +1586,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setColorTemperature(colorTemperature);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1592,7 +1615,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setDirection(direction);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1616,7 +1639,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setMoveMode(moveMode);
         command.setRate(rate);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1638,7 +1661,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setStepSize(stepSize);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1661,7 +1684,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setSaturation(saturation);
         command.setTransitionTime(transitionTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1687,7 +1710,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setTransitionTime(transitionTime);
         command.setStartHue(startHue);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1704,7 +1727,7 @@ public class ZclColorControlCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> stopMoveStepCommand() {
-        return send(new StopMoveStepCommand());
+        return sendCommand(new StopMoveStepCommand());
     }
 
     /**
@@ -1728,7 +1751,7 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setColorTemperatureMinimum(colorTemperatureMinimum);
         command.setColorTemperatureMaximum(colorTemperatureMaximum);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1754,6 +1777,6 @@ public class ZclColorControlCluster extends ZclCluster {
         command.setColorTemperatureMinimum(colorTemperatureMinimum);
         command.setColorTemperatureMaximum(colorTemperatureMaximum);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

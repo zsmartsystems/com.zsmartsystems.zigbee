@@ -21,6 +21,7 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.identify.IdentifyCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.identify.IdentifyQueryCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.identify.IdentifyQueryResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.identify.ZclIdentifyCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -35,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
 public class ZclIdentifyCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -104,6 +105,28 @@ public class ZclIdentifyCluster extends ZclCluster {
      */
     public ZclIdentifyCluster(final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
+    }
+
+    /**
+     * Sends a {@link ZclIdentifyCommand} and returns the {@link Future} to the result which will complete when the remote
+     * device response is received, or the request times out.
+     *
+     * @param command the {@link ZclIdentifyCommand} to send
+     * @return the command result future
+     */
+    public Future<CommandResult> sendCommand(ZclIdentifyCommand command) {
+        return super.sendCommand(command);
+    }
+
+    /**
+     * Sends a response to the command. This method sets all the common elements of the response based on the command -
+     * eg transactionId, direction, address...
+     *
+     * @param command the {@link ZclIdentifyCommand} to which the response is being sent
+     * @param response the {@link ZclIdentifyCommand} to send
+     */
+    public void sendResponse(ZclIdentifyCommand command, ZclIdentifyCommand response) {
+        super.sendResponse(command, response);
     }
 
     /**
@@ -240,7 +263,7 @@ public class ZclIdentifyCluster extends ZclCluster {
         // Set the fields
         command.setIdentifyTime(identifyTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -249,7 +272,7 @@ public class ZclIdentifyCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> identifyQueryCommand() {
-        return send(new IdentifyQueryCommand());
+        return sendCommand(new IdentifyQueryCommand());
     }
 
     /**
@@ -267,6 +290,6 @@ public class ZclIdentifyCluster extends ZclCluster {
         // Set the fields
         command.setIdentifyTime(identifyTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

@@ -25,6 +25,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.keyestablishment.EphemeralDataRespo
 import com.zsmartsystems.zigbee.zcl.clusters.keyestablishment.InitiateKeyEstablishmentRequestCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.keyestablishment.InitiateKeyEstablishmentResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.keyestablishment.TerminateKeyEstablishment;
+import com.zsmartsystems.zigbee.zcl.clusters.keyestablishment.ZclKeyEstablishmentCommand;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -62,7 +63,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
 public class ZclKeyEstablishmentCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -94,8 +95,7 @@ public class ZclKeyEstablishmentCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
 
-        attributeMap.put(ATTR_CLIENTKEYESTABLISHMENTSUITE, new ZclAttribute(this, ATTR_CLIENTKEYESTABLISHMENTSUITE,
-                "Client Key Establishment Suite", ZclDataType.ENUMERATION_16_BIT, true, true, false, false));
+        attributeMap.put(ATTR_CLIENTKEYESTABLISHMENTSUITE, new ZclAttribute(this, ATTR_CLIENTKEYESTABLISHMENTSUITE, "Client Key Establishment Suite", ZclDataType.ENUMERATION_16_BIT, true, true, false, false));
 
         return attributeMap;
     }
@@ -104,8 +104,7 @@ public class ZclKeyEstablishmentCluster extends ZclCluster {
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
         Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
 
-        attributeMap.put(ATTR_SERVERKEYESTABLISHMENTSUITE, new ZclAttribute(this, ATTR_SERVERKEYESTABLISHMENTSUITE,
-                "Server Key Establishment Suite", ZclDataType.ENUMERATION_16_BIT, true, true, false, false));
+        attributeMap.put(ATTR_SERVERKEYESTABLISHMENTSUITE, new ZclAttribute(this, ATTR_SERVERKEYESTABLISHMENTSUITE, "Server Key Establishment Suite", ZclDataType.ENUMERATION_16_BIT, true, true, false, false));
 
         return attributeMap;
     }
@@ -140,6 +139,28 @@ public class ZclKeyEstablishmentCluster extends ZclCluster {
      */
     public ZclKeyEstablishmentCluster(final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
+    }
+
+    /**
+     * Sends a {@link ZclKeyEstablishmentCommand} and returns the {@link Future} to the result which will complete when the remote
+     * device response is received, or the request times out.
+     *
+     * @param command the {@link ZclKeyEstablishmentCommand} to send
+     * @return the command result future
+     */
+    public Future<CommandResult> sendCommand(ZclKeyEstablishmentCommand command) {
+        return super.sendCommand(command);
+    }
+
+    /**
+     * Sends a response to the command. This method sets all the common elements of the response based on the command -
+     * eg transactionId, direction, address...
+     *
+     * @param command the {@link ZclKeyEstablishmentCommand} to which the response is being sent
+     * @param response the {@link ZclKeyEstablishmentCommand} to send
+     */
+    public void sendResponse(ZclKeyEstablishmentCommand command, ZclKeyEstablishmentCommand response) {
+        super.sendResponse(command, response);
     }
 
     /**
@@ -209,8 +230,7 @@ public class ZclKeyEstablishmentCluster extends ZclCluster {
      * @param minInterval minimum reporting period
      * @param maxInterval maximum reporting period
      * @return the {@link Future<CommandResult>} command result future
-     * @deprecated As of release 1.2.0, replaced by
-     *             {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
      */
     @Deprecated
     public Future<CommandResult> setServerKeyEstablishmentSuiteReporting(final int minInterval, final int maxInterval) {
@@ -247,8 +267,7 @@ public class ZclKeyEstablishmentCluster extends ZclCluster {
      * @param identity {@link ByteArray} Identity
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> initiateKeyEstablishmentRequestCommand(Integer keyEstablishmentSuite,
-            Integer ephemeralDataGenerateTime, Integer confirmKeyGenerateTime, ByteArray identity) {
+    public Future<CommandResult> initiateKeyEstablishmentRequestCommand(Integer keyEstablishmentSuite, Integer ephemeralDataGenerateTime, Integer confirmKeyGenerateTime, ByteArray identity) {
         InitiateKeyEstablishmentRequestCommand command = new InitiateKeyEstablishmentRequestCommand();
 
         // Set the fields
@@ -256,9 +275,8 @@ public class ZclKeyEstablishmentCluster extends ZclCluster {
         command.setEphemeralDataGenerateTime(ephemeralDataGenerateTime);
         command.setConfirmKeyGenerateTime(confirmKeyGenerateTime);
         command.setIdentity(identity);
-        command.setDisableDefaultResponse(true);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -275,9 +293,8 @@ public class ZclKeyEstablishmentCluster extends ZclCluster {
 
         // Set the fields
         command.setEphemeralData(ephemeralData);
-        command.setDisableDefaultResponse(true);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -296,9 +313,8 @@ public class ZclKeyEstablishmentCluster extends ZclCluster {
 
         // Set the fields
         command.setSecureMessageAuthenticationCode(secureMessageAuthenticationCode);
-        command.setDisableDefaultResponse(true);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -315,8 +331,7 @@ public class ZclKeyEstablishmentCluster extends ZclCluster {
      * @param identity {@link ByteArray} Identity
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> initiateKeyEstablishmentResponse(Integer requestedKeyEstablishmentSuite,
-            Integer ephemeralDataGenerateTime, Integer confirmKeyGenerateTime, ByteArray identity) {
+    public Future<CommandResult> initiateKeyEstablishmentResponse(Integer requestedKeyEstablishmentSuite, Integer ephemeralDataGenerateTime, Integer confirmKeyGenerateTime, ByteArray identity) {
         InitiateKeyEstablishmentResponse command = new InitiateKeyEstablishmentResponse();
 
         // Set the fields
@@ -324,9 +339,8 @@ public class ZclKeyEstablishmentCluster extends ZclCluster {
         command.setEphemeralDataGenerateTime(ephemeralDataGenerateTime);
         command.setConfirmKeyGenerateTime(confirmKeyGenerateTime);
         command.setIdentity(identity);
-        command.setDisableDefaultResponse(true);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -343,9 +357,8 @@ public class ZclKeyEstablishmentCluster extends ZclCluster {
 
         // Set the fields
         command.setEphemeralData(ephemeralData);
-        command.setDisableDefaultResponse(true);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -364,9 +377,8 @@ public class ZclKeyEstablishmentCluster extends ZclCluster {
 
         // Set the fields
         command.setSecureMessageAuthenticationCode(secureMessageAuthenticationCode);
-        command.setDisableDefaultResponse(true);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -380,16 +392,14 @@ public class ZclKeyEstablishmentCluster extends ZclCluster {
      * @param keyEstablishmentSuite {@link Integer} Key Establishment Suite
      * @return the {@link Future<CommandResult>} command result future
      */
-    public Future<CommandResult> terminateKeyEstablishment(Integer statusCode, Integer waitTime,
-            Integer keyEstablishmentSuite) {
+    public Future<CommandResult> terminateKeyEstablishment(Integer statusCode, Integer waitTime, Integer keyEstablishmentSuite) {
         TerminateKeyEstablishment command = new TerminateKeyEstablishment();
 
         // Set the fields
         command.setStatusCode(statusCode);
         command.setWaitTime(waitTime);
         command.setKeyEstablishmentSuite(keyEstablishmentSuite);
-        command.setDisableDefaultResponse(true);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

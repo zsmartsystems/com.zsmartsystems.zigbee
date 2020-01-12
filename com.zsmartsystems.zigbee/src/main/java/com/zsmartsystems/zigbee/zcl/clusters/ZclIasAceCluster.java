@@ -38,6 +38,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.iasace.GetZoneStatusResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.iasace.PanelStatusChangedCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iasace.PanicCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iasace.SetBypassedZoneListCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.iasace.ZclIasAceCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iasace.ZoneStatusChangedCommand;
 
 /**
@@ -49,7 +50,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.iasace.ZoneStatusChangedCommand;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
 public class ZclIasAceCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -120,6 +121,28 @@ public class ZclIasAceCluster extends ZclCluster {
     }
 
     /**
+     * Sends a {@link ZclIasAceCommand} and returns the {@link Future} to the result which will complete when the remote
+     * device response is received, or the request times out.
+     *
+     * @param command the {@link ZclIasAceCommand} to send
+     * @return the command result future
+     */
+    public Future<CommandResult> sendCommand(ZclIasAceCommand command) {
+        return super.sendCommand(command);
+    }
+
+    /**
+     * Sends a response to the command. This method sets all the common elements of the response based on the command -
+     * eg transactionId, direction, address...
+     *
+     * @param command the {@link ZclIasAceCommand} to which the response is being sent
+     * @param response the {@link ZclIasAceCommand} to send
+     */
+    public void sendResponse(ZclIasAceCommand command, ZclIasAceCommand response) {
+        super.sendResponse(command, response);
+    }
+
+    /**
      * The Arm Command
      * <p>
      * On receipt of this command, the receiving device sets its arm mode according to the value
@@ -140,7 +163,7 @@ public class ZclIasAceCluster extends ZclCluster {
         command.setArmDisarmCode(armDisarmCode);
         command.setZoneId(zoneId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -167,7 +190,7 @@ public class ZclIasAceCluster extends ZclCluster {
         command.setZoneIds(zoneIds);
         command.setArmDisarmCode(armDisarmCode);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -176,7 +199,7 @@ public class ZclIasAceCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> emergencyCommand() {
-        return send(new EmergencyCommand());
+        return sendCommand(new EmergencyCommand());
     }
 
     /**
@@ -185,7 +208,7 @@ public class ZclIasAceCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> fireCommand() {
-        return send(new FireCommand());
+        return sendCommand(new FireCommand());
     }
 
     /**
@@ -194,7 +217,7 @@ public class ZclIasAceCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> panicCommand() {
-        return send(new PanicCommand());
+        return sendCommand(new PanicCommand());
     }
 
     /**
@@ -203,7 +226,7 @@ public class ZclIasAceCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> getZoneIdMapCommand() {
-        return send(new GetZoneIdMapCommand());
+        return sendCommand(new GetZoneIdMapCommand());
     }
 
     /**
@@ -218,7 +241,7 @@ public class ZclIasAceCluster extends ZclCluster {
         // Set the fields
         command.setZoneId(zoneId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -234,7 +257,7 @@ public class ZclIasAceCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> getPanelStatusCommand() {
-        return send(new GetPanelStatusCommand());
+        return sendCommand(new GetPanelStatusCommand());
     }
 
     /**
@@ -248,7 +271,7 @@ public class ZclIasAceCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> getBypassedZoneListCommand() {
-        return send(new GetBypassedZoneListCommand());
+        return sendCommand(new GetBypassedZoneListCommand());
     }
 
     /**
@@ -279,7 +302,7 @@ public class ZclIasAceCluster extends ZclCluster {
         command.setZoneStatusMaskFlag(zoneStatusMaskFlag);
         command.setZoneStatusMask(zoneStatusMask);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -294,7 +317,7 @@ public class ZclIasAceCluster extends ZclCluster {
         // Set the fields
         command.setArmNotification(armNotification);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -343,7 +366,7 @@ public class ZclIasAceCluster extends ZclCluster {
         command.setZoneIdMapSection14(zoneIdMapSection14);
         command.setZoneIdMapSection15(zoneIdMapSection15);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -364,7 +387,7 @@ public class ZclIasAceCluster extends ZclCluster {
         command.setIeeeAddress(ieeeAddress);
         command.setZoneLabel(zoneLabel);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -391,7 +414,7 @@ public class ZclIasAceCluster extends ZclCluster {
         command.setAudibleNotification(audibleNotification);
         command.setZoneLabel(zoneLabel);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -424,7 +447,7 @@ public class ZclIasAceCluster extends ZclCluster {
         command.setAudibleNotification(audibleNotification);
         command.setAlarmStatus(alarmStatus);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -448,7 +471,7 @@ public class ZclIasAceCluster extends ZclCluster {
         command.setAudibleNotification(audibleNotification);
         command.setAlarmStatus(alarmStatus);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -467,7 +490,7 @@ public class ZclIasAceCluster extends ZclCluster {
         // Set the fields
         command.setZoneId(zoneId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -485,7 +508,7 @@ public class ZclIasAceCluster extends ZclCluster {
         // Set the fields
         command.setBypassResult(bypassResult);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -511,6 +534,6 @@ public class ZclIasAceCluster extends ZclCluster {
         command.setZoneId(zoneId);
         command.setZoneStatus(zoneStatus);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

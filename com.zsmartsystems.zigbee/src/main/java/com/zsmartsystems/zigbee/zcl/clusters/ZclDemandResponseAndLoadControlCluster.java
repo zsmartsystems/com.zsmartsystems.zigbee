@@ -24,6 +24,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.demandresponseandloadcontrol.Cancel
 import com.zsmartsystems.zigbee.zcl.clusters.demandresponseandloadcontrol.GetScheduledEvents;
 import com.zsmartsystems.zigbee.zcl.clusters.demandresponseandloadcontrol.LoadControlEventCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.demandresponseandloadcontrol.ReportEventStatus;
+import com.zsmartsystems.zigbee.zcl.clusters.demandresponseandloadcontrol.ZclDemandResponseAndLoadControlCommand;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -45,7 +46,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
 public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -157,6 +158,28 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
     }
 
     /**
+     * Sends a {@link ZclDemandResponseAndLoadControlCommand} and returns the {@link Future} to the result which will complete when the remote
+     * device response is received, or the request times out.
+     *
+     * @param command the {@link ZclDemandResponseAndLoadControlCommand} to send
+     * @return the command result future
+     */
+    public Future<CommandResult> sendCommand(ZclDemandResponseAndLoadControlCommand command) {
+        return super.sendCommand(command);
+    }
+
+    /**
+     * Sends a response to the command. This method sets all the common elements of the response based on the command -
+     * eg transactionId, direction, address...
+     *
+     * @param command the {@link ZclDemandResponseAndLoadControlCommand} to which the response is being sent
+     * @param response the {@link ZclDemandResponseAndLoadControlCommand} to send
+     */
+    public void sendResponse(ZclDemandResponseAndLoadControlCommand command, ZclDemandResponseAndLoadControlCommand response) {
+        super.sendResponse(command, response);
+    }
+
+    /**
      * The Report Event Status
      *
      * @param issuerEventId {@link Integer} Issuer Event ID
@@ -188,7 +211,7 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
         command.setSignatureType(signatureType);
         command.setSignature(signature);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -210,7 +233,7 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
         command.setStartTime(startTime);
         command.setNumberOfEvents(numberOfEvents);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -249,7 +272,7 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
         command.setDutyCycle(dutyCycle);
         command.setEventControl(eventControl);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -272,7 +295,7 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
         command.setCancelControl(cancelControl);
         command.setEffectiveTime(effectiveTime);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -287,6 +310,6 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
         // Set the fields
         command.setCancelControl(cancelControl);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

@@ -25,6 +25,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.thermostat.GetWeeklySchedule;
 import com.zsmartsystems.zigbee.zcl.clusters.thermostat.GetWeeklyScheduleResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.thermostat.SetWeeklySchedule;
 import com.zsmartsystems.zigbee.zcl.clusters.thermostat.SetpointRaiseLowerCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.thermostat.ZclThermostatCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -34,7 +35,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
 public class ZclThermostatCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -180,6 +181,28 @@ public class ZclThermostatCluster extends ZclCluster {
      */
     public ZclThermostatCluster(final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
+    }
+
+    /**
+     * Sends a {@link ZclThermostatCommand} and returns the {@link Future} to the result which will complete when the remote
+     * device response is received, or the request times out.
+     *
+     * @param command the {@link ZclThermostatCommand} to send
+     * @return the command result future
+     */
+    public Future<CommandResult> sendCommand(ZclThermostatCommand command) {
+        return super.sendCommand(command);
+    }
+
+    /**
+     * Sends a response to the command. This method sets all the common elements of the response based on the command -
+     * eg transactionId, direction, address...
+     *
+     * @param command the {@link ZclThermostatCommand} to which the response is being sent
+     * @param response the {@link ZclThermostatCommand} to send
+     */
+    public void sendResponse(ZclThermostatCommand command, ZclThermostatCommand response) {
+        super.sendResponse(command, response);
     }
 
     /**
@@ -1393,7 +1416,7 @@ public class ZclThermostatCluster extends ZclCluster {
         command.setMode(mode);
         command.setAmount(amount);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1428,7 +1451,7 @@ public class ZclThermostatCluster extends ZclCluster {
         command.setHeatSet(heatSet);
         command.setCoolSet(coolSet);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1445,7 +1468,7 @@ public class ZclThermostatCluster extends ZclCluster {
         command.setDaysToReturn(daysToReturn);
         command.setModeToReturn(modeToReturn);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1454,7 +1477,7 @@ public class ZclThermostatCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> clearWeeklySchedule() {
-        return send(new ClearWeeklySchedule());
+        return sendCommand(new ClearWeeklySchedule());
     }
 
     /**
@@ -1477,7 +1500,7 @@ public class ZclThermostatCluster extends ZclCluster {
      * @return the {@link Future<CommandResult>} command result future
      */
     public Future<CommandResult> getRelayStatusLog() {
-        return send(new GetRelayStatusLog());
+        return sendCommand(new GetRelayStatusLog());
     }
 
     /**
@@ -1502,7 +1525,7 @@ public class ZclThermostatCluster extends ZclCluster {
         command.setHeatSet(heatSet);
         command.setCoolSet(coolSet);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1527,6 +1550,6 @@ public class ZclThermostatCluster extends ZclCluster {
         command.setSetpoint(setpoint);
         command.setUnreadEntries(unreadEntries);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

@@ -33,6 +33,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.smartenergytunneling.TransferDataEr
 import com.zsmartsystems.zigbee.zcl.clusters.smartenergytunneling.TransferDataErrorServerToClient;
 import com.zsmartsystems.zigbee.zcl.clusters.smartenergytunneling.TransferDataServerToClient;
 import com.zsmartsystems.zigbee.zcl.clusters.smartenergytunneling.TunnelClosureNotification;
+import com.zsmartsystems.zigbee.zcl.clusters.smartenergytunneling.ZclSmartEnergyTunnelingCommand;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -65,7 +66,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
 public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -139,6 +140,28 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      */
     public ZclSmartEnergyTunnelingCluster(final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
+    }
+
+    /**
+     * Sends a {@link ZclSmartEnergyTunnelingCommand} and returns the {@link Future} to the result which will complete when the remote
+     * device response is received, or the request times out.
+     *
+     * @param command the {@link ZclSmartEnergyTunnelingCommand} to send
+     * @return the command result future
+     */
+    public Future<CommandResult> sendCommand(ZclSmartEnergyTunnelingCommand command) {
+        return super.sendCommand(command);
+    }
+
+    /**
+     * Sends a response to the command. This method sets all the common elements of the response based on the command -
+     * eg transactionId, direction, address...
+     *
+     * @param command the {@link ZclSmartEnergyTunnelingCommand} to which the response is being sent
+     * @param response the {@link ZclSmartEnergyTunnelingCommand} to send
+     */
+    public void sendResponse(ZclSmartEnergyTunnelingCommand command, ZclSmartEnergyTunnelingCommand response) {
+        super.sendResponse(command, response);
     }
 
     /**
@@ -239,7 +262,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
         command.setFlowControlSupport(flowControlSupport);
         command.setMaximumIncomingTransferSize(maximumIncomingTransferSize);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -259,7 +282,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
         // Set the fields
         command.setTunnelId(tunnelId);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -279,7 +302,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
         command.setTunnelId(tunnelId);
         command.setData(data);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -311,7 +334,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
         command.setTunnelId(tunnelId);
         command.setTransferDataStatus(transferDataStatus);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -333,7 +356,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
         command.setTunnelId(tunnelId);
         command.setNumberOfBytesLeft(numberOfBytesLeft);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -356,7 +379,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
         command.setTunnelId(tunnelId);
         command.setNumberOfOctetsLeft(numberOfOctetsLeft);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -374,7 +397,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
         // Set the fields
         command.setProtocolOffset(protocolOffset);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -398,7 +421,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
         command.setTunnelStatus(tunnelStatus);
         command.setMaximumIncomingTransferSize(maximumIncomingTransferSize);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -418,7 +441,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
         command.setTunnelId(tunnelId);
         command.setData(data);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -450,7 +473,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
         command.setTunnelId(tunnelId);
         command.setTransferDataStatus(transferDataStatus);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -472,7 +495,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
         command.setTunnelId(tunnelId);
         command.setNumberOfBytesLeft(numberOfBytesLeft);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -495,7 +518,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
         command.setTunnelId(tunnelId);
         command.setNumberOfOctetsLeft(numberOfOctetsLeft);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -519,7 +542,7 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
         command.setProtocolCount(protocolCount);
         command.setProtocolList(protocolList);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -541,6 +564,6 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
         // Set the fields
         command.setTunnelId(tunnelId);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

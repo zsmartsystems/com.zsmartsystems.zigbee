@@ -20,6 +20,7 @@ import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iaswd.Squawk;
 import com.zsmartsystems.zigbee.zcl.clusters.iaswd.StartWarningCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.iaswd.ZclIasWdCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
 /**
@@ -32,7 +33,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-04T18:21:10Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
 public class ZclIasWdCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -84,6 +85,28 @@ public class ZclIasWdCluster extends ZclCluster {
      */
     public ZclIasWdCluster(final ZigBeeEndpoint zigbeeEndpoint) {
         super(zigbeeEndpoint, CLUSTER_ID, CLUSTER_NAME);
+    }
+
+    /**
+     * Sends a {@link ZclIasWdCommand} and returns the {@link Future} to the result which will complete when the remote
+     * device response is received, or the request times out.
+     *
+     * @param command the {@link ZclIasWdCommand} to send
+     * @return the command result future
+     */
+    public Future<CommandResult> sendCommand(ZclIasWdCommand command) {
+        return super.sendCommand(command);
+    }
+
+    /**
+     * Sends a response to the command. This method sets all the common elements of the response based on the command -
+     * eg transactionId, direction, address...
+     *
+     * @param command the {@link ZclIasWdCommand} to which the response is being sent
+     * @param response the {@link ZclIasWdCommand} to send
+     */
+    public void sendResponse(ZclIasWdCommand command, ZclIasWdCommand response) {
+        super.sendResponse(command, response);
     }
 
     /**
@@ -192,7 +215,7 @@ public class ZclIasWdCluster extends ZclCluster {
         command.setHeader(header);
         command.setWarningDuration(warningDuration);
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -211,6 +234,6 @@ public class ZclIasWdCluster extends ZclCluster {
         // Set the fields
         command.setSquawkInfo(squawkInfo);
 
-        return send(command);
+        return sendCommand(command);
     }
 }

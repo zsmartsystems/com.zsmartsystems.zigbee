@@ -276,12 +276,13 @@ public abstract class ZclCluster {
     }
 
     /**
-     * Sends a {@link ZclCommand}
+     * Sends a {@link ZclCommand} and returns the {@link Future} to the result which will complete when the remote
+     * device response is received, or the request times out.
      *
      * @param command the {@link ZclCommand} to send
      * @return the command result future
      */
-    protected Future<CommandResult> send(ZclCommand command) {
+    protected Future<CommandResult> sendCommand(ZclCommand command) {
         if (isClient()) {
             command.setCommandDirection(ZclCommandDirection.SERVER_TO_CLIENT);
         }
@@ -298,7 +299,7 @@ public abstract class ZclCluster {
      * @param command the {@link ZclCommand} to which the response is being sent
      * @param response the {@link ZclCommand} to send
      */
-    public void sendResponse(ZclCommand command, ZclCommand response) {
+    protected void sendResponse(ZclCommand command, ZclCommand response) {
         response.setDestinationAddress(command.getSourceAddress());
         response.setCommandDirection(command.getCommandDirection().getResponseDirection());
         response.setTransactionId(command.getTransactionId());
@@ -354,7 +355,7 @@ public abstract class ZclCluster {
             defaultResponse.setManufacturerCode(manufacturerCode);
         }
 
-        send(defaultResponse);
+        sendCommand(defaultResponse);
     }
 
     /**
@@ -418,7 +419,7 @@ public abstract class ZclCluster {
             command.setManufacturerCode(manufacturerSpecificAttribute.getManufacturerCode());
         }
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -452,7 +453,7 @@ public abstract class ZclCluster {
             command.setManufacturerCode(getAttribute(attributeIds.get(0)).getManufacturerCode());
         }
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -541,7 +542,7 @@ public abstract class ZclCluster {
             command.setManufacturerCode(manufacturerSpecificAttribute.getManufacturerCode());
         }
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -625,7 +626,7 @@ public abstract class ZclCluster {
             command.setManufacturerCode(getAttribute(attributeId).getManufacturerCode());
         }
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -906,7 +907,7 @@ public abstract class ZclCluster {
                             command.setManufacturerCode(manufacturerCode);
                         }
 
-                        CommandResult result = send(command).get();
+                        CommandResult result = sendCommand(command).get();
                         if (result.isError()) {
                             return false;
                         }
@@ -1028,7 +1029,7 @@ public abstract class ZclCluster {
                             command.setManufacturerCode(manufacturerCode);
                         }
 
-                        CommandResult result = send(command).get();
+                        CommandResult result = sendCommand(command).get();
                         if (result.isError()) {
                             return false;
                         }
@@ -1137,7 +1138,7 @@ public abstract class ZclCluster {
                             command.setManufacturerCode(manufacturerCode);
                         }
 
-                        CommandResult result = send(command).get();
+                        CommandResult result = sendCommand(command).get();
                         if (result.isError()) {
                             return false;
                         }
@@ -1765,7 +1766,7 @@ public abstract class ZclCluster {
             command.setManufacturerCode(attribute.getManufacturerCode());
         }
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**
@@ -1815,7 +1816,7 @@ public abstract class ZclCluster {
         command.setRecords(Collections.singletonList(record));
         command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
 
-        return send(command);
+        return sendCommand(command);
     }
 
     /**

@@ -9,7 +9,6 @@ package com.zsmartsystems.zigbee.zcl.clusters.levelcontrol;
 
 import javax.annotation.Generated;
 
-import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 
 /**
@@ -20,8 +19,8 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-09-24T18:34:07Z")
-public class StopWithOnOffCommand extends ZclCommand {
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T17:52:58Z")
+public class StopWithOnOffCommand extends ZclLevelControlCommand {
     /**
      * The cluster ID to which this command belongs.
      */

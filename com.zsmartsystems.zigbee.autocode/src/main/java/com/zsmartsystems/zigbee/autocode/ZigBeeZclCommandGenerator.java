@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.autocode;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -32,6 +33,10 @@ public class ZigBeeZclCommandGenerator extends ZigBeeBaseFieldGenerator {
 
         for (ZigBeeXmlCluster cluster : clusters) {
             try {
+                if (cluster.commands.isEmpty()) {
+                    continue;
+                }
+                generateZclAbstractClusterCommand(cluster, packageRoot, new File(sourceRootPath));
                 generateZclClusterCommands(cluster, packageRoot, new File(sourceRootPath));
             } catch (IOException e) {
                 // TODO Auto-generated catch block
@@ -49,6 +54,8 @@ public class ZigBeeZclCommandGenerator extends ZigBeeBaseFieldGenerator {
             final File packageFile = getPackageFile(packagePath);
 
             final String className = stringToUpperCamelCase(command.name);
+            final String baseClassName = "Zcl" + stringToUpperCamelCase(cluster.name) + "Command";
+
             final PrintWriter out = getClassOut(packageFile, className);
 
             // List of fields that are handled internally by super class
@@ -80,9 +87,8 @@ public class ZigBeeZclCommandGenerator extends ZigBeeBaseFieldGenerator {
 
             String commandExtends = "";
             if (packageRoot.contains(".zcl.")) {
-                importsAdd(packageRootPrefix + packageZcl + ".ZclCommand");
                 importsAdd(packageRootPrefix + packageZclProtocol + ".ZclCommandDirection");
-                commandExtends = "ZclCommand";
+                commandExtends = baseClassName;
             } else {
                 if (command.name.contains("Response")) {
                     commandExtends = "ZdoResponse";
@@ -133,7 +139,7 @@ public class ZigBeeZclCommandGenerator extends ZigBeeBaseFieldGenerator {
             }
             out.println(" {");
 
-            if (commandExtends.equals("ZclCommand")) {
+            if (commandExtends.startsWith("Zcl")) {
                 if (!cluster.name.equalsIgnoreCase("GENERAL")) {
                     out.println("    /**");
                     out.println("     * The cluster ID to which this command belongs.");
@@ -180,7 +186,7 @@ public class ZigBeeZclCommandGenerator extends ZigBeeBaseFieldGenerator {
             if (!cluster.name.equalsIgnoreCase("GENERAL")) {
                 out.println("        clusterId = CLUSTER_ID;");
             }
-            if (commandExtends.equals("ZclCommand")) {
+            if (commandExtends.startsWith("Zcl")) {
                 out.println("        commandId = COMMAND_ID;");
                 out.println("        genericCommand = "
                         + ((cluster.name.equalsIgnoreCase("GENERAL")) ? "true" : "false") + ";");
@@ -251,6 +257,45 @@ public class ZigBeeZclCommandGenerator extends ZigBeeBaseFieldGenerator {
             out.flush();
             out.close();
         }
+    }
+
+    private void generateZclAbstractClusterCommand(ZigBeeXmlCluster cluster, String packageRootPrefix,
+            File sourceRootPath) throws FileNotFoundException {
+        final String packageRoot = getZclClusterCommandPackage(cluster);
+        final String packagePath = getPackagePath(sourceRootPath, packageRoot);
+        final File packageFile = getPackageFile(packagePath);
+
+        final String clusterClassName = "Zcl" + stringToUpperCamelCase(cluster.name) + "Cluster";
+        final String commandClassName = "Zcl" + stringToUpperCamelCase(cluster.name) + "Command";
+        final PrintWriter out = getClassOut(packageFile, commandClassName);
+
+        importsClear();
+        importsAdd(packageRootPrefix + packageZcl + ".ZclCommand");
+        importsAdd("javax.annotation.Generated");
+
+        outputLicense(out);
+
+        out.println("package " + packageRoot + ";");
+        out.println();
+        outputImports(out);
+
+        out.println("/**");
+        out.println(" * Abstract base command class for all commands in the <b>" + cluster.name
+                + "</b> cluster (<i>Cluster ID "
+                + String.format("0x%04X", cluster.code) + "</i>).");
+        out.println(" * All commands sent through the {@link " + clusterClassName + "} must extend this class.");
+
+        out.println(" * <p>");
+        out.println(" * Code is auto-generated. Modifications may be overwritten!");
+
+        out.println(" */");
+        outputClassGenerated(out);
+
+        out.println("public abstract class " + commandClassName + " extends ZclCommand {");
+        out.println("}");
+
+        out.flush();
+        out.close();
     }
 
 }
