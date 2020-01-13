@@ -1162,7 +1162,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     public void nodeStatusUpdate(final ZigBeeNodeStatus deviceStatus, final Integer networkAddress,
             final IeeeAddress ieeeAddress) {
         logger.debug("{}: nodeStatusUpdate - node status is {}, network address is {}.", ieeeAddress, deviceStatus,
-                networkAddress);
+                String.format("%04X", networkAddress));
 
         // This method should only be called when the transport layer has authoritative information about
         // a devices status. Therefore, we should update the network manager view of a device as appropriate.
