@@ -301,7 +301,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         // Define the default policies
         stackPolicies = new TreeMap<EzspPolicyId, EzspDecisionId>();
-        stackPolicies.put(EzspPolicyId.EZSP_TC_KEY_REQUEST_POLICY, EzspDecisionId.EZSP_DENY_TC_KEY_REQUESTS);
+        stackPolicies.put(EzspPolicyId.EZSP_TC_KEY_REQUEST_POLICY,
+                EzspDecisionId.EZSP_ALLOW_TC_KEY_REQUESTS_AND_SEND_CURRENT_KEY);
         stackPolicies.put(EzspPolicyId.EZSP_TRUST_CENTER_POLICY, EzspDecisionId.EZSP_ALLOW_PRECONFIGURED_KEY_JOINS);
         stackPolicies.put(EzspPolicyId.EZSP_MESSAGE_CONTENTS_IN_CALLBACK_POLICY,
                 EzspDecisionId.EZSP_MESSAGE_TAG_ONLY_IN_CALLBACK);
