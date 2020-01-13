@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-17T19:20:35Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class MatchDescriptorRequest extends ZdoRequest {
     /**
      * The ZDO cluster ID.
@@ -58,9 +58,34 @@ public class MatchDescriptorRequest extends ZdoRequest {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public MatchDescriptorRequest() {
         clusterId = CLUSTER_ID;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param nwkAddrOfInterest {@link Integer} NWK Addr Of Interest
+     * @param profileId {@link Integer} Profile ID
+     * @param inClusterList {@link List<Integer>} In Cluster List
+     * @param outClusterList {@link List<Integer>} Out Cluster List
+     */
+    public MatchDescriptorRequest(
+            Integer nwkAddrOfInterest,
+            Integer profileId,
+            List<Integer> inClusterList,
+            List<Integer> outClusterList) {
+
+        clusterId = CLUSTER_ID;
+
+        this.nwkAddrOfInterest = nwkAddrOfInterest;
+        this.profileId = profileId;
+        this.inClusterList = inClusterList;
+        this.outClusterList = outClusterList;
     }
 
     /**
@@ -76,7 +101,9 @@ public class MatchDescriptorRequest extends ZdoRequest {
      * Sets NWK Addr Of Interest.
      *
      * @param nwkAddrOfInterest the NWK Addr Of Interest
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
         this.nwkAddrOfInterest = nwkAddrOfInterest;
     }
@@ -94,7 +121,9 @@ public class MatchDescriptorRequest extends ZdoRequest {
      * Sets Profile ID.
      *
      * @param profileId the Profile ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProfileId(final Integer profileId) {
         this.profileId = profileId;
     }
@@ -112,7 +141,9 @@ public class MatchDescriptorRequest extends ZdoRequest {
      * Sets In Cluster List.
      *
      * @param inClusterList the In Cluster List
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setInClusterList(final List<Integer> inClusterList) {
         this.inClusterList = inClusterList;
     }
@@ -130,7 +161,9 @@ public class MatchDescriptorRequest extends ZdoRequest {
      * Sets Out Cluster List.
      *
      * @param outClusterList the Out Cluster List
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setOutClusterList(final List<Integer> outClusterList) {
         this.outClusterList = outClusterList;
     }

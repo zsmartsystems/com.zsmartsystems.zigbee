@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-15T18:21:05Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class DeviceAnnounce extends ZdoRequest {
     /**
      * The ZDO cluster ID.
@@ -53,9 +53,31 @@ public class DeviceAnnounce extends ZdoRequest {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public DeviceAnnounce() {
         clusterId = CLUSTER_ID;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param nwkAddrOfInterest {@link Integer} NWK Addr Of Interest
+     * @param ieeeAddr {@link IeeeAddress} IEEE Addr
+     * @param capability {@link Integer} Capability
+     */
+    public DeviceAnnounce(
+            Integer nwkAddrOfInterest,
+            IeeeAddress ieeeAddr,
+            Integer capability) {
+
+        clusterId = CLUSTER_ID;
+
+        this.nwkAddrOfInterest = nwkAddrOfInterest;
+        this.ieeeAddr = ieeeAddr;
+        this.capability = capability;
     }
 
     /**
@@ -71,7 +93,9 @@ public class DeviceAnnounce extends ZdoRequest {
      * Sets NWK Addr Of Interest.
      *
      * @param nwkAddrOfInterest the NWK Addr Of Interest
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
         this.nwkAddrOfInterest = nwkAddrOfInterest;
     }
@@ -89,7 +113,9 @@ public class DeviceAnnounce extends ZdoRequest {
      * Sets IEEE Addr.
      *
      * @param ieeeAddr the IEEE Addr
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIeeeAddr(final IeeeAddress ieeeAddr) {
         this.ieeeAddr = ieeeAddr;
     }
@@ -107,7 +133,9 @@ public class DeviceAnnounce extends ZdoRequest {
      * Sets Capability.
      *
      * @param capability the Capability
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCapability(final Integer capability) {
         this.capability = capability;
     }

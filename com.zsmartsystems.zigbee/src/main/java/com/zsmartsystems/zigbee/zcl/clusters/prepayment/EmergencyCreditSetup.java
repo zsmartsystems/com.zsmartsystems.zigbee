@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class EmergencyCreditSetup extends ZclPrepaymentCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -60,12 +60,40 @@ public class EmergencyCreditSetup extends ZclPrepaymentCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public EmergencyCreditSetup() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param issuerEventId {@link Integer} Issuer Event ID
+     * @param startTime {@link Calendar} Start Time
+     * @param emergencyCreditLimit {@link Integer} Emergency Credit Limit
+     * @param emergencyCreditThreshold {@link Integer} Emergency Credit Threshold
+     */
+    public EmergencyCreditSetup(
+            Integer issuerEventId,
+            Calendar startTime,
+            Integer emergencyCreditLimit,
+            Integer emergencyCreditThreshold) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.issuerEventId = issuerEventId;
+        this.startTime = startTime;
+        this.emergencyCreditLimit = emergencyCreditLimit;
+        this.emergencyCreditThreshold = emergencyCreditThreshold;
     }
 
     /**
@@ -81,7 +109,9 @@ public class EmergencyCreditSetup extends ZclPrepaymentCommand {
      * Sets Issuer Event ID.
      *
      * @param issuerEventId the Issuer Event ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
     }
@@ -99,7 +129,9 @@ public class EmergencyCreditSetup extends ZclPrepaymentCommand {
      * Sets Start Time.
      *
      * @param startTime the Start Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStartTime(final Calendar startTime) {
         this.startTime = startTime;
     }
@@ -117,7 +149,9 @@ public class EmergencyCreditSetup extends ZclPrepaymentCommand {
      * Sets Emergency Credit Limit.
      *
      * @param emergencyCreditLimit the Emergency Credit Limit
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setEmergencyCreditLimit(final Integer emergencyCreditLimit) {
         this.emergencyCreditLimit = emergencyCreditLimit;
     }
@@ -135,7 +169,9 @@ public class EmergencyCreditSetup extends ZclPrepaymentCommand {
      * Sets Emergency Credit Threshold.
      *
      * @param emergencyCreditThreshold the Emergency Credit Threshold
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setEmergencyCreditThreshold(final Integer emergencyCreditThreshold) {
         this.emergencyCreditThreshold = emergencyCreditThreshold;
     }

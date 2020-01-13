@@ -33,7 +33,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
 public class ZclIasWdCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -207,7 +207,16 @@ public class ZclIasWdCluster extends ZclCluster {
      * @param header {@link Integer} Header
      * @param warningDuration {@link Integer} Warning Duration
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.startWarningCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new startWarningCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> startWarningCommand(Integer header, Integer warningDuration) {
         StartWarningCommand command = new StartWarningCommand();
 
@@ -227,7 +236,16 @@ public class ZclIasWdCluster extends ZclCluster {
      *
      * @param squawkInfo {@link Integer} Squawk Info
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.squawk(parameters ...)</code>
+     * with <code>cluster.sendCommand(new squawk(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> squawk(Integer squawkInfo) {
         Squawk command = new Squawk();
 

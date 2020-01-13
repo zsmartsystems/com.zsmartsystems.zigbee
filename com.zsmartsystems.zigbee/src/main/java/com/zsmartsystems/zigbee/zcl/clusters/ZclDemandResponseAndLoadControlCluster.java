@@ -46,7 +46,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
 public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -194,7 +194,16 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
      * @param signatureType {@link Integer} Signature Type
      * @param signature {@link ByteArray} Signature
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.reportEventStatus(parameters ...)</code>
+     * with <code>cluster.sendCommand(new reportEventStatus(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> reportEventStatus(Integer issuerEventId, Integer eventStatus, Calendar eventStatusTime, Integer criticalityLevelApplied, Integer coolingTemperatureSetPointApplied, Integer heatingTemperatureSetPointApplied, Integer averageLoadAdjustmentPercentageApplied, Integer dutyCycleApplied, Integer eventControl, Integer signatureType, ByteArray signature) {
         ReportEventStatus command = new ReportEventStatus();
 
@@ -225,7 +234,16 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
      * @param startTime {@link Calendar} Start Time
      * @param numberOfEvents {@link Integer} Number Of Events
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getScheduledEvents(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getScheduledEvents(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getScheduledEvents(Calendar startTime, Integer numberOfEvents) {
         GetScheduledEvents command = new GetScheduledEvents();
 
@@ -253,7 +271,16 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
      * @param dutyCycle {@link Integer} Duty Cycle
      * @param eventControl {@link Integer} Event Control
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.loadControlEventCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new loadControlEventCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> loadControlEventCommand(Integer issuerEventId, Integer deviceClass, Integer utilityEnrollmentGroup, Calendar startTime, Integer durationInMinutes, Integer criticalityLevel, Integer coolingTemperatureOffset, Integer heatingTemperatureOffset, Integer coolingTemperatureSetPoint, Integer heatingTemperatureSetPoint, Integer averageLoadAdjustmentPercentage, Integer dutyCycle, Integer eventControl) {
         LoadControlEventCommand command = new LoadControlEventCommand();
 
@@ -284,7 +311,16 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
      * @param cancelControl {@link Integer} Cancel Control
      * @param effectiveTime {@link Calendar} Effective Time
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.cancelLoadControlEvent(parameters ...)</code>
+     * with <code>cluster.sendCommand(new cancelLoadControlEvent(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> cancelLoadControlEvent(Integer issuerEventId, Integer deviceClass, Integer utilityEnrollmentGroup, Integer cancelControl, Calendar effectiveTime) {
         CancelLoadControlEvent command = new CancelLoadControlEvent();
 
@@ -303,7 +339,16 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
      *
      * @param cancelControl {@link Integer} Cancel Control
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.cancelAllLoadControlEvents(parameters ...)</code>
+     * with <code>cluster.sendCommand(new cancelAllLoadControlEvents(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> cancelAllLoadControlEvents(Integer cancelControl) {
         CancelAllLoadControlEvents command = new CancelAllLoadControlEvents();
 

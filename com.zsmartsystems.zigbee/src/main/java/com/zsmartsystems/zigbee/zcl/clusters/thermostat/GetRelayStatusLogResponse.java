@@ -22,7 +22,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class GetRelayStatusLogResponse extends ZclThermostatCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -66,12 +66,46 @@ public class GetRelayStatusLogResponse extends ZclThermostatCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public GetRelayStatusLogResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param timeOfDay {@link Integer} Time Of Day
+     * @param relayStatus {@link Integer} Relay Status
+     * @param localTemperature {@link Integer} Local Temperature
+     * @param humidity {@link Integer} Humidity
+     * @param setpoint {@link Integer} Setpoint
+     * @param unreadEntries {@link Integer} Unread Entries
+     */
+    public GetRelayStatusLogResponse(
+            Integer timeOfDay,
+            Integer relayStatus,
+            Integer localTemperature,
+            Integer humidity,
+            Integer setpoint,
+            Integer unreadEntries) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.timeOfDay = timeOfDay;
+        this.relayStatus = relayStatus;
+        this.localTemperature = localTemperature;
+        this.humidity = humidity;
+        this.setpoint = setpoint;
+        this.unreadEntries = unreadEntries;
     }
 
     /**
@@ -87,7 +121,9 @@ public class GetRelayStatusLogResponse extends ZclThermostatCommand {
      * Sets Time Of Day.
      *
      * @param timeOfDay the Time Of Day
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTimeOfDay(final Integer timeOfDay) {
         this.timeOfDay = timeOfDay;
     }
@@ -105,7 +141,9 @@ public class GetRelayStatusLogResponse extends ZclThermostatCommand {
      * Sets Relay Status.
      *
      * @param relayStatus the Relay Status
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setRelayStatus(final Integer relayStatus) {
         this.relayStatus = relayStatus;
     }
@@ -123,7 +161,9 @@ public class GetRelayStatusLogResponse extends ZclThermostatCommand {
      * Sets Local Temperature.
      *
      * @param localTemperature the Local Temperature
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setLocalTemperature(final Integer localTemperature) {
         this.localTemperature = localTemperature;
     }
@@ -141,7 +181,9 @@ public class GetRelayStatusLogResponse extends ZclThermostatCommand {
      * Sets Humidity.
      *
      * @param humidity the Humidity
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setHumidity(final Integer humidity) {
         this.humidity = humidity;
     }
@@ -159,7 +201,9 @@ public class GetRelayStatusLogResponse extends ZclThermostatCommand {
      * Sets Setpoint.
      *
      * @param setpoint the Setpoint
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSetpoint(final Integer setpoint) {
         this.setpoint = setpoint;
     }
@@ -177,7 +221,9 @@ public class GetRelayStatusLogResponse extends ZclThermostatCommand {
      * Sets Unread Entries.
      *
      * @param unreadEntries the Unread Entries
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setUnreadEntries(final Integer unreadEntries) {
         this.unreadEntries = unreadEntries;
     }

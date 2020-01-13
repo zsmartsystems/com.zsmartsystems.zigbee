@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class ScheduleSnapshot extends ZclMeteringCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -75,12 +75,40 @@ public class ScheduleSnapshot extends ZclMeteringCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public ScheduleSnapshot() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param issuerEventId {@link Integer} Issuer Event ID
+     * @param commandIndex {@link Integer} Command Index
+     * @param totalNumberOfCommands {@link Integer} Total Number of Commands
+     * @param snapshotSchedulePayload {@link SnapshotSchedulePayload} Snapshot Schedule Payload
+     */
+    public ScheduleSnapshot(
+            Integer issuerEventId,
+            Integer commandIndex,
+            Integer totalNumberOfCommands,
+            SnapshotSchedulePayload snapshotSchedulePayload) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.issuerEventId = issuerEventId;
+        this.commandIndex = commandIndex;
+        this.totalNumberOfCommands = totalNumberOfCommands;
+        this.snapshotSchedulePayload = snapshotSchedulePayload;
     }
 
     /**
@@ -114,7 +142,9 @@ public class ScheduleSnapshot extends ZclMeteringCommand {
      * allowing for the client to easily identify the set of messages that form a group.
      *
      * @param issuerEventId the Issuer Event ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
     }
@@ -140,7 +170,9 @@ public class ScheduleSnapshot extends ZclMeteringCommand {
      * for each fragment belonging to the same command.
      *
      * @param commandIndex the Command Index
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCommandIndex(final Integer commandIndex) {
         this.commandIndex = commandIndex;
     }
@@ -164,7 +196,9 @@ public class ScheduleSnapshot extends ZclMeteringCommand {
      * Commands field indicates the total number of sub-commands in the message.
      *
      * @param totalNumberOfCommands the Total Number of Commands
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTotalNumberOfCommands(final Integer totalNumberOfCommands) {
         this.totalNumberOfCommands = totalNumberOfCommands;
     }
@@ -182,7 +216,9 @@ public class ScheduleSnapshot extends ZclMeteringCommand {
      * Sets Snapshot Schedule Payload.
      *
      * @param snapshotSchedulePayload the Snapshot Schedule Payload
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSnapshotSchedulePayload(final SnapshotSchedulePayload snapshotSchedulePayload) {
         this.snapshotSchedulePayload = snapshotSchedulePayload;
     }

@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class GetDebtRepaymentLog extends ZclPrepaymentCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -55,12 +55,37 @@ public class GetDebtRepaymentLog extends ZclPrepaymentCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public GetDebtRepaymentLog() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param latestEndTime {@link Calendar} Latest End Time
+     * @param numberOfDebts {@link Integer} Number Of Debts
+     * @param debtType {@link Integer} Debt Type
+     */
+    public GetDebtRepaymentLog(
+            Calendar latestEndTime,
+            Integer numberOfDebts,
+            Integer debtType) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.latestEndTime = latestEndTime;
+        this.numberOfDebts = numberOfDebts;
+        this.debtType = debtType;
     }
 
     /**
@@ -76,7 +101,9 @@ public class GetDebtRepaymentLog extends ZclPrepaymentCommand {
      * Sets Latest End Time.
      *
      * @param latestEndTime the Latest End Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setLatestEndTime(final Calendar latestEndTime) {
         this.latestEndTime = latestEndTime;
     }
@@ -94,7 +121,9 @@ public class GetDebtRepaymentLog extends ZclPrepaymentCommand {
      * Sets Number Of Debts.
      *
      * @param numberOfDebts the Number Of Debts
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNumberOfDebts(final Integer numberOfDebts) {
         this.numberOfDebts = numberOfDebts;
     }
@@ -112,7 +141,9 @@ public class GetDebtRepaymentLog extends ZclPrepaymentCommand {
      * Sets Debt Type.
      *
      * @param debtType the Debt Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDebtType(final Integer debtType) {
         this.debtType = debtType;
     }

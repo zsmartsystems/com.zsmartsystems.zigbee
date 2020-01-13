@@ -46,7 +46,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class PublishPriceCommand extends ZclPriceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -267,12 +267,100 @@ public class PublishPriceCommand extends ZclPriceCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public PublishPriceCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param providerId {@link Integer} Provider ID
+     * @param rateLabel {@link ByteArray} Rate Label
+     * @param issuerEventId {@link Integer} Issuer Event ID
+     * @param currentTime {@link Calendar} Current Time
+     * @param unitOfMeasure {@link Integer} Unit Of Measure
+     * @param currency {@link Integer} Currency
+     * @param priceTrailingDigitAndTier {@link Integer} Price Trailing Digit And Tier
+     * @param numberOfPriceTiers {@link Integer} Number Of Price Tiers
+     * @param startTime {@link Calendar} Start Time
+     * @param duration {@link Integer} Duration
+     * @param price {@link Integer} Price
+     * @param priceRatio {@link Integer} Price Ratio
+     * @param generationPrice {@link Integer} Generation Price
+     * @param generationPriceRatio {@link Integer} Generation Price Ratio
+     * @param alternateCostDelivered {@link Integer} Alternate Cost Delivered
+     * @param alternateCostUnit {@link Integer} Alternate Cost Unit
+     * @param alternateCostTrailingDigit {@link Integer} Alternate Cost Trailing Digit
+     * @param numberOfBlockThresholds {@link Integer} Number Of Block Thresholds
+     * @param priceControl {@link Integer} Price Control
+     * @param numberOfGenerationTiers {@link Integer} Number Of Generation Tiers
+     * @param generationTier {@link Integer} Generation Tier
+     * @param extendedNumberOfPriceTiers {@link Integer} Extended Number Of Price Tiers
+     * @param extendedPriceTier {@link Integer} Extended Price Tier
+     * @param extendedRegisterTier {@link Integer} Extended Register Tier
+     */
+    public PublishPriceCommand(
+            Integer providerId,
+            ByteArray rateLabel,
+            Integer issuerEventId,
+            Calendar currentTime,
+            Integer unitOfMeasure,
+            Integer currency,
+            Integer priceTrailingDigitAndTier,
+            Integer numberOfPriceTiers,
+            Calendar startTime,
+            Integer duration,
+            Integer price,
+            Integer priceRatio,
+            Integer generationPrice,
+            Integer generationPriceRatio,
+            Integer alternateCostDelivered,
+            Integer alternateCostUnit,
+            Integer alternateCostTrailingDigit,
+            Integer numberOfBlockThresholds,
+            Integer priceControl,
+            Integer numberOfGenerationTiers,
+            Integer generationTier,
+            Integer extendedNumberOfPriceTiers,
+            Integer extendedPriceTier,
+            Integer extendedRegisterTier) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.providerId = providerId;
+        this.rateLabel = rateLabel;
+        this.issuerEventId = issuerEventId;
+        this.currentTime = currentTime;
+        this.unitOfMeasure = unitOfMeasure;
+        this.currency = currency;
+        this.priceTrailingDigitAndTier = priceTrailingDigitAndTier;
+        this.numberOfPriceTiers = numberOfPriceTiers;
+        this.startTime = startTime;
+        this.duration = duration;
+        this.price = price;
+        this.priceRatio = priceRatio;
+        this.generationPrice = generationPrice;
+        this.generationPriceRatio = generationPriceRatio;
+        this.alternateCostDelivered = alternateCostDelivered;
+        this.alternateCostUnit = alternateCostUnit;
+        this.alternateCostTrailingDigit = alternateCostTrailingDigit;
+        this.numberOfBlockThresholds = numberOfBlockThresholds;
+        this.priceControl = priceControl;
+        this.numberOfGenerationTiers = numberOfGenerationTiers;
+        this.generationTier = generationTier;
+        this.extendedNumberOfPriceTiers = extendedNumberOfPriceTiers;
+        this.extendedPriceTier = extendedPriceTier;
+        this.extendedRegisterTier = extendedRegisterTier;
     }
 
     /**
@@ -296,7 +384,9 @@ public class PublishPriceCommand extends ZclPriceCommand {
      * providers may be available.
      *
      * @param providerId the Provider ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProviderId(final Integer providerId) {
         this.providerId = providerId;
     }
@@ -324,7 +414,9 @@ public class PublishPriceCommand extends ZclPriceCommand {
      * allows differentiation when a commodity provider may have multiple pricing plans.
      *
      * @param rateLabel the Rate Label
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setRateLabel(final ByteArray rateLabel) {
         this.rateLabel = rateLabel;
     }
@@ -358,7 +450,9 @@ public class PublishPriceCommand extends ZclPriceCommand {
      * that is larger than older pricing information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
     }
@@ -382,7 +476,9 @@ public class PublishPriceCommand extends ZclPriceCommand {
      * provides an extra value-added feature for the broadcast price signals.
      *
      * @param currentTime the Current Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCurrentTime(final Calendar currentTime) {
         this.currentTime = currentTime;
     }
@@ -408,7 +504,9 @@ public class PublishPriceCommand extends ZclPriceCommand {
      * values using a pure binary format as defined in the Metering cluster.
      *
      * @param unitOfMeasure the Unit Of Measure
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setUnitOfMeasure(final Integer unitOfMeasure) {
         this.unitOfMeasure = unitOfMeasure;
     }
@@ -466,7 +564,9 @@ public class PublishPriceCommand extends ZclPriceCommand {
      * and the Extended Number of Price Tiers field.
      *
      * @param currency the Currency
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCurrency(final Integer currency) {
         this.currency = currency;
     }
@@ -484,7 +584,9 @@ public class PublishPriceCommand extends ZclPriceCommand {
      * Sets Price Trailing Digit And Tier.
      *
      * @param priceTrailingDigitAndTier the Price Trailing Digit And Tier
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setPriceTrailingDigitAndTier(final Integer priceTrailingDigitAndTier) {
         this.priceTrailingDigitAndTier = priceTrailingDigitAndTier;
     }
@@ -502,7 +604,9 @@ public class PublishPriceCommand extends ZclPriceCommand {
      * Sets Number Of Price Tiers.
      *
      * @param numberOfPriceTiers the Number Of Price Tiers
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNumberOfPriceTiers(final Integer numberOfPriceTiers) {
         this.numberOfPriceTiers = numberOfPriceTiers;
     }
@@ -536,7 +640,9 @@ public class PublishPriceCommand extends ZclPriceCommand {
      * command shall be set to 0xFFFF indicating the price is valid “until changed”.
      *
      * @param startTime the Start Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStartTime(final Calendar startTime) {
         this.startTime = startTime;
     }
@@ -554,7 +660,9 @@ public class PublishPriceCommand extends ZclPriceCommand {
      * Sets Duration.
      *
      * @param duration the Duration
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDuration(final Integer duration) {
         this.duration = duration;
     }
@@ -580,7 +688,9 @@ public class PublishPriceCommand extends ZclPriceCommand {
      * Trailing Digit field when the commodity is delivered to the premises.
      *
      * @param price the Price
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setPrice(final Integer price) {
         this.price = price;
     }
@@ -610,7 +720,9 @@ public class PublishPriceCommand extends ZclPriceCommand {
      * 0.1 to 25.4. A value of 0xFF indicates the field is not used and 0x00 is an invalid value.
      *
      * @param priceRatio the Price Ratio
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setPriceRatio(final Integer priceRatio) {
         this.priceRatio = priceRatio;
     }
@@ -642,7 +754,9 @@ public class PublishPriceCommand extends ZclPriceCommand {
      * field is not used.
      *
      * @param generationPrice the Generation Price
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setGenerationPrice(final Integer generationPrice) {
         this.generationPrice = generationPrice;
     }
@@ -674,7 +788,9 @@ public class PublishPriceCommand extends ZclPriceCommand {
      * invalid value.
      *
      * @param generationPriceRatio the Generation Price Ratio
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setGenerationPriceRatio(final Integer generationPriceRatio) {
         this.generationPriceRatio = generationPriceRatio;
     }
@@ -708,7 +824,9 @@ public class PublishPriceCommand extends ZclPriceCommand {
      * TOU rates. A value of 0xFFFFFFFF indicates the field is not used.
      *
      * @param alternateCostDelivered the Alternate Cost Delivered
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setAlternateCostDelivered(final Integer alternateCostDelivered) {
         this.alternateCostDelivered = alternateCostDelivered;
     }
@@ -732,7 +850,9 @@ public class PublishPriceCommand extends ZclPriceCommand {
      * value of 0xFF indicates the field is not used.
      *
      * @param alternateCostUnit the Alternate Cost Unit
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setAlternateCostUnit(final Integer alternateCostUnit) {
         this.alternateCostUnit = alternateCostUnit;
     }
@@ -750,7 +870,9 @@ public class PublishPriceCommand extends ZclPriceCommand {
      * Sets Alternate Cost Trailing Digit.
      *
      * @param alternateCostTrailingDigit the Alternate Cost Trailing Digit
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setAlternateCostTrailingDigit(final Integer alternateCostTrailingDigit) {
         this.alternateCostTrailingDigit = alternateCostTrailingDigit;
     }
@@ -768,7 +890,9 @@ public class PublishPriceCommand extends ZclPriceCommand {
      * Sets Number Of Block Thresholds.
      *
      * @param numberOfBlockThresholds the Number Of Block Thresholds
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNumberOfBlockThresholds(final Integer numberOfBlockThresholds) {
         this.numberOfBlockThresholds = numberOfBlockThresholds;
     }
@@ -786,7 +910,9 @@ public class PublishPriceCommand extends ZclPriceCommand {
      * Sets Price Control.
      *
      * @param priceControl the Price Control
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setPriceControl(final Integer priceControl) {
         this.priceControl = priceControl;
     }
@@ -804,7 +930,9 @@ public class PublishPriceCommand extends ZclPriceCommand {
      * Sets Number Of Generation Tiers.
      *
      * @param numberOfGenerationTiers the Number Of Generation Tiers
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNumberOfGenerationTiers(final Integer numberOfGenerationTiers) {
         this.numberOfGenerationTiers = numberOfGenerationTiers;
     }
@@ -822,7 +950,9 @@ public class PublishPriceCommand extends ZclPriceCommand {
      * Sets Generation Tier.
      *
      * @param generationTier the Generation Tier
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setGenerationTier(final Integer generationTier) {
         this.generationTier = generationTier;
     }
@@ -840,7 +970,9 @@ public class PublishPriceCommand extends ZclPriceCommand {
      * Sets Extended Number Of Price Tiers.
      *
      * @param extendedNumberOfPriceTiers the Extended Number Of Price Tiers
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setExtendedNumberOfPriceTiers(final Integer extendedNumberOfPriceTiers) {
         this.extendedNumberOfPriceTiers = extendedNumberOfPriceTiers;
     }
@@ -858,7 +990,9 @@ public class PublishPriceCommand extends ZclPriceCommand {
      * Sets Extended Price Tier.
      *
      * @param extendedPriceTier the Extended Price Tier
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setExtendedPriceTier(final Integer extendedPriceTier) {
         this.extendedPriceTier = extendedPriceTier;
     }
@@ -876,7 +1010,9 @@ public class PublishPriceCommand extends ZclPriceCommand {
      * Sets Extended Register Tier.
      *
      * @param extendedRegisterTier the Extended Register Tier
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setExtendedRegisterTier(final Integer extendedRegisterTier) {
         this.extendedRegisterTier = extendedRegisterTier;
     }

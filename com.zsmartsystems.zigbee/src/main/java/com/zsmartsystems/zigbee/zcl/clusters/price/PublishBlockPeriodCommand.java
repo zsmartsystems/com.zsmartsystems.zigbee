@@ -36,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class PublishBlockPeriodCommand extends ZclPriceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -151,12 +151,52 @@ public class PublishBlockPeriodCommand extends ZclPriceCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public PublishBlockPeriodCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param providerId {@link Integer} Provider ID
+     * @param issuerEventId {@link Integer} Issuer Event ID
+     * @param blockPeriodStartTime {@link Calendar} Block Period Start Time
+     * @param blockPeriodDuration {@link Integer} Block Period Duration
+     * @param blockPeriodControl {@link Integer} Block Period Control
+     * @param blockPeriodDurationType {@link Integer} Block Period Duration Type
+     * @param tariffType {@link Integer} Tariff Type
+     * @param tariffResolutionPeriod {@link Integer} Tariff Resolution Period
+     */
+    public PublishBlockPeriodCommand(
+            Integer providerId,
+            Integer issuerEventId,
+            Calendar blockPeriodStartTime,
+            Integer blockPeriodDuration,
+            Integer blockPeriodControl,
+            Integer blockPeriodDurationType,
+            Integer tariffType,
+            Integer tariffResolutionPeriod) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.providerId = providerId;
+        this.issuerEventId = issuerEventId;
+        this.blockPeriodStartTime = blockPeriodStartTime;
+        this.blockPeriodDuration = blockPeriodDuration;
+        this.blockPeriodControl = blockPeriodControl;
+        this.blockPeriodDurationType = blockPeriodDurationType;
+        this.tariffType = tariffType;
+        this.tariffResolutionPeriod = tariffResolutionPeriod;
     }
 
     /**
@@ -180,7 +220,9 @@ public class PublishBlockPeriodCommand extends ZclPriceCommand {
      * providers may be available.
      *
      * @param providerId the Provider ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProviderId(final Integer providerId) {
         this.providerId = providerId;
     }
@@ -214,7 +256,9 @@ public class PublishBlockPeriodCommand extends ZclPriceCommand {
      * field that is larger than older block information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
     }
@@ -262,7 +306,9 @@ public class PublishBlockPeriodCommand extends ZclPriceCommand {
      * set to 23:59:59 on the applicable date.
      *
      * @param blockPeriodStartTime the Block Period Start Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setBlockPeriodStartTime(final Calendar blockPeriodStartTime) {
         this.blockPeriodStartTime = blockPeriodStartTime;
     }
@@ -288,7 +334,9 @@ public class PublishBlockPeriodCommand extends ZclPriceCommand {
      * changed'.
      *
      * @param blockPeriodDuration the Block Period Duration
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setBlockPeriodDuration(final Integer blockPeriodDuration) {
         this.blockPeriodDuration = blockPeriodDuration;
     }
@@ -318,7 +366,9 @@ public class PublishBlockPeriodCommand extends ZclPriceCommand {
      * Billing periods is out of scope of this specification.
      *
      * @param blockPeriodControl the Block Period Control
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setBlockPeriodControl(final Integer blockPeriodControl) {
         this.blockPeriodControl = blockPeriodControl;
     }
@@ -358,7 +408,9 @@ public class PublishBlockPeriodCommand extends ZclPriceCommand {
      * Minutes is in use.
      *
      * @param blockPeriodDurationType the Block Period Duration Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setBlockPeriodDurationType(final Integer blockPeriodDurationType) {
         this.blockPeriodDurationType = blockPeriodDurationType;
     }
@@ -384,7 +436,9 @@ public class PublishBlockPeriodCommand extends ZclPriceCommand {
      * shall use the ‘Received’ Tariff). The most significant nibble is reserved.
      *
      * @param tariffType the Tariff Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTariffType(final Integer tariffType) {
         this.tariffType = tariffType;
     }
@@ -420,7 +474,9 @@ public class PublishBlockPeriodCommand extends ZclPriceCommand {
      * for the customer. This is described as follows:
      *
      * @param tariffResolutionPeriod the Tariff Resolution Period
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTariffResolutionPeriod(final Integer tariffResolutionPeriod) {
         this.tariffResolutionPeriod = tariffResolutionPeriod;
     }

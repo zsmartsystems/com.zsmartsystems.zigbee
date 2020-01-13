@@ -36,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
 public class ZclIdentifyCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -256,7 +256,16 @@ public class ZclIdentifyCluster extends ZclCluster {
      *
      * @param identifyTime {@link Integer} Identify Time
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.identifyCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new identifyCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> identifyCommand(Integer identifyTime) {
         IdentifyCommand command = new IdentifyCommand();
 
@@ -270,7 +279,16 @@ public class ZclIdentifyCluster extends ZclCluster {
      * The Identify Query Command
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.identifyQueryCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new identifyQueryCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> identifyQueryCommand() {
         return sendCommand(new IdentifyQueryCommand());
     }
@@ -283,7 +301,16 @@ public class ZclIdentifyCluster extends ZclCluster {
      *
      * @param identifyTime {@link Integer} Identify Time
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.identifyQueryResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new identifyQueryResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> identifyQueryResponse(Integer identifyTime) {
         IdentifyQueryResponse command = new IdentifyQueryResponse();
 

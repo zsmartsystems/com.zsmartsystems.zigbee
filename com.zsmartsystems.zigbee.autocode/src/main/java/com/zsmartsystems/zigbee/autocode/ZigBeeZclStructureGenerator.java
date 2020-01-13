@@ -111,6 +111,63 @@ public class ZigBeeZclStructureGenerator extends ZigBeeBaseFieldGenerator {
             }
             out.println();
 
+            out.println("    /**");
+            out.println("     * Default constructor.");
+            out.println("     *");
+            out.println(
+                    "     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.");
+            out.println("     */");
+            out.println("    @Deprecated");
+            out.println("    public " + className + "() {");
+            out.println("    }");
+            out.println();
+
+            out.println("    /**");
+            out.println("     * Constructor providing all required parameters.");
+            out.println("     *");
+            for (final ZigBeeXmlField field : structure.fields) {
+                if (getAutoSized(structure.fields, stringToLowerCamelCase(field.name)) != null) {
+                    continue;
+                }
+                out.println(
+                        "     * @param " + stringToLowerCamelCase(field.name) + " {@link " + getDataTypeClass(field)
+                                + "} " + field.name);
+            }
+            out.println("     */");
+            out.println("    public " + className + "(");
+
+            boolean first = true;
+            for (final ZigBeeXmlField field : structure.fields) {
+                if (getAutoSized(structure.fields, stringToLowerCamelCase(field.name)) != null) {
+                    continue;
+                }
+
+                if (!first) {
+                    out.println(",");
+                }
+                out.print("            " + getDataTypeClass(field) + " " + stringToLowerCamelCase(field.name));
+                first = false;
+            }
+
+            out.println(") {");
+
+            first = true;
+            for (final ZigBeeXmlField field : structure.fields) {
+                if (getAutoSized(structure.fields, stringToLowerCamelCase(field.name)) != null) {
+                    continue;
+                }
+
+                if (first) {
+                    out.println();
+                }
+
+                out.println("        this." + stringToLowerCamelCase(field.name) + " = "
+                        + stringToLowerCamelCase(field.name) + ";");
+                first = false;
+            }
+
+            out.println("    }");
+
             generateFields(out, "ZigBeeSerializable", className, structure.fields, Collections.emptyList());
             generateToString(out, className, structure.fields, Collections.emptyList());
 

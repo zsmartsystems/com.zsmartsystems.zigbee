@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class RequestMirrorResponse extends ZclMeteringCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -51,12 +51,31 @@ public class RequestMirrorResponse extends ZclMeteringCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public RequestMirrorResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param endpointId {@link Integer} Endpoint ID
+     */
+    public RequestMirrorResponse(
+            Integer endpointId) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.endpointId = endpointId;
     }
 
     /**
@@ -86,7 +105,9 @@ public class RequestMirrorResponse extends ZclMeteringCommand {
      * valid, the Metering device shall use the EndPoint ID to forward its metered data.
      *
      * @param endpointId the Endpoint ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setEndpointId(final Integer endpointId) {
         this.endpointId = endpointId;
     }

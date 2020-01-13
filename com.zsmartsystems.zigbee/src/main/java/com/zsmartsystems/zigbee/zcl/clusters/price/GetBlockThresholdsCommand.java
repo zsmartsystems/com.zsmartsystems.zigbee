@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class GetBlockThresholdsCommand extends ZclPriceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -48,12 +48,31 @@ public class GetBlockThresholdsCommand extends ZclPriceCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public GetBlockThresholdsCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param issuerTariffId {@link Integer} Issuer Tariff ID
+     */
+    public GetBlockThresholdsCommand(
+            Integer issuerTariffId) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.issuerTariffId = issuerTariffId;
     }
 
     /**
@@ -73,7 +92,9 @@ public class GetBlockThresholdsCommand extends ZclPriceCommand {
      * IssuerTariffID indicates the tariff to which the requested Price Matrix belongs.
      *
      * @param issuerTariffId the Issuer Tariff ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerTariffId(final Integer issuerTariffId) {
         this.issuerTariffId = issuerTariffId;
     }

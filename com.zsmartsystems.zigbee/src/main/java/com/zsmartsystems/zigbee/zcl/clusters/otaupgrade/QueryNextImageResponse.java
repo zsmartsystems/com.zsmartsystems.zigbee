@@ -35,7 +35,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class QueryNextImageResponse extends ZclOtaUpgradeCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -74,12 +74,43 @@ public class QueryNextImageResponse extends ZclOtaUpgradeCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public QueryNextImageResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param status {@link ZclStatus} Status
+     * @param manufacturerCode {@link Integer} Manufacturer Code
+     * @param imageType {@link Integer} Image Type
+     * @param fileVersion {@link Integer} File Version
+     * @param imageSize {@link Integer} Image Size
+     */
+    public QueryNextImageResponse(
+            ZclStatus status,
+            Integer manufacturerCode,
+            Integer imageType,
+            Integer fileVersion,
+            Integer imageSize) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.status = status;
+        this.manufacturerCode = manufacturerCode;
+        this.imageType = imageType;
+        this.fileVersion = fileVersion;
+        this.imageSize = imageSize;
     }
 
     /**
@@ -95,7 +126,9 @@ public class QueryNextImageResponse extends ZclOtaUpgradeCommand {
      * Sets Status.
      *
      * @param status the Status
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStatus(final ZclStatus status) {
         this.status = status;
     }
@@ -113,7 +146,9 @@ public class QueryNextImageResponse extends ZclOtaUpgradeCommand {
      * Sets Manufacturer Code.
      *
      * @param manufacturerCode the Manufacturer Code
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
     }
@@ -131,7 +166,9 @@ public class QueryNextImageResponse extends ZclOtaUpgradeCommand {
      * Sets Image Type.
      *
      * @param imageType the Image Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setImageType(final Integer imageType) {
         this.imageType = imageType;
     }
@@ -149,7 +186,9 @@ public class QueryNextImageResponse extends ZclOtaUpgradeCommand {
      * Sets File Version.
      *
      * @param fileVersion the File Version
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setFileVersion(final Integer fileVersion) {
         this.fileVersion = fileVersion;
     }
@@ -167,7 +206,9 @@ public class QueryNextImageResponse extends ZclOtaUpgradeCommand {
      * Sets Image Size.
      *
      * @param imageSize the Image Size
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setImageSize(final Integer imageSize) {
         this.imageSize = imageSize;
     }

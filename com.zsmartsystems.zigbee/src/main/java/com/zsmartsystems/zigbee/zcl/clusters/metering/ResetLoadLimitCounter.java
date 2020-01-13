@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class ResetLoadLimitCounter extends ZclMeteringCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -57,12 +57,34 @@ public class ResetLoadLimitCounter extends ZclMeteringCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public ResetLoadLimitCounter() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param providerId {@link Integer} Provider ID
+     * @param issuerEventId {@link Integer} Issuer Event ID
+     */
+    public ResetLoadLimitCounter(
+            Integer providerId,
+            Integer issuerEventId) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.providerId = providerId;
+        this.issuerEventId = issuerEventId;
     }
 
     /**
@@ -82,7 +104,9 @@ public class ResetLoadLimitCounter extends ZclMeteringCommand {
      * An unsigned 32-bit field containing a unique identifier for the commodity provider.
      *
      * @param providerId the Provider ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProviderId(final Integer providerId) {
         this.providerId = providerId;
     }
@@ -112,7 +136,9 @@ public class ResetLoadLimitCounter extends ZclMeteringCommand {
      * Issuer Event ID field that is larger than previous versions of the command.
      *
      * @param issuerEventId the Issuer Event ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
     }

@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class ReportEventStatus extends ZclDemandResponseAndLoadControlCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -131,12 +131,61 @@ public class ReportEventStatus extends ZclDemandResponseAndLoadControlCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public ReportEventStatus() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param issuerEventId {@link Integer} Issuer Event ID
+     * @param eventStatus {@link Integer} Event Status
+     * @param eventStatusTime {@link Calendar} Event Status Time
+     * @param criticalityLevelApplied {@link Integer} Criticality Level Applied
+     * @param coolingTemperatureSetPointApplied {@link Integer} Cooling Temperature Set Point Applied
+     * @param heatingTemperatureSetPointApplied {@link Integer} Heating Temperature Set Point Applied
+     * @param averageLoadAdjustmentPercentageApplied {@link Integer} Average Load Adjustment Percentage Applied
+     * @param dutyCycleApplied {@link Integer} Duty Cycle Applied
+     * @param eventControl {@link Integer} Event Control
+     * @param signatureType {@link Integer} Signature Type
+     * @param signature {@link ByteArray} Signature
+     */
+    public ReportEventStatus(
+            Integer issuerEventId,
+            Integer eventStatus,
+            Calendar eventStatusTime,
+            Integer criticalityLevelApplied,
+            Integer coolingTemperatureSetPointApplied,
+            Integer heatingTemperatureSetPointApplied,
+            Integer averageLoadAdjustmentPercentageApplied,
+            Integer dutyCycleApplied,
+            Integer eventControl,
+            Integer signatureType,
+            ByteArray signature) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.issuerEventId = issuerEventId;
+        this.eventStatus = eventStatus;
+        this.eventStatusTime = eventStatusTime;
+        this.criticalityLevelApplied = criticalityLevelApplied;
+        this.coolingTemperatureSetPointApplied = coolingTemperatureSetPointApplied;
+        this.heatingTemperatureSetPointApplied = heatingTemperatureSetPointApplied;
+        this.averageLoadAdjustmentPercentageApplied = averageLoadAdjustmentPercentageApplied;
+        this.dutyCycleApplied = dutyCycleApplied;
+        this.eventControl = eventControl;
+        this.signatureType = signatureType;
+        this.signature = signature;
     }
 
     /**
@@ -164,7 +213,9 @@ public class ReportEventStatus extends ZclDemandResponseAndLoadControlCommand {
      * Event was issued.
      *
      * @param issuerEventId the Issuer Event ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
     }
@@ -186,7 +237,9 @@ public class ReportEventStatus extends ZclDemandResponseAndLoadControlCommand {
      * This lists the valid values returned in the Event Status field.
      *
      * @param eventStatus the Event Status
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setEventStatus(final Integer eventStatus) {
         this.eventStatus = eventStatus;
     }
@@ -210,7 +263,9 @@ public class ReportEventStatus extends ZclDemandResponseAndLoadControlCommand {
      * value of 0x00000000.
      *
      * @param eventStatusTime the Event Status Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setEventStatusTime(final Calendar eventStatusTime) {
         this.eventStatusTime = eventStatusTime;
     }
@@ -234,7 +289,9 @@ public class ReportEventStatus extends ZclDemandResponseAndLoadControlCommand {
      * Control Event command for more information.
      *
      * @param criticalityLevelApplied the Criticality Level Applied
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCriticalityLevelApplied(final Integer criticalityLevelApplied) {
         this.criticalityLevelApplied = criticalityLevelApplied;
     }
@@ -260,7 +317,9 @@ public class ReportEventStatus extends ZclDemandResponseAndLoadControlCommand {
      * field has not been used by the end device.
      *
      * @param coolingTemperatureSetPointApplied the Cooling Temperature Set Point Applied
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCoolingTemperatureSetPointApplied(final Integer coolingTemperatureSetPointApplied) {
         this.coolingTemperatureSetPointApplied = coolingTemperatureSetPointApplied;
     }
@@ -286,7 +345,9 @@ public class ReportEventStatus extends ZclDemandResponseAndLoadControlCommand {
      * field has not been used by the end device.
      *
      * @param heatingTemperatureSetPointApplied the Heating Temperature Set Point Applied
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setHeatingTemperatureSetPointApplied(final Integer heatingTemperatureSetPointApplied) {
         this.heatingTemperatureSetPointApplied = heatingTemperatureSetPointApplied;
     }
@@ -312,7 +373,9 @@ public class ReportEventStatus extends ZclDemandResponseAndLoadControlCommand {
      * this field has not been used by the end device.
      *
      * @param averageLoadAdjustmentPercentageApplied the Average Load Adjustment Percentage Applied
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setAverageLoadAdjustmentPercentageApplied(final Integer averageLoadAdjustmentPercentageApplied) {
         this.averageLoadAdjustmentPercentageApplied = averageLoadAdjustmentPercentageApplied;
     }
@@ -336,7 +399,9 @@ public class ReportEventStatus extends ZclDemandResponseAndLoadControlCommand {
      * this field has not been used by the end device.
      *
      * @param dutyCycleApplied the Duty Cycle Applied
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDutyCycleApplied(final Integer dutyCycleApplied) {
         this.dutyCycleApplied = dutyCycleApplied;
     }
@@ -358,7 +423,9 @@ public class ReportEventStatus extends ZclDemandResponseAndLoadControlCommand {
      * Identifies additional control options for the event.
      *
      * @param eventControl the Event Control
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setEventControl(final Integer eventControl) {
         this.eventControl = eventControl;
     }
@@ -382,7 +449,9 @@ public class ReportEventStatus extends ZclDemandResponseAndLoadControlCommand {
      * Signature.
      *
      * @param signatureType the Signature Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSignatureType(final Integer signatureType) {
         this.signatureType = signatureType;
     }
@@ -406,7 +475,9 @@ public class ReportEventStatus extends ZclDemandResponseAndLoadControlCommand {
      * used in conjunction with ECDSA.
      *
      * @param signature the Signature
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSignature(final ByteArray signature) {
         this.signature = signature;
     }

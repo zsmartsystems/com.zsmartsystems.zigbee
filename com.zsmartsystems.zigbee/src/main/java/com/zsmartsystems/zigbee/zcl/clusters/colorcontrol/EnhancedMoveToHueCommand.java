@@ -32,7 +32,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class EnhancedMoveToHueCommand extends ZclColorControlCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -61,12 +61,37 @@ public class EnhancedMoveToHueCommand extends ZclColorControlCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public EnhancedMoveToHueCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param enhancedHue {@link Integer} Enhanced Hue
+     * @param direction {@link Integer} Direction
+     * @param transitionTime {@link Integer} Transition Time
+     */
+    public EnhancedMoveToHueCommand(
+            Integer enhancedHue,
+            Integer direction,
+            Integer transitionTime) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.enhancedHue = enhancedHue;
+        this.direction = direction;
+        this.transitionTime = transitionTime;
     }
 
     /**
@@ -82,7 +107,9 @@ public class EnhancedMoveToHueCommand extends ZclColorControlCommand {
      * Sets Enhanced Hue.
      *
      * @param enhancedHue the Enhanced Hue
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setEnhancedHue(final Integer enhancedHue) {
         this.enhancedHue = enhancedHue;
     }
@@ -100,7 +127,9 @@ public class EnhancedMoveToHueCommand extends ZclColorControlCommand {
      * Sets Direction.
      *
      * @param direction the Direction
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDirection(final Integer direction) {
         this.direction = direction;
     }
@@ -118,7 +147,9 @@ public class EnhancedMoveToHueCommand extends ZclColorControlCommand {
      * Sets Transition Time.
      *
      * @param transitionTime the Transition Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTransitionTime(final Integer transitionTime) {
         this.transitionTime = transitionTime;
     }

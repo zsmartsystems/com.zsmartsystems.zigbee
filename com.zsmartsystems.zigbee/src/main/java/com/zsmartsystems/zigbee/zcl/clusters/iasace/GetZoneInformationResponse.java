@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class GetZoneInformationResponse extends ZclIasAceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -64,12 +64,40 @@ public class GetZoneInformationResponse extends ZclIasAceCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public GetZoneInformationResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param zoneId {@link Integer} Zone ID
+     * @param zoneType {@link Integer} Zone Type
+     * @param ieeeAddress {@link IeeeAddress} IEEE Address
+     * @param zoneLabel {@link String} Zone Label
+     */
+    public GetZoneInformationResponse(
+            Integer zoneId,
+            Integer zoneType,
+            IeeeAddress ieeeAddress,
+            String zoneLabel) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.zoneId = zoneId;
+        this.zoneType = zoneType;
+        this.ieeeAddress = ieeeAddress;
+        this.zoneLabel = zoneLabel;
     }
 
     /**
@@ -85,7 +113,9 @@ public class GetZoneInformationResponse extends ZclIasAceCommand {
      * Sets Zone ID.
      *
      * @param zoneId the Zone ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneId(final Integer zoneId) {
         this.zoneId = zoneId;
     }
@@ -103,7 +133,9 @@ public class GetZoneInformationResponse extends ZclIasAceCommand {
      * Sets Zone Type.
      *
      * @param zoneType the Zone Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneType(final Integer zoneType) {
         this.zoneType = zoneType;
     }
@@ -121,7 +153,9 @@ public class GetZoneInformationResponse extends ZclIasAceCommand {
      * Sets IEEE Address.
      *
      * @param ieeeAddress the IEEE Address
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIeeeAddress(final IeeeAddress ieeeAddress) {
         this.ieeeAddress = ieeeAddress;
     }
@@ -153,7 +187,9 @@ public class GetZoneInformationResponse extends ZclIasAceCommand {
      * The string encoding shall be UTF-8.
      *
      * @param zoneLabel the Zone Label
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneLabel(final String zoneLabel) {
         this.zoneLabel = zoneLabel;
     }

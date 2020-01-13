@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class PublishPrepaySnapshot extends ZclPrepaymentCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -81,12 +81,52 @@ public class PublishPrepaySnapshot extends ZclPrepaymentCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public PublishPrepaySnapshot() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param snapshotId {@link Integer} Snapshot ID
+     * @param snapshotTime {@link Calendar} Snapshot Time
+     * @param totalSnapshotsFound {@link Integer} Total Snapshots Found
+     * @param commandIndex {@link Integer} Command Index
+     * @param totalNumberOfCommands {@link Integer} Total Number Of Commands
+     * @param snapshotCause {@link Integer} Snapshot Cause
+     * @param snapshotPayloadType {@link Integer} Snapshot Payload Type
+     * @param snapshotPayload {@link Integer} Snapshot Payload
+     */
+    public PublishPrepaySnapshot(
+            Integer snapshotId,
+            Calendar snapshotTime,
+            Integer totalSnapshotsFound,
+            Integer commandIndex,
+            Integer totalNumberOfCommands,
+            Integer snapshotCause,
+            Integer snapshotPayloadType,
+            Integer snapshotPayload) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.snapshotId = snapshotId;
+        this.snapshotTime = snapshotTime;
+        this.totalSnapshotsFound = totalSnapshotsFound;
+        this.commandIndex = commandIndex;
+        this.totalNumberOfCommands = totalNumberOfCommands;
+        this.snapshotCause = snapshotCause;
+        this.snapshotPayloadType = snapshotPayloadType;
+        this.snapshotPayload = snapshotPayload;
     }
 
     /**
@@ -102,7 +142,9 @@ public class PublishPrepaySnapshot extends ZclPrepaymentCommand {
      * Sets Snapshot ID.
      *
      * @param snapshotId the Snapshot ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSnapshotId(final Integer snapshotId) {
         this.snapshotId = snapshotId;
     }
@@ -120,7 +162,9 @@ public class PublishPrepaySnapshot extends ZclPrepaymentCommand {
      * Sets Snapshot Time.
      *
      * @param snapshotTime the Snapshot Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSnapshotTime(final Calendar snapshotTime) {
         this.snapshotTime = snapshotTime;
     }
@@ -138,7 +182,9 @@ public class PublishPrepaySnapshot extends ZclPrepaymentCommand {
      * Sets Total Snapshots Found.
      *
      * @param totalSnapshotsFound the Total Snapshots Found
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTotalSnapshotsFound(final Integer totalSnapshotsFound) {
         this.totalSnapshotsFound = totalSnapshotsFound;
     }
@@ -156,7 +202,9 @@ public class PublishPrepaySnapshot extends ZclPrepaymentCommand {
      * Sets Command Index.
      *
      * @param commandIndex the Command Index
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCommandIndex(final Integer commandIndex) {
         this.commandIndex = commandIndex;
     }
@@ -174,7 +222,9 @@ public class PublishPrepaySnapshot extends ZclPrepaymentCommand {
      * Sets Total Number Of Commands.
      *
      * @param totalNumberOfCommands the Total Number Of Commands
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTotalNumberOfCommands(final Integer totalNumberOfCommands) {
         this.totalNumberOfCommands = totalNumberOfCommands;
     }
@@ -192,7 +242,9 @@ public class PublishPrepaySnapshot extends ZclPrepaymentCommand {
      * Sets Snapshot Cause.
      *
      * @param snapshotCause the Snapshot Cause
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSnapshotCause(final Integer snapshotCause) {
         this.snapshotCause = snapshotCause;
     }
@@ -210,7 +262,9 @@ public class PublishPrepaySnapshot extends ZclPrepaymentCommand {
      * Sets Snapshot Payload Type.
      *
      * @param snapshotPayloadType the Snapshot Payload Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSnapshotPayloadType(final Integer snapshotPayloadType) {
         this.snapshotPayloadType = snapshotPayloadType;
     }
@@ -228,7 +282,9 @@ public class PublishPrepaySnapshot extends ZclPrepaymentCommand {
      * Sets Snapshot Payload.
      *
      * @param snapshotPayload the Snapshot Payload
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSnapshotPayload(final Integer snapshotPayload) {
         this.snapshotPayload = snapshotPayload;
     }

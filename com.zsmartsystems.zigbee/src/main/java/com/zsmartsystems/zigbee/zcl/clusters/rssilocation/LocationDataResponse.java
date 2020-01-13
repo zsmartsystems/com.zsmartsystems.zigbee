@@ -22,7 +22,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class LocationDataResponse extends ZclRssiLocationCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -86,12 +86,58 @@ public class LocationDataResponse extends ZclRssiLocationCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public LocationDataResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param status {@link Integer} Status
+     * @param locationType {@link Integer} Location Type
+     * @param coordinate1 {@link Integer} Coordinate 1
+     * @param coordinate2 {@link Integer} Coordinate 2
+     * @param coordinate3 {@link Integer} Coordinate 3
+     * @param power {@link Integer} Power
+     * @param pathLossExponent {@link Integer} Path Loss Exponent
+     * @param locationMethod {@link Integer} Location Method
+     * @param qualityMeasure {@link Integer} Quality Measure
+     * @param locationAge {@link Integer} Location Age
+     */
+    public LocationDataResponse(
+            Integer status,
+            Integer locationType,
+            Integer coordinate1,
+            Integer coordinate2,
+            Integer coordinate3,
+            Integer power,
+            Integer pathLossExponent,
+            Integer locationMethod,
+            Integer qualityMeasure,
+            Integer locationAge) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.status = status;
+        this.locationType = locationType;
+        this.coordinate1 = coordinate1;
+        this.coordinate2 = coordinate2;
+        this.coordinate3 = coordinate3;
+        this.power = power;
+        this.pathLossExponent = pathLossExponent;
+        this.locationMethod = locationMethod;
+        this.qualityMeasure = qualityMeasure;
+        this.locationAge = locationAge;
     }
 
     /**
@@ -107,7 +153,9 @@ public class LocationDataResponse extends ZclRssiLocationCommand {
      * Sets Status.
      *
      * @param status the Status
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStatus(final Integer status) {
         this.status = status;
     }
@@ -125,7 +173,9 @@ public class LocationDataResponse extends ZclRssiLocationCommand {
      * Sets Location Type.
      *
      * @param locationType the Location Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setLocationType(final Integer locationType) {
         this.locationType = locationType;
     }
@@ -143,7 +193,9 @@ public class LocationDataResponse extends ZclRssiLocationCommand {
      * Sets Coordinate 1.
      *
      * @param coordinate1 the Coordinate 1
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCoordinate1(final Integer coordinate1) {
         this.coordinate1 = coordinate1;
     }
@@ -161,7 +213,9 @@ public class LocationDataResponse extends ZclRssiLocationCommand {
      * Sets Coordinate 2.
      *
      * @param coordinate2 the Coordinate 2
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCoordinate2(final Integer coordinate2) {
         this.coordinate2 = coordinate2;
     }
@@ -179,7 +233,9 @@ public class LocationDataResponse extends ZclRssiLocationCommand {
      * Sets Coordinate 3.
      *
      * @param coordinate3 the Coordinate 3
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCoordinate3(final Integer coordinate3) {
         this.coordinate3 = coordinate3;
     }
@@ -197,7 +253,9 @@ public class LocationDataResponse extends ZclRssiLocationCommand {
      * Sets Power.
      *
      * @param power the Power
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setPower(final Integer power) {
         this.power = power;
     }
@@ -215,7 +273,9 @@ public class LocationDataResponse extends ZclRssiLocationCommand {
      * Sets Path Loss Exponent.
      *
      * @param pathLossExponent the Path Loss Exponent
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setPathLossExponent(final Integer pathLossExponent) {
         this.pathLossExponent = pathLossExponent;
     }
@@ -233,7 +293,9 @@ public class LocationDataResponse extends ZclRssiLocationCommand {
      * Sets Location Method.
      *
      * @param locationMethod the Location Method
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setLocationMethod(final Integer locationMethod) {
         this.locationMethod = locationMethod;
     }
@@ -251,7 +313,9 @@ public class LocationDataResponse extends ZclRssiLocationCommand {
      * Sets Quality Measure.
      *
      * @param qualityMeasure the Quality Measure
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setQualityMeasure(final Integer qualityMeasure) {
         this.qualityMeasure = qualityMeasure;
     }
@@ -269,7 +333,9 @@ public class LocationDataResponse extends ZclRssiLocationCommand {
      * Sets Location Age.
      *
      * @param locationAge the Location Age
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setLocationAge(final Integer locationAge) {
         this.locationAge = locationAge;
     }

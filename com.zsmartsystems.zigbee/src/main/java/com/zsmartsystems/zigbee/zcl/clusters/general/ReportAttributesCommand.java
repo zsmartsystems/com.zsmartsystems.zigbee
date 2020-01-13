@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class ReportAttributesCommand extends ZclGeneralCommand {
     /**
      * The command ID.
@@ -43,11 +43,29 @@ public class ReportAttributesCommand extends ZclGeneralCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public ReportAttributesCommand() {
         commandId = COMMAND_ID;
         genericCommand = true;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param reports {@link List<AttributeReport>} Reports
+     */
+    public ReportAttributesCommand(
+            List<AttributeReport> reports) {
+
+        commandId = COMMAND_ID;
+        genericCommand = true;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.reports = reports;
     }
 
     /**
@@ -76,7 +94,9 @@ public class ReportAttributesCommand extends ZclGeneralCommand {
      * Sets Reports.
      *
      * @param reports the Reports
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setReports(final List<AttributeReport> reports) {
         this.reports = reports;
     }

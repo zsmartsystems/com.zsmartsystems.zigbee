@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class OffWithEffectCommand extends ZclOnOffCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -56,12 +56,34 @@ public class OffWithEffectCommand extends ZclOnOffCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public OffWithEffectCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param effectIdentifier {@link Integer} Effect Identifier
+     * @param effectVariant {@link Integer} Effect Variant
+     */
+    public OffWithEffectCommand(
+            Integer effectIdentifier,
+            Integer effectVariant) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.effectIdentifier = effectIdentifier;
+        this.effectVariant = effectVariant;
     }
 
     /**
@@ -83,7 +105,9 @@ public class OffWithEffectCommand extends ZclOnOffCommand {
      * when switching the device off.
      *
      * @param effectIdentifier the Effect Identifier
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setEffectIdentifier(final Integer effectIdentifier) {
         this.effectIdentifier = effectIdentifier;
     }
@@ -111,7 +135,9 @@ public class OffWithEffectCommand extends ZclOnOffCommand {
      * on the value of the Effect Identifier field.
      *
      * @param effectVariant the Effect Variant
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setEffectVariant(final Integer effectVariant) {
         this.effectVariant = effectVariant;
     }

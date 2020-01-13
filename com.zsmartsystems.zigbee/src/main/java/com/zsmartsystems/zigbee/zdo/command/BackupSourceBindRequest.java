@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class BackupSourceBindRequest extends ZdoRequest {
     /**
      * The ZDO cluster ID.
@@ -55,9 +55,34 @@ public class BackupSourceBindRequest extends ZdoRequest {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public BackupSourceBindRequest() {
         clusterId = CLUSTER_ID;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param sourceTableEntries {@link Integer} Source Table Entries
+     * @param startIndex {@link Integer} Start Index
+     * @param sourceTableListCount {@link Integer} Source Table List Count
+     * @param sourceTableList {@link List<Long>} Source Table List
+     */
+    public BackupSourceBindRequest(
+            Integer sourceTableEntries,
+            Integer startIndex,
+            Integer sourceTableListCount,
+            List<Long> sourceTableList) {
+
+        clusterId = CLUSTER_ID;
+
+        this.sourceTableEntries = sourceTableEntries;
+        this.startIndex = startIndex;
+        this.sourceTableListCount = sourceTableListCount;
+        this.sourceTableList = sourceTableList;
     }
 
     /**
@@ -73,7 +98,9 @@ public class BackupSourceBindRequest extends ZdoRequest {
      * Sets Source Table Entries.
      *
      * @param sourceTableEntries the Source Table Entries
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSourceTableEntries(final Integer sourceTableEntries) {
         this.sourceTableEntries = sourceTableEntries;
     }
@@ -91,7 +118,9 @@ public class BackupSourceBindRequest extends ZdoRequest {
      * Sets Start Index.
      *
      * @param startIndex the Start Index
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;
     }
@@ -109,7 +138,9 @@ public class BackupSourceBindRequest extends ZdoRequest {
      * Sets Source Table List Count.
      *
      * @param sourceTableListCount the Source Table List Count
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSourceTableListCount(final Integer sourceTableListCount) {
         this.sourceTableListCount = sourceTableListCount;
     }
@@ -127,7 +158,9 @@ public class BackupSourceBindRequest extends ZdoRequest {
      * Sets Source Table List.
      *
      * @param sourceTableList the Source Table List
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSourceTableList(final List<Long> sourceTableList) {
         this.sourceTableList = sourceTableList;
     }

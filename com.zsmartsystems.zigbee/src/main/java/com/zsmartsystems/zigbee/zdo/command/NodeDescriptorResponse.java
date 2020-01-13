@@ -43,7 +43,7 @@ import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-15T18:21:05Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class NodeDescriptorResponse extends ZdoResponse {
     /**
      * The ZDO cluster ID.
@@ -62,9 +62,31 @@ public class NodeDescriptorResponse extends ZdoResponse {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public NodeDescriptorResponse() {
         clusterId = CLUSTER_ID;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param status {@link ZdoStatus} Status
+     * @param nwkAddrOfInterest {@link Integer} NWK Addr Of Interest
+     * @param nodeDescriptor {@link NodeDescriptor} Node Descriptor
+     */
+    public NodeDescriptorResponse(
+            ZdoStatus status,
+            Integer nwkAddrOfInterest,
+            NodeDescriptor nodeDescriptor) {
+
+        clusterId = CLUSTER_ID;
+
+        this.status = status;
+        this.nwkAddrOfInterest = nwkAddrOfInterest;
+        this.nodeDescriptor = nodeDescriptor;
     }
 
     /**
@@ -80,7 +102,9 @@ public class NodeDescriptorResponse extends ZdoResponse {
      * Sets NWK Addr Of Interest.
      *
      * @param nwkAddrOfInterest the NWK Addr Of Interest
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
         this.nwkAddrOfInterest = nwkAddrOfInterest;
     }
@@ -98,7 +122,9 @@ public class NodeDescriptorResponse extends ZdoResponse {
      * Sets Node Descriptor.
      *
      * @param nodeDescriptor the Node Descriptor
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNodeDescriptor(final NodeDescriptor nodeDescriptor) {
         this.nodeDescriptor = nodeDescriptor;
     }

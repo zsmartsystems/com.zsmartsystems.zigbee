@@ -30,7 +30,7 @@ import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class ManagementLqiResponse extends ZdoResponse {
     /**
      * The ZDO cluster ID.
@@ -54,9 +54,34 @@ public class ManagementLqiResponse extends ZdoResponse {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public ManagementLqiResponse() {
         clusterId = CLUSTER_ID;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param status {@link ZdoStatus} Status
+     * @param neighborTableEntries {@link Integer} Neighbor Table Entries
+     * @param startIndex {@link Integer} Start Index
+     * @param neighborTableList {@link List<NeighborTable>} Neighbor Table List
+     */
+    public ManagementLqiResponse(
+            ZdoStatus status,
+            Integer neighborTableEntries,
+            Integer startIndex,
+            List<NeighborTable> neighborTableList) {
+
+        clusterId = CLUSTER_ID;
+
+        this.status = status;
+        this.neighborTableEntries = neighborTableEntries;
+        this.startIndex = startIndex;
+        this.neighborTableList = neighborTableList;
     }
 
     /**
@@ -72,7 +97,9 @@ public class ManagementLqiResponse extends ZdoResponse {
      * Sets Neighbor Table Entries.
      *
      * @param neighborTableEntries the Neighbor Table Entries
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNeighborTableEntries(final Integer neighborTableEntries) {
         this.neighborTableEntries = neighborTableEntries;
     }
@@ -90,7 +117,9 @@ public class ManagementLqiResponse extends ZdoResponse {
      * Sets Start Index.
      *
      * @param startIndex the Start Index
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;
     }
@@ -108,7 +137,9 @@ public class ManagementLqiResponse extends ZdoResponse {
      * Sets Neighbor Table List.
      *
      * @param neighborTableList the Neighbor Table List
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNeighborTableList(final List<NeighborTable> neighborTableList) {
         this.neighborTableList = neighborTableList;
     }

@@ -20,7 +20,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:02:05Z")
 public class DebtPayload implements ZigBeeSerializable {
     /**
      * Collection Time structure field.
@@ -43,6 +43,34 @@ public class DebtPayload implements ZigBeeSerializable {
     private Integer outstandingDebt;
 
 
+    /**
+     * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
+     */
+    @Deprecated
+    public DebtPayload() {
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param collectionTime {@link Calendar} Collection Time
+     * @param amountCollected {@link Integer} Amount Collected
+     * @param debtType {@link Integer} Debt Type
+     * @param outstandingDebt {@link Integer} Outstanding Debt
+     */
+    public DebtPayload(
+            Calendar collectionTime,
+            Integer amountCollected,
+            Integer debtType,
+            Integer outstandingDebt) {
+
+        this.collectionTime = collectionTime;
+        this.amountCollected = amountCollected;
+        this.debtType = debtType;
+        this.outstandingDebt = outstandingDebt;
+    }
 
     /**
      * Gets Collection Time.
@@ -57,7 +85,9 @@ public class DebtPayload implements ZigBeeSerializable {
      * Sets Collection Time.
      *
      * @param collectionTime the Collection Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCollectionTime(final Calendar collectionTime) {
         this.collectionTime = collectionTime;
     }
@@ -75,7 +105,9 @@ public class DebtPayload implements ZigBeeSerializable {
      * Sets Amount Collected.
      *
      * @param amountCollected the Amount Collected
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setAmountCollected(final Integer amountCollected) {
         this.amountCollected = amountCollected;
     }
@@ -93,7 +125,9 @@ public class DebtPayload implements ZigBeeSerializable {
      * Sets Debt Type.
      *
      * @param debtType the Debt Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDebtType(final Integer debtType) {
         this.debtType = debtType;
     }
@@ -111,7 +145,9 @@ public class DebtPayload implements ZigBeeSerializable {
      * Sets Outstanding Debt.
      *
      * @param outstandingDebt the Outstanding Debt
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setOutstandingDebt(final Integer outstandingDebt) {
         this.outstandingDebt = outstandingDebt;
     }

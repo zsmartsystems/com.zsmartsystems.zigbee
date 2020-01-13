@@ -58,12 +58,12 @@ public class ClusterMatcherTest {
 
         List<Integer> clusterListIn = new ArrayList<Integer>();
         List<Integer> clusterListOut = new ArrayList<Integer>();
-        MatchDescriptorRequest request = new MatchDescriptorRequest();
-        request.setNwkAddrOfInterest(0);
+        MatchDescriptorRequest request = new MatchDescriptorRequest(
+                0,
+                0x104,
+                clusterListIn,
+                clusterListOut);
         request.setSourceAddress(new ZigBeeEndpointAddress(1234, 5));
-        request.setProfileId(0x104);
-        request.setInClusterList(clusterListIn);
-        request.setOutClusterList(clusterListOut);
 
         matcher.commandReceived(request);
         assertEquals(0, mockedCommandCaptor.getAllValues().size());

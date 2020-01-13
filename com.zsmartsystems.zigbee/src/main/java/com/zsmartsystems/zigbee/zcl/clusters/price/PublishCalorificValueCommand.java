@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class PublishCalorificValueCommand extends ZclPriceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -67,12 +67,43 @@ public class PublishCalorificValueCommand extends ZclPriceCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public PublishCalorificValueCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param issuerEventId {@link Integer} Issuer Event ID
+     * @param startTime {@link Calendar} Start Time
+     * @param calorificValue {@link Integer} Calorific Value
+     * @param calorificValueUnit {@link Integer} Calorific Value Unit
+     * @param calorificValueTrailingDigit {@link Integer} Calorific Value Trailing Digit
+     */
+    public PublishCalorificValueCommand(
+            Integer issuerEventId,
+            Calendar startTime,
+            Integer calorificValue,
+            Integer calorificValueUnit,
+            Integer calorificValueTrailingDigit) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.issuerEventId = issuerEventId;
+        this.startTime = startTime;
+        this.calorificValue = calorificValue;
+        this.calorificValueUnit = calorificValueUnit;
+        this.calorificValueTrailingDigit = calorificValueTrailingDigit;
     }
 
     /**
@@ -88,7 +119,9 @@ public class PublishCalorificValueCommand extends ZclPriceCommand {
      * Sets Issuer Event ID.
      *
      * @param issuerEventId the Issuer Event ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
     }
@@ -106,7 +139,9 @@ public class PublishCalorificValueCommand extends ZclPriceCommand {
      * Sets Start Time.
      *
      * @param startTime the Start Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStartTime(final Calendar startTime) {
         this.startTime = startTime;
     }
@@ -124,7 +159,9 @@ public class PublishCalorificValueCommand extends ZclPriceCommand {
      * Sets Calorific Value.
      *
      * @param calorificValue the Calorific Value
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCalorificValue(final Integer calorificValue) {
         this.calorificValue = calorificValue;
     }
@@ -142,7 +179,9 @@ public class PublishCalorificValueCommand extends ZclPriceCommand {
      * Sets Calorific Value Unit.
      *
      * @param calorificValueUnit the Calorific Value Unit
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCalorificValueUnit(final Integer calorificValueUnit) {
         this.calorificValueUnit = calorificValueUnit;
     }
@@ -160,7 +199,9 @@ public class PublishCalorificValueCommand extends ZclPriceCommand {
      * Sets Calorific Value Trailing Digit.
      *
      * @param calorificValueTrailingDigit the Calorific Value Trailing Digit
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCalorificValueTrailingDigit(final Integer calorificValueTrailingDigit) {
         this.calorificValueTrailingDigit = calorificValueTrailingDigit;
     }

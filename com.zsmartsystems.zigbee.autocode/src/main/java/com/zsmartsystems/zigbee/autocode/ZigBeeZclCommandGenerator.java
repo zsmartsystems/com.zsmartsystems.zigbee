@@ -39,7 +39,6 @@ public class ZigBeeZclCommandGenerator extends ZigBeeBaseFieldGenerator {
                 generateZclAbstractClusterCommand(cluster, packageRoot, new File(sourceRootPath));
                 generateZclClusterCommands(cluster, packageRoot, new File(sourceRootPath));
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -181,7 +180,13 @@ public class ZigBeeZclCommandGenerator extends ZigBeeBaseFieldGenerator {
 
             out.println("    /**");
             out.println("     * Default constructor.");
+            out.println("     *");
+            out.println(
+                    "     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.");
             out.println("     */");
+            if (!command.fields.isEmpty()) {
+                out.println("    @Deprecated");
+            }
             out.println("    public " + className + "() {");
             if (!cluster.name.equalsIgnoreCase("GENERAL")) {
                 out.println("        clusterId = CLUSTER_ID;");
@@ -194,6 +199,68 @@ public class ZigBeeZclCommandGenerator extends ZigBeeBaseFieldGenerator {
                         + (command.source.equals("client") ? "CLIENT_TO_SERVER" : "SERVER_TO_CLIENT") + ";");
             }
             out.println("    }");
+            out.println();
+
+            if (!command.fields.isEmpty()) {
+                out.println("    /**");
+
+                out.println("     * Constructor providing all required parameters.");
+                out.println("     *");
+                for (final ZigBeeXmlField field : command.fields) {
+                    if (getAutoSized(command.fields, stringToLowerCamelCase(field.name)) != null) {
+                        continue;
+                    }
+                    out.println(
+                            "     * @param " + stringToLowerCamelCase(field.name) + " {@link " + getDataTypeClass(field)
+                                    + "} " + field.name);
+                }
+                out.println("     */");
+                out.println("    public " + className + "(");
+
+                boolean first = true;
+                for (final ZigBeeXmlField field : command.fields) {
+                    if (getAutoSized(command.fields, stringToLowerCamelCase(field.name)) != null) {
+                        continue;
+                    }
+
+                    if (!first) {
+                        out.println(",");
+                    }
+                    out.print("            " + getDataTypeClass(field) + " " + stringToLowerCamelCase(field.name));
+                    first = false;
+                }
+
+                out.println(") {");
+                out.println();
+
+                if (!cluster.name.equalsIgnoreCase("GENERAL")) {
+                    out.println("        clusterId = CLUSTER_ID;");
+                }
+                if (commandExtends.startsWith("Zcl")) {
+                    out.println("        commandId = COMMAND_ID;");
+                    out.println("        genericCommand = "
+                            + ((cluster.name.equalsIgnoreCase("GENERAL")) ? "true" : "false") + ";");
+                    out.println("        commandDirection = ZclCommandDirection."
+                            + (command.source.equals("client") ? "CLIENT_TO_SERVER" : "SERVER_TO_CLIENT") + ";");
+                }
+
+                first = true;
+                for (final ZigBeeXmlField field : command.fields) {
+                    if (getAutoSized(command.fields, stringToLowerCamelCase(field.name)) != null) {
+                        continue;
+                    }
+
+                    if (first) {
+                        out.println();
+                    }
+
+                    out.println("        this." + stringToLowerCamelCase(field.name) + " = "
+                            + stringToLowerCamelCase(field.name) + ";");
+                    first = false;
+                }
+
+                out.println("    }");
+            }
 
             if (cluster.name.equalsIgnoreCase("GENERAL")) {
                 out.println();
@@ -257,6 +324,7 @@ public class ZigBeeZclCommandGenerator extends ZigBeeBaseFieldGenerator {
             out.flush();
             out.close();
         }
+
     }
 
     private void generateZclAbstractClusterCommand(ZigBeeXmlCluster cluster, String packageRootPrefix,

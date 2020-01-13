@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class PublishCurrencyConversionCommand extends ZclPriceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -114,12 +114,52 @@ public class PublishCurrencyConversionCommand extends ZclPriceCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public PublishCurrencyConversionCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param providerId {@link Integer} Provider ID
+     * @param issuerEventId {@link Integer} Issuer Event ID
+     * @param startTime {@link Calendar} Start Time
+     * @param oldCurrency {@link Integer} Old Currency
+     * @param newCurrency {@link Integer} New Currency
+     * @param conversionFactor {@link Integer} Conversion Factor
+     * @param conversionFactorTrailingDigit {@link Integer} Conversion Factor Trailing Digit
+     * @param currencyChangeControlFlags {@link Integer} Currency Change Control Flags
+     */
+    public PublishCurrencyConversionCommand(
+            Integer providerId,
+            Integer issuerEventId,
+            Calendar startTime,
+            Integer oldCurrency,
+            Integer newCurrency,
+            Integer conversionFactor,
+            Integer conversionFactorTrailingDigit,
+            Integer currencyChangeControlFlags) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.providerId = providerId;
+        this.issuerEventId = issuerEventId;
+        this.startTime = startTime;
+        this.oldCurrency = oldCurrency;
+        this.newCurrency = newCurrency;
+        this.conversionFactor = conversionFactor;
+        this.conversionFactorTrailingDigit = conversionFactorTrailingDigit;
+        this.currencyChangeControlFlags = currencyChangeControlFlags;
     }
 
     /**
@@ -143,7 +183,9 @@ public class PublishCurrencyConversionCommand extends ZclPriceCommand {
      * providers may be available.
      *
      * @param providerId the Provider ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProviderId(final Integer providerId) {
         this.providerId = providerId;
     }
@@ -175,7 +217,9 @@ public class PublishCurrencyConversionCommand extends ZclPriceCommand {
      * value in the Issuer Event ID field that is larger than older information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
     }
@@ -205,7 +249,9 @@ public class PublishCurrencyConversionCommand extends ZclPriceCommand {
      * cancelled.
      *
      * @param startTime the Start Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStartTime(final Calendar startTime) {
         this.startTime = startTime;
     }
@@ -231,7 +277,9 @@ public class PublishCurrencyConversionCommand extends ZclPriceCommand {
      * match the values defined by ISO 4217.
      *
      * @param oldCurrency the Old Currency
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setOldCurrency(final Integer oldCurrency) {
         this.oldCurrency = oldCurrency;
     }
@@ -257,7 +305,9 @@ public class PublishCurrencyConversionCommand extends ZclPriceCommand {
      * match the values defined by ISO 4217.
      *
      * @param newCurrency the New Currency
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNewCurrency(final Integer newCurrency) {
         this.newCurrency = newCurrency;
     }
@@ -279,7 +329,9 @@ public class PublishCurrencyConversionCommand extends ZclPriceCommand {
      * The format and use of this field is the same as for the ConversionFactor attribute.
      *
      * @param conversionFactor the Conversion Factor
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setConversionFactor(final Integer conversionFactor) {
         this.conversionFactor = conversionFactor;
     }
@@ -303,7 +355,9 @@ public class PublishCurrencyConversionCommand extends ZclPriceCommand {
      * attribute.
      *
      * @param conversionFactorTrailingDigit the Conversion Factor Trailing Digit
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setConversionFactorTrailingDigit(final Integer conversionFactorTrailingDigit) {
         this.conversionFactorTrailingDigit = conversionFactorTrailingDigit;
     }
@@ -327,7 +381,9 @@ public class PublishCurrencyConversionCommand extends ZclPriceCommand {
      * processing of this command.
      *
      * @param currencyChangeControlFlags the Currency Change Control Flags
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCurrencyChangeControlFlags(final Integer currencyChangeControlFlags) {
         this.currencyChangeControlFlags = currencyChangeControlFlags;
     }

@@ -36,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
 public class ZclWindowCoveringCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -1703,7 +1703,16 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * Moves window covering to InstalledOpenLimit
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.windowCoveringUpOpen(parameters ...)</code>
+     * with <code>cluster.sendCommand(new windowCoveringUpOpen(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> windowCoveringUpOpen() {
         return sendCommand(new WindowCoveringUpOpen());
     }
@@ -1714,7 +1723,16 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * Moves window covering to InstalledClosedLimit
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.windowCoveringDownClose(parameters ...)</code>
+     * with <code>cluster.sendCommand(new windowCoveringDownClose(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> windowCoveringDownClose() {
         return sendCommand(new WindowCoveringDownClose());
     }
@@ -1725,7 +1743,16 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * Stop any adjustment of window covering
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.windowCoveringStop(parameters ...)</code>
+     * with <code>cluster.sendCommand(new windowCoveringStop(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> windowCoveringStop() {
         return sendCommand(new WindowCoveringStop());
     }
@@ -1737,7 +1764,16 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param liftValue {@link Integer} Lift Value
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.windowCoveringGoToLiftValue(parameters ...)</code>
+     * with <code>cluster.sendCommand(new windowCoveringGoToLiftValue(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> windowCoveringGoToLiftValue(Integer liftValue) {
         WindowCoveringGoToLiftValue command = new WindowCoveringGoToLiftValue();
 
@@ -1754,7 +1790,16 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param percentageLiftValue {@link Integer} Percentage Lift Value
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.windowCoveringGoToLiftPercentage(parameters ...)</code>
+     * with <code>cluster.sendCommand(new windowCoveringGoToLiftPercentage(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> windowCoveringGoToLiftPercentage(Integer percentageLiftValue) {
         WindowCoveringGoToLiftPercentage command = new WindowCoveringGoToLiftPercentage();
 
@@ -1771,7 +1816,16 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param tiltValue {@link Integer} Tilt Value
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.windowCoveringGoToTiltValue(parameters ...)</code>
+     * with <code>cluster.sendCommand(new windowCoveringGoToTiltValue(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> windowCoveringGoToTiltValue(Integer tiltValue) {
         WindowCoveringGoToTiltValue command = new WindowCoveringGoToTiltValue();
 
@@ -1788,7 +1842,16 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      *
      * @param percentageTiltValue {@link Integer} Percentage Tilt Value
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.windowCoveringGoToTiltPercentage(parameters ...)</code>
+     * with <code>cluster.sendCommand(new windowCoveringGoToTiltPercentage(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> windowCoveringGoToTiltPercentage(Integer percentageTiltValue) {
         WindowCoveringGoToTiltPercentage command = new WindowCoveringGoToTiltPercentage();
 

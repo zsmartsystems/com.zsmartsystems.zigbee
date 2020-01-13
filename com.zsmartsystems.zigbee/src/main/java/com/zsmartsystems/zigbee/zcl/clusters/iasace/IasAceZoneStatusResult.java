@@ -18,7 +18,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:23:12Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:02:05Z")
 public class IasAceZoneStatusResult implements ZigBeeSerializable {
     /**
      * Zone ID structure field.
@@ -31,6 +31,28 @@ public class IasAceZoneStatusResult implements ZigBeeSerializable {
     private Integer zoneStatus;
 
 
+    /**
+     * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
+     */
+    @Deprecated
+    public IasAceZoneStatusResult() {
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param zoneId {@link Integer} Zone ID
+     * @param zoneStatus {@link Integer} Zone Status
+     */
+    public IasAceZoneStatusResult(
+            Integer zoneId,
+            Integer zoneStatus) {
+
+        this.zoneId = zoneId;
+        this.zoneStatus = zoneStatus;
+    }
 
     /**
      * Gets Zone ID.
@@ -45,7 +67,9 @@ public class IasAceZoneStatusResult implements ZigBeeSerializable {
      * Sets Zone ID.
      *
      * @param zoneId the Zone ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneId(final Integer zoneId) {
         this.zoneId = zoneId;
     }
@@ -63,7 +87,9 @@ public class IasAceZoneStatusResult implements ZigBeeSerializable {
      * Sets Zone Status.
      *
      * @param zoneStatus the Zone Status
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneStatus(final Integer zoneStatus) {
         this.zoneStatus = zoneStatus;
     }

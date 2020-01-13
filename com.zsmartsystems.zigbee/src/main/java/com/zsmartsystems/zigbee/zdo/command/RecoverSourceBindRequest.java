@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class RecoverSourceBindRequest extends ZdoRequest {
     /**
      * The ZDO cluster ID.
@@ -38,9 +38,25 @@ public class RecoverSourceBindRequest extends ZdoRequest {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public RecoverSourceBindRequest() {
         clusterId = CLUSTER_ID;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param startIndex {@link Integer} Start Index
+     */
+    public RecoverSourceBindRequest(
+            Integer startIndex) {
+
+        clusterId = CLUSTER_ID;
+
+        this.startIndex = startIndex;
     }
 
     /**
@@ -56,7 +72,9 @@ public class RecoverSourceBindRequest extends ZdoRequest {
      * Sets Start Index.
      *
      * @param startIndex the Start Index
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;
     }

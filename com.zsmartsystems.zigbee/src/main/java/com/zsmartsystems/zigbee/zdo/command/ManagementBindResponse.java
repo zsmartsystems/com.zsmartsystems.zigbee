@@ -30,7 +30,7 @@ import com.zsmartsystems.zigbee.zdo.field.BindingTable;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class ManagementBindResponse extends ZdoResponse {
     /**
      * The ZDO cluster ID.
@@ -54,9 +54,34 @@ public class ManagementBindResponse extends ZdoResponse {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public ManagementBindResponse() {
         clusterId = CLUSTER_ID;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param status {@link ZdoStatus} Status
+     * @param bindingTableEntries {@link Integer} Binding Table Entries
+     * @param startIndex {@link Integer} Start Index
+     * @param bindingTableList {@link List<BindingTable>} Binding Table List
+     */
+    public ManagementBindResponse(
+            ZdoStatus status,
+            Integer bindingTableEntries,
+            Integer startIndex,
+            List<BindingTable> bindingTableList) {
+
+        clusterId = CLUSTER_ID;
+
+        this.status = status;
+        this.bindingTableEntries = bindingTableEntries;
+        this.startIndex = startIndex;
+        this.bindingTableList = bindingTableList;
     }
 
     /**
@@ -72,7 +97,9 @@ public class ManagementBindResponse extends ZdoResponse {
      * Sets Binding Table Entries.
      *
      * @param bindingTableEntries the Binding Table Entries
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setBindingTableEntries(final Integer bindingTableEntries) {
         this.bindingTableEntries = bindingTableEntries;
     }
@@ -90,7 +117,9 @@ public class ManagementBindResponse extends ZdoResponse {
      * Sets Start Index.
      *
      * @param startIndex the Start Index
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;
     }
@@ -108,7 +137,9 @@ public class ManagementBindResponse extends ZdoResponse {
      * Sets Binding Table List.
      *
      * @param bindingTableList the Binding Table List
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setBindingTableList(final List<BindingTable> bindingTableList) {
         this.bindingTableList = bindingTableList;
     }

@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class DefaultResponse extends ZclGeneralCommand {
     /**
      * The command ID.
@@ -46,11 +46,32 @@ public class DefaultResponse extends ZclGeneralCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public DefaultResponse() {
         commandId = COMMAND_ID;
         genericCommand = true;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param commandIdentifier {@link Integer} Command Identifier
+     * @param statusCode {@link ZclStatus} Status Code
+     */
+    public DefaultResponse(
+            Integer commandIdentifier,
+            ZclStatus statusCode) {
+
+        commandId = COMMAND_ID;
+        genericCommand = true;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.commandIdentifier = commandIdentifier;
+        this.statusCode = statusCode;
     }
 
     /**
@@ -79,7 +100,9 @@ public class DefaultResponse extends ZclGeneralCommand {
      * Sets Command Identifier.
      *
      * @param commandIdentifier the Command Identifier
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCommandIdentifier(final Integer commandIdentifier) {
         this.commandIdentifier = commandIdentifier;
     }
@@ -97,7 +120,9 @@ public class DefaultResponse extends ZclGeneralCommand {
      * Sets Status Code.
      *
      * @param statusCode the Status Code
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStatusCode(final ZclStatus statusCode) {
         this.statusCode = statusCode;
     }

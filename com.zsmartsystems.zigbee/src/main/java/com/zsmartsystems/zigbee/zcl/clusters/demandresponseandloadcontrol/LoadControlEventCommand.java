@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class LoadControlEventCommand extends ZclDemandResponseAndLoadControlCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -184,12 +184,67 @@ public class LoadControlEventCommand extends ZclDemandResponseAndLoadControlComm
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public LoadControlEventCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param issuerEventId {@link Integer} Issuer Event ID
+     * @param deviceClass {@link Integer} Device Class
+     * @param utilityEnrollmentGroup {@link Integer} Utility Enrollment Group
+     * @param startTime {@link Calendar} Start Time
+     * @param durationInMinutes {@link Integer} Duration In Minutes
+     * @param criticalityLevel {@link Integer} Criticality Level
+     * @param coolingTemperatureOffset {@link Integer} Cooling Temperature Offset
+     * @param heatingTemperatureOffset {@link Integer} Heating Temperature Offset
+     * @param coolingTemperatureSetPoint {@link Integer} Cooling Temperature Set Point
+     * @param heatingTemperatureSetPoint {@link Integer} Heating Temperature Set Point
+     * @param averageLoadAdjustmentPercentage {@link Integer} Average Load Adjustment Percentage
+     * @param dutyCycle {@link Integer} Duty Cycle
+     * @param eventControl {@link Integer} Event Control
+     */
+    public LoadControlEventCommand(
+            Integer issuerEventId,
+            Integer deviceClass,
+            Integer utilityEnrollmentGroup,
+            Calendar startTime,
+            Integer durationInMinutes,
+            Integer criticalityLevel,
+            Integer coolingTemperatureOffset,
+            Integer heatingTemperatureOffset,
+            Integer coolingTemperatureSetPoint,
+            Integer heatingTemperatureSetPoint,
+            Integer averageLoadAdjustmentPercentage,
+            Integer dutyCycle,
+            Integer eventControl) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.issuerEventId = issuerEventId;
+        this.deviceClass = deviceClass;
+        this.utilityEnrollmentGroup = utilityEnrollmentGroup;
+        this.startTime = startTime;
+        this.durationInMinutes = durationInMinutes;
+        this.criticalityLevel = criticalityLevel;
+        this.coolingTemperatureOffset = coolingTemperatureOffset;
+        this.heatingTemperatureOffset = heatingTemperatureOffset;
+        this.coolingTemperatureSetPoint = coolingTemperatureSetPoint;
+        this.heatingTemperatureSetPoint = heatingTemperatureSetPoint;
+        this.averageLoadAdjustmentPercentage = averageLoadAdjustmentPercentage;
+        this.dutyCycle = dutyCycle;
+        this.eventControl = eventControl;
     }
 
     /**
@@ -217,7 +272,9 @@ public class LoadControlEventCommand extends ZclDemandResponseAndLoadControlComm
      * Event was issued.
      *
      * @param issuerEventId the Issuer Event ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
     }
@@ -251,7 +308,9 @@ public class LoadControlEventCommand extends ZclDemandResponseAndLoadControlComm
      * devices that are subject to load shed.)
      *
      * @param deviceClass the Device Class
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDeviceClass(final Integer deviceClass) {
         this.deviceClass = deviceClass;
     }
@@ -295,7 +354,9 @@ public class LoadControlEventCommand extends ZclDemandResponseAndLoadControlComm
      * status code.
      *
      * @param utilityEnrollmentGroup the Utility Enrollment Group
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setUtilityEnrollmentGroup(final Integer utilityEnrollmentGroup) {
         this.utilityEnrollmentGroup = utilityEnrollmentGroup;
     }
@@ -323,7 +384,9 @@ public class LoadControlEventCommand extends ZclDemandResponseAndLoadControlComm
      * the event.
      *
      * @param startTime the Start Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStartTime(final Calendar startTime) {
         this.startTime = startTime;
     }
@@ -345,7 +408,9 @@ public class LoadControlEventCommand extends ZclDemandResponseAndLoadControlComm
      * Duration of this event in number of minutes. Maximum value is 1440 (one day).
      *
      * @param durationInMinutes the Duration In Minutes
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDurationInMinutes(final Integer durationInMinutes) {
         this.durationInMinutes = durationInMinutes;
     }
@@ -377,7 +442,9 @@ public class LoadControlEventCommand extends ZclDemandResponseAndLoadControlComm
      * Point can be used in combination with the Criticality level.
      *
      * @param criticalityLevel the Criticality Level
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCriticalityLevel(final Integer criticalityLevel) {
         this.criticalityLevel = criticalityLevel;
     }
@@ -401,7 +468,9 @@ public class LoadControlEventCommand extends ZclDemandResponseAndLoadControlComm
      * event in + 0.1 oC.
      *
      * @param coolingTemperatureOffset the Cooling Temperature Offset
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCoolingTemperatureOffset(final Integer coolingTemperatureOffset) {
         this.coolingTemperatureOffset = coolingTemperatureOffset;
     }
@@ -425,7 +494,9 @@ public class LoadControlEventCommand extends ZclDemandResponseAndLoadControlComm
      * event in + 0.1 oC.
      *
      * @param heatingTemperatureOffset the Heating Temperature Offset
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setHeatingTemperatureOffset(final Integer heatingTemperatureOffset) {
         this.heatingTemperatureOffset = heatingTemperatureOffset;
     }
@@ -447,7 +518,9 @@ public class LoadControlEventCommand extends ZclDemandResponseAndLoadControlComm
      * Requested cooling set point in 0.01 degrees Celsius.
      *
      * @param coolingTemperatureSetPoint the Cooling Temperature Set Point
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCoolingTemperatureSetPoint(final Integer coolingTemperatureSetPoint) {
         this.coolingTemperatureSetPoint = coolingTemperatureSetPoint;
     }
@@ -469,7 +542,9 @@ public class LoadControlEventCommand extends ZclDemandResponseAndLoadControlComm
      * Requested heating set point in 0.01 degrees Celsius.
      *
      * @param heatingTemperatureSetPoint the Heating Temperature Set Point
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setHeatingTemperatureSetPoint(final Integer heatingTemperatureSetPoint) {
         this.heatingTemperatureSetPoint = heatingTemperatureSetPoint;
     }
@@ -519,7 +594,9 @@ public class LoadControlEventCommand extends ZclDemandResponseAndLoadControlComm
      * use.
      *
      * @param averageLoadAdjustmentPercentage the Average Load Adjustment Percentage
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setAverageLoadAdjustmentPercentage(final Integer averageLoadAdjustmentPercentage) {
         this.averageLoadAdjustmentPercentage = averageLoadAdjustmentPercentage;
     }
@@ -561,7 +638,9 @@ public class LoadControlEventCommand extends ZclDemandResponseAndLoadControlComm
      * state” will precede the “on state”.
      *
      * @param dutyCycle the Duty Cycle
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDutyCycle(final Integer dutyCycle) {
         this.dutyCycle = dutyCycle;
     }
@@ -583,7 +662,9 @@ public class LoadControlEventCommand extends ZclDemandResponseAndLoadControlComm
      * Identifies additional control options for the event.
      *
      * @param eventControl the Event Control
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setEventControl(final Integer eventControl) {
         this.eventControl = eventControl;
     }

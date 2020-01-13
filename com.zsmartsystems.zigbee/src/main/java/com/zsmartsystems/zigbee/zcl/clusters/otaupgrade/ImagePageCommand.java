@@ -38,7 +38,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class ImagePageCommand extends ZclOtaUpgradeCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -97,12 +97,55 @@ public class ImagePageCommand extends ZclOtaUpgradeCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public ImagePageCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param fieldControl {@link Integer} Field Control
+     * @param manufacturerCode {@link Integer} Manufacturer Code
+     * @param imageType {@link Integer} Image Type
+     * @param fileVersion {@link Integer} File Version
+     * @param fileOffset {@link Integer} File Offset
+     * @param maximumDataSize {@link Integer} Maximum Data Size
+     * @param pageSize {@link Integer} Page Size
+     * @param responseSpacing {@link Integer} Response Spacing
+     * @param requestNodeAddress {@link IeeeAddress} Request Node Address
+     */
+    public ImagePageCommand(
+            Integer fieldControl,
+            Integer manufacturerCode,
+            Integer imageType,
+            Integer fileVersion,
+            Integer fileOffset,
+            Integer maximumDataSize,
+            Integer pageSize,
+            Integer responseSpacing,
+            IeeeAddress requestNodeAddress) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.fieldControl = fieldControl;
+        this.manufacturerCode = manufacturerCode;
+        this.imageType = imageType;
+        this.fileVersion = fileVersion;
+        this.fileOffset = fileOffset;
+        this.maximumDataSize = maximumDataSize;
+        this.pageSize = pageSize;
+        this.responseSpacing = responseSpacing;
+        this.requestNodeAddress = requestNodeAddress;
     }
 
     /**
@@ -118,7 +161,9 @@ public class ImagePageCommand extends ZclOtaUpgradeCommand {
      * Sets Field Control.
      *
      * @param fieldControl the Field Control
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setFieldControl(final Integer fieldControl) {
         this.fieldControl = fieldControl;
     }
@@ -136,7 +181,9 @@ public class ImagePageCommand extends ZclOtaUpgradeCommand {
      * Sets Manufacturer Code.
      *
      * @param manufacturerCode the Manufacturer Code
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
     }
@@ -154,7 +201,9 @@ public class ImagePageCommand extends ZclOtaUpgradeCommand {
      * Sets Image Type.
      *
      * @param imageType the Image Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setImageType(final Integer imageType) {
         this.imageType = imageType;
     }
@@ -172,7 +221,9 @@ public class ImagePageCommand extends ZclOtaUpgradeCommand {
      * Sets File Version.
      *
      * @param fileVersion the File Version
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setFileVersion(final Integer fileVersion) {
         this.fileVersion = fileVersion;
     }
@@ -190,7 +241,9 @@ public class ImagePageCommand extends ZclOtaUpgradeCommand {
      * Sets File Offset.
      *
      * @param fileOffset the File Offset
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setFileOffset(final Integer fileOffset) {
         this.fileOffset = fileOffset;
     }
@@ -208,7 +261,9 @@ public class ImagePageCommand extends ZclOtaUpgradeCommand {
      * Sets Maximum Data Size.
      *
      * @param maximumDataSize the Maximum Data Size
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setMaximumDataSize(final Integer maximumDataSize) {
         this.maximumDataSize = maximumDataSize;
     }
@@ -226,7 +281,9 @@ public class ImagePageCommand extends ZclOtaUpgradeCommand {
      * Sets Page Size.
      *
      * @param pageSize the Page Size
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setPageSize(final Integer pageSize) {
         this.pageSize = pageSize;
     }
@@ -244,7 +301,9 @@ public class ImagePageCommand extends ZclOtaUpgradeCommand {
      * Sets Response Spacing.
      *
      * @param responseSpacing the Response Spacing
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setResponseSpacing(final Integer responseSpacing) {
         this.responseSpacing = responseSpacing;
     }
@@ -262,7 +321,9 @@ public class ImagePageCommand extends ZclOtaUpgradeCommand {
      * Sets Request Node Address.
      *
      * @param requestNodeAddress the Request Node Address
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setRequestNodeAddress(final IeeeAddress requestNodeAddress) {
         this.requestNodeAddress = requestNodeAddress;
     }

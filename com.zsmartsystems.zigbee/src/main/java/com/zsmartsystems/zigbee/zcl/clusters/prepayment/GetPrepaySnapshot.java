@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class GetPrepaySnapshot extends ZclPrepaymentCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -60,12 +60,40 @@ public class GetPrepaySnapshot extends ZclPrepaymentCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public GetPrepaySnapshot() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param earliestStartTime {@link Calendar} Earliest Start Time
+     * @param latestEndTime {@link Calendar} Latest End Time
+     * @param snapshotOffset {@link Integer} Snapshot Offset
+     * @param snapshotCause {@link Integer} Snapshot Cause
+     */
+    public GetPrepaySnapshot(
+            Calendar earliestStartTime,
+            Calendar latestEndTime,
+            Integer snapshotOffset,
+            Integer snapshotCause) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.earliestStartTime = earliestStartTime;
+        this.latestEndTime = latestEndTime;
+        this.snapshotOffset = snapshotOffset;
+        this.snapshotCause = snapshotCause;
     }
 
     /**
@@ -81,7 +109,9 @@ public class GetPrepaySnapshot extends ZclPrepaymentCommand {
      * Sets Earliest Start Time.
      *
      * @param earliestStartTime the Earliest Start Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setEarliestStartTime(final Calendar earliestStartTime) {
         this.earliestStartTime = earliestStartTime;
     }
@@ -99,7 +129,9 @@ public class GetPrepaySnapshot extends ZclPrepaymentCommand {
      * Sets Latest End Time.
      *
      * @param latestEndTime the Latest End Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setLatestEndTime(final Calendar latestEndTime) {
         this.latestEndTime = latestEndTime;
     }
@@ -117,7 +149,9 @@ public class GetPrepaySnapshot extends ZclPrepaymentCommand {
      * Sets Snapshot Offset.
      *
      * @param snapshotOffset the Snapshot Offset
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSnapshotOffset(final Integer snapshotOffset) {
         this.snapshotOffset = snapshotOffset;
     }
@@ -135,7 +169,9 @@ public class GetPrepaySnapshot extends ZclPrepaymentCommand {
      * Sets Snapshot Cause.
      *
      * @param snapshotCause the Snapshot Cause
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSnapshotCause(final Integer snapshotCause) {
         this.snapshotCause = snapshotCause;
     }

@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class EnhancedAddSceneCommand extends ZclScenesCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -67,12 +67,43 @@ public class EnhancedAddSceneCommand extends ZclScenesCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public EnhancedAddSceneCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param groupId {@link Integer} Group ID
+     * @param sceneId {@link Integer} Scene ID
+     * @param transitionTime {@link Integer} Transition Time
+     * @param sceneName {@link String} Scene Name
+     * @param extensionFieldSets {@link List<ExtensionFieldSet>} Extension Field Sets
+     */
+    public EnhancedAddSceneCommand(
+            Integer groupId,
+            Integer sceneId,
+            Integer transitionTime,
+            String sceneName,
+            List<ExtensionFieldSet> extensionFieldSets) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.groupId = groupId;
+        this.sceneId = sceneId;
+        this.transitionTime = transitionTime;
+        this.sceneName = sceneName;
+        this.extensionFieldSets = extensionFieldSets;
     }
 
     /**
@@ -88,7 +119,9 @@ public class EnhancedAddSceneCommand extends ZclScenesCommand {
      * Sets Group ID.
      *
      * @param groupId the Group ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setGroupId(final Integer groupId) {
         this.groupId = groupId;
     }
@@ -106,7 +139,9 @@ public class EnhancedAddSceneCommand extends ZclScenesCommand {
      * Sets Scene ID.
      *
      * @param sceneId the Scene ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSceneId(final Integer sceneId) {
         this.sceneId = sceneId;
     }
@@ -124,7 +159,9 @@ public class EnhancedAddSceneCommand extends ZclScenesCommand {
      * Sets Transition Time.
      *
      * @param transitionTime the Transition Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTransitionTime(final Integer transitionTime) {
         this.transitionTime = transitionTime;
     }
@@ -142,7 +179,9 @@ public class EnhancedAddSceneCommand extends ZclScenesCommand {
      * Sets Scene Name.
      *
      * @param sceneName the Scene Name
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSceneName(final String sceneName) {
         this.sceneName = sceneName;
     }
@@ -160,7 +199,9 @@ public class EnhancedAddSceneCommand extends ZclScenesCommand {
      * Sets Extension Field Sets.
      *
      * @param extensionFieldSets the Extension Field Sets
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setExtensionFieldSets(final List<ExtensionFieldSet> extensionFieldSets) {
         this.extensionFieldSets = extensionFieldSets;
     }

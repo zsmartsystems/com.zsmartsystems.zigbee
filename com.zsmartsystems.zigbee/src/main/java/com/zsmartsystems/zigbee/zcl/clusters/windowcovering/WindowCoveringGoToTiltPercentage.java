@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class WindowCoveringGoToTiltPercentage extends ZclWindowCoveringCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -43,12 +43,31 @@ public class WindowCoveringGoToTiltPercentage extends ZclWindowCoveringCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public WindowCoveringGoToTiltPercentage() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param percentageTiltValue {@link Integer} Percentage Tilt Value
+     */
+    public WindowCoveringGoToTiltPercentage(
+            Integer percentageTiltValue) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.percentageTiltValue = percentageTiltValue;
     }
 
     /**
@@ -64,7 +83,9 @@ public class WindowCoveringGoToTiltPercentage extends ZclWindowCoveringCommand {
      * Sets Percentage Tilt Value.
      *
      * @param percentageTiltValue the Percentage Tilt Value
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setPercentageTiltValue(final Integer percentageTiltValue) {
         this.percentageTiltValue = percentageTiltValue;
     }

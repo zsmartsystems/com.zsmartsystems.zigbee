@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class GpProxyTableResponse extends ZclGreenPowerCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -68,12 +68,43 @@ public class GpProxyTableResponse extends ZclGreenPowerCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public GpProxyTableResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param status {@link Integer} Status
+     * @param totalNumberOfNonEmptyProxyTableEntries {@link Integer} Total Number Of Non Empty Proxy Table Entries
+     * @param startIndex {@link Integer} Start Index
+     * @param entriesCount {@link Integer} Entries Count
+     * @param proxyTableEntries {@link Integer} Proxy Table Entries
+     */
+    public GpProxyTableResponse(
+            Integer status,
+            Integer totalNumberOfNonEmptyProxyTableEntries,
+            Integer startIndex,
+            Integer entriesCount,
+            Integer proxyTableEntries) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.status = status;
+        this.totalNumberOfNonEmptyProxyTableEntries = totalNumberOfNonEmptyProxyTableEntries;
+        this.startIndex = startIndex;
+        this.entriesCount = entriesCount;
+        this.proxyTableEntries = proxyTableEntries;
     }
 
     /**
@@ -89,7 +120,9 @@ public class GpProxyTableResponse extends ZclGreenPowerCommand {
      * Sets Status.
      *
      * @param status the Status
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStatus(final Integer status) {
         this.status = status;
     }
@@ -107,7 +140,9 @@ public class GpProxyTableResponse extends ZclGreenPowerCommand {
      * Sets Total Number Of Non Empty Proxy Table Entries.
      *
      * @param totalNumberOfNonEmptyProxyTableEntries the Total Number Of Non Empty Proxy Table Entries
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTotalNumberOfNonEmptyProxyTableEntries(final Integer totalNumberOfNonEmptyProxyTableEntries) {
         this.totalNumberOfNonEmptyProxyTableEntries = totalNumberOfNonEmptyProxyTableEntries;
     }
@@ -125,7 +160,9 @@ public class GpProxyTableResponse extends ZclGreenPowerCommand {
      * Sets Start Index.
      *
      * @param startIndex the Start Index
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;
     }
@@ -143,7 +180,9 @@ public class GpProxyTableResponse extends ZclGreenPowerCommand {
      * Sets Entries Count.
      *
      * @param entriesCount the Entries Count
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setEntriesCount(final Integer entriesCount) {
         this.entriesCount = entriesCount;
     }
@@ -161,7 +200,9 @@ public class GpProxyTableResponse extends ZclGreenPowerCommand {
      * Sets Proxy Table Entries.
      *
      * @param proxyTableEntries the Proxy Table Entries
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProxyTableEntries(final Integer proxyTableEntries) {
         this.proxyTableEntries = proxyTableEntries;
     }

@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoRequest;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-15T09:28:31Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class NetworkUpdateRequest extends ZdoRequest {
     /**
      * The ZDO cluster ID.
@@ -59,9 +59,37 @@ public class NetworkUpdateRequest extends ZdoRequest {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public NetworkUpdateRequest() {
         clusterId = CLUSTER_ID;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param scanChannels {@link Integer} Scan Channels
+     * @param scanDuration {@link Integer} Scan Duration
+     * @param scanCount {@link Integer} Scan Count
+     * @param nwkUpdateId {@link Integer} NWK Update ID
+     * @param nwkManagerAddr {@link Integer} NWK Manager Addr
+     */
+    public NetworkUpdateRequest(
+            Integer scanChannels,
+            Integer scanDuration,
+            Integer scanCount,
+            Integer nwkUpdateId,
+            Integer nwkManagerAddr) {
+
+        clusterId = CLUSTER_ID;
+
+        this.scanChannels = scanChannels;
+        this.scanDuration = scanDuration;
+        this.scanCount = scanCount;
+        this.nwkUpdateId = nwkUpdateId;
+        this.nwkManagerAddr = nwkManagerAddr;
     }
 
     /**
@@ -77,7 +105,9 @@ public class NetworkUpdateRequest extends ZdoRequest {
      * Sets Scan Channels.
      *
      * @param scanChannels the Scan Channels
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setScanChannels(final Integer scanChannels) {
         this.scanChannels = scanChannels;
     }
@@ -95,7 +125,9 @@ public class NetworkUpdateRequest extends ZdoRequest {
      * Sets Scan Duration.
      *
      * @param scanDuration the Scan Duration
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setScanDuration(final Integer scanDuration) {
         this.scanDuration = scanDuration;
     }
@@ -113,7 +145,9 @@ public class NetworkUpdateRequest extends ZdoRequest {
      * Sets Scan Count.
      *
      * @param scanCount the Scan Count
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setScanCount(final Integer scanCount) {
         this.scanCount = scanCount;
     }
@@ -131,7 +165,9 @@ public class NetworkUpdateRequest extends ZdoRequest {
      * Sets NWK Update ID.
      *
      * @param nwkUpdateId the NWK Update ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNwkUpdateId(final Integer nwkUpdateId) {
         this.nwkUpdateId = nwkUpdateId;
     }
@@ -149,7 +185,9 @@ public class NetworkUpdateRequest extends ZdoRequest {
      * Sets NWK Manager Addr.
      *
      * @param nwkManagerAddr the NWK Manager Addr
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNwkManagerAddr(final Integer nwkManagerAddr) {
         this.nwkManagerAddr = nwkManagerAddr;
     }

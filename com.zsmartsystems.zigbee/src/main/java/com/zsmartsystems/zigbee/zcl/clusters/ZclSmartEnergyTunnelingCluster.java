@@ -66,7 +66,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
 public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -252,7 +252,16 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      * @param flowControlSupport {@link Boolean} Flow Control Support
      * @param maximumIncomingTransferSize {@link Integer} Maximum Incoming Transfer Size
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.requestTunnel(parameters ...)</code>
+     * with <code>cluster.sendCommand(new requestTunnel(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> requestTunnel(Integer protocolId, Integer manufacturerCode, Boolean flowControlSupport, Integer maximumIncomingTransferSize) {
         RequestTunnel command = new RequestTunnel();
 
@@ -275,7 +284,16 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      *
      * @param tunnelId {@link Integer} Tunnel ID
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.closeTunnel(parameters ...)</code>
+     * with <code>cluster.sendCommand(new closeTunnel(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> closeTunnel(Integer tunnelId) {
         CloseTunnel command = new CloseTunnel();
 
@@ -294,7 +312,16 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      * @param tunnelId {@link Integer} Tunnel ID
      * @param data {@link Integer} Data
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.transferDataClientToServer(parameters ...)</code>
+     * with <code>cluster.sendCommand(new transferDataClientToServer(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> transferDataClientToServer(Integer tunnelId, Integer data) {
         TransferDataClientToServer command = new TransferDataClientToServer();
 
@@ -326,7 +353,16 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      * @param tunnelId {@link Integer} Tunnel ID
      * @param transferDataStatus {@link Integer} Transfer Data Status
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.transferDataErrorClientToServer(parameters ...)</code>
+     * with <code>cluster.sendCommand(new transferDataErrorClientToServer(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> transferDataErrorClientToServer(Integer tunnelId, Integer transferDataStatus) {
         TransferDataErrorClientToServer command = new TransferDataErrorClientToServer();
 
@@ -348,7 +384,16 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      * @param tunnelId {@link Integer} Tunnel ID
      * @param numberOfBytesLeft {@link Integer} Number Of Bytes Left
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.ackTransferDataClientToServer(parameters ...)</code>
+     * with <code>cluster.sendCommand(new ackTransferDataClientToServer(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> ackTransferDataClientToServer(Integer tunnelId, Integer numberOfBytesLeft) {
         AckTransferDataClientToServer command = new AckTransferDataClientToServer();
 
@@ -371,7 +416,16 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      * @param tunnelId {@link Integer} Tunnel ID
      * @param numberOfOctetsLeft {@link Integer} Number Of Octets Left
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.readyDataClientToServer(parameters ...)</code>
+     * with <code>cluster.sendCommand(new readyDataClientToServer(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> readyDataClientToServer(Integer tunnelId, Integer numberOfOctetsLeft) {
         ReadyDataClientToServer command = new ReadyDataClientToServer();
 
@@ -390,7 +444,16 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      *
      * @param protocolOffset {@link Integer} Protocol Offset
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getSupportedTunnelProtocols(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getSupportedTunnelProtocols(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getSupportedTunnelProtocols(Integer protocolOffset) {
         GetSupportedTunnelProtocols command = new GetSupportedTunnelProtocols();
 
@@ -412,7 +475,16 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      * @param tunnelStatus {@link Integer} Tunnel Status
      * @param maximumIncomingTransferSize {@link Integer} Maximum Incoming Transfer Size
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.requestTunnelResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new requestTunnelResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> requestTunnelResponse(Integer tunnelId, Integer tunnelStatus, Integer maximumIncomingTransferSize) {
         RequestTunnelResponse command = new RequestTunnelResponse();
 
@@ -433,7 +505,16 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      * @param tunnelId {@link Integer} Tunnel ID
      * @param data {@link ByteArray} Data
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.transferDataServerToClient(parameters ...)</code>
+     * with <code>cluster.sendCommand(new transferDataServerToClient(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> transferDataServerToClient(Integer tunnelId, ByteArray data) {
         TransferDataServerToClient command = new TransferDataServerToClient();
 
@@ -465,7 +546,16 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      * @param tunnelId {@link Integer} Tunnel ID
      * @param transferDataStatus {@link Integer} Transfer Data Status
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.transferDataErrorServerToClient(parameters ...)</code>
+     * with <code>cluster.sendCommand(new transferDataErrorServerToClient(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> transferDataErrorServerToClient(Integer tunnelId, Integer transferDataStatus) {
         TransferDataErrorServerToClient command = new TransferDataErrorServerToClient();
 
@@ -487,7 +577,16 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      * @param tunnelId {@link Integer} Tunnel ID
      * @param numberOfBytesLeft {@link Integer} Number Of Bytes Left
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.ackTransferDataServerToClient(parameters ...)</code>
+     * with <code>cluster.sendCommand(new ackTransferDataServerToClient(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> ackTransferDataServerToClient(Integer tunnelId, Integer numberOfBytesLeft) {
         AckTransferDataServerToClient command = new AckTransferDataServerToClient();
 
@@ -510,7 +609,16 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      * @param tunnelId {@link Integer} Tunnel ID
      * @param numberOfOctetsLeft {@link Integer} Number Of Octets Left
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.readyDataServerToClient(parameters ...)</code>
+     * with <code>cluster.sendCommand(new readyDataServerToClient(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> readyDataServerToClient(Integer tunnelId, Integer numberOfOctetsLeft) {
         ReadyDataServerToClient command = new ReadyDataServerToClient();
 
@@ -533,7 +641,16 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      * @param protocolCount {@link Integer} Protocol Count
      * @param protocolList {@link Protocol} Protocol List
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.supportedTunnelProtocolsResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new supportedTunnelProtocolsResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> supportedTunnelProtocolsResponse(Boolean protocolListComplete, Integer protocolCount, Protocol protocolList) {
         SupportedTunnelProtocolsResponse command = new SupportedTunnelProtocolsResponse();
 
@@ -557,7 +674,16 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      *
      * @param tunnelId {@link Integer} Tunnel ID
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.tunnelClosureNotification(parameters ...)</code>
+     * with <code>cluster.sendCommand(new tunnelClosureNotification(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> tunnelClosureNotification(Integer tunnelId) {
         TunnelClosureNotification command = new TunnelClosureNotification();
 

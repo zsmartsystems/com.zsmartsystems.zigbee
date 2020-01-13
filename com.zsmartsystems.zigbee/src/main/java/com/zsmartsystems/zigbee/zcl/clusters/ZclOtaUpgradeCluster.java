@@ -64,7 +64,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
 public class ZclOtaUpgradeCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -266,7 +266,16 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @param imageType {@link Integer} Image Type
      * @param newFileVersion {@link Integer} New File Version
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.imageNotifyCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new imageNotifyCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> imageNotifyCommand(Integer payloadType, Integer queryJitter, Integer manufacturerCode, Integer imageType, Integer newFileVersion) {
         ImageNotifyCommand command = new ImageNotifyCommand();
 
@@ -304,7 +313,16 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @param fileVersion {@link Integer} File Version
      * @param hardwareVersion {@link Integer} Hardware Version
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.queryNextImageCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new queryNextImageCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> queryNextImageCommand(Integer fieldControl, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer hardwareVersion) {
         QueryNextImageCommand command = new QueryNextImageCommand();
 
@@ -339,7 +357,16 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @param fileVersion {@link Integer} File Version
      * @param imageSize {@link Integer} Image Size
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.queryNextImageResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new queryNextImageResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> queryNextImageResponse(ZclStatus status, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer imageSize) {
         QueryNextImageResponse command = new QueryNextImageResponse();
 
@@ -379,7 +406,16 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @param requestNodeAddress {@link IeeeAddress} Request Node Address
      * @param blockRequestDelay {@link Integer} Block Request Delay
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.imageBlockCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new imageBlockCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> imageBlockCommand(Integer fieldControl, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer fileOffset, Integer maximumDataSize, IeeeAddress requestNodeAddress, Integer blockRequestDelay) {
         ImageBlockCommand command = new ImageBlockCommand();
 
@@ -425,7 +461,16 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @param responseSpacing {@link Integer} Response Spacing
      * @param requestNodeAddress {@link IeeeAddress} Request Node Address
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.imagePageCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new imagePageCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> imagePageCommand(Integer fieldControl, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer fileOffset, Integer maximumDataSize, Integer pageSize, Integer responseSpacing, IeeeAddress requestNodeAddress) {
         ImagePageCommand command = new ImagePageCommand();
 
@@ -473,7 +518,16 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @param fileOffset {@link Integer} File Offset
      * @param imageData {@link ByteArray} Image Data
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.imageBlockResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new imageBlockResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> imageBlockResponse(ZclStatus status, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer fileOffset, ByteArray imageData) {
         ImageBlockResponse command = new ImageBlockResponse();
 
@@ -514,7 +568,16 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @param imageType {@link Integer} Image Type
      * @param fileVersion {@link Integer} File Version
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.upgradeEndCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new upgradeEndCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> upgradeEndCommand(ZclStatus status, Integer manufacturerCode, Integer imageType, Integer fileVersion) {
         UpgradeEndCommand command = new UpgradeEndCommand();
 
@@ -548,7 +611,16 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @param currentTime {@link Integer} Current Time
      * @param upgradeTime {@link Integer} Upgrade Time
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.upgradeEndResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new upgradeEndResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> upgradeEndResponse(Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer currentTime, Integer upgradeTime) {
         UpgradeEndResponse command = new UpgradeEndResponse();
 
@@ -579,7 +651,16 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @param fileVersion {@link Integer} File Version
      * @param zigbeeStackVersion {@link Integer} Zigbee Stack Version
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.querySpecificFileCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new querySpecificFileCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> querySpecificFileCommand(IeeeAddress requestNodeAddress, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer zigbeeStackVersion) {
         QuerySpecificFileCommand command = new QuerySpecificFileCommand();
 
@@ -612,7 +693,16 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @param fileVersion {@link Integer} File Version
      * @param imageSize {@link Integer} Image Size
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.querySpecificFileResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new querySpecificFileResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> querySpecificFileResponse(ZclStatus status, Integer manufacturerCode, Integer imageType, Integer fileVersion, Integer imageSize) {
         QuerySpecificFileResponse command = new QuerySpecificFileResponse();
 

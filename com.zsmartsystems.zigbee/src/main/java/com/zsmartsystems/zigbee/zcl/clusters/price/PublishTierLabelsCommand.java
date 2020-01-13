@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class PublishTierLabelsCommand extends ZclPriceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -110,12 +110,52 @@ public class PublishTierLabelsCommand extends ZclPriceCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public PublishTierLabelsCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param providerId {@link Integer} Provider ID
+     * @param issuerEventId {@link Integer} Issuer Event ID
+     * @param issuerTariffId {@link Integer} Issuer Tariff ID
+     * @param commandIndex {@link Integer} Command Index
+     * @param totalNumberOfCommands {@link Integer} Total Number Of Commands
+     * @param numberOfLabels {@link Integer} Number Of Labels
+     * @param tierId {@link Integer} Tier ID
+     * @param tierLabel {@link ByteArray} Tier Label
+     */
+    public PublishTierLabelsCommand(
+            Integer providerId,
+            Integer issuerEventId,
+            Integer issuerTariffId,
+            Integer commandIndex,
+            Integer totalNumberOfCommands,
+            Integer numberOfLabels,
+            Integer tierId,
+            ByteArray tierLabel) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.providerId = providerId;
+        this.issuerEventId = issuerEventId;
+        this.issuerTariffId = issuerTariffId;
+        this.commandIndex = commandIndex;
+        this.totalNumberOfCommands = totalNumberOfCommands;
+        this.numberOfLabels = numberOfLabels;
+        this.tierId = tierId;
+        this.tierLabel = tierLabel;
     }
 
     /**
@@ -139,7 +179,9 @@ public class PublishTierLabelsCommand extends ZclPriceCommand {
      * providers may be available.
      *
      * @param providerId the Provider ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProviderId(final Integer providerId) {
         this.providerId = providerId;
     }
@@ -173,7 +215,9 @@ public class PublishTierLabelsCommand extends ZclPriceCommand {
      * information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
     }
@@ -197,7 +241,9 @@ public class PublishTierLabelsCommand extends ZclPriceCommand {
      * tariff that the labels apply to.
      *
      * @param issuerTariffId the Issuer Tariff ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerTariffId(final Integer issuerTariffId) {
         this.issuerTariffId = issuerTariffId;
     }
@@ -223,7 +269,9 @@ public class PublishTierLabelsCommand extends ZclPriceCommand {
      * for each fragment belonging to the same command.
      *
      * @param commandIndex the Command Index
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCommandIndex(final Integer commandIndex) {
         this.commandIndex = commandIndex;
     }
@@ -247,7 +295,9 @@ public class PublishTierLabelsCommand extends ZclPriceCommand {
      * Commands field indicates the total number of sub commands in the message.
      *
      * @param totalNumberOfCommands the Total Number Of Commands
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTotalNumberOfCommands(final Integer totalNumberOfCommands) {
         this.totalNumberOfCommands = totalNumberOfCommands;
     }
@@ -269,7 +319,9 @@ public class PublishTierLabelsCommand extends ZclPriceCommand {
      * The number of Tier ID/Tier Label sets contained within the command.
      *
      * @param numberOfLabels the Number Of Labels
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNumberOfLabels(final Integer numberOfLabels) {
         this.numberOfLabels = numberOfLabels;
     }
@@ -291,7 +343,9 @@ public class PublishTierLabelsCommand extends ZclPriceCommand {
      * The tier number that the associated Tier Label applies to.
      *
      * @param tierId the Tier ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTierId(final Integer tierId) {
         this.tierId = tierId;
     }
@@ -317,7 +371,9 @@ public class PublishTierLabelsCommand extends ZclPriceCommand {
      * format.
      *
      * @param tierLabel the Tier Label
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTierLabel(final ByteArray tierLabel) {
         this.tierLabel = tierLabel;
     }

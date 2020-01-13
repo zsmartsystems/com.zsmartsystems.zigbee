@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class PublishTopUpLog extends ZclPrepaymentCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -54,12 +54,37 @@ public class PublishTopUpLog extends ZclPrepaymentCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public PublishTopUpLog() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param commandIndex {@link Integer} Command Index
+     * @param totalNumberOfCommands {@link Integer} Total Number Of Commands
+     * @param topUpPayload {@link TopUpPayload} Top Up Payload
+     */
+    public PublishTopUpLog(
+            Integer commandIndex,
+            Integer totalNumberOfCommands,
+            TopUpPayload topUpPayload) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.commandIndex = commandIndex;
+        this.totalNumberOfCommands = totalNumberOfCommands;
+        this.topUpPayload = topUpPayload;
     }
 
     /**
@@ -75,7 +100,9 @@ public class PublishTopUpLog extends ZclPrepaymentCommand {
      * Sets Command Index.
      *
      * @param commandIndex the Command Index
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCommandIndex(final Integer commandIndex) {
         this.commandIndex = commandIndex;
     }
@@ -93,7 +120,9 @@ public class PublishTopUpLog extends ZclPrepaymentCommand {
      * Sets Total Number Of Commands.
      *
      * @param totalNumberOfCommands the Total Number Of Commands
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTotalNumberOfCommands(final Integer totalNumberOfCommands) {
         this.totalNumberOfCommands = totalNumberOfCommands;
     }
@@ -111,7 +140,9 @@ public class PublishTopUpLog extends ZclPrepaymentCommand {
      * Sets Top Up Payload.
      *
      * @param topUpPayload the Top Up Payload
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTopUpPayload(final TopUpPayload topUpPayload) {
         this.topUpPayload = topUpPayload;
     }

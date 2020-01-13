@@ -32,7 +32,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class MoveToLevelCommand extends ZclLevelControlCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -56,12 +56,34 @@ public class MoveToLevelCommand extends ZclLevelControlCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public MoveToLevelCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param level {@link Integer} Level
+     * @param transitionTime {@link Integer} Transition Time
+     */
+    public MoveToLevelCommand(
+            Integer level,
+            Integer transitionTime) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.level = level;
+        this.transitionTime = transitionTime;
     }
 
     /**
@@ -77,7 +99,9 @@ public class MoveToLevelCommand extends ZclLevelControlCommand {
      * Sets Level.
      *
      * @param level the Level
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setLevel(final Integer level) {
         this.level = level;
     }
@@ -95,7 +119,9 @@ public class MoveToLevelCommand extends ZclLevelControlCommand {
      * Sets Transition Time.
      *
      * @param transitionTime the Transition Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTransitionTime(final Integer transitionTime) {
         this.transitionTime = transitionTime;
     }

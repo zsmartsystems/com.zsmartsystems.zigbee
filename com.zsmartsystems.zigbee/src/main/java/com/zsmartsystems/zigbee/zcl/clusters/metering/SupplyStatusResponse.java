@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class SupplyStatusResponse extends ZclMeteringCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -75,12 +75,40 @@ public class SupplyStatusResponse extends ZclMeteringCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public SupplyStatusResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param providerId {@link Integer} Provider ID
+     * @param issuerEventId {@link Integer} Issuer Event ID
+     * @param implementationDateTime {@link Calendar} Implementation Date Time
+     * @param supplyStatus {@link Integer} Supply Status
+     */
+    public SupplyStatusResponse(
+            Integer providerId,
+            Integer issuerEventId,
+            Calendar implementationDateTime,
+            Integer supplyStatus) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.providerId = providerId;
+        this.issuerEventId = issuerEventId;
+        this.implementationDateTime = implementationDateTime;
+        this.supplyStatus = supplyStatus;
     }
 
     /**
@@ -102,7 +130,9 @@ public class SupplyStatusResponse extends ZclMeteringCommand {
      * whom this command relates.
      *
      * @param providerId the Provider ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProviderId(final Integer providerId) {
         this.providerId = providerId;
     }
@@ -134,7 +164,9 @@ public class SupplyStatusResponse extends ZclMeteringCommand {
      * the Issuer Event ID field that is larger than older information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
     }
@@ -156,7 +188,9 @@ public class SupplyStatusResponse extends ZclMeteringCommand {
      * A UTC Time field to indicate the date at which the originating command was to be applied.
      *
      * @param implementationDateTime the Implementation Date Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setImplementationDateTime(final Calendar implementationDateTime) {
         this.implementationDateTime = implementationDateTime;
     }
@@ -180,7 +214,9 @@ public class SupplyStatusResponse extends ZclMeteringCommand {
      * Metering Device following implementation of the originating command.
      *
      * @param supplyStatus the Supply Status
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSupplyStatus(final Integer supplyStatus) {
         this.supplyStatus = supplyStatus;
     }

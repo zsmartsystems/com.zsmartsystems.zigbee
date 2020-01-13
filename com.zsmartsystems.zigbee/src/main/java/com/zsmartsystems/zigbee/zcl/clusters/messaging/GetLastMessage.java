@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class GetLastMessage extends ZclMessagingCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -72,12 +72,46 @@ public class GetLastMessage extends ZclMessagingCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public GetLastMessage() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param messageId {@link Integer} Message ID
+     * @param messageControl {@link Integer} Message Control
+     * @param startTime {@link Calendar} Start Time
+     * @param durationInMinutes {@link Integer} Duration In Minutes
+     * @param message {@link String} Message
+     * @param optionalExtendedMessageControl {@link Integer} Optional Extended Message Control
+     */
+    public GetLastMessage(
+            Integer messageId,
+            Integer messageControl,
+            Calendar startTime,
+            Integer durationInMinutes,
+            String message,
+            Integer optionalExtendedMessageControl) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.messageId = messageId;
+        this.messageControl = messageControl;
+        this.startTime = startTime;
+        this.durationInMinutes = durationInMinutes;
+        this.message = message;
+        this.optionalExtendedMessageControl = optionalExtendedMessageControl;
     }
 
     /**
@@ -93,7 +127,9 @@ public class GetLastMessage extends ZclMessagingCommand {
      * Sets Message ID.
      *
      * @param messageId the Message ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setMessageId(final Integer messageId) {
         this.messageId = messageId;
     }
@@ -111,7 +147,9 @@ public class GetLastMessage extends ZclMessagingCommand {
      * Sets Message Control.
      *
      * @param messageControl the Message Control
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setMessageControl(final Integer messageControl) {
         this.messageControl = messageControl;
     }
@@ -129,7 +167,9 @@ public class GetLastMessage extends ZclMessagingCommand {
      * Sets Start Time.
      *
      * @param startTime the Start Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStartTime(final Calendar startTime) {
         this.startTime = startTime;
     }
@@ -147,7 +187,9 @@ public class GetLastMessage extends ZclMessagingCommand {
      * Sets Duration In Minutes.
      *
      * @param durationInMinutes the Duration In Minutes
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDurationInMinutes(final Integer durationInMinutes) {
         this.durationInMinutes = durationInMinutes;
     }
@@ -165,7 +207,9 @@ public class GetLastMessage extends ZclMessagingCommand {
      * Sets Message.
      *
      * @param message the Message
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setMessage(final String message) {
         this.message = message;
     }
@@ -183,7 +227,9 @@ public class GetLastMessage extends ZclMessagingCommand {
      * Sets Optional Extended Message Control.
      *
      * @param optionalExtendedMessageControl the Optional Extended Message Control
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setOptionalExtendedMessageControl(final Integer optionalExtendedMessageControl) {
         this.optionalExtendedMessageControl = optionalExtendedMessageControl;
     }

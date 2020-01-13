@@ -31,7 +31,7 @@ import com.zsmartsystems.zigbee.zdo.command.BindResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class BindRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * The ZDO cluster ID.
@@ -86,9 +86,40 @@ public class BindRequest extends ZdoRequest implements ZigBeeTransactionMatcher 
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public BindRequest() {
         clusterId = CLUSTER_ID;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param srcAddress {@link IeeeAddress} Src Address
+     * @param srcEndpoint {@link Integer} Src Endpoint
+     * @param bindCluster {@link Integer} Bind Cluster
+     * @param dstAddrMode {@link Integer} DST Addr Mode
+     * @param dstAddress {@link IeeeAddress} DST Address
+     * @param dstEndpoint {@link Integer} DST Endpoint
+     */
+    public BindRequest(
+            IeeeAddress srcAddress,
+            Integer srcEndpoint,
+            Integer bindCluster,
+            Integer dstAddrMode,
+            IeeeAddress dstAddress,
+            Integer dstEndpoint) {
+
+        clusterId = CLUSTER_ID;
+
+        this.srcAddress = srcAddress;
+        this.srcEndpoint = srcEndpoint;
+        this.bindCluster = bindCluster;
+        this.dstAddrMode = dstAddrMode;
+        this.dstAddress = dstAddress;
+        this.dstEndpoint = dstEndpoint;
     }
 
     /**
@@ -108,7 +139,9 @@ public class BindRequest extends ZdoRequest implements ZigBeeTransactionMatcher 
      * The IEEE address for the source.
      *
      * @param srcAddress the Src Address
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSrcAddress(final IeeeAddress srcAddress) {
         this.srcAddress = srcAddress;
     }
@@ -130,7 +163,9 @@ public class BindRequest extends ZdoRequest implements ZigBeeTransactionMatcher 
      * The source endpoint for the binding entry.
      *
      * @param srcEndpoint the Src Endpoint
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSrcEndpoint(final Integer srcEndpoint) {
         this.srcEndpoint = srcEndpoint;
     }
@@ -152,7 +187,9 @@ public class BindRequest extends ZdoRequest implements ZigBeeTransactionMatcher 
      * The identifier of the cluster on the source device that is bound to the destination.
      *
      * @param bindCluster the Bind Cluster
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setBindCluster(final Integer bindCluster) {
         this.bindCluster = bindCluster;
     }
@@ -180,7 +217,9 @@ public class BindRequest extends ZdoRequest implements ZigBeeTransactionMatcher 
      * 64-bit extended address for DstAddress and DstEndp present 0x04 – 0xff = reserved
      *
      * @param dstAddrMode the DST Addr Mode
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDstAddrMode(final Integer dstAddrMode) {
         this.dstAddrMode = dstAddrMode;
     }
@@ -202,7 +241,9 @@ public class BindRequest extends ZdoRequest implements ZigBeeTransactionMatcher 
      * The destination address for the binding entry.
      *
      * @param dstAddress the DST Address
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDstAddress(final IeeeAddress dstAddress) {
         this.dstAddress = dstAddress;
     }
@@ -226,7 +267,9 @@ public class BindRequest extends ZdoRequest implements ZigBeeTransactionMatcher 
      * present, shall be the destination endpoint for the binding entry.
      *
      * @param dstEndpoint the DST Endpoint
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDstEndpoint(final Integer dstEndpoint) {
         this.dstEndpoint = dstEndpoint;
     }

@@ -22,7 +22,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class ZoneEnrollResponse extends ZclIasZoneCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -46,12 +46,34 @@ public class ZoneEnrollResponse extends ZclIasZoneCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public ZoneEnrollResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param enrollResponseCode {@link Integer} Enroll Response Code
+     * @param zoneId {@link Integer} Zone ID
+     */
+    public ZoneEnrollResponse(
+            Integer enrollResponseCode,
+            Integer zoneId) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.enrollResponseCode = enrollResponseCode;
+        this.zoneId = zoneId;
     }
 
     /**
@@ -67,7 +89,9 @@ public class ZoneEnrollResponse extends ZclIasZoneCommand {
      * Sets Enroll Response Code.
      *
      * @param enrollResponseCode the Enroll Response Code
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setEnrollResponseCode(final Integer enrollResponseCode) {
         this.enrollResponseCode = enrollResponseCode;
     }
@@ -85,7 +109,9 @@ public class ZoneEnrollResponse extends ZclIasZoneCommand {
      * Sets Zone ID.
      *
      * @param zoneId the Zone ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneId(final Integer zoneId) {
         this.zoneId = zoneId;
     }

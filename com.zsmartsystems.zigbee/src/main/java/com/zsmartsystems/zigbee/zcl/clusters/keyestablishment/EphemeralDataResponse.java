@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class EphemeralDataResponse extends ZclKeyEstablishmentCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -45,12 +45,31 @@ public class EphemeralDataResponse extends ZclKeyEstablishmentCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public EphemeralDataResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param ephemeralData {@link ByteArray} Ephemeral Data
+     */
+    public EphemeralDataResponse(
+            ByteArray ephemeralData) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.ephemeralData = ephemeralData;
     }
 
     /**
@@ -66,7 +85,9 @@ public class EphemeralDataResponse extends ZclKeyEstablishmentCommand {
      * Sets Ephemeral Data.
      *
      * @param ephemeralData the Ephemeral Data
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setEphemeralData(final ByteArray ephemeralData) {
         this.ephemeralData = ephemeralData;
     }

@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class CreditAdjustment extends ZclPrepaymentCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -61,12 +61,40 @@ public class CreditAdjustment extends ZclPrepaymentCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public CreditAdjustment() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param issuerEventId {@link Integer} Issuer Event ID
+     * @param startTime {@link Calendar} Start Time
+     * @param creditAdjustmentType {@link Integer} Credit Adjustment Type
+     * @param creditAdjustmentValue {@link Integer} Credit Adjustment Value
+     */
+    public CreditAdjustment(
+            Integer issuerEventId,
+            Calendar startTime,
+            Integer creditAdjustmentType,
+            Integer creditAdjustmentValue) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.issuerEventId = issuerEventId;
+        this.startTime = startTime;
+        this.creditAdjustmentType = creditAdjustmentType;
+        this.creditAdjustmentValue = creditAdjustmentValue;
     }
 
     /**
@@ -82,7 +110,9 @@ public class CreditAdjustment extends ZclPrepaymentCommand {
      * Sets Issuer Event ID.
      *
      * @param issuerEventId the Issuer Event ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
     }
@@ -100,7 +130,9 @@ public class CreditAdjustment extends ZclPrepaymentCommand {
      * Sets Start Time.
      *
      * @param startTime the Start Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStartTime(final Calendar startTime) {
         this.startTime = startTime;
     }
@@ -118,7 +150,9 @@ public class CreditAdjustment extends ZclPrepaymentCommand {
      * Sets Credit Adjustment Type.
      *
      * @param creditAdjustmentType the Credit Adjustment Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCreditAdjustmentType(final Integer creditAdjustmentType) {
         this.creditAdjustmentType = creditAdjustmentType;
     }
@@ -136,7 +170,9 @@ public class CreditAdjustment extends ZclPrepaymentCommand {
      * Sets Credit Adjustment Value.
      *
      * @param creditAdjustmentValue the Credit Adjustment Value
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCreditAdjustmentValue(final Integer creditAdjustmentValue) {
         this.creditAdjustmentValue = creditAdjustmentValue;
     }

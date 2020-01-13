@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class SelectAvailableEmergencyCredit extends ZclPrepaymentCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -62,12 +62,40 @@ public class SelectAvailableEmergencyCredit extends ZclPrepaymentCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public SelectAvailableEmergencyCredit() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param commandIssueDateTime {@link Calendar} Command Issue Date Time
+     * @param originatingDevice {@link Integer} Originating Device
+     * @param siteId {@link ByteArray} Site ID
+     * @param meterSerialNumber {@link ByteArray} Meter Serial Number
+     */
+    public SelectAvailableEmergencyCredit(
+            Calendar commandIssueDateTime,
+            Integer originatingDevice,
+            ByteArray siteId,
+            ByteArray meterSerialNumber) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.commandIssueDateTime = commandIssueDateTime;
+        this.originatingDevice = originatingDevice;
+        this.siteId = siteId;
+        this.meterSerialNumber = meterSerialNumber;
     }
 
     /**
@@ -83,7 +111,9 @@ public class SelectAvailableEmergencyCredit extends ZclPrepaymentCommand {
      * Sets Command Issue Date Time.
      *
      * @param commandIssueDateTime the Command Issue Date Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCommandIssueDateTime(final Calendar commandIssueDateTime) {
         this.commandIssueDateTime = commandIssueDateTime;
     }
@@ -101,7 +131,9 @@ public class SelectAvailableEmergencyCredit extends ZclPrepaymentCommand {
      * Sets Originating Device.
      *
      * @param originatingDevice the Originating Device
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setOriginatingDevice(final Integer originatingDevice) {
         this.originatingDevice = originatingDevice;
     }
@@ -119,7 +151,9 @@ public class SelectAvailableEmergencyCredit extends ZclPrepaymentCommand {
      * Sets Site ID.
      *
      * @param siteId the Site ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSiteId(final ByteArray siteId) {
         this.siteId = siteId;
     }
@@ -137,7 +171,9 @@ public class SelectAvailableEmergencyCredit extends ZclPrepaymentCommand {
      * Sets Meter Serial Number.
      *
      * @param meterSerialNumber the Meter Serial Number
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setMeterSerialNumber(final ByteArray meterSerialNumber) {
         this.meterSerialNumber = meterSerialNumber;
     }

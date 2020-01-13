@@ -22,7 +22,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class SetDeviceConfigurationCommand extends ZclRssiLocationCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -61,12 +61,43 @@ public class SetDeviceConfigurationCommand extends ZclRssiLocationCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public SetDeviceConfigurationCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param power {@link Integer} Power
+     * @param pathLossExponent {@link Integer} Path Loss Exponent
+     * @param calculationPeriod {@link Integer} Calculation Period
+     * @param numberRssiMeasurements {@link Integer} Number RSSI Measurements
+     * @param reportingPeriod {@link Integer} Reporting Period
+     */
+    public SetDeviceConfigurationCommand(
+            Integer power,
+            Integer pathLossExponent,
+            Integer calculationPeriod,
+            Integer numberRssiMeasurements,
+            Integer reportingPeriod) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.power = power;
+        this.pathLossExponent = pathLossExponent;
+        this.calculationPeriod = calculationPeriod;
+        this.numberRssiMeasurements = numberRssiMeasurements;
+        this.reportingPeriod = reportingPeriod;
     }
 
     /**
@@ -82,7 +113,9 @@ public class SetDeviceConfigurationCommand extends ZclRssiLocationCommand {
      * Sets Power.
      *
      * @param power the Power
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setPower(final Integer power) {
         this.power = power;
     }
@@ -100,7 +133,9 @@ public class SetDeviceConfigurationCommand extends ZclRssiLocationCommand {
      * Sets Path Loss Exponent.
      *
      * @param pathLossExponent the Path Loss Exponent
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setPathLossExponent(final Integer pathLossExponent) {
         this.pathLossExponent = pathLossExponent;
     }
@@ -118,7 +153,9 @@ public class SetDeviceConfigurationCommand extends ZclRssiLocationCommand {
      * Sets Calculation Period.
      *
      * @param calculationPeriod the Calculation Period
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCalculationPeriod(final Integer calculationPeriod) {
         this.calculationPeriod = calculationPeriod;
     }
@@ -136,7 +173,9 @@ public class SetDeviceConfigurationCommand extends ZclRssiLocationCommand {
      * Sets Number RSSI Measurements.
      *
      * @param numberRssiMeasurements the Number RSSI Measurements
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNumberRssiMeasurements(final Integer numberRssiMeasurements) {
         this.numberRssiMeasurements = numberRssiMeasurements;
     }
@@ -154,7 +193,9 @@ public class SetDeviceConfigurationCommand extends ZclRssiLocationCommand {
      * Sets Reporting Period.
      *
      * @param reportingPeriod the Reporting Period
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setReportingPeriod(final Integer reportingPeriod) {
         this.reportingPeriod = reportingPeriod;
     }

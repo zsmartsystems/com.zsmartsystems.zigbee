@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class CppEventResponse extends ZclPriceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -59,12 +59,34 @@ public class CppEventResponse extends ZclPriceCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public CppEventResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param issuerEventId {@link Integer} Issuer Event ID
+     * @param cppAuth {@link Integer} Cpp Auth
+     */
+    public CppEventResponse(
+            Integer issuerEventId,
+            Integer cppAuth) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.issuerEventId = issuerEventId;
+        this.cppAuth = cppAuth;
     }
 
     /**
@@ -94,7 +116,9 @@ public class CppEventResponse extends ZclPriceCommand {
      * value in the Issuer Event ID field that is larger than older information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
     }
@@ -118,7 +142,9 @@ public class CppEventResponse extends ZclPriceCommand {
      * the ‘Accepted’ or ‘Rejected’ values.
      *
      * @param cppAuth the Cpp Auth
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCppAuth(final Integer cppAuth) {
         this.cppAuth = cppAuth;
     }

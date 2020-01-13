@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class GetZoneStatusResponse extends ZclIasAceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -73,12 +73,43 @@ public class GetZoneStatusResponse extends ZclIasAceCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public GetZoneStatusResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param zoneStatusComplete {@link Boolean} Zone Status Complete
+     * @param numberOfZones {@link Integer} Number Of Zones
+     * @param iasAceZoneStatus {@link Integer} IAS ACE Zone Status
+     * @param zoneId {@link Integer} Zone ID
+     * @param zoneStatus {@link Integer} Zone Status
+     */
+    public GetZoneStatusResponse(
+            Boolean zoneStatusComplete,
+            Integer numberOfZones,
+            Integer iasAceZoneStatus,
+            Integer zoneId,
+            Integer zoneStatus) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.zoneStatusComplete = zoneStatusComplete;
+        this.numberOfZones = numberOfZones;
+        this.iasAceZoneStatus = iasAceZoneStatus;
+        this.zoneId = zoneId;
+        this.zoneStatus = zoneStatus;
     }
 
     /**
@@ -112,7 +143,9 @@ public class GetZoneStatusResponse extends ZclIasAceCommand {
      * The IAS ACE client should NOT typically send another Get Zone Status command.
      *
      * @param zoneStatusComplete the Zone Status Complete
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneStatusComplete(final Boolean zoneStatusComplete) {
         this.zoneStatusComplete = zoneStatusComplete;
     }
@@ -130,7 +163,9 @@ public class GetZoneStatusResponse extends ZclIasAceCommand {
      * Sets Number Of Zones.
      *
      * @param numberOfZones the Number Of Zones
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNumberOfZones(final Integer numberOfZones) {
         this.numberOfZones = numberOfZones;
     }
@@ -148,7 +183,9 @@ public class GetZoneStatusResponse extends ZclIasAceCommand {
      * Sets IAS ACE Zone Status.
      *
      * @param iasAceZoneStatus the IAS ACE Zone Status
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIasAceZoneStatus(final Integer iasAceZoneStatus) {
         this.iasAceZoneStatus = iasAceZoneStatus;
     }
@@ -166,7 +203,9 @@ public class GetZoneStatusResponse extends ZclIasAceCommand {
      * Sets Zone ID.
      *
      * @param zoneId the Zone ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneId(final Integer zoneId) {
         this.zoneId = zoneId;
     }
@@ -184,7 +223,9 @@ public class GetZoneStatusResponse extends ZclIasAceCommand {
      * Sets Zone Status.
      *
      * @param zoneStatus the Zone Status
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneStatus(final Integer zoneStatus) {
         this.zoneStatus = zoneStatus;
     }

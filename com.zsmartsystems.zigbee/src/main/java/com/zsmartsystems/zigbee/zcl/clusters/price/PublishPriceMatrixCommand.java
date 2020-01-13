@@ -41,7 +41,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class PublishPriceMatrixCommand extends ZclPriceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -124,12 +124,52 @@ public class PublishPriceMatrixCommand extends ZclPriceCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public PublishPriceMatrixCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param providerId {@link Integer} Provider ID
+     * @param issuerEventId {@link Integer} Issuer Event ID
+     * @param startTime {@link Calendar} Start Time
+     * @param issuerTariffId {@link Integer} Issuer Tariff ID
+     * @param commandIndex {@link Integer} Command Index
+     * @param totalNumberOfCommands {@link Integer} Total Number Of Commands
+     * @param subPayloadControl {@link Integer} Sub Payload Control
+     * @param priceMatrixSubPayload {@link PriceMatrixSubPayload} Price Matrix Sub Payload
+     */
+    public PublishPriceMatrixCommand(
+            Integer providerId,
+            Integer issuerEventId,
+            Calendar startTime,
+            Integer issuerTariffId,
+            Integer commandIndex,
+            Integer totalNumberOfCommands,
+            Integer subPayloadControl,
+            PriceMatrixSubPayload priceMatrixSubPayload) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.providerId = providerId;
+        this.issuerEventId = issuerEventId;
+        this.startTime = startTime;
+        this.issuerTariffId = issuerTariffId;
+        this.commandIndex = commandIndex;
+        this.totalNumberOfCommands = totalNumberOfCommands;
+        this.subPayloadControl = subPayloadControl;
+        this.priceMatrixSubPayload = priceMatrixSubPayload;
     }
 
     /**
@@ -153,7 +193,9 @@ public class PublishPriceMatrixCommand extends ZclPriceCommand {
      * providers may be available.
      *
      * @param providerId the Provider ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProviderId(final Integer providerId) {
         this.providerId = providerId;
     }
@@ -185,7 +227,9 @@ public class PublishPriceMatrixCommand extends ZclPriceCommand {
      * value in the Issuer Event ID field that is larger than older information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
     }
@@ -211,7 +255,9 @@ public class PublishPriceMatrixCommand extends ZclPriceCommand {
      * immediately.
      *
      * @param startTime the Start Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStartTime(final Calendar startTime) {
         this.startTime = startTime;
     }
@@ -235,7 +281,9 @@ public class PublishPriceMatrixCommand extends ZclPriceCommand {
      * Tariff ID sent in the related PublishTariffInformation command.
      *
      * @param issuerTariffId the Issuer Tariff ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerTariffId(final Integer issuerTariffId) {
         this.issuerTariffId = issuerTariffId;
     }
@@ -261,7 +309,9 @@ public class PublishPriceMatrixCommand extends ZclPriceCommand {
      * for each fragment belonging to the same command.
      *
      * @param commandIndex the Command Index
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCommandIndex(final Integer commandIndex) {
         this.commandIndex = commandIndex;
     }
@@ -293,7 +343,9 @@ public class PublishPriceMatrixCommand extends ZclPriceCommand {
      * may be available.
      *
      * @param totalNumberOfCommands the Total Number Of Commands
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTotalNumberOfCommands(final Integer totalNumberOfCommands) {
         this.totalNumberOfCommands = totalNumberOfCommands;
     }
@@ -311,7 +363,9 @@ public class PublishPriceMatrixCommand extends ZclPriceCommand {
      * Sets Sub Payload Control.
      *
      * @param subPayloadControl the Sub Payload Control
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSubPayloadControl(final Integer subPayloadControl) {
         this.subPayloadControl = subPayloadControl;
     }
@@ -329,7 +383,9 @@ public class PublishPriceMatrixCommand extends ZclPriceCommand {
      * Sets Price Matrix Sub Payload.
      *
      * @param priceMatrixSubPayload the Price Matrix Sub Payload
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setPriceMatrixSubPayload(final PriceMatrixSubPayload priceMatrixSubPayload) {
         this.priceMatrixSubPayload = priceMatrixSubPayload;
     }

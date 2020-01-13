@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class CopySceneCommand extends ZclScenesCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -64,12 +64,43 @@ public class CopySceneCommand extends ZclScenesCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public CopySceneCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param mode {@link Integer} Mode
+     * @param groupIdFrom {@link Integer} Group ID From
+     * @param sceneIdFrom {@link Integer} Scene ID From
+     * @param groupIdTo {@link Integer} Group ID To
+     * @param sceneIdTo {@link Integer} Scene ID To
+     */
+    public CopySceneCommand(
+            Integer mode,
+            Integer groupIdFrom,
+            Integer sceneIdFrom,
+            Integer groupIdTo,
+            Integer sceneIdTo) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.mode = mode;
+        this.groupIdFrom = groupIdFrom;
+        this.sceneIdFrom = sceneIdFrom;
+        this.groupIdTo = groupIdTo;
+        this.sceneIdTo = sceneIdTo;
     }
 
     /**
@@ -85,7 +116,9 @@ public class CopySceneCommand extends ZclScenesCommand {
      * Sets Mode.
      *
      * @param mode the Mode
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setMode(final Integer mode) {
         this.mode = mode;
     }
@@ -103,7 +136,9 @@ public class CopySceneCommand extends ZclScenesCommand {
      * Sets Group ID From.
      *
      * @param groupIdFrom the Group ID From
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setGroupIdFrom(final Integer groupIdFrom) {
         this.groupIdFrom = groupIdFrom;
     }
@@ -121,7 +156,9 @@ public class CopySceneCommand extends ZclScenesCommand {
      * Sets Scene ID From.
      *
      * @param sceneIdFrom the Scene ID From
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSceneIdFrom(final Integer sceneIdFrom) {
         this.sceneIdFrom = sceneIdFrom;
     }
@@ -139,7 +176,9 @@ public class CopySceneCommand extends ZclScenesCommand {
      * Sets Group ID To.
      *
      * @param groupIdTo the Group ID To
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setGroupIdTo(final Integer groupIdTo) {
         this.groupIdTo = groupIdTo;
     }
@@ -157,7 +196,9 @@ public class CopySceneCommand extends ZclScenesCommand {
      * Sets Scene ID To.
      *
      * @param sceneIdTo the Scene ID To
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSceneIdTo(final Integer sceneIdTo) {
         this.sceneIdTo = sceneIdTo;
     }

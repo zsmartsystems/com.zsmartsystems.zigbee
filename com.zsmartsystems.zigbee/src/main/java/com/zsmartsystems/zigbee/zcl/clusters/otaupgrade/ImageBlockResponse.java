@@ -43,7 +43,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class ImageBlockResponse extends ZclOtaUpgradeCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -87,12 +87,46 @@ public class ImageBlockResponse extends ZclOtaUpgradeCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public ImageBlockResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param status {@link ZclStatus} Status
+     * @param manufacturerCode {@link Integer} Manufacturer Code
+     * @param imageType {@link Integer} Image Type
+     * @param fileVersion {@link Integer} File Version
+     * @param fileOffset {@link Integer} File Offset
+     * @param imageData {@link ByteArray} Image Data
+     */
+    public ImageBlockResponse(
+            ZclStatus status,
+            Integer manufacturerCode,
+            Integer imageType,
+            Integer fileVersion,
+            Integer fileOffset,
+            ByteArray imageData) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.status = status;
+        this.manufacturerCode = manufacturerCode;
+        this.imageType = imageType;
+        this.fileVersion = fileVersion;
+        this.fileOffset = fileOffset;
+        this.imageData = imageData;
     }
 
     /**
@@ -108,7 +142,9 @@ public class ImageBlockResponse extends ZclOtaUpgradeCommand {
      * Sets Status.
      *
      * @param status the Status
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStatus(final ZclStatus status) {
         this.status = status;
     }
@@ -126,7 +162,9 @@ public class ImageBlockResponse extends ZclOtaUpgradeCommand {
      * Sets Manufacturer Code.
      *
      * @param manufacturerCode the Manufacturer Code
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
     }
@@ -144,7 +182,9 @@ public class ImageBlockResponse extends ZclOtaUpgradeCommand {
      * Sets Image Type.
      *
      * @param imageType the Image Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setImageType(final Integer imageType) {
         this.imageType = imageType;
     }
@@ -162,7 +202,9 @@ public class ImageBlockResponse extends ZclOtaUpgradeCommand {
      * Sets File Version.
      *
      * @param fileVersion the File Version
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setFileVersion(final Integer fileVersion) {
         this.fileVersion = fileVersion;
     }
@@ -180,7 +222,9 @@ public class ImageBlockResponse extends ZclOtaUpgradeCommand {
      * Sets File Offset.
      *
      * @param fileOffset the File Offset
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setFileOffset(final Integer fileOffset) {
         this.fileOffset = fileOffset;
     }
@@ -198,7 +242,9 @@ public class ImageBlockResponse extends ZclOtaUpgradeCommand {
      * Sets Image Data.
      *
      * @param imageData the Image Data
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setImageData(final ByteArray imageData) {
         this.imageData = imageData;
     }

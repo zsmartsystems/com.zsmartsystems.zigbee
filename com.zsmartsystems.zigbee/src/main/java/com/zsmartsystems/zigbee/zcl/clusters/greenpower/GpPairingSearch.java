@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class GpPairingSearch extends ZclGreenPowerCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -63,12 +63,40 @@ public class GpPairingSearch extends ZclGreenPowerCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public GpPairingSearch() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param options {@link Integer} Options
+     * @param gpdSrcId {@link Integer} Gpd Src ID
+     * @param gpdIeee {@link IeeeAddress} Gpd IEEE
+     * @param endpoint {@link Integer} Endpoint
+     */
+    public GpPairingSearch(
+            Integer options,
+            Integer gpdSrcId,
+            IeeeAddress gpdIeee,
+            Integer endpoint) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.options = options;
+        this.gpdSrcId = gpdSrcId;
+        this.gpdIeee = gpdIeee;
+        this.endpoint = endpoint;
     }
 
     /**
@@ -84,7 +112,9 @@ public class GpPairingSearch extends ZclGreenPowerCommand {
      * Sets Options.
      *
      * @param options the Options
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setOptions(final Integer options) {
         this.options = options;
     }
@@ -102,7 +132,9 @@ public class GpPairingSearch extends ZclGreenPowerCommand {
      * Sets Gpd Src ID.
      *
      * @param gpdSrcId the Gpd Src ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setGpdSrcId(final Integer gpdSrcId) {
         this.gpdSrcId = gpdSrcId;
     }
@@ -120,7 +152,9 @@ public class GpPairingSearch extends ZclGreenPowerCommand {
      * Sets Gpd IEEE.
      *
      * @param gpdIeee the Gpd IEEE
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setGpdIeee(final IeeeAddress gpdIeee) {
         this.gpdIeee = gpdIeee;
     }
@@ -138,7 +172,9 @@ public class GpPairingSearch extends ZclGreenPowerCommand {
      * Sets Endpoint.
      *
      * @param endpoint the Endpoint
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setEndpoint(final Integer endpoint) {
         this.endpoint = endpoint;
     }

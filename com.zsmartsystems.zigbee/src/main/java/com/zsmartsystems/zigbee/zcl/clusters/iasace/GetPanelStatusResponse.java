@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class GetPanelStatusResponse extends ZclIasAceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -78,12 +78,40 @@ public class GetPanelStatusResponse extends ZclIasAceCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public GetPanelStatusResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param panelStatus {@link Integer} Panel Status
+     * @param secondsRemaining {@link Integer} Seconds Remaining
+     * @param audibleNotification {@link Integer} Audible Notification
+     * @param alarmStatus {@link Integer} Alarm Status
+     */
+    public GetPanelStatusResponse(
+            Integer panelStatus,
+            Integer secondsRemaining,
+            Integer audibleNotification,
+            Integer alarmStatus) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.panelStatus = panelStatus;
+        this.secondsRemaining = secondsRemaining;
+        this.audibleNotification = audibleNotification;
+        this.alarmStatus = alarmStatus;
     }
 
     /**
@@ -103,7 +131,9 @@ public class GetPanelStatusResponse extends ZclIasAceCommand {
      * Defines the current status of the alarm panel.
      *
      * @param panelStatus the Panel Status
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setPanelStatus(final Integer panelStatus) {
         this.panelStatus = panelStatus;
     }
@@ -133,7 +163,9 @@ public class GetPanelStatusResponse extends ZclIasAceCommand {
      * The default value shall be 0x00.
      *
      * @param secondsRemaining the Seconds Remaining
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSecondsRemaining(final Integer secondsRemaining) {
         this.secondsRemaining = secondsRemaining;
     }
@@ -165,7 +197,9 @@ public class GetPanelStatusResponse extends ZclIasAceCommand {
      * customise their system.
      *
      * @param audibleNotification the Audible Notification
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setAudibleNotification(final Integer audibleNotification) {
         this.audibleNotification = audibleNotification;
     }
@@ -191,7 +225,9 @@ public class GetPanelStatusResponse extends ZclIasAceCommand {
      * display or otherwise initiate notification for users.
      *
      * @param alarmStatus the Alarm Status
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setAlarmStatus(final Integer alarmStatus) {
         this.alarmStatus = alarmStatus;
     }

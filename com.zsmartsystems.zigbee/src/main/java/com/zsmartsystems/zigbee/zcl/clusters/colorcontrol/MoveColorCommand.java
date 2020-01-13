@@ -22,7 +22,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class MoveColorCommand extends ZclColorControlCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -46,12 +46,34 @@ public class MoveColorCommand extends ZclColorControlCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public MoveColorCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param rateX {@link Integer} Rate X
+     * @param rateY {@link Integer} Rate Y
+     */
+    public MoveColorCommand(
+            Integer rateX,
+            Integer rateY) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.rateX = rateX;
+        this.rateY = rateY;
     }
 
     /**
@@ -67,7 +89,9 @@ public class MoveColorCommand extends ZclColorControlCommand {
      * Sets Rate X.
      *
      * @param rateX the Rate X
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setRateX(final Integer rateX) {
         this.rateX = rateX;
     }
@@ -85,7 +109,9 @@ public class MoveColorCommand extends ZclColorControlCommand {
      * Sets Rate Y.
      *
      * @param rateY the Rate Y
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setRateY(final Integer rateY) {
         this.rateY = rateY;
     }

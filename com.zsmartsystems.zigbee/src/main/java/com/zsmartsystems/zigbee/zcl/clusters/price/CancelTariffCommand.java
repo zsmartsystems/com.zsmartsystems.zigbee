@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class CancelTariffCommand extends ZclPriceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -68,12 +68,37 @@ public class CancelTariffCommand extends ZclPriceCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public CancelTariffCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param providerId {@link Integer} Provider ID
+     * @param issuerTariffId {@link Integer} Issuer Tariff ID
+     * @param tariffType {@link Integer} Tariff Type
+     */
+    public CancelTariffCommand(
+            Integer providerId,
+            Integer issuerTariffId,
+            Integer tariffType) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.providerId = providerId;
+        this.issuerTariffId = issuerTariffId;
+        this.tariffType = tariffType;
     }
 
     /**
@@ -97,7 +122,9 @@ public class CancelTariffCommand extends ZclPriceCommand {
      * providers may be available.
      *
      * @param providerId the Provider ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProviderId(final Integer providerId) {
         this.providerId = providerId;
     }
@@ -121,7 +148,9 @@ public class CancelTariffCommand extends ZclPriceCommand {
      * shall have the same Issuer Tariff ID.
      *
      * @param issuerTariffId the Issuer Tariff ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerTariffId(final Integer issuerTariffId) {
         this.issuerTariffId = issuerTariffId;
     }
@@ -147,7 +176,9 @@ public class CancelTariffCommand extends ZclPriceCommand {
      * shall use the ‘Received’ Tariff). The most significant nibble is reserved.
      *
      * @param tariffType the Tariff Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTariffType(final Integer tariffType) {
         this.tariffType = tariffType;
     }

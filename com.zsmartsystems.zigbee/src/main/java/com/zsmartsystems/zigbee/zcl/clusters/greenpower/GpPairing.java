@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class GpPairing extends ZclGreenPowerCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -102,12 +102,64 @@ public class GpPairing extends ZclGreenPowerCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public GpPairing() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param options {@link Integer} Options
+     * @param gpdSrcId {@link Integer} Gpd Src ID
+     * @param gpdIeee {@link IeeeAddress} Gpd IEEE
+     * @param endpoint {@link Integer} Endpoint
+     * @param sinkIeeeAddress {@link IeeeAddress} Sink IEEE Address
+     * @param sinkNwkAddress {@link Integer} Sink NWK Address
+     * @param sinkGroupId {@link Integer} Sink Group ID
+     * @param deviceId {@link Integer} Device ID
+     * @param gpdSecurityFrameCounter {@link Integer} Gpd Security Frame Counter
+     * @param gpdKey {@link ZigBeeKey} Gpd Key
+     * @param assignedAlias {@link Integer} Assigned Alias
+     * @param forwardingRadius {@link Integer} Forwarding Radius
+     */
+    public GpPairing(
+            Integer options,
+            Integer gpdSrcId,
+            IeeeAddress gpdIeee,
+            Integer endpoint,
+            IeeeAddress sinkIeeeAddress,
+            Integer sinkNwkAddress,
+            Integer sinkGroupId,
+            Integer deviceId,
+            Integer gpdSecurityFrameCounter,
+            ZigBeeKey gpdKey,
+            Integer assignedAlias,
+            Integer forwardingRadius) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.options = options;
+        this.gpdSrcId = gpdSrcId;
+        this.gpdIeee = gpdIeee;
+        this.endpoint = endpoint;
+        this.sinkIeeeAddress = sinkIeeeAddress;
+        this.sinkNwkAddress = sinkNwkAddress;
+        this.sinkGroupId = sinkGroupId;
+        this.deviceId = deviceId;
+        this.gpdSecurityFrameCounter = gpdSecurityFrameCounter;
+        this.gpdKey = gpdKey;
+        this.assignedAlias = assignedAlias;
+        this.forwardingRadius = forwardingRadius;
     }
 
     /**
@@ -123,7 +175,9 @@ public class GpPairing extends ZclGreenPowerCommand {
      * Sets Options.
      *
      * @param options the Options
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setOptions(final Integer options) {
         this.options = options;
     }
@@ -141,7 +195,9 @@ public class GpPairing extends ZclGreenPowerCommand {
      * Sets Gpd Src ID.
      *
      * @param gpdSrcId the Gpd Src ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setGpdSrcId(final Integer gpdSrcId) {
         this.gpdSrcId = gpdSrcId;
     }
@@ -159,7 +215,9 @@ public class GpPairing extends ZclGreenPowerCommand {
      * Sets Gpd IEEE.
      *
      * @param gpdIeee the Gpd IEEE
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setGpdIeee(final IeeeAddress gpdIeee) {
         this.gpdIeee = gpdIeee;
     }
@@ -177,7 +235,9 @@ public class GpPairing extends ZclGreenPowerCommand {
      * Sets Endpoint.
      *
      * @param endpoint the Endpoint
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setEndpoint(final Integer endpoint) {
         this.endpoint = endpoint;
     }
@@ -195,7 +255,9 @@ public class GpPairing extends ZclGreenPowerCommand {
      * Sets Sink IEEE Address.
      *
      * @param sinkIeeeAddress the Sink IEEE Address
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSinkIeeeAddress(final IeeeAddress sinkIeeeAddress) {
         this.sinkIeeeAddress = sinkIeeeAddress;
     }
@@ -213,7 +275,9 @@ public class GpPairing extends ZclGreenPowerCommand {
      * Sets Sink NWK Address.
      *
      * @param sinkNwkAddress the Sink NWK Address
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSinkNwkAddress(final Integer sinkNwkAddress) {
         this.sinkNwkAddress = sinkNwkAddress;
     }
@@ -231,7 +295,9 @@ public class GpPairing extends ZclGreenPowerCommand {
      * Sets Sink Group ID.
      *
      * @param sinkGroupId the Sink Group ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSinkGroupId(final Integer sinkGroupId) {
         this.sinkGroupId = sinkGroupId;
     }
@@ -249,7 +315,9 @@ public class GpPairing extends ZclGreenPowerCommand {
      * Sets Device ID.
      *
      * @param deviceId the Device ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDeviceId(final Integer deviceId) {
         this.deviceId = deviceId;
     }
@@ -267,7 +335,9 @@ public class GpPairing extends ZclGreenPowerCommand {
      * Sets Gpd Security Frame Counter.
      *
      * @param gpdSecurityFrameCounter the Gpd Security Frame Counter
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setGpdSecurityFrameCounter(final Integer gpdSecurityFrameCounter) {
         this.gpdSecurityFrameCounter = gpdSecurityFrameCounter;
     }
@@ -285,7 +355,9 @@ public class GpPairing extends ZclGreenPowerCommand {
      * Sets Gpd Key.
      *
      * @param gpdKey the Gpd Key
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setGpdKey(final ZigBeeKey gpdKey) {
         this.gpdKey = gpdKey;
     }
@@ -303,7 +375,9 @@ public class GpPairing extends ZclGreenPowerCommand {
      * Sets Assigned Alias.
      *
      * @param assignedAlias the Assigned Alias
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setAssignedAlias(final Integer assignedAlias) {
         this.assignedAlias = assignedAlias;
     }
@@ -321,7 +395,9 @@ public class GpPairing extends ZclGreenPowerCommand {
      * Sets Forwarding Radius.
      *
      * @param forwardingRadius the Forwarding Radius
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setForwardingRadius(final Integer forwardingRadius) {
         this.forwardingRadius = forwardingRadius;
     }

@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zdo.command.IeeeAddressResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-15T18:21:05Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class IeeeAddressRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * The ZDO cluster ID.
@@ -51,9 +51,31 @@ public class IeeeAddressRequest extends ZdoRequest implements ZigBeeTransactionM
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public IeeeAddressRequest() {
         clusterId = CLUSTER_ID;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param nwkAddrOfInterest {@link Integer} NWK Addr Of Interest
+     * @param requestType {@link Integer} Request Type
+     * @param startIndex {@link Integer} Start Index
+     */
+    public IeeeAddressRequest(
+            Integer nwkAddrOfInterest,
+            Integer requestType,
+            Integer startIndex) {
+
+        clusterId = CLUSTER_ID;
+
+        this.nwkAddrOfInterest = nwkAddrOfInterest;
+        this.requestType = requestType;
+        this.startIndex = startIndex;
     }
 
     /**
@@ -69,7 +91,9 @@ public class IeeeAddressRequest extends ZdoRequest implements ZigBeeTransactionM
      * Sets NWK Addr Of Interest.
      *
      * @param nwkAddrOfInterest the NWK Addr Of Interest
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNwkAddrOfInterest(final Integer nwkAddrOfInterest) {
         this.nwkAddrOfInterest = nwkAddrOfInterest;
     }
@@ -87,7 +111,9 @@ public class IeeeAddressRequest extends ZdoRequest implements ZigBeeTransactionM
      * Sets Request Type.
      *
      * @param requestType the Request Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setRequestType(final Integer requestType) {
         this.requestType = requestType;
     }
@@ -105,7 +131,9 @@ public class IeeeAddressRequest extends ZdoRequest implements ZigBeeTransactionM
      * Sets Start Index.
      *
      * @param startIndex the Start Index
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStartIndex(final Integer startIndex) {
         this.startIndex = startIndex;
     }

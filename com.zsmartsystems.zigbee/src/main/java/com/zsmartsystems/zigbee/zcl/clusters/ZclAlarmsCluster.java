@@ -45,7 +45,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
 public class ZclAlarmsCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -201,7 +201,16 @@ public class ZclAlarmsCluster extends ZclCluster {
      * @param alarmCode {@link Integer} Alarm Code
      * @param clusterIdentifier {@link Integer} Cluster Identifier
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.resetAlarmCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new resetAlarmCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> resetAlarmCommand(Integer alarmCode, Integer clusterIdentifier) {
         ResetAlarmCommand command = new ResetAlarmCommand();
 
@@ -220,7 +229,16 @@ public class ZclAlarmsCluster extends ZclCluster {
      * the alarm log.
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.resetAllAlarmsCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new resetAllAlarmsCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> resetAllAlarmsCommand() {
         return sendCommand(new ResetAllAlarmsCommand());
     }
@@ -234,7 +252,16 @@ public class ZclAlarmsCluster extends ZclCluster {
      * the corresponding entry in the table is removed.
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getAlarmCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getAlarmCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getAlarmCommand() {
         return sendCommand(new GetAlarmCommand());
     }
@@ -245,7 +272,16 @@ public class ZclAlarmsCluster extends ZclCluster {
      * This command causes the alarm table to be cleared.
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.resetAlarmLogCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new resetAlarmLogCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> resetAlarmLogCommand() {
         return sendCommand(new ResetAlarmLogCommand());
     }
@@ -261,7 +297,16 @@ public class ZclAlarmsCluster extends ZclCluster {
      * @param alarmCode {@link Integer} Alarm Code
      * @param clusterIdentifier {@link Integer} Cluster Identifier
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.alarmCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new alarmCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> alarmCommand(Integer alarmCode, Integer clusterIdentifier) {
         AlarmCommand command = new AlarmCommand();
 
@@ -287,7 +332,16 @@ public class ZclAlarmsCluster extends ZclCluster {
      * @param clusterIdentifier {@link Integer} Cluster Identifier
      * @param timestamp {@link Integer} Timestamp
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getAlarmResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getAlarmResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getAlarmResponse(Integer status, Integer alarmCode, Integer clusterIdentifier, Integer timestamp) {
         GetAlarmResponse command = new GetAlarmResponse();
 

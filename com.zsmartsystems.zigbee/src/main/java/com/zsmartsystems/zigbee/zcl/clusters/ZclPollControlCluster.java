@@ -45,7 +45,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
 public class ZclPollControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -858,7 +858,16 @@ public class ZclPollControlCluster extends ZclCluster {
      * @param startFastPolling {@link Boolean} Start Fast Polling
      * @param fastPollTimeout {@link Integer} Fast Poll Timeout
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.checkInResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new checkInResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> checkInResponse(Boolean startFastPolling, Integer fastPollTimeout) {
         CheckInResponse command = new CheckInResponse();
 
@@ -884,7 +893,16 @@ public class ZclPollControlCluster extends ZclCluster {
      * FastPolling it should respond with a Default Response with a status of ACTION_DENIED.
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.fastPollStopCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new fastPollStopCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> fastPollStopCommand() {
         return sendCommand(new FastPollStopCommand());
     }
@@ -902,7 +920,16 @@ public class ZclPollControlCluster extends ZclCluster {
      *
      * @param newLongPollInterval {@link Integer} New Long Poll Interval
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.setLongPollIntervalCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new setLongPollIntervalCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> setLongPollIntervalCommand(Integer newLongPollInterval) {
         SetLongPollIntervalCommand command = new SetLongPollIntervalCommand();
 
@@ -925,7 +952,16 @@ public class ZclPollControlCluster extends ZclCluster {
      *
      * @param newShortPollInterval {@link Integer} New Short Poll Interval
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.setShortPollIntervalCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new setShortPollIntervalCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> setShortPollIntervalCommand(Integer newShortPollInterval) {
         SetShortPollIntervalCommand command = new SetShortPollIntervalCommand();
 
@@ -949,7 +985,16 @@ public class ZclPollControlCluster extends ZclCluster {
      * free to return to polling according to the LongPollInterval.
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.checkInCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new checkInCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> checkInCommand() {
         return sendCommand(new CheckInCommand());
     }

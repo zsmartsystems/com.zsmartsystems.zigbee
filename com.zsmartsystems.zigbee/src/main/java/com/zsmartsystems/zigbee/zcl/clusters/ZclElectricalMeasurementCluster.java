@@ -42,7 +42,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
 public class ZclElectricalMeasurementCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -7966,7 +7966,16 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * Retrieves the power profiling information from the electrical measurement server.
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getProfileInfoCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getProfileInfoCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getProfileInfoCommand() {
         return sendCommand(new GetProfileInfoCommand());
     }
@@ -7981,7 +7990,16 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param startTime {@link Integer} Start Time
      * @param numberOfIntervals {@link Integer} Number Of Intervals
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getMeasurementProfileCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getMeasurementProfileCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getMeasurementProfileCommand(Integer attributeId, Integer startTime, Integer numberOfIntervals) {
         GetMeasurementProfileCommand command = new GetMeasurementProfileCommand();
 
@@ -8005,7 +8023,16 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param maxNumberOfIntervals {@link Integer} Max Number Of Intervals
      * @param listOfAttributes {@link Integer} List Of Attributes
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getProfileInfoResponseCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getProfileInfoResponseCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getProfileInfoResponseCommand(Integer profileCount, Integer profileIntervalPeriod, Integer maxNumberOfIntervals, Integer listOfAttributes) {
         GetProfileInfoResponseCommand command = new GetProfileInfoResponseCommand();
 
@@ -8032,7 +8059,16 @@ public class ZclElectricalMeasurementCluster extends ZclCluster {
      * @param attributeId {@link Integer} Attribute ID
      * @param intervals {@link Integer} Intervals
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.getMeasurementProfileResponseCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new getMeasurementProfileResponseCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> getMeasurementProfileResponseCommand(Integer startTime, Integer status, Integer profileIntervalPeriod, Integer numberOfIntervalsDelivered, Integer attributeId, Integer intervals) {
         GetMeasurementProfileResponseCommand command = new GetMeasurementProfileResponseCommand();
 

@@ -33,7 +33,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class PublishConsolidatedBillCommand extends ZclPriceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -133,12 +133,55 @@ public class PublishConsolidatedBillCommand extends ZclPriceCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public PublishConsolidatedBillCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param providerId {@link Integer} Provider ID
+     * @param issuerEventId {@link Integer} Issuer Event ID
+     * @param billingPeriodStartTime {@link Calendar} Billing Period Start Time
+     * @param billingPeriodDuration {@link Integer} Billing Period Duration
+     * @param billingPeriodDurationType {@link Integer} Billing Period Duration Type
+     * @param tariffType {@link Integer} Tariff Type
+     * @param consolidatedBill {@link Integer} Consolidated Bill
+     * @param currency {@link Integer} Currency
+     * @param billTrailingDigit {@link Integer} Bill Trailing Digit
+     */
+    public PublishConsolidatedBillCommand(
+            Integer providerId,
+            Integer issuerEventId,
+            Calendar billingPeriodStartTime,
+            Integer billingPeriodDuration,
+            Integer billingPeriodDurationType,
+            Integer tariffType,
+            Integer consolidatedBill,
+            Integer currency,
+            Integer billTrailingDigit) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.providerId = providerId;
+        this.issuerEventId = issuerEventId;
+        this.billingPeriodStartTime = billingPeriodStartTime;
+        this.billingPeriodDuration = billingPeriodDuration;
+        this.billingPeriodDurationType = billingPeriodDurationType;
+        this.tariffType = tariffType;
+        this.consolidatedBill = consolidatedBill;
+        this.currency = currency;
+        this.billTrailingDigit = billTrailingDigit;
     }
 
     /**
@@ -162,7 +205,9 @@ public class PublishConsolidatedBillCommand extends ZclPriceCommand {
      * providers may be available.
      *
      * @param providerId the Provider ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProviderId(final Integer providerId) {
         this.providerId = providerId;
     }
@@ -194,7 +239,9 @@ public class PublishConsolidatedBillCommand extends ZclPriceCommand {
      * value in the Issuer Event ID field that is larger than older information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
     }
@@ -228,7 +275,9 @@ public class PublishConsolidatedBillCommand extends ZclPriceCommand {
      * PublishConsolidatedBill command is used in place of this cancellation mechanism).
      *
      * @param billingPeriodStartTime the Billing Period Start Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setBillingPeriodStartTime(final Calendar billingPeriodStartTime) {
         this.billingPeriodStartTime = billingPeriodStartTime;
     }
@@ -252,7 +301,9 @@ public class PublishConsolidatedBillCommand extends ZclPriceCommand {
      * duration units are defined by the Billing Period Duration Type field.
      *
      * @param billingPeriodDuration the Billing Period Duration
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setBillingPeriodDuration(final Integer billingPeriodDuration) {
         this.billingPeriodDuration = billingPeriodDuration;
     }
@@ -278,7 +329,9 @@ public class PublishConsolidatedBillCommand extends ZclPriceCommand {
      * enumerated sub-field providing duration control.
      *
      * @param billingPeriodDurationType the Billing Period Duration Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setBillingPeriodDurationType(final Integer billingPeriodDurationType) {
         this.billingPeriodDurationType = billingPeriodDurationType;
     }
@@ -302,7 +355,9 @@ public class PublishConsolidatedBillCommand extends ZclPriceCommand {
      * significant nibble represents an enumeration of the tariff type as detailed in
      *
      * @param tariffType the Tariff Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTariffType(final Integer tariffType) {
         this.tariffType = tariffType;
     }
@@ -328,7 +383,9 @@ public class PublishConsolidatedBillCommand extends ZclPriceCommand {
      * the Price cluster.
      *
      * @param consolidatedBill the Consolidated Bill
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setConsolidatedBill(final Integer consolidatedBill) {
         this.consolidatedBill = consolidatedBill;
     }
@@ -354,7 +411,9 @@ public class PublishConsolidatedBillCommand extends ZclPriceCommand {
      * should match the values defined by ISO 4217.
      *
      * @param currency the Currency
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCurrency(final Integer currency) {
         this.currency = currency;
     }
@@ -380,7 +439,9 @@ public class PublishConsolidatedBillCommand extends ZclPriceCommand {
      * indicates the number of digits to the right of the decimal point.
      *
      * @param billTrailingDigit the Bill Trailing Digit
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setBillTrailingDigit(final Integer billTrailingDigit) {
         this.billTrailingDigit = billTrailingDigit;
     }

@@ -34,7 +34,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class UpgradeEndResponse extends ZclOtaUpgradeCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -73,12 +73,43 @@ public class UpgradeEndResponse extends ZclOtaUpgradeCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public UpgradeEndResponse() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param manufacturerCode {@link Integer} Manufacturer Code
+     * @param imageType {@link Integer} Image Type
+     * @param fileVersion {@link Integer} File Version
+     * @param currentTime {@link Integer} Current Time
+     * @param upgradeTime {@link Integer} Upgrade Time
+     */
+    public UpgradeEndResponse(
+            Integer manufacturerCode,
+            Integer imageType,
+            Integer fileVersion,
+            Integer currentTime,
+            Integer upgradeTime) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.manufacturerCode = manufacturerCode;
+        this.imageType = imageType;
+        this.fileVersion = fileVersion;
+        this.currentTime = currentTime;
+        this.upgradeTime = upgradeTime;
     }
 
     /**
@@ -94,7 +125,9 @@ public class UpgradeEndResponse extends ZclOtaUpgradeCommand {
      * Sets Manufacturer Code.
      *
      * @param manufacturerCode the Manufacturer Code
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
     }
@@ -112,7 +145,9 @@ public class UpgradeEndResponse extends ZclOtaUpgradeCommand {
      * Sets Image Type.
      *
      * @param imageType the Image Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setImageType(final Integer imageType) {
         this.imageType = imageType;
     }
@@ -130,7 +165,9 @@ public class UpgradeEndResponse extends ZclOtaUpgradeCommand {
      * Sets File Version.
      *
      * @param fileVersion the File Version
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setFileVersion(final Integer fileVersion) {
         this.fileVersion = fileVersion;
     }
@@ -148,7 +185,9 @@ public class UpgradeEndResponse extends ZclOtaUpgradeCommand {
      * Sets Current Time.
      *
      * @param currentTime the Current Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setCurrentTime(final Integer currentTime) {
         this.currentTime = currentTime;
     }
@@ -166,7 +205,9 @@ public class UpgradeEndResponse extends ZclOtaUpgradeCommand {
      * Sets Upgrade Time.
      *
      * @param upgradeTime the Upgrade Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setUpgradeTime(final Integer upgradeTime) {
         this.upgradeTime = upgradeTime;
     }

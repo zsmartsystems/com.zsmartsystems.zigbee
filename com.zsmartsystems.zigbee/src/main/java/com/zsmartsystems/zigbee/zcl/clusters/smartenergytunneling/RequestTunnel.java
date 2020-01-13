@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class RequestTunnel extends ZclSmartEnergyTunnelingCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -78,12 +78,40 @@ public class RequestTunnel extends ZclSmartEnergyTunnelingCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public RequestTunnel() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param protocolId {@link Integer} Protocol ID
+     * @param manufacturerCode {@link Integer} Manufacturer Code
+     * @param flowControlSupport {@link Boolean} Flow Control Support
+     * @param maximumIncomingTransferSize {@link Integer} Maximum Incoming Transfer Size
+     */
+    public RequestTunnel(
+            Integer protocolId,
+            Integer manufacturerCode,
+            Boolean flowControlSupport,
+            Integer maximumIncomingTransferSize) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.protocolId = protocolId;
+        this.manufacturerCode = manufacturerCode;
+        this.flowControlSupport = flowControlSupport;
+        this.maximumIncomingTransferSize = maximumIncomingTransferSize;
     }
 
     /**
@@ -109,7 +137,9 @@ public class RequestTunnel extends ZclSmartEnergyTunnelingCommand {
      * The values above 199 may be used for manufacturer specific protocols.
      *
      * @param protocolId the Protocol ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProtocolId(final Integer protocolId) {
         this.protocolId = protocolId;
     }
@@ -139,7 +169,9 @@ public class RequestTunnel extends ZclSmartEnergyTunnelingCommand {
      * Manufacturer Code is not used.
      *
      * @param manufacturerCode the Manufacturer Code
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
     }
@@ -163,7 +195,9 @@ public class RequestTunnel extends ZclSmartEnergyTunnelingCommand {
      * the tunnel (TRUE) or not (FALSE). The default value is FALSE (no flow control).
      *
      * @param flowControlSupport the Flow Control Support
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setFlowControlSupport(final Boolean flowControlSupport) {
         this.flowControlSupport = flowControlSupport;
     }
@@ -187,7 +221,9 @@ public class RequestTunnel extends ZclSmartEnergyTunnelingCommand {
      * transferred to the client in the payload of a single TransferData command.
      *
      * @param maximumIncomingTransferSize the Maximum Incoming Transfer Size
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setMaximumIncomingTransferSize(final Integer maximumIncomingTransferSize) {
         this.maximumIncomingTransferSize = maximumIncomingTransferSize;
     }

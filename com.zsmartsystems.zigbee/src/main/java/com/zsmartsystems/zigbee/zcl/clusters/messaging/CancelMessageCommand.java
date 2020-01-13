@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class CancelMessageCommand extends ZclMessagingCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -58,12 +58,34 @@ public class CancelMessageCommand extends ZclMessagingCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public CancelMessageCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param messageId {@link Integer} Message ID
+     * @param messageControl {@link Integer} Message Control
+     */
+    public CancelMessageCommand(
+            Integer messageId,
+            Integer messageControl) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.messageId = messageId;
+        this.messageControl = messageControl;
     }
 
     /**
@@ -89,7 +111,9 @@ public class CancelMessageCommand extends ZclMessagingCommand {
      * originally issued.
      *
      * @param messageId the Message ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setMessageId(final Integer messageId) {
         this.messageId = messageId;
     }
@@ -111,7 +135,9 @@ public class CancelMessageCommand extends ZclMessagingCommand {
      * This field is deprecated and should be set to 0x00.
      *
      * @param messageControl the Message Control
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setMessageControl(final Integer messageControl) {
         this.messageControl = messageControl;
     }

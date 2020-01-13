@@ -31,7 +31,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class GetZoneStatusCommand extends ZclIasAceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -96,12 +96,40 @@ public class GetZoneStatusCommand extends ZclIasAceCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public GetZoneStatusCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param startingZoneId {@link Integer} Starting Zone ID
+     * @param maxZoneIDs {@link Integer} Max Zone I Ds
+     * @param zoneStatusMaskFlag {@link Boolean} Zone Status Mask Flag
+     * @param zoneStatusMask {@link Integer} Zone Status Mask
+     */
+    public GetZoneStatusCommand(
+            Integer startingZoneId,
+            Integer maxZoneIDs,
+            Boolean zoneStatusMaskFlag,
+            Integer zoneStatusMask) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.startingZoneId = startingZoneId;
+        this.maxZoneIDs = maxZoneIDs;
+        this.zoneStatusMaskFlag = zoneStatusMaskFlag;
+        this.zoneStatusMask = zoneStatusMask;
     }
 
     /**
@@ -123,7 +151,9 @@ public class GetZoneStatusCommand extends ZclIasAceCommand {
      * information.
      *
      * @param startingZoneId the Starting Zone ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStartingZoneId(final Integer startingZoneId) {
         this.startingZoneId = startingZoneId;
     }
@@ -147,7 +177,9 @@ public class GetZoneStatusCommand extends ZclIasAceCommand {
      * returned by the IAS ACE server when it responds with a Get Zone Status Response command
      *
      * @param maxZoneIDs the Max Zone I Ds
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setMaxZoneIDs(final Integer maxZoneIDs) {
         this.maxZoneIDs = maxZoneIDs;
     }
@@ -187,7 +219,9 @@ public class GetZoneStatusCommand extends ZclIasAceCommand {
      * the number of IAS Zone devices in a system is large.
      *
      * @param zoneStatusMaskFlag the Zone Status Mask Flag
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneStatusMaskFlag(final Boolean zoneStatusMaskFlag) {
         this.zoneStatusMaskFlag = zoneStatusMaskFlag;
     }
@@ -233,7 +267,9 @@ public class GetZoneStatusCommand extends ZclIasAceCommand {
      * IAS Zone in the Get Zone Status Response command.
      *
      * @param zoneStatusMask the Zone Status Mask
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setZoneStatusMask(final Integer zoneStatusMask) {
         this.zoneStatusMask = zoneStatusMask;
     }

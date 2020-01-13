@@ -36,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class QueryNextImageCommand extends ZclOtaUpgradeCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -75,12 +75,43 @@ public class QueryNextImageCommand extends ZclOtaUpgradeCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public QueryNextImageCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param fieldControl {@link Integer} Field Control
+     * @param manufacturerCode {@link Integer} Manufacturer Code
+     * @param imageType {@link Integer} Image Type
+     * @param fileVersion {@link Integer} File Version
+     * @param hardwareVersion {@link Integer} Hardware Version
+     */
+    public QueryNextImageCommand(
+            Integer fieldControl,
+            Integer manufacturerCode,
+            Integer imageType,
+            Integer fileVersion,
+            Integer hardwareVersion) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.fieldControl = fieldControl;
+        this.manufacturerCode = manufacturerCode;
+        this.imageType = imageType;
+        this.fileVersion = fileVersion;
+        this.hardwareVersion = hardwareVersion;
     }
 
     /**
@@ -96,7 +127,9 @@ public class QueryNextImageCommand extends ZclOtaUpgradeCommand {
      * Sets Field Control.
      *
      * @param fieldControl the Field Control
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setFieldControl(final Integer fieldControl) {
         this.fieldControl = fieldControl;
     }
@@ -114,7 +147,9 @@ public class QueryNextImageCommand extends ZclOtaUpgradeCommand {
      * Sets Manufacturer Code.
      *
      * @param manufacturerCode the Manufacturer Code
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
     }
@@ -132,7 +167,9 @@ public class QueryNextImageCommand extends ZclOtaUpgradeCommand {
      * Sets Image Type.
      *
      * @param imageType the Image Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setImageType(final Integer imageType) {
         this.imageType = imageType;
     }
@@ -150,7 +187,9 @@ public class QueryNextImageCommand extends ZclOtaUpgradeCommand {
      * Sets File Version.
      *
      * @param fileVersion the File Version
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setFileVersion(final Integer fileVersion) {
         this.fileVersion = fileVersion;
     }
@@ -168,7 +207,9 @@ public class QueryNextImageCommand extends ZclOtaUpgradeCommand {
      * Sets Hardware Version.
      *
      * @param hardwareVersion the Hardware Version
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setHardwareVersion(final Integer hardwareVersion) {
         this.hardwareVersion = hardwareVersion;
     }

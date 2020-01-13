@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class SetOverallDebtCap extends ZclPrepaymentCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -61,12 +61,40 @@ public class SetOverallDebtCap extends ZclPrepaymentCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public SetOverallDebtCap() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param providerId {@link Integer} Provider ID
+     * @param issuerEventId {@link Integer} Issuer Event ID
+     * @param implementationDateTime {@link Calendar} Implementation Date Time
+     * @param overallDebtCap {@link Integer} Overall Debt Cap
+     */
+    public SetOverallDebtCap(
+            Integer providerId,
+            Integer issuerEventId,
+            Calendar implementationDateTime,
+            Integer overallDebtCap) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.providerId = providerId;
+        this.issuerEventId = issuerEventId;
+        this.implementationDateTime = implementationDateTime;
+        this.overallDebtCap = overallDebtCap;
     }
 
     /**
@@ -82,7 +110,9 @@ public class SetOverallDebtCap extends ZclPrepaymentCommand {
      * Sets Provider ID.
      *
      * @param providerId the Provider ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProviderId(final Integer providerId) {
         this.providerId = providerId;
     }
@@ -100,7 +130,9 @@ public class SetOverallDebtCap extends ZclPrepaymentCommand {
      * Sets Issuer Event ID.
      *
      * @param issuerEventId the Issuer Event ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
     }
@@ -118,7 +150,9 @@ public class SetOverallDebtCap extends ZclPrepaymentCommand {
      * Sets Implementation Date Time.
      *
      * @param implementationDateTime the Implementation Date Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setImplementationDateTime(final Calendar implementationDateTime) {
         this.implementationDateTime = implementationDateTime;
     }
@@ -136,7 +170,9 @@ public class SetOverallDebtCap extends ZclPrepaymentCommand {
      * Sets Overall Debt Cap.
      *
      * @param overallDebtCap the Overall Debt Cap
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setOverallDebtCap(final Integer overallDebtCap) {
         this.overallDebtCap = overallDebtCap;
     }

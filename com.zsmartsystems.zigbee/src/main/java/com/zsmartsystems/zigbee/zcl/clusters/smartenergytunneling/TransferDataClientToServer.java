@@ -25,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class TransferDataClientToServer extends ZclSmartEnergyTunnelingCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -62,12 +62,34 @@ public class TransferDataClientToServer extends ZclSmartEnergyTunnelingCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public TransferDataClientToServer() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param tunnelId {@link Integer} Tunnel ID
+     * @param data {@link Integer} Data
+     */
+    public TransferDataClientToServer(
+            Integer tunnelId,
+            Integer data) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.tunnelId = tunnelId;
+        this.data = data;
     }
 
     /**
@@ -91,7 +113,9 @@ public class TransferDataClientToServer extends ZclSmartEnergyTunnelingCommand {
      * data through the tunnel or passed with any commands concerning that specific tunnel.
      *
      * @param tunnelId the Tunnel ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTunnelId(final Integer tunnelId) {
         this.tunnelId = tunnelId;
     }
@@ -127,7 +151,9 @@ public class TransferDataClientToServer extends ZclSmartEnergyTunnelingCommand {
      * implementer of the specific protocol tunnel behavior.
      *
      * @param data the Data
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setData(final Integer data) {
         this.data = data;
     }

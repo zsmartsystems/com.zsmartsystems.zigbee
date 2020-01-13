@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class StartWarningCommand extends ZclIasWdCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -50,12 +50,34 @@ public class StartWarningCommand extends ZclIasWdCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public StartWarningCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param header {@link Integer} Header
+     * @param warningDuration {@link Integer} Warning Duration
+     */
+    public StartWarningCommand(
+            Integer header,
+            Integer warningDuration) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.header = header;
+        this.warningDuration = warningDuration;
     }
 
     /**
@@ -71,7 +93,9 @@ public class StartWarningCommand extends ZclIasWdCommand {
      * Sets Header.
      *
      * @param header the Header
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setHeader(final Integer header) {
         this.header = header;
     }
@@ -89,7 +113,9 @@ public class StartWarningCommand extends ZclIasWdCommand {
      * Sets Warning Duration.
      *
      * @param warningDuration the Warning Duration
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setWarningDuration(final Integer warningDuration) {
         this.warningDuration = warningDuration;
     }

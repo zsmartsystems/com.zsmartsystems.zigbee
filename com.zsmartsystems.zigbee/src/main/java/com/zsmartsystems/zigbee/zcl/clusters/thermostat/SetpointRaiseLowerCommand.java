@@ -22,7 +22,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class SetpointRaiseLowerCommand extends ZclThermostatCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -46,12 +46,34 @@ public class SetpointRaiseLowerCommand extends ZclThermostatCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public SetpointRaiseLowerCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param mode {@link Integer} Mode
+     * @param amount {@link Integer} Amount
+     */
+    public SetpointRaiseLowerCommand(
+            Integer mode,
+            Integer amount) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.mode = mode;
+        this.amount = amount;
     }
 
     /**
@@ -67,7 +89,9 @@ public class SetpointRaiseLowerCommand extends ZclThermostatCommand {
      * Sets Mode.
      *
      * @param mode the Mode
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setMode(final Integer mode) {
         this.mode = mode;
     }
@@ -85,7 +109,9 @@ public class SetpointRaiseLowerCommand extends ZclThermostatCommand {
      * Sets Amount.
      *
      * @param amount the Amount
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setAmount(final Integer amount) {
         this.amount = amount;
     }

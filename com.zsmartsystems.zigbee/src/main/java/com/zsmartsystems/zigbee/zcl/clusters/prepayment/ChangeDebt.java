@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class ChangeDebt extends ZclPrepaymentCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -92,12 +92,58 @@ public class ChangeDebt extends ZclPrepaymentCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public ChangeDebt() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param issuerEventId {@link Integer} Issuer Event ID
+     * @param debtLabel {@link ByteArray} Debt Label
+     * @param debtAmount {@link Integer} Debt Amount
+     * @param debtRecoveryMethod {@link Integer} Debt Recovery Method
+     * @param debtAmountType {@link Integer} Debt Amount Type
+     * @param debtRecoveryStartTime {@link Calendar} Debt Recovery Start Time
+     * @param debtRecoveryCollectionTime {@link Integer} Debt Recovery Collection Time
+     * @param debtRecoveryFrequency {@link Integer} Debt Recovery Frequency
+     * @param debtRecoveryAmount {@link Integer} Debt Recovery Amount
+     * @param debtRecoveryBalancePercentage {@link Integer} Debt Recovery Balance Percentage
+     */
+    public ChangeDebt(
+            Integer issuerEventId,
+            ByteArray debtLabel,
+            Integer debtAmount,
+            Integer debtRecoveryMethod,
+            Integer debtAmountType,
+            Calendar debtRecoveryStartTime,
+            Integer debtRecoveryCollectionTime,
+            Integer debtRecoveryFrequency,
+            Integer debtRecoveryAmount,
+            Integer debtRecoveryBalancePercentage) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.issuerEventId = issuerEventId;
+        this.debtLabel = debtLabel;
+        this.debtAmount = debtAmount;
+        this.debtRecoveryMethod = debtRecoveryMethod;
+        this.debtAmountType = debtAmountType;
+        this.debtRecoveryStartTime = debtRecoveryStartTime;
+        this.debtRecoveryCollectionTime = debtRecoveryCollectionTime;
+        this.debtRecoveryFrequency = debtRecoveryFrequency;
+        this.debtRecoveryAmount = debtRecoveryAmount;
+        this.debtRecoveryBalancePercentage = debtRecoveryBalancePercentage;
     }
 
     /**
@@ -113,7 +159,9 @@ public class ChangeDebt extends ZclPrepaymentCommand {
      * Sets Issuer Event ID.
      *
      * @param issuerEventId the Issuer Event ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
     }
@@ -131,7 +179,9 @@ public class ChangeDebt extends ZclPrepaymentCommand {
      * Sets Debt Label.
      *
      * @param debtLabel the Debt Label
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDebtLabel(final ByteArray debtLabel) {
         this.debtLabel = debtLabel;
     }
@@ -149,7 +199,9 @@ public class ChangeDebt extends ZclPrepaymentCommand {
      * Sets Debt Amount.
      *
      * @param debtAmount the Debt Amount
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDebtAmount(final Integer debtAmount) {
         this.debtAmount = debtAmount;
     }
@@ -167,7 +219,9 @@ public class ChangeDebt extends ZclPrepaymentCommand {
      * Sets Debt Recovery Method.
      *
      * @param debtRecoveryMethod the Debt Recovery Method
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDebtRecoveryMethod(final Integer debtRecoveryMethod) {
         this.debtRecoveryMethod = debtRecoveryMethod;
     }
@@ -185,7 +239,9 @@ public class ChangeDebt extends ZclPrepaymentCommand {
      * Sets Debt Amount Type.
      *
      * @param debtAmountType the Debt Amount Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDebtAmountType(final Integer debtAmountType) {
         this.debtAmountType = debtAmountType;
     }
@@ -203,7 +259,9 @@ public class ChangeDebt extends ZclPrepaymentCommand {
      * Sets Debt Recovery Start Time.
      *
      * @param debtRecoveryStartTime the Debt Recovery Start Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDebtRecoveryStartTime(final Calendar debtRecoveryStartTime) {
         this.debtRecoveryStartTime = debtRecoveryStartTime;
     }
@@ -221,7 +279,9 @@ public class ChangeDebt extends ZclPrepaymentCommand {
      * Sets Debt Recovery Collection Time.
      *
      * @param debtRecoveryCollectionTime the Debt Recovery Collection Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDebtRecoveryCollectionTime(final Integer debtRecoveryCollectionTime) {
         this.debtRecoveryCollectionTime = debtRecoveryCollectionTime;
     }
@@ -239,7 +299,9 @@ public class ChangeDebt extends ZclPrepaymentCommand {
      * Sets Debt Recovery Frequency.
      *
      * @param debtRecoveryFrequency the Debt Recovery Frequency
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDebtRecoveryFrequency(final Integer debtRecoveryFrequency) {
         this.debtRecoveryFrequency = debtRecoveryFrequency;
     }
@@ -257,7 +319,9 @@ public class ChangeDebt extends ZclPrepaymentCommand {
      * Sets Debt Recovery Amount.
      *
      * @param debtRecoveryAmount the Debt Recovery Amount
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDebtRecoveryAmount(final Integer debtRecoveryAmount) {
         this.debtRecoveryAmount = debtRecoveryAmount;
     }
@@ -275,7 +339,9 @@ public class ChangeDebt extends ZclPrepaymentCommand {
      * Sets Debt Recovery Balance Percentage.
      *
      * @param debtRecoveryBalancePercentage the Debt Recovery Balance Percentage
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDebtRecoveryBalancePercentage(final Integer debtRecoveryBalancePercentage) {
         this.debtRecoveryBalancePercentage = debtRecoveryBalancePercentage;
     }

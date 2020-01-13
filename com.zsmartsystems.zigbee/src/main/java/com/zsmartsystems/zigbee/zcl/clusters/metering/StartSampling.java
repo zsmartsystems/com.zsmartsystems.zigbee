@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class StartSampling extends ZclMeteringCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -88,12 +88,43 @@ public class StartSampling extends ZclMeteringCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public StartSampling() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param issuerEventId {@link Integer} Issuer Event ID
+     * @param startSamplingTime {@link Calendar} Start Sampling Time
+     * @param sampleType {@link Integer} Sample Type
+     * @param sampleRequestInterval {@link Integer} Sample Request Interval
+     * @param maxNumberOfSamples {@link Integer} Max Number Of Samples
+     */
+    public StartSampling(
+            Integer issuerEventId,
+            Calendar startSamplingTime,
+            Integer sampleType,
+            Integer sampleRequestInterval,
+            Integer maxNumberOfSamples) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.issuerEventId = issuerEventId;
+        this.startSamplingTime = startSamplingTime;
+        this.sampleType = sampleType;
+        this.sampleRequestInterval = sampleRequestInterval;
+        this.maxNumberOfSamples = maxNumberOfSamples;
     }
 
     /**
@@ -127,7 +158,9 @@ public class StartSampling extends ZclMeteringCommand {
      * device may return a ZCL Default Response command in this case.
      *
      * @param issuerEventId the Issuer Event ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
     }
@@ -155,7 +188,9 @@ public class StartSampling extends ZclMeteringCommand {
      * Issuer Event ID to be cancelled.
      *
      * @param startSamplingTime the Start Sampling Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStartSamplingTime(final Calendar startSamplingTime) {
         this.startSamplingTime = startSamplingTime;
     }
@@ -177,7 +212,9 @@ public class StartSampling extends ZclMeteringCommand {
      * An 8 bit enumeration that identifies the type of data being sampled.
      *
      * @param sampleType the Sample Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSampleType(final Integer sampleType) {
         this.sampleType = sampleType;
     }
@@ -199,7 +236,9 @@ public class StartSampling extends ZclMeteringCommand {
      * An unsigned 16-bit field representing the interval or time in seconds between samples.
      *
      * @param sampleRequestInterval the Sample Request Interval
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSampleRequestInterval(final Integer sampleRequestInterval) {
         this.sampleRequestInterval = sampleRequestInterval;
     }
@@ -221,7 +260,9 @@ public class StartSampling extends ZclMeteringCommand {
      * A 16 bit unsigned integer that represents the number of samples to be taken.
      *
      * @param maxNumberOfSamples the Max Number Of Samples
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setMaxNumberOfSamples(final Integer maxNumberOfSamples) {
         this.maxNumberOfSamples = maxNumberOfSamples;
     }

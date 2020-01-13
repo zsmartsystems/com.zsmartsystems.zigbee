@@ -49,7 +49,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:04:47Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
 public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -1093,7 +1093,16 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param gppShortAddress {@link Integer} Gpp Short Address
      * @param gppDistance {@link Integer} Gpp Distance
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.gpNotification(parameters ...)</code>
+     * with <code>cluster.sendCommand(new gpNotification(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> gpNotification(Integer options, Integer gpdSrcId, IeeeAddress gpdIeee, Integer gpdEndpoint, Integer gpdSecurityFrameCounter, Integer gpdCommandId, ByteArray gpdCommandPayload, Integer gppShortAddress, Integer gppDistance) {
         GpNotification command = new GpNotification();
 
@@ -1125,7 +1134,16 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param gpdIeee {@link IeeeAddress} Gpd IEEE
      * @param endpoint {@link Integer} Endpoint
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.gpPairingSearch(parameters ...)</code>
+     * with <code>cluster.sendCommand(new gpPairingSearch(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> gpPairingSearch(Integer options, Integer gpdSrcId, IeeeAddress gpdIeee, Integer endpoint) {
         GpPairingSearch command = new GpPairingSearch();
 
@@ -1152,7 +1170,16 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param gppShortAddress {@link Integer} Gpp Short Address
      * @param gppDistance {@link Integer} Gpp Distance
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.gpTunnelingStop(parameters ...)</code>
+     * with <code>cluster.sendCommand(new gpTunnelingStop(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> gpTunnelingStop(Integer options, Integer gpdSrcId, IeeeAddress gpdIeee, Integer endpoint, Integer gpdSecurityFrameCounter, Integer gppShortAddress, Integer gppDistance) {
         GpTunnelingStop command = new GpTunnelingStop();
 
@@ -1189,7 +1216,16 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param gppLink {@link Integer} Gpp Link
      * @param mic {@link Integer} Mic
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.gpCommissioningNotification(parameters ...)</code>
+     * with <code>cluster.sendCommand(new gpCommissioningNotification(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> gpCommissioningNotification(Integer options, Integer gpdSrcId, IeeeAddress gpdIeee, Integer endpoint, Integer gpdSecurityFrameCounter, Integer gpdCommandId, ByteArray gpdCommandPayload, Integer gppShortAddress, Integer gppLink, Integer mic) {
         GpCommissioningNotification command = new GpCommissioningNotification();
 
@@ -1220,7 +1256,16 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param gpmAddrForPairing {@link Integer} Gpm Addr For Pairing
      * @param sinkEndpoint {@link Integer} Sink Endpoint
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.gpSinkCommissioningMode(parameters ...)</code>
+     * with <code>cluster.sendCommand(new gpSinkCommissioningMode(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> gpSinkCommissioningMode(Integer options, Integer gpmAddrForSecurity, Integer gpmAddrForPairing, Integer sinkEndpoint) {
         GpSinkCommissioningMode command = new GpSinkCommissioningMode();
 
@@ -1244,7 +1289,16 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param endpoint {@link Integer} Endpoint
      * @param translations {@link GpTranslationTableUpdateTranslation} Translations
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.gpTranslationTableUpdate(parameters ...)</code>
+     * with <code>cluster.sendCommand(new gpTranslationTableUpdate(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> gpTranslationTableUpdate(Integer options, Integer gpdSrcId, IeeeAddress gpdIeee, Integer endpoint, GpTranslationTableUpdateTranslation translations) {
         GpTranslationTableUpdate command = new GpTranslationTableUpdate();
 
@@ -1266,7 +1320,16 @@ public class ZclGreenPowerCluster extends ZclCluster {
      *
      * @param startIndex {@link Integer} Start Index
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.gpTranslationTableRequest(parameters ...)</code>
+     * with <code>cluster.sendCommand(new gpTranslationTableRequest(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> gpTranslationTableRequest(Integer startIndex) {
         GpTranslationTableRequest command = new GpTranslationTableRequest();
 
@@ -1311,7 +1374,16 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param clusterListServer {@link Integer} Cluster List Server
      * @param clusterListClient {@link Integer} Cluster List Client
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.gpPairingConfiguration(parameters ...)</code>
+     * with <code>cluster.sendCommand(new gpPairingConfiguration(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> gpPairingConfiguration(Integer actions, Integer options, Integer gpdSrcId, IeeeAddress gpdIeee, Integer endpoint, Integer deviceId, Integer groupListCount, GpPairingConfigurationGroupList groupList, Integer gpdAssignedAlias, Integer forwardingRadius, Integer securityOptions, Integer gpdSecurityFrameCounter, ZigBeeKey gpdSecurityKey, Integer numberOfPairedEndpoints, Integer pairedEndpoints, Integer applicationInformation, Integer manufacturerId, Integer modeId, Integer numberOfGpdCommands, Integer gpdCommandIdList, Integer clusterIdListCount, Integer clusterListServer, Integer clusterListClient) {
         GpPairingConfiguration command = new GpPairingConfiguration();
 
@@ -1355,7 +1427,16 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param endpoint {@link Integer} Endpoint
      * @param index {@link Integer} Index
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.gpSinkTableRequest(parameters ...)</code>
+     * with <code>cluster.sendCommand(new gpSinkTableRequest(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> gpSinkTableRequest(Integer options, Integer gpdSrcId, IeeeAddress gpdIeee, Integer endpoint, Integer index) {
         GpSinkTableRequest command = new GpSinkTableRequest();
 
@@ -1385,7 +1466,16 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param entriesCount {@link Integer} Entries Count
      * @param proxyTableEntries {@link Integer} Proxy Table Entries
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.gpProxyTableResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new gpProxyTableResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> gpProxyTableResponse(Integer status, Integer totalNumberOfNonEmptyProxyTableEntries, Integer startIndex, Integer entriesCount, Integer proxyTableEntries) {
         GpProxyTableResponse command = new GpProxyTableResponse();
 
@@ -1411,7 +1501,16 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param gpdIeee {@link IeeeAddress} Gpd IEEE
      * @param gpdSecurityFrameCounter {@link Integer} Gpd Security Frame Counter
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.gpNotificationResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new gpNotificationResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> gpNotificationResponse(Integer options, Integer gpdSrcId, IeeeAddress gpdIeee, Integer gpdSecurityFrameCounter) {
         GpNotificationResponse command = new GpNotificationResponse();
 
@@ -1445,7 +1544,16 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param assignedAlias {@link Integer} Assigned Alias
      * @param forwardingRadius {@link Integer} Forwarding Radius
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.gpPairing(parameters ...)</code>
+     * with <code>cluster.sendCommand(new gpPairing(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> gpPairing(Integer options, Integer gpdSrcId, IeeeAddress gpdIeee, Integer endpoint, IeeeAddress sinkIeeeAddress, Integer sinkNwkAddress, Integer sinkGroupId, Integer deviceId, Integer gpdSecurityFrameCounter, ZigBeeKey gpdKey, Integer assignedAlias, Integer forwardingRadius) {
         GpPairing command = new GpPairing();
 
@@ -1477,7 +1585,16 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param commissioningWindow {@link Integer} Commissioning Window
      * @param channel {@link Integer} Channel
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.gpProxyCommissioningMode(parameters ...)</code>
+     * with <code>cluster.sendCommand(new gpProxyCommissioningMode(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> gpProxyCommissioningMode(Integer options, Integer commissioningWindow, Integer channel) {
         GpProxyCommissioningMode command = new GpProxyCommissioningMode();
 
@@ -1504,7 +1621,16 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param gpdCommandId {@link Integer} Gpd Command ID
      * @param gpdCommandPayload {@link ByteArray} Gpd Command Payload
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.gpResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new gpResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> gpResponse(Integer options, Integer tempMasterShortAddress, Integer tempMasterTxChannel, Integer gpdSrcId, IeeeAddress gpdIeee, Integer endpoint, Integer gpdCommandId, ByteArray gpdCommandPayload) {
         GpResponse command = new GpResponse();
 
@@ -1532,7 +1658,16 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param sinkTableEntriesCount {@link Integer} Sink Table Entries Count
      * @param sinkTableEntries {@link Integer} Sink Table Entries
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.gpSinkTableResponse(parameters ...)</code>
+     * with <code>cluster.sendCommand(new gpSinkTableResponse(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> gpSinkTableResponse(Integer status, Integer totalNumberofNonEmptySinkTableEntries, Integer startIndex, Integer sinkTableEntriesCount, Integer sinkTableEntries) {
         GpSinkTableResponse command = new GpSinkTableResponse();
 
@@ -1557,7 +1692,16 @@ public class ZclGreenPowerCluster extends ZclCluster {
      * @param endpoint {@link Integer} Endpoint
      * @param index {@link Integer} Index
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.gpProxyTableRequest(parameters ...)</code>
+     * with <code>cluster.sendCommand(new gpProxyTableRequest(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> gpProxyTableRequest(Integer options, Integer gpdSrcId, IeeeAddress gpdIeee, Integer endpoint, Integer index) {
         GpProxyTableRequest command = new GpProxyTableRequest();
 

@@ -52,7 +52,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T17:52:58Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
 public class ZclLevelControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -790,7 +790,16 @@ public class ZclLevelControlCluster extends ZclCluster {
      * @param level {@link Integer} Level
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.moveToLevelCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new moveToLevelCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> moveToLevelCommand(Integer level, Integer transitionTime) {
         MoveToLevelCommand command = new MoveToLevelCommand();
 
@@ -807,7 +816,16 @@ public class ZclLevelControlCluster extends ZclCluster {
      * @param moveMode {@link Integer} Move Mode
      * @param rate {@link Integer} Rate
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.moveCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new moveCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> moveCommand(Integer moveMode, Integer rate) {
         MoveCommand command = new MoveCommand();
 
@@ -825,7 +843,16 @@ public class ZclLevelControlCluster extends ZclCluster {
      * @param stepSize {@link Integer} Step Size
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.stepCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new stepCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> stepCommand(Integer stepMode, Integer stepSize, Integer transitionTime) {
         StepCommand command = new StepCommand();
 
@@ -846,7 +873,16 @@ public class ZclLevelControlCluster extends ZclCluster {
      * set to zero.
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.stopCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new stopCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> stopCommand() {
         return sendCommand(new StopCommand());
     }
@@ -867,7 +903,16 @@ public class ZclLevelControlCluster extends ZclCluster {
      * @param level {@link Integer} Level
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.moveToLevelWithOnOffCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new moveToLevelWithOnOffCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> moveToLevelWithOnOffCommand(Integer level, Integer transitionTime) {
         MoveToLevelWithOnOffCommand command = new MoveToLevelWithOnOffCommand();
 
@@ -884,7 +929,16 @@ public class ZclLevelControlCluster extends ZclCluster {
      * @param moveMode {@link Integer} Move Mode
      * @param rate {@link Integer} Rate
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.moveWithOnOffCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new moveWithOnOffCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> moveWithOnOffCommand(Integer moveMode, Integer rate) {
         MoveWithOnOffCommand command = new MoveWithOnOffCommand();
 
@@ -902,7 +956,16 @@ public class ZclLevelControlCluster extends ZclCluster {
      * @param stepSize {@link Integer} Step Size
      * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.stepWithOnOffCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new stepWithOnOffCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> stepWithOnOffCommand(Integer stepMode, Integer stepSize, Integer transitionTime) {
         StepWithOnOffCommand command = new StepWithOnOffCommand();
 
@@ -918,7 +981,16 @@ public class ZclLevelControlCluster extends ZclCluster {
      * The Stop (with On/Off) Command
      *
      * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.3.0.
+     * Use extended ZclCommand class constructors to instantiate the command
+     * and {@link #sendCommand} or {@link #sendResponse} to send the command.
+     * This provides further control when sending the command by allowing customisation
+     * of the command (for example by disabling the <i>DefaultResponse</i>.
+     * <p>
+     * e.g. replace <code>cluster.stopWithOnOffCommand(parameters ...)</code>
+     * with <code>cluster.sendCommand(new stopWithOnOffCommand(parameters ...))</code>
      */
+    @Deprecated
     public Future<CommandResult> stopWithOnOffCommand() {
         return sendCommand(new StopWithOnOffCommand());
     }

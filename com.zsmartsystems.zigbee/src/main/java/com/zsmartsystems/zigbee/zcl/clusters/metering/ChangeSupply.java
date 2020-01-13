@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class ChangeSupply extends ZclMeteringCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -95,12 +95,46 @@ public class ChangeSupply extends ZclMeteringCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public ChangeSupply() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param providerId {@link Integer} Provider ID
+     * @param issuerEventId {@link Integer} Issuer Event ID
+     * @param requestDateTime {@link Calendar} Request Date Time
+     * @param implementationDateTime {@link Calendar} Implementation Date Time
+     * @param proposedSupplyStatus {@link Integer} Proposed Supply Status
+     * @param supplyControlBits {@link Integer} Supply Control Bits
+     */
+    public ChangeSupply(
+            Integer providerId,
+            Integer issuerEventId,
+            Calendar requestDateTime,
+            Calendar implementationDateTime,
+            Integer proposedSupplyStatus,
+            Integer supplyControlBits) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
+
+        this.providerId = providerId;
+        this.issuerEventId = issuerEventId;
+        this.requestDateTime = requestDateTime;
+        this.implementationDateTime = implementationDateTime;
+        this.proposedSupplyStatus = proposedSupplyStatus;
+        this.supplyControlBits = supplyControlBits;
     }
 
     /**
@@ -122,7 +156,9 @@ public class ChangeSupply extends ZclMeteringCommand {
      * whom this command relates.
      *
      * @param providerId the Provider ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProviderId(final Integer providerId) {
         this.providerId = providerId;
     }
@@ -154,7 +190,9 @@ public class ChangeSupply extends ZclMeteringCommand {
      * the Issuer Event ID field that is larger than older information.
      *
      * @param issuerEventId the Issuer Event ID
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setIssuerEventId(final Integer issuerEventId) {
         this.issuerEventId = issuerEventId;
     }
@@ -176,7 +214,9 @@ public class ChangeSupply extends ZclMeteringCommand {
      * A UTC Time field to indicate the date and time at which the supply change was requested.
      *
      * @param requestDateTime the Request Date Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setRequestDateTime(final Calendar requestDateTime) {
         this.requestDateTime = requestDateTime;
     }
@@ -208,7 +248,9 @@ public class ChangeSupply extends ZclMeteringCommand {
      * Implementation Time attribute shall be reset to zero).
      *
      * @param implementationDateTime the Implementation Date Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setImplementationDateTime(final Calendar implementationDateTime) {
         this.implementationDateTime = implementationDateTime;
     }
@@ -232,7 +274,9 @@ public class ChangeSupply extends ZclMeteringCommand {
      * Metering Device following implementation of this command.
      *
      * @param proposedSupplyStatus the Proposed Supply Status
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setProposedSupplyStatus(final Integer proposedSupplyStatus) {
         this.proposedSupplyStatus = proposedSupplyStatus;
     }
@@ -254,7 +298,9 @@ public class ChangeSupply extends ZclMeteringCommand {
      * An 8-bit BitMap where the least significant nibble defines the Supply Control bits.
      *
      * @param supplyControlBits the Supply Control Bits
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setSupplyControlBits(final Integer supplyControlBits) {
         this.supplyControlBits = supplyControlBits;
     }

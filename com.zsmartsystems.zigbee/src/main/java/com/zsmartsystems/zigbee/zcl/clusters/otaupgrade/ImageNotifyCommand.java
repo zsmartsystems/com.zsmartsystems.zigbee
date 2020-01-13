@@ -36,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T12:07:00Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class ImageNotifyCommand extends ZclOtaUpgradeCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -75,12 +75,43 @@ public class ImageNotifyCommand extends ZclOtaUpgradeCommand {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public ImageNotifyCommand() {
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
         genericCommand = false;
         commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param payloadType {@link Integer} Payload Type
+     * @param queryJitter {@link Integer} Query Jitter
+     * @param manufacturerCode {@link Integer} Manufacturer Code
+     * @param imageType {@link Integer} Image Type
+     * @param newFileVersion {@link Integer} New File Version
+     */
+    public ImageNotifyCommand(
+            Integer payloadType,
+            Integer queryJitter,
+            Integer manufacturerCode,
+            Integer imageType,
+            Integer newFileVersion) {
+
+        clusterId = CLUSTER_ID;
+        commandId = COMMAND_ID;
+        genericCommand = false;
+        commandDirection = ZclCommandDirection.SERVER_TO_CLIENT;
+
+        this.payloadType = payloadType;
+        this.queryJitter = queryJitter;
+        this.manufacturerCode = manufacturerCode;
+        this.imageType = imageType;
+        this.newFileVersion = newFileVersion;
     }
 
     /**
@@ -96,7 +127,9 @@ public class ImageNotifyCommand extends ZclOtaUpgradeCommand {
      * Sets Payload Type.
      *
      * @param payloadType the Payload Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setPayloadType(final Integer payloadType) {
         this.payloadType = payloadType;
     }
@@ -114,7 +147,9 @@ public class ImageNotifyCommand extends ZclOtaUpgradeCommand {
      * Sets Query Jitter.
      *
      * @param queryJitter the Query Jitter
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setQueryJitter(final Integer queryJitter) {
         this.queryJitter = queryJitter;
     }
@@ -132,7 +167,9 @@ public class ImageNotifyCommand extends ZclOtaUpgradeCommand {
      * Sets Manufacturer Code.
      *
      * @param manufacturerCode the Manufacturer Code
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setManufacturerCode(final Integer manufacturerCode) {
         this.manufacturerCode = manufacturerCode;
     }
@@ -150,7 +187,9 @@ public class ImageNotifyCommand extends ZclOtaUpgradeCommand {
      * Sets Image Type.
      *
      * @param imageType the Image Type
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setImageType(final Integer imageType) {
         this.imageType = imageType;
     }
@@ -168,7 +207,9 @@ public class ImageNotifyCommand extends ZclOtaUpgradeCommand {
      * Sets New File Version.
      *
      * @param newFileVersion the New File Version
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setNewFileVersion(final Integer newFileVersion) {
         this.newFileVersion = newFileVersion;
     }

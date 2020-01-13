@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zdo.command.ManagementLeaveResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-14T08:56:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class ManagementLeaveRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * The ZDO cluster ID.
@@ -48,9 +48,28 @@ public class ManagementLeaveRequest extends ZdoRequest implements ZigBeeTransact
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public ManagementLeaveRequest() {
         clusterId = CLUSTER_ID;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param deviceAddress {@link IeeeAddress} Device Address
+     * @param removeChildrenRejoin {@link Boolean} Remove Children_Rejoin
+     */
+    public ManagementLeaveRequest(
+            IeeeAddress deviceAddress,
+            Boolean removeChildrenRejoin) {
+
+        clusterId = CLUSTER_ID;
+
+        this.deviceAddress = deviceAddress;
+        this.removeChildrenRejoin = removeChildrenRejoin;
     }
 
     /**
@@ -66,7 +85,9 @@ public class ManagementLeaveRequest extends ZdoRequest implements ZigBeeTransact
      * Sets Device Address.
      *
      * @param deviceAddress the Device Address
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setDeviceAddress(final IeeeAddress deviceAddress) {
         this.deviceAddress = deviceAddress;
     }
@@ -84,7 +105,9 @@ public class ManagementLeaveRequest extends ZdoRequest implements ZigBeeTransact
      * Sets Remove Children_Rejoin.
      *
      * @param removeChildrenRejoin the Remove Children_Rejoin
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setRemoveChildrenRejoin(final Boolean removeChildrenRejoin) {
         this.removeChildrenRejoin = removeChildrenRejoin;
     }

@@ -35,7 +35,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoStatus;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-12-15T09:28:31Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
 public class ManagementNetworkUpdateNotify extends ZdoRequest {
     /**
      * The ZDO cluster ID.
@@ -69,9 +69,37 @@ public class ManagementNetworkUpdateNotify extends ZdoRequest {
 
     /**
      * Default constructor.
+     *
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
+    @Deprecated
     public ManagementNetworkUpdateNotify() {
         clusterId = CLUSTER_ID;
+    }
+
+    /**
+     * Constructor providing all required parameters.
+     *
+     * @param status {@link ZdoStatus} Status
+     * @param scannedChannels {@link Integer} Scanned Channels
+     * @param totalTransmissions {@link Integer} Total Transmissions
+     * @param transmissionFailures {@link Integer} Transmission Failures
+     * @param energyValues {@link List<Integer>} Energy Values
+     */
+    public ManagementNetworkUpdateNotify(
+            ZdoStatus status,
+            Integer scannedChannels,
+            Integer totalTransmissions,
+            Integer transmissionFailures,
+            List<Integer> energyValues) {
+
+        clusterId = CLUSTER_ID;
+
+        this.status = status;
+        this.scannedChannels = scannedChannels;
+        this.totalTransmissions = totalTransmissions;
+        this.transmissionFailures = transmissionFailures;
+        this.energyValues = energyValues;
     }
 
     /**
@@ -87,7 +115,9 @@ public class ManagementNetworkUpdateNotify extends ZdoRequest {
      * Sets Status.
      *
      * @param status the Status
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setStatus(final ZdoStatus status) {
         this.status = status;
     }
@@ -105,7 +135,9 @@ public class ManagementNetworkUpdateNotify extends ZdoRequest {
      * Sets Scanned Channels.
      *
      * @param scannedChannels the Scanned Channels
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setScannedChannels(final Integer scannedChannels) {
         this.scannedChannels = scannedChannels;
     }
@@ -123,7 +155,9 @@ public class ManagementNetworkUpdateNotify extends ZdoRequest {
      * Sets Total Transmissions.
      *
      * @param totalTransmissions the Total Transmissions
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTotalTransmissions(final Integer totalTransmissions) {
         this.totalTransmissions = totalTransmissions;
     }
@@ -141,7 +175,9 @@ public class ManagementNetworkUpdateNotify extends ZdoRequest {
      * Sets Transmission Failures.
      *
      * @param transmissionFailures the Transmission Failures
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setTransmissionFailures(final Integer transmissionFailures) {
         this.transmissionFailures = transmissionFailures;
     }
@@ -159,7 +195,9 @@ public class ManagementNetworkUpdateNotify extends ZdoRequest {
      * Sets Energy Values.
      *
      * @param energyValues the Energy Values
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
+    @Deprecated
     public void setEnergyValues(final List<Integer> energyValues) {
         this.energyValues = energyValues;
     }
