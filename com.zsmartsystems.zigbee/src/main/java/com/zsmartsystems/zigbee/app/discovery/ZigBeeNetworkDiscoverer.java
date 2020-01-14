@@ -213,10 +213,7 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
                 try {
                     do {
                         // Request basic response, start index for associated list is 0
-                        final IeeeAddressRequest request = new IeeeAddressRequest();
-                        request.setRequestType(0);
-                        request.setStartIndex(0);
-                        request.setNwkAddrOfInterest(networkAddress);
+                        final IeeeAddressRequest request = new IeeeAddressRequest(networkAddress, 0, 0);
                         request.setDestinationAddress(
                                 new ZigBeeEndpointAddress(ZigBeeBroadcastDestination.BROADCAST_RX_ON.getKey()));
                         CommandResult response = networkManager.sendTransaction(request, request).get();
@@ -276,10 +273,7 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
                             break;
                         }
 
-                        NetworkAddressRequest request = new NetworkAddressRequest();
-                        request.setIeeeAddr(ieeeAddress);
-                        request.setRequestType(0);
-                        request.setStartIndex(0);
+                        NetworkAddressRequest request = new NetworkAddressRequest(ieeeAddress, 0, 0);
                         request.setDestinationAddress(
                                 new ZigBeeEndpointAddress(ZigBeeBroadcastDestination.BROADCAST_RX_ON.getKey()));
                         CommandResult response = networkManager.sendTransaction(request, request).get();
@@ -383,10 +377,7 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
      */
     private boolean getIeeeAddress(final int networkAddress) throws InterruptedException, ExecutionException {
         // Request basic response, start index for associated list is 0
-        final IeeeAddressRequest request = new IeeeAddressRequest();
-        request.setRequestType(0);
-        request.setStartIndex(0);
-        request.setNwkAddrOfInterest(networkAddress);
+        final IeeeAddressRequest request = new IeeeAddressRequest(networkAddress, 0, 0);
         request.setDestinationAddress(new ZigBeeEndpointAddress(ZigBeeBroadcastDestination.BROADCAST_RX_ON.getKey()));
         CommandResult response = networkManager.sendTransaction(request, request).get();
         if (response.isError()) {
@@ -420,11 +411,8 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
 
         do {
             // Request extended response, start index for associated list is 0
-            final IeeeAddressRequest ieeeAddressRequest = new IeeeAddressRequest();
+            final IeeeAddressRequest ieeeAddressRequest = new IeeeAddressRequest(networkAddress, 1, startIndex);
             ieeeAddressRequest.setDestinationAddress(new ZigBeeEndpointAddress(networkAddress));
-            ieeeAddressRequest.setRequestType(1);
-            ieeeAddressRequest.setStartIndex(startIndex);
-            ieeeAddressRequest.setNwkAddrOfInterest(networkAddress);
             CommandResult response = networkManager.sendTransaction(ieeeAddressRequest, ieeeAddressRequest).get();
             if (response.isError()) {
                 return false;
