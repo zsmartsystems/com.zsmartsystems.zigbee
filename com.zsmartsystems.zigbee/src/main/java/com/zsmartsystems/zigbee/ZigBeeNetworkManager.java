@@ -1118,13 +1118,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         if (zclHeader.isDisableDefaultResponse()) {
             return;
         }
-        DefaultResponse defaultResponse = new DefaultResponse();
+        DefaultResponse defaultResponse = new DefaultResponse(zclHeader.getCommandId(), status);
         defaultResponse.setTransactionId(zclHeader.getSequenceNumber());
-        defaultResponse.setCommandIdentifier(zclHeader.getCommandId());
         defaultResponse.setDestinationAddress(
                 new ZigBeeEndpointAddress(apsFrame.getSourceAddress(), apsFrame.getSourceEndpoint()));
         defaultResponse.setClusterId(apsFrame.getCluster());
-        defaultResponse.setStatusCode(status);
         defaultResponse.setDisableDefaultResponse(true);
         defaultResponse.setCommandDirection(zclHeader.getDirection().getResponseDirection());
         defaultResponse.setApsSecurity(apsFrame.getSecurityEnabled());
@@ -1369,9 +1367,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
         logger.debug("Permit join to {} for {} seconds.", destination, duration);
 
-        ManagementPermitJoiningRequest command = new ManagementPermitJoiningRequest();
-        command.setPermitDuration(duration);
-        command.setTcSignificance(true);
+        ManagementPermitJoiningRequest command = new ManagementPermitJoiningRequest(duration, true);
         command.setDestinationAddress(destination);
         command.setSourceAddress(new ZigBeeEndpointAddress(0));
 
@@ -1380,9 +1376,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         // If this is a broadcast, then we send it to our own address as well
         // This seems to be required for some stacks (eg ZNP)
         if (ZigBeeBroadcastDestination.isBroadcast(destination.getAddress())) {
-            command = new ManagementPermitJoiningRequest();
-            command.setPermitDuration(duration);
-            command.setTcSignificance(true);
+            command = new ManagementPermitJoiningRequest(duration, true);
             command.setDestinationAddress(new ZigBeeEndpointAddress(0));
             command.setSourceAddress(new ZigBeeEndpointAddress(0));
 
@@ -1414,12 +1408,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      *            even if there was no success response to the leave command.
      */
     public void leave(final Integer destinationAddress, final IeeeAddress leaveAddress, boolean forceNodeRemoval) {
-        final ManagementLeaveRequest command = new ManagementLeaveRequest();
+        final ManagementLeaveRequest command = new ManagementLeaveRequest(leaveAddress, false);
 
-        command.setDeviceAddress(leaveAddress);
         command.setDestinationAddress(new ZigBeeEndpointAddress(destinationAddress));
         command.setSourceAddress(new ZigBeeEndpointAddress(0));
-        command.setRemoveChildrenRejoin(false);
 
         // Start a thread to wait for the response
         // When we receive the response, if it's successful, we assume the device left.
