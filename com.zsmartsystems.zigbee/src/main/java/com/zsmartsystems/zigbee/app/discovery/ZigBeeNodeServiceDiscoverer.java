@@ -288,10 +288,7 @@ public class ZigBeeNodeServiceDiscoverer {
      * @throws InterruptedException
      */
     private boolean requestNetworkAddress() throws InterruptedException, ExecutionException {
-        NetworkAddressRequest networkAddressRequest = new NetworkAddressRequest();
-        networkAddressRequest.setIeeeAddr(node.getIeeeAddress());
-        networkAddressRequest.setRequestType(0);
-        networkAddressRequest.setStartIndex(0);
+        NetworkAddressRequest networkAddressRequest = new NetworkAddressRequest(node.getIeeeAddress(), 0, 0);
         networkAddressRequest.setDestinationAddress(
                 new ZigBeeEndpointAddress(ZigBeeBroadcastDestination.BROADCAST_ALL_DEVICES.getKey()));
 
@@ -328,11 +325,11 @@ public class ZigBeeNodeServiceDiscoverer {
 
         do {
             // Request extended response, to get associated list
-            final IeeeAddressRequest ieeeAddressRequest = new IeeeAddressRequest();
+            final IeeeAddressRequest ieeeAddressRequest = new IeeeAddressRequest(
+                    node.getNetworkAddress(),
+                    1,
+                    startIndex);
             ieeeAddressRequest.setDestinationAddress(new ZigBeeEndpointAddress(node.getNetworkAddress()));
-            ieeeAddressRequest.setRequestType(1);
-            ieeeAddressRequest.setStartIndex(startIndex);
-            ieeeAddressRequest.setNwkAddrOfInterest(node.getNetworkAddress());
             CommandResult response = networkManager.sendTransaction(ieeeAddressRequest, ieeeAddressRequest).get();
 
             final IeeeAddressResponse ieeeAddressResponse = response.getResponse();
@@ -359,9 +356,8 @@ public class ZigBeeNodeServiceDiscoverer {
      * @throws InterruptedException
      */
     private boolean requestNodeDescriptor() throws InterruptedException, ExecutionException {
-        final NodeDescriptorRequest nodeDescriptorRequest = new NodeDescriptorRequest();
+        final NodeDescriptorRequest nodeDescriptorRequest = new NodeDescriptorRequest(node.getNetworkAddress());
         nodeDescriptorRequest.setDestinationAddress(new ZigBeeEndpointAddress(node.getNetworkAddress()));
-        nodeDescriptorRequest.setNwkAddrOfInterest(node.getNetworkAddress());
 
         CommandResult response = networkManager.sendTransaction(nodeDescriptorRequest, nodeDescriptorRequest).get();
         final NodeDescriptorResponse nodeDescriptorResponse = (NodeDescriptorResponse) response.getResponse();
@@ -388,9 +384,8 @@ public class ZigBeeNodeServiceDiscoverer {
      * @throws InterruptedException
      */
     private boolean requestPowerDescriptor() throws InterruptedException, ExecutionException {
-        final PowerDescriptorRequest powerDescriptorRequest = new PowerDescriptorRequest();
+        final PowerDescriptorRequest powerDescriptorRequest = new PowerDescriptorRequest(node.getNetworkAddress());
         powerDescriptorRequest.setDestinationAddress(new ZigBeeEndpointAddress(node.getNetworkAddress()));
-        powerDescriptorRequest.setNwkAddrOfInterest(node.getNetworkAddress());
 
         CommandResult response = networkManager.sendTransaction(powerDescriptorRequest, powerDescriptorRequest).get();
         final PowerDescriptorResponse powerDescriptorResponse = (PowerDescriptorResponse) response.getResponse();
@@ -419,9 +414,8 @@ public class ZigBeeNodeServiceDiscoverer {
      * @throws InterruptedException
      */
     private boolean requestActiveEndpoints() throws InterruptedException, ExecutionException {
-        final ActiveEndpointsRequest activeEndpointsRequest = new ActiveEndpointsRequest();
+        final ActiveEndpointsRequest activeEndpointsRequest = new ActiveEndpointsRequest(node.getNetworkAddress());
         activeEndpointsRequest.setDestinationAddress(new ZigBeeEndpointAddress(node.getNetworkAddress()));
-        activeEndpointsRequest.setNwkAddrOfInterest(node.getNetworkAddress());
 
         CommandResult response = networkManager.sendTransaction(activeEndpointsRequest, activeEndpointsRequest).get();
         final ActiveEndpointsResponse activeEndpointsResponse = (ActiveEndpointsResponse) response.getResponse();
@@ -462,9 +456,8 @@ public class ZigBeeNodeServiceDiscoverer {
         int totalNeighbors = 0;
         Set<NeighborTable> neighbors = new HashSet<NeighborTable>();
         do {
-            final ManagementLqiRequest neighborRequest = new ManagementLqiRequest();
+            final ManagementLqiRequest neighborRequest = new ManagementLqiRequest(startIndex);
             neighborRequest.setDestinationAddress(new ZigBeeEndpointAddress(node.getNetworkAddress()));
-            neighborRequest.setStartIndex(startIndex);
 
             CommandResult response = networkManager.sendTransaction(neighborRequest, neighborRequest).get();
             final ManagementLqiResponse neighborResponse = response.getResponse();
@@ -516,9 +509,8 @@ public class ZigBeeNodeServiceDiscoverer {
         int totalRoutes = 0;
         Set<RoutingTable> routes = new HashSet<RoutingTable>();
         do {
-            final ManagementRoutingRequest routeRequest = new ManagementRoutingRequest();
+            final ManagementRoutingRequest routeRequest = new ManagementRoutingRequest(startIndex);
             routeRequest.setDestinationAddress(new ZigBeeEndpointAddress(node.getNetworkAddress()));
-            routeRequest.setStartIndex(startIndex);
 
             CommandResult response = networkManager.sendTransaction(routeRequest, routeRequest).get();
             final ManagementRoutingResponse routingResponse = response.getResponse();
@@ -560,11 +552,12 @@ public class ZigBeeNodeServiceDiscoverer {
      * @throws ExecutionException
      * @throws InterruptedException
      */
-    private ZigBeeEndpoint requestSimpleDescriptor(final int endpointId) throws InterruptedException, ExecutionException {
-        final SimpleDescriptorRequest simpleDescriptorRequest = new SimpleDescriptorRequest();
+    private ZigBeeEndpoint requestSimpleDescriptor(final int endpointId)
+            throws InterruptedException, ExecutionException {
+        final SimpleDescriptorRequest simpleDescriptorRequest = new SimpleDescriptorRequest(
+                node.getNetworkAddress(),
+                endpointId);
         simpleDescriptorRequest.setDestinationAddress(new ZigBeeEndpointAddress(node.getNetworkAddress()));
-        simpleDescriptorRequest.setNwkAddrOfInterest(node.getNetworkAddress());
-        simpleDescriptorRequest.setEndpoint(endpointId);
 
         CommandResult response = networkManager.sendTransaction(simpleDescriptorRequest, simpleDescriptorRequest).get();
 
