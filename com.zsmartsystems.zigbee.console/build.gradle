@@ -1,7 +1,0 @@
-group = 'com.zsmartsystems.zigbee'
-description = ''
-dependencies {
-  compile project(':com.zsmartsystems.zigbee')
-  compile group: 'log4j', name: 'log4j', version: rootProject.log4jVersion
-  compile group: 'org.slf4j', name: 'slf4j-log4j12', version: rootProject.slf4jVersion
-}
