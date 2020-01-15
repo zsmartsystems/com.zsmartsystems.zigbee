@@ -1,6 +1,0 @@
-group = 'com.zsmartsystems.zigbee'
-description = ''
-dependencies {
-  compile project(':com.zsmartsystems.zigbee')
-    compile group: 'org.scream3r', name: 'jssc', version:'2.8.0'
-}
