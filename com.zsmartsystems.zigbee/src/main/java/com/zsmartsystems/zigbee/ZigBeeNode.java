@@ -255,15 +255,14 @@ public class ZigBeeNode implements ZigBeeCommandListener {
      *            greater than 255 seconds will permanently enable joining.
      */
     public void permitJoin(final int duration) {
-        final ManagementPermitJoiningRequest command = new ManagementPermitJoiningRequest();
-
-        if (duration > 255) {
-            command.setPermitDuration(255);
+        int localDuration;
+        if (duration > 254) {
+            localDuration = 254;
         } else {
-            command.setPermitDuration(duration);
+            localDuration = duration;
         }
+        final ManagementPermitJoiningRequest command = new ManagementPermitJoiningRequest(localDuration, true);
 
-        command.setTcSignificance(true);
         command.setDestinationAddress(new ZigBeeEndpointAddress(0));
         command.setSourceAddress(new ZigBeeEndpointAddress(0));
 
@@ -392,11 +391,10 @@ public class ZigBeeNode implements ZigBeeCommandListener {
                 List<BindingTable> bindingTable = new ArrayList<>();
 
                 do {
-                    ManagementBindRequest bindingRequest = new ManagementBindRequest();
+                    ManagementBindRequest bindingRequest = new ManagementBindRequest(index);
                     bindingRequest.setDestinationAddress(new ZigBeeEndpointAddress(getNetworkAddress()));
-                    bindingRequest.setStartIndex(index);
 
-                    CommandResult result = network.sendTransaction(bindingRequest, new ManagementBindRequest()).get();
+                    CommandResult result = network.sendTransaction(bindingRequest, bindingRequest).get();
                     if (result.isTimeout()) {
                         return ZigBeeStatus.FAILURE;
                     }
