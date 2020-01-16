@@ -1200,7 +1200,12 @@ public abstract class ZclCluster {
                     logger.trace("{}: ZclCluster.notifyAttributeListener {} of {} with value {}",
                             zigbeeEndpoint.getEndpointAddress(), listener, attribute, value);
 
-                    listener.attributeUpdated(attribute, value);
+                    try {
+                        listener.attributeUpdated(attribute, value);
+                    } catch (Exception e) {
+                        logger.warn("{}: Exception when notifying attribute listener {} of {} with value {}",
+                                zigbeeEndpoint.getEndpointAddress(), listener, attribute, value, e);
+                    }
                 }
             });
         }

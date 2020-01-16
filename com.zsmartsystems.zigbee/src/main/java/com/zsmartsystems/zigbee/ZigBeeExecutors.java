@@ -13,6 +13,9 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Extension of the {@link Executors} class to create threads with custom names. This allows better profiling of the
  * system as the source of all threads can be determined.
@@ -21,6 +24,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  */
 public class ZigBeeExecutors {
+
+    private static Logger logger = LoggerFactory.getLogger(ZigBeeExecutors.class);
 
     /**
      * Creates a thread pool that creates new threads as needed, but will reuse previously constructed threads when they
@@ -108,6 +113,12 @@ public class ZigBeeExecutors {
             if (thread.getPriority() != Thread.NORM_PRIORITY) {
                 thread.setPriority(Thread.NORM_PRIORITY);
             }
+            thread.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+                @Override
+                public void uncaughtException(Thread t, Throwable e) {
+                    logger.warn("Uncaught exception in thread {}", t.getName(), e);
+                }
+            });
             return thread;
         }
     }
