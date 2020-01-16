@@ -24,8 +24,8 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class ZigBeeExecutors {
-	
-	private static Logger logger = LoggerFactory.getLogger(ZigBeeExecutors.class);
+
+    private static Logger logger = LoggerFactory.getLogger(ZigBeeExecutors.class);
 
     /**
      * Creates a thread pool that creates new threads as needed, but will reuse previously constructed threads when they
@@ -114,11 +114,11 @@ public class ZigBeeExecutors {
                 thread.setPriority(Thread.NORM_PRIORITY);
             }
             thread.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-				@Override
-				public void uncaughtException(Thread t, Throwable e) {
-					logger.warn("Uncaught exception in thread {}", t.getName(), e);
-				}
-			});
+                @Override
+                public void uncaughtException(Thread t, Throwable e) {
+                    logger.warn("Uncaught exception in thread {}", t.getName(), e);
+                }
+            });
             return thread;
         }
     }
