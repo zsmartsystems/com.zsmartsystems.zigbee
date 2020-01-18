@@ -558,12 +558,12 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
         List<Integer> clusterList = new ArrayList<Integer>();
         clusterList.add(clusterId);
 
-        MatchDescriptorRequest matchRequest = new MatchDescriptorRequest();
-        matchRequest.setInClusterList(clusterList);
-        matchRequest.setOutClusterList(Collections.emptyList());
+        MatchDescriptorRequest matchRequest = new MatchDescriptorRequest(
+                destination,
+                ZigBeeProfileType.ZIGBEE_SMART_ENERGY.getKey(),
+                clusterList,
+                Collections.emptyList());
         matchRequest.setDestinationAddress(new ZigBeeEndpointAddress(destination));
-        matchRequest.setProfileId(ZigBeeProfileType.ZIGBEE_SMART_ENERGY.getKey());
-        matchRequest.setNwkAddrOfInterest(destination);
 
         networkManager.sendTransaction(matchRequest);
         timerStart(SEP_RETRY_PERIOD);
@@ -637,9 +637,8 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
      * @throws InterruptedException
      */
     private boolean requestNodeDescriptor(ZigBeeNode node) throws InterruptedException, ExecutionException {
-        final NodeDescriptorRequest nodeDescriptorRequest = new NodeDescriptorRequest();
+        final NodeDescriptorRequest nodeDescriptorRequest = new NodeDescriptorRequest(node.getNetworkAddress());
         nodeDescriptorRequest.setDestinationAddress(new ZigBeeEndpointAddress(node.getNetworkAddress()));
-        nodeDescriptorRequest.setNwkAddrOfInterest(node.getNetworkAddress());
 
         CommandResult response = networkManager.sendTransaction(nodeDescriptorRequest, nodeDescriptorRequest).get();
         final NodeDescriptorResponse nodeDescriptorResponse = (NodeDescriptorResponse) response.getResponse();
@@ -668,11 +667,11 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
      */
     private ZigBeeStatus requestSimpleDescriptor(final ZigBeeEndpoint endpoint)
             throws InterruptedException, ExecutionException {
-        final SimpleDescriptorRequest simpleDescriptorRequest = new SimpleDescriptorRequest();
+        final SimpleDescriptorRequest simpleDescriptorRequest = new SimpleDescriptorRequest(
+                endpoint.getParentNode().getNetworkAddress(),
+                endpoint.getEndpointId());
         simpleDescriptorRequest
                 .setDestinationAddress(new ZigBeeEndpointAddress(endpoint.getParentNode().getNetworkAddress()));
-        simpleDescriptorRequest.setNwkAddrOfInterest(endpoint.getParentNode().getNetworkAddress());
-        simpleDescriptorRequest.setEndpoint(endpoint.getEndpointId());
 
         CommandResult response = networkManager.sendTransaction(simpleDescriptorRequest, simpleDescriptorRequest).get();
 
@@ -897,11 +896,11 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
     private IeeeAddress requestIeeeAddress(final int networkAddress) {
         try {
             // Request simple response, start index for associated list is 0
-            final IeeeAddressRequest ieeeAddressRequest = new IeeeAddressRequest();
+            final IeeeAddressRequest ieeeAddressRequest = new IeeeAddressRequest(
+                    networkAddress,
+                    0,
+                    0);
             ieeeAddressRequest.setDestinationAddress(new ZigBeeEndpointAddress(networkAddress));
-            ieeeAddressRequest.setRequestType(0);
-            ieeeAddressRequest.setStartIndex(0);
-            ieeeAddressRequest.setNwkAddrOfInterest(networkAddress);
             CommandResult response = networkManager.sendTransaction(ieeeAddressRequest, ieeeAddressRequest).get();
             if (response.isError()) {
                 logger.debug("SEP Extension: IeeeAddressRequest returned null");

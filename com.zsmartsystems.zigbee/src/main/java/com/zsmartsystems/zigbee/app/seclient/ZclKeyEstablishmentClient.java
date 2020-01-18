@@ -33,8 +33,11 @@ import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclCommandListener;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclKeyEstablishmentCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.keyestablishment.ConfirmKeyDataRequestCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.keyestablishment.ConfirmKeyResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.keyestablishment.EphemeralDataRequestCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.keyestablishment.EphemeralDataResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.keyestablishment.InitiateKeyEstablishmentRequestCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.keyestablishment.InitiateKeyEstablishmentResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.keyestablishment.KeyEstablishmentStatusEnum;
 import com.zsmartsystems.zigbee.zcl.clusters.keyestablishment.KeyEstablishmentSuiteBitmap;
@@ -319,8 +322,11 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
         setState(KeyEstablishmentState.INITIATE_REQUEST);
         // cryptoSuite = requestedCryptoSuite;
 
-        keCluster.initiateKeyEstablishmentRequestCommand(cryptoSuiteTranslation.get(requestedCryptoSuite).getKey(),
-                cbkeProvider.getEphemeralDataGenerateTime(), cbkeProvider.getConfirmKeyGenerateTime(), certificate);
+        keCluster.sendCommand(new InitiateKeyEstablishmentRequestCommand(
+                cryptoSuiteTranslation.get(requestedCryptoSuite).getKey(),
+                cbkeProvider.getEphemeralDataGenerateTime(),
+                cbkeProvider.getConfirmKeyGenerateTime(),
+                certificate));
         startTerminationTimer(STARTUP_TIMER);
 
         return true;
@@ -372,8 +378,10 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
                 logger.debug(
                         "{}: CBKE Key Establishment Client: Invalid InitiateKeyEstablishmentResponse packet with state {}",
                         ieeeAddress, state);
-                keCluster.terminateKeyEstablishment(KeyEstablishmentStatusEnum.BAD_MESSAGE.getKey(), DELAY_BEFORE_RETRY,
-                        KeyEstablishmentSuiteBitmap.CRYPTO_SUITE_1.getKey());
+                keCluster.sendCommand(new TerminateKeyEstablishment(
+                        KeyEstablishmentStatusEnum.BAD_MESSAGE.getKey(),
+                        DELAY_BEFORE_RETRY,
+                        KeyEstablishmentSuiteBitmap.CRYPTO_SUITE_1.getKey()));
                 setState(KeyEstablishmentState.FAILED);
                 stopCbke(0);
                 return;
@@ -384,8 +392,10 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
                 logger.debug(
                         "{}: CBKE Key Establishment Client: Invalid InitiateKeyEstablishmentResponse packet with multiple suites selected [{}]",
                         ieeeAddress, response.getRequestedKeyEstablishmentSuite());
-                keCluster.terminateKeyEstablishment(KeyEstablishmentStatusEnum.BAD_MESSAGE.getKey(), DELAY_BEFORE_RETRY,
-                        getPreferredCryptoSuite().getKey());
+                keCluster.sendCommand(new TerminateKeyEstablishment(
+                        KeyEstablishmentStatusEnum.BAD_MESSAGE.getKey(),
+                        DELAY_BEFORE_RETRY,
+                        getPreferredCryptoSuite().getKey()));
                 setState(KeyEstablishmentState.FAILED);
                 stopCbke(0);
                 return;
@@ -418,8 +428,10 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
                 switch (cbkeExchange.getCryptoSuite()) {
                     case ECC_163K1:
                         if (response.getIdentity().size() < ZigBeeCryptoSuite1Certificate.CERTIFICATE_LENGTH) {
-                            keCluster.terminateKeyEstablishment(KeyEstablishmentStatusEnum.BAD_MESSAGE.getKey(),
-                                    DELAY_BEFORE_RETRY, KeyEstablishmentSuiteBitmap.CRYPTO_SUITE_1.getKey());
+                            keCluster.sendCommand(new TerminateKeyEstablishment(
+                                    KeyEstablishmentStatusEnum.BAD_MESSAGE.getKey(),
+                                    DELAY_BEFORE_RETRY,
+                                    KeyEstablishmentSuiteBitmap.CRYPTO_SUITE_1.getKey()));
                             setState(KeyEstablishmentState.FAILED);
                             stopCbke(0);
                             return;
@@ -436,8 +448,10 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
             } catch (IllegalArgumentException e) {
                 logger.debug("{}: CBKE Key Establishment Client: Certificates invalid: {}", ieeeAddress,
                         e.getMessage());
-                keCluster.terminateKeyEstablishment(KeyEstablishmentStatusEnum.BAD_MESSAGE.getKey(), DELAY_BEFORE_RETRY,
-                        KeyEstablishmentSuiteBitmap.CRYPTO_SUITE_1.getKey());
+                keCluster.sendCommand(new TerminateKeyEstablishment(
+                        KeyEstablishmentStatusEnum.BAD_MESSAGE.getKey(),
+                        DELAY_BEFORE_RETRY,
+                        KeyEstablishmentSuiteBitmap.CRYPTO_SUITE_1.getKey()));
                 setState(KeyEstablishmentState.FAILED);
                 stopCbke(0);
                 return;
@@ -447,16 +461,20 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
             logger.debug("{}: CBKE Key Establishment Client: Remote Certificate is {}", ieeeAddress, remoteCertificate);
             if (localCertificate == null || remoteCertificate == null) {
                 logger.debug("{}: CBKE Key Establishment Client: Certificates not found", ieeeAddress);
-                keCluster.terminateKeyEstablishment(KeyEstablishmentStatusEnum.UNSUPPORTED_SUITE.getKey(),
-                        DELAY_BEFORE_RETRY, KeyEstablishmentSuiteBitmap.CRYPTO_SUITE_1.getKey());
+                keCluster.sendCommand(new TerminateKeyEstablishment(
+                        KeyEstablishmentStatusEnum.UNSUPPORTED_SUITE.getKey(),
+                        DELAY_BEFORE_RETRY,
+                        KeyEstablishmentSuiteBitmap.CRYPTO_SUITE_1.getKey()));
                 setState(KeyEstablishmentState.FAILED);
                 stopCbke(0);
                 return;
             } else if (!Objects.equals(localCertificate.getIssuer(), remoteCertificate.getIssuer())) {
                 logger.debug("{}: CBKE Key Establishment Client: Issuer is not known - expected={}, received={}",
                         ieeeAddress, localCertificate.getIssuer(), remoteCertificate.getIssuer());
-                keCluster.terminateKeyEstablishment(KeyEstablishmentStatusEnum.UNKNOWN_ISSUER.getKey(),
-                        DELAY_BEFORE_RETRY, KeyEstablishmentSuiteBitmap.CRYPTO_SUITE_1.getKey());
+                keCluster.sendCommand(new TerminateKeyEstablishment(
+                        KeyEstablishmentStatusEnum.UNKNOWN_ISSUER.getKey(),
+                        DELAY_BEFORE_RETRY,
+                        KeyEstablishmentSuiteBitmap.CRYPTO_SUITE_1.getKey()));
                 setState(KeyEstablishmentState.FAILED);
                 stopCbke(0);
                 return;
@@ -467,8 +485,10 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
                 logger.debug(
                         "{}: CBKE Key Establishment Client: Certificate is not for this address - expected={}, received={}",
                         ieeeAddress, ieeeAddress, remoteCertificate.getSubject());
-                keCluster.terminateKeyEstablishment(KeyEstablishmentStatusEnum.BAD_MESSAGE.getKey(), DELAY_BEFORE_RETRY,
-                        KeyEstablishmentSuiteBitmap.CRYPTO_SUITE_1.getKey());
+                keCluster.sendCommand(new TerminateKeyEstablishment(
+                        KeyEstablishmentStatusEnum.BAD_MESSAGE.getKey(),
+                        DELAY_BEFORE_RETRY,
+                        KeyEstablishmentSuiteBitmap.CRYPTO_SUITE_1.getKey()));
                 setState(KeyEstablishmentState.FAILED);
                 stopCbke(0);
                 return;
@@ -481,8 +501,10 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
                 logger.debug(
                         "{}: CBKE Key Establishment Client: Unable to get ephemeral data for requested security suite {}",
                         ieeeAddress, requestedSuite);
-                keCluster.terminateKeyEstablishment(KeyEstablishmentStatusEnum.UNSUPPORTED_SUITE.getKey(),
-                        DELAY_BEFORE_RETRY, KeyEstablishmentSuiteBitmap.CRYPTO_SUITE_1.getKey());
+                keCluster.sendCommand(new TerminateKeyEstablishment(
+                        KeyEstablishmentStatusEnum.UNSUPPORTED_SUITE.getKey(),
+                        DELAY_BEFORE_RETRY,
+                        KeyEstablishmentSuiteBitmap.CRYPTO_SUITE_1.getKey()));
                 setState(KeyEstablishmentState.FAILED);
                 stopCbke(0);
                 return;
@@ -491,7 +513,7 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
                     ieeeAddress, requestedSuite, ephemeralData);
 
             cbkeExchange.addPartnerCertificate(remoteCertificate.getByteArray());
-            keCluster.ephemeralDataRequestCommand(ephemeralData);
+            keCluster.sendCommand(new EphemeralDataRequestCommand(ephemeralData));
 
             confirmKeyGenerateTime = response.getConfirmKeyGenerateTime();
             setState(KeyEstablishmentState.EPHEMERAL_DATA_REQUEST);
@@ -515,8 +537,10 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
             if (state != KeyEstablishmentState.EPHEMERAL_DATA_REQUEST) {
                 logger.debug("{}: CBKE Key Establishment Client: Invalid EphemeralDataResponse packet with state {}",
                         ieeeAddress, state);
-                keCluster.terminateKeyEstablishment(KeyEstablishmentStatusEnum.BAD_MESSAGE.getKey(), DELAY_BEFORE_RETRY,
-                        KeyEstablishmentSuiteBitmap.CRYPTO_SUITE_1.getKey());
+                keCluster.sendCommand(new TerminateKeyEstablishment(
+                        KeyEstablishmentStatusEnum.BAD_MESSAGE.getKey(),
+                        DELAY_BEFORE_RETRY,
+                        KeyEstablishmentSuiteBitmap.CRYPTO_SUITE_1.getKey()));
                 setState(KeyEstablishmentState.FAILED);
                 stopCbke(0);
                 return;
@@ -525,7 +549,7 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
             cbkeExchange.addPartnerEphemeralData(response.getEphemeralData());
 
             ByteArray initiatorMac = cbkeExchange.getInitiatorMac();
-            keCluster.confirmKeyDataRequestCommand(initiatorMac);
+            keCluster.sendCommand(new ConfirmKeyDataRequestCommand(initiatorMac));
 
             setState(KeyEstablishmentState.CONFIRM_KEY_REQUEST);
             startTerminationTimer(confirmKeyGenerateTime);
@@ -547,8 +571,10 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
             // Check the state and terminate if we're not expecting this response
             if (state != KeyEstablishmentState.CONFIRM_KEY_REQUEST) {
                 logger.debug("{}: CBKE Invalid ConfirmKeyResponse packet with state {}", ieeeAddress, state);
-                keCluster.terminateKeyEstablishment(KeyEstablishmentStatusEnum.BAD_MESSAGE.getKey(), DELAY_BEFORE_RETRY,
-                        KeyEstablishmentSuiteBitmap.CRYPTO_SUITE_1.getKey());
+                keCluster.sendCommand(new TerminateKeyEstablishment(
+                        KeyEstablishmentStatusEnum.BAD_MESSAGE.getKey(),
+                        DELAY_BEFORE_RETRY,
+                        KeyEstablishmentSuiteBitmap.CRYPTO_SUITE_1.getKey()));
                 setState(KeyEstablishmentState.FAILED);
                 stopCbke(0);
                 return;
@@ -565,8 +591,10 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
                 logger.debug(
                         "{}: CBKE Key Establishment Client: Key establishment failed - SMAC codes were not confirmed",
                         ieeeAddress);
-                keCluster.terminateKeyEstablishment(KeyEstablishmentStatusEnum.BAD_KEY_CONFIRM.getKey(),
-                        DELAY_BEFORE_RETRY, KeyEstablishmentSuiteBitmap.CRYPTO_SUITE_1.getKey());
+                keCluster.sendCommand(new TerminateKeyEstablishment(
+                        KeyEstablishmentStatusEnum.BAD_KEY_CONFIRM.getKey(),
+                        DELAY_BEFORE_RETRY,
+                        KeyEstablishmentSuiteBitmap.CRYPTO_SUITE_1.getKey()));
                 setState(KeyEstablishmentState.FAILED);
                 stopCbke(0);
                 return;
