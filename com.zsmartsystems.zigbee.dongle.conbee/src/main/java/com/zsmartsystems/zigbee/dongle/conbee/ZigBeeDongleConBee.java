@@ -300,6 +300,7 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
 
         request.setRequestId(apsFrame.getApsCounter());
         request.setClusterId(apsFrame.getCluster());
+        request.setTxOptions(apsFrame.getAckRequest() ? 0x40 : 0);
         switch (apsFrame.getAddressMode()) {
             case DEVICE:
                 request.setDestinationAddress(
@@ -320,7 +321,6 @@ public class ZigBeeDongleConBee implements ZigBeeTransportTransmit {
         request.setProfileId(apsFrame.getProfile());
         request.setRadius(apsFrame.getRadius());
         request.setSourceEndpoint(apsFrame.getSourceEndpoint());
-        // request.setTxOptions(txOptions);
 
         request.setAdsuData(apsFrame.getPayload());
 

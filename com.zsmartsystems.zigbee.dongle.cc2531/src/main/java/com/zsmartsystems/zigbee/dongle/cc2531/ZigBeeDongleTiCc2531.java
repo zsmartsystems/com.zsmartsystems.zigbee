@@ -312,7 +312,7 @@ public class ZigBeeDongleTiCc2531
                 messageIdMap.put(apsFrame.getApsCounter(), msgTag);
                 ZToolPacket response = networkManager.sendCommand(new AF_DATA_REQUEST(apsFrame.getDestinationAddress(),
                         (short) apsFrame.getDestinationEndpoint(), sender, apsFrame.getCluster(),
-                        apsFrame.getApsCounter(), (byte) 0x30, (byte) apsFrame.getRadius(), apsFrame.getPayload()));
+                        apsFrame.getApsCounter(), (byte) (0x20 | (apsFrame.getAckRequest() ? 0x10 : 0)), (byte) apsFrame.getRadius(), apsFrame.getPayload()));
                 state = (response == null || ((AF_DATA_SRSP)response).Status != 0) ? ZigBeeTransportProgressState.TX_NAK : ZigBeeTransportProgressState.TX_ACK;
             } else {
                 ZToolPacket response = networkManager.sendCommand(new AF_DATA_REQUEST_EXT(apsFrame.getDestinationAddress(), sender,

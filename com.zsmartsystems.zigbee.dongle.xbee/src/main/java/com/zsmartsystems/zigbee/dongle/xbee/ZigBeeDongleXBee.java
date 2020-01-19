@@ -337,6 +337,10 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
             command.addOptions(TransmitOptions.ENABLE_APS_ENCRYPTION);
         }
 
+        if (!apsFrame.getAckRequest()) {
+            command.addOptions(TransmitOptions.DISABLE_RETRIES);
+        }
+
         command.setData(apsFrame.getPayload());
 
         logger.debug("XBee send: {}", command.toString());

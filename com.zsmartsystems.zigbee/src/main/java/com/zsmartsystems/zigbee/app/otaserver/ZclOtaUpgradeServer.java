@@ -544,6 +544,7 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
 
         if (command == null) {
             response.setDisableDefaultResponse(true);
+            response.setAckRequest(false);
             cluster.sendCommand(response);
         } else {
             cluster.sendResponse(command, response);

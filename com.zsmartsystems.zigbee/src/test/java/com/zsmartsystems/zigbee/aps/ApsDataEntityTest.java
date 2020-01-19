@@ -38,6 +38,7 @@ public class ApsDataEntityTest {
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
         ZigBeeApsFrame response;
         apsFrame.setApsCounter(1);
+        apsFrame.setAckRequest(true);
         apsFrame.setSourceAddress(1);
 
         response = aps.receive(apsFrame);
@@ -71,6 +72,7 @@ public class ApsDataEntityTest {
 
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
         apsFrame.setApsCounter(1);
+        apsFrame.setAckRequest(true);
         apsFrame.setPayload(createData(0, 30));
 
         aps.send(0, apsFrame);
@@ -93,6 +95,7 @@ public class ApsDataEntityTest {
 
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
         apsFrame.setApsCounter(1);
+        apsFrame.setAckRequest(true);
         apsFrame.setPayload(createData(0, 150));
 
         aps.send(0, apsFrame);
@@ -146,6 +149,7 @@ public class ApsDataEntityTest {
 
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
         apsFrame.setApsCounter(1);
+        apsFrame.setAckRequest(true);
         apsFrame.setPayload(createData(0, 150));
 
         aps.send(0, apsFrame);
@@ -236,6 +240,7 @@ public class ApsDataEntityTest {
 
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
         apsFrame.setApsCounter(1);
+        apsFrame.setAckRequest(true);
         apsFrame.setPayload(createData(0, FRAGMENTATION_LENGTH-1));
 
         aps.send(0, apsFrame);
@@ -253,6 +258,7 @@ public class ApsDataEntityTest {
 
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
         apsFrame.setApsCounter(1);
+        apsFrame.setAckRequest(true);
         apsFrame.setPayload(createData(0, FRAGMENTATION_LENGTH));
 
         aps.send(0, apsFrame);
@@ -270,6 +276,7 @@ public class ApsDataEntityTest {
 
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
         apsFrame.setApsCounter(1);
+        apsFrame.setAckRequest(true);
         apsFrame.setPayload(createData(0, FRAGMENTATION_LENGTH+1));
 
         aps.send(0, apsFrame);
@@ -290,6 +297,7 @@ public class ApsDataEntityTest {
 
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
         apsFrame.setApsCounter(1);
+        apsFrame.setAckRequest(true);
         apsFrame.setPayload(createData(0, FRAGMENTATION_LENGTH*2+1));
 
         aps.send(0, apsFrame);
@@ -302,6 +310,47 @@ public class ApsDataEntityTest {
 
         assertTrue(aps.receiveCommandState(0, ZigBeeTransportProgressState.TX_ACK));
         assertTrue(aps.receiveCommandState(0, ZigBeeTransportProgressState.RX_ACK));
+    }
+
+    @Test
+    public void shouldExpectTwoFramesTransmittedForPayloadFittingInTwoFragmentsWithNoApsAcks() {
+        ZigBeeTransportTransmit transport = Mockito.mock(ZigBeeTransportTransmit.class);
+        ApsDataEntity aps = new ApsDataEntity(transport);
+
+        aps.setFragmentationLength(FRAGMENTATION_LENGTH);
+
+        ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
+        apsFrame.setApsCounter(1);
+        apsFrame.setAckRequest(false);
+        apsFrame.setPayload(createData(0, FRAGMENTATION_LENGTH+1));
+
+        aps.send(0, apsFrame);
+
+        assertFalse(aps.receiveCommandState(0, ZigBeeTransportProgressState.TX_ACK));
+
+        assertTrue(aps.receiveCommandState(0, ZigBeeTransportProgressState.TX_ACK));
+    }
+
+    @Test
+    public void shouldExpectTwoFramesTransmittedForPayloadFittingInTwoFragmentsWithNoApsAcksButAcksReceived() {
+        ZigBeeTransportTransmit transport = Mockito.mock(ZigBeeTransportTransmit.class);
+        ApsDataEntity aps = new ApsDataEntity(transport);
+
+        aps.setFragmentationLength(FRAGMENTATION_LENGTH);
+
+        ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
+        apsFrame.setApsCounter(1);
+        apsFrame.setAckRequest(false);
+        apsFrame.setPayload(createData(0, FRAGMENTATION_LENGTH+1));
+
+        aps.send(0, apsFrame);
+
+        assertFalse(aps.receiveCommandState(0, ZigBeeTransportProgressState.TX_ACK));
+
+        // A misbehaving receiver or dongle not supporting disabling APS ACK disabling cause us to receive RX ACK
+        assertFalse(aps.receiveCommandState(0, ZigBeeTransportProgressState.RX_ACK));
+
+        assertTrue(aps.receiveCommandState(0, ZigBeeTransportProgressState.TX_ACK));
     }
 
     private int[] createData(int start, int length) {
