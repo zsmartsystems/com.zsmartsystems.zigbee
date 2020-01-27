@@ -16,7 +16,8 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
-import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.general.ReadReportingConfigurationResponse;
+import com.zsmartsystems.zigbee.zcl.field.AttributeReportingStatusRecord;
 
 /**
  *
@@ -67,14 +68,17 @@ public class ZigBeeConsoleReportingConfigCommand extends ZigBeeConsoleAbstractCo
 
         final CommandResult result = cluster.getReporting(attribute).get();
         if (result.isSuccess()) {
-            final ReadAttributesResponse response = result.getResponse();
-
-            final ZclStatus statusCode = response.getRecords().get(0).getStatus();
+            final ReadReportingConfigurationResponse response = result.getResponse();
+            final AttributeReportingStatusRecord attributeReportingStatusRecord = response.getRecords().get(0);
+            
+            final ZclStatus statusCode = attributeReportingStatusRecord.getStatus();
             if (statusCode == ZclStatus.SUCCESS) {
                 out.println("Cluster " + response.getClusterId() + ", Attribute "
-                        + response.getRecords().get(0).getAttributeIdentifier() + ", type "
-                        + response.getRecords().get(0).getAttributeDataType() + ", value: "
-                        + response.getRecords().get(0).getAttributeValue());
+                        + attributeReportingStatusRecord.getAttributeIdentifier() + ", type "
+                        + attributeReportingStatusRecord.getAttributeDataType() + ", minimum reporting interval: "
+                        + attributeReportingStatusRecord.getMinimumReportingInterval() + ", maximum reporting interval: "
+                        + attributeReportingStatusRecord.getMaximumReportingInterval() + ", timeout: " 
+                        + attributeReportingStatusRecord.getTimeoutPeriod());
             } else {
                 out.println("Attribute value read error: " + statusCode);
             }
