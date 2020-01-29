@@ -25,6 +25,10 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  *
  */
 public class ZigBeeConsoleAttributeWriteCommand extends ZigBeeConsoleAbstractCommand {
+
+    private static final String ARRAY_START_MARKER = "{";
+    private static final String ARRAY_END_MARKER = "}";
+
     @Override
     public String getCommand() {
         return "write";
@@ -37,7 +41,7 @@ public class ZigBeeConsoleAttributeWriteCommand extends ZigBeeConsoleAbstractCom
 
     @Override
     public String getSyntax() {
-        return "ENDPOINT CLUSTER ATTRIBUTEID VALUE [TYPE]";
+        return "ENDPOINT CLUSTER ATTRIBUTEID (VALUE [TYPE] | {VALUE1 VALUE2 ... VALUEN} TYPE)";
     }
 
     @Override
@@ -49,7 +53,7 @@ public class ZigBeeConsoleAttributeWriteCommand extends ZigBeeConsoleAbstractCom
     public void process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out)
             throws IllegalArgumentException, InterruptedException, ExecutionException {
         if (args.length < 5) {
-            throw new IllegalArgumentException("Invalid number of arguments");
+            throw new IllegalArgumentException("Too few arguments");
         }
 
         String endpointIdParam = args[1];
@@ -58,26 +62,26 @@ public class ZigBeeConsoleAttributeWriteCommand extends ZigBeeConsoleAbstractCom
         String attributeValueParam = args[4];
         String attributeTypeParam = null;
 
-        if (attributeValueParam.startsWith("[")) {
+        if (attributeValueParam.startsWith(ARRAY_START_MARKER)) {
             int cnt = 5;
             for (; cnt < args.length; cnt++) {
                 attributeValueParam += " " + args[cnt];
-                if (attributeValueParam.endsWith("]")) {
+                if (attributeValueParam.endsWith(ARRAY_END_MARKER)) {
                     break;
                 }
             }
-            if (!attributeValueParam.endsWith("]")) {
+            if (!attributeValueParam.endsWith(ARRAY_END_MARKER)) {
                 throw new IllegalArgumentException("Value defined as an array must be terminated with ']'");
             }
             if (args.length == cnt + 2) {
                 attributeTypeParam = args[cnt + 1];
             } else {
-                throw new IllegalArgumentException("Invalid number of arguments");
+                throw new IllegalArgumentException("Invalid number of arguments: Type missing");
             }
         } else if (args.length == 6) {
             attributeTypeParam = args[5];
-        } else {
-            throw new IllegalArgumentException("Invalid number of arguments");
+        } else if (args.length > 6) {
+            throw new IllegalArgumentException("Too many arguments");
         }
 
         final ZigBeeEndpoint endpoint = getEndpoint(networkManager, endpointIdParam);
