@@ -905,6 +905,21 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             return;
         }
 
+        if (getNode(apsFrame.getSourceAddress()) == null) {
+            logger.debug("Incoming message from unknown node {}: Notifying announce listeners",
+                    String.format("%04X", apsFrame.getSourceAddress()));
+
+            // Notify the listeners that we have heard a command that was unknown to us
+            for (final ZigBeeAnnounceListener announceListener : announceListeners) {
+                NotificationService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        announceListener.announceUnknownDevice(apsFrame.getSourceAddress());
+                    }
+                });
+            }
+        }
+
         // Create the deserialiser
         Constructor<? extends ZigBeeDeserializer> constructor;
         ZigBeeDeserializer deserializer;
@@ -936,16 +951,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         if (command == null) {
             logger.debug("Incoming message from node {} did not translate to command",
                     String.format("%04X", apsFrame.getSourceAddress()));
-
-            // Notify the listeners that we have heard a command that was unknown to us
-            for (final ZigBeeAnnounceListener announceListener : announceListeners) {
-                NotificationService.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        announceListener.announceUnknownDevice(apsFrame.getSourceAddress());
-                    }
-                });
-            }
 
             return;
         }
