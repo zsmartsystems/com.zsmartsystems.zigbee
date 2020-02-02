@@ -456,6 +456,7 @@
         </field>
         <field type="NWK_ADDRESS">
             <name>NWK Addr Remote Dev</name>
+            <format>hex[4]</format>
         </field>
         <field type="UNSIGNED_8_BIT_INTEGER">
             <name>Num Assoc Dev</name>
@@ -479,6 +480,7 @@
         </field>
         <field type="NWK_ADDRESS">
             <name>NWK Addr Remote Dev</name>
+            <format>hex[4]</format>
         </field>
         <field type="UNSIGNED_8_BIT_INTEGER" completeOnZero="true">
             <name>Num Assoc Dev</name>

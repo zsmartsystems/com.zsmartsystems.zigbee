@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoStatus;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-02-01T18:52:16Z")
 public class NetworkAddressResponse extends ZdoResponse {
     /**
      * The ZDO cluster ID.
@@ -218,7 +218,7 @@ public class NetworkAddressResponse extends ZdoResponse {
         builder.append(", ieeeAddrRemoteDev=");
         builder.append(ieeeAddrRemoteDev);
         builder.append(", nwkAddrRemoteDev=");
-        builder.append(nwkAddrRemoteDev);
+        builder.append(String.format("%04X", nwkAddrRemoteDev));
         builder.append(", startIndex=");
         builder.append(startIndex);
         builder.append(", nwkAddrAssocDevList=");
