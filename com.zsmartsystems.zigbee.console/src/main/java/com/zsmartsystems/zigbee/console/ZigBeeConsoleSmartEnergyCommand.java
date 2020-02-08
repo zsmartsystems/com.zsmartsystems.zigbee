@@ -19,10 +19,13 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.app.seclient.SmartEnergyClient;
 import com.zsmartsystems.zigbee.security.ZigBeeCbkeProvider;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclMeteringCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclPriceCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.metering.GetProfileResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.metering.GetProfileStatusEnum;
 import com.zsmartsystems.zigbee.zcl.clusters.metering.IntervalPeriodEnum;
 import com.zsmartsystems.zigbee.zcl.clusters.metering.RequestFastPollModeResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.price.GetCurrentPriceCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.price.PublishPriceCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 
 /**
@@ -44,7 +47,7 @@ public class ZigBeeConsoleSmartEnergyCommand extends ZigBeeConsoleAbstractComman
 
     @Override
     public String getSyntax() {
-        return "[GETPROFILE | FASTPOLL] [endpoint] [period]";
+        return "[GETPROFILE | FASTPOLL | PRICE] [endpoint] [period]";
     }
 
     @Override
@@ -67,6 +70,9 @@ public class ZigBeeConsoleSmartEnergyCommand extends ZigBeeConsoleAbstractComman
                 break;
             case "fastpoll":
                 fastPoll(networkManager, args, out);
+                break;
+            case "price":
+                getPrice(networkManager, args, out);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown Smart Energy command: " + args[1].toUpperCase());
@@ -156,7 +162,7 @@ public class ZigBeeConsoleSmartEnergyCommand extends ZigBeeConsoleAbstractComman
         final ZigBeeEndpoint endpoint = getEndpoint(networkManager, args[2]);
         final int period = parseInteger(args[3]);
 
-        ZclMeteringCluster cluster = (ZclMeteringCluster) endpoint.getInputCluster(ZclClusterType.METERING.getId());
+        ZclMeteringCluster cluster = (ZclMeteringCluster) endpoint.getInputCluster(ZclMeteringCluster.CLUSTER_ID);
         if (cluster == null) {
             throw new IllegalArgumentException(
                     "Metering cluster not found on endpoint " + endpoint.getEndpointAddress());
@@ -169,6 +175,34 @@ public class ZigBeeConsoleSmartEnergyCommand extends ZigBeeConsoleAbstractComman
                 return;
             }
             RequestFastPollModeResponse fastPollResponse = (RequestFastPollModeResponse) response.getResponse();
+
+        } catch (InterruptedException | ExecutionException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    private void getPrice(ZigBeeNetworkManager networkManager, String[] args, PrintStream out) {
+        if (args.length < 3) {
+            throw new IllegalArgumentException("Invalid number of arguments");
+        }
+
+        final ZigBeeEndpoint endpoint = getEndpoint(networkManager, args[2]);
+
+        ZclPriceCluster cluster = (ZclPriceCluster) endpoint.getInputCluster(ZclPriceCluster.CLUSTER_ID);
+        if (cluster == null) {
+            throw new IllegalArgumentException(
+                    "Price cluster not found on endpoint " + endpoint.getEndpointAddress());
+        }
+
+        try {
+            GetCurrentPriceCommand getPrice = new GetCurrentPriceCommand(0);
+            CommandResult response = cluster.sendCommand(getPrice).get();
+            if (response.isError()) {
+                out.println("Error response when sending get current price request");
+                return;
+            }
+            PublishPriceCommand priceResponse = (PublishPriceCommand) response.getResponse();
 
         } catch (InterruptedException | ExecutionException e) {
             // TODO Auto-generated catch block
