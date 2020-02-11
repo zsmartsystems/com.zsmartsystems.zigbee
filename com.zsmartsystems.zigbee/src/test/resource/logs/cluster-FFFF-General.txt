@@ -29,5 +29,8 @@ ReadAttributesResponse [Metering: 0000/1 -> 0000/1, cluster=0702, TID=3E, record
 ZigBeeApsFrame [sourceAddress=0000/1, destinationAddress=0000/1, profile=0104, cluster=0006, addressMode=null, radius=0, apsSecurity=false, apsCounter=17, payload=08 25 09 00 00 00 00 10 01 00 2C 01]
 ReadReportingConfigurationResponse [On/Off: 0000/1 -> 0000/1, cluster=0006, TID=25, records=[AttributeReportingStatusRecord [status=SUCCESS, attributeIdentifier=0, direction=0, attributeDataType=BOOLEAN, minimumReportingInterval=1, maximumReportingInterval=300]]]
 
-ZigBeeApsFrame [sourceAddress=0000/1, destinationAddress=4574/1, profile=0109, cluster=0000, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=DB, payload=00 13 00 00 04]
+ZigBeeApsFrame [sourceAddress=0000/1, destinationAddress=0000/1, profile=0109, cluster=0000, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=DB, payload=00 13 00 00 04]
 ReadAttributesCommand [Basic: 0000/1 -> 4574/1, cluster=0000, TID=13, identifiers=[1024]]
+
+ZigBeeApsFrame [sourceAddress=0000/1, destinationAddress=0000/1, profile=0109, cluster=0700, addressMode=DEVICE, radius=0, apsSecurity=true, ackRequest=false, apsCounter=22, payload=08 11 0D 01]
+DiscoverAttributesResponse [Price: 0000/1 -> 0000/1, cluster=0700, TID=11, discoveryComplete=true, attributeInformation=[]]
