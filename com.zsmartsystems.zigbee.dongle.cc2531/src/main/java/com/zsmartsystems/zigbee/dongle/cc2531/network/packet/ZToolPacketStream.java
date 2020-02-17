@@ -33,6 +33,7 @@
 package com.zsmartsystems.zigbee.dongle.cc2531.network.packet;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -94,8 +95,6 @@ public class ZToolPacketStream implements IIntArrayInputStream {
 
     private Checksum checksum = new Checksum();
 
-    private boolean generic = false;
-
     private final ZigBeePort port;
 
     public ZToolPacketStream(ZigBeePort port) {
@@ -108,36 +107,21 @@ public class ZToolPacketStream implements IIntArrayInputStream {
         done = false;
         bytesRead = 0;
         try {
-            final ZToolPacket response;
             // int byteLength = this.read("Length");
             this.length = read("Length");
             // log.debug("data length is " + ByteUtils.formatByte(length.getLength()));
-            final int[] frameData;
             final int apiIdMSB = this.read("API PROFILE_ID_HOME_AUTOMATION MSB");
             final int apiIdLSB = this.read("API PROFILE_ID_HOME_AUTOMATION LSB");
             final DoubleByte apiId = new DoubleByte(apiIdMSB, apiIdLSB);
-            // TODO Remove generic never used
-            // generic = true;
-            if (generic) {
-                // log.info("Parsing data as generic");
-                int i = 0;
-                frameData = new int[length];
-                // Read all data bytes without parsing
-                while (i < frameData.length) {
-                    frameData[i] = this.read("Data " + i + "-th");
-                    i++;
-                }
+            final int[] frameData = this.readRemainingBytes();
+            final ZToolPacket response = parsePayload(apiId, frameData);
 
-                response = new ZToolPacket(apiId, frameData);
-            } else {
-                frameData = this.readRemainingBytes();
-                response = parsePayload(apiId, frameData);
-            }
             // response.setFCS(this.read("Checksum"));
             int fcs = this.read("Checksum");
             // setDone(true);
             if (fcs != response.getFCS()) {
-                // log.debug("Checksum of packet failed: received =" + fcs + " expected = " + response.getFCS());
+                logger.error("Checksum of packet failed: received =" + fcs + " expected = " + response.getFCS() +
+                        ". Len = " + this.length + ", ApiId = " + apiId + ", Packet = " + Arrays.toString(frameData));
                 throw new ZToolParseException("Packet checksum failed");
             }
             if (!this.isDone()) {
