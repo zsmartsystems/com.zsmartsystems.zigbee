@@ -30,6 +30,7 @@
 
 package com.zsmartsystems.zigbee.dongle.cc2531.network.packet.simple;
 
+import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolCMD;
 import com.zsmartsystems.zigbee.dongle.cc2531.network.packet.ZToolPacket;
 import com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util.DoubleByte;
 
@@ -62,6 +63,7 @@ public class ZB_FIND_DEVICE_CONFIRM extends ZToolPacket /*implements IRESPONSE_C
         for (int i = 0; i < 8; i++) {
             this.Result[i] = framedata[i + 3];
         }
+        super.buildPacket(new DoubleByte(ZToolCMD.ZB_FIND_DEVICE_CONFIRM), framedata);
     }
 
 }

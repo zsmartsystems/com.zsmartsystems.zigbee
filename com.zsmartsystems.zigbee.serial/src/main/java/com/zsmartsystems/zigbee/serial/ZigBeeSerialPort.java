@@ -225,6 +225,7 @@ public class ZigBeeSerialPort implements ZigBeePort, SerialPortEventListener {
             try {
                 int[] input = serialPort.readIntArray();
                 if (input == null) {
+                    logger.warn("Nothing read from serial port.");
                     return;
                 }
 
@@ -234,14 +235,20 @@ public class ZigBeeSerialPort implements ZigBeePort, SerialPortEventListener {
                         if (end >= maxLength) {
                             end = 0;
                         }
+                        if (end == start) {
+                            logger.warn("Serial buffer overrun.");
+                            if (++start == maxLength) {
+                                start = 0;
+                            }
+                        }
                     }
-                }
-
-                synchronized (this) {
-                    this.notify();
                 }
             } catch (SerialPortException e) {
                 logger.error("Error while handling serial event.", e);
+            }
+
+            synchronized (this) {
+                this.notify();
             }
         }
     }
