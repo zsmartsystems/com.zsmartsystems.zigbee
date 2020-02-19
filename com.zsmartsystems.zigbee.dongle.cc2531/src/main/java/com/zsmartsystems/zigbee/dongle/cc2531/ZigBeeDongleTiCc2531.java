@@ -13,14 +13,12 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ScheduledExecutorService;
 
+import com.zsmartsystems.zigbee.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.zsmartsystems.zigbee.ExtendedPanId;
-import com.zsmartsystems.zigbee.IeeeAddress;
-import com.zsmartsystems.zigbee.ZigBeeChannel;
-import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoActiveEndpoint;
 import com.zsmartsystems.zigbee.dongle.cc2531.frame.ZdoCallbackIncoming;
@@ -106,6 +104,8 @@ public class ZigBeeDongleTiCc2531
      * The firmware version used in this system. Set during initialisation and saved in case the client is interested.
      */
     private String versionString = "Unknown";
+
+    private ScheduledExecutorService executorService = ZigBeeExecutors.newScheduledThreadPool(1, "CC2531Commands");
 
     /**
      * Constructor to configure the port interface.
@@ -304,23 +304,26 @@ public class ZigBeeDongleTiCc2531
             } else {
                 sender = (short) getSendingEndpoint(apsFrame.getProfile());
             }
-            ZigBeeTransportProgressState state;
 
-            // TODO: How to differentiate group and device addressing?????
-            boolean groupCommand = false;
-            if (!groupCommand) {
-                messageIdMap.put(apsFrame.getApsCounter(), msgTag);
-                ZToolPacket response = networkManager.sendCommand(new AF_DATA_REQUEST(apsFrame.getDestinationAddress(),
-                        (short) apsFrame.getDestinationEndpoint(), sender, apsFrame.getCluster(),
-                        apsFrame.getApsCounter(), (byte) (0x20 | (apsFrame.getAckRequest() ? 0x10 : 0)), (byte) apsFrame.getRadius(), apsFrame.getPayload()));
-                state = (response == null || ((AF_DATA_SRSP)response).Status != 0) ? ZigBeeTransportProgressState.TX_NAK : ZigBeeTransportProgressState.TX_ACK;
-            } else {
-                ZToolPacket response = networkManager.sendCommand(new AF_DATA_REQUEST_EXT(apsFrame.getDestinationAddress(), sender,
-                        apsFrame.getCluster(), apsFrame.getApsCounter(), (byte) (0), (byte) 0, apsFrame.getPayload()));
-                state = (response == null || ((AF_DATA_SRSP_EXT)response).getStatus() != 0) ? ZigBeeTransportProgressState.TX_NAK : ZigBeeTransportProgressState.TX_ACK;
-            }
+            executorService.execute(() -> {
+                ZigBeeTransportProgressState state;
 
-            zigbeeNetworkReceive.receiveCommandState(msgTag, state);
+                // TODO: How to differentiate group and device addressing?????
+                boolean groupCommand = false;
+                if (!groupCommand) {
+                    messageIdMap.put(apsFrame.getApsCounter(), msgTag);
+                    ZToolPacket response = networkManager.sendCommand(new AF_DATA_REQUEST(apsFrame.getDestinationAddress(),
+                            (short) apsFrame.getDestinationEndpoint(), sender, apsFrame.getCluster(),
+                            apsFrame.getApsCounter(), (byte) (0x20 | (apsFrame.getAckRequest() ? 0x10 : 0)), (byte) apsFrame.getRadius(), apsFrame.getPayload()));
+                    state = (response == null || ((AF_DATA_SRSP)response).Status != 0) ? ZigBeeTransportProgressState.TX_NAK : ZigBeeTransportProgressState.TX_ACK;
+                } else {
+                    ZToolPacket response = networkManager.sendCommand(new AF_DATA_REQUEST_EXT(apsFrame.getDestinationAddress(), sender,
+                            apsFrame.getCluster(), apsFrame.getApsCounter(), (byte) (0), (byte) 0, apsFrame.getPayload()));
+                    state = (response == null || ((AF_DATA_SRSP_EXT)response).getStatus() != 0) ? ZigBeeTransportProgressState.TX_NAK : ZigBeeTransportProgressState.TX_ACK;
+                }
+
+                zigbeeNetworkReceive.receiveCommandState(msgTag, state);
+            });
         }
     }
 
