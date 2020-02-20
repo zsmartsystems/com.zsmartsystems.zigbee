@@ -1020,8 +1020,8 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
 
     private ZigBeeCommand receiveZclCommand(final ZclFieldDeserializer fieldDeserializer,
             final ZigBeeApsFrame apsFrame) {
-        if (apsFrame.getDestinationEndpoint() != LOCAL_ENDPOINT_ID
-                && apsFrame.getDestinationEndpoint() != BROADCAST_ENDPOINT_ID) {
+		int destinationEndpoint = apsFrame.getDestinationEndpoint();
+        if (destinationEndpoint < LOCAL_ENDPOINT_ID || destinationEndpoint > BROADCAST_ENDPOINT_ID) {
             logger.debug("Unknown local endpoint for APS frame {}", apsFrame);
             return null;
         }
