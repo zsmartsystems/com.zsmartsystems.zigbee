@@ -234,6 +234,7 @@ public class ZigBeeNodeServiceDiscovererTest {
     @Test
     public void testLocal() throws Exception {
         ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
+        Mockito.when(node.getNodeState()).thenReturn(ZigBeeNode.ZigBeeNodeState.ONLINE);
         ZigBeeNodeServiceDiscoverer discoverer = new ZigBeeNodeServiceDiscoverer(networkManager, node);
 
         TestUtilities.setField(ZigBeeNodeServiceDiscoverer.class, discoverer, "retryPeriod", 1);
@@ -264,6 +265,7 @@ public class ZigBeeNodeServiceDiscovererTest {
         Mockito.verify(futureTask, Mockito.times(1)).cancel(true);
 
         Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).times(1)).updateNode(nodeCapture.capture());
+        assertEquals(ZigBeeNode.ZigBeeNodeState.ONLINE, nodeCapture.getValue().getNodeState());
 
         assertNotNull(discoverer.getLastDiscoveryStarted());
         assertNotNull(discoverer.getLastDiscoveryCompleted());

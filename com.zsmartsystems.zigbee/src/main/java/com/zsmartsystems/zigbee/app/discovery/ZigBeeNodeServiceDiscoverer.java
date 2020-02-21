@@ -235,6 +235,7 @@ public class ZigBeeNodeServiceDiscoverer {
                 // Create a new node to store the data from this update.
                 // We set the network address so that we can detect the change later if needed.
                 updatedNode = new ZigBeeNode(networkManager, node.getIeeeAddress(), node.getNetworkAddress());
+                updatedNode.setNodeState(node.getNodeState());
                 lastDiscoveryStarted = Calendar.getInstance();
             }
 
