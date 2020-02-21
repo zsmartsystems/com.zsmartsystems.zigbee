@@ -9,7 +9,7 @@ package com.zsmartsystems.zigbee.autocode;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.PrintStream;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -44,7 +44,7 @@ public class ZigBeeZclClusterTypeGenerator extends ZigBeeBaseClassGenerator {
         final String packagePath = getPackagePath(sourceRootPath, packageRoot);
         final File packageFile = getPackageFile(packagePath);
 
-        final PrintWriter out = getClassOut(packageFile, className);
+        final PrintStream out = getClassOut(packageFile, className);
 
         outputLicense(out);
         importsClear();

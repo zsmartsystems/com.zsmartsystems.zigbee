@@ -13,7 +13,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -103,12 +104,12 @@ public abstract class ClassGenerator {
         return val.substring(0, 1).toUpperCase() + val.substring(1);
     }
 
-    protected PrintWriter getClassOut(File packageFile, String className) throws FileNotFoundException {
+    protected PrintStream getClassOut(File packageFile, String className) throws FileNotFoundException, UnsupportedEncodingException {
         packageFile.mkdirs();
         final File classFile = new File(packageFile + File.separator + className + ".java");
         System.out.println("Generating: " + classFile.getAbsolutePath());
         final FileOutputStream fileOutputStream = new FileOutputStream(classFile, false);
-        return new PrintWriter(fileOutputStream);
+        return new PrintStream(fileOutputStream,false,"UTF-8");
     }
 
     protected void clearImports() {
@@ -122,14 +123,14 @@ public abstract class ClassGenerator {
         importList.add(importClass);
     }
 
-    protected void outputImports(final PrintWriter out) {
+    protected void outputImports(final PrintStream out) {
         Collections.sort(importList);
         for (final String importClass : importList) {
             out.println("import " + importClass + ";");
         }
     }
 
-    protected void outputCopywrite(PrintWriter out) {
+    protected void outputCopywrite(PrintStream out) {
         String year = "XXXX";
 
         BufferedReader br;
@@ -182,7 +183,7 @@ public abstract class ClassGenerator {
         return null;
     }
 
-    protected void outputWithLinebreak(PrintWriter out, String indent, String line) {
+    protected void outputWithLinebreak(PrintStream out, String indent, String line) {
         String[] words = line.split(" ");
         if (words.length == 0) {
             return;

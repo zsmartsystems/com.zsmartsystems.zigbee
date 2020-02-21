@@ -7,10 +7,13 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember.autocode;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +38,7 @@ public class CommandGenerator extends ClassGenerator {
     protected final String ezspCommandPackage = "com.zsmartsystems.zigbee.dongle.ember.ezsp.command";
     protected final String ezspStructurePackage = "com.zsmartsystems.zigbee.dongle.ember.ezsp.structure";
 
-    public void go(Protocol protocol) throws FileNotFoundException {
+    public void go(Protocol protocol) throws FileNotFoundException, UnsupportedEncodingException {
         String className;
         for (Command command : protocol.commands) {
             if (command.name.endsWith("Handler")) {
@@ -63,12 +66,12 @@ public class CommandGenerator extends ClassGenerator {
     }
 
     private void createCommandClass(String className, Command command, List<Parameter> parameters)
-            throws FileNotFoundException {
+            throws FileNotFoundException, UnsupportedEncodingException {
 
         System.out.println("Processing command class " + command.name + "  [" + className + "()]");
 
-        StringWriter stringWriter = new StringWriter();
-        PrintWriter out = new PrintWriter(stringWriter);
+        OutputStream stringWriter = new ByteArrayOutputStream();
+        PrintStream out = new PrintStream(stringWriter,false,"UTF-8");
 
         clearImports();
         // addImport("org.slf4j.Logger");
@@ -271,7 +274,7 @@ public class CommandGenerator extends ClassGenerator {
         out.flush();
 
         File packageFile = new File(sourceRootPath + ezspCommandPackage.replace(".", "/"));
-        PrintWriter outFile = getClassOut(packageFile, className);
+        PrintStream outFile = getClassOut(packageFile, className);
 
         outputCopywrite(outFile);
         outFile.println("package " + ezspCommandPackage + ";");
@@ -289,12 +292,12 @@ public class CommandGenerator extends ClassGenerator {
         out.close();
     }
 
-    private void createStructureClass(Structure structure) throws FileNotFoundException {
+    private void createStructureClass(Structure structure) throws FileNotFoundException, UnsupportedEncodingException {
         String className = upperCaseFirstCharacter(structure.name);
         System.out.println("Processing structure class " + structure.name + "  [" + className + "()]");
 
-        StringWriter stringWriter = new StringWriter();
-        PrintWriter out = new PrintWriter(stringWriter);
+        OutputStream stringWriter = new ByteArrayOutputStream();
+        PrintStream out = new PrintStream(stringWriter,false,"UTF-8");
 
         clearImports();
         // addImport("org.slf4j.Logger");
@@ -536,7 +539,7 @@ public class CommandGenerator extends ClassGenerator {
         out.flush();
 
         File packageFile = new File(sourceRootPath + ezspStructurePackage.replace(".", "/"));
-        PrintWriter outFile = getClassOut(packageFile, className);
+        PrintStream outFile = getClassOut(packageFile, className);
 
         outputCopywrite(outFile);
         outFile.println("package " + ezspStructurePackage + ";");
@@ -554,12 +557,12 @@ public class CommandGenerator extends ClassGenerator {
         out.close();
     }
 
-    private void createEnumClass(Enumeration enumeration) throws FileNotFoundException {
+    private void createEnumClass(Enumeration enumeration) throws FileNotFoundException, UnsupportedEncodingException {
         String className = upperCaseFirstCharacter(enumeration.name);
         System.out.println("Processing enum class " + enumeration.name + "  [" + className + "()]");
 
-        StringWriter stringWriter = new StringWriter();
-        PrintWriter out = new PrintWriter(stringWriter);
+        OutputStream stringWriter = new ByteArrayOutputStream();
+        PrintStream out = new PrintStream(stringWriter,false,"UTF-8");
 
         clearImports();
 
@@ -656,7 +659,7 @@ public class CommandGenerator extends ClassGenerator {
         out.flush();
 
         File packageFile = new File(sourceRootPath + ezspStructurePackage.replace(".", "/"));
-        PrintWriter outFile = getClassOut(packageFile, className);
+        PrintStream outFile = getClassOut(packageFile, className);
 
         outputCopywrite(outFile);
         outFile.println("package " + ezspStructurePackage + ";");
@@ -890,9 +893,9 @@ public class CommandGenerator extends ClassGenerator {
         }
     }
 
-    private void createEmberFrame(Protocol protocol) throws FileNotFoundException {
-        StringWriter stringWriter = new StringWriter();
-        PrintWriter out = new PrintWriter(stringWriter);
+    private void createEmberFrame(Protocol protocol) throws FileNotFoundException, UnsupportedEncodingException {
+        OutputStream stringWriter = new ByteArrayOutputStream();
+        PrintStream out = new PrintStream(stringWriter);
 
         clearImports();
 
@@ -1128,7 +1131,7 @@ public class CommandGenerator extends ClassGenerator {
         out.flush();
 
         File packageFile = new File(sourceRootPath + ezspPackage.replace(".", "/"));
-        PrintWriter outFile = getClassOut(packageFile, "EzspFrame");
+        PrintStream outFile = getClassOut(packageFile, "EzspFrame");
 
         outFile.print(stringWriter.toString());
 

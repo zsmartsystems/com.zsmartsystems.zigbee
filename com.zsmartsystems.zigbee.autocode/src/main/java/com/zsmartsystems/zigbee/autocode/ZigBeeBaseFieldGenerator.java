@@ -7,7 +7,7 @@
  */
 package com.zsmartsystems.zigbee.autocode;
 
-import java.io.PrintWriter;
+import java.io.PrintStream;
 import java.util.List;
 
 import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlField;
@@ -26,7 +26,7 @@ public class ZigBeeBaseFieldGenerator extends ZigBeeBaseClassGenerator {
     private final String OPERATOR_LESS_THAN = "LESS_THAN";
     private final String OPERATOR_LESS_THAN_OR_EQUAL = "LESS_THAN_OR_EQUAL";
 
-    protected void generateFields(PrintWriter out, String parentClass, String className, List<ZigBeeXmlField> fields,
+    protected void generateFields(PrintStream out, String parentClass, String className, List<ZigBeeXmlField> fields,
             List<String> reservedFields) {
         for (final ZigBeeXmlField field : fields) {
             if (reservedFields.contains(stringToLowerCamelCase(field.name))) {
@@ -221,7 +221,7 @@ public class ZigBeeBaseFieldGenerator extends ZigBeeBaseClassGenerator {
         }
     }
 
-    protected void generateToString(PrintWriter out, String className, List<ZigBeeXmlField> fields,
+    protected void generateToString(PrintStream out, String className, List<ZigBeeXmlField> fields,
             List<String> reservedFields) {
         int fieldLen = 0;
         for (final ZigBeeXmlField field : fields) {

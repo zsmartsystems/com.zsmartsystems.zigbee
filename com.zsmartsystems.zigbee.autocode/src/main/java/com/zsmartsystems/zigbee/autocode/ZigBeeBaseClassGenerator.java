@@ -13,7 +13,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -187,12 +188,12 @@ public abstract class ZigBeeBaseClassGenerator {
         return val.substring(0, 1).toLowerCase() + val.substring(1);
     }
 
-    protected PrintWriter getClassOut(File packageFile, String className) throws FileNotFoundException {
+    protected PrintStream  getClassOut(File packageFile, String className) throws FileNotFoundException, UnsupportedEncodingException {
         packageFile.mkdirs();
         final File classFile = new File(packageFile + File.separator + className + ".java");
         System.out.println("Generating: " + classFile.getAbsolutePath());
         final FileOutputStream fileOutputStream = new FileOutputStream(classFile, false);
-        return new PrintWriter(fileOutputStream);
+        return new PrintStream (fileOutputStream,false,"UTF-8");
     }
 
     protected void importsClear() {
@@ -206,7 +207,7 @@ public abstract class ZigBeeBaseClassGenerator {
         importList.add(importClass);
     }
 
-    protected void outputImports(final PrintWriter out) {
+    protected void outputImports(final PrintStream out) {
         Collections.sort(importList);
         boolean found = false;
         for (final String importClass : importList) {
@@ -239,7 +240,7 @@ public abstract class ZigBeeBaseClassGenerator {
         }
     }
 
-    protected void outputWithLinebreak(PrintWriter out, String indent, List<ZigBeeXmlDescription> descriptions) {
+    protected void outputWithLinebreak(PrintStream out, String indent, List<ZigBeeXmlDescription> descriptions) {
         boolean firstDescription = true;
         for (ZigBeeXmlDescription description : descriptions) {
             if (description.description == null) {
@@ -290,7 +291,7 @@ public abstract class ZigBeeBaseClassGenerator {
         }
     }
 
-    protected void outputLicense(PrintWriter out) {
+    protected void outputLicense(PrintStream out) {
         String year = "XXXX";
 
         BufferedReader br;
@@ -338,12 +339,12 @@ public abstract class ZigBeeBaseClassGenerator {
         return sourceRootPath.getAbsolutePath() + File.separator + packageRoot.replace(".", File.separator);
     }
 
-    protected void outputClassGenerated(PrintWriter out) {
+    protected void outputClassGenerated(PrintStream out) {
         out.println("@Generated(value = \"" + ZigBeeCodeGenerator.class.getName() + "\", date = \"" + generatedDate
                 + "\")");
     }
 
-    protected void outputAttributeJavaDoc(PrintWriter out, String type, ZigBeeXmlAttribute attribute,
+    protected void outputAttributeJavaDoc(PrintStream out, String type, ZigBeeXmlAttribute attribute,
             DataTypeMap zclDataType) {
         out.println();
         out.println("    /**");

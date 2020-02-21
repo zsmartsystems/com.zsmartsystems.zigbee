@@ -7,10 +7,12 @@
  */
 package com.zsmartsystems.zigbee.dongle.telegesis.autocode;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +39,7 @@ public class CommandGenerator extends ClassGenerator {
 
     Map<String, String> events = new TreeMap<String, String>();
 
-    public void go(Protocol protocol) throws FileNotFoundException {
+    public void go(Protocol protocol) throws FileNotFoundException, UnsupportedEncodingException {
         String packageName;
         String className;
         for (Command command : protocol.commands) {
@@ -62,7 +64,7 @@ public class CommandGenerator extends ClassGenerator {
 
     private void createCommandClass(String packageName, String className, Command command,
             List<ParameterGroup> commandParameterGroup, List<ParameterGroup> responseParameterGroup)
-            throws FileNotFoundException {
+            throws FileNotFoundException, UnsupportedEncodingException {
 
         // Create a list of async events that we need to handle
         if (className.endsWith("Event")) {
@@ -71,8 +73,8 @@ public class CommandGenerator extends ClassGenerator {
 
         System.out.println("Processing command class " + command.name + "  [" + className + "()]");
 
-        StringWriter stringWriter = new StringWriter();
-        PrintWriter out = new PrintWriter(stringWriter);
+        OutputStream stringWriter = new ByteArrayOutputStream();
+        PrintStream out = new PrintStream(stringWriter,false,"UTF-8");
 
         clearImports();
         // addImport("org.slf4j.Logger");
@@ -505,7 +507,7 @@ public class CommandGenerator extends ClassGenerator {
         out.flush();
 
         File packageFile = new File(sourceRootPath + packageName.replace(".", "/"));
-        PrintWriter outFile = getClassOut(packageFile, className);
+        PrintStream outFile = getClassOut(packageFile, className);
 
         outputCopywrite(outFile);
         outFile.println("package " + packageName + ";");
@@ -523,7 +525,7 @@ public class CommandGenerator extends ClassGenerator {
         out.close();
     }
 
-    private void createParameterDefinition(PrintWriter out, String indent, Parameter parameter) {
+    private void createParameterDefinition(PrintStream out, String indent, Parameter parameter) {
         if (parameter.multiple) {
             addImport("java.util.List");
             addImport("java.util.ArrayList");
@@ -540,7 +542,7 @@ public class CommandGenerator extends ClassGenerator {
         }
     }
 
-    private void createParameterGetter(PrintWriter out, String indent, List<Parameter> parameters) {
+    private void createParameterGetter(PrintStream out, String indent, List<Parameter> parameters) {
         for (Parameter parameter : parameters) {
             if (parameter.auto_size != null) {
                 continue;
@@ -573,7 +575,7 @@ public class CommandGenerator extends ClassGenerator {
         }
     }
 
-    private void createParameterSetter(PrintWriter out, String indent, List<Parameter> parameters) {
+    private void createParameterSetter(PrintStream out, String indent, List<Parameter> parameters) {
         for (Parameter parameter : parameters) {
             if (parameter.auto_size != null) {
                 continue;
@@ -662,7 +664,7 @@ public class CommandGenerator extends ClassGenerator {
         }
     }
 
-    private void createDeserializer(PrintWriter out, String indent, ParameterGroup group) {
+    private void createDeserializer(PrintStream out, String indent, ParameterGroup group) {
         Map<String, String> autoSizers = new HashMap<String, String>();
         String conditional = null;
 
@@ -769,7 +771,7 @@ public class CommandGenerator extends ClassGenerator {
         }
     }
 
-    private void createToString(PrintWriter out, String indent, boolean first, String className, ParameterGroup group) {
+    private void createToString(PrintStream out, String indent, boolean first, String className, ParameterGroup group) {
         for (Parameter parameter : group.parameters) {
             if (parameter.auto_size != null) {
                 continue;
@@ -801,12 +803,12 @@ public class CommandGenerator extends ClassGenerator {
         }
     }
 
-    private void createEnumClass(Enumeration enumeration) throws FileNotFoundException {
+    private void createEnumClass(Enumeration enumeration) throws FileNotFoundException, UnsupportedEncodingException {
         String className = upperCaseFirstCharacter(enumeration.name);
         System.out.println("Processing enum class " + enumeration.name + "  [" + className + "()]");
 
-        StringWriter stringWriter = new StringWriter();
-        PrintWriter out = new PrintWriter(stringWriter);
+        OutputStream stringWriter = new ByteArrayOutputStream();
+        PrintStream out = new PrintStream(stringWriter,false,"UTF-8");
 
         clearImports();
 
@@ -931,7 +933,7 @@ public class CommandGenerator extends ClassGenerator {
         out.flush();
 
         File packageFile = new File(sourceRootPath + enumPackage.replace(".", "/"));
-        PrintWriter outFile = getClassOut(packageFile, className);
+        PrintStream outFile = getClassOut(packageFile, className);
 
         outputCopywrite(outFile);
         outFile.println("package " + enumPackage + ";");
@@ -961,7 +963,7 @@ public class CommandGenerator extends ClassGenerator {
         return hash;
     }
 
-    private void createFrameClass() throws FileNotFoundException {
+    private void createFrameClass() throws FileNotFoundException, UnsupportedEncodingException {
         // Do a quick check to make sure we don't have duplicate hash's
         List<Integer> hashcodes = new ArrayList<Integer>();
         for (String event : events.values()) {
@@ -972,8 +974,8 @@ public class CommandGenerator extends ClassGenerator {
             hashcodes.add(hash);
         }
 
-        StringWriter stringWriter = new StringWriter();
-        PrintWriter out = new PrintWriter(stringWriter);
+        OutputStream stringWriter = new ByteArrayOutputStream();
+        PrintStream out = new PrintStream(stringWriter,false,"UTF-8");
 
         clearImports();
         addImport(commandPackage + ".TelegesisEvent");
@@ -1061,7 +1063,7 @@ public class CommandGenerator extends ClassGenerator {
         out.flush();
 
         File packageFile = new File(sourceRootPath + internalPackage.replace(".", "/"));
-        PrintWriter outFile = getClassOut(packageFile, "TelegesisEventFactory");
+        PrintStream outFile = getClassOut(packageFile, "TelegesisEventFactory");
 
         outputCopywrite(outFile);
         outFile.println("package " + internalPackage + ";");

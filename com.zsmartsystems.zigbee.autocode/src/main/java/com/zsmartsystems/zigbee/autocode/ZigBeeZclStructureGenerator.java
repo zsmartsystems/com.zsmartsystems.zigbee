@@ -9,7 +9,7 @@ package com.zsmartsystems.zigbee.autocode;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.PrintStream;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +53,7 @@ public class ZigBeeZclStructureGenerator extends ZigBeeBaseFieldGenerator {
             final File packageFile = getPackageFile(packagePath);
 
             final String className = structure.className;
-            final PrintWriter out = getClassOut(packageFile, className);
+            final PrintStream out = getClassOut(packageFile, className);
 
             outputLicense(out);
 

@@ -9,7 +9,7 @@ package com.zsmartsystems.zigbee.autocode;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -55,7 +55,7 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
 
         final String clusterClassName = "Zcl" + stringToUpperCamelCase(cluster.name) + "Cluster";
         final String commandClassName = "Zcl" + stringToUpperCamelCase(cluster.name) + "Command";
-        final PrintWriter out = getClassOut(packageFile, clusterClassName);
+        final PrintStream out = getClassOut(packageFile, clusterClassName);
 
         outputLicense(out);
 
@@ -471,7 +471,7 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
 
     }
 
-    private void createInitializeAttributes(PrintWriter out, String clusterName, List<ZigBeeXmlAttribute> attributes) {
+    private void createInitializeAttributes(PrintStream out, String clusterName, List<ZigBeeXmlAttribute> attributes) {
         out.println("        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();");
 
         if (attributes.size() != 0) {

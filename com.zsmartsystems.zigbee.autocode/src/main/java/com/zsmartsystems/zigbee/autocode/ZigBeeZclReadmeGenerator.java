@@ -11,7 +11,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.PrintStream;
 import java.util.List;
 
 import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlCluster;
@@ -54,9 +54,9 @@ public class ZigBeeZclReadmeGenerator extends ZigBeeBaseClassGenerator {
             // Close the input stream
             fstream.close();
 
-            PrintWriter fos;
+            PrintStream fos;
 
-            fos = new PrintWriter(README_MD);
+            fos = new PrintStream(README_MD,"UTF-8");
             fos.print(mdContents);
             fos.close();
         } catch (IOException e) {

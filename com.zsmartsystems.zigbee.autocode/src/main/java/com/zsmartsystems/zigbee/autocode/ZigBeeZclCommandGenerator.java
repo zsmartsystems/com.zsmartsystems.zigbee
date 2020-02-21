@@ -10,7 +10,8 @@ package com.zsmartsystems.zigbee.autocode;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +56,7 @@ public class ZigBeeZclCommandGenerator extends ZigBeeBaseFieldGenerator {
             final String className = stringToUpperCamelCase(command.name);
             final String baseClassName = "Zcl" + stringToUpperCamelCase(cluster.name) + "Command";
 
-            final PrintWriter out = getClassOut(packageFile, className);
+            final PrintStream out = getClassOut(packageFile, className);
 
             // List of fields that are handled internally by super class
             List<String> reservedFields = new ArrayList<>();
@@ -328,14 +329,14 @@ public class ZigBeeZclCommandGenerator extends ZigBeeBaseFieldGenerator {
     }
 
     private void generateZclAbstractClusterCommand(ZigBeeXmlCluster cluster, String packageRootPrefix,
-            File sourceRootPath) throws FileNotFoundException {
+            File sourceRootPath) throws FileNotFoundException, UnsupportedEncodingException {
         final String packageRoot = getZclClusterCommandPackage(cluster);
         final String packagePath = getPackagePath(sourceRootPath, packageRoot);
         final File packageFile = getPackageFile(packagePath);
 
         final String clusterClassName = "Zcl" + stringToUpperCamelCase(cluster.name) + "Cluster";
         final String commandClassName = "Zcl" + stringToUpperCamelCase(cluster.name) + "Command";
-        final PrintWriter out = getClassOut(packageFile, commandClassName);
+        final PrintStream out = getClassOut(packageFile, commandClassName);
 
         importsClear();
         importsAdd(packageRootPrefix + packageZcl + ".ZclCommand");
