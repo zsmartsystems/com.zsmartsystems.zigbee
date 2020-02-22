@@ -13,9 +13,9 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.TestUtilities;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddEndpointRequest;
 
 /**
  *
@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddEndpointRequest
  */
 public class EzspAddEndpointRequestTest extends EzspFrameTest {
     @Test
-    public void testAddEndpointRequest() {
+    public void testAddEndpointRequest() throws Exception {
         EzspFrame.setEzspVersion(4);
         int[] clusters = new int[] { 0, 1, 6 };
         EzspAddEndpointRequest request = new EzspAddEndpointRequest();
@@ -34,7 +34,7 @@ public class EzspAddEndpointRequestTest extends EzspFrameTest {
         request.setInputClusterList(clusters);
         request.setOutputClusterList(clusters);
         request.setProfileId(0x104);
-        request.setSequenceNumber(2);
+        TestUtilities.setField(EzspFrame.class, request, "sequenceNumber", 2);
         System.out.println(request);
 
         assertTrue(Arrays.equals(getPacketData("02 00 02 01 04 01 00 00 00 03 03 00 00 01 00 06 00 00 00 01 00 06 00"),
@@ -42,7 +42,7 @@ public class EzspAddEndpointRequestTest extends EzspFrameTest {
     }
 
     @Test
-    public void testAddEndpointRequestNoClusters() {
+    public void testAddEndpointRequestNoClusters() throws Exception {
         EzspFrame.setEzspVersion(4);
         int[] clusters = new int[] {};
         EzspAddEndpointRequest request = new EzspAddEndpointRequest();
@@ -51,7 +51,7 @@ public class EzspAddEndpointRequestTest extends EzspFrameTest {
         request.setInputClusterList(clusters);
         request.setOutputClusterList(clusters);
         request.setProfileId(0x104);
-        request.setSequenceNumber(170);
+        TestUtilities.setField(EzspFrame.class, request, "sequenceNumber", 170);
         System.out.println(request);
 
         assertTrue(Arrays.equals(getPacketData("AA 00 02 01 04 01 00 00 00 00 00"), request.serialize()));

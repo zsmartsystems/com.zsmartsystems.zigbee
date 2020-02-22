@@ -13,9 +13,9 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.TestUtilities;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetValueRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspValueId;
 
 /**
@@ -25,10 +25,10 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspValueId;
  */
 public class EzspSetValueRequestTest extends EzspFrameTest {
     @Test
-    public void testSetValue() {
+    public void testSetValue() throws Exception {
         EzspFrame.setEzspVersion(4);
         EzspSetValueRequest request = new EzspSetValueRequest();
-        request.setSequenceNumber(2);
+        TestUtilities.setField(EzspFrame.class, request, "sequenceNumber", 2);
         request.setValueId(EzspValueId.EZSP_VALUE_APS_FRAME_COUNTER);
         request.setValue(new int[] { 1, 2, 3, 4 });
         System.out.println(request);

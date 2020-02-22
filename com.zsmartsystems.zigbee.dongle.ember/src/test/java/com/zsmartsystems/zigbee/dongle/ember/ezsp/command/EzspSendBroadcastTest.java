@@ -13,9 +13,10 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.TestUtilities;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendBroadcastRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsOption;
 import com.zsmartsystems.zigbee.serialization.DefaultSerializer;
@@ -28,7 +29,7 @@ import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningRequest;
 public class EzspSendBroadcastTest extends EzspFrameTest {
 
     @Test
-    public void testSendPermitJoining() {
+    public void testSendPermitJoining() throws Exception {
         ManagementPermitJoiningRequest permitJoining = new ManagementPermitJoiningRequest();
 
         permitJoining.setDestinationAddress(new ZigBeeEndpointAddress(0xFFFC));
@@ -54,7 +55,7 @@ public class EzspSendBroadcastTest extends EzspFrameTest {
         apsFrame.setGroupId(0);
 
         emberBroadcast.setMessageTag(5);
-        emberBroadcast.setSequenceNumber(5);
+        TestUtilities.setField(EzspFrame.class, emberBroadcast, "sequenceNumber", 5);
         emberBroadcast.setApsFrame(apsFrame);
         emberBroadcast.setDestination(permitJoining.getDestinationAddress().getAddress());
         emberBroadcast.setMessageContents(payload);

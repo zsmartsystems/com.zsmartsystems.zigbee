@@ -13,9 +13,9 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.TestUtilities;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAesMmoHashRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberAesMmoHashContext;
 
 /**
@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberAesMmoHashConte
 public class EzspAesMmoHashRequestTest extends EzspFrameTest {
 
     @Test
-    public void test() {
+    public void test() throws Exception {
         EzspFrame.setEzspVersion(4);
         EmberAesMmoHashContext context = new EmberAesMmoHashContext();
         context.setResult(new int[16]);
@@ -34,7 +34,7 @@ public class EzspAesMmoHashRequestTest extends EzspFrameTest {
         request.setContext(context);
         request.setData(new int[] { 0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77 });
         request.setFinalize(true);
-        request.setSequenceNumber(170);
+        TestUtilities.setField(EzspFrame.class, request, "sequenceNumber", 170);
         System.out.println(request);
 
         assertTrue(Arrays.equals(getPacketData(

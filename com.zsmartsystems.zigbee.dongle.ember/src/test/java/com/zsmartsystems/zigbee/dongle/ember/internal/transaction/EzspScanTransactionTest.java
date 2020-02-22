@@ -17,6 +17,7 @@ import java.util.Set;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.TestUtilities;
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
@@ -36,12 +37,12 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspNetworkScanType;
  */
 public class EzspScanTransactionTest extends EzspFrameTest {
     @Test
-    public void testScanTransaction() {
+    public void testScanTransaction() throws Exception {
         EzspFrame.setEzspVersion(4);
         EzspStartScanRequest energyScan = new EzspStartScanRequest();
         energyScan.setChannelMask(ZigBeeChannelMask.CHANNEL_MASK_2GHZ);
         energyScan.setDuration(1);
-        energyScan.setSequenceNumber(3);
+        TestUtilities.setField(EzspFrame.class, energyScan, "sequenceNumber", 3);
         energyScan.setScanType(EzspNetworkScanType.EZSP_ENERGY_SCAN);
 
         Set<Class<?>> relatedResponses = new HashSet<Class<?>>(Arrays.asList(EzspStartScanResponse.class,

@@ -13,9 +13,9 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.TestUtilities;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetKeyRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyType;
 
 /**
@@ -25,11 +25,11 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyType;
  */
 public class EzspGetKeyRequestTest extends EzspFrameTest {
     @Test
-    public void testAddEndpointRequest() {
+    public void testAddEndpointRequest() throws Exception {
         EzspFrame.setEzspVersion(4);
         EzspGetKeyRequest request = new EzspGetKeyRequest();
         request.setKeyType(EmberKeyType.EMBER_APPLICATION_LINK_KEY);
-        request.setSequenceNumber(2);
+        TestUtilities.setField(EzspFrame.class, request, "sequenceNumber", 2);
         System.out.println(request);
 
         assertTrue(Arrays.equals(getPacketData("02 00 6A 05"), request.serialize()));

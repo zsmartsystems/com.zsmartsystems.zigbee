@@ -26,6 +26,7 @@ import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
+import com.zsmartsystems.zigbee.TestUtilities;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetConfigurationValueResponse;
@@ -277,14 +278,14 @@ public class SpiFrameHandlerTest {
     }
 
     @Test
-    public void testSendEzspFrame() {
+    public void testSendEzspFrame() throws Exception {
         portOutData = new ArrayList<>();
         SpiFrameHandler handler = new SpiFrameHandler(Mockito.mock(EzspFrameHandler.class));
         handler.start(new TestPort(Mockito.mock(InputStream.class), Mockito.mock(OutputStream.class)));
 
         EzspVersionRequest command = new EzspVersionRequest();
         command.setDesiredProtocolVersion(4);
-        command.setSequenceNumber(1);
+        TestUtilities.setField(EzspFrame.class, command, "sequenceNumber", 1);
         sendEzspFrame(handler, command);
         assertEquals(7, portOutData.size());
         assertEquals(Integer.valueOf(0xFE), portOutData.get(0));

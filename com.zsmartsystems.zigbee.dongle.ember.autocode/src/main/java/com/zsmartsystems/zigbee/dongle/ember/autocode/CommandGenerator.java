@@ -1018,15 +1018,6 @@ public class CommandGenerator extends ClassGenerator {
         out.println();
 
         out.println("    /**");
-        out.println("     * Sets the 8 bit transaction sequence number");
-        out.println("     *");
-        out.println("     * @param sequenceNumber");
-        out.println("     */");
-        out.println("    public void setSequenceNumber(int sequenceNumber) {");
-        out.println("        this.sequenceNumber = sequenceNumber;");
-        out.println("    }");
-        out.println();
-        out.println("    /**");
         out.println("     * Gets the 8 bit transaction sequence number");
         out.println("     *");
         out.println("     * @return sequence number");

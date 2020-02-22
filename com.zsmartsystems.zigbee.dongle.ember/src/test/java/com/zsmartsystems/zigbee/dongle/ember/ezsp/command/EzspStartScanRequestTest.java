@@ -13,10 +13,10 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.TestUtilities;
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStartScanRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspNetworkScanType;
 
 /**
@@ -26,10 +26,10 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspNetworkScanType;
  */
 public class EzspStartScanRequestTest extends EzspFrameTest {
     @Test
-    public void testVersion() {
+    public void testVersion() throws Exception {
         EzspFrame.setEzspVersion(4);
         EzspStartScanRequest request = new EzspStartScanRequest();
-        request.setSequenceNumber(3);
+        TestUtilities.setField(EzspFrame.class, request, "sequenceNumber", 3);
         request.setScanType(EzspNetworkScanType.EZSP_ENERGY_SCAN);
         request.setChannelMask(ZigBeeChannelMask.CHANNEL_MASK_2GHZ);
         request.setDuration(1);

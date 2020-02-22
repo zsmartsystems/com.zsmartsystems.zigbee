@@ -13,9 +13,9 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.TestUtilities;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLookupEui64ByNodeIdRequest;
 
 /**
  *
@@ -24,11 +24,11 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLookupEui64ByNodeI
  */
 public class EzspLookupEui64ByNodeIdRequestTest extends EzspFrameTest {
     @Test
-    public void testLookupAddress() {
+    public void testLookupAddress() throws Exception {
         EzspFrame.setEzspVersion(4);
         EzspLookupEui64ByNodeIdRequest request = new EzspLookupEui64ByNodeIdRequest();
         request.setNodeId(0);
-        request.setSequenceNumber(5);
+        TestUtilities.setField(EzspFrame.class, request, "sequenceNumber", 5);
         System.out.println(request);
 
         assertTrue(Arrays.equals(getPacketData("05 00 61 00 00"), request.serialize()));
