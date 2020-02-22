@@ -14,11 +14,10 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.TestUtilities;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendUnicastRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendUnicastResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsOption;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberOutgoingMessageType;
@@ -44,7 +43,7 @@ public class EzspSendUnicastTest extends EzspFrameTest {
     }
 
     @Test
-    public void testSendPermitJoining() {
+    public void testSendPermitJoining() throws Exception {
         EzspFrame.setEzspVersion(4);
         ManagementPermitJoiningRequest permitJoining = new ManagementPermitJoiningRequest();
 
@@ -71,7 +70,7 @@ public class EzspSendUnicastTest extends EzspFrameTest {
         apsFrame.setGroupId(0xffff);
 
         emberUnicast.setMessageTag(0x99);
-        emberUnicast.setSequenceNumber(0xaa);
+        TestUtilities.setField(EzspFrame.class, emberUnicast, "sequenceNumber", 0xAA);
         emberUnicast.setType(EmberOutgoingMessageType.EMBER_OUTGOING_DIRECT);
         emberUnicast.setApsFrame(apsFrame);
         emberUnicast.setIndexOrDestination(permitJoining.getDestinationAddress().getAddress());

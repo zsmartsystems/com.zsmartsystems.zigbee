@@ -14,6 +14,8 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.TestUtilities;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.ash.AshFrame.FrameType;
 
@@ -25,17 +27,17 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.ash.AshFrame.FrameType;
 public class AshFrameDataTest {
 
     @Test
-    public void testAshFrameData() {
+    public void testAshFrameData() throws Exception {
         AshFrameData frame;
         EzspVersionRequest request = new EzspVersionRequest();
-        request.setSequenceNumber(1);
+        TestUtilities.setField(EzspFrame.class, request, "sequenceNumber", 1);
         request.setDesiredProtocolVersion(4);
         frame = new AshFrameData(request);
         System.out.println(frame);
         assertTrue(Arrays.equals(new int[] { 0, 67, 33, 168, 80, 155, 152, 126 }, frame.getOutputBuffer()));
 
         request = new EzspVersionRequest();
-        request.setSequenceNumber(2);
+        TestUtilities.setField(EzspFrame.class, request, "sequenceNumber", 2);
         request.setDesiredProtocolVersion(4);
         frame = new AshFrameData(request);
         frame.setAckNum(3);
@@ -44,7 +46,7 @@ public class AshFrameDataTest {
         assertTrue(Arrays.equals(new int[] { 67, 64, 33, 168, 80, 255, 254, 126 }, frame.getOutputBuffer()));
 
         request = new EzspVersionRequest();
-        request.setSequenceNumber(3);
+        TestUtilities.setField(EzspFrame.class, request, "sequenceNumber", 3);
         request.setDesiredProtocolVersion(4);
         frame = new AshFrameData(request);
         frame.setAckNum(6);

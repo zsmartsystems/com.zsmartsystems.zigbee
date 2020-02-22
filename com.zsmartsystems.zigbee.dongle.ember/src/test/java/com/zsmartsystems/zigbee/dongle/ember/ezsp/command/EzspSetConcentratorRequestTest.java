@@ -13,9 +13,9 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.TestUtilities;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetConcentratorRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberConcentratorType;
 
 /**
@@ -25,10 +25,10 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberConcentratorTyp
  */
 public class EzspSetConcentratorRequestTest extends EzspFrameTest {
     @Test
-    public void testEnabled() {
+    public void testEnabled() throws Exception {
         EzspFrame.setEzspVersion(4);
         EzspSetConcentratorRequest request = new EzspSetConcentratorRequest();
-        request.setSequenceNumber(52);
+        TestUtilities.setField(EzspFrame.class, request, "sequenceNumber", 52);
         request.setConcentratorType(EmberConcentratorType.EMBER_HIGH_RAM_CONCENTRATOR);
         request.setMinTime(60);
         request.setMaxTime(3600);
@@ -42,10 +42,10 @@ public class EzspSetConcentratorRequestTest extends EzspFrameTest {
     }
 
     @Test
-    public void testDisabled() {
+    public void testDisabled() throws Exception {
         EzspFrame.setEzspVersion(4);
         EzspSetConcentratorRequest request = new EzspSetConcentratorRequest();
-        request.setSequenceNumber(52);
+        TestUtilities.setField(EzspFrame.class, request, "sequenceNumber", 52);
         request.setConcentratorType(EmberConcentratorType.EMBER_LOW_RAM_CONCENTRATOR);
         request.setMinTime(60);
         request.setMaxTime(3600);

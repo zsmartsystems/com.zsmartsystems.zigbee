@@ -15,11 +15,11 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.TestUtilities;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
-import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspSingleResponseTransaction;
-import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransaction;
 
 /**
  *
@@ -28,9 +28,9 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransactio
  */
 public class EzspSingleResponseTransactionTest extends EzspFrameTest {
     @Test
-    public void testResponseMatches() {
+    public void testResponseMatches() throws Exception {
         EzspVersionRequest version = new EzspVersionRequest();
-        version.setSequenceNumber(3);
+        TestUtilities.setField(EzspFrame.class, version, "sequenceNumber", 3);
         version.setDesiredProtocolVersion(4);
 
         EzspTransaction versionTransaction = new EzspSingleResponseTransaction(version, EzspVersionResponse.class);
@@ -46,9 +46,9 @@ public class EzspSingleResponseTransactionTest extends EzspFrameTest {
     }
 
     @Test
-    public void testResponseMatchFails() {
+    public void testResponseMatchFails() throws Exception {
         EzspVersionRequest version = new EzspVersionRequest();
-        version.setSequenceNumber(4);
+        TestUtilities.setField(EzspFrame.class, version, "sequenceNumber", 4);
         version.setDesiredProtocolVersion(4);
 
         EzspTransaction versionTransaction = new EzspSingleResponseTransaction(version, EzspVersionResponse.class);

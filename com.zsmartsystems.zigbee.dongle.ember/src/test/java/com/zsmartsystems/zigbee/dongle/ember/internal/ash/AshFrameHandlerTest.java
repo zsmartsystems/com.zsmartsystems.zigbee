@@ -28,6 +28,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.TestUtilities;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
@@ -237,7 +238,7 @@ public class AshFrameHandlerTest {
         TestUtilities.setField(AshFrameHandler.class, frameHandler, "stateConnected", true);
 
         EzspVersionRequest request = new EzspVersionRequest();
-        request.setSequenceNumber(3);
+        TestUtilities.setField(EzspFrame.class, request, "sequenceNumber", 3);
         request.setDesiredProtocolVersion(4);
 
         EzspTransaction transaction = frameHandler

@@ -22,7 +22,6 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.apache.log4j.xml.DOMConfigurator;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
@@ -91,7 +90,7 @@ public class ZigBeeConsoleMain {
      * @param args the command arguments
      */
     public static void main(final String[] args) {
-        DOMConfigurator.configure("./log4j.xml");
+        // DOMConfigurator.configure("./log4j.xml");
 
         final String serialPortName;
         final String dongleName;

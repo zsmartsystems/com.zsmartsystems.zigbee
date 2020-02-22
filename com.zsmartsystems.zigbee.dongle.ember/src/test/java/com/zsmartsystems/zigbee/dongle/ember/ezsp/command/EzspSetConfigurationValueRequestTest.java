@@ -13,9 +13,9 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.TestUtilities;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetConfigurationValueRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberZdoConfigurationFlags;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
 
@@ -26,10 +26,10 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
  */
 public class EzspSetConfigurationValueRequestTest extends EzspFrameTest {
     @Test
-    public void testVersion() {
+    public void testVersion() throws Exception {
         EzspFrame.setEzspVersion(4);
         EzspSetConfigurationValueRequest request = new EzspSetConfigurationValueRequest();
-        request.setSequenceNumber(2);
+        TestUtilities.setField(EzspFrame.class, request, "sequenceNumber", 2);
         request.setConfigId(EzspConfigId.EZSP_CONFIG_APPLICATION_ZDO_FLAGS);
         request.setValue(EmberZdoConfigurationFlags.EMBER_APP_RECEIVES_SUPPORTED_ZDO_REQUESTS.getKey());
         System.out.println(request);

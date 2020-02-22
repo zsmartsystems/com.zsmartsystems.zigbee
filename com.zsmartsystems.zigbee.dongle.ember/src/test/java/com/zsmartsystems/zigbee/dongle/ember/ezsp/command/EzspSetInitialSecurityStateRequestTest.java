@@ -14,9 +14,9 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.TestUtilities;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetInitialSecurityStateRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurityBitmask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurityState;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
  */
 public class EzspSetInitialSecurityStateRequestTest extends EzspFrameTest {
     @Test
-    public void testSecurityStateRequest() {
+    public void testSecurityStateRequest() throws Exception {
         EzspFrame.setEzspVersion(4);
 
         EmberKeyData keyData;
@@ -44,7 +44,7 @@ public class EzspSetInitialSecurityStateRequestTest extends EzspFrameTest {
         state.setNetworkKeySequenceNumber(0);
         state.addBitmask(EmberInitialSecurityBitmask.EMBER_STANDARD_SECURITY_MODE);
         request.setState(state);
-        request.setSequenceNumber(7);
+        TestUtilities.setField(EzspFrame.class, request, "sequenceNumber", 7);
         System.out.println(request);
 
         assertTrue(Arrays.equals(getPacketData(

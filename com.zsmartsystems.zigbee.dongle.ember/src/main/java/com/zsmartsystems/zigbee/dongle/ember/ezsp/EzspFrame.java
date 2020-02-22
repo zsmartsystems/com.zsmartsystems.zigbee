@@ -371,15 +371,6 @@ public abstract class EzspFrame {
     }
 
     /**
-     * Sets the 8 bit transaction sequence number
-     *
-     * @param sequenceNumber
-     */
-    public void setSequenceNumber(int sequenceNumber) {
-        this.sequenceNumber = sequenceNumber;
-    }
-
-    /**
      * Gets the 8 bit transaction sequence number
      *
      * @return sequence number

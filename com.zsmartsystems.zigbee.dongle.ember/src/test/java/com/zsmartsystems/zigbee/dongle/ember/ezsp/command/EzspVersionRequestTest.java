@@ -13,9 +13,9 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.TestUtilities;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionRequest;
 
 /**
  *
@@ -24,33 +24,33 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionRequest;
  */
 public class EzspVersionRequestTest extends EzspFrameTest {
     @Test
-    public void testVersion4() {
+    public void testVersion4() throws Exception {
         EzspFrame.setEzspVersion(4);
         EzspVersionRequest version = new EzspVersionRequest();
         version.setDesiredProtocolVersion(4);
-        version.setSequenceNumber(0);
+        TestUtilities.setField(EzspFrame.class, version, "sequenceNumber", 0);
         System.out.println(version);
 
         assertTrue(Arrays.equals(getPacketData("00 00 00 04"), version.serialize()));
     }
 
     @Test
-    public void testVersion5() {
+    public void testVersion5() throws Exception {
         EzspFrame.setEzspVersion(5);
         EzspVersionRequest version = new EzspVersionRequest();
         version.setDesiredProtocolVersion(5);
-        version.setSequenceNumber(0);
+        TestUtilities.setField(EzspFrame.class, version, "sequenceNumber", 0);
         System.out.println(version);
 
         assertTrue(Arrays.equals(getPacketData("00 00 FF 00 00 05"), version.serialize()));
     }
 
     @Test
-    public void testVersion6() {
+    public void testVersion6() throws Exception {
         EzspFrame.setEzspVersion(6);
         EzspVersionRequest version = new EzspVersionRequest();
         version.setDesiredProtocolVersion(6);
-        version.setSequenceNumber(0);
+        TestUtilities.setField(EzspFrame.class, version, "sequenceNumber", 0);
         System.out.println(version);
 
         assertTrue(Arrays.equals(getPacketData("00 00 FF 00 00 06"), version.serialize()));
