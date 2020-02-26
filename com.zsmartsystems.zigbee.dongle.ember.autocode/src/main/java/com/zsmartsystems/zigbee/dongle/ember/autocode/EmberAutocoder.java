@@ -9,6 +9,7 @@ package com.zsmartsystems.zigbee.dongle.ember.autocode;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +58,7 @@ public class EmberAutocoder {
 
         try {
             new CommandGenerator().go(protocol);
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }

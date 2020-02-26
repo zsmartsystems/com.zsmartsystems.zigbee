@@ -9,6 +9,7 @@ package com.zsmartsystems.zigbee.dongle.telegesis.autocode;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ import com.zsmartsystems.zigbee.dongle.telegesis.autocode.xml.Value;
  *
  */
 public class TelegesisAutocoder {
-    public static void main(final String[] args) {
+    public static void main(final String[] args)  {
 
         Protocol protocol;
         try {
@@ -57,7 +58,7 @@ public class TelegesisAutocoder {
         try {
             new CommandGenerator().go(protocol);
             // new PacketProcessing().go(protocol);
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }
