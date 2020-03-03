@@ -7,6 +7,8 @@
  */
 package com.zsmartsystems.zigbee.zcl;
 
+import java.util.Objects;
+
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 
@@ -23,15 +25,22 @@ public class ZclTransactionMatcher implements ZigBeeTransactionMatcher {
 
     @Override
     public boolean isTransactionMatch(ZigBeeCommand request, ZigBeeCommand response) {
-        if (!request.getDestinationAddress().equals(response.getSourceAddress())) {
-            return false;
-        }
+        return (addressesMatch(request, response)
+                && response instanceof ZclCommand
+                && ((ZclCommand) request).getTransactionId() != null
+                && transactionIdsMatch((ZclCommand) request, (ZclCommand) response))
+                && clusterIdsMatch(request, response);
+    }
 
-        if (response instanceof ZclCommand && ((ZclCommand) request).getTransactionId() != null) {
-            final int transactionId = ((ZclCommand) request).getTransactionId();
-            return Integer.valueOf(transactionId).equals(((ZclCommand) response).getTransactionId());
-        } else {
-            return false;
-        }
+    private boolean addressesMatch(ZigBeeCommand request, ZigBeeCommand response) {
+        return request.getDestinationAddress().equals(response.getSourceAddress());
+    }
+    
+    private boolean transactionIdsMatch(ZclCommand request, ZclCommand response) {
+        return Objects.equals(request.getTransactionId(), response.getTransactionId());
+    }
+    
+    private boolean clusterIdsMatch(ZigBeeCommand request, ZigBeeCommand response) {
+        return Objects.equals(request.getClusterId(), response.getClusterId());
     }
 }
