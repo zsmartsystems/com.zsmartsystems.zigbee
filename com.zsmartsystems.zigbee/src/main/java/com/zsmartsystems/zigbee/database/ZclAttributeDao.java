@@ -98,6 +98,12 @@ public class ZclAttributeDao {
     private int reportingTimeout;
 
     /**
+     * The manufacturer code of the attribute, in case the attribute is 
+     * manufacturer-specific. Otherwise, this field is null.
+     */
+    private Integer manufacturerCode;
+
+    /**
      * Records the last time a report was received
      */
     private Calendar lastReportTime;
@@ -273,6 +279,20 @@ public class ZclAttributeDao {
      */
     public void setReportingTimeout(int reportingTimeout) {
         this.reportingTimeout = reportingTimeout;
+    }
+
+    /**
+     * @return the manufacturer code (or null, if attribute is not manufacturer-specific)
+     */
+    public Integer getManufacturerCode() {
+        return manufacturerCode;
+    }
+
+    /**
+     * @param manufacturerCode the manufacturer code to set (or null, if attribute is not manufacturer-specific)
+     */
+    public void setManufacturerCode(Integer manufacturerCode) {
+        this.manufacturerCode = manufacturerCode;
     }
 
     /**

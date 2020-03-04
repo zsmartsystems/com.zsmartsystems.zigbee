@@ -131,7 +131,7 @@ public class ZclAttributeTest {
     public void dao() {
         ZclCluster cluster = Mockito.mock(ZclCluster.class);
         ZclAttribute attribute = new ZclAttribute(cluster, 123, "Test Name", ZclDataType.UNSIGNED_8_BIT_INTEGER, true,
-                false, true, false);
+                false, true, false, 0x1234);
 
         attribute.updateValue(Integer.valueOf(12345));
 
@@ -144,6 +144,7 @@ public class ZclAttributeTest {
         assertTrue(dao.isWritable());
         assertFalse(dao.isReadable());
         assertFalse(dao.isReportable());
+        assertEquals(Integer.valueOf(0x1234), dao.getManufacturerCode());
         assertEquals(12345, dao.getLastValue());
 
         ZclAttribute daoAttribute = new ZclAttribute();
@@ -157,6 +158,7 @@ public class ZclAttributeTest {
         assertTrue(daoAttribute.isWritable());
         assertFalse(daoAttribute.isReadable());
         assertFalse(daoAttribute.isReportable());
+        assertEquals(Integer.valueOf(0x1234), daoAttribute.getManufacturerCode());
         assertEquals(12345, daoAttribute.getLastValue());
     }
 }
