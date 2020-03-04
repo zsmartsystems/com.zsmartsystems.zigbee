@@ -541,6 +541,7 @@ public class ZclAttribute {
         maximumReportingPeriod = dao.getMaximumReportingPeriod();
         reportingChange = dao.getReportingChange();
         reportingTimeout = dao.getReportingTimeout();
+        manufacturerCode = dao.getManufacturerCode();
     }
 
     /**
@@ -564,6 +565,7 @@ public class ZclAttribute {
         dao.setReportable(reportable);
         dao.setReportingChange(reportingChange);
         dao.setReportingTimeout(reportingTimeout);
+        dao.setManufacturerCode(manufacturerCode);
         dao.setLastValue(lastValue);
         dao.setLastReportTime(lastReportTime);
 
