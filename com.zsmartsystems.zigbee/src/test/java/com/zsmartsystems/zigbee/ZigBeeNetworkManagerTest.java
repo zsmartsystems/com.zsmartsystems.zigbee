@@ -476,6 +476,7 @@ public class ZigBeeNetworkManagerTest
 
         ZigBeeEndpoint endpoint = Mockito.mock(ZigBeeEndpoint.class);
         ZclCluster cluster = new ZclOnOffCluster(endpoint);
+        Mockito.when(endpoint.getOutputCluster(cluster.getClusterId())).thenReturn(cluster);
 
         ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
         Mockito.when(node.getIeeeAddress()).thenReturn(new IeeeAddress("1111111111111111"));
@@ -490,7 +491,7 @@ public class ZigBeeNetworkManagerTest
         apsFrame.setApsCounter(1);
 
         apsFrame.setCluster(6);
-        apsFrame.setDestinationEndpoint(2);
+        apsFrame.setDestinationEndpoint(1);
         apsFrame.setProfile(0x104);
         apsFrame.setSourceEndpoint(5);
 
