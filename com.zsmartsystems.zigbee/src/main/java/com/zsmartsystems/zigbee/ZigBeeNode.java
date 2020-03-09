@@ -728,7 +728,7 @@ public class ZigBeeNode implements ZigBeeCommandListener {
 
         boolean updated = false;
 
-        if (nodeState != node.getNodeState()) {
+        if (node.getNodeState() != ZigBeeNodeState.UNKNOWN && nodeState != node.getNodeState()) {
             nodeState = node.getNodeState();
             updated = true;
         }
