@@ -461,6 +461,8 @@ public class ZigBeeNodeTest {
         newNode = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress("1234567890"));
         newNode.setNodeState(ZigBeeNodeState.ONLINE);
         assertTrue(node.updateNode(newNode));
+        newNode.setNodeState(ZigBeeNodeState.UNKNOWN);
+        assertFalse(node.updateNode(newNode));
     }
 
     @Test
