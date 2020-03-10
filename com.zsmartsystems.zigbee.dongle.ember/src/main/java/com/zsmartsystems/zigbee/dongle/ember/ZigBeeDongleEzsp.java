@@ -942,7 +942,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         if (response instanceof EzspMfglibRxHandler) {
             if (mfglibListener != null) {
                 EzspMfglibRxHandler mfglibHandler = (EzspMfglibRxHandler) response;
-                mfglibListener.emberMfgLibPacketReceived(mfglibHandler.getLinkQuality(), mfglibHandler.getLinkQuality(),
+                mfglibListener.emberMfgLibPacketReceived(mfglibHandler.getLinkQuality(), mfglibHandler.getRssi(),
                         mfglibHandler.getPacketContents());
             }
             return;
