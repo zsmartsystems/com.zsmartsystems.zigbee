@@ -12,6 +12,7 @@ import java.util.Set;
 
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeCommandListener;
+import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 
 /**
  * Class to manage notifications of received commands. The library distributes commands hierarchically so this class
@@ -21,6 +22,13 @@ import com.zsmartsystems.zigbee.ZigBeeCommandListener;
  *
  */
 public class ZigBeeCommandNotifier {
+    
+    private ZigBeeNetworkManager networkManager;
+
+    public ZigBeeCommandNotifier(ZigBeeNetworkManager networkManager) {
+        this.networkManager = networkManager;
+    }
+    
     /**
      * The command listeners.
      */
@@ -52,7 +60,7 @@ public class ZigBeeCommandNotifier {
     public synchronized void notifyCommandListeners(final ZigBeeCommand command) {
         // Notify the listeners
         for (final ZigBeeCommandListener commandListener : commandListeners) {
-            NotificationService.execute(new Runnable() {
+            networkManager.getNotificationService().execute(new Runnable() {
                 @Override
                 public void run() {
                     commandListener.commandReceived(command);

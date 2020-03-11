@@ -182,6 +182,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      * The network database - used to save the state of the network and all its nodes
      */
     private final ZigBeeNetworkDatabaseManager databaseManager;
+    
+    /**
+     * An executor service for running notifications in separate threads.
+     */
+    private NotificationService notificationService = new NotificationService();
 
     /**
      * Executor service to execute update threads for discovery or mesh updates etc.
@@ -211,7 +216,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
     /**
      * The {@link ZigBeeCommandNotifier}. This is used for sending notifications asynchronously to listeners.
      */
-    private final ZigBeeCommandNotifier commandNotifier = new ZigBeeCommandNotifier();
+    private final ZigBeeCommandNotifier commandNotifier = new ZigBeeCommandNotifier(this);
 
     /**
      * The listeners of the ZigBee network state.
@@ -364,7 +369,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      */
     public ZigBeeStatus initialize() {
         logger.debug("ZigBeeNetworkManager initialize: networkState={}", networkState);
-        NotificationService.initialize();
         synchronized (this) {
             if (networkState != ZigBeeNetworkState.UNINITIALISED) {
                 return ZigBeeStatus.INVALID_STATE;
@@ -697,7 +701,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         transport.shutdown();
         transactionManager.shutdown();
 
-        NotificationService.shutdown(5000);
+        notificationService.shutdown(5000);
         executorService.shutdownNow();
     }
 
@@ -911,7 +915,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
             // Notify the listeners that we have heard a command that was unknown to us
             for (final ZigBeeAnnounceListener announceListener : announceListeners) {
-                NotificationService.execute(new Runnable() {
+                notificationService.execute(new Runnable() {
                     @Override
                     public void run() {
                         announceListener.announceUnknownDevice(apsFrame.getSourceAddress());
@@ -978,7 +982,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         // Directly distribute commands to nodes
         ZigBeeNode node = getNode(command.getSourceAddress().getAddress());
         if (node != null) {
-            NotificationService.execute(new Runnable() {
+            notificationService.execute(new Runnable() {
                 @Override
                 public void run() {
                     node.commandReceived(finalCommand, apsFrame.getReceivedRssi(), apsFrame.getReceivedLqi());
@@ -1214,7 +1218,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
         // Notify the listeners
         for (final ZigBeeAnnounceListener announceListener : announceListeners) {
-            NotificationService.execute(new Runnable() {
+            notificationService.execute(new Runnable() {
                 @Override
                 public void run() {
                     announceListener.deviceStatusUpdate(deviceStatus, networkAddress, ieeeAddress);
@@ -1275,7 +1279,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         // and ensure that the local node is added.
         // This is done in another thread which will then notify users.
         if (state == ZigBeeNetworkState.ONLINE) {
-            NotificationService.execute(new Runnable() {
+            notificationService.execute(new Runnable() {
                 @Override
                 public void run() {
                     setNetworkStateOnline();
@@ -1286,7 +1290,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
 
         for (final ZigBeeNetworkStateListener stateListener : stateListeners) {
-            NotificationService.execute(new Runnable() {
+            notificationService.execute(new Runnable() {
                 @Override
                 public void run() {
                     stateListener.networkStateUpdated(state);
@@ -1322,7 +1326,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             logger.debug("Network state ONLINE: Notifying node {} [{}]", node.getIeeeAddress(),
                     String.format("%04X", node.getNetworkAddress()));
             if (node.getNodeDescriptor() != null) {
-                NotificationService.execute(new Runnable() {
+                notificationService.execute(new Runnable() {
                     @Override
                     public void run() {
                         transport.setNodeDescriptor(node.getIeeeAddress(), node.getNodeDescriptor());
@@ -1331,7 +1335,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             }
 
             for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
-                NotificationService.execute(new Runnable() {
+                notificationService.execute(new Runnable() {
                     @Override
                     public void run() {
                         listener.nodeAdded(node);
@@ -1342,7 +1346,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
         // Now that everything is added and started, notify the listeners that the state has updated
         for (final ZigBeeNetworkStateListener stateListener : stateListeners) {
-            NotificationService.execute(new Runnable() {
+            notificationService.execute(new Runnable() {
                 @Override
                 public void run() {
                     stateListener.networkStateUpdated(ZigBeeNetworkState.ONLINE);
@@ -1597,7 +1601,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
 
         for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
-            NotificationService.execute(new Runnable() {
+            notificationService.execute(new Runnable() {
                 @Override
                 public void run() {
                     listener.nodeRemoved(node);
@@ -1639,7 +1643,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
 
         if (node.getNodeDescriptor() != null) {
-            NotificationService.execute(new Runnable() {
+            notificationService.execute(new Runnable() {
                 @Override
                 public void run() {
                     transport.setNodeDescriptor(node.getIeeeAddress(), node.getNodeDescriptor());
@@ -1648,7 +1652,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         }
 
         for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
-            NotificationService.execute(new Runnable() {
+            notificationService.execute(new Runnable() {
                 @Override
                 public void run() {
                     listener.nodeAdded(node);
@@ -1693,7 +1697,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
         if (node.getNodeDescriptor() != null && networkNodes.get(node.getIeeeAddress()) != null && Objects
                 .equals(networkNodes.get(node.getIeeeAddress()).getNodeDescriptor(), node.getNodeDescriptor())) {
-            NotificationService.execute(new Runnable() {
+            notificationService.execute(new Runnable() {
                 @Override
                 public void run() {
                     transport.setNodeDescriptor(node.getIeeeAddress(), node.getNodeDescriptor());
@@ -1725,7 +1729,7 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             synchronized (nodeListeners) {
                 latch = new CountDownLatch(nodeListeners.size());
                 for (final ZigBeeNetworkNodeListener listener : nodeListeners) {
-                    NotificationService.execute(new Runnable() {
+                    notificationService.execute(new Runnable() {
                         @Override
                         public void run() {
                             if (sendNodeAdded) {
@@ -1880,6 +1884,15 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
      */
     public Integer getLocalNwkAddress() {
         return localNwkAddress;
+    }
+    
+    /**
+     * Gets this network manager's {@link NotificationService} instance.
+     * 
+     * @return this network manager's {@link NotificationService} instance.
+     */
+    public NotificationService getNotificationService() {
+        return notificationService;
     }
 
     /**

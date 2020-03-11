@@ -20,7 +20,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import org.awaitility.Awaitility;
-import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
@@ -53,11 +52,6 @@ import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
  */
 public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
     private List<ZigBeeOtaServerStatus> otaStatusCapture;
-
-    @Before
-    public void resetNotificationService() throws Exception {
-        NotificationService.initialize();
-    }
 
     @Test
     public void testNotify() throws Exception {
@@ -102,6 +96,7 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
         }).when(mockedNetworkManager).sendCommand(mockedCommandCaptor.capture());
 
         ZclOtaUpgradeCluster cluster = Mockito.mock(ZclOtaUpgradeCluster.class);
+        Mockito.when(cluster.getNotificationService()).thenReturn(new NotificationService());
 
         ZclOtaUpgradeServer server = new ZclOtaUpgradeServer();
         assertEquals(ZigBeeStatus.SUCCESS, server.appStartup(cluster));
@@ -146,6 +141,7 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
         otaStatusCapture = new ArrayList<ZigBeeOtaServerStatus>();
 
         ZclOtaUpgradeCluster cluster = Mockito.mock(ZclOtaUpgradeCluster.class);
+        Mockito.when(cluster.getNotificationService()).thenReturn(new NotificationService());
         ZclOtaUpgradeServer server = new ZclOtaUpgradeServer();
         assertEquals(ZigBeeStatus.SUCCESS, server.appStartup(cluster));
         server.addListener(this);
