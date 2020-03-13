@@ -7,6 +7,9 @@
  */
 package com.zsmartsystems.zigbee.zcl;
 
+import static com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster.ATTR_ONOFF;
+import static java.lang.Boolean.TRUE;
+import static java.util.stream.Collectors.toSet;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -15,7 +18,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -652,22 +654,54 @@ public class ZclClusterTest {
 
     @Test
     public void setDao() {
+        // Given an On/Off cluster and the DAO created from that cluster
         createEndpoint();
-
         ZclOnOffCluster cluster = new ZclOnOffCluster(endpoint);
+        Set<Integer> onOffClusterAttributeIds = cluster.getAttributes().stream().map(ZclAttribute::getId)
+                .collect(toSet());
 
         ZclClusterDao clusterDao = cluster.getDao();
-        ZclAttributeDao attributeDao = new ZclAttributeDao();
-        attributeDao.setDataType(ZclDataType.SIGNED_16_BIT_INTEGER);
-        attributeDao.setId(1);
-        attributeDao.setLastValue(Double.valueOf(123));
-        Map<Integer, ZclAttributeDao> attributes = new HashMap<>();
-        attributes.put(1, attributeDao);
-        clusterDao.setAttributes(attributes);
+        Map<Integer, ZclAttributeDao> attributeDaos = clusterDao.getAttributes();
 
+        // Add one attribute for a manufacturer-specific attribute to the DAO
+        ZclAttributeDao manufacturerSpecificAttributeDao = new ZclAttributeDao();
+        manufacturerSpecificAttributeDao.setId(0xF000);
+        manufacturerSpecificAttributeDao.setManufacturerCode(0x1234);
+        manufacturerSpecificAttributeDao.setDataType(ZclDataType.SIGNED_16_BIT_INTEGER);
+        manufacturerSpecificAttributeDao.setLastValue(Double.valueOf(123));
+        attributeDaos.put(manufacturerSpecificAttributeDao.getId(), manufacturerSpecificAttributeDao);
+
+        // Set last value and implemented status for the on/off attribute in the DAO
+        ZclAttributeDao onOffAttributeDao = attributeDaos.get(ATTR_ONOFF);
+        onOffAttributeDao.setLastValue(TRUE);
+        onOffAttributeDao.setImplemented(true);
+
+        clusterDao.setAttributes(attributeDaos);
+
+        // Now update the cluster from the DAO
         cluster.setDao(clusterDao);
-        assertEquals(1, cluster.getAttributes().size());
-        assertEquals(Integer.class, cluster.getAttributes().iterator().next().getLastValue().getClass());
+
+        // Then the cluster contains all attributes from the on/off cluster, plus the manufacturer-specific attribute
+        assertEquals(onOffClusterAttributeIds.size() + 1, cluster.getAttributes().size());
+        for (Integer attributeId : onOffClusterAttributeIds) {
+            ZclAttribute attribute = cluster.getAttribute(attributeId);
+            assertNotNull(attribute);
+            assertEquals(new ZclOnOffCluster(endpoint).getAttribute(attributeId).getDataType(),
+                    attribute.getDataType());
+            assertEquals(new ZclOnOffCluster(endpoint).getAttribute(attributeId).getMaximumReportingPeriod(),
+                    attribute.getMaximumReportingPeriod());
+            assertEquals(new ZclOnOffCluster(endpoint).getAttribute(attributeId).getName(), attribute.getName());
+        }
+
+        // The onOff attribute has the state set correctly
+        ZclAttribute onOffAttribute = cluster.getAttribute(ATTR_ONOFF);
+        assertEquals(TRUE, onOffAttribute.getLastValue());
+        assertTrue(onOffAttribute.isImplemented());
+
+        // And the manufacturer-specific attribute has the state set correctly
+        ZclAttribute manufacturerSpecificAttribute = cluster.getAttribute(0xF000);
+        assertEquals(manufacturerSpecificAttribute.getManufacturerCode(), Integer.valueOf(0x1234));
+        assertEquals(manufacturerSpecificAttribute.getLastValue(), Integer.valueOf(123));
     }
 
     @Test
