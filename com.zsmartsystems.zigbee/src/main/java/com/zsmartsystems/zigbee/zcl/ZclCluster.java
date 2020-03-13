@@ -141,14 +141,14 @@ public abstract class ZclCluster {
 
     /**
      * Map of client attributes supported by the cluster. This contains all attributes, even if they are not supported
-     * by the remote device. To check what attributes are supported by the remove device, us the
+     * by the remote device. To check what attributes are supported by the remove device, use the
      * {@link #discoverAttributes()} method followed by the {@link #getSupportedAttributes()} method.
      */
     protected Map<Integer, ZclAttribute> clientAttributes = initializeClientAttributes();
 
     /**
      * Map of server attributes supported by the cluster. This contains all attributes, even if they are not supported
-     * by the remote device. To check what attributes are supported by the remove device, us the
+     * by the remote device. To check what attributes are supported by the remove device, use the
      * {@link #discoverAttributes()} method followed by the {@link #getSupportedAttributes()} method.
      */
     protected Map<Integer, ZclAttribute> serverAttributes = initializeServerAttributes();
