@@ -543,6 +543,17 @@ public class ZclAttribute {
         reportingTimeout = dao.getReportingTimeout();
         manufacturerCode = dao.getManufacturerCode();
     }
+    
+    /**
+     * Sets the dynamic state of the attribute from a {@link ZclAttributeDao} which has been restored from a persisted state.
+     *
+     * @param dao the {@link ZclAttributeDao} from which to restore the dynamic state
+     */
+    public void setDynamicStateFromDao(ZclAttributeDao dao) {
+        implemented = dao.isImplemented();
+        lastValue = dao.getLastValue();
+        lastReportTime = dao.getLastReportTime();
+    }
 
     /**
      * Returns a Data Acquisition Object for this attribute. This is a clean class recording the state of the primary

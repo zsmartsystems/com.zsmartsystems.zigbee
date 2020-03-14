@@ -141,14 +141,14 @@ public abstract class ZclCluster {
 
     /**
      * Map of client attributes supported by the cluster. This contains all attributes, even if they are not supported
-     * by the remote device. To check what attributes are supported by the remove device, us the
+     * by the remote device. To check what attributes are supported by the remove device, use the
      * {@link #discoverAttributes()} method followed by the {@link #getSupportedAttributes()} method.
      */
     protected Map<Integer, ZclAttribute> clientAttributes = initializeClientAttributes();
 
     /**
      * Map of server attributes supported by the cluster. This contains all attributes, even if they are not supported
-     * by the remote device. To check what attributes are supported by the remove device, us the
+     * by the remote device. To check what attributes are supported by the remove device, use the
      * {@link #discoverAttributes()} method followed by the {@link #getSupportedAttributes()} method.
      */
     protected Map<Integer, ZclAttribute> serverAttributes = initializeServerAttributes();
@@ -1598,20 +1598,21 @@ public abstract class ZclCluster {
         supportedCommandsGenerated.addAll(dao.getSupportedCommandsGenerated());
         supportedCommandsReceived.addAll(dao.getSupportedCommandsReceived());
 
-        Map<Integer, ZclAttribute> daoZclAttributes = new HashMap<>();
+        Map<Integer, ZclAttribute> attributes = isClient ? clientAttributes : serverAttributes;
+        
         for (ZclAttributeDao daoAttribute : dao.getAttributes().values()) {
             // Normalize the data to protect against the users serialisation system restoring incorrect data classes
             daoAttribute
                     .setLastValue(normalizer.normalizeZclData(daoAttribute.getDataType(), daoAttribute.getLastValue()));
-            ZclAttribute attribute = new ZclAttribute();
-            attribute.setDao(this, daoAttribute);
-            daoZclAttributes.put(daoAttribute.getId(), attribute);
-        }
-
-        if (isClient) {
-            clientAttributes = daoZclAttributes;
-        } else {
-            serverAttributes = daoZclAttributes;
+            
+            ZclAttribute attribute = attributes.get(daoAttribute.getId());
+            if (attribute == null || daoAttribute.getManufacturerCode() != null) {
+                attribute = new ZclAttribute();
+                attribute.setDao(this, daoAttribute);
+                attributes.put(daoAttribute.getId(), attribute);
+            } else {
+                attribute.setDynamicStateFromDao(daoAttribute);
+            }
         }
     }
 
