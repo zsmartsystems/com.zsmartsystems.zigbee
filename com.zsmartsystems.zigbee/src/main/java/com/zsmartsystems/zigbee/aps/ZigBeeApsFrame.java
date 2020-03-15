@@ -138,6 +138,9 @@ public class ZigBeeApsFrame {
      */
     private int apsCounter = -1;
 
+    private Integer rssi;
+    private Integer lqi;
+
     protected int fragmentSize;
     protected int fragmentBase = 0;
     protected int fragmentTotal = 0;
@@ -418,6 +421,62 @@ public class ZigBeeApsFrame {
         return payload;
     }
 
+    /**
+     * Calling this method indicates that transmission of a fragment has completed.
+     * It moves the fragment base and decrease outstanding fragments counter.
+     */
+    public void oneFragmentCompleted() {
+        fragmentBase++;
+        if (fragmentOutstanding > 0) {
+            fragmentOutstanding--;
+        }
+    }
+
+    /**
+     * Calling this method indicates that a fragment has been sent. It increases outstanding fragments counter.
+     */
+    public void oneFragmentSent() {
+        if (fragmentOutstanding <= fragmentTotal) {
+            this.fragmentOutstanding++;
+        }
+    }
+
+    /**
+     * Gets the RSSI from the packet. If this is unknown the method will return null
+     *
+     * @return the RSSI of the packet
+     */
+    public Integer getReceivedRssi() {
+        return rssi;
+    }
+
+    /**
+     * Sets the RSSI from the packet. If this is unknown the method will return null
+     *
+     * @param the RSSI of the packet
+     */
+    public void setReceivedRssi(int rssi) {
+        this.rssi = rssi;
+    }
+
+    /**
+     * Gets the LQI from the packet. If this is unknown the method will return null
+     *
+     * @return the LQI of the packet
+     */
+    public Integer getReceivedLqi() {
+        return lqi;
+    }
+
+    /**
+     * Sets the LQI from the packet. If this is unknown the method will return null
+     *
+     * @param the LQI of the packet
+     */
+    public void setReceivedLqi(int lqi) {
+        this.lqi = lqi;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder(164);
@@ -439,6 +498,20 @@ public class ZigBeeApsFrame {
         } else {
             builder.append(String.format("%02X", apsCounter));
         }
+
+        builder.append(", rssi=");
+        if (rssi == null) {
+            builder.append("--");
+        } else {
+            builder.append(rssi);
+        }
+        builder.append(", lqi=");
+        if (lqi == null) {
+            builder.append("--");
+        } else {
+            builder.append(String.format("%02X", lqi));
+        }
+
         builder.append(", payload=");
         if (payload != null) {
             for (int c = 0; c < payload.length; c++) {
@@ -450,25 +523,5 @@ public class ZigBeeApsFrame {
         }
         builder.append(']');
         return builder.toString();
-    }
-
-    /**
-     * Calling this method indicates that transmission of a fragment has completed.
-     * It moves the fragment base and decrease outstanding fragments counter.
-     */
-    public void oneFragmentCompleted() {
-        fragmentBase++;
-        if (fragmentOutstanding > 0) {
-            fragmentOutstanding--;
-        }
-    }
-
-    /**
-     * Calling this method indicates that a fragment has been sent. It increases outstanding fragments counter.
-     */
-    public void oneFragmentSent() {
-        if (fragmentOutstanding <= fragmentTotal) {
-            this.fragmentOutstanding++;
-        }
     }
 }
