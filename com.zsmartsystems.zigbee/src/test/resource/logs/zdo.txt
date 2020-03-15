@@ -42,7 +42,7 @@ NodeDescriptorRequest [0000/0 -> 0000/0, cluster=0002, TID=1B, nwkAddrOfInterest
 ZigBeeApsFrame [sourceAddress=0000/0, destinationAddress=0000/0, profile=0000, cluster=0005, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=1D, payload=00 1B 7A]
 ActiveEndpointsRequest [0000/0 -> 0000/0, cluster=0005, TID=1D, nwkAddrOfInterest=31259]
 
-ZigBeeApsFrame [sourceAddress=61585/0, destinationAddress=0000/0, profile=0000, cluster=8005, addressMode=null, radius=0, apsSecurity=false, apsCounter=3F, payload=00 00 91 F0 07 01 02 03 04 05 C8 E8]
+ZigBeeApsFrame [sourceAddress=0000/0, destinationAddress=0000/0, profile=0000, cluster=8005, addressMode=null, radius=0, apsSecurity=false, apsCounter=3F, payload=00 00 91 F0 07 01 02 03 04 05 C8 E8]
 ActiveEndpointsResponse [61585/0 -> 0000/0, cluster=8005, TID=--, status=SUCCESS, nwkAddrOfInterest=61585, activeEpList=[1, 2, 3, 4, 5, 200, 232]]
 
 ZigBeeApsFrame [sourceAddress=0000/0, destinationAddress=0000/0, profile=0000, cluster=0004, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=1E, payload=00 1B 7A 03]

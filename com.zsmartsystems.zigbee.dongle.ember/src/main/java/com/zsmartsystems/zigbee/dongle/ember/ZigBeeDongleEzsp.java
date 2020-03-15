@@ -860,6 +860,9 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             apsFrame.setSourceAddress(incomingMessage.getSender());
             apsFrame.setSourceEndpoint(emberApsFrame.getSourceEndpoint());
 
+            apsFrame.setReceivedLqi(incomingMessage.getLastHopLqi());
+            apsFrame.setReceivedRssi(incomingMessage.getLastHopRssi());
+
             apsFrame.setPayload(incomingMessage.getMessageContents());
             zigbeeTransportReceive.receiveCommand(apsFrame);
 

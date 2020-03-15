@@ -959,14 +959,25 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
 
         // Pass the command to the transaction manager for processing
         // If the transaction manager wants to drop this command, it returns null
-        command = transactionManager.receive(command);
-        if (command == null) {
+        final ZigBeeCommand finalCommand = transactionManager.receive(command);
+        if (finalCommand == null) {
             return;
         }
 
         // Ignore the DefaultResponse
-        if (command instanceof DefaultResponse) {
+        if (finalCommand instanceof DefaultResponse) {
             return;
+        }
+
+        // Directly distribute commands to nodes
+        ZigBeeNode node = getNode(command.getSourceAddress().getAddress());
+        if (node != null) {
+            NotificationService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    node.commandReceived(finalCommand, apsFrame.getReceivedRssi(), apsFrame.getReceivedLqi());
+                }
+            });
         }
 
         // Notify the listeners
@@ -1585,7 +1596,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             return;
         }
         networkNodes.remove(node.getIeeeAddress());
-        removeCommandListener(node);
 
         synchronized (this) {
             if (networkState != ZigBeeNetworkState.ONLINE) {
@@ -1628,7 +1638,6 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
             return;
         }
         networkNodes.put(node.getIeeeAddress(), node);
-        addCommandListener(node);
 
         synchronized (this) {
             if (networkState != ZigBeeNetworkState.ONLINE) {
