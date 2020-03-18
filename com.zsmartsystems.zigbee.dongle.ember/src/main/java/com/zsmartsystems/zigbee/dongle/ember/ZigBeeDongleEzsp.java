@@ -988,7 +988,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     @Override
     public ZigBeeStatus setZigBeeChannel(ZigBeeChannel channel) {
-        if ((ZigBeeChannelMask.CHANNEL_MASK_2GHZ & channel.getMask()) == 0) {
+        if (channel != ZigBeeChannel.UNKNOWN && (ZigBeeChannelMask.CHANNEL_MASK_2GHZ & channel.getMask()) == 0) {
             logger.debug("Unable to set channel outside of 2.4GHz channels: {}", channel);
             return ZigBeeStatus.INVALID_ARGUMENTS;
         }

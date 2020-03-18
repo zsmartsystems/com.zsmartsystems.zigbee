@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
 import com.zsmartsystems.zigbee.dongle.ember.EmberNcp;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspEnergyScanResultHandler;
@@ -141,7 +142,7 @@ public class EmberNetworkInitialisation {
             logger.debug("Created random Extended PAN ID: {}", extendedPanIdBuilder.toString());
         }
 
-        if (networkParameters.getRadioChannel() == 0) {
+        if (networkParameters.getRadioChannel() == ZigBeeChannel.UNKNOWN.getChannel()) {
             networkParameters.setRadioChannel(quietestChannel);
         }
 
