@@ -117,7 +117,8 @@ public interface ZigBeeTransportTransmit {
     ZigBeeChannel getZigBeeChannel();
 
     /**
-     * Sets the ZigBee RF channel
+     * Sets the ZigBee RF channel. Setting {@link ZigBeeChannel.UNKNOWN} will perform a scan and use the
+     * quietest channel during initialisation.
      *
      * @param channel the {@link ZigBeeChannel} defining the channel to use
      * @return {@link ZigBeeStatus} with the status of function
