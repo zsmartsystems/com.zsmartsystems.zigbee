@@ -1082,7 +1082,7 @@
 			<prompt>AT+ESCAN</prompt>
 		</command_parameters>
 		<response_parameters>
-			<prompt>AT+ESCAN</prompt>
+			<prompt>+ESCAN</prompt>
 			<required>true</required>
 		</response_parameters>		
 		<response_parameters>

@@ -57,8 +57,8 @@ public class TelegesisEnergyScanCommand extends TelegesisFrame implements Telege
 
         initialiseDeserializer(data);
 
-        // Deserialize the fields for the "AT+ESCAN" response
-        if (testPrompt(data, "AT+ESCAN")) {
+        // Deserialize the fields for the "+ESCAN" response
+        if (testPrompt(data, "+ESCAN")) {
             receivedAtPlusescan = true;
             return false;
         }
