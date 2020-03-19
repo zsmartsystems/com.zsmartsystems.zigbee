@@ -100,8 +100,10 @@ public class ClusterMatcherTest {
         List<Integer> clusterListIn = new ArrayList<Integer>();
         List<Integer> clusterListOut = new ArrayList<Integer>();
         clusterListIn.add(0x500);
+        int requestTransactionId = 5;
         MatchDescriptorRequest request = new MatchDescriptorRequest();
         request.setNwkAddrOfInterest(0xFFFF);
+        request.setTransactionId(requestTransactionId);
         request.setSourceAddress(new ZigBeeEndpointAddress(1234, 5));
         request.setProfileId(0x104);
         request.setInClusterList(clusterListIn);
@@ -111,6 +113,7 @@ public class ClusterMatcherTest {
         assertEquals(1, mockedCommandCaptor.getAllValues().size());
         MatchDescriptorResponse response = (MatchDescriptorResponse) mockedCommandCaptor.getValue();
         assertEquals(1234, response.getDestinationAddress().getAddress());
+        assertEquals(requestTransactionId, response.getTransactionId().intValue());
     }
 
     @Test
@@ -125,6 +128,7 @@ public class ClusterMatcherTest {
         List<Integer> clusterListOut = new ArrayList<Integer>();
         clusterListIn.add(0x600);
         MatchDescriptorRequest request = new MatchDescriptorRequest();
+        request.setTransactionId(5);
         request.setNwkAddrOfInterest(0);
         request.setSourceAddress(new ZigBeeEndpointAddress(1234, 5));
         request.setProfileId(0x104);
@@ -145,6 +149,7 @@ public class ClusterMatcherTest {
         List<Integer> clusterListOut = new ArrayList<Integer>();
         clusterListOut.add(0x500);
         MatchDescriptorRequest request = new MatchDescriptorRequest();
+        request.setTransactionId(5);
         request.setNwkAddrOfInterest(0);
         request.setSourceAddress(new ZigBeeEndpointAddress(1234, 5));
         request.setProfileId(0x104);
@@ -165,8 +170,10 @@ public class ClusterMatcherTest {
         List<Integer> clusterListOut = new ArrayList<Integer>();
         clusterListIn.add(0x500);
         clusterListOut.add(0x500);
+        int requestTransactionId = 5;
         MatchDescriptorRequest request = new MatchDescriptorRequest();
         request.setNwkAddrOfInterest(0);
+        request.setTransactionId(requestTransactionId);
         request.setSourceAddress(new ZigBeeEndpointAddress(1234, 5));
         request.setProfileId(0x104);
         request.setInClusterList(clusterListIn);
@@ -177,5 +184,6 @@ public class ClusterMatcherTest {
         MatchDescriptorResponse response = (MatchDescriptorResponse) mockedCommandCaptor.getValue();
         assertEquals(1234, response.getDestinationAddress().getAddress());
         assertEquals(Integer.valueOf(0), response.getNwkAddrOfInterest());
+        assertEquals(requestTransactionId, response.getTransactionId().intValue());
     }
 }
