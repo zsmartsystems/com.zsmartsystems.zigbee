@@ -953,7 +953,8 @@ public class ZigBeeNetworkManagerTest
         TestUtilities.setField(ZigBeeNetworkManager.class, networkManager, "networkState", ZigBeeNetworkState.ONLINE);
         networkManager.receiveCommand(apsFrame);
         Mockito.verify(node, Mockito.timeout(TIMEOUT).times(1))
-                .commandReceived(ArgumentMatchers.any(ZigBeeCommand.class));
+                .commandReceived(ArgumentMatchers.any(ZigBeeCommand.class), ArgumentMatchers.any(),
+                        ArgumentMatchers.any());
         Awaitility.await().until(() -> commandListenerUpdated());
         if (commandListenerCapture.size() == 0) {
             return null;

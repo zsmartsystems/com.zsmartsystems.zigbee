@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import com.zsmartsystems.zigbee.database.ZigBeeEndpointDao;
 import com.zsmartsystems.zigbee.database.ZigBeeNodeDao;
 import com.zsmartsystems.zigbee.internal.NotificationService;
+import com.zsmartsystems.zigbee.internal.ZigBeeNodeLinkQualityHandler;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
@@ -53,7 +54,7 @@ import com.zsmartsystems.zigbee.zdo.field.SimpleDescriptor;
  * @author Chris Jackson
  *
  */
-public class ZigBeeNode implements ZigBeeCommandListener {
+public class ZigBeeNode {
     /**
      * The {@link Logger}.
      */
@@ -142,6 +143,11 @@ public class ZigBeeNode implements ZigBeeCommandListener {
          */
         OFFLINE
     }
+
+    /**
+     * A handler to manage the {@link ZigBeeLinkQualityStatistics}
+     */
+    private ZigBeeNodeLinkQualityHandler linkQualityStatistics = new ZigBeeNodeLinkQualityHandler();
 
     /**
      * Constructor
@@ -318,6 +324,11 @@ public class ZigBeeNode implements ZigBeeCommandListener {
         return nodeDescriptor.getMacCapabilities().contains(MacCapabilitiesType.REDUCED_FUNCTION_DEVICE);
     }
 
+    /**
+     * Returns true if the node is capable of supporting security. This tests the {@link NodeDescriptor}.
+     *
+     * @return true if the node is capable of supporting security
+     */
     public boolean isSecurityCapable() {
         if (nodeDescriptor == null) {
             return false;
@@ -325,6 +336,11 @@ public class ZigBeeNode implements ZigBeeCommandListener {
         return nodeDescriptor.getMacCapabilities().contains(MacCapabilitiesType.SECURITY_CAPABLE);
     }
 
+    /**
+     * Returns true if the node is the primary trust centre. This tests the {@link NodeDescriptor}.
+     *
+     * @return true if the node is the primary trust centre
+     */
     public boolean isPrimaryTrustCenter() {
         if (nodeDescriptor == null) {
             return false;
@@ -674,8 +690,15 @@ public class ZigBeeNode implements ZigBeeCommandListener {
         return lastUpdateTime;
     }
 
-    @Override
-    public void commandReceived(ZigBeeCommand command) {
+    /**
+     * Incoming command handler. The node will process any commands addressed to this node ID and pass to
+     * the appropriate endpoint.
+     *
+     * @param command the {@link ZigBeeCommand} received
+     * @param rssi the Received Signal Strength Indicator of the received packet, or null
+     * @param lqi the Link Quality Indicator of the received packet, or null
+     */
+    public void commandReceived(ZigBeeCommand command, Integer rssi, Integer lqi) {
         // This gets called for all received commands
         // Check if it's our address
         if (!(command instanceof ZclCommand) || networkAddress == null
@@ -684,6 +707,9 @@ public class ZigBeeNode implements ZigBeeCommandListener {
         }
 
         logger.trace("{}: ZigBeeNode.commandReceived({})", ieeeAddress, command);
+
+        linkQualityStatistics.updateReceivedLqi(lqi);
+        linkQualityStatistics.updateReceivedRssi(rssi);
 
         ZclCommand zclCommand = (ZclCommand) command;
         ZigBeeEndpointAddress endpointAddress = (ZigBeeEndpointAddress) zclCommand.getSourceAddress();
@@ -890,6 +916,15 @@ public class ZigBeeNode implements ZigBeeCommandListener {
      */
     public ZigBeeNodeState getNodeState() {
         return nodeState;
+    }
+
+    /**
+     * Retrieves the {@link ZigBeeLinkQualityStatistics} for the node
+     *
+     * @return the {@link ZigBeeLinkQualityStatistics} for the node
+     */
+    public ZigBeeLinkQualityStatistics getLinkQualityStatistics() {
+        return linkQualityStatistics;
     }
 
     @Override
