@@ -9,6 +9,7 @@ package com.zsmartsystems.zigbee.dongle.telegesis;
 
 import java.io.InputStream;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -46,6 +47,8 @@ import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDisa
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDisallowUnsecuredRejoinCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDisplayNetworkInformationCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDisplayProductIdentificationCommand;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisEnergyScanCommand;
+import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisEnergyScanCommand.ScanResult;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisEvent;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisGetChannelMaskCommand;
 import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisGetFrameCntCommand;
@@ -828,12 +831,58 @@ public class ZigBeeDongleTelegesis
         return radioChannel;
     }
 
+    /**
+     * Finds the quietest channel on the network
+     *
+     * @return the quietest channel or {@code ZigBeeChannel.UNKNOWN} if an error occurred
+     */
+    private ZigBeeChannel findQuietestChannel() {
+        ZigBeeChannel quietestChannel = ZigBeeChannel.UNKNOWN;
+        TelegesisSetChannelMaskCommand maskCommand = new TelegesisSetChannelMaskCommand();
+        // TODO: which channel mask for scan (using 2GHZ, see EmberNetworkInitialisation#doEnergyScan())
+        maskCommand.setChannelMask(ZigBeeChannelMask.CHANNEL_MASK_2GHZ);
+        if (frameHandler.sendRequest(maskCommand) == null || maskCommand.getStatus() != TelegesisStatusCode.SUCCESS) {
+            return ZigBeeChannel.UNKNOWN;
+        }
+
+        TelegesisEnergyScanCommand energyScanCommand = new TelegesisEnergyScanCommand();
+        // according to the Telegesis specification this command may take up to 4 seconds, but we have seen 5 and 6 on
+        // slow devices, let's play safe
+        frameHandler.setCommandTimeout(10000);
+        TelegesisStatusCode status = frameHandler.sendRequest(energyScanCommand);
+        if (status == TelegesisStatusCode.SUCCESS) {
+            List<ScanResult> scanResults = energyScanCommand.getScanResults();
+            int bestRSSI = 0;
+            for (ScanResult result : scanResults) {
+                if (result.getRssi() > bestRSSI) {
+                    quietestChannel = ZigBeeChannel.create(result.getChannel());
+                    bestRSSI = result.getRssi();
+                }
+            }
+        } else {
+            logger.warn("Running EnergyScanCommand: {} resulted in status code: {}", energyScanCommand, status);
+            return ZigBeeChannel.UNKNOWN;
+        }
+
+        return quietestChannel;
+    }
+
     @Override
     public ZigBeeStatus setZigBeeChannel(ZigBeeChannel channel) {
-        radioChannel = channel;
+        if (channel == ZigBeeChannel.UNKNOWN) {
+            // do an energy scan
+            ZigBeeChannel quietestChannel = findQuietestChannel();
+            if (quietestChannel != ZigBeeChannel.UNKNOWN) {
+                radioChannel = quietestChannel;
+            } else {
+                return ZigBeeStatus.BAD_RESPONSE;
+            }
+        } else {
+            radioChannel = channel;
+        }
 
         ZigBeeChannelMask channelMask = new ZigBeeChannelMask();
-        channelMask.addChannel(channel);
+        channelMask.addChannel(radioChannel);
 
         TelegesisSetChannelMaskCommand maskCommand = new TelegesisSetChannelMaskCommand();
         maskCommand.setChannelMask(channelMask.getChannelMask() >> 11);
@@ -850,7 +899,7 @@ public class ZigBeeDongleTelegesis
         }
 
         TelegesisChangeChannelCommand channelCommand = new TelegesisChangeChannelCommand();
-        channelCommand.setChannel(channel.getChannel());
+        channelCommand.setChannel(radioChannel.getChannel());
         if (frameHandler.sendRequest(channelCommand) == null
                 || channelCommand.getStatus() != TelegesisStatusCode.SUCCESS) {
             return ZigBeeStatus.BAD_RESPONSE;

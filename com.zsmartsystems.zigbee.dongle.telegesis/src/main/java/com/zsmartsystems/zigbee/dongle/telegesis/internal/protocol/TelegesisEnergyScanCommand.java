@@ -23,9 +23,9 @@ import java.util.List;
  */
 public class TelegesisEnergyScanCommand extends TelegesisFrame implements TelegesisCommand {
     /**
-     * AT+ESCAN required response flag
+     * +ESCAN required response flag
      */
-     private boolean receivedAtPlusescan = false;
+     private boolean receivedPlusescan = false;
 
     /**
      * Response field
@@ -59,10 +59,10 @@ public class TelegesisEnergyScanCommand extends TelegesisFrame implements Telege
 
         // Deserialize the fields for the "+ESCAN" response
         if (testPrompt(data, "+ESCAN")) {
-            receivedAtPlusescan = true;
+            receivedPlusescan = true;
             return false;
         }
-        if (!receivedAtPlusescan) {
+        if (!receivedPlusescan) {
             return false;
         }
         // Deserialize the fields for the response
@@ -87,7 +87,7 @@ public class TelegesisEnergyScanCommand extends TelegesisFrame implements Telege
     /**
      *
      */
-    class ScanResult extends TelegesisFrame {
+    public class ScanResult extends TelegesisFrame {
         /**
          */
         private Integer channel;

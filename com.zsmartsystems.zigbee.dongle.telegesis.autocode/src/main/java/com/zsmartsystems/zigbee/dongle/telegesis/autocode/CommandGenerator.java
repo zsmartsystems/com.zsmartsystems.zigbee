@@ -451,7 +451,7 @@ public class CommandGenerator extends ClassGenerator {
             out.println("    /**");
             out.println("     *");
             out.println("     */");
-            out.println("    class " + stringToUpperCamelCase(group.name) + " extends TelegesisFrame {");
+            out.println("    public class " + stringToUpperCamelCase(group.name) + " extends TelegesisFrame {");
             for (Parameter parameter : group.parameters) {
                 if (parameter.auto_size != null) {
                     continue;

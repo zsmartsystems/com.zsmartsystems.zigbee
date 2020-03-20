@@ -97,7 +97,7 @@ public class TelegesisActiveScanCommand extends TelegesisFrame implements Telege
     /**
      *
      */
-    class ScanResult extends TelegesisFrame {
+    public class ScanResult extends TelegesisFrame {
         /**
          */
         private Integer channel;
