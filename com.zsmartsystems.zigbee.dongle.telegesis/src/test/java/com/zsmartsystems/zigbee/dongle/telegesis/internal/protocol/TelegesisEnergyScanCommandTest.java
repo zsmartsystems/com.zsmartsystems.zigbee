@@ -28,7 +28,7 @@ public class TelegesisEnergyScanCommandTest extends TelegesisFrameBaseTest {
         System.out.println(command);
         assertEquals("AT+ESCAN\r\n", intArrayToString(command.serialize()));
 
-        command.deserialize(stringToIntArray("AT+ESCAN:\r"));
+        command.deserialize(stringToIntArray("+ESCAN:\r"));
         System.out.println(command);
         assertEquals(0, command.getScanResults().size());
 
