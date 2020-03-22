@@ -27,8 +27,6 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParamete
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspJoinNetworkRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspJoinNetworkResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetInitialSecurityStateRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetInitialSecurityStateResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurityBitmask;
@@ -43,7 +41,6 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspValueId;
 import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspSingleResponseTransaction;
-import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransaction;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 
 /**
@@ -57,6 +54,11 @@ public class EmberNetworkInitialisation {
      * The {@link Logger}.
      */
     private final Logger logger = LoggerFactory.getLogger(EmberNetworkInitialisation.class);
+
+    /**
+     * The number of milliseconds to wait for the NCP to leave the network
+     */
+    private static final int WAIT_FOR_LEAVE = 5000;
 
     /**
      * The frame handler used to send the EZSP frames to the NCP
@@ -108,11 +110,7 @@ public class EmberNetworkInitialisation {
         EmberNcp ncp = new EmberNcp(protocolHandler);
 
         // Leave the current network so we can initialise a new network
-        if (checkNetworkJoined()) {
-            ncp.leaveNetwork();
-        }
-
-        ncp.clearKeyTable();
+        ensureNetworkLeft();
 
         // Perform an energy scan to find a clear channel
         int quietestChannel = doEnergyScan(ncp, scanDuration);
@@ -129,7 +127,7 @@ public class EmberNetworkInitialisation {
             Random random = new Random();
             int panId = random.nextInt(65535);
             networkParameters.setPanId(panId);
-            logger.debug("Created random PAN ID: {}", panId);
+            logger.debug("Created random PAN ID: {}", String.format("%04X", panId));
 
             int extendedPanId[] = new int[8];
             StringBuilder extendedPanIdBuilder = new StringBuilder();
@@ -168,11 +166,7 @@ public class EmberNetworkInitialisation {
         logger.debug("Joining Ember network with configuration {}", networkParameters);
 
         // Leave the current network so we can initialise a new network
-        EmberNcp ncp = new EmberNcp(protocolHandler);
-        if (checkNetworkJoined()) {
-            ncp.leaveNetwork();
-        }
-        ncp.clearKeyTable();
+        ensureNetworkLeft();
 
         // Initialise security - no network key as we'll get that from the coordinator
         setSecurityState(linkKey, null);
@@ -188,17 +182,49 @@ public class EmberNetworkInitialisation {
         doRejoinNetwork(true, new ZigBeeChannelMask(0));
     }
 
-    private boolean checkNetworkJoined() {
-        // Check if the network is initialised
-        EzspNetworkStateRequest networkStateRequest = new EzspNetworkStateRequest();
-        EzspTransaction networkStateTransaction = protocolHandler.sendEzspTransaction(
-                new EzspSingleResponseTransaction(networkStateRequest, EzspNetworkStateResponse.class));
-        EzspNetworkStateResponse networkStateResponse = (EzspNetworkStateResponse) networkStateTransaction
-                .getResponse();
-        logger.debug(networkStateResponse.toString());
-        logger.debug("EZSP networkStateResponse {}", networkStateResponse.getStatus());
+    /**
+     * Ensures that the NCP is not on a network. If the NCP is currently joined to a network, then it will leave and
+     * will wait until the network state is {@link EmberNetworkStatus#EMBER_NO_NETWORK} before returning.
+     *
+     * @return true if the NCP is not on a network. false if the network leave was unsuccessful.
+     */
+    private boolean ensureNetworkLeft() {
+        EmberNcp ncp = new EmberNcp(protocolHandler);
 
-        return networkStateResponse.getStatus() == EmberNetworkStatus.EMBER_JOINED_NETWORK;
+        // If the current network state isn't NO NETWORK, or LEAVING NETWORK, then we leave the current network
+        EmberNetworkStatus currentNetworkState = ncp.getNetworkState();
+        if (currentNetworkState != EmberNetworkStatus.EMBER_NO_NETWORK
+                && currentNetworkState != EmberNetworkStatus.EMBER_LEAVING_NETWORK) {
+            logger.debug("Ember network initialisation: Leaving current network. Network status={}",
+                    currentNetworkState);
+            ncp.leaveNetwork();
+        }
+
+        // Then wait until the state is NO NETWORK
+        long timer = System.currentTimeMillis() + WAIT_FOR_LEAVE;
+        do {
+            currentNetworkState = ncp.getNetworkState();
+            if (currentNetworkState == EmberNetworkStatus.EMBER_NO_NETWORK) {
+                break;
+            }
+            try {
+                Thread.sleep(250);
+            } catch (InterruptedException e) {
+                break;
+            }
+        } while (timer > System.currentTimeMillis());
+
+        if (currentNetworkState != EmberNetworkStatus.EMBER_NO_NETWORK) {
+            logger.debug("Ember network initialisation: Failed to leave network. Network status={}",
+                    currentNetworkState);
+            return false;
+        }
+        logger.debug("Ember network initialisation: Network leave confirmed");
+
+        // And clear the key table so we don't leave any device specific keys set
+        ncp.clearKeyTable();
+
+        return true;
     }
 
     /**
