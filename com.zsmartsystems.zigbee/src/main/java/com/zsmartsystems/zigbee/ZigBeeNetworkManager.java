@@ -1391,7 +1391,8 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         sendTransaction(command);
 
         // If this is a broadcast, then we send it to our own address as well
-        // This seems to be required for some stacks (eg ZNP)
+        // This seems to be required for some stacks (eg TI ZNP).
+        // Note that in recent Ember ZNet stacks a unicast join will return an error INV_REQUESTTYPE!
         if (ZigBeeBroadcastDestination.isBroadcast(destination.getAddress())) {
             command = new ManagementPermitJoiningRequest(duration, true);
             command.setDestinationAddress(new ZigBeeEndpointAddress(0));
