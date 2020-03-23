@@ -135,7 +135,7 @@ import com.zsmartsystems.zigbee.zdo.command.NetworkAddressRequest;
  *
  * @author Chris Jackson
  */
-public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportReceive {
+public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
     /**
      * The local endpoint ID used for all ZCL commands
      */
@@ -882,12 +882,10 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         return true;
     }
 
-    @Override
     public void addCommandListener(ZigBeeCommandListener commandListener) {
         commandNotifier.addCommandListener(commandListener);
     }
 
-    @Override
     public void removeCommandListener(ZigBeeCommandListener commandListener) {
         commandNotifier.removeCommandListener(commandListener);
     }
@@ -1907,13 +1905,11 @@ public class ZigBeeNetworkManager implements ZigBeeNetwork, ZigBeeTransportRecei
         command.setSourceAddress(new ZigBeeEndpointAddress(localNwkAddress));
     }
 
-    @Override
     public void sendTransaction(ZigBeeCommand command) {
         finaliseOutgoingCommand(command);
         transactionManager.sendTransaction(command);
     }
 
-    @Override
     public Future<CommandResult> sendTransaction(ZigBeeCommand command, ZigBeeTransactionMatcher responseMatcher) {
         finaliseOutgoingCommand(command);
         return transactionManager.sendTransaction(command, responseMatcher);
