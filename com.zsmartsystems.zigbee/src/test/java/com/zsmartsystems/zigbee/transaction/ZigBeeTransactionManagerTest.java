@@ -23,11 +23,9 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledFuture;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
@@ -55,14 +53,10 @@ import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.MacCapabilitiesType;
 public class ZigBeeTransactionManagerTest {
     private static int TIMEOUT = 5000;
 
-    @Before
-    public void resetNotificationService() throws Exception {
-        NotificationService.initialize();
-    }
-
     @Test
     public void sendTransaction() {
         ZigBeeNetworkManager networkManager = Mockito.mock(ZigBeeNetworkManager.class);
+        Mockito.when(networkManager.getNotificationService()).thenReturn(new NotificationService());
         ZigBeeCommand command = getCommand(123);
         Mockito.when(command.getTransactionId()).thenReturn(null);
         ZigBeeTransactionMatcher responseMatcher = Mockito.mock(ZigBeeTransactionMatcher.class);
@@ -174,6 +168,7 @@ public class ZigBeeTransactionManagerTest {
     @Test
     public void shutdown() throws Exception {
         ZigBeeNetworkManager networkManager = Mockito.mock(ZigBeeNetworkManager.class);
+        Mockito.when(networkManager.getNotificationService()).thenReturn(new NotificationService());
         ZigBeeTransactionManager transactionManager = new ZigBeeTransactionManager(networkManager);
         ZigBeeTransactionMatcher responseMatcher = Mockito.mock(ZigBeeTransactionMatcher.class);
 
@@ -202,6 +197,7 @@ public class ZigBeeTransactionManagerTest {
     @Test
     public void receiveAck() throws Exception {
         ZigBeeNetworkManager networkManager = Mockito.mock(ZigBeeNetworkManager.class);
+        Mockito.when(networkManager.getNotificationService()).thenReturn(new NotificationService());
         ZigBeeTransactionManager transactionManager = new ZigBeeTransactionManager(networkManager);
 
         ZigBeeTransaction transaction = Mockito.mock(ZigBeeTransaction.class);
@@ -243,6 +239,7 @@ public class ZigBeeTransactionManagerTest {
     @Test
     public void receiveNak() throws Exception {
         ZigBeeNetworkManager networkManager = Mockito.mock(ZigBeeNetworkManager.class);
+        Mockito.when(networkManager.getNotificationService()).thenReturn(new NotificationService());
         ZigBeeTransactionManager transactionManager = new ZigBeeTransactionManager(networkManager);
 
         ZigBeeTransaction transaction = Mockito.mock(ZigBeeTransaction.class);
@@ -337,6 +334,7 @@ public class ZigBeeTransactionManagerTest {
         // This test sets the max sleepy transactions to 2, then fills the queue with 3 frames and makes sure only 2 are
         // sent
         ZigBeeNetworkManager networkManager = Mockito.mock(ZigBeeNetworkManager.class);
+        Mockito.when(networkManager.getNotificationService()).thenReturn(new NotificationService());
         ZigBeeTransactionManager transactionManager = new ZigBeeTransactionManager(networkManager);
         transactionManager.setMaxSleepyTransactions(2);
         ZigBeeTransactionProfile profile = new ZigBeeTransactionProfile(0, 5, 0);

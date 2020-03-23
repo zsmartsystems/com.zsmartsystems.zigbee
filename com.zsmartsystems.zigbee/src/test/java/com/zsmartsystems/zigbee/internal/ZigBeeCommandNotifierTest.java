@@ -17,6 +17,7 @@ import org.mockito.Mockito;
 import com.zsmartsystems.zigbee.TestUtilities;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeCommandListener;
+import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 
 /**
@@ -29,7 +30,9 @@ public class ZigBeeCommandNotifierTest {
 
     @Test
     public void addCommandListener() throws Exception {
-        ZigBeeCommandNotifier notifier = new ZigBeeCommandNotifier();
+        ZigBeeNetworkManager mockedNetworkManager = Mockito.mock(ZigBeeNetworkManager.class);
+        Mockito.when(mockedNetworkManager.getNotificationService()).thenReturn(new NotificationService());
+        ZigBeeCommandNotifier notifier = new ZigBeeCommandNotifier(mockedNetworkManager);
 
         ZigBeeCommandListener commandListener = Mockito.mock(ZigBeeCommandListener.class);
         notifier.addCommandListener(commandListener);

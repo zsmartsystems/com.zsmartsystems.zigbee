@@ -1194,7 +1194,7 @@ public abstract class ZclCluster {
      */
     private void notifyAttributeListener(final ZclAttribute attribute, final Object value) {
         for (final ZclAttributeListener listener : attributeListeners) {
-            NotificationService.execute(new Runnable() {
+            getNotificationService().execute(new Runnable() {
                 @Override
                 public void run() {
                     logger.trace("{}: ZclCluster.notifyAttributeListener {} of {} with value {}",
@@ -1252,7 +1252,7 @@ public abstract class ZclCluster {
         synchronized (commandListeners) {
             latch = new CountDownLatch(commandListeners.size());
             for (final ZclCommandListener listener : commandListeners) {
-                NotificationService.execute(new Runnable() {
+                getNotificationService().execute(new Runnable() {
                     @Override
                     public void run() {
                         logger.trace("{}: ZclCluster.notifyCommandListener {} of {}",
@@ -1933,6 +1933,10 @@ public abstract class ZclCluster {
         }
 
         return defaultResponse;
+    }
+    
+    public NotificationService getNotificationService() {
+        return zigbeeEndpoint.getNotificationService();
     }
 
 }

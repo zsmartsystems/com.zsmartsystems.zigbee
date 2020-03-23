@@ -121,9 +121,9 @@ public class ZigBeeNode {
             .unmodifiableList(new ArrayList<ZigBeeNetworkEndpointListener>());
 
     /**
-     * The {@link ZigBeeNetwork} that manages this node.
+     * The {@link ZigBeeNetworkManager} that manages this node.
      */
-    private final ZigBeeNetwork network;
+    private final ZigBeeNetworkManager networkManager;
 
     private ZigBeeNodeState nodeState = ZigBeeNodeState.UNKNOWN;
 
@@ -152,29 +152,29 @@ public class ZigBeeNode {
     /**
      * Constructor
      *
-     * @param network the {@link ZigBeeNetwork}
+     * @param networkManager the {@link ZigBeeNetworkManager}
      * @param ieeeAddress the {@link IeeeAddress} of the node
      * @throws {@link IllegalArgumentException} if ieeeAddress is null
      */
-    public ZigBeeNode(ZigBeeNetwork network, IeeeAddress ieeeAddress) {
+    public ZigBeeNode(ZigBeeNetworkManager networkManager, IeeeAddress ieeeAddress) {
         if (ieeeAddress == null) {
             throw new IllegalArgumentException("IeeeAddress can't be null when creating ZigBeeNode");
         }
 
-        this.network = network;
+        this.networkManager = networkManager;
         this.ieeeAddress = ieeeAddress;
     }
 
     /**
      * Constructor
      *
-     * @param network the {@link ZigBeeNetwork}
+     * @param networkManager the {@link ZigBeeNetworkManager}
      * @param ieeeAddress the {@link IeeeAddress} of the node
      * @param networkAddress the network address of the node
      * @throws {@link IllegalArgumentException} if ieeeAddress is null
      */
-    public ZigBeeNode(ZigBeeNetwork network, IeeeAddress ieeeAddress, Integer networkAddress) {
-        this(network, ieeeAddress);
+    public ZigBeeNode(ZigBeeNetworkManager networkManager, IeeeAddress ieeeAddress, Integer networkAddress) {
+        this(networkManager, ieeeAddress);
 
         this.networkAddress = networkAddress;
     }
@@ -272,7 +272,7 @@ public class ZigBeeNode {
         command.setDestinationAddress(new ZigBeeEndpointAddress(0));
         command.setSourceAddress(new ZigBeeEndpointAddress(0));
 
-        network.sendTransaction(command);
+        networkManager.sendTransaction(command);
     }
 
     /**
@@ -410,7 +410,7 @@ public class ZigBeeNode {
                     ManagementBindRequest bindingRequest = new ManagementBindRequest(index);
                     bindingRequest.setDestinationAddress(new ZigBeeEndpointAddress(getNetworkAddress()));
 
-                    CommandResult result = network.sendTransaction(bindingRequest, bindingRequest).get();
+                    CommandResult result = networkManager.sendTransaction(bindingRequest, bindingRequest).get();
                     if (result.isTimeout()) {
                         return ZigBeeStatus.FAILURE;
                     }
@@ -477,7 +477,7 @@ public class ZigBeeNode {
         }
         synchronized (this) {
             for (final ZigBeeNetworkEndpointListener listener : endpointListeners) {
-                NotificationService.execute(new Runnable() {
+                getNotificationService().execute(new Runnable() {
                     @Override
                     public void run() {
                         listener.deviceAdded(endpoint);
@@ -498,7 +498,7 @@ public class ZigBeeNode {
         }
         synchronized (this) {
             for (final ZigBeeNetworkEndpointListener listener : endpointListeners) {
-                NotificationService.execute(new Runnable() {
+                getNotificationService().execute(new Runnable() {
                     @Override
                     public void run() {
                         listener.deviceUpdated(endpoint);
@@ -521,7 +521,7 @@ public class ZigBeeNode {
         synchronized (this) {
             if (endpoint != null) {
                 for (final ZigBeeNetworkEndpointListener listener : endpointListeners) {
-                    NotificationService.execute(new Runnable() {
+                    getNotificationService().execute(new Runnable() {
                         @Override
                         public void run() {
                             listener.deviceRemoved(endpoint);
@@ -880,7 +880,7 @@ public class ZigBeeNode {
      * @param command the {@link ZigBeeCommand} to send
      */
     public void sendTransaction(ZigBeeCommand command) {
-        network.sendTransaction(command);
+        networkManager.sendTransaction(command);
     }
 
     /**
@@ -891,7 +891,7 @@ public class ZigBeeNode {
      * @return the {@link CommandResult} future.
      */
     public Future<CommandResult> sendTransaction(ZigBeeCommand command, ZigBeeTransactionMatcher responseMatcher) {
-        return network.sendTransaction(command, responseMatcher);
+        return networkManager.sendTransaction(command, responseMatcher);
     }
 
     /**
@@ -916,6 +916,15 @@ public class ZigBeeNode {
      */
     public ZigBeeNodeState getNodeState() {
         return nodeState;
+    }
+    
+    /**
+     * Gets the {@link NotificationService} provided by this node's network manager.
+     * 
+     * @return the {@link NotificationService} provided by this node's network manager.
+     */
+    public NotificationService getNotificationService() {
+        return networkManager.getNotificationService();
     }
 
     /**

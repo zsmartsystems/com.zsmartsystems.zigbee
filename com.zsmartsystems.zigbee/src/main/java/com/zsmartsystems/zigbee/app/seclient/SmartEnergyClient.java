@@ -393,7 +393,7 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
         synchronized (this) {
             // Notify the listeners
             for (final SmartEnergyStatusCallback statusListener : statusListeners) {
-                NotificationService.execute(new Runnable() {
+                networkManager.getNotificationService().execute(new Runnable() {
                     @Override
                     public void run() {
                         statusListener.sepStatusUpdate(updatedStatus);

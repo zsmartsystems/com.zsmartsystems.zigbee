@@ -207,7 +207,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
         synchronized (outstandingTransactions) {
             // Notify the listeners
             for (final ZigBeeTransaction transaction : outstandingTransactions) {
-                NotificationService.execute(new Runnable() {
+                networkManager.getNotificationService().execute(new Runnable() {
                     @Override
                     public void run() {
                         transaction.cancel();
@@ -542,7 +542,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
             // Notify the listeners
             for (final ZigBeeTransaction transaction : outstandingTransactions) {
                 logger.debug("notifyTransactionCommand: {} {}", command, transaction);
-                NotificationService.execute(new Runnable() {
+                networkManager.getNotificationService().execute(new Runnable() {
                     @Override
                     public void run() {
                         transaction.commandReceived(command);
@@ -564,7 +564,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
         synchronized (outstandingTransactions) {
             // Notify the listeners
             for (final ZigBeeTransaction transaction : outstandingTransactions) {
-                NotificationService.execute(new Runnable() {
+                networkManager.getNotificationService().execute(new Runnable() {
                     @Override
                     public void run() {
                         transaction.transactionStatusReceived(state, transactionId);

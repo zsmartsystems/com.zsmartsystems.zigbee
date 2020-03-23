@@ -27,20 +27,11 @@ public class NotificationService {
     /**
      * The logger
      */
-    private static Logger logger = LoggerFactory.getLogger(NotificationService.class);
+    private Logger logger = LoggerFactory.getLogger(NotificationService.class);
 
-    private static ExecutorService executorService = ZigBeeExecutors.newCachedThreadPool("NotificationService");
+    private ExecutorService executorService = ZigBeeExecutors.newCachedThreadPool("NotificationService");
 
-    /**
-     * Initializes the notification service
-     */
-    public static void initialize() {
-        if (executorService.isShutdown()) {
-            executorService = ZigBeeExecutors.newCachedThreadPool("NotificationService");
-        }
-    }
-
-    public static void execute(Runnable command) {
+    public void execute(Runnable command) {
         if (executorService.isShutdown()) {
             logger.debug("NotificationService is shutdown. Not scheduling {}", command.getClass().getName());
             return;
@@ -57,7 +48,7 @@ public class NotificationService {
      *
      * @param wait the number of milliseconds to wait for all threads to close before terminating
      */
-    public static void shutdown(long wait) {
+    public void shutdown(long wait) {
         executorService.shutdown();
         try {
             executorService.awaitTermination(wait, TimeUnit.MILLISECONDS);

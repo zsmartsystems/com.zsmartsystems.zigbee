@@ -39,6 +39,7 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkState;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.ZigBeeNode.ZigBeeNodeState;
+import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.security.ZigBeeCbkeProvider;
 import com.zsmartsystems.zigbee.security.ZigBeeCryptoSuites;
@@ -110,6 +111,7 @@ public class SmartEnergyClientTest {
     public void keyEstablishmentCallback() throws Exception {
         System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ZigBeeNetworkManager networkManager = Mockito.mock(ZigBeeNetworkManager.class);
+        Mockito.when(networkManager.getNotificationService()).thenReturn(new NotificationService());
         SmartEnergyClient extension = new SmartEnergyClient(Mockito.mock(ZigBeeCbkeProvider.class));
         SmartEnergyStatusCallback listener = Mockito.mock(SmartEnergyStatusCallback.class);
         extension.addListener(listener);
@@ -155,6 +157,7 @@ public class SmartEnergyClientTest {
 
         SmartEnergyClient extension = new SmartEnergyClient(Mockito.mock(ZigBeeCbkeProvider.class));
         ZigBeeNetworkManager networkManager = Mockito.mock(ZigBeeNetworkManager.class);
+        Mockito.when(networkManager.getNotificationService()).thenReturn(new NotificationService());
         assertEquals(ZigBeeStatus.SUCCESS, extension.extensionInitialize(networkManager));
 
         SmartEnergyStatusCallback listener = Mockito.mock(SmartEnergyStatusCallback.class);

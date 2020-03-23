@@ -511,7 +511,7 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
         synchronized (this) {
             // Notify the listeners
             for (final ZigBeeOtaStatusCallback statusListener : statusListeners) {
-                NotificationService.execute(new Runnable() {
+                cluster.getNotificationService().execute(new Runnable() {
                     @Override
                     public void run() {
                         statusListener.otaStatusUpdate(updatedStatus, percentComplete);
