@@ -8,7 +8,6 @@
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.command;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspStatus;
 
 /**
@@ -36,9 +35,9 @@ public class EzspGetPolicyResponse extends EzspFrameResponse {
     /**
      * The current decision for the specified policy.
      * <p>
-     * EZSP type is <i>EzspDecisionId</i> - Java type is {@link EzspDecisionId}
+     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      */
-    private EzspDecisionId decisionId;
+    private int decisionId;
 
     /**
      * Response and Handler constructor
@@ -49,7 +48,7 @@ public class EzspGetPolicyResponse extends EzspFrameResponse {
 
         // Deserialize the fields
         status = deserializer.deserializeEzspStatus();
-        decisionId = deserializer.deserializeEzspDecisionId();
+        decisionId = deserializer.deserializeUInt8();
     }
 
     /**
@@ -77,20 +76,20 @@ public class EzspGetPolicyResponse extends EzspFrameResponse {
     /**
      * The current decision for the specified policy.
      * <p>
-     * EZSP type is <i>EzspDecisionId</i> - Java type is {@link EzspDecisionId}
+     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      *
-     * @return the current decisionId as {@link EzspDecisionId}
+     * @return the current decisionId as {@link int}
      */
-    public EzspDecisionId getDecisionId() {
+    public int getDecisionId() {
         return decisionId;
     }
 
     /**
      * The current decision for the specified policy.
      *
-     * @param decisionId the decisionId to set as {@link EzspDecisionId}
+     * @param decisionId the decisionId to set as {@link int}
      */
-    public void setDecisionId(EzspDecisionId decisionId) {
+    public void setDecisionId(int decisionId) {
         this.decisionId = decisionId;
     }
 
@@ -102,7 +101,7 @@ public class EzspGetPolicyResponse extends EzspFrameResponse {
         builder.append(", status=");
         builder.append(status);
         builder.append(", decisionId=");
-        builder.append(decisionId);
+        builder.append(String.format("%02X", decisionId));
         builder.append(']');
         return builder.toString();
     }

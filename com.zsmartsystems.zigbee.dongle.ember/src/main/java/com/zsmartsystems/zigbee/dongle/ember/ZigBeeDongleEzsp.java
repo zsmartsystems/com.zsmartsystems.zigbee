@@ -69,6 +69,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberOutgoingMessage
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberZdoConfigurationFlags;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionBitmask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspPolicyId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspStatus;
@@ -183,6 +184,11 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
      * The low level protocol to use for this dongle
      */
     private EmberSerialProtocol protocol;
+
+    /**
+     * The stack version returned by the stack
+     */
+    private EzspVersionResponse ezspVersion;
 
     /**
      * The Ember version used in this system. Set during initialisation and saved in case the client is interested.
@@ -411,9 +417,11 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             logger.debug("Configuration state {} = {}", config.getKey(), config.getValue());
         }
 
-        Map<EzspPolicyId, EzspDecisionId> policies = stackConfigurer.getPolicy(stackPolicies.keySet());
-        for (Entry<EzspPolicyId, EzspDecisionId> policy : policies.entrySet()) {
-            logger.debug("Policy state {} = {}", policy.getKey(), policy.getValue());
+        Map<EzspPolicyId, Integer> policies = stackConfigurer.getPolicy(stackPolicies.keySet());
+        for (Entry<EzspPolicyId, Integer> policy : policies.entrySet()) {
+            EzspDecisionId decisionId = EzspDecisionId.getEzspDecisionId(policy.getValue());
+            logger.debug("Policy state {} = {} [{}]", policy.getKey(), decisionId,
+                    String.format("%02X", policy.getValue()));
         }
 
         stackConfigurer.setConfiguration(stackConfiguration);
@@ -424,8 +432,10 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         stackConfigurer.setPolicy(stackPolicies);
         policies = stackConfigurer.getPolicy(stackPolicies.keySet());
-        for (Entry<EzspPolicyId, EzspDecisionId> policy : policies.entrySet()) {
-            logger.debug("Policy state {} = {}", policy.getKey(), policy.getValue());
+        for (Entry<EzspPolicyId, Integer> policy : policies.entrySet()) {
+            EzspDecisionId decisionId = EzspDecisionId.getEzspDecisionId(policy.getValue());
+            logger.debug("Policy state {} = {} [{}]", policy.getKey(), decisionId,
+                    String.format("%02X", policy.getValue()));
         }
 
         EmberNcp ncp = getEmberNcp();
@@ -1144,14 +1154,32 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         return ZigBeeStatus.SUCCESS;
     }
 
+    /**
+     * Sets the Trust Centre join mode decision.
+     * <p>
+     * This method sets the decision flags for the trust centre. It's worth noting that the way this works changed with
+     * EZSP8 (ZNet 6.7). Prior to this, a {@link EzspDecisionId} was set. From EZSP8, a bitmask is used instead s
+     * defined by {@link EzspDecisionBitmask}.
+     * <p>
+     * This method will use the appropriate method
+     *
+     * @param joinMode the {@link TrustCentreJoinMode}
+     * @return {@link ZigBeeStatus} with success or failure
+     */
     private ZigBeeStatus setTcJoinMode(TrustCentreJoinMode joinMode) {
+        int bitmask = 0;
         EzspDecisionId emberJoinMode;
         switch (joinMode) {
             case TC_JOIN_INSECURE:
                 emberJoinMode = EzspDecisionId.EZSP_ALLOW_JOINS;
+                bitmask = EzspDecisionBitmask.EZSP_DECISION_ALLOW_JOINS.getKey()
+                        + EzspDecisionBitmask.EZSP_DECISION_ALLOW_UNSECURED_REJOINS.getKey();
                 break;
             case TC_JOIN_SECURE:
                 emberJoinMode = EzspDecisionId.EZSP_ALLOW_PRECONFIGURED_KEY_JOINS;
+                bitmask = EzspDecisionBitmask.EZSP_DECISION_ALLOW_JOINS.getKey()
+                        // + EzspDecisionBitmask.EZSP_DECISION_JOINS_USE_INSTALL_CODE_KEY.getKey()
+                        + EzspDecisionBitmask.EZSP_DECISION_IGNORE_UNSECURED_REJOINS.getKey();
                 break;
             case TC_JOIN_DENY:
                 emberJoinMode = EzspDecisionId.EZSP_DISALLOW_ALL_JOINS_AND_REJOINS;
@@ -1159,8 +1187,14 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             default:
                 return ZigBeeStatus.INVALID_ARGUMENTS;
         }
-        return (getEmberNcp().setPolicy(EzspPolicyId.EZSP_TRUST_CENTER_POLICY,
-                emberJoinMode) == EzspStatus.EZSP_SUCCESS) ? ZigBeeStatus.SUCCESS : ZigBeeStatus.FAILURE;
+
+        if (ezspVersion.getProtocolVersion() < 8) {
+            return (getEmberNcp().setPolicy(EzspPolicyId.EZSP_TRUST_CENTER_POLICY,
+                    emberJoinMode) == EzspStatus.EZSP_SUCCESS) ? ZigBeeStatus.SUCCESS : ZigBeeStatus.FAILURE;
+        } else {
+            return (getEmberNcp().setPolicy(EzspPolicyId.EZSP_TRUST_CENTER_POLICY,
+                    bitmask) == EzspStatus.EZSP_SUCCESS) ? ZigBeeStatus.SUCCESS : ZigBeeStatus.FAILURE;
+        }
     }
 
     @Override
@@ -1206,32 +1240,32 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         // We MUST send the version command first.
         // Any failure to respond here indicates a failure of the ASH or EZSP layers to initialise
-        EzspVersionResponse version = ncp.getVersion(4);
-        if (version == null) {
+        ezspVersion = ncp.getVersion(4);
+        if (ezspVersion == null) {
             logger.debug("EZSP Dongle: Version returned null. ASH/EZSP not initialised.");
             return false;
         }
 
-        if (version.getProtocolVersion() != EzspFrame.getEzspVersion()) {
+        if (ezspVersion.getProtocolVersion() != EzspFrame.getEzspVersion()) {
             // The device supports a different version that we current have set
-            if (!EzspFrame.setEzspVersion(version.getProtocolVersion())) {
+            if (!EzspFrame.setEzspVersion(ezspVersion.getProtocolVersion())) {
                 logger.error("EZSP Dongle: NCP requires unsupported version of EZSP (required = V{}, supported = V{})",
-                        version.getProtocolVersion(), EzspFrame.getEzspVersion());
+                        ezspVersion.getProtocolVersion(), EzspFrame.getEzspVersion());
                 return false;
             }
 
-            version = ncp.getVersion(EzspFrame.getEzspVersion());
-            logger.debug(version.toString());
+            ezspVersion = ncp.getVersion(EzspFrame.getEzspVersion());
+            logger.debug(ezspVersion.toString());
         }
 
         StringBuilder builder = new StringBuilder(60);
         builder.append("EZSP Version=");
-        builder.append(version.getProtocolVersion());
+        builder.append(ezspVersion.getProtocolVersion());
         builder.append(", Stack Type=");
-        builder.append(version.getStackType());
+        builder.append(ezspVersion.getStackType());
         builder.append(", Stack Version=");
         for (int cnt = 3; cnt >= 0; cnt--) {
-            builder.append((version.getStackVersion() >> (cnt * 4)) & 0x0F);
+            builder.append((ezspVersion.getStackVersion() >> (cnt * 4)) & 0x0F);
             if (cnt != 0) {
                 builder.append('.');
             }

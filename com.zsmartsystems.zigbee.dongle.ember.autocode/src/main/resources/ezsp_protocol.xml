@@ -271,9 +271,10 @@
 				<description>Identifies which policy to modify.</description>
 			</parameter>
 			<parameter>
-				<data_type>EzspDecisionId</data_type>
+				<data_type>uint8_t</data_type>
 				<name>decisionId</name>
 				<description> The new decision for the specified policy.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</command_parameters>
 		<response_parameters>
@@ -303,9 +304,10 @@
 				<description>EZSP_SUCCESS if the policy was changed, EZSP_ERROR_INVALID_ID if the NCP does not recognize policyId.</description>
 			</parameter>
 			<parameter>
-				<data_type>EzspDecisionId</data_type>
+				<data_type>uint8_t</data_type>
 				<name>decisionId</name>
 				<description>The current decision for the specified policy.</description>
+				<display>hex[2]</display>
 			</parameter>
 		</response_parameters>
 	</command>
