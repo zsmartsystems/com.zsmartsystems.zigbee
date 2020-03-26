@@ -45,6 +45,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMessageSentHandler
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStackStatusHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspTrustCenterJoinHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberDeviceUpdate;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberIncomingMessageType;
@@ -125,7 +126,7 @@ public class ZigBeeDongleEzspTest {
     }
 
     @Test
-    public void setTcJoinMode() {
+    public void setTcJoinMode() throws Exception {
         System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ArgumentCaptor<EzspPolicyId> policyId = ArgumentCaptor.forClass(EzspPolicyId.class);
         ArgumentCaptor<EzspDecisionId> decisionId = ArgumentCaptor.forClass(EzspDecisionId.class);
@@ -138,6 +139,10 @@ public class ZigBeeDongleEzspTest {
                 return ncp;
             }
         };
+
+        EzspVersionResponse ezspVersion = Mockito.mock(EzspVersionResponse.class);
+        Mockito.when(ezspVersion.getProtocolVersion()).thenReturn(4);
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "ezspVersion", ezspVersion);
 
         TransportConfig configuration = new TransportConfig();
         configuration.addOption(TransportConfigOption.TRUST_CENTRE_JOIN_MODE, TrustCentreJoinMode.TC_JOIN_DENY);
