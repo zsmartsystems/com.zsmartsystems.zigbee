@@ -108,8 +108,10 @@ public class EzspMfglibSetPowerRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(78);
-        builder.append("EzspMfglibSetPowerRequest [txPowerMode=");
+        final StringBuilder builder = new StringBuilder(103);
+        builder.append("EzspMfglibSetPowerRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", txPowerMode=");
         builder.append(txPowerMode);
         builder.append(", power=");
         builder.append(power);

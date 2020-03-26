@@ -68,8 +68,10 @@ public class EzspAddOrUpdateKeyTableEntryResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(64);
-        builder.append("EzspAddOrUpdateKeyTableEntryResponse [status=");
+        final StringBuilder builder = new StringBuilder(89);
+        builder.append("EzspAddOrUpdateKeyTableEntryResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(']');
         return builder.toString();

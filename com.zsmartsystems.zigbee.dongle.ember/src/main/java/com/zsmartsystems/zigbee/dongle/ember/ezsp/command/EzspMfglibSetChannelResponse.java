@@ -65,8 +65,10 @@ public class EzspMfglibSetChannelResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(56);
-        builder.append("EzspMfglibSetChannelResponse [status=");
+        final StringBuilder builder = new StringBuilder(81);
+        builder.append("EzspMfglibSetChannelResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(']');
         return builder.toString();

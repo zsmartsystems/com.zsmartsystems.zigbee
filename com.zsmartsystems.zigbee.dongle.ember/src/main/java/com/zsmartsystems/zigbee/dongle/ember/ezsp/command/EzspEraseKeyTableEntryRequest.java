@@ -77,8 +77,10 @@ public class EzspEraseKeyTableEntryRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(57);
-        builder.append("EzspEraseKeyTableEntryRequest [index=");
+        final StringBuilder builder = new StringBuilder(82);
+        builder.append("EzspEraseKeyTableEntryRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", index=");
         builder.append(index);
         builder.append(']');
         return builder.toString();

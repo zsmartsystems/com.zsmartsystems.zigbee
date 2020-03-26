@@ -81,8 +81,10 @@ public class EzspGetBindingRemoteNodeIdRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(61);
-        builder.append("EzspGetBindingRemoteNodeIdRequest [index=");
+        final StringBuilder builder = new StringBuilder(86);
+        builder.append("EzspGetBindingRemoteNodeIdRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", index=");
         builder.append(index);
         builder.append(']');
         return builder.toString();

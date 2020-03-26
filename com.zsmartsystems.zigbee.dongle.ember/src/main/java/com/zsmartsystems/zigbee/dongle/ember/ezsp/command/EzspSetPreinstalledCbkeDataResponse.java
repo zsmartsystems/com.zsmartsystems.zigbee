@@ -65,8 +65,10 @@ public class EzspSetPreinstalledCbkeDataResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(63);
-        builder.append("EzspSetPreinstalledCbkeDataResponse [status=");
+        final StringBuilder builder = new StringBuilder(88);
+        builder.append("EzspSetPreinstalledCbkeDataResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(']');
         return builder.toString();

@@ -79,8 +79,10 @@ public class EzspGetTransientLinkKeyRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(58);
-        builder.append("EzspGetTransientLinkKeyRequest [eui=");
+        final StringBuilder builder = new StringBuilder(83);
+        builder.append("EzspGetTransientLinkKeyRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", eui=");
         builder.append(eui);
         builder.append(']');
         return builder.toString();

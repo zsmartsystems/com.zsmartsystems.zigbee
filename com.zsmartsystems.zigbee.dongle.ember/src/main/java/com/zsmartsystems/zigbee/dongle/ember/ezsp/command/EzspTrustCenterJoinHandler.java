@@ -180,8 +180,10 @@ public class EzspTrustCenterJoinHandler extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(154);
-        builder.append("EzspTrustCenterJoinHandler [newNodeId=");
+        final StringBuilder builder = new StringBuilder(179);
+        builder.append("EzspTrustCenterJoinHandler [networkId=");
+        builder.append(networkId);
+        builder.append(", newNodeId=");
         builder.append(String.format("%04X", newNodeId));
         builder.append(", newNodeEui64=");
         builder.append(newNodeEui64);

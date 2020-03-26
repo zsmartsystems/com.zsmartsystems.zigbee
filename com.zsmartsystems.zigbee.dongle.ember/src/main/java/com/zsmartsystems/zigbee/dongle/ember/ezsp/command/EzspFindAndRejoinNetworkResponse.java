@@ -73,8 +73,10 @@ public class EzspFindAndRejoinNetworkResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(60);
-        builder.append("EzspFindAndRejoinNetworkResponse [status=");
+        final StringBuilder builder = new StringBuilder(85);
+        builder.append("EzspFindAndRejoinNetworkResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(']');
         return builder.toString();

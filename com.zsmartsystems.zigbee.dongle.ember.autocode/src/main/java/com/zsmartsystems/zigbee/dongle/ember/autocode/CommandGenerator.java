@@ -12,7 +12,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
@@ -71,7 +70,7 @@ public class CommandGenerator extends ClassGenerator {
         System.out.println("Processing command class " + command.name + "  [" + className + "()]");
 
         OutputStream stringWriter = new ByteArrayOutputStream();
-        PrintStream out = new PrintStream(stringWriter,false,"UTF-8");
+        PrintStream out = new PrintStream(stringWriter, false, "UTF-8");
 
         clearImports();
         // addImport("org.slf4j.Logger");
@@ -240,19 +239,17 @@ public class CommandGenerator extends ClassGenerator {
             out.println("        return \"" + className + " []\";");
         } else {
             out.println("        final StringBuilder builder = new StringBuilder("
-                    + (className.length() + 3 + parameters.size() * 25) + ");");
-            boolean first = true;
+                    + (className.length() + 3 + (parameters.size() + 1) * 25) + ");");
+
+            out.println("        builder.append(\"" + className + " [networkId=\");");
+            out.println("        builder.append(networkId);");
+
             for (Parameter parameter : parameters) {
                 if (parameter.auto_size != null) {
                     continue;
                 }
 
-                if (first) {
-                    out.println("        builder.append(\"" + className + " [" + parameter.name + "=\");");
-                } else {
-                    out.println("        builder.append(\", " + parameter.name + "=\");");
-                }
-                first = false;
+                out.println("        builder.append(\", " + parameter.name + "=\");");
                 if (parameter.data_type.contains("[")) {
                     out.println("        for (int cnt = 0; cnt < " + parameter.name + ".length; cnt++) {");
                     out.println("            if (cnt > 0) {");
@@ -297,7 +294,7 @@ public class CommandGenerator extends ClassGenerator {
         System.out.println("Processing structure class " + structure.name + "  [" + className + "()]");
 
         OutputStream stringWriter = new ByteArrayOutputStream();
-        PrintStream out = new PrintStream(stringWriter,false,"UTF-8");
+        PrintStream out = new PrintStream(stringWriter, false, "UTF-8");
 
         clearImports();
         // addImport("org.slf4j.Logger");
@@ -562,7 +559,7 @@ public class CommandGenerator extends ClassGenerator {
         System.out.println("Processing enum class " + enumeration.name + "  [" + className + "()]");
 
         OutputStream stringWriter = new ByteArrayOutputStream();
-        PrintStream out = new PrintStream(stringWriter,false,"UTF-8");
+        PrintStream out = new PrintStream(stringWriter, false, "UTF-8");
 
         clearImports();
 
@@ -969,6 +966,16 @@ public class CommandGenerator extends ClassGenerator {
         out.println("    private static final int EZSP_MAX_VERSION = 8;");
         out.println();
         out.println("    /**");
+        out.println("     * The network ID bit shift");
+        out.println("     */");
+        out.println("    protected static final int EZSP_NETWORK_ID_SHIFT = 5;");
+        out.println();
+        out.println("    /**");
+        out.println("     * The network ID bit mask");
+        out.println("     */");
+        out.println("    protected static final int EZSP_NETWORK_ID_MASK = 0x60;");
+        out.println();
+        out.println("    /**");
         out.println("     * The current version of EZSP being used");
         out.println("     */");
         out.println("    protected static int ezspVersion = EZSP_MIN_VERSION;");
@@ -1000,6 +1007,7 @@ public class CommandGenerator extends ClassGenerator {
         out.println("    protected int sequenceNumber;");
         out.println("    protected int frameControl;");
         out.println("    protected int frameId = 0;");
+        out.println("    protected int networkId = 0;");
         out.println("    protected boolean isResponse = false;");
         out.println();
         out.println("    private static Map<Integer, Class<?>> ezspHandlerMap = new HashMap<Integer, Class<?>>();");
@@ -1020,6 +1028,24 @@ public class CommandGenerator extends ClassGenerator {
         out.println("    }");
         out.println();
 
+        out.println("    /**");
+        out.println("     * Sets the network ID (0 to 3)");
+        out.println("     *");
+        out.println("     * @param networkId the networkId");
+        out.println("     */");
+        out.println("    public void setNetworkId(int networkId) {");
+        out.println("        this.networkId = networkId;");
+        out.println("    }");
+        out.println();
+        out.println("    /**");
+        out.println("     * Gets the network ID (0 to 3)");
+        out.println("     *");
+        out.println("     * @return the networkId of this frame");
+        out.println("     */");
+        out.println("    public int getNetworkId() {");
+        out.println("        return networkId;");
+        out.println("    }");
+        out.println();
         out.println("    /**");
         out.println("     * Gets the 8 bit transaction sequence number");
         out.println("     *");

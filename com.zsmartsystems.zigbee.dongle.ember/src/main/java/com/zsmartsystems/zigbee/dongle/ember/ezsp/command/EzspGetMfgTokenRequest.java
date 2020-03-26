@@ -78,8 +78,10 @@ public class EzspGetMfgTokenRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(50);
-        builder.append("EzspGetMfgTokenRequest [tokenId=");
+        final StringBuilder builder = new StringBuilder(75);
+        builder.append("EzspGetMfgTokenRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", tokenId=");
         builder.append(tokenId);
         builder.append(']');
         return builder.toString();

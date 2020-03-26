@@ -71,8 +71,10 @@ public class EzspSetRadioPowerResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(53);
-        builder.append("EzspSetRadioPowerResponse [status=");
+        final StringBuilder builder = new StringBuilder(78);
+        builder.append("EzspSetRadioPowerResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(']');
         return builder.toString();

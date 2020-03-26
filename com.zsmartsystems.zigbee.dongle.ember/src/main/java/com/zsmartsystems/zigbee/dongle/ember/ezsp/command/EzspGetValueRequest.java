@@ -77,8 +77,10 @@ public class EzspGetValueRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(47);
-        builder.append("EzspGetValueRequest [valueId=");
+        final StringBuilder builder = new StringBuilder(72);
+        builder.append("EzspGetValueRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", valueId=");
         builder.append(valueId);
         builder.append(']');
         return builder.toString();

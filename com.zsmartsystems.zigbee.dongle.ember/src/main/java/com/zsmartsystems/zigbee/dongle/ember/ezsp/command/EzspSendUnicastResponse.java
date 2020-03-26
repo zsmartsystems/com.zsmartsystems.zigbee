@@ -111,8 +111,10 @@ public class EzspSendUnicastResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(76);
-        builder.append("EzspSendUnicastResponse [status=");
+        final StringBuilder builder = new StringBuilder(101);
+        builder.append("EzspSendUnicastResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(", sequence=");
         builder.append(String.format("%02X", sequence));

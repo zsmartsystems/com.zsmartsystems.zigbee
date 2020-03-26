@@ -222,8 +222,10 @@ public class EzspMessageSentHandler extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(200);
-        builder.append("EzspMessageSentHandler [type=");
+        final StringBuilder builder = new StringBuilder(225);
+        builder.append("EzspMessageSentHandler [networkId=");
+        builder.append(networkId);
+        builder.append(", type=");
         builder.append(type);
         builder.append(", indexOrDestination=");
         builder.append(indexOrDestination);

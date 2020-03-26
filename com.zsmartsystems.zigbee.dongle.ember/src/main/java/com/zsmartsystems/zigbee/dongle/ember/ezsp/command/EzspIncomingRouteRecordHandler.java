@@ -177,8 +177,10 @@ public class EzspIncomingRouteRecordHandler extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(183);
-        builder.append("EzspIncomingRouteRecordHandler [source=");
+        final StringBuilder builder = new StringBuilder(208);
+        builder.append("EzspIncomingRouteRecordHandler [networkId=");
+        builder.append(networkId);
+        builder.append(", source=");
         builder.append(String.format("%04X", source));
         builder.append(", sourceEui=");
         builder.append(sourceEui);

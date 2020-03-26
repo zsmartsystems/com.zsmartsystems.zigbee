@@ -94,8 +94,10 @@ public class EzspLookupEui64ByNodeIdResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(84);
-        builder.append("EzspLookupEui64ByNodeIdResponse [status=");
+        final StringBuilder builder = new StringBuilder(109);
+        builder.append("EzspLookupEui64ByNodeIdResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(", eui64=");
         builder.append(eui64);

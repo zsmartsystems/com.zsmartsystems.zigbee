@@ -64,8 +64,10 @@ public class EzspPollHandler extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(43);
-        builder.append("EzspPollHandler [senderEui64=");
+        final StringBuilder builder = new StringBuilder(68);
+        builder.append("EzspPollHandler [networkId=");
+        builder.append(networkId);
+        builder.append(", senderEui64=");
         builder.append(senderEui64);
         builder.append(']');
         return builder.toString();

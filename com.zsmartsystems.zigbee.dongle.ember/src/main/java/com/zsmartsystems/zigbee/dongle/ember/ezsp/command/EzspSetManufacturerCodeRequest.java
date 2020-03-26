@@ -77,8 +77,10 @@ public class EzspSetManufacturerCodeRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(58);
-        builder.append("EzspSetManufacturerCodeRequest [code=");
+        final StringBuilder builder = new StringBuilder(83);
+        builder.append("EzspSetManufacturerCodeRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", code=");
         builder.append(code);
         builder.append(']');
         return builder.toString();

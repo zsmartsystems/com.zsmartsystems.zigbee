@@ -92,8 +92,10 @@ public class EzspSendBroadcastResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(78);
-        builder.append("EzspSendBroadcastResponse [status=");
+        final StringBuilder builder = new StringBuilder(103);
+        builder.append("EzspSendBroadcastResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(", sequence=");
         builder.append(String.format("%02X", sequence));

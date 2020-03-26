@@ -111,8 +111,10 @@ public class EzspSendMulticastResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(78);
-        builder.append("EzspSendMulticastResponse [status=");
+        final StringBuilder builder = new StringBuilder(103);
+        builder.append("EzspSendMulticastResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(", sequence=");
         builder.append(String.format("%02X", sequence));

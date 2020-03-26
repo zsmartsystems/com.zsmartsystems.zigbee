@@ -67,8 +67,10 @@ public class EzspMfglibSendPacketResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(56);
-        builder.append("EzspMfglibSendPacketResponse [status=");
+        final StringBuilder builder = new StringBuilder(81);
+        builder.append("EzspMfglibSendPacketResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(']');
         return builder.toString();

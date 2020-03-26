@@ -150,8 +150,10 @@ public class EzspGetChildDataResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(127);
-        builder.append("EzspGetChildDataResponse [status=");
+        final StringBuilder builder = new StringBuilder(152);
+        builder.append("EzspGetChildDataResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(", childId=");
         builder.append(String.format("%04X", childId));

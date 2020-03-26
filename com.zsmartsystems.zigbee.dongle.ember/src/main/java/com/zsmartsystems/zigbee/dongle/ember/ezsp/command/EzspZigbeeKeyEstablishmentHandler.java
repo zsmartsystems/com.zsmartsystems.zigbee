@@ -97,8 +97,10 @@ public class EzspZigbeeKeyEstablishmentHandler extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(86);
-        builder.append("EzspZigbeeKeyEstablishmentHandler [partner=");
+        final StringBuilder builder = new StringBuilder(111);
+        builder.append("EzspZigbeeKeyEstablishmentHandler [networkId=");
+        builder.append(networkId);
+        builder.append(", partner=");
         builder.append(partner);
         builder.append(", status=");
         builder.append(status);

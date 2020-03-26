@@ -124,8 +124,10 @@ public class EzspCalculateSmacs283k1Handler extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(108);
-        builder.append("EzspCalculateSmacs283k1Handler [status=");
+        final StringBuilder builder = new StringBuilder(133);
+        builder.append("EzspCalculateSmacs283k1Handler [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(", initiatorSmac=");
         builder.append(initiatorSmac);

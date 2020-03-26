@@ -275,8 +275,10 @@ public class EzspGpProxyTableProcessGpPairingRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(242);
-        builder.append("EzspGpProxyTableProcessGpPairingRequest [options=");
+        final StringBuilder builder = new StringBuilder(267);
+        builder.append("EzspGpProxyTableProcessGpPairingRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", options=");
         builder.append(options);
         builder.append(", addr=");
         builder.append(addr);

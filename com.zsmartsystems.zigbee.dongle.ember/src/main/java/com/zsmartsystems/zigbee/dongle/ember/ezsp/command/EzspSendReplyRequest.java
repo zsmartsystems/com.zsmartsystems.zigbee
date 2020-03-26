@@ -166,8 +166,10 @@ public class EzspSendReplyRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(148);
-        builder.append("EzspSendReplyRequest [sender=");
+        final StringBuilder builder = new StringBuilder(173);
+        builder.append("EzspSendReplyRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", sender=");
         builder.append(String.format("%04X", sender));
         builder.append(", apsFrame=");
         builder.append(apsFrame);

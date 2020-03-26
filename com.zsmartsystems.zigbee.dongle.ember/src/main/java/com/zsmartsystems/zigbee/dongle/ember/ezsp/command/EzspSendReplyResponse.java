@@ -89,8 +89,10 @@ public class EzspSendReplyResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(49);
-        builder.append("EzspSendReplyResponse [policyDecision=");
+        final StringBuilder builder = new StringBuilder(74);
+        builder.append("EzspSendReplyResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", policyDecision=");
         builder.append(policyDecision);
         builder.append(']');
         return builder.toString();

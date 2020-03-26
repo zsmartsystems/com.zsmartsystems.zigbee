@@ -63,8 +63,10 @@ public class EzspGpProxyTableProcessGpPairingResponse extends EzspFrameResponse 
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(68);
-        builder.append("EzspGpProxyTableProcessGpPairingResponse [gpPairingAdded=");
+        final StringBuilder builder = new StringBuilder(93);
+        builder.append("EzspGpProxyTableProcessGpPairingResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", gpPairingAdded=");
         builder.append(gpPairingAdded);
         builder.append(']');
         return builder.toString();

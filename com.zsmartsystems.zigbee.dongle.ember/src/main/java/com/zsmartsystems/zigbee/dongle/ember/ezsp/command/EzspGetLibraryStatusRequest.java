@@ -78,8 +78,10 @@ public class EzspGetLibraryStatusRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(55);
-        builder.append("EzspGetLibraryStatusRequest [libraryId=");
+        final StringBuilder builder = new StringBuilder(80);
+        builder.append("EzspGetLibraryStatusRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", libraryId=");
         builder.append(libraryId);
         builder.append(']');
         return builder.toString();

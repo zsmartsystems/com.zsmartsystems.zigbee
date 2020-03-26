@@ -93,8 +93,10 @@ public class EzspGpProxyTableGetEntryResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(85);
-        builder.append("EzspGpProxyTableGetEntryResponse [status=");
+        final StringBuilder builder = new StringBuilder(110);
+        builder.append("EzspGpProxyTableGetEntryResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(", entry=");
         builder.append(entry);

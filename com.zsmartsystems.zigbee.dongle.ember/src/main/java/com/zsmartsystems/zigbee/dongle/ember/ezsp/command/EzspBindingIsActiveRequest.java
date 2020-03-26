@@ -79,8 +79,10 @@ public class EzspBindingIsActiveRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(54);
-        builder.append("EzspBindingIsActiveRequest [index=");
+        final StringBuilder builder = new StringBuilder(79);
+        builder.append("EzspBindingIsActiveRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", index=");
         builder.append(index);
         builder.append(']');
         return builder.toString();

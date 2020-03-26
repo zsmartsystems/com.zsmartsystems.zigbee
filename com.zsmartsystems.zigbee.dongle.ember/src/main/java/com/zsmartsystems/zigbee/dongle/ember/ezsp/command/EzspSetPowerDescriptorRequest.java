@@ -77,8 +77,10 @@ public class EzspSetPowerDescriptorRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(57);
-        builder.append("EzspSetPowerDescriptorRequest [descriptor=");
+        final StringBuilder builder = new StringBuilder(82);
+        builder.append("EzspSetPowerDescriptorRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", descriptor=");
         builder.append(descriptor);
         builder.append(']');
         return builder.toString();

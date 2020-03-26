@@ -137,8 +137,10 @@ public class EzspCalculateSmacsRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(103);
-        builder.append("EzspCalculateSmacsRequest [amInitiator=");
+        final StringBuilder builder = new StringBuilder(128);
+        builder.append("EzspCalculateSmacsRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", amInitiator=");
         builder.append(amInitiator);
         builder.append(", partnerCertificate=");
         builder.append(partnerCertificate);

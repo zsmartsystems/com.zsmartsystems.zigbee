@@ -122,8 +122,10 @@ public class EzspGetXncpInfoResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(101);
-        builder.append("EzspGetXncpInfoResponse [status=");
+        final StringBuilder builder = new StringBuilder(126);
+        builder.append("EzspGetXncpInfoResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(", manufacturerId=");
         builder.append(manufacturerId);

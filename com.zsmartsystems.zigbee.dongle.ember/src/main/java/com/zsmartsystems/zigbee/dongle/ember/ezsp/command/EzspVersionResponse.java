@@ -121,8 +121,10 @@ public class EzspVersionResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(97);
-        builder.append("EzspVersionResponse [protocolVersion=");
+        final StringBuilder builder = new StringBuilder(122);
+        builder.append("EzspVersionResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", protocolVersion=");
         builder.append(protocolVersion);
         builder.append(", stackType=");
         builder.append(stackType);

@@ -80,8 +80,10 @@ public class EzspGetNeighborRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(50);
-        builder.append("EzspGetNeighborRequest [index=");
+        final StringBuilder builder = new StringBuilder(75);
+        builder.append("EzspGetNeighborRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", index=");
         builder.append(index);
         builder.append(']');
         return builder.toString();

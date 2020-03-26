@@ -178,8 +178,10 @@ public class EzspMacFilterMatchMessageHandler extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(185);
-        builder.append("EzspMacFilterMatchMessageHandler [filterIndexMatch=");
+        final StringBuilder builder = new StringBuilder(210);
+        builder.append("EzspMacFilterMatchMessageHandler [networkId=");
+        builder.append(networkId);
+        builder.append(", filterIndexMatch=");
         builder.append(filterIndexMatch);
         builder.append(", legacyPassthroughType=");
         builder.append(legacyPassthroughType);

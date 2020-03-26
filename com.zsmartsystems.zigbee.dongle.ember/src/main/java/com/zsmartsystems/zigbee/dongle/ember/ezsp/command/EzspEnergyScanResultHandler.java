@@ -92,8 +92,10 @@ public class EzspEnergyScanResultHandler extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(80);
-        builder.append("EzspEnergyScanResultHandler [channel=");
+        final StringBuilder builder = new StringBuilder(105);
+        builder.append("EzspEnergyScanResultHandler [networkId=");
+        builder.append(networkId);
+        builder.append(", channel=");
         builder.append(channel);
         builder.append(", maxRssiValue=");
         builder.append(maxRssiValue);

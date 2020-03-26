@@ -68,6 +68,9 @@ public abstract class EzspFrameResponse extends EzspFrame {
                 frameId = deserializer.deserializeUInt8();
             }
         }
+
+        networkId = (frameControl & EZSP_NETWORK_ID_MASK) >> EZSP_NETWORK_ID_SHIFT;
+
         isResponse = (frameControl & EZSP_FC_RESPONSE) != 0;
         callbackPending = (frameControl & EZSP_FC_CB_PENDING) != 0;
     }

@@ -81,8 +81,10 @@ public class EzspVersionRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(46);
-        builder.append("EzspVersionRequest [desiredProtocolVersion=");
+        final StringBuilder builder = new StringBuilder(71);
+        builder.append("EzspVersionRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", desiredProtocolVersion=");
         builder.append(desiredProtocolVersion);
         builder.append(']');
         return builder.toString();

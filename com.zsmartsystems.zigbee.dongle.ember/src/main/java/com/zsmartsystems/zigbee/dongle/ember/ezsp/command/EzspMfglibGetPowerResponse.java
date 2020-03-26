@@ -63,8 +63,10 @@ public class EzspMfglibGetPowerResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(54);
-        builder.append("EzspMfglibGetPowerResponse [power=");
+        final StringBuilder builder = new StringBuilder(79);
+        builder.append("EzspMfglibGetPowerResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", power=");
         builder.append(power);
         builder.append(']');
         return builder.toString();

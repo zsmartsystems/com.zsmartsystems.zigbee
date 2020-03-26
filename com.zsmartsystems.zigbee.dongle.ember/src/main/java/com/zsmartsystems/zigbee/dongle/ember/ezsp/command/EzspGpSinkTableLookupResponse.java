@@ -63,8 +63,10 @@ public class EzspGpSinkTableLookupResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(57);
-        builder.append("EzspGpSinkTableLookupResponse [index=");
+        final StringBuilder builder = new StringBuilder(82);
+        builder.append("EzspGpSinkTableLookupResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", index=");
         builder.append(index);
         builder.append(']');
         return builder.toString();

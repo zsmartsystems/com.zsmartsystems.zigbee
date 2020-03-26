@@ -93,8 +93,10 @@ public class EzspIncomingRouteErrorHandler extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(82);
-        builder.append("EzspIncomingRouteErrorHandler [status=");
+        final StringBuilder builder = new StringBuilder(107);
+        builder.append("EzspIncomingRouteErrorHandler [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(", target=");
         builder.append(String.format("%04X", target));

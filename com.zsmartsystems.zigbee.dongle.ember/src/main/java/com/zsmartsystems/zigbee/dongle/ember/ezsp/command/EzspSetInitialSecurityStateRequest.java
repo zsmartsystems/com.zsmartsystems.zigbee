@@ -80,8 +80,10 @@ public class EzspSetInitialSecurityStateRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(62);
-        builder.append("EzspSetInitialSecurityStateRequest [state=");
+        final StringBuilder builder = new StringBuilder(87);
+        builder.append("EzspSetInitialSecurityStateRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", state=");
         builder.append(state);
         builder.append(']');
         return builder.toString();

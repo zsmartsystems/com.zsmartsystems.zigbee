@@ -128,8 +128,10 @@ public class EzspFindAndRejoinNetworkRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(84);
-        builder.append("EzspFindAndRejoinNetworkRequest [haveCurrentNetworkKey=");
+        final StringBuilder builder = new StringBuilder(109);
+        builder.append("EzspFindAndRejoinNetworkRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", haveCurrentNetworkKey=");
         builder.append(haveCurrentNetworkKey);
         builder.append(", channelMask=");
         builder.append(String.format("%08X", channelMask));

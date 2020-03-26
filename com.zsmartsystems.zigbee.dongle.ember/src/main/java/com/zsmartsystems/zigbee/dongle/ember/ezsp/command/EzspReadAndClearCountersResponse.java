@@ -64,8 +64,10 @@ public class EzspReadAndClearCountersResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(60);
-        builder.append("EzspReadAndClearCountersResponse [values=");
+        final StringBuilder builder = new StringBuilder(85);
+        builder.append("EzspReadAndClearCountersResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", values=");
         for (int cnt = 0; cnt < values.length; cnt++) {
             if (cnt > 0) {
                 builder.append(' ');
