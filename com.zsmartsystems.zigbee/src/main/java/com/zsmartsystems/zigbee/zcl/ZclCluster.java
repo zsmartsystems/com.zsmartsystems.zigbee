@@ -1381,8 +1381,8 @@ public abstract class ZclCluster {
                 command.getRecords());
         for (ReadAttributeStatusRecord record : command.getRecords()) {
             if (record.getStatus() != ZclStatus.SUCCESS) {
-                logger.debug("{}: Error reading attribute {} in {} cluster {} - {}",
-                        zigbeeEndpoint.getEndpointAddress(), (isClient ? "Client" : "Server"),
+                logger.debug("{}: Error reading {} attribute {} in cluster {} - {}",
+                        zigbeeEndpoint.getEndpointAddress(), (isClient ? "client" : "server"),
                         record.getAttributeIdentifier(), clusterId, record.getStatus());
                 continue;
             }
