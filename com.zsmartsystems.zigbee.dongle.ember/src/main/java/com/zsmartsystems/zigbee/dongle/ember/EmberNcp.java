@@ -728,7 +728,6 @@ public class EmberNcp {
     public void setPowerDescriptor(int descriptor) {
         EzspSetPowerDescriptorRequest request = new EzspSetPowerDescriptorRequest();
         request.setDescriptor(descriptor);
-        protocolHandler.queueFrame(request);
         protocolHandler
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspSetPowerDescriptorResponse.class));
     }
@@ -742,7 +741,6 @@ public class EmberNcp {
     public void setManufacturerCode(int code) {
         EzspSetManufacturerCodeRequest request = new EzspSetManufacturerCodeRequest();
         request.setCode(code);
-        protocolHandler.queueFrame(request);
         protocolHandler
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspSetManufacturerCodeResponse.class));
     }
