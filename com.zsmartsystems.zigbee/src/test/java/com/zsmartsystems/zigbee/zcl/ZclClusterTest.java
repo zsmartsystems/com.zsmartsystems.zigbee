@@ -742,6 +742,7 @@ public class ZclClusterTest {
         assertEquals(1, discoverResponse.getAttributeInformation().get(0).getIdentifier());
         assertEquals(ZclDataType.UNSIGNED_8_BIT_INTEGER,
                 discoverResponse.getAttributeInformation().get(0).getDataType());
+        assertTrue(discoverResponse.getDiscoveryComplete());
 
         cluster.getLocalAttribute(1).setImplemented(false);
         cluster.handleCommand(discoverCommand);
@@ -768,6 +769,7 @@ public class ZclClusterTest {
         assertEquals(2, discoverResponse.getAttributeInformation().size());
         assertEquals(10, discoverResponse.getAttributeInformation().get(0).getIdentifier());
         assertEquals(ZclDataType.CHARACTER_STRING, discoverResponse.getAttributeInformation().get(0).getDataType());
+        assertFalse(discoverResponse.getDiscoveryComplete());
     }
 
     @Test
