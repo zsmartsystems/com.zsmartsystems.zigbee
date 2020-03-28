@@ -141,53 +141,35 @@ public class ZigBeeNodeServiceDiscovererTest {
         assertEquals(node, discoverer.getNode());
 
         // Add all the required responses to a list
-        NetworkAddressResponse nwkResponse = new NetworkAddressResponse();
-        nwkResponse.setStatus(ZdoStatus.SUCCESS);
+        NetworkAddressResponse nwkResponse = new NetworkAddressResponse(ZdoStatus.SUCCESS, null, 123, null, null);
         nwkResponse.setSourceAddress(new ZigBeeEndpointAddress(123));
         nwkResponse.setDestinationAddress(new ZigBeeEndpointAddress(0));
-        nwkResponse.setNwkAddrRemoteDev(123);
         responses.put(ZdoCommandType.NETWORK_ADDRESS_REQUEST.getClusterId(), nwkResponse);
 
-        IeeeAddressResponse ieeeResponse = new IeeeAddressResponse();
-        ieeeResponse.setStatus(ZdoStatus.SUCCESS);
+        IeeeAddressResponse ieeeResponse = new IeeeAddressResponse(ZdoStatus.SUCCESS, new IeeeAddress("1234567890ABCDEF"), null, null, null);
         ieeeResponse.setSourceAddress(new ZigBeeEndpointAddress(123));
         ieeeResponse.setDestinationAddress(new ZigBeeEndpointAddress(0));
-        ieeeResponse.setIeeeAddrRemoteDev(new IeeeAddress("1234567890ABCDEF"));
         responses.put(ZdoCommandType.IEEE_ADDRESS_REQUEST.getClusterId(), ieeeResponse);
 
-        NodeDescriptorResponse nodeResponse = new NodeDescriptorResponse();
-        nodeResponse.setStatus(ZdoStatus.SUCCESS);
+        NodeDescriptor nodeDescriptor = new NodeDescriptor();
+        NodeDescriptorResponse nodeResponse = new NodeDescriptorResponse(ZdoStatus.SUCCESS, 0, nodeDescriptor);
         nodeResponse.setSourceAddress(new ZigBeeEndpointAddress(123));
         nodeResponse.setDestinationAddress(new ZigBeeEndpointAddress(0));
-        nodeResponse.setNwkAddrOfInterest(0);
-        NodeDescriptor nodeDescriptor = new NodeDescriptor();
-        nodeResponse.setNodeDescriptor(nodeDescriptor);
         responses.put(ZdoCommandType.NODE_DESCRIPTOR_REQUEST.getClusterId(), nodeResponse);
 
-        PowerDescriptorResponse powerResponse = new PowerDescriptorResponse();
-        powerResponse.setStatus(ZdoStatus.SUCCESS);
+        PowerDescriptor powerDescriptor = new PowerDescriptor();
+        PowerDescriptorResponse powerResponse = new PowerDescriptorResponse(ZdoStatus.SUCCESS, 0, powerDescriptor);
         powerResponse.setSourceAddress(new ZigBeeEndpointAddress(123));
         powerResponse.setDestinationAddress(new ZigBeeEndpointAddress(0));
-        powerResponse.setNwkAddrOfInterest(0);
-        PowerDescriptor powerDescriptor = new PowerDescriptor();
-        powerResponse.setPowerDescriptor(powerDescriptor);
         responses.put(ZdoCommandType.POWER_DESCRIPTOR_REQUEST.getClusterId(), powerResponse);
 
-        ActiveEndpointsResponse endpointsResponse = new ActiveEndpointsResponse();
-        endpointsResponse.setStatus(ZdoStatus.SUCCESS);
-        endpointsResponse.setSourceAddress(new ZigBeeEndpointAddress(123));
-        endpointsResponse.setDestinationAddress(new ZigBeeEndpointAddress(0));
-        endpointsResponse.setNwkAddrOfInterest(0);
         List<Integer> activeEpList = new ArrayList<Integer>();
         activeEpList.add(1);
-        endpointsResponse.setActiveEpList(activeEpList);
+        ActiveEndpointsResponse endpointsResponse = new ActiveEndpointsResponse(ZdoStatus.SUCCESS, 0, activeEpList);
+        endpointsResponse.setSourceAddress(new ZigBeeEndpointAddress(123));
+        endpointsResponse.setDestinationAddress(new ZigBeeEndpointAddress(0));
         responses.put(ZdoCommandType.ACTIVE_ENDPOINTS_REQUEST.getClusterId(), endpointsResponse);
 
-        SimpleDescriptorResponse simpleResponse = new SimpleDescriptorResponse();
-        simpleResponse.setStatus(ZdoStatus.SUCCESS);
-        simpleResponse.setSourceAddress(new ZigBeeEndpointAddress(123));
-        simpleResponse.setDestinationAddress(new ZigBeeEndpointAddress(0, 1));
-        simpleResponse.setNwkAddrOfInterest(0);
         SimpleDescriptor simpleDescriptor = new SimpleDescriptor();
         simpleDescriptor.setDeviceId(0);
         simpleDescriptor.setDeviceVersion(0);
@@ -197,25 +179,19 @@ public class ZigBeeNodeServiceDiscovererTest {
         List<Integer> outputClusterList = new ArrayList<Integer>();
         simpleDescriptor.setInputClusterList(inputClusterList);
         simpleDescriptor.setOutputClusterList(outputClusterList);
-        simpleResponse.setSimpleDescriptor(simpleDescriptor);
+        SimpleDescriptorResponse simpleResponse = new SimpleDescriptorResponse(ZdoStatus.SUCCESS, 0, null, simpleDescriptor);
+        simpleResponse.setSourceAddress(new ZigBeeEndpointAddress(123));
+        simpleResponse.setDestinationAddress(new ZigBeeEndpointAddress(0, 1));
         responses.put(ZdoCommandType.SIMPLE_DESCRIPTOR_REQUEST.getClusterId(), simpleResponse);
 
-        ManagementLqiResponse lqiRequest = new ManagementLqiResponse();
-        lqiRequest.setStatus(ZdoStatus.SUCCESS);
+        ManagementLqiResponse lqiRequest = new ManagementLqiResponse(ZdoStatus.SUCCESS, 0, 0, new ArrayList<>());
         lqiRequest.setSourceAddress(new ZigBeeEndpointAddress(123));
         lqiRequest.setDestinationAddress(new ZigBeeEndpointAddress(0));
-        lqiRequest.setStartIndex(0);
-        lqiRequest.setNeighborTableEntries(0);
-        lqiRequest.setNeighborTableList(new ArrayList<NeighborTable>());
         responses.put(ZdoCommandType.MANAGEMENT_LQI_REQUEST.getClusterId(), lqiRequest);
 
-        ManagementRoutingResponse routingResponse = new ManagementRoutingResponse();
-        routingResponse.setStatus(ZdoStatus.SUCCESS);
+        ManagementRoutingResponse routingResponse = new ManagementRoutingResponse(ZdoStatus.SUCCESS, 0, 0, new ArrayList<>());
         routingResponse.setSourceAddress(new ZigBeeEndpointAddress(123));
         routingResponse.setDestinationAddress(new ZigBeeEndpointAddress(0));
-        routingResponse.setStartIndex(0);
-        routingResponse.setRoutingTableList(new ArrayList<RoutingTable>());
-        routingResponse.setRoutingTableEntries(0);
         responses.put(ZdoCommandType.MANAGEMENT_ROUTING_REQUEST.getClusterId(), routingResponse);
 
         discoverer.startDiscovery();

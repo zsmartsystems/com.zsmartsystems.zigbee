@@ -272,7 +272,8 @@ public class ZclIasZoneClient implements ZigBeeApplication, ZclCommandListener {
         }
 
         zoneType = command.getZoneType();
-        iasZoneCluster.zoneEnrollResponse(EnrollResponseCodeEnum.SUCCESS.getKey(), zoneId);
+        ZoneEnrollResponse zoneEnrollResponse = new ZoneEnrollResponse(EnrollResponseCodeEnum.SUCCESS.getKey(), zoneId);
+        iasZoneCluster.sendCommand(zoneEnrollResponse);
         return true;
     }
 
@@ -299,7 +300,7 @@ public class ZclIasZoneClient implements ZigBeeApplication, ZclCommandListener {
     private class AutoEnrollmentTask implements Runnable {
         @Override
         public void run() {
-            iasZoneCluster.zoneEnrollResponse(EnrollResponseCodeEnum.SUCCESS.getKey(), zoneId);
+            iasZoneCluster.sendCommand(new ZoneEnrollResponse(EnrollResponseCodeEnum.SUCCESS.getKey(), zoneId));
         }
     }
 }

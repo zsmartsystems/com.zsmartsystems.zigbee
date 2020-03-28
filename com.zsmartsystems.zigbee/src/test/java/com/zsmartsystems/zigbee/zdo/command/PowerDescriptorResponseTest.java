@@ -31,7 +31,7 @@ public class PowerDescriptorResponseTest extends CommandTest {
     public void testReceive() {
         int[] packet = getPacketData("00 00 00 00 10 C1");
 
-        PowerDescriptorResponse descriptorResponse = new PowerDescriptorResponse();
+        PowerDescriptorResponse descriptorResponse = new PowerDescriptorResponse(null, null, null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);
@@ -52,7 +52,7 @@ public class PowerDescriptorResponseTest extends CommandTest {
     public void testReceiveNotSupported() {
         int[] packet = getPacketData("84 84");
 
-        PowerDescriptorResponse descriptorResponse = new PowerDescriptorResponse();
+        PowerDescriptorResponse descriptorResponse = new PowerDescriptorResponse(null, null, null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);

@@ -20,10 +20,7 @@ import com.zsmartsystems.zigbee.app.seclient.SmartEnergyClient;
 import com.zsmartsystems.zigbee.security.ZigBeeCbkeProvider;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclMeteringCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclPriceCluster;
-import com.zsmartsystems.zigbee.zcl.clusters.metering.GetProfileResponse;
-import com.zsmartsystems.zigbee.zcl.clusters.metering.GetProfileStatusEnum;
-import com.zsmartsystems.zigbee.zcl.clusters.metering.IntervalPeriodEnum;
-import com.zsmartsystems.zigbee.zcl.clusters.metering.RequestFastPollModeResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.metering.*;
 import com.zsmartsystems.zigbee.zcl.clusters.price.GetCurrentPriceCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.price.PublishPriceCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
@@ -129,7 +126,7 @@ public class ZigBeeConsoleSmartEnergyCommand extends ZigBeeConsoleAbstractComman
 
         try {
             for (int cnt = 0; cnt < repeatCycles; cnt++) {
-                CommandResult result = cluster.getProfile(0, Calendar.getInstance(), 1).get();
+                CommandResult result = cluster.sendCommand(new GetProfile(0, Calendar.getInstance(), 1)).get();
                 GetProfileResponse response = (GetProfileResponse) result.getResponse();
                 if (response.getStatus() != 0) {
                     out.println(
@@ -169,7 +166,7 @@ public class ZigBeeConsoleSmartEnergyCommand extends ZigBeeConsoleAbstractComman
         }
 
         try {
-            CommandResult response = cluster.requestFastPollMode(period, 15).get();
+            CommandResult response = cluster.sendCommand(new RequestFastPollMode(period, 15)).get();
             if (response.isError()) {
                 out.println("Error response when sending fast poll request");
                 return;

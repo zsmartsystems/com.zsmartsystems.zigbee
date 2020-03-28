@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.zcl.clusters.general;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.Test;
 
@@ -38,10 +39,9 @@ public class ConfigureReportingCommandTest extends CommandTest {
         record.setTimeoutPeriod(0);
         record.setMinimumReportingInterval(1);
         record.setMaximumReportingInterval(600);
-        ConfigureReportingCommand command = new ConfigureReportingCommand();
+        ConfigureReportingCommand command = new ConfigureReportingCommand(Collections.singletonList(record));
         command.setClusterId(6);
         command.setDestinationAddress(new ZigBeeEndpointAddress(31084, 18));
-        command.setRecords(Arrays.asList(record));
         command.setTransactionId(23);
 
         System.out.println(command);

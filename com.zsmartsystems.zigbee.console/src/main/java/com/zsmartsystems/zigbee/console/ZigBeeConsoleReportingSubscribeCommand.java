@@ -88,7 +88,7 @@ public class ZigBeeConsoleReportingSubscribeCommand extends ZigBeeConsoleAbstrac
             reportableChange = null;
         }
 
-        final CommandResult result = cluster.setReporting(attribute, minInterval, maxInterval, reportableChange).get();
+        final CommandResult result = cluster.setReporting(attribute.getId(), minInterval, maxInterval, reportableChange).get();
         if (result.isSuccess()) {
             final ConfigureReportingResponse response = result.getResponse();
             final ZclStatus statusCode = response.getStatus();

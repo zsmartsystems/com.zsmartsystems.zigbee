@@ -31,14 +31,12 @@ public class CommandResultTest {
         assertFalse(result.isError());
         assertTrue(result.isSuccess());
 
-        DefaultResponse response = new DefaultResponse();
-        response.setStatusCode(ZclStatus.SUCCESS);
+        DefaultResponse response = new DefaultResponse(1, ZclStatus.SUCCESS);
         result = new CommandResult(response);
         assertFalse(result.isError());
         assertTrue(result.isSuccess());
 
-        response = new DefaultResponse();
-        response.setStatusCode(ZclStatus.FAILURE);
+        response = new DefaultResponse(2, ZclStatus.FAILURE);
         result = new CommandResult(response);
         assertTrue(result.isError());
         assertFalse(result.isSuccess());

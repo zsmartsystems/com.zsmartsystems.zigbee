@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.zcl;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.zsmartsystems.zigbee.IeeeAddress;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -61,7 +62,7 @@ public class ZclResponseMatcherTest {
     @Test
     public void testZdoResponse() {
         ZclCommand request = createOnCommand(new ZigBeeEndpointAddress(0,1), new ZigBeeEndpointAddress(1234,5), 5);
-        ZdoCommand response = new DeviceAnnounce();
+        ZdoCommand response = new DeviceAnnounce(123, new IeeeAddress("0123456789123456"), null);
         
         assertFalse(matcher.isTransactionMatch(request, response));
     }
@@ -93,7 +94,7 @@ public class ZclResponseMatcherTest {
     }
     
     private ZclCommand createDefaultResponse(ZigBeeAddress source, ZigBeeAddress dest, Integer clusterId, Integer transactionId) {
-        ZclCommand zclResponse = new DefaultResponse();
+        ZclCommand zclResponse = new DefaultResponse(DefaultResponse.COMMAND_ID, ZclStatus.SUCCESS);
         zclResponse.setSourceAddress(source);
         zclResponse.setDestinationAddress(dest);
         zclResponse.setClusterId(clusterId);

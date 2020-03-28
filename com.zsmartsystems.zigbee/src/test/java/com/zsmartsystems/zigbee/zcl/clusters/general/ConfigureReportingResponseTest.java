@@ -29,7 +29,7 @@ public class ConfigureReportingResponseTest extends CommandTest {
     public void test() {
         int[] packet = getPacketData("18 1B 07 00 00 00 00");
 
-        ConfigureReportingResponse response = new ConfigureReportingResponse();
+        ConfigureReportingResponse response = new ConfigureReportingResponse(null, null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);
@@ -52,7 +52,7 @@ public class ConfigureReportingResponseTest extends CommandTest {
     public void testStatusOnly() {
         int[] packet = getPacketData("18 11 07 00");
 
-        ConfigureReportingResponse response = new ConfigureReportingResponse();
+        ConfigureReportingResponse response = new ConfigureReportingResponse(null, null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);
@@ -71,7 +71,7 @@ public class ConfigureReportingResponseTest extends CommandTest {
     public void testErrorInvalidDataType() {
         int[] packet = getPacketData("08 6C 07 8D 00 00 00");
 
-        ConfigureReportingResponse response = new ConfigureReportingResponse();
+        ConfigureReportingResponse response = new ConfigureReportingResponse(null, null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);

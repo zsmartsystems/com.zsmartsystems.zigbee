@@ -153,15 +153,11 @@ public class ClusterMatcher implements ZigBeeCommandListener {
                 logger.debug("{}: ClusterMatcher no match", networkManager.getZigBeeExtendedPanId());
                 return;
             }
-
-            MatchDescriptorResponse matchResponse = new MatchDescriptorResponse();
-            matchResponse.setStatus(ZdoStatus.SUCCESS);
             List<Integer> matchList = new ArrayList<Integer>();
             matchList.add(localEndpointId);
-            matchResponse.setMatchList(matchList);
+            MatchDescriptorResponse matchResponse = new MatchDescriptorResponse(ZdoStatus.SUCCESS, networkManager.getLocalNwkAddress(), matchList);
             matchResponse.setTransactionId(matchRequest.getTransactionId());
             matchResponse.setDestinationAddress(command.getSourceAddress());
-            matchResponse.setNwkAddrOfInterest(networkManager.getLocalNwkAddress());
             logger.debug("{}: ClusterMatcher sending match {}", networkManager.getZigBeeExtendedPanId(), matchResponse);
             networkManager.sendTransaction(matchResponse);
         }

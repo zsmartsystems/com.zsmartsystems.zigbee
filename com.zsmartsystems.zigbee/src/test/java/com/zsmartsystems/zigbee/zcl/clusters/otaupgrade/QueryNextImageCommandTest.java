@@ -27,7 +27,7 @@ public class QueryNextImageCommandTest extends CommandTest {
     public void testReceive() {
         int[] packet = getPacketData("00 0C 11 62 00 03 05 02 01");
 
-        QueryNextImageCommand command = new QueryNextImageCommand();
+        QueryNextImageCommand command = new QueryNextImageCommand(null, null, null, null, null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);
@@ -44,7 +44,7 @@ public class QueryNextImageCommandTest extends CommandTest {
     public void testReceiveHwVersion() {
         int[] packet = getPacketData("01 0C 11 62 00 03 05 02 01 33 44");
 
-        QueryNextImageCommand command = new QueryNextImageCommand();
+        QueryNextImageCommand command = new QueryNextImageCommand(null, null, null, null, null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);
