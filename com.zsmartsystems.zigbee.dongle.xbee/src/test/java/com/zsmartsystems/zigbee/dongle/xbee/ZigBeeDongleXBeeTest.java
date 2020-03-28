@@ -60,14 +60,11 @@ public class ZigBeeDongleXBeeTest {
             e.printStackTrace();
         }
 
-        MatchDescriptorResponse command = new MatchDescriptorResponse();
-        command.setDestinationAddress(new ZigBeeEndpointAddress(46946));
-        command.setNwkAddrOfInterest(46946);
-        command.setStatus(ZdoStatus.SUCCESS);
-        command.setTransactionId(0x2A);
         List<Integer> matchList = new ArrayList<>();
         matchList.add(1);
-        command.setMatchList(matchList);
+        MatchDescriptorResponse command = new MatchDescriptorResponse(ZdoStatus.SUCCESS, 46946, matchList);
+        command.setDestinationAddress(new ZigBeeEndpointAddress(46946));
+        command.setTransactionId(0x2A);
 
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
         apsFrame.setDestinationAddress(46946);

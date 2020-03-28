@@ -45,12 +45,10 @@ public class EzspSendUnicastTest extends EzspFrameTest {
     @Test
     public void testSendPermitJoining() throws Exception {
         EzspFrame.setEzspVersion(4);
-        ManagementPermitJoiningRequest permitJoining = new ManagementPermitJoiningRequest();
+        ManagementPermitJoiningRequest permitJoining = new ManagementPermitJoiningRequest(60, false);
 
         permitJoining.setDestinationAddress(new ZigBeeEndpointAddress(0x401C));
         permitJoining.setSourceAddress(new ZigBeeEndpointAddress(0));
-        permitJoining.setTcSignificance(false);
-        permitJoining.setPermitDuration(60);
 
         DefaultSerializer serializer = new DefaultSerializer();
         ZclFieldSerializer fieldSerializer = new ZclFieldSerializer(serializer);

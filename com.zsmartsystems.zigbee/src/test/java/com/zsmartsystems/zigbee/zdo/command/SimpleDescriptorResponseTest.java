@@ -31,7 +31,7 @@ public class SimpleDescriptorResponseTest extends CommandTest {
         // int[] packet = getPacketData("00 00 00 00 10 C1");
         int[] packet = getPacketData("00 81 00 01");
 
-        SimpleDescriptorResponse descriptorResponse = new SimpleDescriptorResponse();
+        SimpleDescriptorResponse descriptorResponse = new SimpleDescriptorResponse(null, null, null, null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);
@@ -50,7 +50,7 @@ public class SimpleDescriptorResponseTest extends CommandTest {
     public void testReceive() {
         int[] packet = getPacketData("00 00 00 00 14 01 04 01 00 00 00 03 00 00 01 00 06 00 03 00 00 01 00 06 00");
 
-        SimpleDescriptorResponse descriptorResponse = new SimpleDescriptorResponse();
+        SimpleDescriptorResponse descriptorResponse = new SimpleDescriptorResponse(null, null, null, null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);

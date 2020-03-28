@@ -1374,7 +1374,7 @@ public final class ZigBeeConsole {
                 clusterId = Integer.parseInt(args[1]);
             }
 
-            networkManager.addSupportedCluster(clusterId);
+            networkManager.addSupportedClientCluster(clusterId);
 
             print("Added cluster " + String.format("0x%X", clusterId) + " to match descriptor list.", out);
 
@@ -1676,9 +1676,8 @@ public final class ZigBeeConsole {
                     List<Integer> lqi = new ArrayList<>();
                     while (cnt < cnts) {
                         print("LQI Poll CNT: " + cnt++, out);
-                        final ManagementLqiRequest neighborRequest = new ManagementLqiRequest();
+                        final ManagementLqiRequest neighborRequest = new ManagementLqiRequest(0);
                         neighborRequest.setDestinationAddress(new ZigBeeEndpointAddress(0));
-                        neighborRequest.setStartIndex(0);
 
                         CommandResult response;
                         try {

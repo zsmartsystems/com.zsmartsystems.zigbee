@@ -27,7 +27,7 @@ public class ZoneStatusChangeNotificationCommandTest extends CommandTest {
     public void test() {
         int[] packet = getPacketData("09 7B 00 24 00 00 00 00 00");
 
-        ZoneStatusChangeNotificationCommand command = new ZoneStatusChangeNotificationCommand();
+        ZoneStatusChangeNotificationCommand command = new ZoneStatusChangeNotificationCommand(null, null, null, null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);

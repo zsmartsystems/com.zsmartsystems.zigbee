@@ -33,7 +33,7 @@ public class ZigBeeIasCieExtension implements ZigBeeNetworkExtension, ZigBeeNetw
     public ZigBeeStatus extensionInitialize(ZigBeeNetworkManager networkManager) {
         this.networkManager = networkManager;
 
-        networkManager.addSupportedCluster(ZclIasZoneCluster.CLUSTER_ID);
+        networkManager.addSupportedClientCluster(ZclIasZoneCluster.CLUSTER_ID);
         networkManager.addNetworkNodeListener(this);
         return ZigBeeStatus.SUCCESS;
     }

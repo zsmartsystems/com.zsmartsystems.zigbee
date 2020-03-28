@@ -30,10 +30,8 @@ public class ManagementPermitJoiningRequestTest extends CommandTest {
         // Short response - ie not extended
         int[] packet = getPacketData("00 FF 01");
 
-        ManagementPermitJoiningRequest request = new ManagementPermitJoiningRequest();
+        ManagementPermitJoiningRequest request = new ManagementPermitJoiningRequest(255, true);
         request.setDestinationAddress(new ZigBeeEndpointAddress(0));
-        request.setTcSignificance(true);
-        request.setPermitDuration(255);
 
         DefaultSerializer serializer = new DefaultSerializer();
         ZclFieldSerializer fieldSerializer = new ZclFieldSerializer(serializer);

@@ -25,7 +25,7 @@ public class DiscoverCommandsGeneratedResponseTest extends CommandTest {
     public void testReceive() {
         int[] packet = getPacketData("01");
 
-        DiscoverCommandsGeneratedResponse response = new DiscoverCommandsGeneratedResponse();
+        DiscoverCommandsGeneratedResponse response = new DiscoverCommandsGeneratedResponse(null, null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);

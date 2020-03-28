@@ -31,7 +31,7 @@ public class ReadAttributesResponseTest extends CommandTest {
     public void testReceive() {
         int[] packet = getPacketData("05 00 00 42 06 4C 43 54 30 30 33 21 00 1D");
 
-        ReadAttributesResponse response = new ReadAttributesResponse();
+        ReadAttributesResponse response = new ReadAttributesResponse(null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);
@@ -52,7 +52,7 @@ public class ReadAttributesResponseTest extends CommandTest {
     public void testReceiveOtaImageStatus() {
         int[] packet = getPacketData("06 00 00 20 02");
 
-        ReadAttributesResponse response = new ReadAttributesResponse();
+        ReadAttributesResponse response = new ReadAttributesResponse(null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);
@@ -73,7 +73,7 @@ public class ReadAttributesResponseTest extends CommandTest {
     public void testReceiveNull() {
         int[] packet = getPacketData("01 00 86");
 
-        ReadAttributesResponse response = new ReadAttributesResponse();
+        ReadAttributesResponse response = new ReadAttributesResponse(null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);

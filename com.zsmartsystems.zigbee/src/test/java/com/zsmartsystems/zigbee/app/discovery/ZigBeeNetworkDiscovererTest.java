@@ -96,16 +96,11 @@ public class ZigBeeNetworkDiscovererTest {
     @Test
     public void testNormal() {
         // Add all the required responses to a list
-        IeeeAddressResponse ieeeResponse = new IeeeAddressResponse();
-        ieeeResponse.setStatus(ZdoStatus.SUCCESS);
-        ieeeResponse.setSourceAddress(new ZigBeeEndpointAddress(0));
-        ieeeResponse.setDestinationAddress(new ZigBeeEndpointAddress(0));
-        ieeeResponse.setIeeeAddrRemoteDev(new IeeeAddress("1234567890ABCDEF"));
-        ieeeResponse.setNwkAddrRemoteDev(0);
-        ieeeResponse.setStartIndex(0);
         List<Integer> remotes = new ArrayList<>();
         remotes.add(1);
-        ieeeResponse.setNwkAddrAssocDevList(remotes);
+        IeeeAddressResponse ieeeResponse = new IeeeAddressResponse(ZdoStatus.SUCCESS, new IeeeAddress("1234567890ABCDEF"), 0, 0, remotes);
+        ieeeResponse.setSourceAddress(new ZigBeeEndpointAddress(0));
+        ieeeResponse.setDestinationAddress(new ZigBeeEndpointAddress(0));
         responses.put(ZdoCommandType.IEEE_ADDRESS_REQUEST.getClusterId(), ieeeResponse);
 
         ZigBeeNetworkDiscoverer discoverer = new ZigBeeNetworkDiscoverer(networkManager);
@@ -164,9 +159,7 @@ public class ZigBeeNetworkDiscovererTest {
     public void testNodeAddressUpdate() {
         IeeeAddress ieeeAddress = new IeeeAddress("123456890ABCDEF");
 
-        DeviceAnnounce announce = new DeviceAnnounce();
-        announce.setIeeeAddr(ieeeAddress);
-        announce.setNwkAddrOfInterest(12345);
+        DeviceAnnounce announce = new DeviceAnnounce(12345, ieeeAddress, null);
 
         ZigBeeNetworkDiscoverer discoverer = new ZigBeeNetworkDiscoverer(networkManager);
         discoverer.setRetryPeriod(0);
@@ -199,12 +192,9 @@ public class ZigBeeNetworkDiscovererTest {
     public void rediscoverNodeByEui() throws Exception {
         ZigBeeNetworkDiscoverer discoverer = new ZigBeeNetworkDiscoverer(networkManager);
 
-        IeeeAddressResponse ieeeResponse = new IeeeAddressResponse();
-        ieeeResponse.setStatus(ZdoStatus.SUCCESS);
+        IeeeAddressResponse ieeeResponse = new IeeeAddressResponse(ZdoStatus.SUCCESS, new IeeeAddress("1111111111111111"), 1111, null, null);
         ieeeResponse.setSourceAddress(new ZigBeeEndpointAddress(1111));
         ieeeResponse.setDestinationAddress(new ZigBeeEndpointAddress(0));
-        ieeeResponse.setNwkAddrRemoteDev(1111);
-        ieeeResponse.setIeeeAddrRemoteDev(new IeeeAddress("1111111111111111"));
         responses.put(ZdoCommandType.IEEE_ADDRESS_REQUEST.getClusterId(), ieeeResponse);
 
         Map<Integer, Long> discoveryStartTime = new HashMap<>();
@@ -226,12 +216,9 @@ public class ZigBeeNetworkDiscovererTest {
     public void rediscoverNodeByNwk() throws Exception {
         ZigBeeNetworkDiscoverer discoverer = new ZigBeeNetworkDiscoverer(networkManager);
 
-        NetworkAddressResponse nwkResponse = new NetworkAddressResponse();
-        nwkResponse.setStatus(ZdoStatus.SUCCESS);
+        NetworkAddressResponse nwkResponse = new NetworkAddressResponse(ZdoStatus.SUCCESS, new IeeeAddress("1111111111111111"), 1111, null, null);
         nwkResponse.setSourceAddress(new ZigBeeEndpointAddress(1111));
         nwkResponse.setDestinationAddress(new ZigBeeEndpointAddress(0));
-        nwkResponse.setNwkAddrRemoteDev(1111);
-        nwkResponse.setIeeeAddrRemoteDev(new IeeeAddress("1111111111111111"));
         responses.put(ZdoCommandType.NETWORK_ADDRESS_REQUEST.getClusterId(), nwkResponse);
 
         Map<Integer, Long> discoveryStartTime = new HashMap<>();

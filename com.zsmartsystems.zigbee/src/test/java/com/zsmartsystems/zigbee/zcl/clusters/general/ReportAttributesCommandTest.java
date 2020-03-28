@@ -31,7 +31,7 @@ public class ReportAttributesCommandTest extends CommandTest {
     public void testSingle() {
         int[] packet = getPacketData("05 FF 21 5C 03 55 00 39 FF BF 38 43");
         // 0x4338BFFF =
-        ReportAttributesCommand response = new ReportAttributesCommand();
+        ReportAttributesCommand response = new ReportAttributesCommand(null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);

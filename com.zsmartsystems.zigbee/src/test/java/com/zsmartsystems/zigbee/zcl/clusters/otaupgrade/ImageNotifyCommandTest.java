@@ -28,44 +28,43 @@ public class ImageNotifyCommandTest extends CommandTest {
 
     @Test
     public void testSend() {
-        ImageNotifyCommand command = new ImageNotifyCommand();
-        command.setSourceAddress(new ZigBeeEndpointAddress(0, 1));
-        command.setDestinationAddress(new ZigBeeEndpointAddress(57337, 3));
-        command.setImageType(6);
-        command.setQueryJitter(72);
-        command.setManufacturerCode(4364);
-        command.setNewFileVersion(16909063);
+        ImageNotifyCommand command = getTestImageNotifyCommandWithPayloadType(0);
         System.out.println(command);
 
         ZigBeeSerializer serializer = new DefaultSerializer();
         ZclFieldSerializer fieldSerializer = new ZclFieldSerializer(serializer);
-        command.setPayloadType(0);
         command.serialize(fieldSerializer);
         assertTrue(Arrays.equals(getPacketData("00 48"), serializer.getPayload()));
 
         serializer = new DefaultSerializer();
         fieldSerializer = new ZclFieldSerializer(serializer);
-        command.setPayloadType(1);
+        command = getTestImageNotifyCommandWithPayloadType(1);
         command.serialize(fieldSerializer);
         assertTrue(Arrays.equals(getPacketData("01 48 0C 11"), serializer.getPayload()));
 
         serializer = new DefaultSerializer();
         fieldSerializer = new ZclFieldSerializer(serializer);
-        command.setPayloadType(1);
         command.serialize(fieldSerializer);
         assertTrue(Arrays.equals(getPacketData("01 48 0C 11"), serializer.getPayload()));
 
         serializer = new DefaultSerializer();
         fieldSerializer = new ZclFieldSerializer(serializer);
-        command.setPayloadType(2);
+        command = getTestImageNotifyCommandWithPayloadType(2);
         command.serialize(fieldSerializer);
         assertTrue(Arrays.equals(getPacketData("02 48 0C 11 06 00"), serializer.getPayload()));
 
         serializer = new DefaultSerializer();
         fieldSerializer = new ZclFieldSerializer(serializer);
-        command.setPayloadType(3);
+        command = getTestImageNotifyCommandWithPayloadType(3);
         command.serialize(fieldSerializer);
         assertTrue(Arrays.equals(getPacketData("03 48 0C 11 06 00 07 03 02 01"), serializer.getPayload()));
+    }
+
+    private ImageNotifyCommand getTestImageNotifyCommandWithPayloadType(int payloadType) {
+        ImageNotifyCommand command = new ImageNotifyCommand(payloadType, 72, 4364, 6, 16909063);
+        command.setSourceAddress(new ZigBeeEndpointAddress(0, 1));
+        command.setDestinationAddress(new ZigBeeEndpointAddress(57337, 3));
+        return command;
     }
 
 }

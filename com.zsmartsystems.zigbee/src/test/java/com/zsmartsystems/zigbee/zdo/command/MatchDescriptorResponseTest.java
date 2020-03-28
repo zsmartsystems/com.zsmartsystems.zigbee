@@ -31,14 +31,10 @@ public class MatchDescriptorResponseTest extends CommandTest {
 
     @Test
     public void testSendEndpoint1() {
-        MatchDescriptorResponse matchResponse = new MatchDescriptorResponse();
-        matchResponse.setStatus(ZdoStatus.SUCCESS);
         List<Integer> matchList = new ArrayList<Integer>();
         matchList.add(1);
-        matchResponse.setMatchList(matchList);
-
+        MatchDescriptorResponse matchResponse = new MatchDescriptorResponse(ZdoStatus.SUCCESS, 1234, matchList);
         matchResponse.setDestinationAddress(new ZigBeeEndpointAddress(1234, 5));
-        matchResponse.setNwkAddrOfInterest(1234);
         System.out.println(matchResponse);
 
         ZigBeeSerializer serializer = new DefaultSerializer();
@@ -49,15 +45,11 @@ public class MatchDescriptorResponseTest extends CommandTest {
 
     @Test
     public void testSendEndpoint2() {
-        MatchDescriptorResponse matchResponse = new MatchDescriptorResponse();
-        matchResponse.setStatus(ZdoStatus.SUCCESS);
         List<Integer> matchList = new ArrayList<Integer>();
         matchList.add(1);
         matchList.add(2);
-        matchResponse.setMatchList(matchList);
-
+        MatchDescriptorResponse matchResponse = new MatchDescriptorResponse(ZdoStatus.SUCCESS, 1234, matchList);
         matchResponse.setDestinationAddress(new ZigBeeEndpointAddress(1234, 5));
-        matchResponse.setNwkAddrOfInterest(1234);
         System.out.println(matchResponse);
 
         ZigBeeSerializer serializer = new DefaultSerializer();
