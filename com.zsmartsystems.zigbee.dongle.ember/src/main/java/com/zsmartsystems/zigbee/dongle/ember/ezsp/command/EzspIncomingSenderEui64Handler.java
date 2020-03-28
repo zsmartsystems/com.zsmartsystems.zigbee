@@ -66,8 +66,10 @@ public class EzspIncomingSenderEui64Handler extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(58);
-        builder.append("EzspIncomingSenderEui64Handler [senderEui64=");
+        final StringBuilder builder = new StringBuilder(83);
+        builder.append("EzspIncomingSenderEui64Handler [networkId=");
+        builder.append(networkId);
+        builder.append(", senderEui64=");
         builder.append(senderEui64);
         builder.append(']');
         return builder.toString();

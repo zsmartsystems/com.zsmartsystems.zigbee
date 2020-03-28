@@ -65,8 +65,10 @@ public class EzspRemoveDeviceResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(52);
-        builder.append("EzspRemoveDeviceResponse [status=");
+        final StringBuilder builder = new StringBuilder(77);
+        builder.append("EzspRemoveDeviceResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(']');
         return builder.toString();

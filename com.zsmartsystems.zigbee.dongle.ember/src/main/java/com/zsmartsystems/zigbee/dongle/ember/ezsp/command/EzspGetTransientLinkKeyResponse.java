@@ -95,8 +95,10 @@ public class EzspGetTransientLinkKeyResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(84);
-        builder.append("EzspGetTransientLinkKeyResponse [status=");
+        final StringBuilder builder = new StringBuilder(109);
+        builder.append("EzspGetTransientLinkKeyResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(", transientKeyData=");
         builder.append(transientKeyData);

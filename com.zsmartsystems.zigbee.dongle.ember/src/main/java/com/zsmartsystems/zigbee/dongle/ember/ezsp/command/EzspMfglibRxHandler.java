@@ -120,8 +120,10 @@ public class EzspMfglibRxHandler extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(122);
-        builder.append("EzspMfglibRxHandler [linkQuality=");
+        final StringBuilder builder = new StringBuilder(147);
+        builder.append("EzspMfglibRxHandler [networkId=");
+        builder.append(networkId);
+        builder.append(", linkQuality=");
         builder.append(linkQuality);
         builder.append(", rssi=");
         builder.append(rssi);

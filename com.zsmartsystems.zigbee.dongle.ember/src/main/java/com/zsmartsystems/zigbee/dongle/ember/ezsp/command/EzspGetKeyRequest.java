@@ -72,8 +72,10 @@ public class EzspGetKeyRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(45);
-        builder.append("EzspGetKeyRequest [keyType=");
+        final StringBuilder builder = new StringBuilder(70);
+        builder.append("EzspGetKeyRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", keyType=");
         builder.append(keyType);
         builder.append(']');
         return builder.toString();

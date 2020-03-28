@@ -106,8 +106,10 @@ public class EzspSetValueRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(97);
-        builder.append("EzspSetValueRequest [valueId=");
+        final StringBuilder builder = new StringBuilder(122);
+        builder.append("EzspSetValueRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", valueId=");
         builder.append(valueId);
         builder.append(", value=");
         for (int cnt = 0; cnt < value.length; cnt++) {

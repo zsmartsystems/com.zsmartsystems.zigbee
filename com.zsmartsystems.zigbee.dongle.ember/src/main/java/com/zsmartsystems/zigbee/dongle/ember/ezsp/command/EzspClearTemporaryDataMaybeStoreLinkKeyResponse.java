@@ -66,8 +66,10 @@ public class EzspClearTemporaryDataMaybeStoreLinkKeyResponse extends EzspFrameRe
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(75);
-        builder.append("EzspClearTemporaryDataMaybeStoreLinkKeyResponse [status=");
+        final StringBuilder builder = new StringBuilder(100);
+        builder.append("EzspClearTemporaryDataMaybeStoreLinkKeyResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(']');
         return builder.toString();

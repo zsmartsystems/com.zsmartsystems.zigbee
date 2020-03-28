@@ -112,8 +112,10 @@ public class EzspFindKeyTableEntryRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(81);
-        builder.append("EzspFindKeyTableEntryRequest [address=");
+        final StringBuilder builder = new StringBuilder(106);
+        builder.append("EzspFindKeyTableEntryRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", address=");
         builder.append(address);
         builder.append(", linkKey=");
         builder.append(linkKey);

@@ -66,8 +66,10 @@ public class EzspSendTrustCenterLinkKeyResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(62);
-        builder.append("EzspSendTrustCenterLinkKeyResponse [status=");
+        final StringBuilder builder = new StringBuilder(87);
+        builder.append("EzspSendTrustCenterLinkKeyResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(']');
         return builder.toString();

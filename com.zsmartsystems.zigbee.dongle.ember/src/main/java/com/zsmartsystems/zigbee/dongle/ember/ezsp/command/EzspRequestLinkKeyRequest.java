@@ -88,8 +88,10 @@ public class EzspRequestLinkKeyRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(53);
-        builder.append("EzspRequestLinkKeyRequest [partner=");
+        final StringBuilder builder = new StringBuilder(78);
+        builder.append("EzspRequestLinkKeyRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", partner=");
         builder.append(partner);
         builder.append(']');
         return builder.toString();

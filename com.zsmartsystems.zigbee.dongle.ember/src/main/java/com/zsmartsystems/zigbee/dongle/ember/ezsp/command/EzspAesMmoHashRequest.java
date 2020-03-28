@@ -164,8 +164,10 @@ public class EzspAesMmoHashRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(124);
-        builder.append("EzspAesMmoHashRequest [context=");
+        final StringBuilder builder = new StringBuilder(149);
+        builder.append("EzspAesMmoHashRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", context=");
         builder.append(context);
         builder.append(", finalize=");
         builder.append(finalize);

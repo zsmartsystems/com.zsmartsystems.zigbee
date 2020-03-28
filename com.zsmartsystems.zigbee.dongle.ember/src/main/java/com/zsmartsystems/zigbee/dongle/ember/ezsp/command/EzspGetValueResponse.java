@@ -96,8 +96,10 @@ public class EzspGetValueResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(98);
-        builder.append("EzspGetValueResponse [status=");
+        final StringBuilder builder = new StringBuilder(123);
+        builder.append("EzspGetValueResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(", value=");
         for (int cnt = 0; cnt < value.length; cnt++) {

@@ -77,8 +77,10 @@ public class EzspLookupEui64ByNodeIdRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(58);
-        builder.append("EzspLookupEui64ByNodeIdRequest [nodeId=");
+        final StringBuilder builder = new StringBuilder(83);
+        builder.append("EzspLookupEui64ByNodeIdRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", nodeId=");
         builder.append(String.format("%04X", nodeId));
         builder.append(']');
         return builder.toString();

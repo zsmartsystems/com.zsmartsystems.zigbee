@@ -64,8 +64,10 @@ public class EzspInvalidCommandResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(54);
-        builder.append("EzspInvalidCommandResponse [reason=");
+        final StringBuilder builder = new StringBuilder(79);
+        builder.append("EzspInvalidCommandResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", reason=");
         builder.append(reason);
         builder.append(']');
         return builder.toString();

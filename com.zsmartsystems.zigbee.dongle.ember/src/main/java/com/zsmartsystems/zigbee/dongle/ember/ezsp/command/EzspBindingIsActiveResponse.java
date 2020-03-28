@@ -66,8 +66,10 @@ public class EzspBindingIsActiveResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(55);
-        builder.append("EzspBindingIsActiveResponse [active=");
+        final StringBuilder builder = new StringBuilder(80);
+        builder.append("EzspBindingIsActiveResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", active=");
         builder.append(active);
         builder.append(']');
         return builder.toString();

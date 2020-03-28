@@ -200,8 +200,10 @@ public class EzspSendMulticastRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(177);
-        builder.append("EzspSendMulticastRequest [apsFrame=");
+        final StringBuilder builder = new StringBuilder(202);
+        builder.append("EzspSendMulticastRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", apsFrame=");
         builder.append(apsFrame);
         builder.append(", hops=");
         builder.append(hops);

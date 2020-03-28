@@ -93,8 +93,10 @@ public class EzspGetCertificateResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(79);
-        builder.append("EzspGetCertificateResponse [status=");
+        final StringBuilder builder = new StringBuilder(104);
+        builder.append("EzspGetCertificateResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(", localCert=");
         builder.append(localCert);

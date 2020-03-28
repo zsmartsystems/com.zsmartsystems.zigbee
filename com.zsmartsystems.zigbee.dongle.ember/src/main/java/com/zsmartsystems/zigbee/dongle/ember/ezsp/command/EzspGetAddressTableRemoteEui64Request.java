@@ -76,8 +76,10 @@ public class EzspGetAddressTableRemoteEui64Request extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(65);
-        builder.append("EzspGetAddressTableRemoteEui64Request [addressTableIndex=");
+        final StringBuilder builder = new StringBuilder(90);
+        builder.append("EzspGetAddressTableRemoteEui64Request [networkId=");
+        builder.append(networkId);
+        builder.append(", addressTableIndex=");
         builder.append(addressTableIndex);
         builder.append(']');
         return builder.toString();

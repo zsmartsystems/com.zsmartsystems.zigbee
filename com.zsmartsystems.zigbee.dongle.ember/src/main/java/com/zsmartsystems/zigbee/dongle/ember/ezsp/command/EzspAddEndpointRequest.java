@@ -221,8 +221,10 @@ public class EzspAddEndpointRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(225);
-        builder.append("EzspAddEndpointRequest [endpoint=");
+        final StringBuilder builder = new StringBuilder(250);
+        builder.append("EzspAddEndpointRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", endpoint=");
         builder.append(endpoint);
         builder.append(", profileId=");
         builder.append(String.format("%04X", profileId));

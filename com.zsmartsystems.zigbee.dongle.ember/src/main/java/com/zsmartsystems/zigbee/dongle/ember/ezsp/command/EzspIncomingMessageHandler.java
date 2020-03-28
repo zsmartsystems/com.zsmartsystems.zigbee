@@ -274,8 +274,10 @@ public class EzspIncomingMessageHandler extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(254);
-        builder.append("EzspIncomingMessageHandler [type=");
+        final StringBuilder builder = new StringBuilder(279);
+        builder.append("EzspIncomingMessageHandler [networkId=");
+        builder.append(networkId);
+        builder.append(", type=");
         builder.append(type);
         builder.append(", apsFrame=");
         builder.append(apsFrame);

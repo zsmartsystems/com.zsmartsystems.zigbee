@@ -77,8 +77,10 @@ public class EzspGetRouteTableEntryRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(57);
-        builder.append("EzspGetRouteTableEntryRequest [index=");
+        final StringBuilder builder = new StringBuilder(82);
+        builder.append("EzspGetRouteTableEntryRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", index=");
         builder.append(index);
         builder.append(']');
         return builder.toString();

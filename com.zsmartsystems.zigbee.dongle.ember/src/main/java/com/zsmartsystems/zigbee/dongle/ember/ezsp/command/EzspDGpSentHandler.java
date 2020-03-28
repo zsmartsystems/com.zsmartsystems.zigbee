@@ -92,8 +92,10 @@ public class EzspDGpSentHandler extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(71);
-        builder.append("EzspDGpSentHandler [status=");
+        final StringBuilder builder = new StringBuilder(96);
+        builder.append("EzspDGpSentHandler [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(", gpepHandle=");
         builder.append(gpepHandle);

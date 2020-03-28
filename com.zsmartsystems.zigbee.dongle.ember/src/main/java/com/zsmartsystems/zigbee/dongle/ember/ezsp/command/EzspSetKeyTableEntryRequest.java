@@ -162,8 +162,10 @@ public class EzspSetKeyTableEntryRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(130);
-        builder.append("EzspSetKeyTableEntryRequest [index=");
+        final StringBuilder builder = new StringBuilder(155);
+        builder.append("EzspSetKeyTableEntryRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", index=");
         builder.append(index);
         builder.append(", address=");
         builder.append(address);

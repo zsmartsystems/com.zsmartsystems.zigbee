@@ -105,8 +105,10 @@ public class EzspSetBindingRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(74);
-        builder.append("EzspSetBindingRequest [index=");
+        final StringBuilder builder = new StringBuilder(99);
+        builder.append("EzspSetBindingRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", index=");
         builder.append(index);
         builder.append(", value=");
         builder.append(value);

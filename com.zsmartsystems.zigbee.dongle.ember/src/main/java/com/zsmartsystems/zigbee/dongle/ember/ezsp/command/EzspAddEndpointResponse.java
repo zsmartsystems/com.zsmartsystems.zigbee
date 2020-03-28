@@ -76,8 +76,10 @@ public class EzspAddEndpointResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(51);
-        builder.append("EzspAddEndpointResponse [status=");
+        final StringBuilder builder = new StringBuilder(76);
+        builder.append("EzspAddEndpointResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(']');
         return builder.toString();

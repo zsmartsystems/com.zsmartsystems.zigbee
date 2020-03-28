@@ -111,8 +111,10 @@ public class EzspJoinNetworkRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(75);
-        builder.append("EzspJoinNetworkRequest [nodeType=");
+        final StringBuilder builder = new StringBuilder(100);
+        builder.append("EzspJoinNetworkRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", nodeType=");
         builder.append(nodeType);
         builder.append(", parameters=");
         builder.append(parameters);

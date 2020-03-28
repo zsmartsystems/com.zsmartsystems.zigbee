@@ -61,6 +61,16 @@ public abstract class EzspFrame {
     private static final int EZSP_MAX_VERSION = 8;
 
     /**
+     * The network ID bit shift
+     */
+    protected static final int EZSP_NETWORK_ID_SHIFT = 5;
+
+    /**
+     * The network ID bit mask
+     */
+    protected static final int EZSP_NETWORK_ID_MASK = 0x60;
+
+    /**
      * The current version of EZSP being used
      */
     protected static int ezspVersion = EZSP_MIN_VERSION;
@@ -224,6 +234,7 @@ public abstract class EzspFrame {
     protected int sequenceNumber;
     protected int frameControl;
     protected int frameId = 0;
+    protected int networkId = 0;
     protected boolean isResponse = false;
 
     private static Map<Integer, Class<?>> ezspHandlerMap = new HashMap<Integer, Class<?>>();
@@ -368,6 +379,24 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_TRUST_CENTER_JOIN_HANDLER, EzspTrustCenterJoinHandler.class);
         ezspHandlerMap.put(FRAME_ID_VERSION, EzspVersionResponse.class);
         ezspHandlerMap.put(FRAME_ID_ZIGBEE_KEY_ESTABLISHMENT_HANDLER, EzspZigbeeKeyEstablishmentHandler.class);
+    }
+
+    /**
+     * Sets the network ID (0 to 3)
+     *
+     * @param networkId the networkId
+     */
+    public void setNetworkId(int networkId) {
+        this.networkId = networkId;
+    }
+
+    /**
+     * Gets the network ID (0 to 3)
+     *
+     * @return the networkId of this frame
+     */
+    public int getNetworkId() {
+        return networkId;
     }
 
     /**

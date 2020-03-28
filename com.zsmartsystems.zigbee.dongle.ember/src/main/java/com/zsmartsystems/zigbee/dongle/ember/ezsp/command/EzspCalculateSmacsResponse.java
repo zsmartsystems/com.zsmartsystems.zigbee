@@ -67,8 +67,10 @@ public class EzspCalculateSmacsResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(54);
-        builder.append("EzspCalculateSmacsResponse [status=");
+        final StringBuilder builder = new StringBuilder(79);
+        builder.append("EzspCalculateSmacsResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(']');
         return builder.toString();

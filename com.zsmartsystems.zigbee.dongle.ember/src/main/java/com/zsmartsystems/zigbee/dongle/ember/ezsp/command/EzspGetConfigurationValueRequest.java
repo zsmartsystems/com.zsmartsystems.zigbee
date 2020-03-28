@@ -77,8 +77,10 @@ public class EzspGetConfigurationValueRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(60);
-        builder.append("EzspGetConfigurationValueRequest [configId=");
+        final StringBuilder builder = new StringBuilder(85);
+        builder.append("EzspGetConfigurationValueRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", configId=");
         builder.append(configId);
         builder.append(']');
         return builder.toString();

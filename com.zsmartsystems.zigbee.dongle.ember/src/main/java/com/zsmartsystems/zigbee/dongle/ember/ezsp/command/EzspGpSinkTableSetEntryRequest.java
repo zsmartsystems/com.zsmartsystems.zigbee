@@ -105,8 +105,10 @@ public class EzspGpSinkTableSetEntryRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(83);
-        builder.append("EzspGpSinkTableSetEntryRequest [sinkIndex=");
+        final StringBuilder builder = new StringBuilder(108);
+        builder.append("EzspGpSinkTableSetEntryRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", sinkIndex=");
         builder.append(sinkIndex);
         builder.append(", entry=");
         builder.append(entry);

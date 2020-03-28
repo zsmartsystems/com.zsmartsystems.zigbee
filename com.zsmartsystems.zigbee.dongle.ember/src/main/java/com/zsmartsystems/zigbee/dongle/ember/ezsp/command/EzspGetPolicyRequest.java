@@ -77,8 +77,10 @@ public class EzspGetPolicyRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(48);
-        builder.append("EzspGetPolicyRequest [policyId=");
+        final StringBuilder builder = new StringBuilder(73);
+        builder.append("EzspGetPolicyRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", policyId=");
         builder.append(policyId);
         builder.append(']');
         return builder.toString();

@@ -63,8 +63,10 @@ public class EzspGpProxyTableLookupResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(58);
-        builder.append("EzspGpProxyTableLookupResponse [index=");
+        final StringBuilder builder = new StringBuilder(83);
+        builder.append("EzspGpProxyTableLookupResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", index=");
         builder.append(index);
         builder.append(']');
         return builder.toString();

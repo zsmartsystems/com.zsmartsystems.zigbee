@@ -108,8 +108,10 @@ public class EzspSetConfigurationValueRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(85);
-        builder.append("EzspSetConfigurationValueRequest [configId=");
+        final StringBuilder builder = new StringBuilder(110);
+        builder.append("EzspSetConfigurationValueRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", configId=");
         builder.append(configId);
         builder.append(", value=");
         builder.append(value);

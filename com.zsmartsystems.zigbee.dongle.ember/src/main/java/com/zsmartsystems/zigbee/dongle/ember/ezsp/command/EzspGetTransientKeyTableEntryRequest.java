@@ -76,8 +76,10 @@ public class EzspGetTransientKeyTableEntryRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(64);
-        builder.append("EzspGetTransientKeyTableEntryRequest [index=");
+        final StringBuilder builder = new StringBuilder(89);
+        builder.append("EzspGetTransientKeyTableEntryRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", index=");
         builder.append(index);
         builder.append(']');
         return builder.toString();

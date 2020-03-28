@@ -78,8 +78,10 @@ public class EzspGetExtendedTimeoutRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(57);
-        builder.append("EzspGetExtendedTimeoutRequest [remoteEui64=");
+        final StringBuilder builder = new StringBuilder(82);
+        builder.append("EzspGetExtendedTimeoutRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", remoteEui64=");
         builder.append(remoteEui64);
         builder.append(']');
         return builder.toString();

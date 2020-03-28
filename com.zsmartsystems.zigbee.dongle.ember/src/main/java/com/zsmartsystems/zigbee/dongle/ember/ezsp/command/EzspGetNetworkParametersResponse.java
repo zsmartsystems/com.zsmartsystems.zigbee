@@ -122,8 +122,10 @@ public class EzspGetNetworkParametersResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(110);
-        builder.append("EzspGetNetworkParametersResponse [status=");
+        final StringBuilder builder = new StringBuilder(135);
+        builder.append("EzspGetNetworkParametersResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(", nodeType=");
         builder.append(nodeType);

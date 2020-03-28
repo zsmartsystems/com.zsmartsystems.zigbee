@@ -76,8 +76,10 @@ public class EzspGetBindingRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(49);
-        builder.append("EzspGetBindingRequest [index=");
+        final StringBuilder builder = new StringBuilder(74);
+        builder.append("EzspGetBindingRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", index=");
         builder.append(index);
         builder.append(']');
         return builder.toString();

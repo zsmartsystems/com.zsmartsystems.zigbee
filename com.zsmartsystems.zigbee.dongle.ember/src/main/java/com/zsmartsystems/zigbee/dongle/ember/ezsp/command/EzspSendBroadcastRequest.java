@@ -199,8 +199,10 @@ public class EzspSendBroadcastRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(177);
-        builder.append("EzspSendBroadcastRequest [destination=");
+        final StringBuilder builder = new StringBuilder(202);
+        builder.append("EzspSendBroadcastRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", destination=");
         builder.append(String.format("%04X", destination));
         builder.append(", apsFrame=");
         builder.append(apsFrame);

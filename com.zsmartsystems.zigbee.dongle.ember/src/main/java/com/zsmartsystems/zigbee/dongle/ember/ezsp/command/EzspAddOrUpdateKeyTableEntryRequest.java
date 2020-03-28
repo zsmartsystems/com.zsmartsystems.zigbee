@@ -138,8 +138,10 @@ public class EzspAddOrUpdateKeyTableEntryRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(113);
-        builder.append("EzspAddOrUpdateKeyTableEntryRequest [address=");
+        final StringBuilder builder = new StringBuilder(138);
+        builder.append("EzspAddOrUpdateKeyTableEntryRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", address=");
         builder.append(address);
         builder.append(", linkKey=");
         builder.append(linkKey);

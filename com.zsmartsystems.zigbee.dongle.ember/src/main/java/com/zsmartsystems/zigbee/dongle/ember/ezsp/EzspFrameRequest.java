@@ -55,7 +55,7 @@ public abstract class EzspFrameRequest extends EzspFrame {
 
         if (ezspVersion >= 8) {
             // Output Frame Control - 2 Bytes
-            serializer.serializeUInt16(0x0100);
+            serializer.serializeUInt16(0x0100 + ((networkId << EZSP_NETWORK_ID_SHIFT) & EZSP_NETWORK_ID_MASK));
 
             // Output Frame ID - 2 Bytes
             serializer.serializeUInt16(frameId);

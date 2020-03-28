@@ -266,8 +266,10 @@ public class EzspSetConcentratorRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(204);
-        builder.append("EzspSetConcentratorRequest [enable=");
+        final StringBuilder builder = new StringBuilder(229);
+        builder.append("EzspSetConcentratorRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", enable=");
         builder.append(enable);
         builder.append(", concentratorType=");
         builder.append(concentratorType);

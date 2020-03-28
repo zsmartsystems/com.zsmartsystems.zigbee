@@ -77,8 +77,10 @@ public class EzspGpProxyTableLookupRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(57);
-        builder.append("EzspGpProxyTableLookupRequest [addr=");
+        final StringBuilder builder = new StringBuilder(82);
+        builder.append("EzspGpProxyTableLookupRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", addr=");
         builder.append(addr);
         builder.append(']');
         return builder.toString();

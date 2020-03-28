@@ -76,8 +76,10 @@ public class EzspGpProxyTableGetEntryRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(59);
-        builder.append("EzspGpProxyTableGetEntryRequest [proxyIndex=");
+        final StringBuilder builder = new StringBuilder(84);
+        builder.append("EzspGpProxyTableGetEntryRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", proxyIndex=");
         builder.append(proxyIndex);
         builder.append(']');
         return builder.toString();

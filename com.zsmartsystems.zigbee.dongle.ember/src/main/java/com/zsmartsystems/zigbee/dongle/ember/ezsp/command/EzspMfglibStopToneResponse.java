@@ -64,8 +64,10 @@ public class EzspMfglibStopToneResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(54);
-        builder.append("EzspMfglibStopToneResponse [status=");
+        final StringBuilder builder = new StringBuilder(79);
+        builder.append("EzspMfglibStopToneResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(']');
         return builder.toString();

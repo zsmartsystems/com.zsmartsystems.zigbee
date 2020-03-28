@@ -64,8 +64,10 @@ public class EzspSetConcentratorResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(55);
-        builder.append("EzspSetConcentratorResponse [status=");
+        final StringBuilder builder = new StringBuilder(80);
+        builder.append("EzspSetConcentratorResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(']');
         return builder.toString();

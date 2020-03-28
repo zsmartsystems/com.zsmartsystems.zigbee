@@ -65,8 +65,10 @@ public class EzspGetMfgTokenResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(76);
-        builder.append("EzspGetMfgTokenResponse [tokenData=");
+        final StringBuilder builder = new StringBuilder(101);
+        builder.append("EzspGetMfgTokenResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", tokenData=");
         for (int cnt = 0; cnt < tokenData.length; cnt++) {
             if (cnt > 0) {
                 builder.append(' ');
