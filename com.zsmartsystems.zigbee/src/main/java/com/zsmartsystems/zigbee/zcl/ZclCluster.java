@@ -1354,6 +1354,7 @@ public abstract class ZclCluster {
 
         DiscoverAttributesResponse response = new DiscoverAttributesResponse();
         response.setAttributeInformation(attributeInformation);
+        response.setDiscoveryComplete(attributeInformation.size() == getLocalAttributes().size());
         sendResponse(command, response);
     }
 
@@ -1599,12 +1600,12 @@ public abstract class ZclCluster {
         supportedCommandsReceived.addAll(dao.getSupportedCommandsReceived());
 
         Map<Integer, ZclAttribute> attributes = isClient ? clientAttributes : serverAttributes;
-        
+
         for (ZclAttributeDao daoAttribute : dao.getAttributes().values()) {
             // Normalize the data to protect against the users serialisation system restoring incorrect data classes
             daoAttribute
                     .setLastValue(normalizer.normalizeZclData(daoAttribute.getDataType(), daoAttribute.getLastValue()));
-            
+
             ZclAttribute attribute = attributes.get(daoAttribute.getId());
             if (attribute == null || daoAttribute.getManufacturerCode() != null) {
                 attribute = new ZclAttribute();
@@ -1934,7 +1935,7 @@ public abstract class ZclCluster {
 
         return defaultResponse;
     }
-    
+
     public NotificationService getNotificationService() {
         return zigbeeEndpoint.getNotificationService();
     }
