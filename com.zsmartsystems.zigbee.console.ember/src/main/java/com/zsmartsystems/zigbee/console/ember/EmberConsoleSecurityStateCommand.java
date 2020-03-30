@@ -71,10 +71,10 @@ public class EmberConsoleSecurityStateCommand extends EmberConsoleAbstractComman
         Integer transientKeyTimeout = ncp.getConfiguration(EzspConfigId.EZSP_CONFIG_TRANSIENT_KEY_TIMEOUT_S);
         EmberCurrentSecurityState securityState = ncp.getCurrentSecurityState();
 
-        EzspDecisionId trustCentrePolicy = ncp.getPolicy(EzspPolicyId.EZSP_TRUST_CENTER_POLICY);
-        EzspDecisionId appKeyPolicy = ncp.getPolicy(EzspPolicyId.EZSP_APP_KEY_REQUEST_POLICY);
-        EzspDecisionId trustCentreKeyPolicy = ncp.getPolicy(EzspPolicyId.EZSP_TC_KEY_REQUEST_POLICY);
-        EzspDecisionId trustCentreRejoinPolicy = ncp
+        Integer trustCentrePolicy = ncp.getPolicy(EzspPolicyId.EZSP_TRUST_CENTER_POLICY);
+        Integer appKeyPolicy = ncp.getPolicy(EzspPolicyId.EZSP_APP_KEY_REQUEST_POLICY);
+        Integer trustCentreKeyPolicy = ncp.getPolicy(EzspPolicyId.EZSP_TC_KEY_REQUEST_POLICY);
+        Integer trustCentreRejoinPolicy = ncp
                 .getPolicy(EzspPolicyId.EZSP_TC_REJOINS_USING_WELL_KNOWN_KEY_POLICY);
 
         EmberKeyStruct networkKey = ncp.getKey(EmberKeyType.EMBER_CURRENT_NETWORK_KEY);
@@ -110,10 +110,10 @@ public class EmberConsoleSecurityStateCommand extends EmberConsoleAbstractComman
         out.println("Key table size             : " + keyTableSize);
         out.println("Trust Centre cache size    : " + trustCentreCacheSize);
         out.println("Transient key timeout      : " + transientKeyTimeout);
-        out.println("Application Key Policy     : " + appKeyPolicy);
-        out.println("Trust Centre Policy        : " + trustCentrePolicy);
-        out.println("Trust Centre Key Policy    : " + trustCentreKeyPolicy);
-        out.println("Trust Centre Rejoin Policy : " + trustCentreRejoinPolicy);
+        out.println("Application Key Policy     : " + EzspDecisionId.getEzspDecisionId(appKeyPolicy));
+        out.println("Trust Centre Policy        : " + String.format("%02X", trustCentrePolicy));
+        out.println("Trust Centre Key Policy    : " + EzspDecisionId.getEzspDecisionId(trustCentreKeyPolicy));
+        out.println("Trust Centre Rejoin Policy : " + EzspDecisionId.getEzspDecisionId(trustCentreRejoinPolicy));
         out.println(
                 "Installation Code          : " + (installCode == null ? "" : printArray(installCode.getAsIntArray())));
         out.println("ECC Library Support        : " + libraryEcc);

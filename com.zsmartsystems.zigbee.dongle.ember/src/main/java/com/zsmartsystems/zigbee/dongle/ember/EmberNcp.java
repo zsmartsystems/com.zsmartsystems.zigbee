@@ -456,6 +456,29 @@ public class EmberNcp {
     public EzspStatus setPolicy(EzspPolicyId policyId, EzspDecisionId decisionId) {
         EzspSetPolicyRequest setPolicyRequest = new EzspSetPolicyRequest();
         setPolicyRequest.setPolicyId(policyId);
+        setPolicyRequest.setDecisionId(decisionId.getKey());
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(new EzspSingleResponseTransaction(setPolicyRequest, EzspSetPolicyResponse.class));
+        EzspSetPolicyResponse setPolicyResponse = (EzspSetPolicyResponse) transaction.getResponse();
+        lastStatus = null;
+        logger.debug(setPolicyResponse.toString());
+        if (setPolicyResponse.getStatus() != EzspStatus.EZSP_SUCCESS) {
+            logger.debug("Error during setting policy: {}", setPolicyResponse);
+        }
+
+        return setPolicyResponse.getStatus();
+    }
+
+    /**
+     * Set a policy used by the NCP to make fast decisions.
+     *
+     * @param policyId the {@link EzspPolicyId} to set
+     * @param decisionId the decisionId to set to as an integer
+     * @return the {@link EzspStatus} of the response
+     */
+    public EzspStatus setPolicy(EzspPolicyId policyId, int decisionId) {
+        EzspSetPolicyRequest setPolicyRequest = new EzspSetPolicyRequest();
+        setPolicyRequest.setPolicyId(policyId);
         setPolicyRequest.setDecisionId(decisionId);
         EzspTransaction transaction = protocolHandler
                 .sendEzspTransaction(new EzspSingleResponseTransaction(setPolicyRequest, EzspSetPolicyResponse.class));
@@ -476,7 +499,7 @@ public class EmberNcp {
      * @return the returned {@link EzspDecisionId} if the policy was retrieved successfully or null if there was an
      *         error
      */
-    public EzspDecisionId getPolicy(EzspPolicyId policyId) {
+    public Integer getPolicy(EzspPolicyId policyId) {
         EzspGetPolicyRequest getPolicyRequest = new EzspGetPolicyRequest();
         getPolicyRequest.setPolicyId(policyId);
         EzspTransaction transaction = protocolHandler

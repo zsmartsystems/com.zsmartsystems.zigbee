@@ -98,11 +98,11 @@ public class EmberStackConfiguration {
      * requesting them before returning.
      *
      * @param policies {@link Set} of {@link EzspPolicyId} to request
-     * @return map of configuration data mapping {@link EzspPolicyId} to {@link EzspDecisionId}. Value will be null if
+     * @return map of configuration data mapping {@link EzspPolicyId} to {@link Integer}. Value will be null if
      *         error occurred.
      */
-    public Map<EzspPolicyId, EzspDecisionId> getPolicy(Set<EzspPolicyId> policies) {
-        Map<EzspPolicyId, EzspDecisionId> response = new HashMap<>();
+    public Map<EzspPolicyId, Integer> getPolicy(Set<EzspPolicyId> policies) {
+        Map<EzspPolicyId, Integer> response = new HashMap<>();
 
         for (EzspPolicyId policyId : policies) {
             response.put(policyId, ncp.getPolicy(policyId));

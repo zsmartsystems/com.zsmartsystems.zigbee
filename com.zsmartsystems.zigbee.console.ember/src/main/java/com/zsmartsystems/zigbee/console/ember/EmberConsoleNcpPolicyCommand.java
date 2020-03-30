@@ -56,7 +56,7 @@ public class EmberConsoleNcpPolicyCommand extends EmberConsoleAbstractCommand {
         EmberNcp ncp = getEmberNcp(networkManager);
 
         if (args.length == 1) {
-            Map<EzspPolicyId, EzspDecisionId> policies = new TreeMap<>();
+            Map<EzspPolicyId, Integer> policies = new TreeMap<>();
             for (EzspPolicyId policyId : EzspPolicyId.values()) {
                 if (policyId == EzspPolicyId.UNKNOWN) {
                     continue;
@@ -65,10 +65,16 @@ public class EmberConsoleNcpPolicyCommand extends EmberConsoleAbstractCommand {
                 policies.put(policyId, ncp.getPolicy(policyId));
             }
 
-            for (Entry<EzspPolicyId, EzspDecisionId> policy : policies.entrySet()) {
+            for (Entry<EzspPolicyId, Integer> policy : policies.entrySet()) {
                 out.print(String.format("%-55s", policy.getKey()));
                 if (policy.getValue() != null) {
-                    out.print(policy.getValue());
+                    out.print(String.format("%02X", policy.getValue()));
+
+                    EzspDecisionId decisionId = EzspDecisionId.getEzspDecisionId(policy.getValue());
+                    if (decisionId != null) {
+                        out.print(" ");
+                        out.print(decisionId);
+                    }
                 }
                 out.println();
             }
@@ -79,11 +85,13 @@ public class EmberConsoleNcpPolicyCommand extends EmberConsoleAbstractCommand {
         EzspPolicyId policyId = EzspPolicyId.valueOf(args[1].toUpperCase());
 
         if (args.length == 2) {
-            EzspDecisionId decisionId = ncp.getPolicy(policyId);
-            if (decisionId == null) {
+            Integer decision = ncp.getPolicy(policyId);
+            if (decision == null) {
                 out.println("Error reading Ember NCP policy " + policyId.toString());
             } else {
-                out.println("Ember NCP policy " + policyId.toString() + " is " + decisionId);
+                EzspDecisionId decisionId = EzspDecisionId.getEzspDecisionId(decision);
+                out.println("Ember NCP policy " + policyId.toString() + " is " + String.format("%02X", decision) + " "
+                        + decisionId);
             }
         } else {
             EzspDecisionId decisionId = EzspDecisionId.valueOf(args[2].toUpperCase());

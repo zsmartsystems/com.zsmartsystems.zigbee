@@ -688,6 +688,7 @@ public class CommandGenerator extends ClassGenerator {
             case "EmberNodeId":
             case "EmberCounterType":
             case "EmberGpSecurityFrameCounter":
+            case "EzspDecisionBitmask":
             case "int8s":
             case "uint8_u":
             case "uint8_t":
@@ -832,6 +833,7 @@ public class CommandGenerator extends ClassGenerator {
             case "uint8_t":
             case "uint8_u":
                 return "UInt8";
+            case "EzspDecisionBitmask":
             case "EmberNodeId":
             case "uint16_t":
                 return "UInt16";

@@ -8,7 +8,6 @@
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.command;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspPolicyId;
 import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
 
@@ -36,9 +35,9 @@ public class EzspSetPolicyRequest extends EzspFrameRequest {
     /**
      *  The new decision for the specified policy.
      * <p>
-     * EZSP type is <i>EzspDecisionId</i> - Java type is {@link EzspDecisionId}
+     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      */
-    private EzspDecisionId decisionId;
+    private int decisionId;
 
     /**
      * Serialiser used to serialise to binary line data
@@ -76,20 +75,20 @@ public class EzspSetPolicyRequest extends EzspFrameRequest {
     /**
      *  The new decision for the specified policy.
      * <p>
-     * EZSP type is <i>EzspDecisionId</i> - Java type is {@link EzspDecisionId}
+     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      *
-     * @return the current decisionId as {@link EzspDecisionId}
+     * @return the current decisionId as {@link int}
      */
-    public EzspDecisionId getDecisionId() {
+    public int getDecisionId() {
         return decisionId;
     }
 
     /**
      *  The new decision for the specified policy.
      *
-     * @param decisionId the decisionId to set as {@link EzspDecisionId}
+     * @param decisionId the decisionId to set as {@link int}
      */
-    public void setDecisionId(EzspDecisionId decisionId) {
+    public void setDecisionId(int decisionId) {
         this.decisionId = decisionId;
     }
 
@@ -100,7 +99,7 @@ public class EzspSetPolicyRequest extends EzspFrameRequest {
 
         // Serialize the fields
         serializer.serializeEzspPolicyId(policyId);
-        serializer.serializeEzspDecisionId(decisionId);
+        serializer.serializeUInt8(decisionId);
         return serializer.getPayload();
     }
 
@@ -112,7 +111,7 @@ public class EzspSetPolicyRequest extends EzspFrameRequest {
         builder.append(", policyId=");
         builder.append(policyId);
         builder.append(", decisionId=");
-        builder.append(decisionId);
+        builder.append(String.format("%02X", decisionId));
         builder.append(']');
         return builder.toString();
     }
