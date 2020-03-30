@@ -3610,7 +3610,7 @@
 				<display>hex[4]</display>
 			</parameter>
 			<parameter>
-				<data_type>uint8_t</data_type>
+				<data_type>int8s</data_type>
 				<name>radioTxPower</name>
 				<description>A power setting, in dBm.</description>
 			</parameter>
