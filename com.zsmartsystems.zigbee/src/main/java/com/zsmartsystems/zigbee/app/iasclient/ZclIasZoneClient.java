@@ -195,7 +195,8 @@ public class ZclIasZoneClient implements ZigBeeApplication, ZclCommandListener {
     }
 
     private void initialise() {
-        Integer currentState = (Integer) iasZoneCluster.getAttribute(ZclIasZoneCluster.ATTR_ZONESTATE).readValue(0);
+        Integer currentState = (Integer) iasZoneCluster.getAttribute(ZclIasZoneCluster.ATTR_ZONESTATE)
+                .readValue(Long.MAX_VALUE);
         if (currentState != null) {
             ZoneStateEnum currentStateEnum = ZoneStateEnum.getByValue(currentState);
             logger.debug("{}: IAS CIE state is currently {}[{}]", iasZoneCluster.getZigBeeAddress(), currentStateEnum,
