@@ -1183,6 +1183,11 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             case TC_JOIN_DENY:
                 emberJoinMode = EzspDecisionId.EZSP_DISALLOW_ALL_JOINS_AND_REJOINS;
                 break;
+            case TC_JOIN_INSTALLCODE:
+                emberJoinMode = EzspDecisionId.EZSP_ALLOW_PRECONFIGURED_KEY_JOINS;
+                bitmask = EzspDecisionBitmask.EZSP_DECISION_ALLOW_JOINS.getKey()
+                        + EzspDecisionBitmask.EZSP_DECISION_JOINS_USE_INSTALL_CODE_KEY.getKey();
+                break;
             default:
                 return ZigBeeStatus.INVALID_ARGUMENTS;
         }

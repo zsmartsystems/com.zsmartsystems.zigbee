@@ -26,5 +26,9 @@ public enum TrustCentreJoinMode {
     /**
      * The TC should allow joins only with a preconfigured link key / device specific install code.
      */
-    TC_JOIN_SECURE
+    TC_JOIN_SECURE,
+    /**
+     * The TC should only allow devices to join when there is a device specific install code derived link key
+     */
+    TC_JOIN_INSTALLCODE
 }
