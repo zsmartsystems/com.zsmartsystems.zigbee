@@ -65,6 +65,10 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetPolicyRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetPolicyResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetTransientKeyTableEntryRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetTransientKeyTableEntryResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetTransientLinkKeyRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetTransientLinkKeyResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetValueRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetValueResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLeaveNetworkRequest;
@@ -107,6 +111,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberLibraryStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberTransientKeyData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspMfgTokenId;
@@ -583,6 +588,49 @@ public class EmberNcp {
         }
 
         return response.getStatus();
+    }
+
+    /**
+     * Gets a transient link key from the NCP
+     *
+     * @param index the key index to retrieve
+     * @return the {@link EmberTransientKeyData} of the response
+     */
+    public EmberTransientKeyData getTransientLinkKeyIndex(int index) {
+        EzspGetTransientKeyTableEntryRequest request = new EzspGetTransientKeyTableEntryRequest();
+        request.setIndex(index);
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(
+                        new EzspSingleResponseTransaction(request, EzspGetTransientKeyTableEntryResponse.class));
+        EzspGetTransientKeyTableEntryResponse response = (EzspGetTransientKeyTableEntryResponse) transaction
+                .getResponse();
+        logger.debug(response.toString());
+        lastStatus = response.getStatus();
+        if (lastStatus != EmberStatus.EMBER_SUCCESS) {
+            return null;
+        }
+        return response.getTransientKeyData();
+    }
+
+    /**
+     * Gets a transient link key from the NCP
+     *
+     * @param ieeeAddress the {@link IeeeAddress} transient key to retrieve
+     * @return the {@link EmberTransientKeyData} of the response
+     */
+    public EmberTransientKeyData getTransientLinkKey(IeeeAddress ieeeAddress) {
+        EzspGetTransientLinkKeyRequest request = new EzspGetTransientLinkKeyRequest();
+        request.setEui(ieeeAddress);
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetTransientLinkKeyResponse.class));
+        EzspGetTransientLinkKeyResponse response = (EzspGetTransientLinkKeyResponse) transaction
+                .getResponse();
+        logger.debug(response.toString());
+        lastStatus = response.getStatus();
+        if (lastStatus != EmberStatus.EMBER_SUCCESS) {
+            return null;
+        }
+        return response.getTransientKeyData();
     }
 
     /**

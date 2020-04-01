@@ -67,8 +67,7 @@ public class ZigBeeConsoleInstallKeyCommand extends ZigBeeConsoleAbstractCommand
         installKey.setAddress(partner);
 
         ZigBeeStatus result = networkManager.setZigBeeInstallKey(installKey);
-        out.println("Install key " + hash.toString() + " for address " + partner + " was "
-                + (result == ZigBeeStatus.SUCCESS ? "" : "not") + " set.");
+        out.println("Install key " + hash.toString() + " for address " + partner + " completed with state " + result);
     }
 
 }
