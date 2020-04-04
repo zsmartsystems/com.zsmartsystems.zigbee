@@ -129,6 +129,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
      */
     private EzspProtocolHandler frameHandler;
 
+    private AshFrameHandler.AshFrameHandlerConfig ashFrameHandlerConfig;
+
     /**
      * The Ember bootload handler
      */
@@ -265,6 +267,17 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
      */
     public ZigBeeDongleEzsp(final ZigBeePort serialPort) {
         this(serialPort, EmberSerialProtocol.ASH2);
+    }
+
+    /**
+     * Create a {@link ZigBeeDongleEzsp} with the default ASH2 frame handler.
+     * The provided config will be used to configure the ASH2 frame handler.
+     *
+     * @param serialPort the {@link ZigBeePort} to use for the connection
+     */
+    public ZigBeeDongleEzsp(final ZigBeePort serialPort, final AshFrameHandler.AshFrameHandlerConfig config) {
+        this(serialPort, EmberSerialProtocol.ASH2);
+        this.ashFrameHandlerConfig = config;
     }
 
     /**
@@ -1180,7 +1193,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         switch (protocol) {
             case ASH2:
-                frameHandler = new AshFrameHandler(this);
+                frameHandler = new AshFrameHandler(this, ashFrameHandlerConfig);
                 break;
             case SPI:
                 frameHandler = new SpiFrameHandler(this);

@@ -60,27 +60,90 @@ public class AshFrameHandler implements EzspProtocolHandler {
      */
     private final Logger logger = LoggerFactory.getLogger(AshFrameHandler.class);
 
-    /**
-     * The receive timeout settings - min/initial/max - defined in milliseconds
-     */
-    private final static int T_RX_ACK_MIN = 400;
-    private final static int T_RX_ACK_INIT = 1600;
-    private final static int T_RX_ACK_MAX = 3200;
-    private int receiveTimeout = T_RX_ACK_INIT;
+    public static class AshFrameHandlerConfig {
 
-    private final static int T_CON_HOLDOFF = 1250;
-    private int connectTimeout = T_CON_HOLDOFF;
+        /**
+         * The receive timeout settings - min/initial/max - defined in milliseconds
+         */
+        private int ackReceiveMinTimeout = 400;
+        private int ackReceiveInitTimeout = 1600;
+        private int ackReceiveMaxTimeout = 3200;
+
+        private int connectTimeout = 1250;
+
+        /**
+         * Maximum number of consecutive timeouts allowed while waiting to receive an ACK
+         */
+        private int maxAckTimeouts = 4;
+
+        /**
+         * Maximum number of DATA frames we can transmit without an ACK
+         */
+        private int txWindow = 1;
+
+        public int getAckReceiveMinTimeout() {
+            return ackReceiveMinTimeout;
+        }
+
+        public AshFrameHandlerConfig setAckReceiveMinTimeout(int ackReceiveMinTimeout) {
+            this.ackReceiveMinTimeout = ackReceiveMinTimeout;
+            return this;
+        }
+
+        public int getAckReceiveInitTimeout() {
+            return ackReceiveInitTimeout;
+        }
+
+        public AshFrameHandlerConfig setAckReceiveInitTimeout(int ackReceiveInitTimeout) {
+            this.ackReceiveInitTimeout = ackReceiveInitTimeout;
+            return this;
+        }
+
+        public int getAckReceiveMaxTimeout() {
+            return ackReceiveMaxTimeout;
+        }
+
+        public AshFrameHandlerConfig setAckReceiveMaxTimeout(int ackReceiveMaxTimeout) {
+            this.ackReceiveMaxTimeout = ackReceiveMaxTimeout;
+            return this;
+        }
+
+        public int getConnectTimeout() {
+            return connectTimeout;
+        }
+
+        public AshFrameHandlerConfig setConnectTimeout(int connectTimeout) {
+            this.connectTimeout = connectTimeout;
+            return this;
+        }
+
+        public int getMaxAckTimeouts() {
+            return maxAckTimeouts;
+        }
+
+        public AshFrameHandlerConfig setMaxAckTimeouts(int maxAckTimeouts) {
+            this.maxAckTimeouts = maxAckTimeouts;
+            return this;
+        }
+
+        public int getTxWindow() {
+            return txWindow;
+        }
+
+        public AshFrameHandlerConfig setTxWindow(int txWindow) {
+            this.txWindow = txWindow;
+            return this;
+        }
+    }
 
     /**
-     * Maximum number of consecutive timeouts allowed while waiting to receive an ACK
+     * The logger.
      */
-    private final static int ACK_TIMEOUTS = 4;
+    private final Logger logger = LoggerFactory.getLogger(AshFrameHandler.class);
+
+    private int receiveTimeout;
+
     private int retries = 0;
-
-    /**
-     * Maximum number of DATA frames we can transmit without an ACK
-     */
-    private final int TX_WINDOW = 1;
 
     private long sentTime;
 
@@ -127,6 +190,8 @@ public class AshFrameHandler implements EzspProtocolHandler {
      */
     private final EzspFrameHandler frameHandler;
 
+    private final AshFrameHandlerConfig config;
+
     /**
      * The port.
      */
@@ -144,12 +209,25 @@ public class AshFrameHandler implements EzspProtocolHandler {
     private boolean closeHandler = false;
 
     /**
-     * Construct the handler and provide the {@link EzspFrameHandler}
+     * Construct the handler and provide the {@link EzspFrameHandler}.
+     * Also initialized this handler with the default configuration.
      *
      * @param frameHandler the {@link EzspFrameHandler} packet handler
      */
     public AshFrameHandler(final EzspFrameHandler frameHandler) {
+        this(frameHandler, new AshFrameHandlerConfig());
+    }
+
+    /**
+     * Construct the handler and provide the {@link EzspFrameHandler}.
+     * Also initialized this handler with the provided configuration.
+     *
+     * @param frameHandler the {@link EzspFrameHandler} packet handler
+     * @param config the handler configuration
+     */
+    public AshFrameHandler(final EzspFrameHandler frameHandler, final AshFrameHandlerConfig config) {
         this.frameHandler = frameHandler;
+        this.config = config;
     }
 
     @Override
@@ -414,7 +492,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
         }
 
         // Check how many frames are outstanding
-        if (sentQueue.size() >= TX_WINDOW) {
+        if (sentQueue.size() >= config.getTxWindow()) {
             // check timer task
             if (timerFuture == null) {
                 startRetryTimer();
@@ -521,7 +599,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
         logger.debug("ASH: Reconnect");
         ackNum = 0;
         frmNum = 0;
-        receiveTimeout = T_RX_ACK_INIT;
+        receiveTimeout = config.getAckReceiveInitTimeout();
 
         sendFrame(new AshFrameRst());
     }
@@ -543,10 +621,10 @@ public class AshFrameHandler implements EzspProtocolHandler {
         if (sentTime != 0) {
             stopRetryTimer();
             receiveTimeout = (int) ((receiveTimeout * 7 / 8) + ((System.nanoTime() - sentTime) / 2000000));
-            if (receiveTimeout < T_RX_ACK_MIN) {
-                receiveTimeout = T_RX_ACK_MIN;
-            } else if (receiveTimeout > T_RX_ACK_MAX) {
-                receiveTimeout = T_RX_ACK_MAX;
+            if (receiveTimeout < config.getAckReceiveMinTimeout()) {
+                receiveTimeout = config.getAckReceiveMinTimeout();
+            } else if (receiveTimeout > config.getAckReceiveMaxTimeout()) {
+                receiveTimeout = config.getAckReceiveMaxTimeout();
             }
             logger.trace("ASH: RX Timer took {}ms, timer now {}ms", (System.nanoTime() - sentTime) / 1000000,
                     receiveTimeout);
@@ -572,7 +650,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
         // Stop any existing timer - shouldn't happen here, but play safe!
         stopRetryTimer();
 
-        timerFuture = timer.schedule(new AshConnectTimer(), connectTimeout, TimeUnit.MILLISECONDS);
+        timerFuture = timer.schedule(new AshConnectTimer(), config.getConnectTimeout(), TimeUnit.MILLISECONDS);
 
         logger.trace("ASH: Started connect timer");
     }
@@ -600,7 +678,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
                 return;
             }
 
-            if (retries++ > ACK_TIMEOUTS) {
+            if (retries++ > config.getMaxAckTimeouts()) {
                 logger.debug("ASH: Error number of retries exceeded [{}].", retries);
 
                 // Too many retries.
@@ -618,8 +696,8 @@ public class AshFrameHandler implements EzspProtocolHandler {
             // If a DATA frame acknowledgement is not received within the current timeout value,
             // then t_rx_ack is doubled.
             receiveTimeout *= 2;
-            if (receiveTimeout > T_RX_ACK_MAX) {
-                receiveTimeout = T_RX_ACK_MAX;
+            if (receiveTimeout > config.getAckReceiveMaxTimeout()) {
+                receiveTimeout = config.getAckReceiveMaxTimeout();
             }
 
             try {
