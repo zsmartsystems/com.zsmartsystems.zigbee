@@ -564,9 +564,11 @@ public class SpiFrameHandler implements EzspProtocolHandler {
             // Send the data
             for (int outByte : outputData) {
                 logger.trace("SPI TX: {}", String.format("%02X", outByte));
-                port.write(outByte);
             }
-            port.write(SPI_FLAG_BYTE);
+            int[] frameData = new int[outputData.length + 1];
+            System.arraycopy(outputData, 0, frameData, 0, outputData.length);
+            frameData[frameData.length - 1] = SPI_FLAG_BYTE;
+            port.write(frameData);
 
             startRetryTimer();
         }

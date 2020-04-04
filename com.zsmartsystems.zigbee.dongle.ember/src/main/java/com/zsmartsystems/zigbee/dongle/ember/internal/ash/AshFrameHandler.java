@@ -479,9 +479,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
         logger.debug("--> TX ASH frame: {}", ashFrame);
 
         // Send the data
-        for (int outByte : ashFrame.getOutputBuffer()) {
-            port.write(outByte);
-        }
+        port.write(ashFrame.getOutputBuffer());
 
         // Only start the timer for data and reset frames
         if (ashFrame instanceof AshFrameData || ashFrame instanceof AshFrameRst) {

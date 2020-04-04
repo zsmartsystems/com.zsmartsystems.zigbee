@@ -296,9 +296,7 @@ public class CommandInterfaceImpl implements ZToolPacketHandler, CommandInterfac
     @Override
     public void sendRaw(int[] packet) throws IOException {
         synchronized (port) {
-            for (int i = 0; i < packet.length; i++) {
-                port.write(packet[i]);
-            }
+            port.write(packet);
         }
     }
 
