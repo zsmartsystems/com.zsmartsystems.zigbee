@@ -136,11 +136,6 @@ public class AshFrameHandler implements EzspProtocolHandler {
         }
     }
 
-    /**
-     * The logger.
-     */
-    private final Logger logger = LoggerFactory.getLogger(AshFrameHandler.class);
-
     private int receiveTimeout;
 
     private int retries = 0;
