@@ -169,6 +169,13 @@ public class TelegesisFirmwareUpdateHandlerTest {
         }
 
         @Override
+        public void write(int[] bytes) {
+            for(int val : bytes) {
+                output[cnt++] = (byte) val;
+            }
+        }
+
+        @Override
         public int read(int timeout) {
             return read();
         }
