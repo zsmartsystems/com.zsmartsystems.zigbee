@@ -46,19 +46,23 @@
 		<name>Power Source</name>
 		<description>The PowerSource attribute is 8 bits in length and specifies the source(s) of power available to the device. Bits b0&#8211;b6 of this attribute represent the primary power source of the device and bit b7 indicates whether the device has a secondary power source in the form of a battery backup.</description>
 	</attribute>
-	<attribute code="0x0008" type="ENUMERATION_8_BIT" side="server" optional="true" writable="false" reportable="false">
+	<attribute code="0x0008" type="ENUMERATION_8_BIT" side="server" optional="true" writable="false"
+		reportable="false">
 		<name>Generic Device Class</name>
 		<description></description>
 	</attribute>
-	<attribute code="0x0009" type="ENUMERATION_8_BIT" side="server" optional="true" writable="false" reportable="false">
+	<attribute code="0x0009" type="ENUMERATION_8_BIT" side="server" class="GenericDeviceTypeEnum" optional="true"
+		writable="false" reportable="false">
 		<name>Generic Device Type</name>
 		<description></description>
 	</attribute>
-	<attribute code="0x000A" type="CHARACTER_STRING" side="server" optional="true" writable="false" reportable="false">
+	<attribute code="0x000A" type="CHARACTER_STRING" side="server" optional="true" writable="false"
+		reportable="false">
 		<name>Product Code</name>
 		<description></description>
 	</attribute>
-	<attribute code="0x000B" type="CHARACTER_STRING" side="server" optional="true" writable="false" reportable="false">
+	<attribute code="0x000B" type="CHARACTER_STRING" side="server" optional="true" writable="false"
+		reportable="false">
 		<name>Product URL</name>
 		<description></description>
 	</attribute>
@@ -92,6 +96,33 @@
 		<name>SW Build ID</name>
 		<description>The SWBuildIDattribute represents a detailed, manufacturer-specific reference to the version of the software.</description>
 	</attribute>
+
+	<constant class="GenericDeviceTypeEnum">
+		<name>Generic Device Type</name>
+		<value code="0x00" name="Incandescent"></value>
+		<value code="0x01" name="Spotlight Halogen"></value>
+		<value code="0x02" name="Halogen bulb"></value>
+		<value code="0x03" name="CFL"></value>
+		<value code="0x04" name="Linear Fluorescent"></value>
+		<value code="0x05" name="LED bulb"></value>
+		<value code="0x06" name="Spotlight LED"></value>
+		<value code="0x07" name="LED strip"></value>
+		<value code="0x08" name="LED tube"></value>
+		<value code="0x09" name="Generic indoor luminaire"></value>
+		<value code="0x0A" name="Generic outdoor luminaire"></value>
+		<value code="0x0B" name="Pendant luminaire"></value>
+		<value code="0x0C" name="Floor standing luminaire"></value>
+		<value code="0xE0" name="Generic Controller "></value>
+		<value code="0xE1" name="Wall Switch"></value>
+		<value code="0xE2" name="Portable remote controller"></value>
+		<value code="0xE3" name="Motion sensor / light sensor"></value>
+		<value code="0xF0" name="Generic actuator"></value>
+		<value code="0xF1" name="Wall socket"></value>
+		<value code="0xF2" name="Gateway/Bridge"></value>
+		<value code="0xF3" name="Plug-in unit"></value>
+		<value code="0xF4" name="Retrofit actuator"></value>
+		<value code="0xFF" name="Unspecified"></value>
+	</constant>
 
 	<constant class="PowerSourceEnum">
 		<name>Power Source</name>
