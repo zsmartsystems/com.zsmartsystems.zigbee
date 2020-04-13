@@ -164,7 +164,10 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
                 int exceptionCnt = 0;
 
+                // Ensure that a NAK is only sent for the first error in a sequence and a
+                // valid response is required before sending another NAK
                 boolean rejectionCondition = false;
+
                 while (!closeHandler) {
                     try {
                         int[] packetData = getPacket();
