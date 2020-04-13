@@ -23,6 +23,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -163,6 +164,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
                 int exceptionCnt = 0;
 
+                boolean rejectionCondition = false;
                 while (!closeHandler) {
                     try {
                         int[] packetData = getPacket();
@@ -175,8 +177,11 @@ public class AshFrameHandler implements EzspProtocolHandler {
                         if (packet == null) {
                             logger.debug("<-- RX ASH error: BAD PACKET {}", frameToString(packetData));
 
-                            // Send a NAK
-                            responseFrame = new AshFrameNak(ackNum);
+                            // Send a NAK and set rejection condition
+                            if (!rejectionCondition) {
+                                rejectionCondition = true;
+                                responseFrame = new AshFrameNak(ackNum);
+                            }
                         } else {
                             logger.debug("<-- RX ASH frame: {}", packet.toString());
 
@@ -195,6 +200,9 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
                                     // Check for out of sequence frame number
                                     if (packet.getFrmNum() == ackNum) {
+                                        // Clear rejection condition
+                                        rejectionCondition = false;
+
                                         // Frame was in sequence - prepare the response
                                         ackNum = (ackNum + 1) & 0x07;
                                         responseFrame = new AshFrameAck(ackNum);
@@ -213,7 +221,12 @@ public class AshFrameHandler implements EzspProtocolHandler {
                                         // Send a NAK - this is out of sequence and not a retransmission
                                         logger.debug("ASH: Frame out of sequence - expected {}, received {}", ackNum,
                                                 packet.getFrmNum());
-                                        responseFrame = new AshFrameNak(ackNum);
+
+                                        // Send a NAK and set rejection condition
+                                        if (!rejectionCondition) {
+                                            rejectionCondition = true;
+                                            responseFrame = new AshFrameNak(ackNum);
+                                        }
                                     } else {
                                         // Send an ACK - this was out of sequence but was a retransmission
                                         responseFrame = new AshFrameAck(ackNum);
