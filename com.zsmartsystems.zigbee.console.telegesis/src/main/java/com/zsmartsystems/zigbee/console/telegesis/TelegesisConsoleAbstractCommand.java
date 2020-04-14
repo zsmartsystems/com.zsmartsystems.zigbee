@@ -18,15 +18,16 @@ import com.zsmartsystems.zigbee.dongle.telegesis.ZigBeeDongleTelegesis;
  *
  */
 public abstract class TelegesisConsoleAbstractCommand implements ZigBeeConsoleCommand {
+    private static final String UNKNOWN_TRANSPORT_TYPE = "Dongle is not an Telegesis NCP.";
 
     protected TelegesisNcp getTelegesisNcp(ZigBeeNetworkManager networkManager)
             throws IllegalArgumentException, IllegalStateException {
         if (!(networkManager.getZigBeeTransport() instanceof ZigBeeDongleTelegesis)) {
-            throw new IllegalArgumentException("Dongle is not an Ember NCP.");
+            throw new IllegalArgumentException(UNKNOWN_TRANSPORT_TYPE);
         }
         ZigBeeDongleTelegesis dongle = (ZigBeeDongleTelegesis) networkManager.getZigBeeTransport();
         if (dongle == null) {
-            throw new IllegalStateException("Dongle is not an Telegesis NCP.");
+            throw new IllegalStateException(UNKNOWN_TRANSPORT_TYPE);
         }
         return dongle.getTelegesisNcp();
     }
