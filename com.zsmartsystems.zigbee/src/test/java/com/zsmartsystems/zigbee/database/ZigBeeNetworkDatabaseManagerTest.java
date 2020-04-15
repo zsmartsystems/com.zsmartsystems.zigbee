@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
@@ -155,4 +156,30 @@ public class ZigBeeNetworkDatabaseManagerTest {
         assertEquals(3,
                 TestUtilities.getField(ZigBeeNetworkDatabaseManager.class, databaseManager, "deferredWriteTime"));
     }
+
+    @Test
+    public void shutdown() throws Exception {
+        ZigBeeNetworkManager networkManager = Mockito.mock(ZigBeeNetworkManager.class);
+        ZigBeeNetworkDatabaseManager databaseManager = new ZigBeeNetworkDatabaseManager(networkManager);
+        databaseManager.setDataStore(Mockito.mock(ZigBeeNetworkDataStore.class));
+
+        ScheduledExecutorService executorService = Mockito.mock(ScheduledExecutorService.class);
+
+        TestUtilities.setField(ZigBeeNetworkDatabaseManager.class, databaseManager, "executorService", executorService);
+
+        databaseManager.shutdown();
+        Mockito.verify(executorService, Mockito.timeout(TIMEOUT).times(1)).shutdown();
+        Mockito.verify(executorService, Mockito.timeout(TIMEOUT).times(1)).shutdownNow();
+        Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).times(1)).removeNetworkNodeListener(databaseManager);
+
+        Mockito.when(executorService.isShutdown()).thenReturn(true);
+
+        ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
+
+        databaseManager.nodeUpdated(node);
+        Mockito.verify(executorService, Mockito.timeout(TIMEOUT).times(0)).schedule(
+                ArgumentMatchers.any(Runnable.class),
+                ArgumentMatchers.any(Long.class), ArgumentMatchers.any(TimeUnit.class));
+    }
+
 }
