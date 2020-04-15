@@ -18,15 +18,16 @@ import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
  *
  */
 public abstract class EmberConsoleAbstractCommand implements ZigBeeConsoleCommand {
+    private static final String UNKNOWN_TRANSPORT_TYPE = "Dongle is not an Ember NCP.";
 
     protected EmberNcp getEmberNcp(ZigBeeNetworkManager networkManager)
             throws IllegalArgumentException, IllegalStateException {
         if (!(networkManager.getZigBeeTransport() instanceof ZigBeeDongleEzsp)) {
-            throw new IllegalArgumentException("Dongle is not an Ember NCP.");
+            throw new IllegalArgumentException(UNKNOWN_TRANSPORT_TYPE);
         }
         ZigBeeDongleEzsp dongle = (ZigBeeDongleEzsp) networkManager.getZigBeeTransport();
         if (dongle == null) {
-            throw new IllegalStateException("Dongle is not an Ember NCP.");
+            throw new IllegalStateException(UNKNOWN_TRANSPORT_TYPE);
         }
         return dongle.getEmberNcp();
     }
