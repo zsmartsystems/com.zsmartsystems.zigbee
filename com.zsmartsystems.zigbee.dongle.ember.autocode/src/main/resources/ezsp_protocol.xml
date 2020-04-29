@@ -590,6 +590,61 @@
 			</parameter>
 		</response_parameters>
 	</command>
+
+	<command>
+		<name>customFrame</name>
+		<id>0x47</id>
+		<description>Provides the customer a custom EZSP frame. On the NCP, these frames are only handled if the XNCP library is included. On the NCP side these frames are handled in the emberXNcpIncomingCustomEzspMessageCallback() callback function.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>payloadLength</name>
+				<description>The length of the custom frame payload (maximum 119 bytes).</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t[]</data_type>
+				<name>payload</name>
+				<description>The payload of the custom frame.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>The status returned by the custom command.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>replyLength</name>
+				<description>The length of the response.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t[]</data_type>
+				<name>reply</name>
+				<description>The response.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>customFrameHandler</name>
+		<id>0x54</id>
+		<description>A callback indicating a custom EZSP message has been received.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>payloadLength</name>
+				<description>The length of the custom frame payload.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t[]</data_type>
+				<name>payload</name>
+				<description>The payload of the custom frame.</description>
+			</parameter>
+		</response_parameters>
+	</command>
 															
 	<command>
 		<name>getEui64</name>
