@@ -109,6 +109,8 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_CLEAR_TEMPORARY_DATA_MAYBE_STORE_LINK_KEY283K1 = 0xEE;
     protected static final int FRAME_ID_CLEAR_TRANSIENT_LINK_KEYS = 0x6B;
     protected static final int FRAME_ID_COUNTER_ROLLOVER_HANDLER = 0xF2;
+    protected static final int FRAME_ID_CUSTOM_FRAME = 0x47;
+    protected static final int FRAME_ID_CUSTOM_FRAME_HANDLER = 0x54;
     protected static final int FRAME_ID_D_GP_SEND = 0xC6;
     protected static final int FRAME_ID_D_GP_SENT_HANDLER = 0xC7;
     protected static final int FRAME_ID_DELETE_BINDING = 0x2D;
@@ -258,6 +260,8 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_CLEAR_TEMPORARY_DATA_MAYBE_STORE_LINK_KEY283K1, EzspClearTemporaryDataMaybeStoreLinkKey283k1Response.class);
         ezspHandlerMap.put(FRAME_ID_CLEAR_TRANSIENT_LINK_KEYS, EzspClearTransientLinkKeysResponse.class);
         ezspHandlerMap.put(FRAME_ID_COUNTER_ROLLOVER_HANDLER, EzspCounterRolloverHandler.class);
+        ezspHandlerMap.put(FRAME_ID_CUSTOM_FRAME, EzspCustomFrameResponse.class);
+        ezspHandlerMap.put(FRAME_ID_CUSTOM_FRAME_HANDLER, EzspCustomFrameHandler.class);
         ezspHandlerMap.put(FRAME_ID_D_GP_SEND, EzspDGpSendResponse.class);
         ezspHandlerMap.put(FRAME_ID_D_GP_SENT_HANDLER, EzspDGpSentHandler.class);
         ezspHandlerMap.put(FRAME_ID_DELETE_BINDING, EzspDeleteBindingResponse.class);
