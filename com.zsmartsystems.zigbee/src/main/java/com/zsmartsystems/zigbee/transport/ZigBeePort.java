@@ -63,7 +63,9 @@ public interface ZigBeePort {
      *
      * @param bytes the bytes to write.
      */
-    void write(int[] bytes);
+    default void write(int[] bytes) {
+        throw new UnsupportedOperationException();
+    }
 
     /**
      * Read a value from the port. This should block until a byte is available.
