@@ -1063,7 +1063,6 @@ public class EmberNcp {
      */
     public int[] sendCustomFrame(int[] customFrame) {
         EzspCustomFrameRequest request = new EzspCustomFrameRequest();
-        request.setPayloadLength(customFrame.length);
         request.setPayload(customFrame);
         EzspTransaction transaction = protocolHandler
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspCustomFrameResponse.class));
