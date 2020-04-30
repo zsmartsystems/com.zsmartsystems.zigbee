@@ -34,13 +34,6 @@ public class EzspCustomFrameResponse extends EzspFrameResponse {
     private EmberStatus status;
 
     /**
-     * The length of the response.
-     * <p>
-     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
-     */
-    private int replyLength;
-
-    /**
      * The response.
      * <p>
      * EZSP type is <i>uint8_t[]</i> - Java type is {@link int[]}
@@ -56,8 +49,8 @@ public class EzspCustomFrameResponse extends EzspFrameResponse {
 
         // Deserialize the fields
         status = deserializer.deserializeEmberStatus();
-        replyLength = deserializer.deserializeUInt8();
-        reply = deserializer.deserializeUInt8Array(replyLength);
+        int replyLength = deserializer.deserializeUInt8();
+        reply= deserializer.deserializeUInt8Array(replyLength);
     }
 
     /**
@@ -78,26 +71,6 @@ public class EzspCustomFrameResponse extends EzspFrameResponse {
      */
     public void setStatus(EmberStatus status) {
         this.status = status;
-    }
-
-    /**
-     * The length of the response.
-     * <p>
-     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
-     *
-     * @return the current replyLength as {@link int}
-     */
-    public int getReplyLength() {
-        return replyLength;
-    }
-
-    /**
-     * The length of the response.
-     *
-     * @param replyLength the replyLength to set as {@link int}
-     */
-    public void setReplyLength(int replyLength) {
-        this.replyLength = replyLength;
     }
 
     /**
@@ -122,11 +95,11 @@ public class EzspCustomFrameResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(101);
-        builder.append("EzspCustomFrameResponse [status=");
+        final StringBuilder builder = new StringBuilder(126);
+        builder.append("EzspCustomFrameResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
-        builder.append(", replyLength=");
-        builder.append(replyLength);
         builder.append(", reply=");
         for (int cnt = 0; cnt < reply.length; cnt++) {
             if (cnt > 0) {
