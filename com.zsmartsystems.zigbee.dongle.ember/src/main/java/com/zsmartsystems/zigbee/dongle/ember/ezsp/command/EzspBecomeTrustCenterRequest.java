@@ -80,8 +80,10 @@ public class EzspBecomeTrustCenterRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(56);
-        builder.append("EzspBecomeTrustCenterRequest [newNetworkKey=");
+        final StringBuilder builder = new StringBuilder(81);
+        builder.append("EzspBecomeTrustCenterRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", newNetworkKey=");
         builder.append(newNetworkKey);
         builder.append(']');
         return builder.toString();

@@ -65,8 +65,10 @@ public class EzspSwitchNetworkKeyHandler extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(55);
-        builder.append("EzspSwitchNetworkKeyHandler [sequenceNumber=");
+        final StringBuilder builder = new StringBuilder(80);
+        builder.append("EzspSwitchNetworkKeyHandler [networkId=");
+        builder.append(networkId);
+        builder.append(", sequenceNumber=");
         builder.append(sequenceNumber);
         builder.append(']');
         return builder.toString();

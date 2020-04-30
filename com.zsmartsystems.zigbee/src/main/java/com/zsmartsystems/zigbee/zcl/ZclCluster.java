@@ -397,9 +397,8 @@ public abstract class ZclCluster {
      * @return command future {@link CommandResult}
      */
     public Future<CommandResult> writeAttributes(List<WriteAttributeRecord> attributes) {
-        final WriteAttributesCommand command = new WriteAttributesCommand();
+        final WriteAttributesCommand command = new WriteAttributesCommand(attributes);
         command.setClusterId(clusterId);
-        command.setRecords(attributes);
         command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
 
         ZclAttribute manufacturerSpecificAttribute = null;
@@ -441,10 +440,9 @@ public abstract class ZclCluster {
      * @return command future
      */
     public Future<CommandResult> readAttributes(final List<Integer> attributeIds) {
-        final ReadAttributesCommand command = new ReadAttributesCommand();
+        final ReadAttributesCommand command = new ReadAttributesCommand(attributeIds);
 
         command.setClusterId(clusterId);
-        command.setIdentifiers(attributeIds);
         command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
 
         if (!attributeIds.isEmpty() && isManufacturerSpecific()) {
@@ -520,9 +518,8 @@ public abstract class ZclCluster {
      * @return command future {@link CommandResult}
      */
     public Future<CommandResult> reportAttributes(List<AttributeReport> attributes) {
-        final ReportAttributesCommand command = new ReportAttributesCommand();
+        final ReportAttributesCommand command = new ReportAttributesCommand(attributes);
         command.setClusterId(clusterId);
-        command.setReports(attributes);
         command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
 
         ZclAttribute manufacturerSpecificAttribute = null;
@@ -612,12 +609,11 @@ public abstract class ZclCluster {
      * @return command future {@link CommandResult}
      */
     public Future<CommandResult> getReporting(final int attributeId) {
-        final ReadReportingConfigurationCommand command = new ReadReportingConfigurationCommand();
-        command.setClusterId(clusterId);
         AttributeRecord record = new AttributeRecord();
         record.setAttributeIdentifier(attributeId);
         record.setDirection(0);
-        command.setRecords(Collections.singletonList(record));
+        final ReadReportingConfigurationCommand command = new ReadReportingConfigurationCommand(Collections.singletonList(record));
+        command.setClusterId(clusterId);
         command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
 
         if (isManufacturerSpecific()) {
@@ -778,14 +774,8 @@ public abstract class ZclCluster {
      * @return Command future
      */
     public Future<CommandResult> bind(IeeeAddress address, int endpointId) {
-        final BindRequest command = new BindRequest();
+        final BindRequest command = new BindRequest(zigbeeEndpoint.getIeeeAddress(), zigbeeEndpoint.getEndpointId(), clusterId, 3, address, endpointId);
         command.setDestinationAddress(new ZigBeeEndpointAddress(zigbeeEndpoint.getEndpointAddress().getAddress()));
-        command.setSrcAddress(zigbeeEndpoint.getIeeeAddress());
-        command.setSrcEndpoint(zigbeeEndpoint.getEndpointId());
-        command.setBindCluster(clusterId);
-        command.setDstAddrMode(3); // 64 bit addressing
-        command.setDstAddress(address);
-        command.setDstEndpoint(endpointId);
         // The transaction is not sent to the Endpoint of this cluster, but to the ZDO endpoint 0 directly.
         return zigbeeEndpoint.getParentNode().sendTransaction(command, command);
     }
@@ -798,14 +788,8 @@ public abstract class ZclCluster {
      * @return Command future
      */
     public Future<CommandResult> unbind(IeeeAddress address, int endpointId) {
-        final UnbindRequest command = new UnbindRequest();
+        final UnbindRequest command = new UnbindRequest(zigbeeEndpoint.getIeeeAddress(), zigbeeEndpoint.getEndpointId(), clusterId, 3, address, endpointId);
         command.setDestinationAddress(new ZigBeeEndpointAddress(zigbeeEndpoint.getEndpointAddress().getAddress()));
-        command.setSrcAddress(zigbeeEndpoint.getIeeeAddress());
-        command.setSrcEndpoint(zigbeeEndpoint.getEndpointId());
-        command.setBindCluster(clusterId);
-        command.setDstAddrMode(3); // 64 bit addressing
-        command.setDstAddress(address);
-        command.setDstEndpoint(endpointId);
         // The transaction is not sent to the Endpoint of this cluster, but to the ZDO endpoint 0 directly.
         return zigbeeEndpoint.getParentNode().sendTransaction(command, command);
     }
@@ -895,11 +879,9 @@ public abstract class ZclCluster {
                     Set<AttributeInformation> attributes = new HashSet<>();
 
                     do {
-                        final DiscoverAttributesCommand command = new DiscoverAttributesCommand();
+                        final DiscoverAttributesCommand command = new DiscoverAttributesCommand(index, 10);
                         command.setClusterId(clusterId);
                         command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
-                        command.setStartAttributeIdentifier(index);
-                        command.setMaximumAttributeIdentifiers(10);
 
                         if (isManufacturerSpecific()) {
                             command.setManufacturerCode(getManufacturerCode());
@@ -1017,11 +999,9 @@ public abstract class ZclCluster {
                     Set<Integer> commands = new HashSet<>();
 
                     do {
-                        final DiscoverCommandsReceived command = new DiscoverCommandsReceived();
+                        final DiscoverCommandsReceived command = new DiscoverCommandsReceived(index, 20);
                         command.setClusterId(clusterId);
                         command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
-                        command.setStartCommandIdentifier(index);
-                        command.setMaximumCommandIdentifiers(20);
 
                         if (isManufacturerSpecific()) {
                             command.setManufacturerCode(getManufacturerCode());
@@ -1126,11 +1106,9 @@ public abstract class ZclCluster {
                     Set<Integer> commands = new HashSet<>();
 
                     do {
-                        final DiscoverCommandsGenerated command = new DiscoverCommandsGenerated();
+                        final DiscoverCommandsGenerated command = new DiscoverCommandsGenerated(index, 20);
                         command.setClusterId(clusterId);
                         command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
-                        command.setStartCommandIdentifier(index);
-                        command.setMaximumCommandIdentifiers(20);
 
                         if (isManufacturerSpecific()) {
                             command.setManufacturerCode(getManufacturerCode());
@@ -1194,7 +1172,7 @@ public abstract class ZclCluster {
      */
     private void notifyAttributeListener(final ZclAttribute attribute, final Object value) {
         for (final ZclAttributeListener listener : attributeListeners) {
-            NotificationService.execute(new Runnable() {
+            getNotificationService().execute(new Runnable() {
                 @Override
                 public void run() {
                     logger.trace("{}: ZclCluster.notifyAttributeListener {} of {} with value {}",
@@ -1252,7 +1230,7 @@ public abstract class ZclCluster {
         synchronized (commandListeners) {
             latch = new CountDownLatch(commandListeners.size());
             for (final ZclCommandListener listener : commandListeners) {
-                NotificationService.execute(new Runnable() {
+                getNotificationService().execute(new Runnable() {
                     @Override
                     public void run() {
                         logger.trace("{}: ZclCluster.notifyCommandListener {} of {}",
@@ -1323,9 +1301,8 @@ public abstract class ZclCluster {
             attributeRecords.add(record);
         }
 
-        ReadAttributesResponse response = new ReadAttributesResponse();
+        ReadAttributesResponse response = new ReadAttributesResponse(attributeRecords);
         response.setClusterId(clusterId);
-        response.setRecords(attributeRecords);
         sendResponse(command, response);
     }
 
@@ -1352,8 +1329,7 @@ public abstract class ZclCluster {
             }
         }
 
-        DiscoverAttributesResponse response = new DiscoverAttributesResponse();
-        response.setAttributeInformation(attributeInformation);
+        DiscoverAttributesResponse response = new DiscoverAttributesResponse(attributeInformation.size() == getLocalAttributes().size(), attributeInformation);
         sendResponse(command, response);
     }
 
@@ -1381,8 +1357,8 @@ public abstract class ZclCluster {
                 command.getRecords());
         for (ReadAttributeStatusRecord record : command.getRecords()) {
             if (record.getStatus() != ZclStatus.SUCCESS) {
-                logger.debug("{}: Error reading attribute {} in {} cluster {} - {}",
-                        zigbeeEndpoint.getEndpointAddress(), (isClient ? "Client" : "Server"),
+                logger.debug("{}: Error reading {} attribute {} in cluster {} - {}",
+                        zigbeeEndpoint.getEndpointAddress(), (isClient ? "client" : "server"),
                         record.getAttributeIdentifier(), clusterId, record.getStatus());
                 continue;
             }
@@ -1424,7 +1400,7 @@ public abstract class ZclCluster {
             attributeStatus.add(responseRecord);
         }
 
-        WriteAttributesResponse response = new WriteAttributesResponse();
+        WriteAttributesResponse response = new WriteAttributesResponse(attributeStatus);
         if (success) {
             // If all attributes are written successfully, then we only need to return SUCCESS
             WriteAttributeStatusRecord responseRecord = new WriteAttributeStatusRecord();
@@ -1432,7 +1408,6 @@ public abstract class ZclCluster {
             attributeStatus.clear();
             attributeStatus.add(responseRecord);
         }
-        response.setRecords(attributeStatus);
         sendResponse(command, response);
     }
 
@@ -1599,12 +1574,12 @@ public abstract class ZclCluster {
         supportedCommandsReceived.addAll(dao.getSupportedCommandsReceived());
 
         Map<Integer, ZclAttribute> attributes = isClient ? clientAttributes : serverAttributes;
-        
+
         for (ZclAttributeDao daoAttribute : dao.getAttributes().values()) {
             // Normalize the data to protect against the users serialisation system restoring incorrect data classes
             daoAttribute
                     .setLastValue(normalizer.normalizeZclData(daoAttribute.getDataType(), daoAttribute.getLastValue()));
-            
+
             ZclAttribute attribute = attributes.get(daoAttribute.getId());
             if (attribute == null || daoAttribute.getManufacturerCode() != null) {
                 attribute = new ZclAttribute();
@@ -1920,12 +1895,10 @@ public abstract class ZclCluster {
         if (command.isDisableDefaultResponse()) {
             return null;
         }
-        DefaultResponse defaultResponse = new DefaultResponse();
+        DefaultResponse defaultResponse = new DefaultResponse(command.getCommandId() ,status);
         defaultResponse.setTransactionId(command.getTransactionId());
-        defaultResponse.setCommandIdentifier(command.getCommandId());
         defaultResponse.setDestinationAddress(command.getDestinationAddress());
         defaultResponse.setClusterId(command.getClusterId());
-        defaultResponse.setStatusCode(status);
         defaultResponse.setApsSecurity(command.getApsSecurity());
 
         if (command.isManufacturerSpecific()) {
@@ -1933,6 +1906,10 @@ public abstract class ZclCluster {
         }
 
         return defaultResponse;
+    }
+
+    public NotificationService getNotificationService() {
+        return zigbeeEndpoint.getNotificationService();
     }
 
 }

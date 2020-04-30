@@ -39,7 +39,7 @@ public class EmberNetworkParameters {
     /**
      * A power setting, in dBm.
      * <p>
-     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
+     * EZSP type is <i>int8s</i> - Java type is {@link int}
      */
     private int radioTxPower;
 
@@ -136,7 +136,7 @@ public class EmberNetworkParameters {
     /**
      * A power setting, in dBm.
      * <p>
-     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
+     * EZSP type is <i>int8s</i> - Java type is {@link int}
      *
      * @return the current radioTxPower as {@link int}
      */
@@ -272,7 +272,7 @@ public class EmberNetworkParameters {
         // Serialize the fields
         serializer.serializeExtendedPanId(extendedPanId);
         serializer.serializeUInt16(panId);
-        serializer.serializeUInt8(radioTxPower);
+        serializer.serializeInt8S(radioTxPower);
         serializer.serializeUInt8(radioChannel);
         serializer.serializeEmberJoinMethod(joinMethod);
         serializer.serializeUInt16(nwkManagerId);
@@ -290,7 +290,7 @@ public class EmberNetworkParameters {
         // Deserialize the fields
         extendedPanId = deserializer.deserializeExtendedPanId();
         panId = deserializer.deserializeUInt16();
-        radioTxPower = deserializer.deserializeUInt8();
+        radioTxPower = deserializer.deserializeInt8S();
         radioChannel = deserializer.deserializeUInt8();
         joinMethod = deserializer.deserializeEmberJoinMethod();
         nwkManagerId = deserializer.deserializeUInt16();

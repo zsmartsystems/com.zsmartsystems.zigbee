@@ -67,8 +67,10 @@ public class EzspMfglibStartToneResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(55);
-        builder.append("EzspMfglibStartToneResponse [status=");
+        final StringBuilder builder = new StringBuilder(80);
+        builder.append("EzspMfglibStartToneResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(']');
         return builder.toString();

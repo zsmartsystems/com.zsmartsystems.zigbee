@@ -29,7 +29,7 @@ public class DiscoverAttributesResponseTest extends CommandTest {
     public void testReceive() {
         int[] packet = getPacketData("00 02 00 21 03 00 21 04 00 21 07 00 21 08 00 30");
 
-        DiscoverAttributesResponse response = new DiscoverAttributesResponse();
+        DiscoverAttributesResponse response = new DiscoverAttributesResponse(null, null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);

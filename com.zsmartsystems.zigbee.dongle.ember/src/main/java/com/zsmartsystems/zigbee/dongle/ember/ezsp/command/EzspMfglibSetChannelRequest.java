@@ -77,8 +77,10 @@ public class EzspMfglibSetChannelRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(55);
-        builder.append("EzspMfglibSetChannelRequest [channel=");
+        final StringBuilder builder = new StringBuilder(80);
+        builder.append("EzspMfglibSetChannelRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", channel=");
         builder.append(channel);
         builder.append(']');
         return builder.toString();

@@ -61,6 +61,16 @@ public abstract class EzspFrame {
     private static final int EZSP_MAX_VERSION = 8;
 
     /**
+     * The network ID bit shift
+     */
+    protected static final int EZSP_NETWORK_ID_SHIFT = 5;
+
+    /**
+     * The network ID bit mask
+     */
+    protected static final int EZSP_NETWORK_ID_MASK = 0x60;
+
+    /**
      * The current version of EZSP being used
      */
     protected static int ezspVersion = EZSP_MIN_VERSION;
@@ -99,6 +109,8 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_CLEAR_TEMPORARY_DATA_MAYBE_STORE_LINK_KEY283K1 = 0xEE;
     protected static final int FRAME_ID_CLEAR_TRANSIENT_LINK_KEYS = 0x6B;
     protected static final int FRAME_ID_COUNTER_ROLLOVER_HANDLER = 0xF2;
+    protected static final int FRAME_ID_CUSTOM_FRAME = 0x47;
+    protected static final int FRAME_ID_CUSTOM_FRAME_HANDLER = 0x54;
     protected static final int FRAME_ID_D_GP_SEND = 0xC6;
     protected static final int FRAME_ID_D_GP_SENT_HANDLER = 0xC7;
     protected static final int FRAME_ID_DELETE_BINDING = 0x2D;
@@ -224,6 +236,7 @@ public abstract class EzspFrame {
     protected int sequenceNumber;
     protected int frameControl;
     protected int frameId = 0;
+    protected int networkId = 0;
     protected boolean isResponse = false;
 
     private static Map<Integer, Class<?>> ezspHandlerMap = new HashMap<Integer, Class<?>>();
@@ -247,6 +260,8 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_CLEAR_TEMPORARY_DATA_MAYBE_STORE_LINK_KEY283K1, EzspClearTemporaryDataMaybeStoreLinkKey283k1Response.class);
         ezspHandlerMap.put(FRAME_ID_CLEAR_TRANSIENT_LINK_KEYS, EzspClearTransientLinkKeysResponse.class);
         ezspHandlerMap.put(FRAME_ID_COUNTER_ROLLOVER_HANDLER, EzspCounterRolloverHandler.class);
+        ezspHandlerMap.put(FRAME_ID_CUSTOM_FRAME, EzspCustomFrameResponse.class);
+        ezspHandlerMap.put(FRAME_ID_CUSTOM_FRAME_HANDLER, EzspCustomFrameHandler.class);
         ezspHandlerMap.put(FRAME_ID_D_GP_SEND, EzspDGpSendResponse.class);
         ezspHandlerMap.put(FRAME_ID_D_GP_SENT_HANDLER, EzspDGpSentHandler.class);
         ezspHandlerMap.put(FRAME_ID_DELETE_BINDING, EzspDeleteBindingResponse.class);
@@ -368,6 +383,24 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_TRUST_CENTER_JOIN_HANDLER, EzspTrustCenterJoinHandler.class);
         ezspHandlerMap.put(FRAME_ID_VERSION, EzspVersionResponse.class);
         ezspHandlerMap.put(FRAME_ID_ZIGBEE_KEY_ESTABLISHMENT_HANDLER, EzspZigbeeKeyEstablishmentHandler.class);
+    }
+
+    /**
+     * Sets the network ID (0 to 3)
+     *
+     * @param networkId the networkId
+     */
+    public void setNetworkId(int networkId) {
+        this.networkId = networkId;
+    }
+
+    /**
+     * Gets the network ID (0 to 3)
+     *
+     * @return the networkId of this frame
+     */
+    public int getNetworkId() {
+        return networkId;
     }
 
     /**

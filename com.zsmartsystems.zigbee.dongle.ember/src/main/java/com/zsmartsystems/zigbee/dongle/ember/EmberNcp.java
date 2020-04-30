@@ -65,6 +65,10 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetPolicyRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetPolicyResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetTransientKeyTableEntryRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetTransientKeyTableEntryResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetTransientLinkKeyRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetTransientLinkKeyResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetValueRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetValueResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLeaveNetworkRequest;
@@ -107,6 +111,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberLibraryStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberTransientKeyData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspMfgTokenId;
@@ -456,6 +461,29 @@ public class EmberNcp {
     public EzspStatus setPolicy(EzspPolicyId policyId, EzspDecisionId decisionId) {
         EzspSetPolicyRequest setPolicyRequest = new EzspSetPolicyRequest();
         setPolicyRequest.setPolicyId(policyId);
+        setPolicyRequest.setDecisionId(decisionId.getKey());
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(new EzspSingleResponseTransaction(setPolicyRequest, EzspSetPolicyResponse.class));
+        EzspSetPolicyResponse setPolicyResponse = (EzspSetPolicyResponse) transaction.getResponse();
+        lastStatus = null;
+        logger.debug(setPolicyResponse.toString());
+        if (setPolicyResponse.getStatus() != EzspStatus.EZSP_SUCCESS) {
+            logger.debug("Error during setting policy: {}", setPolicyResponse);
+        }
+
+        return setPolicyResponse.getStatus();
+    }
+
+    /**
+     * Set a policy used by the NCP to make fast decisions.
+     *
+     * @param policyId the {@link EzspPolicyId} to set
+     * @param decisionId the decisionId to set to as an integer
+     * @return the {@link EzspStatus} of the response
+     */
+    public EzspStatus setPolicy(EzspPolicyId policyId, int decisionId) {
+        EzspSetPolicyRequest setPolicyRequest = new EzspSetPolicyRequest();
+        setPolicyRequest.setPolicyId(policyId);
         setPolicyRequest.setDecisionId(decisionId);
         EzspTransaction transaction = protocolHandler
                 .sendEzspTransaction(new EzspSingleResponseTransaction(setPolicyRequest, EzspSetPolicyResponse.class));
@@ -476,7 +504,7 @@ public class EmberNcp {
      * @return the returned {@link EzspDecisionId} if the policy was retrieved successfully or null if there was an
      *         error
      */
-    public EzspDecisionId getPolicy(EzspPolicyId policyId) {
+    public Integer getPolicy(EzspPolicyId policyId) {
         EzspGetPolicyRequest getPolicyRequest = new EzspGetPolicyRequest();
         getPolicyRequest.setPolicyId(policyId);
         EzspTransaction transaction = protocolHandler
@@ -560,6 +588,49 @@ public class EmberNcp {
         }
 
         return response.getStatus();
+    }
+
+    /**
+     * Gets a transient link key from the NCP
+     *
+     * @param index the key index to retrieve
+     * @return the {@link EmberTransientKeyData} of the response
+     */
+    public EmberTransientKeyData getTransientLinkKeyIndex(int index) {
+        EzspGetTransientKeyTableEntryRequest request = new EzspGetTransientKeyTableEntryRequest();
+        request.setIndex(index);
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(
+                        new EzspSingleResponseTransaction(request, EzspGetTransientKeyTableEntryResponse.class));
+        EzspGetTransientKeyTableEntryResponse response = (EzspGetTransientKeyTableEntryResponse) transaction
+                .getResponse();
+        logger.debug(response.toString());
+        lastStatus = response.getStatus();
+        if (lastStatus != EmberStatus.EMBER_SUCCESS) {
+            return null;
+        }
+        return response.getTransientKeyData();
+    }
+
+    /**
+     * Gets a transient link key from the NCP
+     *
+     * @param ieeeAddress the {@link IeeeAddress} transient key to retrieve
+     * @return the {@link EmberTransientKeyData} of the response
+     */
+    public EmberTransientKeyData getTransientLinkKey(IeeeAddress ieeeAddress) {
+        EzspGetTransientLinkKeyRequest request = new EzspGetTransientLinkKeyRequest();
+        request.setEui(ieeeAddress);
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetTransientLinkKeyResponse.class));
+        EzspGetTransientLinkKeyResponse response = (EzspGetTransientLinkKeyResponse) transaction
+                .getResponse();
+        logger.debug(response.toString());
+        lastStatus = response.getStatus();
+        if (lastStatus != EmberStatus.EMBER_SUCCESS) {
+            return null;
+        }
+        return response.getTransientKeyData();
     }
 
     /**
@@ -728,7 +799,6 @@ public class EmberNcp {
     public void setPowerDescriptor(int descriptor) {
         EzspSetPowerDescriptorRequest request = new EzspSetPowerDescriptorRequest();
         request.setDescriptor(descriptor);
-        protocolHandler.queueFrame(request);
         protocolHandler
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspSetPowerDescriptorResponse.class));
     }
@@ -742,7 +812,6 @@ public class EmberNcp {
     public void setManufacturerCode(int code) {
         EzspSetManufacturerCodeRequest request = new EzspSetManufacturerCodeRequest();
         request.setCode(code);
-        protocolHandler.queueFrame(request);
         protocolHandler
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspSetManufacturerCodeResponse.class));
     }

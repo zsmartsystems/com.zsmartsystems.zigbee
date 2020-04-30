@@ -31,7 +31,7 @@ public class ManagementRoutingResponseTest extends CommandTest {
         // Short response - ie not extended
         int[] packet = getPacketData("00 00 01 00 01 2A 2F 00 35 38");
 
-        ManagementRoutingResponse routingResponse = new ManagementRoutingResponse();
+        ManagementRoutingResponse routingResponse = new ManagementRoutingResponse(null, null, null, null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);

@@ -174,8 +174,10 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
                         }
                         String name = attribute.name.replaceAll("\\{\\{count\\}\\}", Integer.toString(arrayCount));
                         out.println("    public static final int " + getEnum(name) + " = "
-                                + String.format("0x%04X", attribute.code + arrayCount) + ";");
-                        arrayCount += arrayStep;
+                                + String.format("0x%04X",
+                                        attribute.code + (arrayCount - attribute.arrayStart) * arrayStep)
+                                + ";");
+                        arrayCount++;
                     }
                 } else {
                     if (!attribute.description.isEmpty()) {
@@ -485,7 +487,7 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
                         String name = attribute.name.replaceAll("\\{\\{count\\}\\}", Integer.toString(arrayCount));
                         out.println("        attributeMap.put(" + getEnum(name) + ", "
                                 + defineAttribute(attribute, clusterName, name, 0) + ");");
-                        arrayCount += arrayStep;
+                        arrayCount++;
                     }
                 } else {
                     out.println("        attributeMap.put(" + getEnum(attribute.name) + ", "

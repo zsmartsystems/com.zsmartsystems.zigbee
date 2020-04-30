@@ -63,8 +63,10 @@ public class EzspStackTokenChangedHandler extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(56);
-        builder.append("EzspStackTokenChangedHandler [tokenAddress=");
+        final StringBuilder builder = new StringBuilder(81);
+        builder.append("EzspStackTokenChangedHandler [networkId=");
+        builder.append(networkId);
+        builder.append(", tokenAddress=");
         builder.append(tokenAddress);
         builder.append(']');
         return builder.toString();

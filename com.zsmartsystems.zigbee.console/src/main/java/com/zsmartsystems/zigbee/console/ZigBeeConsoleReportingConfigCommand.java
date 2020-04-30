@@ -66,7 +66,7 @@ public class ZigBeeConsoleReportingConfigCommand extends ZigBeeConsoleAbstractCo
                     "Attribute " + attributeId + " was not found in " + printCluster(cluster));
         }
 
-        final CommandResult result = cluster.getReporting(attribute).get();
+        final CommandResult result = cluster.getReporting(attribute.getId()).get();
         if (result.isSuccess()) {
             final ReadReportingConfigurationResponse response = result.getResponse();
             final AttributeReportingStatusRecord attributeReportingStatusRecord = response.getRecords().get(0);

@@ -63,8 +63,10 @@ public class EzspNeighborCountResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(53);
-        builder.append("EzspNeighborCountResponse [value=");
+        final StringBuilder builder = new StringBuilder(78);
+        builder.append("EzspNeighborCountResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", value=");
         builder.append(value);
         builder.append(']');
         return builder.toString();

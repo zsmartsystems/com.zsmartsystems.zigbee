@@ -93,8 +93,10 @@ public class EzspGpSinkTableGetEntryResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(84);
-        builder.append("EzspGpSinkTableGetEntryResponse [status=");
+        final StringBuilder builder = new StringBuilder(109);
+        builder.append("EzspGpSinkTableGetEntryResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(", entry=");
         builder.append(entry);

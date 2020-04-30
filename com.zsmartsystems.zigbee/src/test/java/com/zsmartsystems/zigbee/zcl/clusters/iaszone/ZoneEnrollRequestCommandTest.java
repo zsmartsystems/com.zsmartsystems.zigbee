@@ -27,7 +27,7 @@ public class ZoneEnrollRequestCommandTest extends CommandTest {
     public void test() {
         int[] packet = getPacketData("09 63 01 0D 00 4E 10");
 
-        ZoneEnrollRequestCommand command = new ZoneEnrollRequestCommand();
+        ZoneEnrollRequestCommand command = new ZoneEnrollRequestCommand(null, null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);

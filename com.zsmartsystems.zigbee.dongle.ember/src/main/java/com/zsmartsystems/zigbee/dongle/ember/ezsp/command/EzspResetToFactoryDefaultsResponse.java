@@ -64,8 +64,10 @@ public class EzspResetToFactoryDefaultsResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(62);
-        builder.append("EzspResetToFactoryDefaultsResponse [status=");
+        final StringBuilder builder = new StringBuilder(87);
+        builder.append("EzspResetToFactoryDefaultsResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(']');
         return builder.toString();

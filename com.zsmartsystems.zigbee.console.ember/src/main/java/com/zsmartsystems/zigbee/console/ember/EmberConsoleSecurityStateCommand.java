@@ -23,6 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberLibraryId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberLibraryStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberTransientKeyData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspDecisionId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspPolicyId;
@@ -71,10 +72,10 @@ public class EmberConsoleSecurityStateCommand extends EmberConsoleAbstractComman
         Integer transientKeyTimeout = ncp.getConfiguration(EzspConfigId.EZSP_CONFIG_TRANSIENT_KEY_TIMEOUT_S);
         EmberCurrentSecurityState securityState = ncp.getCurrentSecurityState();
 
-        EzspDecisionId trustCentrePolicy = ncp.getPolicy(EzspPolicyId.EZSP_TRUST_CENTER_POLICY);
-        EzspDecisionId appKeyPolicy = ncp.getPolicy(EzspPolicyId.EZSP_APP_KEY_REQUEST_POLICY);
-        EzspDecisionId trustCentreKeyPolicy = ncp.getPolicy(EzspPolicyId.EZSP_TC_KEY_REQUEST_POLICY);
-        EzspDecisionId trustCentreRejoinPolicy = ncp
+        Integer trustCentrePolicy = ncp.getPolicy(EzspPolicyId.EZSP_TRUST_CENTER_POLICY);
+        Integer appKeyPolicy = ncp.getPolicy(EzspPolicyId.EZSP_APP_KEY_REQUEST_POLICY);
+        Integer trustCentreKeyPolicy = ncp.getPolicy(EzspPolicyId.EZSP_TC_KEY_REQUEST_POLICY);
+        Integer trustCentreRejoinPolicy = ncp
                 .getPolicy(EzspPolicyId.EZSP_TC_REJOINS_USING_WELL_KNOWN_KEY_POLICY);
 
         EmberKeyStruct networkKey = ncp.getKey(EmberKeyType.EMBER_CURRENT_NETWORK_KEY);
@@ -102,6 +103,14 @@ public class EmberConsoleSecurityStateCommand extends EmberConsoleAbstractComman
             }
         }
 
+        List<EmberTransientKeyData> transientTable = new ArrayList<>();
+        for (int cnt = 0; cnt < keyTableSize; cnt++) {
+            EmberTransientKeyData key = ncp.getTransientLinkKeyIndex(cnt);
+            if (key != null) {
+                transientTable.add(key);
+            }
+        }
+
         out.println("Current Network State      : " + networkState);
         out.println("Trust Centre Address       : "
                 + (securityState == null ? "" : securityState.getTrustCenterLongAddress()));
@@ -110,10 +119,10 @@ public class EmberConsoleSecurityStateCommand extends EmberConsoleAbstractComman
         out.println("Key table size             : " + keyTableSize);
         out.println("Trust Centre cache size    : " + trustCentreCacheSize);
         out.println("Transient key timeout      : " + transientKeyTimeout);
-        out.println("Application Key Policy     : " + appKeyPolicy);
-        out.println("Trust Centre Policy        : " + trustCentrePolicy);
-        out.println("Trust Centre Key Policy    : " + trustCentreKeyPolicy);
-        out.println("Trust Centre Rejoin Policy : " + trustCentreRejoinPolicy);
+        out.println("Application Key Policy     : " + EzspDecisionId.getEzspDecisionId(appKeyPolicy));
+        out.println("Trust Centre Policy        : " + String.format("%02X", trustCentrePolicy));
+        out.println("Trust Centre Key Policy    : " + EzspDecisionId.getEzspDecisionId(trustCentreKeyPolicy));
+        out.println("Trust Centre Rejoin Policy : " + EzspDecisionId.getEzspDecisionId(trustCentreRejoinPolicy));
         out.println(
                 "Installation Code          : " + (installCode == null ? "" : printArray(installCode.getAsIntArray())));
         out.println("ECC Library Support        : " + libraryEcc);
@@ -140,7 +149,7 @@ public class EmberConsoleSecurityStateCommand extends EmberConsoleAbstractComman
         }
         out.println();
         out.println(
-                "Key Type                        IEEE Address      Key Data                          In Cnt    Out Cnt   Seq  Auth  Sleep");
+                "Key Type                        IEEE Address      Key Data                          In Cnt    Out Cnt   Seq  Auth  Sleep  Timer");
 
         if (linkKey != null) {
             out.println(printKey(linkKey));
@@ -150,6 +159,9 @@ public class EmberConsoleSecurityStateCommand extends EmberConsoleAbstractComman
         }
         for (EmberKeyStruct key : keyTable) {
             out.println(printKey(key));
+        }
+        for (EmberTransientKeyData key : transientTable) {
+            out.println(printTransientKey(key));
         }
     }
 
@@ -198,6 +210,25 @@ public class EmberConsoleSecurityStateCommand extends EmberConsoleAbstractComman
         } else {
             builder.append("No  ");
         }
+
+        return builder.toString();
+    }
+
+    private String printTransientKey(EmberTransientKeyData key) {
+        StringBuilder builder = new StringBuilder(110);
+
+        builder.append(String.format("%-30s  ", "EMBER_TRANSIENT_LINK_KEY"));
+
+        builder.append(key.getEui64());
+        builder.append("  ");
+
+        for (int value : key.getKeyData().getContents()) {
+            builder.append(String.format("%02X", value));
+        }
+
+        builder.append(String.format("  %08X  ", key.getIncomingFrameCounter()));
+        builder.append("                            ");
+        builder.append(String.format("% 5d", key.getCountdownTimerMs() / 100000));
 
         return builder.toString();
     }

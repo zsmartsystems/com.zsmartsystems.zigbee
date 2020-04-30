@@ -22,7 +22,6 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
@@ -56,15 +55,10 @@ import com.zsmartsystems.zigbee.zdo.field.RoutingTable.DiscoveryState;
 public class ZigBeeNodeTest {
     static final int TIMEOUT = 5000;
 
-    @Before
-    public void resetNotificationService() throws Exception {
-        NotificationService.initialize();
-    }
-
     @Test
     public void testAddDescriptors() {
         System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
-        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress(), 1);
+        ZigBeeNode node = new ZigBeeNode(getMocketNetworkManager(), new IeeeAddress(), 1);
 
         assertEquals(Integer.valueOf(1), node.getNetworkAddress());
 
@@ -85,7 +79,7 @@ public class ZigBeeNodeTest {
     @Test
     public void testSetIeeeAddress() {
         System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
-        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress("17880100dc880b"));
+        ZigBeeNode node = new ZigBeeNode(getMocketNetworkManager(), new IeeeAddress("17880100dc880b"));
         assertEquals(new IeeeAddress("17880100dc880b"), node.getIeeeAddress());
 
         System.out.println(node.toString());
@@ -95,7 +89,7 @@ public class ZigBeeNodeTest {
     public void testSetPowerDescriptor() {
         System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         PowerDescriptor descriptor = new PowerDescriptor(1, 2, 4, 0xc);
-        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress());
+        ZigBeeNode node = new ZigBeeNode(getMocketNetworkManager(), new IeeeAddress());
         node.setPowerDescriptor(descriptor);
         assertEquals(CurrentPowerModeType.RECEIVER_ON_PERIODICALLY, node.getPowerDescriptor().getCurrentPowerMode());
         assertEquals(PowerSourceType.DISPOSABLE_BATTERY, node.getPowerDescriptor().getCurrentPowerSource());
@@ -132,7 +126,7 @@ public class ZigBeeNodeTest {
     @Test
     public void testNeighborTableUpdate() {
         System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
-        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress());
+        ZigBeeNode node = new ZigBeeNode(getMocketNetworkManager(), new IeeeAddress());
         Set<NeighborTable> neighbors;
 
         NeighborTable neighbor1 = getNeighborTable(12345, "123456789", 0);
@@ -163,7 +157,7 @@ public class ZigBeeNodeTest {
     @Test
     public void testRoutingTableUpdate() {
         System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
-        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress());
+        ZigBeeNode node = new ZigBeeNode(getMocketNetworkManager(), new IeeeAddress());
         Set<RoutingTable> routes;
 
         RoutingTable route1 = new RoutingTable();
@@ -216,7 +210,7 @@ public class ZigBeeNodeTest {
     @Test
     public void testDeviceTypes() {
         System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
-        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress());
+        ZigBeeNode node = new ZigBeeNode(getMocketNetworkManager(), new IeeeAddress());
         assertFalse(node.isFullFuntionDevice());
         assertFalse(node.isReducedFuntionDevice());
         assertFalse(node.isPrimaryTrustCenter());
@@ -253,7 +247,7 @@ public class ZigBeeNodeTest {
     @Test
     public void testLastUpdate() {
         System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
-        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress());
+        ZigBeeNode node = new ZigBeeNode(getMocketNetworkManager(), new IeeeAddress());
         assertNull(node.getLastUpdateTime());
         node.setLastUpdateTime();
         assertNotNull(node.getLastUpdateTime());
@@ -262,7 +256,7 @@ public class ZigBeeNodeTest {
     @Test
     public void testAssociatedDevices() {
         System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
-        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress());
+        ZigBeeNode node = new ZigBeeNode(getMocketNetworkManager(), new IeeeAddress());
 
         // Check list is empty to start
         assertNotNull(node.getAssociatedDevices());
@@ -337,9 +331,9 @@ public class ZigBeeNodeTest {
     @Test
     public void testUpdated() throws Exception {
         System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
-        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress("1234567890"));
-        ZigBeeNode newNode = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress("1234567890"));
-        ZigBeeNode invalidNode = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class),
+        ZigBeeNode node = new ZigBeeNode(getMocketNetworkManager(), new IeeeAddress("1234567890"));
+        ZigBeeNode newNode = new ZigBeeNode(getMocketNetworkManager(), new IeeeAddress("1234567890"));
+        ZigBeeNode invalidNode = new ZigBeeNode(getMocketNetworkManager(),
                 new IeeeAddress("ABCDEF1234567890"));
         assertTrue(node.setNetworkAddress(1234));
         assertTrue(newNode.setNetworkAddress(1234));
@@ -349,7 +343,7 @@ public class ZigBeeNodeTest {
         assertFalse(node.updateNode(newNode));
 
         assertNull(node.getNodeDescriptor());
-        newNode = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress("1234567890"));
+        newNode = new ZigBeeNode(getMocketNetworkManager(), new IeeeAddress("1234567890"));
         NodeDescriptor nodeDescriptor = Mockito.mock(NodeDescriptor.class);
         Mockito.when(nodeDescriptor.getLogicalType()).thenReturn(LogicalType.COORDINATOR);
         newNode.setNodeDescriptor(nodeDescriptor);
@@ -357,7 +351,7 @@ public class ZigBeeNodeTest {
         assertNotNull(node.getNodeDescriptor());
 
         assertNull(node.getPowerDescriptor());
-        newNode = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress("1234567890"));
+        newNode = new ZigBeeNode(getMocketNetworkManager(), new IeeeAddress("1234567890"));
         PowerDescriptor powerDescriptor = Mockito.mock(PowerDescriptor.class);
         newNode.setPowerDescriptor(powerDescriptor);
         assertTrue(node.updateNode(newNode));
@@ -427,7 +421,7 @@ public class ZigBeeNodeTest {
         assertTrue(node.setNeighbors(null));
         assertEquals(0, node.getNeighbors().size());
 
-        newNode = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), node.getIeeeAddress());
+        newNode = new ZigBeeNode(getMocketNetworkManager(), node.getIeeeAddress());
         ZigBeeEndpoint endpoint = new ZigBeeEndpoint(newNode, 1);
         newNode.addEndpoint(endpoint);
         System.out.println(newNode);
@@ -445,7 +439,7 @@ public class ZigBeeNodeTest {
         Set<BindingTable> bindingTable = new HashSet<BindingTable>();
         bindingTable.add(new BindingTable());
         assertEquals(0, node.getBindingTable().size());
-        newNode = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress("1234567890"));
+        newNode = new ZigBeeNode(getMocketNetworkManager(), new IeeeAddress("1234567890"));
         TestUtilities.setField(ZigBeeNode.class, newNode, "bindingTable", bindingTable);
         assertTrue(node.updateNode(newNode));
         assertEquals(1, node.getBindingTable().size());
@@ -453,12 +447,12 @@ public class ZigBeeNodeTest {
         Set<RoutingTable> routeTable = new HashSet<RoutingTable>();
         routeTable.add(new RoutingTable());
         assertEquals(0, node.getRoutes().size());
-        newNode = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress("1234567890"));
+        newNode = new ZigBeeNode(getMocketNetworkManager(), new IeeeAddress("1234567890"));
         newNode.setRoutes(routeTable);
         assertTrue(node.updateNode(newNode));
         assertEquals(1, node.getRoutes().size());
 
-        newNode = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress("1234567890"));
+        newNode = new ZigBeeNode(getMocketNetworkManager(), new IeeeAddress("1234567890"));
         newNode.setNodeState(ZigBeeNodeState.ONLINE);
         assertTrue(node.updateNode(newNode));
         newNode.setNodeState(ZigBeeNodeState.UNKNOWN);
@@ -468,7 +462,7 @@ public class ZigBeeNodeTest {
     @Test
     public void isDiscovered() throws Exception {
         System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
-        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress("1234567890"));
+        ZigBeeNode node = new ZigBeeNode(getMocketNetworkManager(), new IeeeAddress("1234567890"));
         ZigBeeNetworkEndpointListener listener = Mockito.mock(ZigBeeNetworkEndpointListener.class);
         node.addNetworkEndpointListener(listener);
 
@@ -497,7 +491,7 @@ public class ZigBeeNodeTest {
     @Test
     public void commandReceived() {
         System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
-        ZigBeeNetworkManager networkManager = Mockito.mock(ZigBeeNetworkManager.class);
+        ZigBeeNetworkManager networkManager = getMocketNetworkManager();
         ZigBeeNode node = new ZigBeeNode(networkManager, new IeeeAddress("1234567890"));
         assertTrue(node.setNetworkAddress(12345));
 
@@ -573,7 +567,7 @@ public class ZigBeeNodeTest {
     @Test
     public void setNodeState() {
         System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
-        ZigBeeNode node = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress("1234567890"));
+        ZigBeeNode node = new ZigBeeNode(getMocketNetworkManager(), new IeeeAddress("1234567890"));
 
         assertFalse(node.setNodeState(ZigBeeNodeState.UNKNOWN));
         assertTrue(node.setNodeState(ZigBeeNodeState.ONLINE));
@@ -586,7 +580,7 @@ public class ZigBeeNodeTest {
     @Test
     public void updateBindingTable() throws InterruptedException, ExecutionException {
         System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
-        ZigBeeNetworkManager networkManager = Mockito.mock(ZigBeeNetworkManager.class);
+        ZigBeeNetworkManager networkManager = getMocketNetworkManager();
         Map<Integer, ZigBeeCommand> responses = new HashMap<Integer, ZigBeeCommand>();
 
         Mockito.doAnswer(new Answer<Future<CommandResult>>() {
@@ -605,28 +599,31 @@ public class ZigBeeNodeTest {
         ZigBeeNode node = new ZigBeeNode(networkManager, new IeeeAddress("1234567890"));
         assertTrue(node.setNetworkAddress(1));
 
-        ManagementBindResponse nodeResponse = new ManagementBindResponse();
-        nodeResponse.setStatus(ZdoStatus.NOT_SUPPORTED);
+        ManagementBindResponse nodeResponse = new ManagementBindResponse(ZdoStatus.NOT_SUPPORTED, null, null, null);
         nodeResponse.setSourceAddress(new ZigBeeEndpointAddress(123));
         nodeResponse.setDestinationAddress(new ZigBeeEndpointAddress(0));
         responses.put(ZdoCommandType.MANAGEMENT_BIND_REQUEST.getClusterId(), nodeResponse);
         Future<ZigBeeStatus> future = node.updateBindingTable();
         assertEquals(ZigBeeStatus.UNSUPPORTED, future.get());
 
-        nodeResponse = new ManagementBindResponse();
-        nodeResponse.setStatus(ZdoStatus.NOT_PERMITTED);
+        nodeResponse = new ManagementBindResponse(ZdoStatus.NOT_PERMITTED, null, null, null);
         nodeResponse.setSourceAddress(new ZigBeeEndpointAddress(123));
         nodeResponse.setDestinationAddress(new ZigBeeEndpointAddress(0));
         responses.put(ZdoCommandType.MANAGEMENT_BIND_REQUEST.getClusterId(), nodeResponse);
         future = node.updateBindingTable();
         assertEquals(ZigBeeStatus.INVALID_STATE, future.get());
 
-        nodeResponse = new ManagementBindResponse();
-        nodeResponse.setStatus(ZdoStatus.NO_DESCRIPTOR); // Random error
+        nodeResponse = new ManagementBindResponse(ZdoStatus.NO_DESCRIPTOR, null, null, null);
         nodeResponse.setSourceAddress(new ZigBeeEndpointAddress(123));
         nodeResponse.setDestinationAddress(new ZigBeeEndpointAddress(0));
         responses.put(ZdoCommandType.MANAGEMENT_BIND_REQUEST.getClusterId(), nodeResponse);
         future = node.updateBindingTable();
         assertEquals(ZigBeeStatus.FAILURE, future.get());
+    }
+
+    private ZigBeeNetworkManager getMocketNetworkManager() {
+        ZigBeeNetworkManager networkManager = Mockito.mock(ZigBeeNetworkManager.class);
+        Mockito.when(networkManager.getNotificationService()).thenReturn(new NotificationService());
+        return networkManager;
     }
 }

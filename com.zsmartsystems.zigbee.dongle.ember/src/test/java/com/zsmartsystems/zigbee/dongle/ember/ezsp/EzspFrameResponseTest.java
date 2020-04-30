@@ -46,7 +46,6 @@ public class EzspFrameResponseTest {
 
     @Test
     public void testResponseV8() {
-        EzspFrame.setEzspVersion(4);
         EzspFrame.setEzspVersion(8);
         EzspVersionResponse response = new EzspVersionResponse(
                 new int[] { 0x01, 0x80, 0x01, 0x00, 0x00, 0x08, 0x02, 0x00, 0x67 });
@@ -54,6 +53,15 @@ public class EzspFrameResponseTest {
 
         assertEquals(8, response.getProtocolVersion());
         assertEquals(0x6700, response.getStackVersion());
+        assertEquals(0, response.getNetworkId());
+
+        response = new EzspVersionResponse(
+                new int[] { 0x01, 0xC0, 0x01, 0x00, 0x00, 0x08, 0x02, 0x00, 0x67 });
+        System.out.println(response);
+
+        assertEquals(8, response.getProtocolVersion());
+        assertEquals(0x6700, response.getStackVersion());
+        assertEquals(2, response.getNetworkId());
     }
 
     @Test

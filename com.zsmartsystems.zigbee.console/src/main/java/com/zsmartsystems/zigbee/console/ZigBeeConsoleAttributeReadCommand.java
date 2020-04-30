@@ -108,7 +108,7 @@ public class ZigBeeConsoleAttributeReadCommand extends ZigBeeConsoleAbstractComm
 
     private boolean readAttribute(PrintStream out, ZclCluster cluster, Map<Integer, String> attributes)
             throws InterruptedException, ExecutionException {
-        CommandResult result = cluster.read(new ArrayList<>(attributes.keySet())).get();
+        CommandResult result = cluster.readAttributes(new ArrayList<>(attributes.keySet())).get();
 
         if (result.isSuccess()) {
             final ReadAttributesResponse response = result.getResponse();

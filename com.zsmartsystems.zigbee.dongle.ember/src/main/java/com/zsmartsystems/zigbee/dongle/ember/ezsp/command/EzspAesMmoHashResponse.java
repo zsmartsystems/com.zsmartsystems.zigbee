@@ -96,8 +96,10 @@ public class EzspAesMmoHashResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(75);
-        builder.append("EzspAesMmoHashResponse [status=");
+        final StringBuilder builder = new StringBuilder(100);
+        builder.append("EzspAesMmoHashResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(", returnContext=");
         builder.append(returnContext);

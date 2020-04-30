@@ -404,8 +404,10 @@ public class EzspGpepIncomingMessageHandler extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(383);
-        builder.append("EzspGpepIncomingMessageHandler [status=");
+        final StringBuilder builder = new StringBuilder(408);
+        builder.append("EzspGpepIncomingMessageHandler [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(", gpdLink=");
         builder.append(gpdLink);

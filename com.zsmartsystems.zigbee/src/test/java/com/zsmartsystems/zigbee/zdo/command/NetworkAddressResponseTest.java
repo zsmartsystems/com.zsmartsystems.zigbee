@@ -28,7 +28,7 @@ public class NetworkAddressResponseTest extends CommandTest {
     public void testReceive() {
         int[] packet = getPacketData("00 00 43 1D A5 00 AA 3E B0 7C 74 3B");
 
-        NetworkAddressResponse addressResponse = new NetworkAddressResponse();
+        NetworkAddressResponse addressResponse = new NetworkAddressResponse(null, null, null, null, null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);

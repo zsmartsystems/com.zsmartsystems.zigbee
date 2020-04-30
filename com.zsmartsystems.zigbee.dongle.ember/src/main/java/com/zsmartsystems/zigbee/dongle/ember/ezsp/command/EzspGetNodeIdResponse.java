@@ -63,8 +63,10 @@ public class EzspGetNodeIdResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(49);
-        builder.append("EzspGetNodeIdResponse [nodeId=");
+        final StringBuilder builder = new StringBuilder(74);
+        builder.append("EzspGetNodeIdResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", nodeId=");
         builder.append(String.format("%04X", nodeId));
         builder.append(']');
         return builder.toString();

@@ -219,8 +219,10 @@ public class EzspSendUnicastRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(175);
-        builder.append("EzspSendUnicastRequest [type=");
+        final StringBuilder builder = new StringBuilder(200);
+        builder.append("EzspSendUnicastRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", type=");
         builder.append(type);
         builder.append(", indexOrDestination=");
         builder.append(String.format("%04X", indexOrDestination));

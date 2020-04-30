@@ -45,6 +45,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMessageSentHandler
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStackStatusHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspTrustCenterJoinHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberDeviceUpdate;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberIncomingMessageType;
@@ -125,7 +126,7 @@ public class ZigBeeDongleEzspTest {
     }
 
     @Test
-    public void setTcJoinMode() {
+    public void setTcJoinModeV4() throws Exception {
         System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ArgumentCaptor<EzspPolicyId> policyId = ArgumentCaptor.forClass(EzspPolicyId.class);
         ArgumentCaptor<EzspDecisionId> decisionId = ArgumentCaptor.forClass(EzspDecisionId.class);
@@ -138,6 +139,10 @@ public class ZigBeeDongleEzspTest {
                 return ncp;
             }
         };
+
+        EzspVersionResponse ezspVersion = Mockito.mock(EzspVersionResponse.class);
+        Mockito.when(ezspVersion.getProtocolVersion()).thenReturn(4);
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "ezspVersion", ezspVersion);
 
         TransportConfig configuration = new TransportConfig();
         configuration.addOption(TransportConfigOption.TRUST_CENTRE_JOIN_MODE, TrustCentreJoinMode.TC_JOIN_DENY);
@@ -159,6 +164,60 @@ public class ZigBeeDongleEzspTest {
         assertEquals(ZigBeeStatus.SUCCESS, configuration.getResult(TransportConfigOption.TRUST_CENTRE_JOIN_MODE));
         assertEquals(policyId.getValue(), EzspPolicyId.EZSP_TRUST_CENTER_POLICY);
         assertEquals(decisionId.getValue(), EzspDecisionId.EZSP_ALLOW_PRECONFIGURED_KEY_JOINS);
+
+        configuration = new TransportConfig();
+        configuration.addOption(TransportConfigOption.TRUST_CENTRE_JOIN_MODE, Integer.valueOf(0));
+        dongle.updateTransportConfig(configuration);
+        assertEquals(ZigBeeStatus.INVALID_ARGUMENTS,
+                configuration.getResult(TransportConfigOption.TRUST_CENTRE_JOIN_MODE));
+    }
+
+    @Test
+    public void setTcJoinModeV8() throws Exception {
+        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
+        ArgumentCaptor<EzspPolicyId> policyId = ArgumentCaptor.forClass(EzspPolicyId.class);
+        ArgumentCaptor<Integer> decisionId = ArgumentCaptor.forClass(Integer.class);
+
+        final EmberNcp ncp = Mockito.mock(EmberNcp.class);
+        Mockito.when(ncp.setPolicy(policyId.capture(), decisionId.capture())).thenReturn(EzspStatus.EZSP_SUCCESS);
+        ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null) {
+            @Override
+            public EmberNcp getEmberNcp() {
+                return ncp;
+            }
+        };
+
+        EzspVersionResponse ezspVersion = Mockito.mock(EzspVersionResponse.class);
+        Mockito.when(ezspVersion.getProtocolVersion()).thenReturn(8);
+        TestUtilities.setField(ZigBeeDongleEzsp.class, dongle, "ezspVersion", ezspVersion);
+
+        TransportConfig configuration = new TransportConfig();
+        configuration.addOption(TransportConfigOption.TRUST_CENTRE_JOIN_MODE, TrustCentreJoinMode.TC_JOIN_DENY);
+        dongle.updateTransportConfig(configuration);
+        assertEquals(ZigBeeStatus.SUCCESS, configuration.getResult(TransportConfigOption.TRUST_CENTRE_JOIN_MODE));
+        assertEquals(policyId.getValue(), EzspPolicyId.EZSP_TRUST_CENTER_POLICY);
+        assertEquals(Integer.valueOf(0), decisionId.getValue());
+
+        configuration = new TransportConfig();
+        configuration.addOption(TransportConfigOption.TRUST_CENTRE_JOIN_MODE, TrustCentreJoinMode.TC_JOIN_INSECURE);
+        dongle.updateTransportConfig(configuration);
+        assertEquals(ZigBeeStatus.SUCCESS, configuration.getResult(TransportConfigOption.TRUST_CENTRE_JOIN_MODE));
+        assertEquals(policyId.getValue(), EzspPolicyId.EZSP_TRUST_CENTER_POLICY);
+        assertEquals(Integer.valueOf(3), decisionId.getValue());
+
+        configuration = new TransportConfig();
+        configuration.addOption(TransportConfigOption.TRUST_CENTRE_JOIN_MODE, TrustCentreJoinMode.TC_JOIN_SECURE);
+        dongle.updateTransportConfig(configuration);
+        assertEquals(ZigBeeStatus.SUCCESS, configuration.getResult(TransportConfigOption.TRUST_CENTRE_JOIN_MODE));
+        assertEquals(policyId.getValue(), EzspPolicyId.EZSP_TRUST_CENTER_POLICY);
+        assertEquals(Integer.valueOf(9), decisionId.getValue());
+
+        configuration = new TransportConfig();
+        configuration.addOption(TransportConfigOption.TRUST_CENTRE_JOIN_MODE, TrustCentreJoinMode.TC_JOIN_INSTALLCODE);
+        dongle.updateTransportConfig(configuration);
+        assertEquals(ZigBeeStatus.SUCCESS, configuration.getResult(TransportConfigOption.TRUST_CENTRE_JOIN_MODE));
+        assertEquals(policyId.getValue(), EzspPolicyId.EZSP_TRUST_CENTER_POLICY);
+        assertEquals(Integer.valueOf(17), decisionId.getValue());
 
         configuration = new TransportConfig();
         configuration.addOption(TransportConfigOption.TRUST_CENTRE_JOIN_MODE, Integer.valueOf(0));

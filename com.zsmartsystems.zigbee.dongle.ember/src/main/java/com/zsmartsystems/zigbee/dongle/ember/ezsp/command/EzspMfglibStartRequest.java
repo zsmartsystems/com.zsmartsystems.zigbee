@@ -79,8 +79,10 @@ public class EzspMfglibStartRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(50);
-        builder.append("EzspMfglibStartRequest [rxCallback=");
+        final StringBuilder builder = new StringBuilder(75);
+        builder.append("EzspMfglibStartRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", rxCallback=");
         builder.append(rxCallback);
         builder.append(']');
         return builder.toString();

@@ -26,7 +26,7 @@ public class MatchDescriptorRequestTest extends CommandTest {
     public void testReceive() {
         int[] packet = getPacketData("2E FD FF 04 01 00 01 00 05");
 
-        MatchDescriptorRequest request = new MatchDescriptorRequest();
+        MatchDescriptorRequest request = new MatchDescriptorRequest(null, null, null, null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);

@@ -64,8 +64,10 @@ public class EzspFormNetworkResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(51);
-        builder.append("EzspFormNetworkResponse [status=");
+        final StringBuilder builder = new StringBuilder(76);
+        builder.append("EzspFormNetworkResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(']');
         return builder.toString();

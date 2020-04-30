@@ -61,19 +61,14 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingConfigCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingSubscribeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingUnsubscribeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleSmartEnergyCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleTrustCentreCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleUnbindCommand;
-import com.zsmartsystems.zigbee.security.ZigBeeKey;
-import com.zsmartsystems.zigbee.transport.TransportConfig;
-import com.zsmartsystems.zigbee.transport.TransportConfigOption;
-import com.zsmartsystems.zigbee.transport.TrustCentreJoinMode;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareCallback;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareStatus;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareUpdate;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
-import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
-import com.zsmartsystems.zigbee.zcl.clusters.general.ConfigureReportingResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.GetGroupMembershipResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.ViewGroupResponse;
@@ -167,7 +162,6 @@ public final class ZigBeeConsole {
         commands.put("firmware", new FirmwareCommand());
 
         commands.put("supportedcluster", new SupportedClusterCommand());
-        commands.put("trustcentre", new TrustCentreCommand());
 
         commands.put("rediscover", new RediscoverCommand());
 
@@ -199,6 +193,7 @@ public final class ZigBeeConsole {
 
         newCommands.put("installkey", new ZigBeeConsoleInstallKeyCommand());
         newCommands.put("linkkey", new ZigBeeConsoleLinkKeyCommand());
+        newCommands.put("trustcentre", new ZigBeeConsoleTrustCentreCommand());
 
         newCommands.put("netstart", new ZigBeeConsoleNetworkStartCommand());
         newCommands.put("netbackup", new ZigBeeConsoleNetworkBackupCommand());
@@ -982,7 +977,7 @@ public final class ZigBeeConsole {
             return true;
         }
     }
-    
+
     /**
      * Writes an attribute to a device.
      */
@@ -1286,59 +1281,6 @@ public final class ZigBeeConsole {
     }
 
     /**
-     * Trust centre configuration.
-     */
-    private class TrustCentreCommand implements ConsoleCommand {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getDescription() {
-            return "Configures the trust centre.";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getSyntax() {
-            return "trustcentre [MODE|KEY] [MODE / KEY]";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length < 3) {
-                return false;
-            }
-            TransportConfig config = new TransportConfig();
-            switch (args[1].toLowerCase()) {
-                case "mode":
-                    config.addOption(TransportConfigOption.TRUST_CENTRE_JOIN_MODE,
-                            TrustCentreJoinMode.valueOf(args[2].toUpperCase()));
-                    break;
-                case "key":
-                    String key = "";
-                    for (int cnt = 0; cnt < 16; cnt++) {
-                        key += args[cnt + 2];
-                    }
-                    config.addOption(TransportConfigOption.TRUST_CENTRE_LINK_KEY, new ZigBeeKey(key));
-                    break;
-
-                default:
-                    return false;
-            }
-
-            TransportConfigOption option = config.getOptions().iterator().next();
-            dongle.updateTransportConfig(config);
-            print("Trust Centre configuration for " + option + " returned " + config.getResult(option), out);
-            return true;
-        }
-    }
-
-    /**
      * Locks door.
      */
     private class SupportedClusterCommand implements ConsoleCommand {
@@ -1374,7 +1316,7 @@ public final class ZigBeeConsole {
                 clusterId = Integer.parseInt(args[1]);
             }
 
-            networkManager.addSupportedCluster(clusterId);
+            networkManager.addSupportedClientCluster(clusterId);
 
             print("Added cluster " + String.format("0x%X", clusterId) + " to match descriptor list.", out);
 
@@ -1676,9 +1618,8 @@ public final class ZigBeeConsole {
                     List<Integer> lqi = new ArrayList<>();
                     while (cnt < cnts) {
                         print("LQI Poll CNT: " + cnt++, out);
-                        final ManagementLqiRequest neighborRequest = new ManagementLqiRequest();
+                        final ManagementLqiRequest neighborRequest = new ManagementLqiRequest(0);
                         neighborRequest.setDestinationAddress(new ZigBeeEndpointAddress(0));
-                        neighborRequest.setStartIndex(0);
 
                         CommandResult response;
                         try {

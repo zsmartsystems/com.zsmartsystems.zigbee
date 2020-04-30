@@ -64,8 +64,10 @@ public class EzspStopScanResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(48);
-        builder.append("EzspStopScanResponse [status=");
+        final StringBuilder builder = new StringBuilder(73);
+        builder.append("EzspStopScanResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(']');
         return builder.toString();

@@ -16,7 +16,6 @@ import java.util.Set;
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurityBitmask;
-import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
 
 /**
  *
@@ -50,5 +49,14 @@ public class EzspSerializerTest {
         securityBitmask.add(EmberInitialSecurityBitmask.EMBER_NO_FRAME_COUNTER_RESET);
         serializer.serializeEmberInitialSecurityBitmask(securityBitmask);
         assertTrue(Arrays.equals(new int[] { 0x02, 0x12 }, serializer.getPayload()));
+    }
+
+    @Test
+    public void serializeInt8S() {
+        EzspSerializer serializer = new EzspSerializer();
+
+        serializer.serializeInt8S(5);
+        serializer.serializeInt8S(-5);
+        assertTrue(Arrays.equals(new int[] { 0x05, 0xFB }, serializer.getPayload()));
     }
 }

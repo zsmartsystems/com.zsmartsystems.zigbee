@@ -30,7 +30,7 @@ public class ManagementBindResponseTest extends CommandTest {
     public void testReceive() {
         int[] packet = getPacketData("00 00 01 00 01 43 1D A5 00 AA 3E B0 7C 03 06 00 03 62 39 05 0D 00 6F 0D 00 01");
 
-        ManagementBindResponse response = new ManagementBindResponse();
+        ManagementBindResponse response = new ManagementBindResponse(null, null, null, null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);

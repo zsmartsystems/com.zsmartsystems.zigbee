@@ -80,8 +80,10 @@ public class EzspMfglibSendPacketRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(80);
-        builder.append("EzspMfglibSendPacketRequest [packetContents=");
+        final StringBuilder builder = new StringBuilder(105);
+        builder.append("EzspMfglibSendPacketRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", packetContents=");
         for (int cnt = 0; cnt < packetContents.length; cnt++) {
             if (cnt > 0) {
                 builder.append(' ');

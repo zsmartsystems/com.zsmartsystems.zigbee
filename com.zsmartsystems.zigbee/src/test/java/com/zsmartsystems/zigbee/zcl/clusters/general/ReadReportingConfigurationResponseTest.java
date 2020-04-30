@@ -31,7 +31,7 @@ public class ReadReportingConfigurationResponseTest extends CommandTest {
     public void testReceive_SUCCESS() {
         int[] packet = getPacketData("00 00 00 00 10 01 00 2C 01");
 
-        ReadReportingConfigurationResponse response = new ReadReportingConfigurationResponse();
+        ReadReportingConfigurationResponse response = new ReadReportingConfigurationResponse(null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);
@@ -53,7 +53,7 @@ public class ReadReportingConfigurationResponseTest extends CommandTest {
     public void testReceive_UNSUPPORTED_ATTRIBUTE() {
         int[] packet = getPacketData("86 00 00 00");
 
-        ReadReportingConfigurationResponse response = new ReadReportingConfigurationResponse();
+        ReadReportingConfigurationResponse response = new ReadReportingConfigurationResponse(null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);

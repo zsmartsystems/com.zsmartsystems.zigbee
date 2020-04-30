@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.zcl.clusters.general;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.Test;
 
@@ -29,10 +30,9 @@ public class ReadAttributesCommandTest extends CommandTest {
     public void testSingle() {
         int[] packet = getPacketData("04 00");
 
-        ReadAttributesCommand command = new ReadAttributesCommand();
+        ReadAttributesCommand command = new ReadAttributesCommand(Collections.singletonList(4));
         command.setClusterId(0);
         command.setDestinationAddress(new ZigBeeEndpointAddress(57337, 3));
-        command.setIdentifiers(Arrays.asList(4));
         command.setTransactionId(1);
         DefaultSerializer serializer = new DefaultSerializer();
         ZclFieldSerializer fieldSerializer = new ZclFieldSerializer(serializer);

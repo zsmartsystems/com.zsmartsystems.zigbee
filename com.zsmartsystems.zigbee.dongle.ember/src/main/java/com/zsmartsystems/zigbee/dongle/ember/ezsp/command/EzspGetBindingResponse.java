@@ -93,8 +93,10 @@ public class EzspGetBindingResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(75);
-        builder.append("EzspGetBindingResponse [status=");
+        final StringBuilder builder = new StringBuilder(100);
+        builder.append("EzspGetBindingResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(", value=");
         builder.append(value);

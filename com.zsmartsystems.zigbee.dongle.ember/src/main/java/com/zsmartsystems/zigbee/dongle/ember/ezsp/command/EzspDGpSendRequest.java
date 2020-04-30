@@ -246,8 +246,10 @@ public class EzspDGpSendRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(221);
-        builder.append("EzspDGpSendRequest [action=");
+        final StringBuilder builder = new StringBuilder(246);
+        builder.append("EzspDGpSendRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", action=");
         builder.append(action);
         builder.append(", useCca=");
         builder.append(useCca);

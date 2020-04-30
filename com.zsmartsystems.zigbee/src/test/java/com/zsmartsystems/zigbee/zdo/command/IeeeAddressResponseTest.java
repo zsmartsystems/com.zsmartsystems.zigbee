@@ -29,7 +29,7 @@ public class IeeeAddressResponseTest extends CommandTest {
         // Short response - ie not extended. This is from the Ember response!
         int[] packet = getPacketData("00 00 BF 32 17 00 00 A3 22 00 00 00 00");
 
-        IeeeAddressResponse addressResponse = new IeeeAddressResponse();
+        IeeeAddressResponse addressResponse = new IeeeAddressResponse(null, null, null, null, null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);
@@ -48,7 +48,7 @@ public class IeeeAddressResponseTest extends CommandTest {
         // Short response - ie not extended. This is from the Ember response!
         int[] packet = getPacketData("00 00 42 CC 12 00 00 24 E5 7C AD B8");
 
-        IeeeAddressResponse addressResponse = new IeeeAddressResponse();
+        IeeeAddressResponse addressResponse = new IeeeAddressResponse(null, null, null, null, null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);
@@ -67,7 +67,7 @@ public class IeeeAddressResponseTest extends CommandTest {
     public void testReceive() {
         int[] packet = getPacketData("00 00 EC A1 A5 01 00 8D 15 00 35 38 00 01 2A 2F");
 
-        IeeeAddressResponse addressResponse = new IeeeAddressResponse();
+        IeeeAddressResponse addressResponse = new IeeeAddressResponse(null, null, null, null, null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);

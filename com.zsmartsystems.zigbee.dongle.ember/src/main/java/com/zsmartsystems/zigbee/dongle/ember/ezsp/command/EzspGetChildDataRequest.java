@@ -79,8 +79,10 @@ public class EzspGetChildDataRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(51);
-        builder.append("EzspGetChildDataRequest [index=");
+        final StringBuilder builder = new StringBuilder(76);
+        builder.append("EzspGetChildDataRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", index=");
         builder.append(index);
         builder.append(']');
         return builder.toString();

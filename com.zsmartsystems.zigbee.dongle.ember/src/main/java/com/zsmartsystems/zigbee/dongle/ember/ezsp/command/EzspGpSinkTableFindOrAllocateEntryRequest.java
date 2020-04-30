@@ -77,8 +77,10 @@ public class EzspGpSinkTableFindOrAllocateEntryRequest extends EzspFrameRequest 
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(69);
-        builder.append("EzspGpSinkTableFindOrAllocateEntryRequest [addr=");
+        final StringBuilder builder = new StringBuilder(94);
+        builder.append("EzspGpSinkTableFindOrAllocateEntryRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", addr=");
         builder.append(addr);
         builder.append(']');
         return builder.toString();

@@ -29,7 +29,7 @@ public class NodeDescriptorResponseTest extends CommandTest {
         // data=01 90 45 00 00 00 02 80 00 00 40 01 00 00 36 FF 00 00 00 FF FF 11 00 00 00 00 00 40 8F CD AB 52 80 00 41
         // 2A
         // 80 00 00]
-        NodeDescriptorResponse descriptorResponse = new NodeDescriptorResponse();
+        NodeDescriptorResponse descriptorResponse = new NodeDescriptorResponse(null, null, null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);

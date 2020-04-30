@@ -77,8 +77,10 @@ public class EzspGpSinkTableLookupRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(56);
-        builder.append("EzspGpSinkTableLookupRequest [addr=");
+        final StringBuilder builder = new StringBuilder(81);
+        builder.append("EzspGpSinkTableLookupRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", addr=");
         builder.append(addr);
         builder.append(']');
         return builder.toString();

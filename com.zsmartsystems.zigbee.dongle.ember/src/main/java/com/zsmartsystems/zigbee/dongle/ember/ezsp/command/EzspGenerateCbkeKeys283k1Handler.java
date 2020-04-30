@@ -96,8 +96,10 @@ public class EzspGenerateCbkeKeys283k1Handler extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(85);
-        builder.append("EzspGenerateCbkeKeys283k1Handler [status=");
+        final StringBuilder builder = new StringBuilder(110);
+        builder.append("EzspGenerateCbkeKeys283k1Handler [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(", ephemeralPublicKey=");
         builder.append(ephemeralPublicKey);

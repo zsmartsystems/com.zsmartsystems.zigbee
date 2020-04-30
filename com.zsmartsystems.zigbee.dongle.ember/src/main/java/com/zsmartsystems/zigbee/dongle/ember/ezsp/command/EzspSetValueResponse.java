@@ -70,8 +70,10 @@ public class EzspSetValueResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(48);
-        builder.append("EzspSetValueResponse [status=");
+        final StringBuilder builder = new StringBuilder(73);
+        builder.append("EzspSetValueResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(']');
         return builder.toString();

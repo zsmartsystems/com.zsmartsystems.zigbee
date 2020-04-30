@@ -124,8 +124,10 @@ public class EzspIncomingManyToOneRouteRequestHandler extends EzspFrameResponse 
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(118);
-        builder.append("EzspIncomingManyToOneRouteRequestHandler [source=");
+        final StringBuilder builder = new StringBuilder(143);
+        builder.append("EzspIncomingManyToOneRouteRequestHandler [networkId=");
+        builder.append(networkId);
+        builder.append(", source=");
         builder.append(String.format("%04X", source));
         builder.append(", longId=");
         builder.append(longId);

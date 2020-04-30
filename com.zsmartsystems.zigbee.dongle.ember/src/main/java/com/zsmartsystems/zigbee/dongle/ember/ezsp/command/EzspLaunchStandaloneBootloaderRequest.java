@@ -92,8 +92,10 @@ public class EzspLaunchStandaloneBootloaderRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(65);
-        builder.append("EzspLaunchStandaloneBootloaderRequest [mode=");
+        final StringBuilder builder = new StringBuilder(90);
+        builder.append("EzspLaunchStandaloneBootloaderRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", mode=");
         builder.append(mode);
         builder.append(']');
         return builder.toString();

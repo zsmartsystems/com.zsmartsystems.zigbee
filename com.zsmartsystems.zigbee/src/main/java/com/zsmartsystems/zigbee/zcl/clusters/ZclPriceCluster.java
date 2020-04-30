@@ -72,7 +72,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-04-14T19:23:36Z")
 public class ZclPriceCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -130,54 +130,54 @@ public class ZclPriceCluster extends ZclCluster {
      * enumerations.
      */
     public static final int ATTR_COMMODITYTYPECLIENT = 0x0002;
-    public static final int ATTR_TIER1PRICELABEL = 0x0001;
-    public static final int ATTR_TIER2PRICELABEL = 0x0002;
-    public static final int ATTR_TIER3PRICELABEL = 0x0003;
-    public static final int ATTR_TIER4PRICELABEL = 0x0004;
-    public static final int ATTR_TIER5PRICELABEL = 0x0005;
-    public static final int ATTR_TIER6PRICELABEL = 0x0006;
-    public static final int ATTR_TIER7PRICELABEL = 0x0007;
-    public static final int ATTR_TIER8PRICELABEL = 0x0008;
-    public static final int ATTR_TIER9PRICELABEL = 0x0009;
-    public static final int ATTR_TIER10PRICELABEL = 0x000A;
-    public static final int ATTR_TIER11PRICELABEL = 0x000B;
-    public static final int ATTR_TIER12PRICELABEL = 0x000C;
-    public static final int ATTR_TIER13PRICELABEL = 0x000D;
-    public static final int ATTR_TIER14PRICELABEL = 0x000E;
-    public static final int ATTR_TIER15PRICELABEL = 0x000F;
-    public static final int ATTR_TIER16PRICELABEL = 0x0010;
-    public static final int ATTR_TIER17PRICELABEL = 0x0011;
-    public static final int ATTR_TIER18PRICELABEL = 0x0012;
-    public static final int ATTR_TIER19PRICELABEL = 0x0013;
-    public static final int ATTR_TIER20PRICELABEL = 0x0014;
-    public static final int ATTR_TIER21PRICELABEL = 0x0015;
-    public static final int ATTR_TIER22PRICELABEL = 0x0016;
-    public static final int ATTR_TIER23PRICELABEL = 0x0017;
-    public static final int ATTR_TIER24PRICELABEL = 0x0018;
-    public static final int ATTR_TIER25PRICELABEL = 0x0019;
-    public static final int ATTR_TIER26PRICELABEL = 0x001A;
-    public static final int ATTR_TIER27PRICELABEL = 0x001B;
-    public static final int ATTR_TIER28PRICELABEL = 0x001C;
-    public static final int ATTR_TIER29PRICELABEL = 0x001D;
-    public static final int ATTR_TIER30PRICELABEL = 0x001E;
-    public static final int ATTR_TIER31PRICELABEL = 0x001F;
-    public static final int ATTR_TIER32PRICELABEL = 0x0020;
-    public static final int ATTR_TIER33PRICELABEL = 0x0021;
-    public static final int ATTR_TIER34PRICELABEL = 0x0022;
-    public static final int ATTR_TIER35PRICELABEL = 0x0023;
-    public static final int ATTR_TIER36PRICELABEL = 0x0024;
-    public static final int ATTR_TIER37PRICELABEL = 0x0025;
-    public static final int ATTR_TIER38PRICELABEL = 0x0026;
-    public static final int ATTR_TIER39PRICELABEL = 0x0027;
-    public static final int ATTR_TIER40PRICELABEL = 0x0028;
-    public static final int ATTR_TIER41PRICELABEL = 0x0029;
-    public static final int ATTR_TIER42PRICELABEL = 0x002A;
-    public static final int ATTR_TIER43PRICELABEL = 0x002B;
-    public static final int ATTR_TIER44PRICELABEL = 0x002C;
-    public static final int ATTR_TIER45PRICELABEL = 0x002D;
-    public static final int ATTR_TIER46PRICELABEL = 0x002E;
-    public static final int ATTR_TIER47PRICELABEL = 0x002F;
-    public static final int ATTR_TIER48PRICELABEL = 0x0030;
+    public static final int ATTR_TIER1PRICELABEL = 0x0000;
+    public static final int ATTR_TIER2PRICELABEL = 0x0001;
+    public static final int ATTR_TIER3PRICELABEL = 0x0002;
+    public static final int ATTR_TIER4PRICELABEL = 0x0003;
+    public static final int ATTR_TIER5PRICELABEL = 0x0004;
+    public static final int ATTR_TIER6PRICELABEL = 0x0005;
+    public static final int ATTR_TIER7PRICELABEL = 0x0006;
+    public static final int ATTR_TIER8PRICELABEL = 0x0007;
+    public static final int ATTR_TIER9PRICELABEL = 0x0008;
+    public static final int ATTR_TIER10PRICELABEL = 0x0009;
+    public static final int ATTR_TIER11PRICELABEL = 0x000A;
+    public static final int ATTR_TIER12PRICELABEL = 0x000B;
+    public static final int ATTR_TIER13PRICELABEL = 0x000C;
+    public static final int ATTR_TIER14PRICELABEL = 0x000D;
+    public static final int ATTR_TIER15PRICELABEL = 0x000E;
+    public static final int ATTR_TIER16PRICELABEL = 0x000F;
+    public static final int ATTR_TIER17PRICELABEL = 0x0010;
+    public static final int ATTR_TIER18PRICELABEL = 0x0011;
+    public static final int ATTR_TIER19PRICELABEL = 0x0012;
+    public static final int ATTR_TIER20PRICELABEL = 0x0013;
+    public static final int ATTR_TIER21PRICELABEL = 0x0014;
+    public static final int ATTR_TIER22PRICELABEL = 0x0015;
+    public static final int ATTR_TIER23PRICELABEL = 0x0016;
+    public static final int ATTR_TIER24PRICELABEL = 0x0017;
+    public static final int ATTR_TIER25PRICELABEL = 0x0018;
+    public static final int ATTR_TIER26PRICELABEL = 0x0019;
+    public static final int ATTR_TIER27PRICELABEL = 0x001A;
+    public static final int ATTR_TIER28PRICELABEL = 0x001B;
+    public static final int ATTR_TIER29PRICELABEL = 0x001C;
+    public static final int ATTR_TIER30PRICELABEL = 0x001D;
+    public static final int ATTR_TIER31PRICELABEL = 0x001E;
+    public static final int ATTR_TIER32PRICELABEL = 0x001F;
+    public static final int ATTR_TIER33PRICELABEL = 0x0020;
+    public static final int ATTR_TIER34PRICELABEL = 0x0021;
+    public static final int ATTR_TIER35PRICELABEL = 0x0022;
+    public static final int ATTR_TIER36PRICELABEL = 0x0023;
+    public static final int ATTR_TIER37PRICELABEL = 0x0024;
+    public static final int ATTR_TIER38PRICELABEL = 0x0025;
+    public static final int ATTR_TIER39PRICELABEL = 0x0026;
+    public static final int ATTR_TIER40PRICELABEL = 0x0027;
+    public static final int ATTR_TIER41PRICELABEL = 0x0028;
+    public static final int ATTR_TIER42PRICELABEL = 0x0029;
+    public static final int ATTR_TIER43PRICELABEL = 0x002A;
+    public static final int ATTR_TIER44PRICELABEL = 0x002B;
+    public static final int ATTR_TIER45PRICELABEL = 0x002C;
+    public static final int ATTR_TIER46PRICELABEL = 0x002D;
+    public static final int ATTR_TIER47PRICELABEL = 0x002E;
+    public static final int ATTR_TIER48PRICELABEL = 0x002F;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -187,7 +187,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_BLOCK1THRESHOLD = 0x0101;
+    public static final int ATTR_BLOCK1THRESHOLD = 0x0100;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -197,7 +197,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_BLOCK2THRESHOLD = 0x0102;
+    public static final int ATTR_BLOCK2THRESHOLD = 0x0101;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -207,7 +207,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_BLOCK3THRESHOLD = 0x0103;
+    public static final int ATTR_BLOCK3THRESHOLD = 0x0102;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -217,7 +217,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_BLOCK4THRESHOLD = 0x0104;
+    public static final int ATTR_BLOCK4THRESHOLD = 0x0103;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -227,7 +227,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_BLOCK5THRESHOLD = 0x0105;
+    public static final int ATTR_BLOCK5THRESHOLD = 0x0104;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -237,7 +237,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_BLOCK6THRESHOLD = 0x0106;
+    public static final int ATTR_BLOCK6THRESHOLD = 0x0105;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -247,7 +247,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_BLOCK7THRESHOLD = 0x0107;
+    public static final int ATTR_BLOCK7THRESHOLD = 0x0106;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -257,7 +257,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_BLOCK8THRESHOLD = 0x0108;
+    public static final int ATTR_BLOCK8THRESHOLD = 0x0107;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -267,7 +267,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_BLOCK9THRESHOLD = 0x0109;
+    public static final int ATTR_BLOCK9THRESHOLD = 0x0108;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -277,7 +277,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_BLOCK10THRESHOLD = 0x010A;
+    public static final int ATTR_BLOCK10THRESHOLD = 0x0109;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -287,7 +287,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_BLOCK11THRESHOLD = 0x010B;
+    public static final int ATTR_BLOCK11THRESHOLD = 0x010A;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -297,7 +297,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_BLOCK12THRESHOLD = 0x010C;
+    public static final int ATTR_BLOCK12THRESHOLD = 0x010B;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -307,7 +307,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_BLOCK13THRESHOLD = 0x010D;
+    public static final int ATTR_BLOCK13THRESHOLD = 0x010C;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -317,7 +317,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_BLOCK14THRESHOLD = 0x010E;
+    public static final int ATTR_BLOCK14THRESHOLD = 0x010D;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -327,7 +327,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_BLOCK15THRESHOLD = 0x010F;
+    public static final int ATTR_BLOCK15THRESHOLD = 0x010E;
     /**
      * Where a single set of thresholds is used, the BlockThresholdCount attribute indicates
      * the number of applicable BlockNThresholds. Where more than one set of thresholds is
@@ -344,7 +344,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER1BLOCK1THRESHOLD = 0x0111;
+    public static final int ATTR_TIER1BLOCK1THRESHOLD = 0x0110;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -354,7 +354,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER1BLOCK2THRESHOLD = 0x0112;
+    public static final int ATTR_TIER1BLOCK2THRESHOLD = 0x0111;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -364,7 +364,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER1BLOCK3THRESHOLD = 0x0113;
+    public static final int ATTR_TIER1BLOCK3THRESHOLD = 0x0112;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -374,7 +374,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER1BLOCK4THRESHOLD = 0x0114;
+    public static final int ATTR_TIER1BLOCK4THRESHOLD = 0x0113;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -384,7 +384,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER1BLOCK5THRESHOLD = 0x0115;
+    public static final int ATTR_TIER1BLOCK5THRESHOLD = 0x0114;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -394,7 +394,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER1BLOCK6THRESHOLD = 0x0116;
+    public static final int ATTR_TIER1BLOCK6THRESHOLD = 0x0115;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -404,7 +404,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER1BLOCK7THRESHOLD = 0x0117;
+    public static final int ATTR_TIER1BLOCK7THRESHOLD = 0x0116;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -414,7 +414,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER1BLOCK8THRESHOLD = 0x0118;
+    public static final int ATTR_TIER1BLOCK8THRESHOLD = 0x0117;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -424,7 +424,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER1BLOCK9THRESHOLD = 0x0119;
+    public static final int ATTR_TIER1BLOCK9THRESHOLD = 0x0118;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -434,7 +434,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER1BLOCK10THRESHOLD = 0x011A;
+    public static final int ATTR_TIER1BLOCK10THRESHOLD = 0x0119;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -444,7 +444,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER1BLOCK11THRESHOLD = 0x011B;
+    public static final int ATTR_TIER1BLOCK11THRESHOLD = 0x011A;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -454,7 +454,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER1BLOCK12THRESHOLD = 0x011C;
+    public static final int ATTR_TIER1BLOCK12THRESHOLD = 0x011B;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -464,7 +464,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER1BLOCK13THRESHOLD = 0x011D;
+    public static final int ATTR_TIER1BLOCK13THRESHOLD = 0x011C;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -474,7 +474,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER1BLOCK14THRESHOLD = 0x011E;
+    public static final int ATTR_TIER1BLOCK14THRESHOLD = 0x011D;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -484,7 +484,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER1BLOCK15THRESHOLD = 0x011F;
+    public static final int ATTR_TIER1BLOCK15THRESHOLD = 0x011E;
     /**
      * The TierNBlockThresholdCount attributes hold the number of block thresholds
      * applicable to a given tier. These attributes are used in the case when a combination
@@ -501,7 +501,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER2BLOCK1THRESHOLD = 0x0121;
+    public static final int ATTR_TIER2BLOCK1THRESHOLD = 0x0120;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -511,7 +511,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER2BLOCK2THRESHOLD = 0x0122;
+    public static final int ATTR_TIER2BLOCK2THRESHOLD = 0x0121;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -521,7 +521,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER2BLOCK3THRESHOLD = 0x0123;
+    public static final int ATTR_TIER2BLOCK3THRESHOLD = 0x0122;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -531,7 +531,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER2BLOCK4THRESHOLD = 0x0124;
+    public static final int ATTR_TIER2BLOCK4THRESHOLD = 0x0123;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -541,7 +541,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER2BLOCK5THRESHOLD = 0x0125;
+    public static final int ATTR_TIER2BLOCK5THRESHOLD = 0x0124;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -551,7 +551,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER2BLOCK6THRESHOLD = 0x0126;
+    public static final int ATTR_TIER2BLOCK6THRESHOLD = 0x0125;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -561,7 +561,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER2BLOCK7THRESHOLD = 0x0127;
+    public static final int ATTR_TIER2BLOCK7THRESHOLD = 0x0126;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -571,7 +571,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER2BLOCK8THRESHOLD = 0x0128;
+    public static final int ATTR_TIER2BLOCK8THRESHOLD = 0x0127;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -581,7 +581,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER2BLOCK9THRESHOLD = 0x0129;
+    public static final int ATTR_TIER2BLOCK9THRESHOLD = 0x0128;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -591,7 +591,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER2BLOCK10THRESHOLD = 0x012A;
+    public static final int ATTR_TIER2BLOCK10THRESHOLD = 0x0129;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -601,7 +601,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER2BLOCK11THRESHOLD = 0x012B;
+    public static final int ATTR_TIER2BLOCK11THRESHOLD = 0x012A;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -611,7 +611,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER2BLOCK12THRESHOLD = 0x012C;
+    public static final int ATTR_TIER2BLOCK12THRESHOLD = 0x012B;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -621,7 +621,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER2BLOCK13THRESHOLD = 0x012D;
+    public static final int ATTR_TIER2BLOCK13THRESHOLD = 0x012C;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -631,7 +631,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER2BLOCK14THRESHOLD = 0x012E;
+    public static final int ATTR_TIER2BLOCK14THRESHOLD = 0x012D;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -641,7 +641,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER2BLOCK15THRESHOLD = 0x012F;
+    public static final int ATTR_TIER2BLOCK15THRESHOLD = 0x012E;
     /**
      * The TierNBlockThresholdCount attributes hold the number of block thresholds
      * applicable to a given tier. These attributes are used in the case when a combination
@@ -658,7 +658,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER3BLOCK1THRESHOLD = 0x0131;
+    public static final int ATTR_TIER3BLOCK1THRESHOLD = 0x0130;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -668,7 +668,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER3BLOCK2THRESHOLD = 0x0132;
+    public static final int ATTR_TIER3BLOCK2THRESHOLD = 0x0131;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -678,7 +678,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER3BLOCK3THRESHOLD = 0x0133;
+    public static final int ATTR_TIER3BLOCK3THRESHOLD = 0x0132;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -688,7 +688,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER3BLOCK4THRESHOLD = 0x0134;
+    public static final int ATTR_TIER3BLOCK4THRESHOLD = 0x0133;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -698,7 +698,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER3BLOCK5THRESHOLD = 0x0135;
+    public static final int ATTR_TIER3BLOCK5THRESHOLD = 0x0134;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -708,7 +708,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER3BLOCK6THRESHOLD = 0x0136;
+    public static final int ATTR_TIER3BLOCK6THRESHOLD = 0x0135;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -718,7 +718,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER3BLOCK7THRESHOLD = 0x0137;
+    public static final int ATTR_TIER3BLOCK7THRESHOLD = 0x0136;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -728,7 +728,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER3BLOCK8THRESHOLD = 0x0138;
+    public static final int ATTR_TIER3BLOCK8THRESHOLD = 0x0137;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -738,7 +738,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER3BLOCK9THRESHOLD = 0x0139;
+    public static final int ATTR_TIER3BLOCK9THRESHOLD = 0x0138;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -748,7 +748,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER3BLOCK10THRESHOLD = 0x013A;
+    public static final int ATTR_TIER3BLOCK10THRESHOLD = 0x0139;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -758,7 +758,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER3BLOCK11THRESHOLD = 0x013B;
+    public static final int ATTR_TIER3BLOCK11THRESHOLD = 0x013A;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -768,7 +768,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER3BLOCK12THRESHOLD = 0x013C;
+    public static final int ATTR_TIER3BLOCK12THRESHOLD = 0x013B;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -778,7 +778,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER3BLOCK13THRESHOLD = 0x013D;
+    public static final int ATTR_TIER3BLOCK13THRESHOLD = 0x013C;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -788,7 +788,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER3BLOCK14THRESHOLD = 0x013E;
+    public static final int ATTR_TIER3BLOCK14THRESHOLD = 0x013D;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -798,7 +798,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER3BLOCK15THRESHOLD = 0x013F;
+    public static final int ATTR_TIER3BLOCK15THRESHOLD = 0x013E;
     /**
      * The TierNBlockThresholdCount attributes hold the number of block thresholds
      * applicable to a given tier. These attributes are used in the case when a combination
@@ -815,7 +815,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER4BLOCK1THRESHOLD = 0x0141;
+    public static final int ATTR_TIER4BLOCK1THRESHOLD = 0x0140;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -825,7 +825,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER4BLOCK2THRESHOLD = 0x0142;
+    public static final int ATTR_TIER4BLOCK2THRESHOLD = 0x0141;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -835,7 +835,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER4BLOCK3THRESHOLD = 0x0143;
+    public static final int ATTR_TIER4BLOCK3THRESHOLD = 0x0142;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -845,7 +845,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER4BLOCK4THRESHOLD = 0x0144;
+    public static final int ATTR_TIER4BLOCK4THRESHOLD = 0x0143;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -855,7 +855,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER4BLOCK5THRESHOLD = 0x0145;
+    public static final int ATTR_TIER4BLOCK5THRESHOLD = 0x0144;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -865,7 +865,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER4BLOCK6THRESHOLD = 0x0146;
+    public static final int ATTR_TIER4BLOCK6THRESHOLD = 0x0145;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -875,7 +875,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER4BLOCK7THRESHOLD = 0x0147;
+    public static final int ATTR_TIER4BLOCK7THRESHOLD = 0x0146;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -885,7 +885,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER4BLOCK8THRESHOLD = 0x0148;
+    public static final int ATTR_TIER4BLOCK8THRESHOLD = 0x0147;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -895,7 +895,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER4BLOCK9THRESHOLD = 0x0149;
+    public static final int ATTR_TIER4BLOCK9THRESHOLD = 0x0148;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -905,7 +905,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER4BLOCK10THRESHOLD = 0x014A;
+    public static final int ATTR_TIER4BLOCK10THRESHOLD = 0x0149;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -915,7 +915,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER4BLOCK11THRESHOLD = 0x014B;
+    public static final int ATTR_TIER4BLOCK11THRESHOLD = 0x014A;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -925,7 +925,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER4BLOCK12THRESHOLD = 0x014C;
+    public static final int ATTR_TIER4BLOCK12THRESHOLD = 0x014B;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -935,7 +935,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER4BLOCK13THRESHOLD = 0x014D;
+    public static final int ATTR_TIER4BLOCK13THRESHOLD = 0x014C;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -945,7 +945,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER4BLOCK14THRESHOLD = 0x014E;
+    public static final int ATTR_TIER4BLOCK14THRESHOLD = 0x014D;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -955,7 +955,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER4BLOCK15THRESHOLD = 0x014F;
+    public static final int ATTR_TIER4BLOCK15THRESHOLD = 0x014E;
     /**
      * The TierNBlockThresholdCount attributes hold the number of block thresholds
      * applicable to a given tier. These attributes are used in the case when a combination
@@ -972,7 +972,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER5BLOCK1THRESHOLD = 0x0151;
+    public static final int ATTR_TIER5BLOCK1THRESHOLD = 0x0150;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -982,7 +982,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER5BLOCK2THRESHOLD = 0x0152;
+    public static final int ATTR_TIER5BLOCK2THRESHOLD = 0x0151;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -992,7 +992,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER5BLOCK3THRESHOLD = 0x0153;
+    public static final int ATTR_TIER5BLOCK3THRESHOLD = 0x0152;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1002,7 +1002,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER5BLOCK4THRESHOLD = 0x0154;
+    public static final int ATTR_TIER5BLOCK4THRESHOLD = 0x0153;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1012,7 +1012,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER5BLOCK5THRESHOLD = 0x0155;
+    public static final int ATTR_TIER5BLOCK5THRESHOLD = 0x0154;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1022,7 +1022,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER5BLOCK6THRESHOLD = 0x0156;
+    public static final int ATTR_TIER5BLOCK6THRESHOLD = 0x0155;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1032,7 +1032,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER5BLOCK7THRESHOLD = 0x0157;
+    public static final int ATTR_TIER5BLOCK7THRESHOLD = 0x0156;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1042,7 +1042,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER5BLOCK8THRESHOLD = 0x0158;
+    public static final int ATTR_TIER5BLOCK8THRESHOLD = 0x0157;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1052,7 +1052,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER5BLOCK9THRESHOLD = 0x0159;
+    public static final int ATTR_TIER5BLOCK9THRESHOLD = 0x0158;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1062,7 +1062,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER5BLOCK10THRESHOLD = 0x015A;
+    public static final int ATTR_TIER5BLOCK10THRESHOLD = 0x0159;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1072,7 +1072,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER5BLOCK11THRESHOLD = 0x015B;
+    public static final int ATTR_TIER5BLOCK11THRESHOLD = 0x015A;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1082,7 +1082,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER5BLOCK12THRESHOLD = 0x015C;
+    public static final int ATTR_TIER5BLOCK12THRESHOLD = 0x015B;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1092,7 +1092,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER5BLOCK13THRESHOLD = 0x015D;
+    public static final int ATTR_TIER5BLOCK13THRESHOLD = 0x015C;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1102,7 +1102,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER5BLOCK14THRESHOLD = 0x015E;
+    public static final int ATTR_TIER5BLOCK14THRESHOLD = 0x015D;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1112,7 +1112,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER5BLOCK15THRESHOLD = 0x015F;
+    public static final int ATTR_TIER5BLOCK15THRESHOLD = 0x015E;
     /**
      * The TierNBlockThresholdCount attributes hold the number of block thresholds
      * applicable to a given tier. These attributes are used in the case when a combination
@@ -1129,7 +1129,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER6BLOCK1THRESHOLD = 0x0161;
+    public static final int ATTR_TIER6BLOCK1THRESHOLD = 0x0160;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1139,7 +1139,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER6BLOCK2THRESHOLD = 0x0162;
+    public static final int ATTR_TIER6BLOCK2THRESHOLD = 0x0161;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1149,7 +1149,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER6BLOCK3THRESHOLD = 0x0163;
+    public static final int ATTR_TIER6BLOCK3THRESHOLD = 0x0162;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1159,7 +1159,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER6BLOCK4THRESHOLD = 0x0164;
+    public static final int ATTR_TIER6BLOCK4THRESHOLD = 0x0163;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1169,7 +1169,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER6BLOCK5THRESHOLD = 0x0165;
+    public static final int ATTR_TIER6BLOCK5THRESHOLD = 0x0164;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1179,7 +1179,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER6BLOCK6THRESHOLD = 0x0166;
+    public static final int ATTR_TIER6BLOCK6THRESHOLD = 0x0165;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1189,7 +1189,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER6BLOCK7THRESHOLD = 0x0167;
+    public static final int ATTR_TIER6BLOCK7THRESHOLD = 0x0166;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1199,7 +1199,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER6BLOCK8THRESHOLD = 0x0168;
+    public static final int ATTR_TIER6BLOCK8THRESHOLD = 0x0167;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1209,7 +1209,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER6BLOCK9THRESHOLD = 0x0169;
+    public static final int ATTR_TIER6BLOCK9THRESHOLD = 0x0168;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1219,7 +1219,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER6BLOCK10THRESHOLD = 0x016A;
+    public static final int ATTR_TIER6BLOCK10THRESHOLD = 0x0169;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1229,7 +1229,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER6BLOCK11THRESHOLD = 0x016B;
+    public static final int ATTR_TIER6BLOCK11THRESHOLD = 0x016A;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1239,7 +1239,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER6BLOCK12THRESHOLD = 0x016C;
+    public static final int ATTR_TIER6BLOCK12THRESHOLD = 0x016B;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1249,7 +1249,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER6BLOCK13THRESHOLD = 0x016D;
+    public static final int ATTR_TIER6BLOCK13THRESHOLD = 0x016C;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1259,7 +1259,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER6BLOCK14THRESHOLD = 0x016E;
+    public static final int ATTR_TIER6BLOCK14THRESHOLD = 0x016D;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1269,7 +1269,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER6BLOCK15THRESHOLD = 0x016F;
+    public static final int ATTR_TIER6BLOCK15THRESHOLD = 0x016E;
     /**
      * The TierNBlockThresholdCount attributes hold the number of block thresholds
      * applicable to a given tier. These attributes are used in the case when a combination
@@ -1286,7 +1286,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER7BLOCK1THRESHOLD = 0x0171;
+    public static final int ATTR_TIER7BLOCK1THRESHOLD = 0x0170;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1296,7 +1296,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER7BLOCK2THRESHOLD = 0x0172;
+    public static final int ATTR_TIER7BLOCK2THRESHOLD = 0x0171;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1306,7 +1306,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER7BLOCK3THRESHOLD = 0x0173;
+    public static final int ATTR_TIER7BLOCK3THRESHOLD = 0x0172;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1316,7 +1316,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER7BLOCK4THRESHOLD = 0x0174;
+    public static final int ATTR_TIER7BLOCK4THRESHOLD = 0x0173;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1326,7 +1326,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER7BLOCK5THRESHOLD = 0x0175;
+    public static final int ATTR_TIER7BLOCK5THRESHOLD = 0x0174;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1336,7 +1336,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER7BLOCK6THRESHOLD = 0x0176;
+    public static final int ATTR_TIER7BLOCK6THRESHOLD = 0x0175;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1346,7 +1346,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER7BLOCK7THRESHOLD = 0x0177;
+    public static final int ATTR_TIER7BLOCK7THRESHOLD = 0x0176;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1356,7 +1356,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER7BLOCK8THRESHOLD = 0x0178;
+    public static final int ATTR_TIER7BLOCK8THRESHOLD = 0x0177;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1366,7 +1366,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER7BLOCK9THRESHOLD = 0x0179;
+    public static final int ATTR_TIER7BLOCK9THRESHOLD = 0x0178;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1376,7 +1376,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER7BLOCK10THRESHOLD = 0x017A;
+    public static final int ATTR_TIER7BLOCK10THRESHOLD = 0x0179;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1386,7 +1386,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER7BLOCK11THRESHOLD = 0x017B;
+    public static final int ATTR_TIER7BLOCK11THRESHOLD = 0x017A;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1396,7 +1396,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER7BLOCK12THRESHOLD = 0x017C;
+    public static final int ATTR_TIER7BLOCK12THRESHOLD = 0x017B;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1406,7 +1406,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER7BLOCK13THRESHOLD = 0x017D;
+    public static final int ATTR_TIER7BLOCK13THRESHOLD = 0x017C;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1416,7 +1416,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER7BLOCK14THRESHOLD = 0x017E;
+    public static final int ATTR_TIER7BLOCK14THRESHOLD = 0x017D;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1426,7 +1426,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER7BLOCK15THRESHOLD = 0x017F;
+    public static final int ATTR_TIER7BLOCK15THRESHOLD = 0x017E;
     /**
      * The TierNBlockThresholdCount attributes hold the number of block thresholds
      * applicable to a given tier. These attributes are used in the case when a combination
@@ -1443,7 +1443,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER8BLOCK1THRESHOLD = 0x0181;
+    public static final int ATTR_TIER8BLOCK1THRESHOLD = 0x0180;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1453,7 +1453,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER8BLOCK2THRESHOLD = 0x0182;
+    public static final int ATTR_TIER8BLOCK2THRESHOLD = 0x0181;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1463,7 +1463,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER8BLOCK3THRESHOLD = 0x0183;
+    public static final int ATTR_TIER8BLOCK3THRESHOLD = 0x0182;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1473,7 +1473,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER8BLOCK4THRESHOLD = 0x0184;
+    public static final int ATTR_TIER8BLOCK4THRESHOLD = 0x0183;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1483,7 +1483,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER8BLOCK5THRESHOLD = 0x0185;
+    public static final int ATTR_TIER8BLOCK5THRESHOLD = 0x0184;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1493,7 +1493,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER8BLOCK6THRESHOLD = 0x0186;
+    public static final int ATTR_TIER8BLOCK6THRESHOLD = 0x0185;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1503,7 +1503,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER8BLOCK7THRESHOLD = 0x0187;
+    public static final int ATTR_TIER8BLOCK7THRESHOLD = 0x0186;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1513,7 +1513,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER8BLOCK8THRESHOLD = 0x0188;
+    public static final int ATTR_TIER8BLOCK8THRESHOLD = 0x0187;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1523,7 +1523,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER8BLOCK9THRESHOLD = 0x0189;
+    public static final int ATTR_TIER8BLOCK9THRESHOLD = 0x0188;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1533,7 +1533,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER8BLOCK10THRESHOLD = 0x018A;
+    public static final int ATTR_TIER8BLOCK10THRESHOLD = 0x0189;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1543,7 +1543,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER8BLOCK11THRESHOLD = 0x018B;
+    public static final int ATTR_TIER8BLOCK11THRESHOLD = 0x018A;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1553,7 +1553,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER8BLOCK12THRESHOLD = 0x018C;
+    public static final int ATTR_TIER8BLOCK12THRESHOLD = 0x018B;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1563,7 +1563,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER8BLOCK13THRESHOLD = 0x018D;
+    public static final int ATTR_TIER8BLOCK13THRESHOLD = 0x018C;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1573,7 +1573,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER8BLOCK14THRESHOLD = 0x018E;
+    public static final int ATTR_TIER8BLOCK14THRESHOLD = 0x018D;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1583,7 +1583,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER8BLOCK15THRESHOLD = 0x018F;
+    public static final int ATTR_TIER8BLOCK15THRESHOLD = 0x018E;
     /**
      * The TierNBlockThresholdCount attributes hold the number of block thresholds
      * applicable to a given tier. These attributes are used in the case when a combination
@@ -1600,7 +1600,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER9BLOCK1THRESHOLD = 0x0191;
+    public static final int ATTR_TIER9BLOCK1THRESHOLD = 0x0190;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1610,7 +1610,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER9BLOCK2THRESHOLD = 0x0192;
+    public static final int ATTR_TIER9BLOCK2THRESHOLD = 0x0191;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1620,7 +1620,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER9BLOCK3THRESHOLD = 0x0193;
+    public static final int ATTR_TIER9BLOCK3THRESHOLD = 0x0192;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1630,7 +1630,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER9BLOCK4THRESHOLD = 0x0194;
+    public static final int ATTR_TIER9BLOCK4THRESHOLD = 0x0193;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1640,7 +1640,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER9BLOCK5THRESHOLD = 0x0195;
+    public static final int ATTR_TIER9BLOCK5THRESHOLD = 0x0194;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1650,7 +1650,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER9BLOCK6THRESHOLD = 0x0196;
+    public static final int ATTR_TIER9BLOCK6THRESHOLD = 0x0195;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1660,7 +1660,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER9BLOCK7THRESHOLD = 0x0197;
+    public static final int ATTR_TIER9BLOCK7THRESHOLD = 0x0196;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1670,7 +1670,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER9BLOCK8THRESHOLD = 0x0198;
+    public static final int ATTR_TIER9BLOCK8THRESHOLD = 0x0197;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1680,7 +1680,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER9BLOCK9THRESHOLD = 0x0199;
+    public static final int ATTR_TIER9BLOCK9THRESHOLD = 0x0198;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1690,7 +1690,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER9BLOCK10THRESHOLD = 0x019A;
+    public static final int ATTR_TIER9BLOCK10THRESHOLD = 0x0199;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1700,7 +1700,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER9BLOCK11THRESHOLD = 0x019B;
+    public static final int ATTR_TIER9BLOCK11THRESHOLD = 0x019A;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1710,7 +1710,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER9BLOCK12THRESHOLD = 0x019C;
+    public static final int ATTR_TIER9BLOCK12THRESHOLD = 0x019B;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1720,7 +1720,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER9BLOCK13THRESHOLD = 0x019D;
+    public static final int ATTR_TIER9BLOCK13THRESHOLD = 0x019C;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1730,7 +1730,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER9BLOCK14THRESHOLD = 0x019E;
+    public static final int ATTR_TIER9BLOCK14THRESHOLD = 0x019D;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1740,7 +1740,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER9BLOCK15THRESHOLD = 0x019F;
+    public static final int ATTR_TIER9BLOCK15THRESHOLD = 0x019E;
     /**
      * The TierNBlockThresholdCount attributes hold the number of block thresholds
      * applicable to a given tier. These attributes are used in the case when a combination
@@ -1757,7 +1757,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER10BLOCK1THRESHOLD = 0x01A1;
+    public static final int ATTR_TIER10BLOCK1THRESHOLD = 0x01A0;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1767,7 +1767,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER10BLOCK2THRESHOLD = 0x01A2;
+    public static final int ATTR_TIER10BLOCK2THRESHOLD = 0x01A1;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1777,7 +1777,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER10BLOCK3THRESHOLD = 0x01A3;
+    public static final int ATTR_TIER10BLOCK3THRESHOLD = 0x01A2;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1787,7 +1787,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER10BLOCK4THRESHOLD = 0x01A4;
+    public static final int ATTR_TIER10BLOCK4THRESHOLD = 0x01A3;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1797,7 +1797,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER10BLOCK5THRESHOLD = 0x01A5;
+    public static final int ATTR_TIER10BLOCK5THRESHOLD = 0x01A4;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1807,7 +1807,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER10BLOCK6THRESHOLD = 0x01A6;
+    public static final int ATTR_TIER10BLOCK6THRESHOLD = 0x01A5;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1817,7 +1817,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER10BLOCK7THRESHOLD = 0x01A7;
+    public static final int ATTR_TIER10BLOCK7THRESHOLD = 0x01A6;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1827,7 +1827,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER10BLOCK8THRESHOLD = 0x01A8;
+    public static final int ATTR_TIER10BLOCK8THRESHOLD = 0x01A7;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1837,7 +1837,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER10BLOCK9THRESHOLD = 0x01A9;
+    public static final int ATTR_TIER10BLOCK9THRESHOLD = 0x01A8;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1847,7 +1847,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER10BLOCK10THRESHOLD = 0x01AA;
+    public static final int ATTR_TIER10BLOCK10THRESHOLD = 0x01A9;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1857,7 +1857,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER10BLOCK11THRESHOLD = 0x01AB;
+    public static final int ATTR_TIER10BLOCK11THRESHOLD = 0x01AA;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1867,7 +1867,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER10BLOCK12THRESHOLD = 0x01AC;
+    public static final int ATTR_TIER10BLOCK12THRESHOLD = 0x01AB;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1877,7 +1877,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER10BLOCK13THRESHOLD = 0x01AD;
+    public static final int ATTR_TIER10BLOCK13THRESHOLD = 0x01AC;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1887,7 +1887,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER10BLOCK14THRESHOLD = 0x01AE;
+    public static final int ATTR_TIER10BLOCK14THRESHOLD = 0x01AD;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1897,7 +1897,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER10BLOCK15THRESHOLD = 0x01AF;
+    public static final int ATTR_TIER10BLOCK15THRESHOLD = 0x01AE;
     /**
      * The TierNBlockThresholdCount attributes hold the number of block thresholds
      * applicable to a given tier. These attributes are used in the case when a combination
@@ -1914,7 +1914,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER11BLOCK1THRESHOLD = 0x01B1;
+    public static final int ATTR_TIER11BLOCK1THRESHOLD = 0x01B0;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1924,7 +1924,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER11BLOCK2THRESHOLD = 0x01B2;
+    public static final int ATTR_TIER11BLOCK2THRESHOLD = 0x01B1;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1934,7 +1934,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER11BLOCK3THRESHOLD = 0x01B3;
+    public static final int ATTR_TIER11BLOCK3THRESHOLD = 0x01B2;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1944,7 +1944,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER11BLOCK4THRESHOLD = 0x01B4;
+    public static final int ATTR_TIER11BLOCK4THRESHOLD = 0x01B3;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1954,7 +1954,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER11BLOCK5THRESHOLD = 0x01B5;
+    public static final int ATTR_TIER11BLOCK5THRESHOLD = 0x01B4;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1964,7 +1964,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER11BLOCK6THRESHOLD = 0x01B6;
+    public static final int ATTR_TIER11BLOCK6THRESHOLD = 0x01B5;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1974,7 +1974,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER11BLOCK7THRESHOLD = 0x01B7;
+    public static final int ATTR_TIER11BLOCK7THRESHOLD = 0x01B6;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1984,7 +1984,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER11BLOCK8THRESHOLD = 0x01B8;
+    public static final int ATTR_TIER11BLOCK8THRESHOLD = 0x01B7;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -1994,7 +1994,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER11BLOCK9THRESHOLD = 0x01B9;
+    public static final int ATTR_TIER11BLOCK9THRESHOLD = 0x01B8;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2004,7 +2004,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER11BLOCK10THRESHOLD = 0x01BA;
+    public static final int ATTR_TIER11BLOCK10THRESHOLD = 0x01B9;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2014,7 +2014,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER11BLOCK11THRESHOLD = 0x01BB;
+    public static final int ATTR_TIER11BLOCK11THRESHOLD = 0x01BA;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2024,7 +2024,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER11BLOCK12THRESHOLD = 0x01BC;
+    public static final int ATTR_TIER11BLOCK12THRESHOLD = 0x01BB;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2034,7 +2034,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER11BLOCK13THRESHOLD = 0x01BD;
+    public static final int ATTR_TIER11BLOCK13THRESHOLD = 0x01BC;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2044,7 +2044,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER11BLOCK14THRESHOLD = 0x01BE;
+    public static final int ATTR_TIER11BLOCK14THRESHOLD = 0x01BD;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2054,7 +2054,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER11BLOCK15THRESHOLD = 0x01BF;
+    public static final int ATTR_TIER11BLOCK15THRESHOLD = 0x01BE;
     /**
      * The TierNBlockThresholdCount attributes hold the number of block thresholds
      * applicable to a given tier. These attributes are used in the case when a combination
@@ -2071,7 +2071,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER12BLOCK1THRESHOLD = 0x01C1;
+    public static final int ATTR_TIER12BLOCK1THRESHOLD = 0x01C0;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2081,7 +2081,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER12BLOCK2THRESHOLD = 0x01C2;
+    public static final int ATTR_TIER12BLOCK2THRESHOLD = 0x01C1;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2091,7 +2091,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER12BLOCK3THRESHOLD = 0x01C3;
+    public static final int ATTR_TIER12BLOCK3THRESHOLD = 0x01C2;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2101,7 +2101,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER12BLOCK4THRESHOLD = 0x01C4;
+    public static final int ATTR_TIER12BLOCK4THRESHOLD = 0x01C3;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2111,7 +2111,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER12BLOCK5THRESHOLD = 0x01C5;
+    public static final int ATTR_TIER12BLOCK5THRESHOLD = 0x01C4;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2121,7 +2121,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER12BLOCK6THRESHOLD = 0x01C6;
+    public static final int ATTR_TIER12BLOCK6THRESHOLD = 0x01C5;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2131,7 +2131,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER12BLOCK7THRESHOLD = 0x01C7;
+    public static final int ATTR_TIER12BLOCK7THRESHOLD = 0x01C6;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2141,7 +2141,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER12BLOCK8THRESHOLD = 0x01C8;
+    public static final int ATTR_TIER12BLOCK8THRESHOLD = 0x01C7;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2151,7 +2151,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER12BLOCK9THRESHOLD = 0x01C9;
+    public static final int ATTR_TIER12BLOCK9THRESHOLD = 0x01C8;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2161,7 +2161,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER12BLOCK10THRESHOLD = 0x01CA;
+    public static final int ATTR_TIER12BLOCK10THRESHOLD = 0x01C9;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2171,7 +2171,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER12BLOCK11THRESHOLD = 0x01CB;
+    public static final int ATTR_TIER12BLOCK11THRESHOLD = 0x01CA;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2181,7 +2181,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER12BLOCK12THRESHOLD = 0x01CC;
+    public static final int ATTR_TIER12BLOCK12THRESHOLD = 0x01CB;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2191,7 +2191,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER12BLOCK13THRESHOLD = 0x01CD;
+    public static final int ATTR_TIER12BLOCK13THRESHOLD = 0x01CC;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2201,7 +2201,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER12BLOCK14THRESHOLD = 0x01CE;
+    public static final int ATTR_TIER12BLOCK14THRESHOLD = 0x01CD;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2211,7 +2211,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER12BLOCK15THRESHOLD = 0x01CF;
+    public static final int ATTR_TIER12BLOCK15THRESHOLD = 0x01CE;
     /**
      * The TierNBlockThresholdCount attributes hold the number of block thresholds
      * applicable to a given tier. These attributes are used in the case when a combination
@@ -2228,7 +2228,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER13BLOCK1THRESHOLD = 0x01D1;
+    public static final int ATTR_TIER13BLOCK1THRESHOLD = 0x01D0;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2238,7 +2238,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER13BLOCK2THRESHOLD = 0x01D2;
+    public static final int ATTR_TIER13BLOCK2THRESHOLD = 0x01D1;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2248,7 +2248,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER13BLOCK3THRESHOLD = 0x01D3;
+    public static final int ATTR_TIER13BLOCK3THRESHOLD = 0x01D2;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2258,7 +2258,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER13BLOCK4THRESHOLD = 0x01D4;
+    public static final int ATTR_TIER13BLOCK4THRESHOLD = 0x01D3;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2268,7 +2268,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER13BLOCK5THRESHOLD = 0x01D5;
+    public static final int ATTR_TIER13BLOCK5THRESHOLD = 0x01D4;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2278,7 +2278,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER13BLOCK6THRESHOLD = 0x01D6;
+    public static final int ATTR_TIER13BLOCK6THRESHOLD = 0x01D5;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2288,7 +2288,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER13BLOCK7THRESHOLD = 0x01D7;
+    public static final int ATTR_TIER13BLOCK7THRESHOLD = 0x01D6;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2298,7 +2298,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER13BLOCK8THRESHOLD = 0x01D8;
+    public static final int ATTR_TIER13BLOCK8THRESHOLD = 0x01D7;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2308,7 +2308,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER13BLOCK9THRESHOLD = 0x01D9;
+    public static final int ATTR_TIER13BLOCK9THRESHOLD = 0x01D8;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2318,7 +2318,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER13BLOCK10THRESHOLD = 0x01DA;
+    public static final int ATTR_TIER13BLOCK10THRESHOLD = 0x01D9;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2328,7 +2328,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER13BLOCK11THRESHOLD = 0x01DB;
+    public static final int ATTR_TIER13BLOCK11THRESHOLD = 0x01DA;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2338,7 +2338,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER13BLOCK12THRESHOLD = 0x01DC;
+    public static final int ATTR_TIER13BLOCK12THRESHOLD = 0x01DB;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2348,7 +2348,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER13BLOCK13THRESHOLD = 0x01DD;
+    public static final int ATTR_TIER13BLOCK13THRESHOLD = 0x01DC;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2358,7 +2358,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER13BLOCK14THRESHOLD = 0x01DE;
+    public static final int ATTR_TIER13BLOCK14THRESHOLD = 0x01DD;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2368,7 +2368,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER13BLOCK15THRESHOLD = 0x01DF;
+    public static final int ATTR_TIER13BLOCK15THRESHOLD = 0x01DE;
     /**
      * The TierNBlockThresholdCount attributes hold the number of block thresholds
      * applicable to a given tier. These attributes are used in the case when a combination
@@ -2385,7 +2385,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER14BLOCK1THRESHOLD = 0x01E1;
+    public static final int ATTR_TIER14BLOCK1THRESHOLD = 0x01E0;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2395,7 +2395,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER14BLOCK2THRESHOLD = 0x01E2;
+    public static final int ATTR_TIER14BLOCK2THRESHOLD = 0x01E1;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2405,7 +2405,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER14BLOCK3THRESHOLD = 0x01E3;
+    public static final int ATTR_TIER14BLOCK3THRESHOLD = 0x01E2;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2415,7 +2415,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER14BLOCK4THRESHOLD = 0x01E4;
+    public static final int ATTR_TIER14BLOCK4THRESHOLD = 0x01E3;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2425,7 +2425,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER14BLOCK5THRESHOLD = 0x01E5;
+    public static final int ATTR_TIER14BLOCK5THRESHOLD = 0x01E4;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2435,7 +2435,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER14BLOCK6THRESHOLD = 0x01E6;
+    public static final int ATTR_TIER14BLOCK6THRESHOLD = 0x01E5;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2445,7 +2445,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER14BLOCK7THRESHOLD = 0x01E7;
+    public static final int ATTR_TIER14BLOCK7THRESHOLD = 0x01E6;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2455,7 +2455,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER14BLOCK8THRESHOLD = 0x01E8;
+    public static final int ATTR_TIER14BLOCK8THRESHOLD = 0x01E7;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2465,7 +2465,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER14BLOCK9THRESHOLD = 0x01E9;
+    public static final int ATTR_TIER14BLOCK9THRESHOLD = 0x01E8;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2475,7 +2475,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER14BLOCK10THRESHOLD = 0x01EA;
+    public static final int ATTR_TIER14BLOCK10THRESHOLD = 0x01E9;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2485,7 +2485,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER14BLOCK11THRESHOLD = 0x01EB;
+    public static final int ATTR_TIER14BLOCK11THRESHOLD = 0x01EA;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2495,7 +2495,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER14BLOCK12THRESHOLD = 0x01EC;
+    public static final int ATTR_TIER14BLOCK12THRESHOLD = 0x01EB;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2505,7 +2505,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER14BLOCK13THRESHOLD = 0x01ED;
+    public static final int ATTR_TIER14BLOCK13THRESHOLD = 0x01EC;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2515,7 +2515,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER14BLOCK14THRESHOLD = 0x01EE;
+    public static final int ATTR_TIER14BLOCK14THRESHOLD = 0x01ED;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2525,7 +2525,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER14BLOCK15THRESHOLD = 0x01EF;
+    public static final int ATTR_TIER14BLOCK15THRESHOLD = 0x01EE;
     /**
      * The TierNBlockThresholdCount attributes hold the number of block thresholds
      * applicable to a given tier. These attributes are used in the case when a combination
@@ -2542,7 +2542,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER15BLOCK1THRESHOLD = 0x01F1;
+    public static final int ATTR_TIER15BLOCK1THRESHOLD = 0x01F0;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2552,7 +2552,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER15BLOCK2THRESHOLD = 0x01F2;
+    public static final int ATTR_TIER15BLOCK2THRESHOLD = 0x01F1;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2562,7 +2562,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER15BLOCK3THRESHOLD = 0x01F3;
+    public static final int ATTR_TIER15BLOCK3THRESHOLD = 0x01F2;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2572,7 +2572,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER15BLOCK4THRESHOLD = 0x01F4;
+    public static final int ATTR_TIER15BLOCK4THRESHOLD = 0x01F3;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2582,7 +2582,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER15BLOCK5THRESHOLD = 0x01F5;
+    public static final int ATTR_TIER15BLOCK5THRESHOLD = 0x01F4;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2592,7 +2592,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER15BLOCK6THRESHOLD = 0x01F6;
+    public static final int ATTR_TIER15BLOCK6THRESHOLD = 0x01F5;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2602,7 +2602,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER15BLOCK7THRESHOLD = 0x01F7;
+    public static final int ATTR_TIER15BLOCK7THRESHOLD = 0x01F6;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2612,7 +2612,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER15BLOCK8THRESHOLD = 0x01F8;
+    public static final int ATTR_TIER15BLOCK8THRESHOLD = 0x01F7;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2622,7 +2622,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER15BLOCK9THRESHOLD = 0x01F9;
+    public static final int ATTR_TIER15BLOCK9THRESHOLD = 0x01F8;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2632,7 +2632,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER15BLOCK10THRESHOLD = 0x01FA;
+    public static final int ATTR_TIER15BLOCK10THRESHOLD = 0x01F9;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2642,7 +2642,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER15BLOCK11THRESHOLD = 0x01FB;
+    public static final int ATTR_TIER15BLOCK11THRESHOLD = 0x01FA;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2652,7 +2652,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER15BLOCK12THRESHOLD = 0x01FC;
+    public static final int ATTR_TIER15BLOCK12THRESHOLD = 0x01FB;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2662,7 +2662,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER15BLOCK13THRESHOLD = 0x01FD;
+    public static final int ATTR_TIER15BLOCK13THRESHOLD = 0x01FC;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2672,7 +2672,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER15BLOCK14THRESHOLD = 0x01FE;
+    public static final int ATTR_TIER15BLOCK14THRESHOLD = 0x01FD;
     /**
      * Attributes Block1Threshold through Block15Threshold represent the block threshold
      * values for a given period (typically the billing cycle). These values may be updated by
@@ -2682,7 +2682,7 @@ public class ZclPriceCluster extends ZclCluster {
      * values are absolute and always increasing. The values represent the threshold at the
      * end of a block. The Unit of Measure will be based on the
      */
-    public static final int ATTR_TIER15BLOCK15THRESHOLD = 0x01FF;
+    public static final int ATTR_TIER15BLOCK15THRESHOLD = 0x01FE;
     /**
      * The TierNBlockThresholdCount attributes hold the number of block thresholds
      * applicable to a given tier. These attributes are used in the case when a combination
@@ -2743,454 +2743,454 @@ public class ZclPriceCluster extends ZclCluster {
     public static final int ATTR_CALORIFICVALUE = 0x0304;
     public static final int ATTR_CALORIFICVALUEUNIT = 0x0305;
     public static final int ATTR_CALORIFICVALUETRAILINGDIGIT = 0x0306;
-    public static final int ATTR_NOTIERBLOCK1PRICE = 0x0401;
-    public static final int ATTR_NOTIERBLOCK2PRICE = 0x0402;
-    public static final int ATTR_NOTIERBLOCK3PRICE = 0x0403;
-    public static final int ATTR_NOTIERBLOCK4PRICE = 0x0404;
-    public static final int ATTR_NOTIERBLOCK5PRICE = 0x0405;
-    public static final int ATTR_NOTIERBLOCK6PRICE = 0x0406;
-    public static final int ATTR_NOTIERBLOCK7PRICE = 0x0407;
-    public static final int ATTR_NOTIERBLOCK8PRICE = 0x0408;
-    public static final int ATTR_NOTIERBLOCK9PRICE = 0x0409;
-    public static final int ATTR_NOTIERBLOCK10PRICE = 0x040A;
-    public static final int ATTR_NOTIERBLOCK11PRICE = 0x040B;
-    public static final int ATTR_NOTIERBLOCK12PRICE = 0x040C;
-    public static final int ATTR_NOTIERBLOCK13PRICE = 0x040D;
-    public static final int ATTR_NOTIERBLOCK14PRICE = 0x040E;
-    public static final int ATTR_NOTIERBLOCK15PRICE = 0x040F;
-    public static final int ATTR_NOTIERBLOCK16PRICE = 0x0410;
-    public static final int ATTR_TIER1BLOCK1PRICE = 0x0411;
-    public static final int ATTR_TIER1BLOCK2PRICE = 0x0412;
-    public static final int ATTR_TIER1BLOCK3PRICE = 0x0413;
-    public static final int ATTR_TIER1BLOCK4PRICE = 0x0414;
-    public static final int ATTR_TIER1BLOCK5PRICE = 0x0415;
-    public static final int ATTR_TIER1BLOCK6PRICE = 0x0416;
-    public static final int ATTR_TIER1BLOCK7PRICE = 0x0417;
-    public static final int ATTR_TIER1BLOCK8PRICE = 0x0418;
-    public static final int ATTR_TIER1BLOCK9PRICE = 0x0419;
-    public static final int ATTR_TIER1BLOCK10PRICE = 0x041A;
-    public static final int ATTR_TIER1BLOCK11PRICE = 0x041B;
-    public static final int ATTR_TIER1BLOCK12PRICE = 0x041C;
-    public static final int ATTR_TIER1BLOCK13PRICE = 0x041D;
-    public static final int ATTR_TIER1BLOCK14PRICE = 0x041E;
-    public static final int ATTR_TIER1BLOCK15PRICE = 0x041F;
-    public static final int ATTR_TIER1BLOCK16PRICE = 0x0420;
-    public static final int ATTR_TIER2BLOCK1PRICE = 0x0421;
-    public static final int ATTR_TIER2BLOCK2PRICE = 0x0422;
-    public static final int ATTR_TIER2BLOCK3PRICE = 0x0423;
-    public static final int ATTR_TIER2BLOCK4PRICE = 0x0424;
-    public static final int ATTR_TIER2BLOCK5PRICE = 0x0425;
-    public static final int ATTR_TIER2BLOCK6PRICE = 0x0426;
-    public static final int ATTR_TIER2BLOCK7PRICE = 0x0427;
-    public static final int ATTR_TIER2BLOCK8PRICE = 0x0428;
-    public static final int ATTR_TIER2BLOCK9PRICE = 0x0429;
-    public static final int ATTR_TIER2BLOCK10PRICE = 0x042A;
-    public static final int ATTR_TIER2BLOCK11PRICE = 0x042B;
-    public static final int ATTR_TIER2BLOCK12PRICE = 0x042C;
-    public static final int ATTR_TIER2BLOCK13PRICE = 0x042D;
-    public static final int ATTR_TIER2BLOCK14PRICE = 0x042E;
-    public static final int ATTR_TIER2BLOCK15PRICE = 0x042F;
-    public static final int ATTR_TIER2BLOCK16PRICE = 0x0430;
-    public static final int ATTR_TIER3BLOCK1PRICE = 0x0431;
-    public static final int ATTR_TIER3BLOCK2PRICE = 0x0432;
-    public static final int ATTR_TIER3BLOCK3PRICE = 0x0433;
-    public static final int ATTR_TIER3BLOCK4PRICE = 0x0434;
-    public static final int ATTR_TIER3BLOCK5PRICE = 0x0435;
-    public static final int ATTR_TIER3BLOCK6PRICE = 0x0436;
-    public static final int ATTR_TIER3BLOCK7PRICE = 0x0437;
-    public static final int ATTR_TIER3BLOCK8PRICE = 0x0438;
-    public static final int ATTR_TIER3BLOCK9PRICE = 0x0439;
-    public static final int ATTR_TIER3BLOCK10PRICE = 0x043A;
-    public static final int ATTR_TIER3BLOCK11PRICE = 0x043B;
-    public static final int ATTR_TIER3BLOCK12PRICE = 0x043C;
-    public static final int ATTR_TIER3BLOCK13PRICE = 0x043D;
-    public static final int ATTR_TIER3BLOCK14PRICE = 0x043E;
-    public static final int ATTR_TIER3BLOCK15PRICE = 0x043F;
-    public static final int ATTR_TIER3BLOCK16PRICE = 0x0440;
-    public static final int ATTR_TIER4BLOCK1PRICE = 0x0441;
-    public static final int ATTR_TIER4BLOCK2PRICE = 0x0442;
-    public static final int ATTR_TIER4BLOCK3PRICE = 0x0443;
-    public static final int ATTR_TIER4BLOCK4PRICE = 0x0444;
-    public static final int ATTR_TIER4BLOCK5PRICE = 0x0445;
-    public static final int ATTR_TIER4BLOCK6PRICE = 0x0446;
-    public static final int ATTR_TIER4BLOCK7PRICE = 0x0447;
-    public static final int ATTR_TIER4BLOCK8PRICE = 0x0448;
-    public static final int ATTR_TIER4BLOCK9PRICE = 0x0449;
-    public static final int ATTR_TIER4BLOCK10PRICE = 0x044A;
-    public static final int ATTR_TIER4BLOCK11PRICE = 0x044B;
-    public static final int ATTR_TIER4BLOCK12PRICE = 0x044C;
-    public static final int ATTR_TIER4BLOCK13PRICE = 0x044D;
-    public static final int ATTR_TIER4BLOCK14PRICE = 0x044E;
-    public static final int ATTR_TIER4BLOCK15PRICE = 0x044F;
-    public static final int ATTR_TIER4BLOCK16PRICE = 0x0450;
-    public static final int ATTR_TIER5BLOCK1PRICE = 0x0451;
-    public static final int ATTR_TIER5BLOCK2PRICE = 0x0452;
-    public static final int ATTR_TIER5BLOCK3PRICE = 0x0453;
-    public static final int ATTR_TIER5BLOCK4PRICE = 0x0454;
-    public static final int ATTR_TIER5BLOCK5PRICE = 0x0455;
-    public static final int ATTR_TIER5BLOCK6PRICE = 0x0456;
-    public static final int ATTR_TIER5BLOCK7PRICE = 0x0457;
-    public static final int ATTR_TIER5BLOCK8PRICE = 0x0458;
-    public static final int ATTR_TIER5BLOCK9PRICE = 0x0459;
-    public static final int ATTR_TIER5BLOCK10PRICE = 0x045A;
-    public static final int ATTR_TIER5BLOCK11PRICE = 0x045B;
-    public static final int ATTR_TIER5BLOCK12PRICE = 0x045C;
-    public static final int ATTR_TIER5BLOCK13PRICE = 0x045D;
-    public static final int ATTR_TIER5BLOCK14PRICE = 0x045E;
-    public static final int ATTR_TIER5BLOCK15PRICE = 0x045F;
-    public static final int ATTR_TIER5BLOCK16PRICE = 0x0460;
-    public static final int ATTR_TIER6BLOCK1PRICE = 0x0461;
-    public static final int ATTR_TIER6BLOCK2PRICE = 0x0462;
-    public static final int ATTR_TIER6BLOCK3PRICE = 0x0463;
-    public static final int ATTR_TIER6BLOCK4PRICE = 0x0464;
-    public static final int ATTR_TIER6BLOCK5PRICE = 0x0465;
-    public static final int ATTR_TIER6BLOCK6PRICE = 0x0466;
-    public static final int ATTR_TIER6BLOCK7PRICE = 0x0467;
-    public static final int ATTR_TIER6BLOCK8PRICE = 0x0468;
-    public static final int ATTR_TIER6BLOCK9PRICE = 0x0469;
-    public static final int ATTR_TIER6BLOCK10PRICE = 0x046A;
-    public static final int ATTR_TIER6BLOCK11PRICE = 0x046B;
-    public static final int ATTR_TIER6BLOCK12PRICE = 0x046C;
-    public static final int ATTR_TIER6BLOCK13PRICE = 0x046D;
-    public static final int ATTR_TIER6BLOCK14PRICE = 0x046E;
-    public static final int ATTR_TIER6BLOCK15PRICE = 0x046F;
-    public static final int ATTR_TIER6BLOCK16PRICE = 0x0470;
-    public static final int ATTR_TIER7BLOCK1PRICE = 0x0471;
-    public static final int ATTR_TIER7BLOCK2PRICE = 0x0472;
-    public static final int ATTR_TIER7BLOCK3PRICE = 0x0473;
-    public static final int ATTR_TIER7BLOCK4PRICE = 0x0474;
-    public static final int ATTR_TIER7BLOCK5PRICE = 0x0475;
-    public static final int ATTR_TIER7BLOCK6PRICE = 0x0476;
-    public static final int ATTR_TIER7BLOCK7PRICE = 0x0477;
-    public static final int ATTR_TIER7BLOCK8PRICE = 0x0478;
-    public static final int ATTR_TIER7BLOCK9PRICE = 0x0479;
-    public static final int ATTR_TIER7BLOCK10PRICE = 0x047A;
-    public static final int ATTR_TIER7BLOCK11PRICE = 0x047B;
-    public static final int ATTR_TIER7BLOCK12PRICE = 0x047C;
-    public static final int ATTR_TIER7BLOCK13PRICE = 0x047D;
-    public static final int ATTR_TIER7BLOCK14PRICE = 0x047E;
-    public static final int ATTR_TIER7BLOCK15PRICE = 0x047F;
-    public static final int ATTR_TIER7BLOCK16PRICE = 0x0480;
-    public static final int ATTR_TIER8BLOCK1PRICE = 0x0481;
-    public static final int ATTR_TIER8BLOCK2PRICE = 0x0482;
-    public static final int ATTR_TIER8BLOCK3PRICE = 0x0483;
-    public static final int ATTR_TIER8BLOCK4PRICE = 0x0484;
-    public static final int ATTR_TIER8BLOCK5PRICE = 0x0485;
-    public static final int ATTR_TIER8BLOCK6PRICE = 0x0486;
-    public static final int ATTR_TIER8BLOCK7PRICE = 0x0487;
-    public static final int ATTR_TIER8BLOCK8PRICE = 0x0488;
-    public static final int ATTR_TIER8BLOCK9PRICE = 0x0489;
-    public static final int ATTR_TIER8BLOCK10PRICE = 0x048A;
-    public static final int ATTR_TIER8BLOCK11PRICE = 0x048B;
-    public static final int ATTR_TIER8BLOCK12PRICE = 0x048C;
-    public static final int ATTR_TIER8BLOCK13PRICE = 0x048D;
-    public static final int ATTR_TIER8BLOCK14PRICE = 0x048E;
-    public static final int ATTR_TIER8BLOCK15PRICE = 0x048F;
-    public static final int ATTR_TIER8BLOCK16PRICE = 0x0490;
-    public static final int ATTR_TIER9BLOCK1PRICE = 0x0491;
-    public static final int ATTR_TIER9BLOCK2PRICE = 0x0492;
-    public static final int ATTR_TIER9BLOCK3PRICE = 0x0493;
-    public static final int ATTR_TIER9BLOCK4PRICE = 0x0494;
-    public static final int ATTR_TIER9BLOCK5PRICE = 0x0495;
-    public static final int ATTR_TIER9BLOCK6PRICE = 0x0496;
-    public static final int ATTR_TIER9BLOCK7PRICE = 0x0497;
-    public static final int ATTR_TIER9BLOCK8PRICE = 0x0498;
-    public static final int ATTR_TIER9BLOCK9PRICE = 0x0499;
-    public static final int ATTR_TIER9BLOCK10PRICE = 0x049A;
-    public static final int ATTR_TIER9BLOCK11PRICE = 0x049B;
-    public static final int ATTR_TIER9BLOCK12PRICE = 0x049C;
-    public static final int ATTR_TIER9BLOCK13PRICE = 0x049D;
-    public static final int ATTR_TIER9BLOCK14PRICE = 0x049E;
-    public static final int ATTR_TIER9BLOCK15PRICE = 0x049F;
-    public static final int ATTR_TIER9BLOCK16PRICE = 0x04A0;
-    public static final int ATTR_TIER10BLOCK1PRICE = 0x04A1;
-    public static final int ATTR_TIER10BLOCK2PRICE = 0x04A2;
-    public static final int ATTR_TIER10BLOCK3PRICE = 0x04A3;
-    public static final int ATTR_TIER10BLOCK4PRICE = 0x04A4;
-    public static final int ATTR_TIER10BLOCK5PRICE = 0x04A5;
-    public static final int ATTR_TIER10BLOCK6PRICE = 0x04A6;
-    public static final int ATTR_TIER10BLOCK7PRICE = 0x04A7;
-    public static final int ATTR_TIER10BLOCK8PRICE = 0x04A8;
-    public static final int ATTR_TIER10BLOCK9PRICE = 0x04A9;
-    public static final int ATTR_TIER10BLOCK10PRICE = 0x04AA;
-    public static final int ATTR_TIER10BLOCK11PRICE = 0x04AB;
-    public static final int ATTR_TIER10BLOCK12PRICE = 0x04AC;
-    public static final int ATTR_TIER10BLOCK13PRICE = 0x04AD;
-    public static final int ATTR_TIER10BLOCK14PRICE = 0x04AE;
-    public static final int ATTR_TIER10BLOCK15PRICE = 0x04AF;
-    public static final int ATTR_TIER10BLOCK16PRICE = 0x04B0;
-    public static final int ATTR_TIER11BLOCK1PRICE = 0x04B1;
-    public static final int ATTR_TIER11BLOCK2PRICE = 0x04B2;
-    public static final int ATTR_TIER11BLOCK3PRICE = 0x04B3;
-    public static final int ATTR_TIER11BLOCK4PRICE = 0x04B4;
-    public static final int ATTR_TIER11BLOCK5PRICE = 0x04B5;
-    public static final int ATTR_TIER11BLOCK6PRICE = 0x04B6;
-    public static final int ATTR_TIER11BLOCK7PRICE = 0x04B7;
-    public static final int ATTR_TIER11BLOCK8PRICE = 0x04B8;
-    public static final int ATTR_TIER11BLOCK9PRICE = 0x04B9;
-    public static final int ATTR_TIER11BLOCK10PRICE = 0x04BA;
-    public static final int ATTR_TIER11BLOCK11PRICE = 0x04BB;
-    public static final int ATTR_TIER11BLOCK12PRICE = 0x04BC;
-    public static final int ATTR_TIER11BLOCK13PRICE = 0x04BD;
-    public static final int ATTR_TIER11BLOCK14PRICE = 0x04BE;
-    public static final int ATTR_TIER11BLOCK15PRICE = 0x04BF;
-    public static final int ATTR_TIER11BLOCK16PRICE = 0x04C0;
-    public static final int ATTR_TIER12BLOCK1PRICE = 0x04C1;
-    public static final int ATTR_TIER12BLOCK2PRICE = 0x04C2;
-    public static final int ATTR_TIER12BLOCK3PRICE = 0x04C3;
-    public static final int ATTR_TIER12BLOCK4PRICE = 0x04C4;
-    public static final int ATTR_TIER12BLOCK5PRICE = 0x04C5;
-    public static final int ATTR_TIER12BLOCK6PRICE = 0x04C6;
-    public static final int ATTR_TIER12BLOCK7PRICE = 0x04C7;
-    public static final int ATTR_TIER12BLOCK8PRICE = 0x04C8;
-    public static final int ATTR_TIER12BLOCK9PRICE = 0x04C9;
-    public static final int ATTR_TIER12BLOCK10PRICE = 0x04CA;
-    public static final int ATTR_TIER12BLOCK11PRICE = 0x04CB;
-    public static final int ATTR_TIER12BLOCK12PRICE = 0x04CC;
-    public static final int ATTR_TIER12BLOCK13PRICE = 0x04CD;
-    public static final int ATTR_TIER12BLOCK14PRICE = 0x04CE;
-    public static final int ATTR_TIER12BLOCK15PRICE = 0x04CF;
-    public static final int ATTR_TIER12BLOCK16PRICE = 0x04D0;
-    public static final int ATTR_TIER13BLOCK1PRICE = 0x04D1;
-    public static final int ATTR_TIER13BLOCK2PRICE = 0x04D2;
-    public static final int ATTR_TIER13BLOCK3PRICE = 0x04D3;
-    public static final int ATTR_TIER13BLOCK4PRICE = 0x04D4;
-    public static final int ATTR_TIER13BLOCK5PRICE = 0x04D5;
-    public static final int ATTR_TIER13BLOCK6PRICE = 0x04D6;
-    public static final int ATTR_TIER13BLOCK7PRICE = 0x04D7;
-    public static final int ATTR_TIER13BLOCK8PRICE = 0x04D8;
-    public static final int ATTR_TIER13BLOCK9PRICE = 0x04D9;
-    public static final int ATTR_TIER13BLOCK10PRICE = 0x04DA;
-    public static final int ATTR_TIER13BLOCK11PRICE = 0x04DB;
-    public static final int ATTR_TIER13BLOCK12PRICE = 0x04DC;
-    public static final int ATTR_TIER13BLOCK13PRICE = 0x04DD;
-    public static final int ATTR_TIER13BLOCK14PRICE = 0x04DE;
-    public static final int ATTR_TIER13BLOCK15PRICE = 0x04DF;
-    public static final int ATTR_TIER13BLOCK16PRICE = 0x04E0;
-    public static final int ATTR_TIER14BLOCK1PRICE = 0x04E1;
-    public static final int ATTR_TIER14BLOCK2PRICE = 0x04E2;
-    public static final int ATTR_TIER14BLOCK3PRICE = 0x04E3;
-    public static final int ATTR_TIER14BLOCK4PRICE = 0x04E4;
-    public static final int ATTR_TIER14BLOCK5PRICE = 0x04E5;
-    public static final int ATTR_TIER14BLOCK6PRICE = 0x04E6;
-    public static final int ATTR_TIER14BLOCK7PRICE = 0x04E7;
-    public static final int ATTR_TIER14BLOCK8PRICE = 0x04E8;
-    public static final int ATTR_TIER14BLOCK9PRICE = 0x04E9;
-    public static final int ATTR_TIER14BLOCK10PRICE = 0x04EA;
-    public static final int ATTR_TIER14BLOCK11PRICE = 0x04EB;
-    public static final int ATTR_TIER14BLOCK12PRICE = 0x04EC;
-    public static final int ATTR_TIER14BLOCK13PRICE = 0x04ED;
-    public static final int ATTR_TIER14BLOCK14PRICE = 0x04EE;
-    public static final int ATTR_TIER14BLOCK15PRICE = 0x04EF;
-    public static final int ATTR_TIER14BLOCK16PRICE = 0x04F0;
-    public static final int ATTR_TIER15BLOCK1PRICE = 0x04F1;
-    public static final int ATTR_TIER15BLOCK2PRICE = 0x04F2;
-    public static final int ATTR_TIER15BLOCK3PRICE = 0x04F3;
-    public static final int ATTR_TIER15BLOCK4PRICE = 0x04F4;
-    public static final int ATTR_TIER15BLOCK5PRICE = 0x04F5;
-    public static final int ATTR_TIER15BLOCK6PRICE = 0x04F6;
-    public static final int ATTR_TIER15BLOCK7PRICE = 0x04F7;
-    public static final int ATTR_TIER15BLOCK8PRICE = 0x04F8;
-    public static final int ATTR_TIER15BLOCK9PRICE = 0x04F9;
-    public static final int ATTR_TIER15BLOCK10PRICE = 0x04FA;
-    public static final int ATTR_TIER15BLOCK11PRICE = 0x04FB;
-    public static final int ATTR_TIER15BLOCK12PRICE = 0x04FC;
-    public static final int ATTR_TIER15BLOCK13PRICE = 0x04FD;
-    public static final int ATTR_TIER15BLOCK14PRICE = 0x04FE;
-    public static final int ATTR_TIER15BLOCK15PRICE = 0x04FF;
-    public static final int ATTR_TIER15BLOCK16PRICE = 0x0500;
+    public static final int ATTR_NOTIERBLOCK1PRICE = 0x0400;
+    public static final int ATTR_NOTIERBLOCK2PRICE = 0x0401;
+    public static final int ATTR_NOTIERBLOCK3PRICE = 0x0402;
+    public static final int ATTR_NOTIERBLOCK4PRICE = 0x0403;
+    public static final int ATTR_NOTIERBLOCK5PRICE = 0x0404;
+    public static final int ATTR_NOTIERBLOCK6PRICE = 0x0405;
+    public static final int ATTR_NOTIERBLOCK7PRICE = 0x0406;
+    public static final int ATTR_NOTIERBLOCK8PRICE = 0x0407;
+    public static final int ATTR_NOTIERBLOCK9PRICE = 0x0408;
+    public static final int ATTR_NOTIERBLOCK10PRICE = 0x0409;
+    public static final int ATTR_NOTIERBLOCK11PRICE = 0x040A;
+    public static final int ATTR_NOTIERBLOCK12PRICE = 0x040B;
+    public static final int ATTR_NOTIERBLOCK13PRICE = 0x040C;
+    public static final int ATTR_NOTIERBLOCK14PRICE = 0x040D;
+    public static final int ATTR_NOTIERBLOCK15PRICE = 0x040E;
+    public static final int ATTR_NOTIERBLOCK16PRICE = 0x040F;
+    public static final int ATTR_TIER1BLOCK1PRICE = 0x0410;
+    public static final int ATTR_TIER1BLOCK2PRICE = 0x0411;
+    public static final int ATTR_TIER1BLOCK3PRICE = 0x0412;
+    public static final int ATTR_TIER1BLOCK4PRICE = 0x0413;
+    public static final int ATTR_TIER1BLOCK5PRICE = 0x0414;
+    public static final int ATTR_TIER1BLOCK6PRICE = 0x0415;
+    public static final int ATTR_TIER1BLOCK7PRICE = 0x0416;
+    public static final int ATTR_TIER1BLOCK8PRICE = 0x0417;
+    public static final int ATTR_TIER1BLOCK9PRICE = 0x0418;
+    public static final int ATTR_TIER1BLOCK10PRICE = 0x0419;
+    public static final int ATTR_TIER1BLOCK11PRICE = 0x041A;
+    public static final int ATTR_TIER1BLOCK12PRICE = 0x041B;
+    public static final int ATTR_TIER1BLOCK13PRICE = 0x041C;
+    public static final int ATTR_TIER1BLOCK14PRICE = 0x041D;
+    public static final int ATTR_TIER1BLOCK15PRICE = 0x041E;
+    public static final int ATTR_TIER1BLOCK16PRICE = 0x041F;
+    public static final int ATTR_TIER2BLOCK1PRICE = 0x0420;
+    public static final int ATTR_TIER2BLOCK2PRICE = 0x0421;
+    public static final int ATTR_TIER2BLOCK3PRICE = 0x0422;
+    public static final int ATTR_TIER2BLOCK4PRICE = 0x0423;
+    public static final int ATTR_TIER2BLOCK5PRICE = 0x0424;
+    public static final int ATTR_TIER2BLOCK6PRICE = 0x0425;
+    public static final int ATTR_TIER2BLOCK7PRICE = 0x0426;
+    public static final int ATTR_TIER2BLOCK8PRICE = 0x0427;
+    public static final int ATTR_TIER2BLOCK9PRICE = 0x0428;
+    public static final int ATTR_TIER2BLOCK10PRICE = 0x0429;
+    public static final int ATTR_TIER2BLOCK11PRICE = 0x042A;
+    public static final int ATTR_TIER2BLOCK12PRICE = 0x042B;
+    public static final int ATTR_TIER2BLOCK13PRICE = 0x042C;
+    public static final int ATTR_TIER2BLOCK14PRICE = 0x042D;
+    public static final int ATTR_TIER2BLOCK15PRICE = 0x042E;
+    public static final int ATTR_TIER2BLOCK16PRICE = 0x042F;
+    public static final int ATTR_TIER3BLOCK1PRICE = 0x0430;
+    public static final int ATTR_TIER3BLOCK2PRICE = 0x0431;
+    public static final int ATTR_TIER3BLOCK3PRICE = 0x0432;
+    public static final int ATTR_TIER3BLOCK4PRICE = 0x0433;
+    public static final int ATTR_TIER3BLOCK5PRICE = 0x0434;
+    public static final int ATTR_TIER3BLOCK6PRICE = 0x0435;
+    public static final int ATTR_TIER3BLOCK7PRICE = 0x0436;
+    public static final int ATTR_TIER3BLOCK8PRICE = 0x0437;
+    public static final int ATTR_TIER3BLOCK9PRICE = 0x0438;
+    public static final int ATTR_TIER3BLOCK10PRICE = 0x0439;
+    public static final int ATTR_TIER3BLOCK11PRICE = 0x043A;
+    public static final int ATTR_TIER3BLOCK12PRICE = 0x043B;
+    public static final int ATTR_TIER3BLOCK13PRICE = 0x043C;
+    public static final int ATTR_TIER3BLOCK14PRICE = 0x043D;
+    public static final int ATTR_TIER3BLOCK15PRICE = 0x043E;
+    public static final int ATTR_TIER3BLOCK16PRICE = 0x043F;
+    public static final int ATTR_TIER4BLOCK1PRICE = 0x0440;
+    public static final int ATTR_TIER4BLOCK2PRICE = 0x0441;
+    public static final int ATTR_TIER4BLOCK3PRICE = 0x0442;
+    public static final int ATTR_TIER4BLOCK4PRICE = 0x0443;
+    public static final int ATTR_TIER4BLOCK5PRICE = 0x0444;
+    public static final int ATTR_TIER4BLOCK6PRICE = 0x0445;
+    public static final int ATTR_TIER4BLOCK7PRICE = 0x0446;
+    public static final int ATTR_TIER4BLOCK8PRICE = 0x0447;
+    public static final int ATTR_TIER4BLOCK9PRICE = 0x0448;
+    public static final int ATTR_TIER4BLOCK10PRICE = 0x0449;
+    public static final int ATTR_TIER4BLOCK11PRICE = 0x044A;
+    public static final int ATTR_TIER4BLOCK12PRICE = 0x044B;
+    public static final int ATTR_TIER4BLOCK13PRICE = 0x044C;
+    public static final int ATTR_TIER4BLOCK14PRICE = 0x044D;
+    public static final int ATTR_TIER4BLOCK15PRICE = 0x044E;
+    public static final int ATTR_TIER4BLOCK16PRICE = 0x044F;
+    public static final int ATTR_TIER5BLOCK1PRICE = 0x0450;
+    public static final int ATTR_TIER5BLOCK2PRICE = 0x0451;
+    public static final int ATTR_TIER5BLOCK3PRICE = 0x0452;
+    public static final int ATTR_TIER5BLOCK4PRICE = 0x0453;
+    public static final int ATTR_TIER5BLOCK5PRICE = 0x0454;
+    public static final int ATTR_TIER5BLOCK6PRICE = 0x0455;
+    public static final int ATTR_TIER5BLOCK7PRICE = 0x0456;
+    public static final int ATTR_TIER5BLOCK8PRICE = 0x0457;
+    public static final int ATTR_TIER5BLOCK9PRICE = 0x0458;
+    public static final int ATTR_TIER5BLOCK10PRICE = 0x0459;
+    public static final int ATTR_TIER5BLOCK11PRICE = 0x045A;
+    public static final int ATTR_TIER5BLOCK12PRICE = 0x045B;
+    public static final int ATTR_TIER5BLOCK13PRICE = 0x045C;
+    public static final int ATTR_TIER5BLOCK14PRICE = 0x045D;
+    public static final int ATTR_TIER5BLOCK15PRICE = 0x045E;
+    public static final int ATTR_TIER5BLOCK16PRICE = 0x045F;
+    public static final int ATTR_TIER6BLOCK1PRICE = 0x0460;
+    public static final int ATTR_TIER6BLOCK2PRICE = 0x0461;
+    public static final int ATTR_TIER6BLOCK3PRICE = 0x0462;
+    public static final int ATTR_TIER6BLOCK4PRICE = 0x0463;
+    public static final int ATTR_TIER6BLOCK5PRICE = 0x0464;
+    public static final int ATTR_TIER6BLOCK6PRICE = 0x0465;
+    public static final int ATTR_TIER6BLOCK7PRICE = 0x0466;
+    public static final int ATTR_TIER6BLOCK8PRICE = 0x0467;
+    public static final int ATTR_TIER6BLOCK9PRICE = 0x0468;
+    public static final int ATTR_TIER6BLOCK10PRICE = 0x0469;
+    public static final int ATTR_TIER6BLOCK11PRICE = 0x046A;
+    public static final int ATTR_TIER6BLOCK12PRICE = 0x046B;
+    public static final int ATTR_TIER6BLOCK13PRICE = 0x046C;
+    public static final int ATTR_TIER6BLOCK14PRICE = 0x046D;
+    public static final int ATTR_TIER6BLOCK15PRICE = 0x046E;
+    public static final int ATTR_TIER6BLOCK16PRICE = 0x046F;
+    public static final int ATTR_TIER7BLOCK1PRICE = 0x0470;
+    public static final int ATTR_TIER7BLOCK2PRICE = 0x0471;
+    public static final int ATTR_TIER7BLOCK3PRICE = 0x0472;
+    public static final int ATTR_TIER7BLOCK4PRICE = 0x0473;
+    public static final int ATTR_TIER7BLOCK5PRICE = 0x0474;
+    public static final int ATTR_TIER7BLOCK6PRICE = 0x0475;
+    public static final int ATTR_TIER7BLOCK7PRICE = 0x0476;
+    public static final int ATTR_TIER7BLOCK8PRICE = 0x0477;
+    public static final int ATTR_TIER7BLOCK9PRICE = 0x0478;
+    public static final int ATTR_TIER7BLOCK10PRICE = 0x0479;
+    public static final int ATTR_TIER7BLOCK11PRICE = 0x047A;
+    public static final int ATTR_TIER7BLOCK12PRICE = 0x047B;
+    public static final int ATTR_TIER7BLOCK13PRICE = 0x047C;
+    public static final int ATTR_TIER7BLOCK14PRICE = 0x047D;
+    public static final int ATTR_TIER7BLOCK15PRICE = 0x047E;
+    public static final int ATTR_TIER7BLOCK16PRICE = 0x047F;
+    public static final int ATTR_TIER8BLOCK1PRICE = 0x0480;
+    public static final int ATTR_TIER8BLOCK2PRICE = 0x0481;
+    public static final int ATTR_TIER8BLOCK3PRICE = 0x0482;
+    public static final int ATTR_TIER8BLOCK4PRICE = 0x0483;
+    public static final int ATTR_TIER8BLOCK5PRICE = 0x0484;
+    public static final int ATTR_TIER8BLOCK6PRICE = 0x0485;
+    public static final int ATTR_TIER8BLOCK7PRICE = 0x0486;
+    public static final int ATTR_TIER8BLOCK8PRICE = 0x0487;
+    public static final int ATTR_TIER8BLOCK9PRICE = 0x0488;
+    public static final int ATTR_TIER8BLOCK10PRICE = 0x0489;
+    public static final int ATTR_TIER8BLOCK11PRICE = 0x048A;
+    public static final int ATTR_TIER8BLOCK12PRICE = 0x048B;
+    public static final int ATTR_TIER8BLOCK13PRICE = 0x048C;
+    public static final int ATTR_TIER8BLOCK14PRICE = 0x048D;
+    public static final int ATTR_TIER8BLOCK15PRICE = 0x048E;
+    public static final int ATTR_TIER8BLOCK16PRICE = 0x048F;
+    public static final int ATTR_TIER9BLOCK1PRICE = 0x0490;
+    public static final int ATTR_TIER9BLOCK2PRICE = 0x0491;
+    public static final int ATTR_TIER9BLOCK3PRICE = 0x0492;
+    public static final int ATTR_TIER9BLOCK4PRICE = 0x0493;
+    public static final int ATTR_TIER9BLOCK5PRICE = 0x0494;
+    public static final int ATTR_TIER9BLOCK6PRICE = 0x0495;
+    public static final int ATTR_TIER9BLOCK7PRICE = 0x0496;
+    public static final int ATTR_TIER9BLOCK8PRICE = 0x0497;
+    public static final int ATTR_TIER9BLOCK9PRICE = 0x0498;
+    public static final int ATTR_TIER9BLOCK10PRICE = 0x0499;
+    public static final int ATTR_TIER9BLOCK11PRICE = 0x049A;
+    public static final int ATTR_TIER9BLOCK12PRICE = 0x049B;
+    public static final int ATTR_TIER9BLOCK13PRICE = 0x049C;
+    public static final int ATTR_TIER9BLOCK14PRICE = 0x049D;
+    public static final int ATTR_TIER9BLOCK15PRICE = 0x049E;
+    public static final int ATTR_TIER9BLOCK16PRICE = 0x049F;
+    public static final int ATTR_TIER10BLOCK1PRICE = 0x04A0;
+    public static final int ATTR_TIER10BLOCK2PRICE = 0x04A1;
+    public static final int ATTR_TIER10BLOCK3PRICE = 0x04A2;
+    public static final int ATTR_TIER10BLOCK4PRICE = 0x04A3;
+    public static final int ATTR_TIER10BLOCK5PRICE = 0x04A4;
+    public static final int ATTR_TIER10BLOCK6PRICE = 0x04A5;
+    public static final int ATTR_TIER10BLOCK7PRICE = 0x04A6;
+    public static final int ATTR_TIER10BLOCK8PRICE = 0x04A7;
+    public static final int ATTR_TIER10BLOCK9PRICE = 0x04A8;
+    public static final int ATTR_TIER10BLOCK10PRICE = 0x04A9;
+    public static final int ATTR_TIER10BLOCK11PRICE = 0x04AA;
+    public static final int ATTR_TIER10BLOCK12PRICE = 0x04AB;
+    public static final int ATTR_TIER10BLOCK13PRICE = 0x04AC;
+    public static final int ATTR_TIER10BLOCK14PRICE = 0x04AD;
+    public static final int ATTR_TIER10BLOCK15PRICE = 0x04AE;
+    public static final int ATTR_TIER10BLOCK16PRICE = 0x04AF;
+    public static final int ATTR_TIER11BLOCK1PRICE = 0x04B0;
+    public static final int ATTR_TIER11BLOCK2PRICE = 0x04B1;
+    public static final int ATTR_TIER11BLOCK3PRICE = 0x04B2;
+    public static final int ATTR_TIER11BLOCK4PRICE = 0x04B3;
+    public static final int ATTR_TIER11BLOCK5PRICE = 0x04B4;
+    public static final int ATTR_TIER11BLOCK6PRICE = 0x04B5;
+    public static final int ATTR_TIER11BLOCK7PRICE = 0x04B6;
+    public static final int ATTR_TIER11BLOCK8PRICE = 0x04B7;
+    public static final int ATTR_TIER11BLOCK9PRICE = 0x04B8;
+    public static final int ATTR_TIER11BLOCK10PRICE = 0x04B9;
+    public static final int ATTR_TIER11BLOCK11PRICE = 0x04BA;
+    public static final int ATTR_TIER11BLOCK12PRICE = 0x04BB;
+    public static final int ATTR_TIER11BLOCK13PRICE = 0x04BC;
+    public static final int ATTR_TIER11BLOCK14PRICE = 0x04BD;
+    public static final int ATTR_TIER11BLOCK15PRICE = 0x04BE;
+    public static final int ATTR_TIER11BLOCK16PRICE = 0x04BF;
+    public static final int ATTR_TIER12BLOCK1PRICE = 0x04C0;
+    public static final int ATTR_TIER12BLOCK2PRICE = 0x04C1;
+    public static final int ATTR_TIER12BLOCK3PRICE = 0x04C2;
+    public static final int ATTR_TIER12BLOCK4PRICE = 0x04C3;
+    public static final int ATTR_TIER12BLOCK5PRICE = 0x04C4;
+    public static final int ATTR_TIER12BLOCK6PRICE = 0x04C5;
+    public static final int ATTR_TIER12BLOCK7PRICE = 0x04C6;
+    public static final int ATTR_TIER12BLOCK8PRICE = 0x04C7;
+    public static final int ATTR_TIER12BLOCK9PRICE = 0x04C8;
+    public static final int ATTR_TIER12BLOCK10PRICE = 0x04C9;
+    public static final int ATTR_TIER12BLOCK11PRICE = 0x04CA;
+    public static final int ATTR_TIER12BLOCK12PRICE = 0x04CB;
+    public static final int ATTR_TIER12BLOCK13PRICE = 0x04CC;
+    public static final int ATTR_TIER12BLOCK14PRICE = 0x04CD;
+    public static final int ATTR_TIER12BLOCK15PRICE = 0x04CE;
+    public static final int ATTR_TIER12BLOCK16PRICE = 0x04CF;
+    public static final int ATTR_TIER13BLOCK1PRICE = 0x04D0;
+    public static final int ATTR_TIER13BLOCK2PRICE = 0x04D1;
+    public static final int ATTR_TIER13BLOCK3PRICE = 0x04D2;
+    public static final int ATTR_TIER13BLOCK4PRICE = 0x04D3;
+    public static final int ATTR_TIER13BLOCK5PRICE = 0x04D4;
+    public static final int ATTR_TIER13BLOCK6PRICE = 0x04D5;
+    public static final int ATTR_TIER13BLOCK7PRICE = 0x04D6;
+    public static final int ATTR_TIER13BLOCK8PRICE = 0x04D7;
+    public static final int ATTR_TIER13BLOCK9PRICE = 0x04D8;
+    public static final int ATTR_TIER13BLOCK10PRICE = 0x04D9;
+    public static final int ATTR_TIER13BLOCK11PRICE = 0x04DA;
+    public static final int ATTR_TIER13BLOCK12PRICE = 0x04DB;
+    public static final int ATTR_TIER13BLOCK13PRICE = 0x04DC;
+    public static final int ATTR_TIER13BLOCK14PRICE = 0x04DD;
+    public static final int ATTR_TIER13BLOCK15PRICE = 0x04DE;
+    public static final int ATTR_TIER13BLOCK16PRICE = 0x04DF;
+    public static final int ATTR_TIER14BLOCK1PRICE = 0x04E0;
+    public static final int ATTR_TIER14BLOCK2PRICE = 0x04E1;
+    public static final int ATTR_TIER14BLOCK3PRICE = 0x04E2;
+    public static final int ATTR_TIER14BLOCK4PRICE = 0x04E3;
+    public static final int ATTR_TIER14BLOCK5PRICE = 0x04E4;
+    public static final int ATTR_TIER14BLOCK6PRICE = 0x04E5;
+    public static final int ATTR_TIER14BLOCK7PRICE = 0x04E6;
+    public static final int ATTR_TIER14BLOCK8PRICE = 0x04E7;
+    public static final int ATTR_TIER14BLOCK9PRICE = 0x04E8;
+    public static final int ATTR_TIER14BLOCK10PRICE = 0x04E9;
+    public static final int ATTR_TIER14BLOCK11PRICE = 0x04EA;
+    public static final int ATTR_TIER14BLOCK12PRICE = 0x04EB;
+    public static final int ATTR_TIER14BLOCK13PRICE = 0x04EC;
+    public static final int ATTR_TIER14BLOCK14PRICE = 0x04ED;
+    public static final int ATTR_TIER14BLOCK15PRICE = 0x04EE;
+    public static final int ATTR_TIER14BLOCK16PRICE = 0x04EF;
+    public static final int ATTR_TIER15BLOCK1PRICE = 0x04F0;
+    public static final int ATTR_TIER15BLOCK2PRICE = 0x04F1;
+    public static final int ATTR_TIER15BLOCK3PRICE = 0x04F2;
+    public static final int ATTR_TIER15BLOCK4PRICE = 0x04F3;
+    public static final int ATTR_TIER15BLOCK5PRICE = 0x04F4;
+    public static final int ATTR_TIER15BLOCK6PRICE = 0x04F5;
+    public static final int ATTR_TIER15BLOCK7PRICE = 0x04F6;
+    public static final int ATTR_TIER15BLOCK8PRICE = 0x04F7;
+    public static final int ATTR_TIER15BLOCK9PRICE = 0x04F8;
+    public static final int ATTR_TIER15BLOCK10PRICE = 0x04F9;
+    public static final int ATTR_TIER15BLOCK11PRICE = 0x04FA;
+    public static final int ATTR_TIER15BLOCK12PRICE = 0x04FB;
+    public static final int ATTR_TIER15BLOCK13PRICE = 0x04FC;
+    public static final int ATTR_TIER15BLOCK14PRICE = 0x04FD;
+    public static final int ATTR_TIER15BLOCK15PRICE = 0x04FE;
+    public static final int ATTR_TIER15BLOCK16PRICE = 0x04FF;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER16 = 0x051F;
+    public static final int ATTR_PRICETIER16 = 0x050F;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER17 = 0x0520;
+    public static final int ATTR_PRICETIER17 = 0x0510;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER18 = 0x0521;
+    public static final int ATTR_PRICETIER18 = 0x0511;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER19 = 0x0522;
+    public static final int ATTR_PRICETIER19 = 0x0512;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER20 = 0x0523;
+    public static final int ATTR_PRICETIER20 = 0x0513;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER21 = 0x0524;
+    public static final int ATTR_PRICETIER21 = 0x0514;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER22 = 0x0525;
+    public static final int ATTR_PRICETIER22 = 0x0515;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER23 = 0x0526;
+    public static final int ATTR_PRICETIER23 = 0x0516;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER24 = 0x0527;
+    public static final int ATTR_PRICETIER24 = 0x0517;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER25 = 0x0528;
+    public static final int ATTR_PRICETIER25 = 0x0518;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER26 = 0x0529;
+    public static final int ATTR_PRICETIER26 = 0x0519;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER27 = 0x052A;
+    public static final int ATTR_PRICETIER27 = 0x051A;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER28 = 0x052B;
+    public static final int ATTR_PRICETIER28 = 0x051B;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER29 = 0x052C;
+    public static final int ATTR_PRICETIER29 = 0x051C;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER30 = 0x052D;
+    public static final int ATTR_PRICETIER30 = 0x051D;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER31 = 0x052E;
+    public static final int ATTR_PRICETIER31 = 0x051E;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER32 = 0x052F;
+    public static final int ATTR_PRICETIER32 = 0x051F;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER33 = 0x0530;
+    public static final int ATTR_PRICETIER33 = 0x0520;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER34 = 0x0531;
+    public static final int ATTR_PRICETIER34 = 0x0521;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER35 = 0x0532;
+    public static final int ATTR_PRICETIER35 = 0x0522;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER36 = 0x0533;
+    public static final int ATTR_PRICETIER36 = 0x0523;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER37 = 0x0534;
+    public static final int ATTR_PRICETIER37 = 0x0524;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER38 = 0x0535;
+    public static final int ATTR_PRICETIER38 = 0x0525;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER39 = 0x0536;
+    public static final int ATTR_PRICETIER39 = 0x0526;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER40 = 0x0537;
+    public static final int ATTR_PRICETIER40 = 0x0527;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER41 = 0x0538;
+    public static final int ATTR_PRICETIER41 = 0x0528;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER42 = 0x0539;
+    public static final int ATTR_PRICETIER42 = 0x0529;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER43 = 0x053A;
+    public static final int ATTR_PRICETIER43 = 0x052A;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER44 = 0x053B;
+    public static final int ATTR_PRICETIER44 = 0x052B;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER45 = 0x053C;
+    public static final int ATTR_PRICETIER45 = 0x052C;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER46 = 0x053D;
+    public static final int ATTR_PRICETIER46 = 0x052D;
     /**
      * Attributes PriceTier16 through PriceTier48 represent the price of Energy, Gas, or
      * Water delivered to the premises (i.e. delivered to the customer from the utility) at a
      * specific price tier.
      */
-    public static final int ATTR_PRICETIER47 = 0x053E;
+    public static final int ATTR_PRICETIER47 = 0x052E;
     /**
      * Attribute CPP1 Price represents the price of Energy, Gas, or Water delivered to the
      * premises (i.e. delivered to the customer from the utility) while Critical Peak Pricing
@@ -3294,378 +3294,378 @@ public class ZclPriceCluster extends ZclCluster {
     public static final int ATTR_CREDITCARDPAYMENT5 = 0x0850;
     public static final int ATTR_CREDITCARDPAYMENTDATE5 = 0x0851;
     public static final int ATTR_CREDITCARDPAYMENTREF5 = 0x0852;
-    public static final int ATTR_RECEIVEDTIER1PRICELABEL = 0x8001;
-    public static final int ATTR_RECEIVEDTIER2PRICELABEL = 0x8002;
-    public static final int ATTR_RECEIVEDTIER3PRICELABEL = 0x8003;
-    public static final int ATTR_RECEIVEDTIER4PRICELABEL = 0x8004;
-    public static final int ATTR_RECEIVEDTIER5PRICELABEL = 0x8005;
-    public static final int ATTR_RECEIVEDTIER6PRICELABEL = 0x8006;
-    public static final int ATTR_RECEIVEDTIER7PRICELABEL = 0x8007;
-    public static final int ATTR_RECEIVEDTIER8PRICELABEL = 0x8008;
-    public static final int ATTR_RECEIVEDTIER9PRICELABEL = 0x8009;
-    public static final int ATTR_RECEIVEDTIER10PRICELABEL = 0x800A;
-    public static final int ATTR_RECEIVEDTIER11PRICELABEL = 0x800B;
-    public static final int ATTR_RECEIVEDTIER12PRICELABEL = 0x800C;
-    public static final int ATTR_RECEIVEDTIER13PRICELABEL = 0x800D;
-    public static final int ATTR_RECEIVEDTIER14PRICELABEL = 0x800E;
-    public static final int ATTR_RECEIVEDTIER15PRICELABEL = 0x800F;
-    public static final int ATTR_RECEIVEDTIER16PRICELABEL = 0x8010;
-    public static final int ATTR_RECEIVEDTIER17PRICELABEL = 0x8011;
-    public static final int ATTR_RECEIVEDTIER18PRICELABEL = 0x8012;
-    public static final int ATTR_RECEIVEDTIER19PRICELABEL = 0x8013;
-    public static final int ATTR_RECEIVEDTIER20PRICELABEL = 0x8014;
-    public static final int ATTR_RECEIVEDTIER21PRICELABEL = 0x8015;
-    public static final int ATTR_RECEIVEDTIER22PRICELABEL = 0x8016;
-    public static final int ATTR_RECEIVEDTIER23PRICELABEL = 0x8017;
-    public static final int ATTR_RECEIVEDTIER24PRICELABEL = 0x8018;
-    public static final int ATTR_RECEIVEDTIER25PRICELABEL = 0x8019;
-    public static final int ATTR_RECEIVEDTIER26PRICELABEL = 0x801A;
-    public static final int ATTR_RECEIVEDTIER27PRICELABEL = 0x801B;
-    public static final int ATTR_RECEIVEDTIER28PRICELABEL = 0x801C;
-    public static final int ATTR_RECEIVEDTIER29PRICELABEL = 0x801D;
-    public static final int ATTR_RECEIVEDTIER30PRICELABEL = 0x801E;
-    public static final int ATTR_RECEIVEDTIER31PRICELABEL = 0x801F;
-    public static final int ATTR_RECEIVEDTIER32PRICELABEL = 0x8020;
-    public static final int ATTR_RECEIVEDTIER33PRICELABEL = 0x8021;
-    public static final int ATTR_RECEIVEDTIER34PRICELABEL = 0x8022;
-    public static final int ATTR_RECEIVEDTIER35PRICELABEL = 0x8023;
-    public static final int ATTR_RECEIVEDTIER36PRICELABEL = 0x8024;
-    public static final int ATTR_RECEIVEDTIER37PRICELABEL = 0x8025;
-    public static final int ATTR_RECEIVEDTIER38PRICELABEL = 0x8026;
-    public static final int ATTR_RECEIVEDTIER39PRICELABEL = 0x8027;
-    public static final int ATTR_RECEIVEDTIER40PRICELABEL = 0x8028;
-    public static final int ATTR_RECEIVEDTIER41PRICELABEL = 0x8029;
-    public static final int ATTR_RECEIVEDTIER42PRICELABEL = 0x802A;
-    public static final int ATTR_RECEIVEDTIER43PRICELABEL = 0x802B;
-    public static final int ATTR_RECEIVEDTIER44PRICELABEL = 0x802C;
-    public static final int ATTR_RECEIVEDTIER45PRICELABEL = 0x802D;
-    public static final int ATTR_RECEIVEDTIER46PRICELABEL = 0x802E;
-    public static final int ATTR_RECEIVEDTIER47PRICELABEL = 0x802F;
-    public static final int ATTR_RECEIVEDTIER48PRICELABEL = 0x8030;
-    public static final int ATTR_RECEIVEDBLOCK1THRESHOLD = 0x8101;
-    public static final int ATTR_RECEIVEDBLOCK2THRESHOLD = 0x8102;
-    public static final int ATTR_RECEIVEDBLOCK3THRESHOLD = 0x8103;
-    public static final int ATTR_RECEIVEDBLOCK4THRESHOLD = 0x8104;
-    public static final int ATTR_RECEIVEDBLOCK5THRESHOLD = 0x8105;
-    public static final int ATTR_RECEIVEDBLOCK6THRESHOLD = 0x8106;
-    public static final int ATTR_RECEIVEDBLOCK7THRESHOLD = 0x8107;
-    public static final int ATTR_RECEIVEDBLOCK8THRESHOLD = 0x8108;
-    public static final int ATTR_RECEIVEDBLOCK9THRESHOLD = 0x8109;
-    public static final int ATTR_RECEIVEDBLOCK10THRESHOLD = 0x810A;
-    public static final int ATTR_RECEIVEDBLOCK11THRESHOLD = 0x810B;
-    public static final int ATTR_RECEIVEDBLOCK12THRESHOLD = 0x810C;
-    public static final int ATTR_RECEIVEDBLOCK13THRESHOLD = 0x810D;
-    public static final int ATTR_RECEIVEDBLOCK14THRESHOLD = 0x810E;
-    public static final int ATTR_RECEIVEDBLOCK15THRESHOLD = 0x810F;
-    public static final int ATTR_RECEIVEDBLOCK16THRESHOLD = 0x8110;
+    public static final int ATTR_RECEIVEDTIER1PRICELABEL = 0x8000;
+    public static final int ATTR_RECEIVEDTIER2PRICELABEL = 0x8001;
+    public static final int ATTR_RECEIVEDTIER3PRICELABEL = 0x8002;
+    public static final int ATTR_RECEIVEDTIER4PRICELABEL = 0x8003;
+    public static final int ATTR_RECEIVEDTIER5PRICELABEL = 0x8004;
+    public static final int ATTR_RECEIVEDTIER6PRICELABEL = 0x8005;
+    public static final int ATTR_RECEIVEDTIER7PRICELABEL = 0x8006;
+    public static final int ATTR_RECEIVEDTIER8PRICELABEL = 0x8007;
+    public static final int ATTR_RECEIVEDTIER9PRICELABEL = 0x8008;
+    public static final int ATTR_RECEIVEDTIER10PRICELABEL = 0x8009;
+    public static final int ATTR_RECEIVEDTIER11PRICELABEL = 0x800A;
+    public static final int ATTR_RECEIVEDTIER12PRICELABEL = 0x800B;
+    public static final int ATTR_RECEIVEDTIER13PRICELABEL = 0x800C;
+    public static final int ATTR_RECEIVEDTIER14PRICELABEL = 0x800D;
+    public static final int ATTR_RECEIVEDTIER15PRICELABEL = 0x800E;
+    public static final int ATTR_RECEIVEDTIER16PRICELABEL = 0x800F;
+    public static final int ATTR_RECEIVEDTIER17PRICELABEL = 0x8010;
+    public static final int ATTR_RECEIVEDTIER18PRICELABEL = 0x8011;
+    public static final int ATTR_RECEIVEDTIER19PRICELABEL = 0x8012;
+    public static final int ATTR_RECEIVEDTIER20PRICELABEL = 0x8013;
+    public static final int ATTR_RECEIVEDTIER21PRICELABEL = 0x8014;
+    public static final int ATTR_RECEIVEDTIER22PRICELABEL = 0x8015;
+    public static final int ATTR_RECEIVEDTIER23PRICELABEL = 0x8016;
+    public static final int ATTR_RECEIVEDTIER24PRICELABEL = 0x8017;
+    public static final int ATTR_RECEIVEDTIER25PRICELABEL = 0x8018;
+    public static final int ATTR_RECEIVEDTIER26PRICELABEL = 0x8019;
+    public static final int ATTR_RECEIVEDTIER27PRICELABEL = 0x801A;
+    public static final int ATTR_RECEIVEDTIER28PRICELABEL = 0x801B;
+    public static final int ATTR_RECEIVEDTIER29PRICELABEL = 0x801C;
+    public static final int ATTR_RECEIVEDTIER30PRICELABEL = 0x801D;
+    public static final int ATTR_RECEIVEDTIER31PRICELABEL = 0x801E;
+    public static final int ATTR_RECEIVEDTIER32PRICELABEL = 0x801F;
+    public static final int ATTR_RECEIVEDTIER33PRICELABEL = 0x8020;
+    public static final int ATTR_RECEIVEDTIER34PRICELABEL = 0x8021;
+    public static final int ATTR_RECEIVEDTIER35PRICELABEL = 0x8022;
+    public static final int ATTR_RECEIVEDTIER36PRICELABEL = 0x8023;
+    public static final int ATTR_RECEIVEDTIER37PRICELABEL = 0x8024;
+    public static final int ATTR_RECEIVEDTIER38PRICELABEL = 0x8025;
+    public static final int ATTR_RECEIVEDTIER39PRICELABEL = 0x8026;
+    public static final int ATTR_RECEIVEDTIER40PRICELABEL = 0x8027;
+    public static final int ATTR_RECEIVEDTIER41PRICELABEL = 0x8028;
+    public static final int ATTR_RECEIVEDTIER42PRICELABEL = 0x8029;
+    public static final int ATTR_RECEIVEDTIER43PRICELABEL = 0x802A;
+    public static final int ATTR_RECEIVEDTIER44PRICELABEL = 0x802B;
+    public static final int ATTR_RECEIVEDTIER45PRICELABEL = 0x802C;
+    public static final int ATTR_RECEIVEDTIER46PRICELABEL = 0x802D;
+    public static final int ATTR_RECEIVEDTIER47PRICELABEL = 0x802E;
+    public static final int ATTR_RECEIVEDTIER48PRICELABEL = 0x802F;
+    public static final int ATTR_RECEIVEDBLOCK1THRESHOLD = 0x8100;
+    public static final int ATTR_RECEIVEDBLOCK2THRESHOLD = 0x8101;
+    public static final int ATTR_RECEIVEDBLOCK3THRESHOLD = 0x8102;
+    public static final int ATTR_RECEIVEDBLOCK4THRESHOLD = 0x8103;
+    public static final int ATTR_RECEIVEDBLOCK5THRESHOLD = 0x8104;
+    public static final int ATTR_RECEIVEDBLOCK6THRESHOLD = 0x8105;
+    public static final int ATTR_RECEIVEDBLOCK7THRESHOLD = 0x8106;
+    public static final int ATTR_RECEIVEDBLOCK8THRESHOLD = 0x8107;
+    public static final int ATTR_RECEIVEDBLOCK9THRESHOLD = 0x8108;
+    public static final int ATTR_RECEIVEDBLOCK10THRESHOLD = 0x8109;
+    public static final int ATTR_RECEIVEDBLOCK11THRESHOLD = 0x810A;
+    public static final int ATTR_RECEIVEDBLOCK12THRESHOLD = 0x810B;
+    public static final int ATTR_RECEIVEDBLOCK13THRESHOLD = 0x810C;
+    public static final int ATTR_RECEIVEDBLOCK14THRESHOLD = 0x810D;
+    public static final int ATTR_RECEIVEDBLOCK15THRESHOLD = 0x810E;
+    public static final int ATTR_RECEIVEDBLOCK16THRESHOLD = 0x810F;
     public static final int ATTR_RECEIVEDSTARTOFBLOCKPERIOD = 0x8200;
     public static final int ATTR_RECEIVEDBLOCKPERIODDURATION = 0x8201;
     public static final int ATTR_RECEIVEDTHRESHOLDMULTIPLIER = 0x8202;
     public static final int ATTR_RECEIVEDTHRESHOLDDIVISOR = 0x8203;
-    public static final int ATTR_RXNOTIERBLOCK1PRICE = 0x8401;
-    public static final int ATTR_RXNOTIERBLOCK2PRICE = 0x8402;
-    public static final int ATTR_RXNOTIERBLOCK3PRICE = 0x8403;
-    public static final int ATTR_RXNOTIERBLOCK4PRICE = 0x8404;
-    public static final int ATTR_RXNOTIERBLOCK5PRICE = 0x8405;
-    public static final int ATTR_RXNOTIERBLOCK6PRICE = 0x8406;
-    public static final int ATTR_RXNOTIERBLOCK7PRICE = 0x8407;
-    public static final int ATTR_RXNOTIERBLOCK8PRICE = 0x8408;
-    public static final int ATTR_RXNOTIERBLOCK9PRICE = 0x8409;
-    public static final int ATTR_RXNOTIERBLOCK10PRICE = 0x840A;
-    public static final int ATTR_RXNOTIERBLOCK11PRICE = 0x840B;
-    public static final int ATTR_RXNOTIERBLOCK12PRICE = 0x840C;
-    public static final int ATTR_RXNOTIERBLOCK13PRICE = 0x840D;
-    public static final int ATTR_RXNOTIERBLOCK14PRICE = 0x840E;
-    public static final int ATTR_RXNOTIERBLOCK15PRICE = 0x840F;
-    public static final int ATTR_RXNOTIERBLOCK16PRICE = 0x8410;
-    public static final int ATTR_RXTIER1BLOCK1PRICE = 0x8411;
-    public static final int ATTR_RXTIER1BLOCK2PRICE = 0x8412;
-    public static final int ATTR_RXTIER1BLOCK3PRICE = 0x8413;
-    public static final int ATTR_RXTIER1BLOCK4PRICE = 0x8414;
-    public static final int ATTR_RXTIER1BLOCK5PRICE = 0x8415;
-    public static final int ATTR_RXTIER1BLOCK6PRICE = 0x8416;
-    public static final int ATTR_RXTIER1BLOCK7PRICE = 0x8417;
-    public static final int ATTR_RXTIER1BLOCK8PRICE = 0x8418;
-    public static final int ATTR_RXTIER1BLOCK9PRICE = 0x8419;
-    public static final int ATTR_RXTIER1BLOCK10PRICE = 0x841A;
-    public static final int ATTR_RXTIER1BLOCK11PRICE = 0x841B;
-    public static final int ATTR_RXTIER1BLOCK12PRICE = 0x841C;
-    public static final int ATTR_RXTIER1BLOCK13PRICE = 0x841D;
-    public static final int ATTR_RXTIER1BLOCK14PRICE = 0x841E;
-    public static final int ATTR_RXTIER1BLOCK15PRICE = 0x841F;
-    public static final int ATTR_RXTIER1BLOCK16PRICE = 0x8420;
-    public static final int ATTR_RXTIER2BLOCK1PRICE = 0x8421;
-    public static final int ATTR_RXTIER2BLOCK2PRICE = 0x8422;
-    public static final int ATTR_RXTIER2BLOCK3PRICE = 0x8423;
-    public static final int ATTR_RXTIER2BLOCK4PRICE = 0x8424;
-    public static final int ATTR_RXTIER2BLOCK5PRICE = 0x8425;
-    public static final int ATTR_RXTIER2BLOCK6PRICE = 0x8426;
-    public static final int ATTR_RXTIER2BLOCK7PRICE = 0x8427;
-    public static final int ATTR_RXTIER2BLOCK8PRICE = 0x8428;
-    public static final int ATTR_RXTIER2BLOCK9PRICE = 0x8429;
-    public static final int ATTR_RXTIER2BLOCK10PRICE = 0x842A;
-    public static final int ATTR_RXTIER2BLOCK11PRICE = 0x842B;
-    public static final int ATTR_RXTIER2BLOCK12PRICE = 0x842C;
-    public static final int ATTR_RXTIER2BLOCK13PRICE = 0x842D;
-    public static final int ATTR_RXTIER2BLOCK14PRICE = 0x842E;
-    public static final int ATTR_RXTIER2BLOCK15PRICE = 0x842F;
-    public static final int ATTR_RXTIER2BLOCK16PRICE = 0x8430;
-    public static final int ATTR_RXTIER3BLOCK1PRICE = 0x8431;
-    public static final int ATTR_RXTIER3BLOCK2PRICE = 0x8432;
-    public static final int ATTR_RXTIER3BLOCK3PRICE = 0x8433;
-    public static final int ATTR_RXTIER3BLOCK4PRICE = 0x8434;
-    public static final int ATTR_RXTIER3BLOCK5PRICE = 0x8435;
-    public static final int ATTR_RXTIER3BLOCK6PRICE = 0x8436;
-    public static final int ATTR_RXTIER3BLOCK7PRICE = 0x8437;
-    public static final int ATTR_RXTIER3BLOCK8PRICE = 0x8438;
-    public static final int ATTR_RXTIER3BLOCK9PRICE = 0x8439;
-    public static final int ATTR_RXTIER3BLOCK10PRICE = 0x843A;
-    public static final int ATTR_RXTIER3BLOCK11PRICE = 0x843B;
-    public static final int ATTR_RXTIER3BLOCK12PRICE = 0x843C;
-    public static final int ATTR_RXTIER3BLOCK13PRICE = 0x843D;
-    public static final int ATTR_RXTIER3BLOCK14PRICE = 0x843E;
-    public static final int ATTR_RXTIER3BLOCK15PRICE = 0x843F;
-    public static final int ATTR_RXTIER3BLOCK16PRICE = 0x8440;
-    public static final int ATTR_RXTIER4BLOCK1PRICE = 0x8441;
-    public static final int ATTR_RXTIER4BLOCK2PRICE = 0x8442;
-    public static final int ATTR_RXTIER4BLOCK3PRICE = 0x8443;
-    public static final int ATTR_RXTIER4BLOCK4PRICE = 0x8444;
-    public static final int ATTR_RXTIER4BLOCK5PRICE = 0x8445;
-    public static final int ATTR_RXTIER4BLOCK6PRICE = 0x8446;
-    public static final int ATTR_RXTIER4BLOCK7PRICE = 0x8447;
-    public static final int ATTR_RXTIER4BLOCK8PRICE = 0x8448;
-    public static final int ATTR_RXTIER4BLOCK9PRICE = 0x8449;
-    public static final int ATTR_RXTIER4BLOCK10PRICE = 0x844A;
-    public static final int ATTR_RXTIER4BLOCK11PRICE = 0x844B;
-    public static final int ATTR_RXTIER4BLOCK12PRICE = 0x844C;
-    public static final int ATTR_RXTIER4BLOCK13PRICE = 0x844D;
-    public static final int ATTR_RXTIER4BLOCK14PRICE = 0x844E;
-    public static final int ATTR_RXTIER4BLOCK15PRICE = 0x844F;
-    public static final int ATTR_RXTIER4BLOCK16PRICE = 0x8450;
-    public static final int ATTR_RXTIER5BLOCK1PRICE = 0x8451;
-    public static final int ATTR_RXTIER5BLOCK2PRICE = 0x8452;
-    public static final int ATTR_RXTIER5BLOCK3PRICE = 0x8453;
-    public static final int ATTR_RXTIER5BLOCK4PRICE = 0x8454;
-    public static final int ATTR_RXTIER5BLOCK5PRICE = 0x8455;
-    public static final int ATTR_RXTIER5BLOCK6PRICE = 0x8456;
-    public static final int ATTR_RXTIER5BLOCK7PRICE = 0x8457;
-    public static final int ATTR_RXTIER5BLOCK8PRICE = 0x8458;
-    public static final int ATTR_RXTIER5BLOCK9PRICE = 0x8459;
-    public static final int ATTR_RXTIER5BLOCK10PRICE = 0x845A;
-    public static final int ATTR_RXTIER5BLOCK11PRICE = 0x845B;
-    public static final int ATTR_RXTIER5BLOCK12PRICE = 0x845C;
-    public static final int ATTR_RXTIER5BLOCK13PRICE = 0x845D;
-    public static final int ATTR_RXTIER5BLOCK14PRICE = 0x845E;
-    public static final int ATTR_RXTIER5BLOCK15PRICE = 0x845F;
-    public static final int ATTR_RXTIER5BLOCK16PRICE = 0x8460;
-    public static final int ATTR_RXTIER6BLOCK1PRICE = 0x8461;
-    public static final int ATTR_RXTIER6BLOCK2PRICE = 0x8462;
-    public static final int ATTR_RXTIER6BLOCK3PRICE = 0x8463;
-    public static final int ATTR_RXTIER6BLOCK4PRICE = 0x8464;
-    public static final int ATTR_RXTIER6BLOCK5PRICE = 0x8465;
-    public static final int ATTR_RXTIER6BLOCK6PRICE = 0x8466;
-    public static final int ATTR_RXTIER6BLOCK7PRICE = 0x8467;
-    public static final int ATTR_RXTIER6BLOCK8PRICE = 0x8468;
-    public static final int ATTR_RXTIER6BLOCK9PRICE = 0x8469;
-    public static final int ATTR_RXTIER6BLOCK10PRICE = 0x846A;
-    public static final int ATTR_RXTIER6BLOCK11PRICE = 0x846B;
-    public static final int ATTR_RXTIER6BLOCK12PRICE = 0x846C;
-    public static final int ATTR_RXTIER6BLOCK13PRICE = 0x846D;
-    public static final int ATTR_RXTIER6BLOCK14PRICE = 0x846E;
-    public static final int ATTR_RXTIER6BLOCK15PRICE = 0x846F;
-    public static final int ATTR_RXTIER6BLOCK16PRICE = 0x8470;
-    public static final int ATTR_RXTIER7BLOCK1PRICE = 0x8471;
-    public static final int ATTR_RXTIER7BLOCK2PRICE = 0x8472;
-    public static final int ATTR_RXTIER7BLOCK3PRICE = 0x8473;
-    public static final int ATTR_RXTIER7BLOCK4PRICE = 0x8474;
-    public static final int ATTR_RXTIER7BLOCK5PRICE = 0x8475;
-    public static final int ATTR_RXTIER7BLOCK6PRICE = 0x8476;
-    public static final int ATTR_RXTIER7BLOCK7PRICE = 0x8477;
-    public static final int ATTR_RXTIER7BLOCK8PRICE = 0x8478;
-    public static final int ATTR_RXTIER7BLOCK9PRICE = 0x8479;
-    public static final int ATTR_RXTIER7BLOCK10PRICE = 0x847A;
-    public static final int ATTR_RXTIER7BLOCK11PRICE = 0x847B;
-    public static final int ATTR_RXTIER7BLOCK12PRICE = 0x847C;
-    public static final int ATTR_RXTIER7BLOCK13PRICE = 0x847D;
-    public static final int ATTR_RXTIER7BLOCK14PRICE = 0x847E;
-    public static final int ATTR_RXTIER7BLOCK15PRICE = 0x847F;
-    public static final int ATTR_RXTIER7BLOCK16PRICE = 0x8480;
-    public static final int ATTR_RXTIER8BLOCK1PRICE = 0x8481;
-    public static final int ATTR_RXTIER8BLOCK2PRICE = 0x8482;
-    public static final int ATTR_RXTIER8BLOCK3PRICE = 0x8483;
-    public static final int ATTR_RXTIER8BLOCK4PRICE = 0x8484;
-    public static final int ATTR_RXTIER8BLOCK5PRICE = 0x8485;
-    public static final int ATTR_RXTIER8BLOCK6PRICE = 0x8486;
-    public static final int ATTR_RXTIER8BLOCK7PRICE = 0x8487;
-    public static final int ATTR_RXTIER8BLOCK8PRICE = 0x8488;
-    public static final int ATTR_RXTIER8BLOCK9PRICE = 0x8489;
-    public static final int ATTR_RXTIER8BLOCK10PRICE = 0x848A;
-    public static final int ATTR_RXTIER8BLOCK11PRICE = 0x848B;
-    public static final int ATTR_RXTIER8BLOCK12PRICE = 0x848C;
-    public static final int ATTR_RXTIER8BLOCK13PRICE = 0x848D;
-    public static final int ATTR_RXTIER8BLOCK14PRICE = 0x848E;
-    public static final int ATTR_RXTIER8BLOCK15PRICE = 0x848F;
-    public static final int ATTR_RXTIER8BLOCK16PRICE = 0x8490;
-    public static final int ATTR_RXTIER9BLOCK1PRICE = 0x8491;
-    public static final int ATTR_RXTIER9BLOCK2PRICE = 0x8492;
-    public static final int ATTR_RXTIER9BLOCK3PRICE = 0x8493;
-    public static final int ATTR_RXTIER9BLOCK4PRICE = 0x8494;
-    public static final int ATTR_RXTIER9BLOCK5PRICE = 0x8495;
-    public static final int ATTR_RXTIER9BLOCK6PRICE = 0x8496;
-    public static final int ATTR_RXTIER9BLOCK7PRICE = 0x8497;
-    public static final int ATTR_RXTIER9BLOCK8PRICE = 0x8498;
-    public static final int ATTR_RXTIER9BLOCK9PRICE = 0x8499;
-    public static final int ATTR_RXTIER9BLOCK10PRICE = 0x849A;
-    public static final int ATTR_RXTIER9BLOCK11PRICE = 0x849B;
-    public static final int ATTR_RXTIER9BLOCK12PRICE = 0x849C;
-    public static final int ATTR_RXTIER9BLOCK13PRICE = 0x849D;
-    public static final int ATTR_RXTIER9BLOCK14PRICE = 0x849E;
-    public static final int ATTR_RXTIER9BLOCK15PRICE = 0x849F;
-    public static final int ATTR_RXTIER9BLOCK16PRICE = 0x84A0;
-    public static final int ATTR_RXTIER10BLOCK1PRICE = 0x84A1;
-    public static final int ATTR_RXTIER10BLOCK2PRICE = 0x84A2;
-    public static final int ATTR_RXTIER10BLOCK3PRICE = 0x84A3;
-    public static final int ATTR_RXTIER10BLOCK4PRICE = 0x84A4;
-    public static final int ATTR_RXTIER10BLOCK5PRICE = 0x84A5;
-    public static final int ATTR_RXTIER10BLOCK6PRICE = 0x84A6;
-    public static final int ATTR_RXTIER10BLOCK7PRICE = 0x84A7;
-    public static final int ATTR_RXTIER10BLOCK8PRICE = 0x84A8;
-    public static final int ATTR_RXTIER10BLOCK9PRICE = 0x84A9;
-    public static final int ATTR_RXTIER10BLOCK10PRICE = 0x84AA;
-    public static final int ATTR_RXTIER10BLOCK11PRICE = 0x84AB;
-    public static final int ATTR_RXTIER10BLOCK12PRICE = 0x84AC;
-    public static final int ATTR_RXTIER10BLOCK13PRICE = 0x84AD;
-    public static final int ATTR_RXTIER10BLOCK14PRICE = 0x84AE;
-    public static final int ATTR_RXTIER10BLOCK15PRICE = 0x84AF;
-    public static final int ATTR_RXTIER10BLOCK16PRICE = 0x84B0;
-    public static final int ATTR_RXTIER11BLOCK1PRICE = 0x84B1;
-    public static final int ATTR_RXTIER11BLOCK2PRICE = 0x84B2;
-    public static final int ATTR_RXTIER11BLOCK3PRICE = 0x84B3;
-    public static final int ATTR_RXTIER11BLOCK4PRICE = 0x84B4;
-    public static final int ATTR_RXTIER11BLOCK5PRICE = 0x84B5;
-    public static final int ATTR_RXTIER11BLOCK6PRICE = 0x84B6;
-    public static final int ATTR_RXTIER11BLOCK7PRICE = 0x84B7;
-    public static final int ATTR_RXTIER11BLOCK8PRICE = 0x84B8;
-    public static final int ATTR_RXTIER11BLOCK9PRICE = 0x84B9;
-    public static final int ATTR_RXTIER11BLOCK10PRICE = 0x84BA;
-    public static final int ATTR_RXTIER11BLOCK11PRICE = 0x84BB;
-    public static final int ATTR_RXTIER11BLOCK12PRICE = 0x84BC;
-    public static final int ATTR_RXTIER11BLOCK13PRICE = 0x84BD;
-    public static final int ATTR_RXTIER11BLOCK14PRICE = 0x84BE;
-    public static final int ATTR_RXTIER11BLOCK15PRICE = 0x84BF;
-    public static final int ATTR_RXTIER11BLOCK16PRICE = 0x84C0;
-    public static final int ATTR_RXTIER12BLOCK1PRICE = 0x84C1;
-    public static final int ATTR_RXTIER12BLOCK2PRICE = 0x84C2;
-    public static final int ATTR_RXTIER12BLOCK3PRICE = 0x84C3;
-    public static final int ATTR_RXTIER12BLOCK4PRICE = 0x84C4;
-    public static final int ATTR_RXTIER12BLOCK5PRICE = 0x84C5;
-    public static final int ATTR_RXTIER12BLOCK6PRICE = 0x84C6;
-    public static final int ATTR_RXTIER12BLOCK7PRICE = 0x84C7;
-    public static final int ATTR_RXTIER12BLOCK8PRICE = 0x84C8;
-    public static final int ATTR_RXTIER12BLOCK9PRICE = 0x84C9;
-    public static final int ATTR_RXTIER12BLOCK10PRICE = 0x84CA;
-    public static final int ATTR_RXTIER12BLOCK11PRICE = 0x84CB;
-    public static final int ATTR_RXTIER12BLOCK12PRICE = 0x84CC;
-    public static final int ATTR_RXTIER12BLOCK13PRICE = 0x84CD;
-    public static final int ATTR_RXTIER12BLOCK14PRICE = 0x84CE;
-    public static final int ATTR_RXTIER12BLOCK15PRICE = 0x84CF;
-    public static final int ATTR_RXTIER12BLOCK16PRICE = 0x84D0;
-    public static final int ATTR_RXTIER13BLOCK1PRICE = 0x84D1;
-    public static final int ATTR_RXTIER13BLOCK2PRICE = 0x84D2;
-    public static final int ATTR_RXTIER13BLOCK3PRICE = 0x84D3;
-    public static final int ATTR_RXTIER13BLOCK4PRICE = 0x84D4;
-    public static final int ATTR_RXTIER13BLOCK5PRICE = 0x84D5;
-    public static final int ATTR_RXTIER13BLOCK6PRICE = 0x84D6;
-    public static final int ATTR_RXTIER13BLOCK7PRICE = 0x84D7;
-    public static final int ATTR_RXTIER13BLOCK8PRICE = 0x84D8;
-    public static final int ATTR_RXTIER13BLOCK9PRICE = 0x84D9;
-    public static final int ATTR_RXTIER13BLOCK10PRICE = 0x84DA;
-    public static final int ATTR_RXTIER13BLOCK11PRICE = 0x84DB;
-    public static final int ATTR_RXTIER13BLOCK12PRICE = 0x84DC;
-    public static final int ATTR_RXTIER13BLOCK13PRICE = 0x84DD;
-    public static final int ATTR_RXTIER13BLOCK14PRICE = 0x84DE;
-    public static final int ATTR_RXTIER13BLOCK15PRICE = 0x84DF;
-    public static final int ATTR_RXTIER13BLOCK16PRICE = 0x84E0;
-    public static final int ATTR_RXTIER14BLOCK1PRICE = 0x84E1;
-    public static final int ATTR_RXTIER14BLOCK2PRICE = 0x84E2;
-    public static final int ATTR_RXTIER14BLOCK3PRICE = 0x84E3;
-    public static final int ATTR_RXTIER14BLOCK4PRICE = 0x84E4;
-    public static final int ATTR_RXTIER14BLOCK5PRICE = 0x84E5;
-    public static final int ATTR_RXTIER14BLOCK6PRICE = 0x84E6;
-    public static final int ATTR_RXTIER14BLOCK7PRICE = 0x84E7;
-    public static final int ATTR_RXTIER14BLOCK8PRICE = 0x84E8;
-    public static final int ATTR_RXTIER14BLOCK9PRICE = 0x84E9;
-    public static final int ATTR_RXTIER14BLOCK10PRICE = 0x84EA;
-    public static final int ATTR_RXTIER14BLOCK11PRICE = 0x84EB;
-    public static final int ATTR_RXTIER14BLOCK12PRICE = 0x84EC;
-    public static final int ATTR_RXTIER14BLOCK13PRICE = 0x84ED;
-    public static final int ATTR_RXTIER14BLOCK14PRICE = 0x84EE;
-    public static final int ATTR_RXTIER14BLOCK15PRICE = 0x84EF;
-    public static final int ATTR_RXTIER14BLOCK16PRICE = 0x84F0;
-    public static final int ATTR_RXTIER15BLOCK1PRICE = 0x84F1;
-    public static final int ATTR_RXTIER15BLOCK2PRICE = 0x84F2;
-    public static final int ATTR_RXTIER15BLOCK3PRICE = 0x84F3;
-    public static final int ATTR_RXTIER15BLOCK4PRICE = 0x84F4;
-    public static final int ATTR_RXTIER15BLOCK5PRICE = 0x84F5;
-    public static final int ATTR_RXTIER15BLOCK6PRICE = 0x84F6;
-    public static final int ATTR_RXTIER15BLOCK7PRICE = 0x84F7;
-    public static final int ATTR_RXTIER15BLOCK8PRICE = 0x84F8;
-    public static final int ATTR_RXTIER15BLOCK9PRICE = 0x84F9;
-    public static final int ATTR_RXTIER15BLOCK10PRICE = 0x84FA;
-    public static final int ATTR_RXTIER15BLOCK11PRICE = 0x84FB;
-    public static final int ATTR_RXTIER15BLOCK12PRICE = 0x84FC;
-    public static final int ATTR_RXTIER15BLOCK13PRICE = 0x84FD;
-    public static final int ATTR_RXTIER15BLOCK14PRICE = 0x84FE;
-    public static final int ATTR_RXTIER15BLOCK15PRICE = 0x84FF;
-    public static final int ATTR_RXTIER15BLOCK16PRICE = 0x8500;
-    public static final int ATTR_RECEIVEDPRICETIER16 = 0x851F;
-    public static final int ATTR_RECEIVEDPRICETIER17 = 0x8520;
-    public static final int ATTR_RECEIVEDPRICETIER18 = 0x8521;
-    public static final int ATTR_RECEIVEDPRICETIER19 = 0x8522;
-    public static final int ATTR_RECEIVEDPRICETIER20 = 0x8523;
-    public static final int ATTR_RECEIVEDPRICETIER21 = 0x8524;
-    public static final int ATTR_RECEIVEDPRICETIER22 = 0x8525;
-    public static final int ATTR_RECEIVEDPRICETIER23 = 0x8526;
-    public static final int ATTR_RECEIVEDPRICETIER24 = 0x8527;
-    public static final int ATTR_RECEIVEDPRICETIER25 = 0x8528;
-    public static final int ATTR_RECEIVEDPRICETIER26 = 0x8529;
-    public static final int ATTR_RECEIVEDPRICETIER27 = 0x852A;
-    public static final int ATTR_RECEIVEDPRICETIER28 = 0x852B;
-    public static final int ATTR_RECEIVEDPRICETIER29 = 0x852C;
-    public static final int ATTR_RECEIVEDPRICETIER30 = 0x852D;
-    public static final int ATTR_RECEIVEDPRICETIER31 = 0x852E;
-    public static final int ATTR_RECEIVEDPRICETIER32 = 0x852F;
-    public static final int ATTR_RECEIVEDPRICETIER33 = 0x8530;
-    public static final int ATTR_RECEIVEDPRICETIER34 = 0x8531;
-    public static final int ATTR_RECEIVEDPRICETIER35 = 0x8532;
-    public static final int ATTR_RECEIVEDPRICETIER36 = 0x8533;
-    public static final int ATTR_RECEIVEDPRICETIER37 = 0x8534;
-    public static final int ATTR_RECEIVEDPRICETIER38 = 0x8535;
-    public static final int ATTR_RECEIVEDPRICETIER39 = 0x8536;
-    public static final int ATTR_RECEIVEDPRICETIER40 = 0x8537;
-    public static final int ATTR_RECEIVEDPRICETIER41 = 0x8538;
-    public static final int ATTR_RECEIVEDPRICETIER42 = 0x8539;
-    public static final int ATTR_RECEIVEDPRICETIER43 = 0x853A;
-    public static final int ATTR_RECEIVEDPRICETIER44 = 0x853B;
-    public static final int ATTR_RECEIVEDPRICETIER45 = 0x853C;
-    public static final int ATTR_RECEIVEDPRICETIER46 = 0x853D;
-    public static final int ATTR_RECEIVEDPRICETIER47 = 0x853E;
-    public static final int ATTR_RECEIVEDPRICETIER48 = 0x853F;
-    public static final int ATTR_RECEIVEDPRICETIER49 = 0x8540;
-    public static final int ATTR_RECEIVEDPRICETIER50 = 0x8541;
-    public static final int ATTR_RECEIVEDPRICETIER51 = 0x8542;
-    public static final int ATTR_RECEIVEDPRICETIER52 = 0x8543;
-    public static final int ATTR_RECEIVEDPRICETIER53 = 0x8544;
-    public static final int ATTR_RECEIVEDPRICETIER54 = 0x8545;
-    public static final int ATTR_RECEIVEDPRICETIER55 = 0x8546;
-    public static final int ATTR_RECEIVEDPRICETIER56 = 0x8547;
-    public static final int ATTR_RECEIVEDPRICETIER57 = 0x8548;
-    public static final int ATTR_RECEIVEDPRICETIER58 = 0x8549;
-    public static final int ATTR_RECEIVEDPRICETIER59 = 0x854A;
-    public static final int ATTR_RECEIVEDPRICETIER60 = 0x854B;
-    public static final int ATTR_RECEIVEDPRICETIER61 = 0x854C;
-    public static final int ATTR_RECEIVEDPRICETIER62 = 0x854D;
-    public static final int ATTR_RECEIVEDPRICETIER63 = 0x854E;
+    public static final int ATTR_RXNOTIERBLOCK1PRICE = 0x8400;
+    public static final int ATTR_RXNOTIERBLOCK2PRICE = 0x8401;
+    public static final int ATTR_RXNOTIERBLOCK3PRICE = 0x8402;
+    public static final int ATTR_RXNOTIERBLOCK4PRICE = 0x8403;
+    public static final int ATTR_RXNOTIERBLOCK5PRICE = 0x8404;
+    public static final int ATTR_RXNOTIERBLOCK6PRICE = 0x8405;
+    public static final int ATTR_RXNOTIERBLOCK7PRICE = 0x8406;
+    public static final int ATTR_RXNOTIERBLOCK8PRICE = 0x8407;
+    public static final int ATTR_RXNOTIERBLOCK9PRICE = 0x8408;
+    public static final int ATTR_RXNOTIERBLOCK10PRICE = 0x8409;
+    public static final int ATTR_RXNOTIERBLOCK11PRICE = 0x840A;
+    public static final int ATTR_RXNOTIERBLOCK12PRICE = 0x840B;
+    public static final int ATTR_RXNOTIERBLOCK13PRICE = 0x840C;
+    public static final int ATTR_RXNOTIERBLOCK14PRICE = 0x840D;
+    public static final int ATTR_RXNOTIERBLOCK15PRICE = 0x840E;
+    public static final int ATTR_RXNOTIERBLOCK16PRICE = 0x840F;
+    public static final int ATTR_RXTIER1BLOCK1PRICE = 0x8410;
+    public static final int ATTR_RXTIER1BLOCK2PRICE = 0x8411;
+    public static final int ATTR_RXTIER1BLOCK3PRICE = 0x8412;
+    public static final int ATTR_RXTIER1BLOCK4PRICE = 0x8413;
+    public static final int ATTR_RXTIER1BLOCK5PRICE = 0x8414;
+    public static final int ATTR_RXTIER1BLOCK6PRICE = 0x8415;
+    public static final int ATTR_RXTIER1BLOCK7PRICE = 0x8416;
+    public static final int ATTR_RXTIER1BLOCK8PRICE = 0x8417;
+    public static final int ATTR_RXTIER1BLOCK9PRICE = 0x8418;
+    public static final int ATTR_RXTIER1BLOCK10PRICE = 0x8419;
+    public static final int ATTR_RXTIER1BLOCK11PRICE = 0x841A;
+    public static final int ATTR_RXTIER1BLOCK12PRICE = 0x841B;
+    public static final int ATTR_RXTIER1BLOCK13PRICE = 0x841C;
+    public static final int ATTR_RXTIER1BLOCK14PRICE = 0x841D;
+    public static final int ATTR_RXTIER1BLOCK15PRICE = 0x841E;
+    public static final int ATTR_RXTIER1BLOCK16PRICE = 0x841F;
+    public static final int ATTR_RXTIER2BLOCK1PRICE = 0x8420;
+    public static final int ATTR_RXTIER2BLOCK2PRICE = 0x8421;
+    public static final int ATTR_RXTIER2BLOCK3PRICE = 0x8422;
+    public static final int ATTR_RXTIER2BLOCK4PRICE = 0x8423;
+    public static final int ATTR_RXTIER2BLOCK5PRICE = 0x8424;
+    public static final int ATTR_RXTIER2BLOCK6PRICE = 0x8425;
+    public static final int ATTR_RXTIER2BLOCK7PRICE = 0x8426;
+    public static final int ATTR_RXTIER2BLOCK8PRICE = 0x8427;
+    public static final int ATTR_RXTIER2BLOCK9PRICE = 0x8428;
+    public static final int ATTR_RXTIER2BLOCK10PRICE = 0x8429;
+    public static final int ATTR_RXTIER2BLOCK11PRICE = 0x842A;
+    public static final int ATTR_RXTIER2BLOCK12PRICE = 0x842B;
+    public static final int ATTR_RXTIER2BLOCK13PRICE = 0x842C;
+    public static final int ATTR_RXTIER2BLOCK14PRICE = 0x842D;
+    public static final int ATTR_RXTIER2BLOCK15PRICE = 0x842E;
+    public static final int ATTR_RXTIER2BLOCK16PRICE = 0x842F;
+    public static final int ATTR_RXTIER3BLOCK1PRICE = 0x8430;
+    public static final int ATTR_RXTIER3BLOCK2PRICE = 0x8431;
+    public static final int ATTR_RXTIER3BLOCK3PRICE = 0x8432;
+    public static final int ATTR_RXTIER3BLOCK4PRICE = 0x8433;
+    public static final int ATTR_RXTIER3BLOCK5PRICE = 0x8434;
+    public static final int ATTR_RXTIER3BLOCK6PRICE = 0x8435;
+    public static final int ATTR_RXTIER3BLOCK7PRICE = 0x8436;
+    public static final int ATTR_RXTIER3BLOCK8PRICE = 0x8437;
+    public static final int ATTR_RXTIER3BLOCK9PRICE = 0x8438;
+    public static final int ATTR_RXTIER3BLOCK10PRICE = 0x8439;
+    public static final int ATTR_RXTIER3BLOCK11PRICE = 0x843A;
+    public static final int ATTR_RXTIER3BLOCK12PRICE = 0x843B;
+    public static final int ATTR_RXTIER3BLOCK13PRICE = 0x843C;
+    public static final int ATTR_RXTIER3BLOCK14PRICE = 0x843D;
+    public static final int ATTR_RXTIER3BLOCK15PRICE = 0x843E;
+    public static final int ATTR_RXTIER3BLOCK16PRICE = 0x843F;
+    public static final int ATTR_RXTIER4BLOCK1PRICE = 0x8440;
+    public static final int ATTR_RXTIER4BLOCK2PRICE = 0x8441;
+    public static final int ATTR_RXTIER4BLOCK3PRICE = 0x8442;
+    public static final int ATTR_RXTIER4BLOCK4PRICE = 0x8443;
+    public static final int ATTR_RXTIER4BLOCK5PRICE = 0x8444;
+    public static final int ATTR_RXTIER4BLOCK6PRICE = 0x8445;
+    public static final int ATTR_RXTIER4BLOCK7PRICE = 0x8446;
+    public static final int ATTR_RXTIER4BLOCK8PRICE = 0x8447;
+    public static final int ATTR_RXTIER4BLOCK9PRICE = 0x8448;
+    public static final int ATTR_RXTIER4BLOCK10PRICE = 0x8449;
+    public static final int ATTR_RXTIER4BLOCK11PRICE = 0x844A;
+    public static final int ATTR_RXTIER4BLOCK12PRICE = 0x844B;
+    public static final int ATTR_RXTIER4BLOCK13PRICE = 0x844C;
+    public static final int ATTR_RXTIER4BLOCK14PRICE = 0x844D;
+    public static final int ATTR_RXTIER4BLOCK15PRICE = 0x844E;
+    public static final int ATTR_RXTIER4BLOCK16PRICE = 0x844F;
+    public static final int ATTR_RXTIER5BLOCK1PRICE = 0x8450;
+    public static final int ATTR_RXTIER5BLOCK2PRICE = 0x8451;
+    public static final int ATTR_RXTIER5BLOCK3PRICE = 0x8452;
+    public static final int ATTR_RXTIER5BLOCK4PRICE = 0x8453;
+    public static final int ATTR_RXTIER5BLOCK5PRICE = 0x8454;
+    public static final int ATTR_RXTIER5BLOCK6PRICE = 0x8455;
+    public static final int ATTR_RXTIER5BLOCK7PRICE = 0x8456;
+    public static final int ATTR_RXTIER5BLOCK8PRICE = 0x8457;
+    public static final int ATTR_RXTIER5BLOCK9PRICE = 0x8458;
+    public static final int ATTR_RXTIER5BLOCK10PRICE = 0x8459;
+    public static final int ATTR_RXTIER5BLOCK11PRICE = 0x845A;
+    public static final int ATTR_RXTIER5BLOCK12PRICE = 0x845B;
+    public static final int ATTR_RXTIER5BLOCK13PRICE = 0x845C;
+    public static final int ATTR_RXTIER5BLOCK14PRICE = 0x845D;
+    public static final int ATTR_RXTIER5BLOCK15PRICE = 0x845E;
+    public static final int ATTR_RXTIER5BLOCK16PRICE = 0x845F;
+    public static final int ATTR_RXTIER6BLOCK1PRICE = 0x8460;
+    public static final int ATTR_RXTIER6BLOCK2PRICE = 0x8461;
+    public static final int ATTR_RXTIER6BLOCK3PRICE = 0x8462;
+    public static final int ATTR_RXTIER6BLOCK4PRICE = 0x8463;
+    public static final int ATTR_RXTIER6BLOCK5PRICE = 0x8464;
+    public static final int ATTR_RXTIER6BLOCK6PRICE = 0x8465;
+    public static final int ATTR_RXTIER6BLOCK7PRICE = 0x8466;
+    public static final int ATTR_RXTIER6BLOCK8PRICE = 0x8467;
+    public static final int ATTR_RXTIER6BLOCK9PRICE = 0x8468;
+    public static final int ATTR_RXTIER6BLOCK10PRICE = 0x8469;
+    public static final int ATTR_RXTIER6BLOCK11PRICE = 0x846A;
+    public static final int ATTR_RXTIER6BLOCK12PRICE = 0x846B;
+    public static final int ATTR_RXTIER6BLOCK13PRICE = 0x846C;
+    public static final int ATTR_RXTIER6BLOCK14PRICE = 0x846D;
+    public static final int ATTR_RXTIER6BLOCK15PRICE = 0x846E;
+    public static final int ATTR_RXTIER6BLOCK16PRICE = 0x846F;
+    public static final int ATTR_RXTIER7BLOCK1PRICE = 0x8470;
+    public static final int ATTR_RXTIER7BLOCK2PRICE = 0x8471;
+    public static final int ATTR_RXTIER7BLOCK3PRICE = 0x8472;
+    public static final int ATTR_RXTIER7BLOCK4PRICE = 0x8473;
+    public static final int ATTR_RXTIER7BLOCK5PRICE = 0x8474;
+    public static final int ATTR_RXTIER7BLOCK6PRICE = 0x8475;
+    public static final int ATTR_RXTIER7BLOCK7PRICE = 0x8476;
+    public static final int ATTR_RXTIER7BLOCK8PRICE = 0x8477;
+    public static final int ATTR_RXTIER7BLOCK9PRICE = 0x8478;
+    public static final int ATTR_RXTIER7BLOCK10PRICE = 0x8479;
+    public static final int ATTR_RXTIER7BLOCK11PRICE = 0x847A;
+    public static final int ATTR_RXTIER7BLOCK12PRICE = 0x847B;
+    public static final int ATTR_RXTIER7BLOCK13PRICE = 0x847C;
+    public static final int ATTR_RXTIER7BLOCK14PRICE = 0x847D;
+    public static final int ATTR_RXTIER7BLOCK15PRICE = 0x847E;
+    public static final int ATTR_RXTIER7BLOCK16PRICE = 0x847F;
+    public static final int ATTR_RXTIER8BLOCK1PRICE = 0x8480;
+    public static final int ATTR_RXTIER8BLOCK2PRICE = 0x8481;
+    public static final int ATTR_RXTIER8BLOCK3PRICE = 0x8482;
+    public static final int ATTR_RXTIER8BLOCK4PRICE = 0x8483;
+    public static final int ATTR_RXTIER8BLOCK5PRICE = 0x8484;
+    public static final int ATTR_RXTIER8BLOCK6PRICE = 0x8485;
+    public static final int ATTR_RXTIER8BLOCK7PRICE = 0x8486;
+    public static final int ATTR_RXTIER8BLOCK8PRICE = 0x8487;
+    public static final int ATTR_RXTIER8BLOCK9PRICE = 0x8488;
+    public static final int ATTR_RXTIER8BLOCK10PRICE = 0x8489;
+    public static final int ATTR_RXTIER8BLOCK11PRICE = 0x848A;
+    public static final int ATTR_RXTIER8BLOCK12PRICE = 0x848B;
+    public static final int ATTR_RXTIER8BLOCK13PRICE = 0x848C;
+    public static final int ATTR_RXTIER8BLOCK14PRICE = 0x848D;
+    public static final int ATTR_RXTIER8BLOCK15PRICE = 0x848E;
+    public static final int ATTR_RXTIER8BLOCK16PRICE = 0x848F;
+    public static final int ATTR_RXTIER9BLOCK1PRICE = 0x8490;
+    public static final int ATTR_RXTIER9BLOCK2PRICE = 0x8491;
+    public static final int ATTR_RXTIER9BLOCK3PRICE = 0x8492;
+    public static final int ATTR_RXTIER9BLOCK4PRICE = 0x8493;
+    public static final int ATTR_RXTIER9BLOCK5PRICE = 0x8494;
+    public static final int ATTR_RXTIER9BLOCK6PRICE = 0x8495;
+    public static final int ATTR_RXTIER9BLOCK7PRICE = 0x8496;
+    public static final int ATTR_RXTIER9BLOCK8PRICE = 0x8497;
+    public static final int ATTR_RXTIER9BLOCK9PRICE = 0x8498;
+    public static final int ATTR_RXTIER9BLOCK10PRICE = 0x8499;
+    public static final int ATTR_RXTIER9BLOCK11PRICE = 0x849A;
+    public static final int ATTR_RXTIER9BLOCK12PRICE = 0x849B;
+    public static final int ATTR_RXTIER9BLOCK13PRICE = 0x849C;
+    public static final int ATTR_RXTIER9BLOCK14PRICE = 0x849D;
+    public static final int ATTR_RXTIER9BLOCK15PRICE = 0x849E;
+    public static final int ATTR_RXTIER9BLOCK16PRICE = 0x849F;
+    public static final int ATTR_RXTIER10BLOCK1PRICE = 0x84A0;
+    public static final int ATTR_RXTIER10BLOCK2PRICE = 0x84A1;
+    public static final int ATTR_RXTIER10BLOCK3PRICE = 0x84A2;
+    public static final int ATTR_RXTIER10BLOCK4PRICE = 0x84A3;
+    public static final int ATTR_RXTIER10BLOCK5PRICE = 0x84A4;
+    public static final int ATTR_RXTIER10BLOCK6PRICE = 0x84A5;
+    public static final int ATTR_RXTIER10BLOCK7PRICE = 0x84A6;
+    public static final int ATTR_RXTIER10BLOCK8PRICE = 0x84A7;
+    public static final int ATTR_RXTIER10BLOCK9PRICE = 0x84A8;
+    public static final int ATTR_RXTIER10BLOCK10PRICE = 0x84A9;
+    public static final int ATTR_RXTIER10BLOCK11PRICE = 0x84AA;
+    public static final int ATTR_RXTIER10BLOCK12PRICE = 0x84AB;
+    public static final int ATTR_RXTIER10BLOCK13PRICE = 0x84AC;
+    public static final int ATTR_RXTIER10BLOCK14PRICE = 0x84AD;
+    public static final int ATTR_RXTIER10BLOCK15PRICE = 0x84AE;
+    public static final int ATTR_RXTIER10BLOCK16PRICE = 0x84AF;
+    public static final int ATTR_RXTIER11BLOCK1PRICE = 0x84B0;
+    public static final int ATTR_RXTIER11BLOCK2PRICE = 0x84B1;
+    public static final int ATTR_RXTIER11BLOCK3PRICE = 0x84B2;
+    public static final int ATTR_RXTIER11BLOCK4PRICE = 0x84B3;
+    public static final int ATTR_RXTIER11BLOCK5PRICE = 0x84B4;
+    public static final int ATTR_RXTIER11BLOCK6PRICE = 0x84B5;
+    public static final int ATTR_RXTIER11BLOCK7PRICE = 0x84B6;
+    public static final int ATTR_RXTIER11BLOCK8PRICE = 0x84B7;
+    public static final int ATTR_RXTIER11BLOCK9PRICE = 0x84B8;
+    public static final int ATTR_RXTIER11BLOCK10PRICE = 0x84B9;
+    public static final int ATTR_RXTIER11BLOCK11PRICE = 0x84BA;
+    public static final int ATTR_RXTIER11BLOCK12PRICE = 0x84BB;
+    public static final int ATTR_RXTIER11BLOCK13PRICE = 0x84BC;
+    public static final int ATTR_RXTIER11BLOCK14PRICE = 0x84BD;
+    public static final int ATTR_RXTIER11BLOCK15PRICE = 0x84BE;
+    public static final int ATTR_RXTIER11BLOCK16PRICE = 0x84BF;
+    public static final int ATTR_RXTIER12BLOCK1PRICE = 0x84C0;
+    public static final int ATTR_RXTIER12BLOCK2PRICE = 0x84C1;
+    public static final int ATTR_RXTIER12BLOCK3PRICE = 0x84C2;
+    public static final int ATTR_RXTIER12BLOCK4PRICE = 0x84C3;
+    public static final int ATTR_RXTIER12BLOCK5PRICE = 0x84C4;
+    public static final int ATTR_RXTIER12BLOCK6PRICE = 0x84C5;
+    public static final int ATTR_RXTIER12BLOCK7PRICE = 0x84C6;
+    public static final int ATTR_RXTIER12BLOCK8PRICE = 0x84C7;
+    public static final int ATTR_RXTIER12BLOCK9PRICE = 0x84C8;
+    public static final int ATTR_RXTIER12BLOCK10PRICE = 0x84C9;
+    public static final int ATTR_RXTIER12BLOCK11PRICE = 0x84CA;
+    public static final int ATTR_RXTIER12BLOCK12PRICE = 0x84CB;
+    public static final int ATTR_RXTIER12BLOCK13PRICE = 0x84CC;
+    public static final int ATTR_RXTIER12BLOCK14PRICE = 0x84CD;
+    public static final int ATTR_RXTIER12BLOCK15PRICE = 0x84CE;
+    public static final int ATTR_RXTIER12BLOCK16PRICE = 0x84CF;
+    public static final int ATTR_RXTIER13BLOCK1PRICE = 0x84D0;
+    public static final int ATTR_RXTIER13BLOCK2PRICE = 0x84D1;
+    public static final int ATTR_RXTIER13BLOCK3PRICE = 0x84D2;
+    public static final int ATTR_RXTIER13BLOCK4PRICE = 0x84D3;
+    public static final int ATTR_RXTIER13BLOCK5PRICE = 0x84D4;
+    public static final int ATTR_RXTIER13BLOCK6PRICE = 0x84D5;
+    public static final int ATTR_RXTIER13BLOCK7PRICE = 0x84D6;
+    public static final int ATTR_RXTIER13BLOCK8PRICE = 0x84D7;
+    public static final int ATTR_RXTIER13BLOCK9PRICE = 0x84D8;
+    public static final int ATTR_RXTIER13BLOCK10PRICE = 0x84D9;
+    public static final int ATTR_RXTIER13BLOCK11PRICE = 0x84DA;
+    public static final int ATTR_RXTIER13BLOCK12PRICE = 0x84DB;
+    public static final int ATTR_RXTIER13BLOCK13PRICE = 0x84DC;
+    public static final int ATTR_RXTIER13BLOCK14PRICE = 0x84DD;
+    public static final int ATTR_RXTIER13BLOCK15PRICE = 0x84DE;
+    public static final int ATTR_RXTIER13BLOCK16PRICE = 0x84DF;
+    public static final int ATTR_RXTIER14BLOCK1PRICE = 0x84E0;
+    public static final int ATTR_RXTIER14BLOCK2PRICE = 0x84E1;
+    public static final int ATTR_RXTIER14BLOCK3PRICE = 0x84E2;
+    public static final int ATTR_RXTIER14BLOCK4PRICE = 0x84E3;
+    public static final int ATTR_RXTIER14BLOCK5PRICE = 0x84E4;
+    public static final int ATTR_RXTIER14BLOCK6PRICE = 0x84E5;
+    public static final int ATTR_RXTIER14BLOCK7PRICE = 0x84E6;
+    public static final int ATTR_RXTIER14BLOCK8PRICE = 0x84E7;
+    public static final int ATTR_RXTIER14BLOCK9PRICE = 0x84E8;
+    public static final int ATTR_RXTIER14BLOCK10PRICE = 0x84E9;
+    public static final int ATTR_RXTIER14BLOCK11PRICE = 0x84EA;
+    public static final int ATTR_RXTIER14BLOCK12PRICE = 0x84EB;
+    public static final int ATTR_RXTIER14BLOCK13PRICE = 0x84EC;
+    public static final int ATTR_RXTIER14BLOCK14PRICE = 0x84ED;
+    public static final int ATTR_RXTIER14BLOCK15PRICE = 0x84EE;
+    public static final int ATTR_RXTIER14BLOCK16PRICE = 0x84EF;
+    public static final int ATTR_RXTIER15BLOCK1PRICE = 0x84F0;
+    public static final int ATTR_RXTIER15BLOCK2PRICE = 0x84F1;
+    public static final int ATTR_RXTIER15BLOCK3PRICE = 0x84F2;
+    public static final int ATTR_RXTIER15BLOCK4PRICE = 0x84F3;
+    public static final int ATTR_RXTIER15BLOCK5PRICE = 0x84F4;
+    public static final int ATTR_RXTIER15BLOCK6PRICE = 0x84F5;
+    public static final int ATTR_RXTIER15BLOCK7PRICE = 0x84F6;
+    public static final int ATTR_RXTIER15BLOCK8PRICE = 0x84F7;
+    public static final int ATTR_RXTIER15BLOCK9PRICE = 0x84F8;
+    public static final int ATTR_RXTIER15BLOCK10PRICE = 0x84F9;
+    public static final int ATTR_RXTIER15BLOCK11PRICE = 0x84FA;
+    public static final int ATTR_RXTIER15BLOCK12PRICE = 0x84FB;
+    public static final int ATTR_RXTIER15BLOCK13PRICE = 0x84FC;
+    public static final int ATTR_RXTIER15BLOCK14PRICE = 0x84FD;
+    public static final int ATTR_RXTIER15BLOCK15PRICE = 0x84FE;
+    public static final int ATTR_RXTIER15BLOCK16PRICE = 0x84FF;
+    public static final int ATTR_RECEIVEDPRICETIER16 = 0x850F;
+    public static final int ATTR_RECEIVEDPRICETIER17 = 0x8510;
+    public static final int ATTR_RECEIVEDPRICETIER18 = 0x8511;
+    public static final int ATTR_RECEIVEDPRICETIER19 = 0x8512;
+    public static final int ATTR_RECEIVEDPRICETIER20 = 0x8513;
+    public static final int ATTR_RECEIVEDPRICETIER21 = 0x8514;
+    public static final int ATTR_RECEIVEDPRICETIER22 = 0x8515;
+    public static final int ATTR_RECEIVEDPRICETIER23 = 0x8516;
+    public static final int ATTR_RECEIVEDPRICETIER24 = 0x8517;
+    public static final int ATTR_RECEIVEDPRICETIER25 = 0x8518;
+    public static final int ATTR_RECEIVEDPRICETIER26 = 0x8519;
+    public static final int ATTR_RECEIVEDPRICETIER27 = 0x851A;
+    public static final int ATTR_RECEIVEDPRICETIER28 = 0x851B;
+    public static final int ATTR_RECEIVEDPRICETIER29 = 0x851C;
+    public static final int ATTR_RECEIVEDPRICETIER30 = 0x851D;
+    public static final int ATTR_RECEIVEDPRICETIER31 = 0x851E;
+    public static final int ATTR_RECEIVEDPRICETIER32 = 0x851F;
+    public static final int ATTR_RECEIVEDPRICETIER33 = 0x8520;
+    public static final int ATTR_RECEIVEDPRICETIER34 = 0x8521;
+    public static final int ATTR_RECEIVEDPRICETIER35 = 0x8522;
+    public static final int ATTR_RECEIVEDPRICETIER36 = 0x8523;
+    public static final int ATTR_RECEIVEDPRICETIER37 = 0x8524;
+    public static final int ATTR_RECEIVEDPRICETIER38 = 0x8525;
+    public static final int ATTR_RECEIVEDPRICETIER39 = 0x8526;
+    public static final int ATTR_RECEIVEDPRICETIER40 = 0x8527;
+    public static final int ATTR_RECEIVEDPRICETIER41 = 0x8528;
+    public static final int ATTR_RECEIVEDPRICETIER42 = 0x8529;
+    public static final int ATTR_RECEIVEDPRICETIER43 = 0x852A;
+    public static final int ATTR_RECEIVEDPRICETIER44 = 0x852B;
+    public static final int ATTR_RECEIVEDPRICETIER45 = 0x852C;
+    public static final int ATTR_RECEIVEDPRICETIER46 = 0x852D;
+    public static final int ATTR_RECEIVEDPRICETIER47 = 0x852E;
+    public static final int ATTR_RECEIVEDPRICETIER48 = 0x852F;
+    public static final int ATTR_RECEIVEDPRICETIER49 = 0x8530;
+    public static final int ATTR_RECEIVEDPRICETIER50 = 0x8531;
+    public static final int ATTR_RECEIVEDPRICETIER51 = 0x8532;
+    public static final int ATTR_RECEIVEDPRICETIER52 = 0x8533;
+    public static final int ATTR_RECEIVEDPRICETIER53 = 0x8534;
+    public static final int ATTR_RECEIVEDPRICETIER54 = 0x8535;
+    public static final int ATTR_RECEIVEDPRICETIER55 = 0x8536;
+    public static final int ATTR_RECEIVEDPRICETIER56 = 0x8537;
+    public static final int ATTR_RECEIVEDPRICETIER57 = 0x8538;
+    public static final int ATTR_RECEIVEDPRICETIER58 = 0x8539;
+    public static final int ATTR_RECEIVEDPRICETIER59 = 0x853A;
+    public static final int ATTR_RECEIVEDPRICETIER60 = 0x853B;
+    public static final int ATTR_RECEIVEDPRICETIER61 = 0x853C;
+    public static final int ATTR_RECEIVEDPRICETIER62 = 0x853D;
+    public static final int ATTR_RECEIVEDPRICETIER63 = 0x853E;
     public static final int ATTR_RECEIVEDTARIFFLABEL = 0x8610;
     public static final int ATTR_RECEIVEDNUMBEROFPRICETIERSINUSE = 0x8611;
     public static final int ATTR_RECEIVEDNUMBEROFBLOCKTHRESHOLDSINUSE = 0x8612;

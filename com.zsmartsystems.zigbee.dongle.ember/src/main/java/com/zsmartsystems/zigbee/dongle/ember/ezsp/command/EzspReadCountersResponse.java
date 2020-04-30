@@ -63,8 +63,10 @@ public class EzspReadCountersResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(52);
-        builder.append("EzspReadCountersResponse [values=");
+        final StringBuilder builder = new StringBuilder(77);
+        builder.append("EzspReadCountersResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", values=");
         for (int cnt = 0; cnt < values.length; cnt++) {
             if (cnt > 0) {
                 builder.append(' ');

@@ -67,8 +67,10 @@ public class EzspFindKeyTableEntryResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(57);
-        builder.append("EzspFindKeyTableEntryResponse [index=");
+        final StringBuilder builder = new StringBuilder(82);
+        builder.append("EzspFindKeyTableEntryResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", index=");
         builder.append(index);
         builder.append(']');
         return builder.toString();

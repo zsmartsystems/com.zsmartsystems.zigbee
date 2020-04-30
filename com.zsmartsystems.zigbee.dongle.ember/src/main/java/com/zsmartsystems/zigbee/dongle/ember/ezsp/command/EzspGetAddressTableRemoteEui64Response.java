@@ -64,8 +64,10 @@ public class EzspGetAddressTableRemoteEui64Response extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(66);
-        builder.append("EzspGetAddressTableRemoteEui64Response [eui64=");
+        final StringBuilder builder = new StringBuilder(91);
+        builder.append("EzspGetAddressTableRemoteEui64Response [networkId=");
+        builder.append(networkId);
+        builder.append(", eui64=");
         builder.append(eui64);
         builder.append(']');
         return builder.toString();

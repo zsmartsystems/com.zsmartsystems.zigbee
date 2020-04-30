@@ -29,17 +29,12 @@ public class AddScenesCommandTest extends CommandTest {
     @Test
     public void testAddSceneCommand() throws Exception {
         int[] packet = getPacketData("01 00 02 03 00 0A 54 65 73 74 20 53 63 65 6E 65 04 00 05 06");
-        AddSceneCommand request = new AddSceneCommand();
-        request.setGroupId(1);
-        request.setSceneId(2);
-        request.setSceneName("Test Scene");
-        request.setTransitionTime(3);
         final List<ExtensionFieldSet> list = new ArrayList<ExtensionFieldSet>();
         final ExtensionFieldSet data = new ExtensionFieldSet();
         data.setClusterId(4);
         data.setData(new int[] { 5, 6 });
         list.add(data);
-        request.setExtensionFieldSets(list);
+        AddSceneCommand request = new AddSceneCommand(1, 2, 3, "Test Scene", list);
         System.out.println(request);
 
         DefaultSerializer serializer = new DefaultSerializer();

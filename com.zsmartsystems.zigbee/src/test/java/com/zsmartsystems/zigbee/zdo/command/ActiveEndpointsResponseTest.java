@@ -27,7 +27,7 @@ public class ActiveEndpointsResponseTest extends CommandTest {
     public void testReceive() {
         int[] packet = getPacketData("00 00 00 00 01 01");
 
-        ActiveEndpointsResponse endpointsResponse = new ActiveEndpointsResponse();
+        ActiveEndpointsResponse endpointsResponse = new ActiveEndpointsResponse(null, null, null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);
@@ -47,7 +47,7 @@ public class ActiveEndpointsResponseTest extends CommandTest {
     public void testReceive2() {
         int[] packet = getPacketData("00 00 BD 97 06 01 02 03 04 C8 E8");
 
-        ActiveEndpointsResponse endpointsResponse = new ActiveEndpointsResponse();
+        ActiveEndpointsResponse endpointsResponse = new ActiveEndpointsResponse(null, null, null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);

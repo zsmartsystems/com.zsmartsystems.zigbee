@@ -136,8 +136,10 @@ public class EzspSetPreinstalledCbkeDataRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(112);
-        builder.append("EzspSetPreinstalledCbkeDataRequest [caCert=");
+        final StringBuilder builder = new StringBuilder(137);
+        builder.append("EzspSetPreinstalledCbkeDataRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", caCert=");
         builder.append(caCert);
         builder.append(", myCert=");
         builder.append(myCert);

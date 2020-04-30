@@ -33,7 +33,6 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import org.awaitility.Awaitility;
-import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
@@ -93,11 +92,6 @@ public class ZigBeeNetworkManagerTest
     private ZigBeeTransportTransmit mockedTransport;
     private ZigBeeNetworkStateListener mockedStateListener;
     private List<ZigBeeCommand> commandListenerCapture;
-
-    @Before
-    public void resetNotificationService() throws Exception {
-        NotificationService.initialize();
-    }
 
     @Test
     public void testAddRemoveNode() throws Exception {
@@ -826,9 +820,6 @@ public class ZigBeeNetworkManagerTest
 
         final ZigBeeNetworkManager networkManager = new ZigBeeNetworkManager(mockedTransport);
 
-        TestUtilities.setField(NotificationService.class, NotificationService.class, "executorService",
-                Executors.newCachedThreadPool());
-
         TestUtilities.setField(ZigBeeNetworkManager.class, networkManager, "databaseManager",
                 Mockito.mock(ZigBeeNetworkDatabaseManager.class));
 
@@ -855,7 +846,7 @@ public class ZigBeeNetworkManagerTest
 
         Mockito.doNothing().when(mockedTransport).sendCommand(ArgumentMatchers.anyInt(),
                 mockedApsFrameListener.capture());
-
+        
         return networkManager;
     }
 
@@ -1344,10 +1335,6 @@ public class ZigBeeNetworkManagerTest
 
     @Test
     public void processLogs() throws Exception {
-        TestUtilities.outputTestHeader();
-        TestUtilities.setField(NotificationService.class, NotificationService.class, "executorService",
-                Executors.newCachedThreadPool());
-
         File dir = FileSystems.getDefault().getPath("./src/test/resource/logs").toFile();
 
         File[] directoryListing = dir.listFiles();

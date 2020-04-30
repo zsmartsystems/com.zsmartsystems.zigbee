@@ -11,6 +11,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
@@ -23,6 +24,7 @@ import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclIasZoneCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.EnrollResponseCodeEnum;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneEnrollRequestCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneEnrollResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneStateEnum;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneTypeEnum;
 
@@ -47,7 +49,8 @@ public class ZclIasZoneClientTest {
         Mockito.when(cluster.getZigBeeAddress()).thenReturn(new ZigBeeEndpointAddress(1, 1));
 
         ZclAttribute attributeZoneState = Mockito.mock(ZclAttribute.class);
-        Mockito.when(attributeZoneState.readValue(0)).thenReturn(Integer.valueOf(ZoneStateEnum.ENROLLED.getKey()));
+        Mockito.when(attributeZoneState.readValue(Long.MAX_VALUE))
+                .thenReturn(Integer.valueOf(ZoneStateEnum.ENROLLED.getKey()));
 
         Mockito.when(cluster.getAttribute(ZclIasZoneCluster.ATTR_ZONESTATE)).thenReturn(attributeZoneState);
 
@@ -149,11 +152,14 @@ public class ZclIasZoneClientTest {
 
         TestUtilities.setField(ZclIasZoneClient.class, client, "iasZoneCluster", cluster);
 
-        ZoneEnrollRequestCommand command = new ZoneEnrollRequestCommand();
-        command.setZoneType(ZoneTypeEnum.FIRE_SENSOR.getKey());
+        ZoneEnrollRequestCommand command = new ZoneEnrollRequestCommand(ZoneTypeEnum.FIRE_SENSOR.getKey(), 12);
         client.commandReceived(command);
 
+        ArgumentCaptor<ZoneEnrollResponse> zoneResposeCapture = ArgumentCaptor.forClass(ZoneEnrollResponse.class);
         Mockito.verify(cluster, Mockito.timeout(TIMEOUT).times(1))
-                .zoneEnrollResponse(EnrollResponseCodeEnum.SUCCESS.getKey(), 1);
+                .sendCommand(zoneResposeCapture.capture());
+        ZoneEnrollResponse capturedResponse = zoneResposeCapture.getValue();
+        assertEquals(EnrollResponseCodeEnum.SUCCESS.getKey(), capturedResponse.getEnrollResponseCode().intValue());
+        assertEquals(1, capturedResponse.getZoneId().intValue());
     }
 }

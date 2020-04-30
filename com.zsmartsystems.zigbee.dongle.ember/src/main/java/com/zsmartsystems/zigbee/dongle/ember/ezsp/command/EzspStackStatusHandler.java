@@ -70,8 +70,10 @@ public class EzspStackStatusHandler extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(50);
-        builder.append("EzspStackStatusHandler [status=");
+        final StringBuilder builder = new StringBuilder(75);
+        builder.append("EzspStackStatusHandler [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(']');
         return builder.toString();

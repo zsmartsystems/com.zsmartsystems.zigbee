@@ -64,8 +64,10 @@ public class EzspDeleteBindingResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(53);
-        builder.append("EzspDeleteBindingResponse [status=");
+        final StringBuilder builder = new StringBuilder(78);
+        builder.append("EzspDeleteBindingResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(']');
         return builder.toString();

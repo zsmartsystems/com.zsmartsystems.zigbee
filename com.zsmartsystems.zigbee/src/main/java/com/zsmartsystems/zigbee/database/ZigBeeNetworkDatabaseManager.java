@@ -245,6 +245,11 @@ public class ZigBeeNetworkDatabaseManager implements ZigBeeNetworkNodeListener {
     private void saveNode(ZigBeeNode node) {
         int deferredDelay = deferredWriteTime;
 
+        if (executorService.isShutdown()) {
+            logger.debug("{}: Data store: Save rejected as executor is already shut down.", node.getIeeeAddress());
+            return;
+        }
+
         synchronized (deferredWriteFutures) {
             if (deferredWriteFutures.containsKey(node.getIeeeAddress())) {
                 // Cancel the currently scheduled write

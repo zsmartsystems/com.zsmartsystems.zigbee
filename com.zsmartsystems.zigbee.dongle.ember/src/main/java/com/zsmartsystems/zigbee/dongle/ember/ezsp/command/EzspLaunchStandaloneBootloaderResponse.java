@@ -65,8 +65,10 @@ public class EzspLaunchStandaloneBootloaderResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(66);
-        builder.append("EzspLaunchStandaloneBootloaderResponse [status=");
+        final StringBuilder builder = new StringBuilder(91);
+        builder.append("EzspLaunchStandaloneBootloaderResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(']');
         return builder.toString();

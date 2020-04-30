@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import com.zsmartsystems.zigbee.app.ZigBeeApplication;
 import com.zsmartsystems.zigbee.database.ZclClusterDao;
 import com.zsmartsystems.zigbee.database.ZigBeeEndpointDao;
+import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
@@ -588,6 +589,15 @@ public class ZigBeeEndpoint {
     public Future<CommandResult> sendTransaction(ZigBeeCommand command, ZigBeeTransactionMatcher responseMatcher) {
         command.setDestinationAddress(getEndpointAddress());
         return node.sendTransaction(command, responseMatcher);
+    }
+    
+    /**
+     * Gets the {@link NotificationService} provided by the {@link ZigBeeNetworkManager}.
+     * 
+     * @return the {@link NotificationService} provided by the {@link ZigBeeNetworkManager}.
+     */
+    public NotificationService getNotificationService() {
+        return node.getNotificationService();
     }
 
     @Override

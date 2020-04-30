@@ -88,8 +88,10 @@ public class EzspSendManyToOneRouteRequestResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(65);
-        builder.append("EzspSendManyToOneRouteRequestResponse [status=");
+        final StringBuilder builder = new StringBuilder(90);
+        builder.append("EzspSendManyToOneRouteRequestResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", status=");
         builder.append(status);
         builder.append(']');
         return builder.toString();

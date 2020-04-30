@@ -63,8 +63,10 @@ public class EzspCounterRolloverHandler extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(54);
-        builder.append("EzspCounterRolloverHandler [type=");
+        final StringBuilder builder = new StringBuilder(79);
+        builder.append("EzspCounterRolloverHandler [networkId=");
+        builder.append(networkId);
+        builder.append(", type=");
         builder.append(type);
         builder.append(']');
         return builder.toString();

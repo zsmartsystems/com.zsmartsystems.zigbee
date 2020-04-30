@@ -63,8 +63,10 @@ public class EzspGpSinkTableFindOrAllocateEntryResponse extends EzspFrameRespons
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(70);
-        builder.append("EzspGpSinkTableFindOrAllocateEntryResponse [index=");
+        final StringBuilder builder = new StringBuilder(95);
+        builder.append("EzspGpSinkTableFindOrAllocateEntryResponse [networkId=");
+        builder.append(networkId);
+        builder.append(", index=");
         builder.append(index);
         builder.append(']');
         return builder.toString();

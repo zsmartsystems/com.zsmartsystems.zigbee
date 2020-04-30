@@ -25,7 +25,7 @@ public class OffWithEffectCommandTest extends CommandTest {
     @Test
     public void deserialize() {
         int[] packet = getPacketData("01 12 40 00 00");
-        OffWithEffectCommand command = new OffWithEffectCommand();
+        OffWithEffectCommand command = new OffWithEffectCommand(null, null);
 
         DefaultDeserializer deserializer = new DefaultDeserializer(packet);
         ZclFieldDeserializer fieldDeserializer = new ZclFieldDeserializer(deserializer);

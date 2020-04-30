@@ -81,8 +81,10 @@ public class EzspClearTemporaryDataMaybeStoreLinkKeyRequest extends EzspFrameReq
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(74);
-        builder.append("EzspClearTemporaryDataMaybeStoreLinkKeyRequest [storeLinkKey=");
+        final StringBuilder builder = new StringBuilder(99);
+        builder.append("EzspClearTemporaryDataMaybeStoreLinkKeyRequest [networkId=");
+        builder.append(networkId);
+        builder.append(", storeLinkKey=");
         builder.append(storeLinkKey);
         builder.append(']');
         return builder.toString();
