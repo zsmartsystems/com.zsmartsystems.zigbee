@@ -46,7 +46,7 @@ public class EzspCustomFrameHandler extends EzspFrameResponse {
 
         // Deserialize the fields
         payloadLength = deserializer.deserializeUInt8();
-        payload = deserializer.deserializeUInt8Array();
+        payload = deserializer.deserializeUInt8Array(payloadLength);
     }
 
     /**

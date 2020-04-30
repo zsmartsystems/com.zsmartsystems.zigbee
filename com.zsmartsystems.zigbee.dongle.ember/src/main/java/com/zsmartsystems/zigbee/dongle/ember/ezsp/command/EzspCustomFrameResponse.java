@@ -57,7 +57,7 @@ public class EzspCustomFrameResponse extends EzspFrameResponse {
         // Deserialize the fields
         status = deserializer.deserializeEmberStatus();
         replyLength = deserializer.deserializeUInt8();
-        reply = deserializer.deserializeUInt8Array();
+        reply = deserializer.deserializeUInt8Array(replyLength);
     }
 
     /**
