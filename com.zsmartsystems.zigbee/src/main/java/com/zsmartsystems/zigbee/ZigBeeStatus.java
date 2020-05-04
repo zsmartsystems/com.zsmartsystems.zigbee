@@ -69,5 +69,10 @@ public enum ZigBeeStatus {
     /**
      * A fatal error occurred that cannot be recovered from.
      */
-    FATAL_ERROR
+    FATAL_ERROR,
+
+    /**
+     * No ZigBee network was found or formed
+     */
+    NO_NETWORK
 }

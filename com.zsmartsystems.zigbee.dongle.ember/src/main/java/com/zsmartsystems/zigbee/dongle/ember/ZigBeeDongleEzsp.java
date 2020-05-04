@@ -476,7 +476,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         // Now initialise the network
         EmberStatus initResponse = ncp.networkInit();
         if (initResponse == EmberStatus.EMBER_NOT_JOINED) {
-            logger.debug("EZSP dongle initialize done - response {}", initResponse);
+            logger.debug("EZSP dongle initialize failed to join network");
+            return ZigBeeStatus.NO_NETWORK;
         }
 
         // Print current security state to debug logs
