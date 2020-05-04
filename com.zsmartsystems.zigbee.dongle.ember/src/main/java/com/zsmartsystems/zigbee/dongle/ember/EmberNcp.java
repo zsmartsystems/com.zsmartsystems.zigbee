@@ -34,6 +34,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAesMmoHashRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAesMmoHashResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspClearKeyTableRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspClearKeyTableResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspCustomFrameRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspCustomFrameResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspEnergyScanResultHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetCertificate283k1Request;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetCertificate283k1Response;
@@ -69,6 +71,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetTransientKeyTab
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetTransientKeyTableEntryResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetTransientLinkKeyRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetTransientLinkKeyResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetXncpInfoRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetXncpInfoResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetValueRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetValueResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLeaveNetworkRequest;
@@ -1000,6 +1004,43 @@ public class EmberNcp {
         EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse response = (EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse) transaction
                 .getResponse();
         return (response == null) ? 0xFFFF : response.getBootloaderVersion();
+    }
+
+    /**
+     * Get XNCP information from NCP.
+     *
+     * @return the XNCP information
+     */
+    public EzspGetXncpInfoResponse getXncpInfo() {
+        EzspGetXncpInfoRequest request = new EzspGetXncpInfoRequest();
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetXncpInfoResponse.class));
+        EzspGetXncpInfoResponse response = (EzspGetXncpInfoResponse) transaction.getResponse();
+        EzspStatus status = response.getStatus();
+        if (response.getStatus() != EzspStatus.EZSP_SUCCESS) {
+            logger.debug("Error sending xncp info: {}", response);
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * Send a custom frame to the NCP.
+     *
+     * @return the custom response
+     */
+    public EzspCustomFrameResponse sendCustomFrame(int[] customFrame) {
+        EzspCustomFrameRequest request = new EzspCustomFrameRequest();
+        request.setPayload(customFrame);
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspCustomFrameResponse.class));
+        EzspCustomFrameResponse response = (EzspCustomFrameResponse) transaction.getResponse();
+        lastStatus = response.getStatus();
+        if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
+            logger.debug("Error sending custom frame: {}", response);
+            return null;
+        }
+        return response;
     }
 
     private String intArrayToString(int[] payload) {
