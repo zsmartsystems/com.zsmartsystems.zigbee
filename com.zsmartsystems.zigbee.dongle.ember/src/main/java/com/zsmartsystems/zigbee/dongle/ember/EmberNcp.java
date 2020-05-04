@@ -1007,42 +1007,11 @@ public class EmberNcp {
     }
 
     /**
-     * XNCP information.
-     */
-    public static class XncpInfo {
-
-        private final int manufacturerId;
-
-        private final int versionNumber;
-
-        /**
-         * The manufacturer ID reported by the NCP
-         * @return
-         */
-        public int getManufacturerId() {
-            return manufacturerId;
-        }
-
-        /**
-         * The version number reported by the NCP
-         * @return
-         */
-        public int getVersionNumber() {
-            return versionNumber;
-        }
-
-        public XncpInfo(int manufacturerId, int versionNumber) {
-            this.manufacturerId = manufacturerId;
-            this.versionNumber = versionNumber;
-        }
-    }
-
-    /**
      * Get XNCP information from NCP.
      *
      * @return the XNCP information
      */
-    public XncpInfo getXncpInfo() {
+    public EzspGetXncpInfoResponse getXncpInfo() {
         EzspGetXncpInfoRequest request = new EzspGetXncpInfoRequest();
         EzspTransaction transaction = protocolHandler
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetXncpInfoResponse.class));
@@ -1052,8 +1021,7 @@ public class EmberNcp {
             logger.debug("Error sending xncp info: {}", response);
             return null;
         }
-
-        return new XncpInfo(response.getManufacturerId(), response.getVersionNumber());
+        return response;
     }
 
     /**
@@ -1061,7 +1029,7 @@ public class EmberNcp {
      *
      * @return the custom response
      */
-    public int[] sendCustomFrame(int[] customFrame) {
+    public EzspCustomFrameResponse sendCustomFrame(int[] customFrame) {
         EzspCustomFrameRequest request = new EzspCustomFrameRequest();
         request.setPayload(customFrame);
         EzspTransaction transaction = protocolHandler
@@ -1072,8 +1040,7 @@ public class EmberNcp {
             logger.debug("Error sending custom frame: {}", response);
             return null;
         }
-
-        return response.getReply();
+        return response;
     }
 
     private String intArrayToString(int[] payload) {
