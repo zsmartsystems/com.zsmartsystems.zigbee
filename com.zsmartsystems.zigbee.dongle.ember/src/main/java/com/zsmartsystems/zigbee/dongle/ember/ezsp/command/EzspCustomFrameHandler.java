@@ -24,13 +24,6 @@ public class EzspCustomFrameHandler extends EzspFrameResponse {
     public static final int FRAME_ID = 0x54;
 
     /**
-     * The length of the custom frame payload.
-     * <p>
-     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
-     */
-    private int payloadLength;
-
-    /**
      * The payload of the custom frame.
      * <p>
      * EZSP type is <i>uint8_t[]</i> - Java type is {@link int[]}
@@ -45,28 +38,8 @@ public class EzspCustomFrameHandler extends EzspFrameResponse {
         super(inputBuffer);
 
         // Deserialize the fields
-        payloadLength = deserializer.deserializeUInt8();
-        payload = deserializer.deserializeUInt8Array();
-    }
-
-    /**
-     * The length of the custom frame payload.
-     * <p>
-     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
-     *
-     * @return the current payloadLength as {@link int}
-     */
-    public int getPayloadLength() {
-        return payloadLength;
-    }
-
-    /**
-     * The length of the custom frame payload.
-     *
-     * @param payloadLength the payloadLength to set as {@link int}
-     */
-    public void setPayloadLength(int payloadLength) {
-        this.payloadLength = payloadLength;
+        int payloadLength = deserializer.deserializeUInt8();
+        payload= deserializer.deserializeUInt8Array(payloadLength);
     }
 
     /**
@@ -91,9 +64,9 @@ public class EzspCustomFrameHandler extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(75);
-        builder.append("EzspCustomFrameHandler [payloadLength=");
-        builder.append(payloadLength);
+        final StringBuilder builder = new StringBuilder(100);
+        builder.append("EzspCustomFrameHandler [networkId=");
+        builder.append(networkId);
         builder.append(", payload=");
         for (int cnt = 0; cnt < payload.length; cnt++) {
             if (cnt > 0) {
