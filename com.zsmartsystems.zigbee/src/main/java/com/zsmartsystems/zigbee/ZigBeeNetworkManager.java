@@ -400,7 +400,9 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         }
 
         if (nwkAddress == null) {
-            logger.error("{}: Adding local node to network: NWK unknown", ieeeAddress);
+            if(networkState == ZigBeeNetworkState.ONLINE) {
+                logger.error("{}: Adding local node to network: NWK unknown", ieeeAddress);
+            }
             nwkAddress = 0xFFFE;
         }
 
