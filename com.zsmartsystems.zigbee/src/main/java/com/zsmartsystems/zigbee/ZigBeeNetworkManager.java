@@ -386,8 +386,6 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
 
         localIeeeAddress = transport.getIeeeAddress();
 
-        addLocalNode();
-
         return ZigBeeStatus.SUCCESS;
     }
 
@@ -632,12 +630,6 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
                 removeNode(node);
             }
             databaseManager.clear();
-        }
-
-        ZigBeeNode node = getLocalNode();
-        if (node == null) {
-            logger.error("Local node is unknown during startup");
-            return ZigBeeStatus.INVALID_STATE;
         }
 
         // Start the transport layer
