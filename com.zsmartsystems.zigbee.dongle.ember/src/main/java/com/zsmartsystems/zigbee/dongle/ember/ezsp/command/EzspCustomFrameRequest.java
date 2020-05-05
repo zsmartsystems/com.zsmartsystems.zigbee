@@ -27,13 +27,6 @@ public class EzspCustomFrameRequest extends EzspFrameRequest {
     public static final int FRAME_ID = 0x47;
 
     /**
-     * The length of the custom frame payload (maximum 119 bytes).
-     * <p>
-     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
-     */
-    private int payloadLength;
-
-    /**
      * The payload of the custom frame.
      * <p>
      * EZSP type is <i>uint8_t[]</i> - Java type is {@link int[]}
@@ -51,26 +44,6 @@ public class EzspCustomFrameRequest extends EzspFrameRequest {
     public EzspCustomFrameRequest() {
         frameId = FRAME_ID;
         serializer = new EzspSerializer();
-    }
-
-    /**
-     * The length of the custom frame payload (maximum 119 bytes).
-     * <p>
-     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
-     *
-     * @return the current payloadLength as {@link int}
-     */
-    public int getPayloadLength() {
-        return payloadLength;
-    }
-
-    /**
-     * The length of the custom frame payload (maximum 119 bytes).
-     *
-     * @param payloadLength the payloadLength to set as {@link int}
-     */
-    public void setPayloadLength(int payloadLength) {
-        this.payloadLength = payloadLength;
     }
 
     /**
@@ -99,16 +72,16 @@ public class EzspCustomFrameRequest extends EzspFrameRequest {
         serializeHeader(serializer);
 
         // Serialize the fields
-        serializer.serializeUInt8(payloadLength);
+        serializer.serializeUInt8(payload.length);
         serializer.serializeUInt8Array(payload);
         return serializer.getPayload();
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(75);
-        builder.append("EzspCustomFrameRequest [payloadLength=");
-        builder.append(payloadLength);
+        final StringBuilder builder = new StringBuilder(100);
+        builder.append("EzspCustomFrameRequest [networkId=");
+        builder.append(networkId);
         builder.append(", payload=");
         for (int cnt = 0; cnt < payload.length; cnt++) {
             if (cnt > 0) {

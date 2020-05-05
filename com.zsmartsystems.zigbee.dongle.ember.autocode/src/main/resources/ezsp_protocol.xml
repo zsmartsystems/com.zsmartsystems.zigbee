@@ -602,6 +602,7 @@
 				<data_type>uint8_t</data_type>
 				<name>payloadLength</name>
 				<description>The length of the custom frame payload (maximum 119 bytes).</description>
+				<auto_size>payload</auto_size>
 			</parameter>
 			<parameter>
 				<data_type>uint8_t[]</data_type>
@@ -619,6 +620,7 @@
 				<data_type>uint8_t</data_type>
 				<name>replyLength</name>
 				<description>The length of the response.</description>
+				<auto_size>reply</auto_size>
 			</parameter>
 			<parameter>
 				<data_type>uint8_t[]</data_type>
@@ -639,6 +641,7 @@
 				<data_type>uint8_t</data_type>
 				<name>payloadLength</name>
 				<description>The length of the custom frame payload.</description>
+				<auto_size>payload</auto_size>
 			</parameter>
 			<parameter>
 				<data_type>uint8_t[]</data_type>
