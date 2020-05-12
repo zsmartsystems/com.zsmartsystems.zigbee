@@ -1604,7 +1604,6 @@
 		</response_parameters>
 	</command>
 
-
 	<command>
 		<name>messageSentHandler</name>
 		<id>0x3F</id>
@@ -1621,6 +1620,7 @@
 				<data_type>uint16_t</data_type>
 				<name>indexOrDestination</name>
 				<description>The destination to which the message was sent, for direct unicasts, or the address table or binding index for other unicasts. The value is unspecified for multicasts and broadcasts.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>EmberApsFrame</data_type>
