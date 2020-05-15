@@ -197,7 +197,7 @@ public class ZigBeeNodeServiceDiscoverer {
      *
      * @param newTasks a set of {@link NodeDiscoveryTask}s to be performed
      */
-    private void startDiscovery(Set<NodeDiscoveryTask> newTasks) {
+    private void startDiscovery(List<NodeDiscoveryTask> newTasks) {
         // Tasks are managed in a queue. The worker thread will only remove the task from the queue once the task is
         // complete. When no tasks are left in the queue, the worker thread will exit.
         synchronized (discoveryTasks) {
@@ -676,7 +676,7 @@ public class ZigBeeNodeServiceDiscoverer {
      */
     public void startDiscovery() {
         logger.debug("{}: Node SVC Discovery: start discovery", node.getIeeeAddress());
-        Set<NodeDiscoveryTask> tasks = new HashSet<NodeDiscoveryTask>();
+        List<NodeDiscoveryTask> tasks = new ArrayList<NodeDiscoveryTask>();
 
         // Always request the network address unless this is our local node - in case it's changed
         if (!networkManager.getLocalNwkAddress().equals(node.getNetworkAddress())) {
@@ -710,7 +710,7 @@ public class ZigBeeNodeServiceDiscoverer {
 
         } else {
             logger.debug("{}: Node SVC Discovery: Update mesh", node.getIeeeAddress());
-            startDiscovery(new HashSet<>(meshUpdateTasks));
+            startDiscovery(new ArrayList<>(meshUpdateTasks));
         }
     }
 
