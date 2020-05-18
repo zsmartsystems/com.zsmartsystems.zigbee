@@ -1245,7 +1245,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         // We MUST send the version command first.
         // Any failure to respond here indicates a failure of the ASH or EZSP layers to initialise
-        ezspVersion = ncp.getVersion(4);
+        ezspVersion = ncp.getVersion();
         if (ezspVersion == null) {
             logger.debug("EZSP Dongle: Version returned null. ASH/EZSP not initialised.");
             return false;
@@ -1259,7 +1259,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 return false;
             }
 
-            ezspVersion = ncp.getVersion(EzspFrame.getEzspVersion());
+            ezspVersion = ncp.getVersion();
             logger.debug(ezspVersion.toString());
         }
 
