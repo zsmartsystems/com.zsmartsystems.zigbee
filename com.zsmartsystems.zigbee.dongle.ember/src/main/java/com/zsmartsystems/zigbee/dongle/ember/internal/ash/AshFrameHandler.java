@@ -93,6 +93,11 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
     private final static int ASH_MAX_LENGTH = 220;
 
+    /**
+     * Timeout after which sending an EZSP transaction is aborted.
+     */
+    private static final long EZSP_TRANSACTION_TIMEOUT_SECONDS = 10;
+
     private Integer ackNum = 0;
     private int frmNum = 0;
 
@@ -783,10 +788,13 @@ public class AshFrameHandler implements EzspProtocolHandler {
         }
 
         try {
-            futureResponse.get();
+            futureResponse.get(EZSP_TRANSACTION_TIMEOUT_SECONDS, TimeUnit.SECONDS);
         } catch (InterruptedException | ExecutionException e) {
             futureResponse.cancel(true);
             logger.debug("ASH interrupted in sendRequest while sending {}", ezspTransaction.getRequest());
+        } catch (TimeoutException e) {
+            futureResponse.cancel(true);
+            logger.debug("Sending EZSP transaction timed out after {} seconds", EZSP_TRANSACTION_TIMEOUT_SECONDS);
         }
 
         return ezspTransaction;

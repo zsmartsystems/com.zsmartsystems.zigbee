@@ -64,6 +64,11 @@ public class SpiFrameHandler implements EzspProtocolHandler {
     private final static int DEFAULT_POLL_RATE = 100;
 
     /**
+     * Timeout after which sending an EZSP transaction is aborted.
+     */
+    private static final long EZSP_TRANSACTION_TIMEOUT_SECONDS = 10;
+
+    /**
      * The logger.
      */
     private final Logger logger = LoggerFactory.getLogger(SpiFrameHandler.class);
@@ -754,11 +759,14 @@ public class SpiFrameHandler implements EzspProtocolHandler {
         }
 
         try {
-            futureResponse.get();
+            futureResponse.get(EZSP_TRANSACTION_TIMEOUT_SECONDS, TimeUnit.SECONDS);
             return ezspTransaction;
         } catch (InterruptedException | ExecutionException e) {
             futureResponse.cancel(true);
             logger.debug("EZSP interrupted in sendRequest: ", e);
+        } catch (TimeoutException e) {
+            futureResponse.cancel(true);
+            logger.debug("Sending EZSP transaction timed out after {} seconds", EZSP_TRANSACTION_TIMEOUT_SECONDS);
         }
 
         return null;
