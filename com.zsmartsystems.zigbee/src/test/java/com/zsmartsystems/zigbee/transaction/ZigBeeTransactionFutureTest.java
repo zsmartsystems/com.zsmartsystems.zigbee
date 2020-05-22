@@ -18,6 +18,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.CommandResult;
@@ -36,7 +37,7 @@ public class ZigBeeTransactionFutureTest {
         ZigBeeTransactionFuture future = new ZigBeeTransactionFuture();
         assertFalse(future.isDone());
 
-        CommandResult result = new CommandResult();
+        CommandResult result = new CommandResult(ZigBeeStatus.FAILURE, null);
         future.set(result);
         assertTrue(future.isDone());
 
@@ -116,7 +117,7 @@ public class ZigBeeTransactionFutureTest {
         thread2.start();
         assertTrue(startLatch.await(TIMEOUT, TimeUnit.MILLISECONDS));
 
-        CommandResult result = new CommandResult();
+        CommandResult result = new CommandResult(ZigBeeStatus.FAILURE, null);
         future.set(result);
         assertTrue(future.isDone());
 
