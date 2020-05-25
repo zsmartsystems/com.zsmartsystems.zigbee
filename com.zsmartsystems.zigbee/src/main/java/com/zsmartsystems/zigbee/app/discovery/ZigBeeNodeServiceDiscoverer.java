@@ -177,6 +177,8 @@ public class ZigBeeNodeServiceDiscoverer {
      */
     private final Queue<NodeDiscoveryTask> discoveryTasks = new PriorityQueue<NodeDiscoveryTask>();
 
+    private final List<NodeDiscoveryTask> failedDiscoveryTasks = new ArrayList<NodeDiscoveryTask>();
+    private boolean finished = false;
     private boolean closed = false;
 
     /**
@@ -611,6 +613,7 @@ public class ZigBeeNodeServiceDiscoverer {
                     lastDiscoveryCompleted = Calendar.getInstance();
                     logger.debug("{}: Node SVC Discovery: complete", node.getIeeeAddress());
                     networkManager.updateNode(updatedNode);
+                    finished = true;
                     return;
                 }
                 logger.debug("{}: Node SVC Discovery: running {}", node.getIeeeAddress(), discoveryTask);
@@ -662,6 +665,12 @@ public class ZigBeeNodeServiceDiscoverer {
                             discoveryTask, retryCnt);
                     synchronized (discoveryTasks) {
                         discoveryTasks.remove(discoveryTask);
+                        failedDiscoveryTasks.add(discoveryTask);
+                        // if the network address fails, nothing else will work
+                        if (discoveryTask == NodeDiscoveryTask.NWK_ADDRESS && node.getNetworkAddress() == null) {
+                            finished = true;
+                            return;
+                        }
                     }
 
                     retryCnt = 0;
@@ -682,6 +691,14 @@ public class ZigBeeNodeServiceDiscoverer {
                 logger.error("{}: Node SVC Discovery: exception: ", node.getIeeeAddress(), e);
             }
         }
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public boolean isSuccessful() {
+        return failedDiscoveryTasks.isEmpty();
     }
 
     /**
