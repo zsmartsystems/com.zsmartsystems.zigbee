@@ -12,8 +12,8 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Random;
 import java.util.Set;
@@ -152,8 +152,9 @@ public class ZigBeeNodeServiceDiscoverer {
     private List<NodeDiscoveryTask> meshUpdateTasks = Collections.emptyList();
 
     /**
-     *
-     *
+     * The definition of discovery tasks.
+     * <p>
+     * Note that tasks will be run in the order of the enum definition.
      */
     public enum NodeDiscoveryTask {
         NWK_ADDRESS,
@@ -168,7 +169,7 @@ public class ZigBeeNodeServiceDiscoverer {
     /**
      * The list of tasks we need to complete
      */
-    private final Queue<NodeDiscoveryTask> discoveryTasks = new LinkedList<NodeDiscoveryTask>();
+    private final Queue<NodeDiscoveryTask> discoveryTasks = new PriorityQueue<NodeDiscoveryTask>();
 
     private boolean closed = false;
 
