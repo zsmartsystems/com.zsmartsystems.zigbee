@@ -157,6 +157,9 @@ public class ZigBeeNodeServiceDiscoverer {
      * Note that tasks will be run in the order of the enum definition.
      */
     public enum NodeDiscoveryTask {
+        /**
+         * Retrieve NWK Address. Note that this must be first as other tasks require the network address
+         */
         NWK_ADDRESS,
         ASSOCIATED_NODES,
         NODE_DESCRIPTOR,
@@ -203,6 +206,12 @@ public class ZigBeeNodeServiceDiscoverer {
         // complete. When no tasks are left in the queue, the worker thread will exit.
         synchronized (discoveryTasks) {
             logger.debug("{}: Node SVC Discovery: starting new tasks {}", node.getIeeeAddress(), newTasks);
+
+            // Ensure that we always know the network address
+            if (node.getNetworkAddress() == null) {
+                logger.debug("{}: Node SVC Discovery: network address was not known", node.getIeeeAddress());
+                newTasks.add(NodeDiscoveryTask.NWK_ADDRESS);
+            }
 
             // Remove router/coordinator-only tasks if the device is possibly an end node.
             final boolean isPossibleEndDevice = isPossibleEndDevice();

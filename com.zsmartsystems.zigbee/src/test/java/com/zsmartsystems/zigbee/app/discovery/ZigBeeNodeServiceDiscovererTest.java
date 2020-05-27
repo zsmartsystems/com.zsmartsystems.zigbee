@@ -314,24 +314,30 @@ public class ZigBeeNodeServiceDiscovererTest {
     }
 
     @Test
-    public void ordering() throws Exception {
+    public void taskPriority() throws Exception {
         ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
         Mockito.when(node.getLogicalType()).thenReturn(LogicalType.UNKNOWN);
         Mockito.when(node.getIeeeAddress()).thenReturn(new IeeeAddress("1234567890ABCDEF"));
+        Mockito.when(node.getNetworkAddress()).thenReturn(null);
 
         ZigBeeNodeServiceDiscoverer discoverer = new ZigBeeNodeServiceDiscoverer(networkManager, node);
 
         Set<NodeDiscoveryTask> tasks = new HashSet<NodeDiscoveryTask>();
 
+        // NWK_ADDRESS should always be highest priority as all other tasks depend on it
+        assertEquals(0, NodeDiscoveryTask.NWK_ADDRESS.ordinal());
+
         tasks.add(NodeDiscoveryTask.NEIGHBORS);
         tasks.add(NodeDiscoveryTask.ROUTES);
-        tasks.add(NodeDiscoveryTask.NWK_ADDRESS);
         tasks.add(NodeDiscoveryTask.NODE_DESCRIPTOR);
 
         TestUtilities.invokeMethod(ZigBeeNodeServiceDiscoverer.class, discoverer, "startDiscovery", Set.class, tasks);
         Queue<NodeDiscoveryTask> tasksOut = (Queue<NodeDiscoveryTask>) TestUtilities.getField(
                 ZigBeeNodeServiceDiscoverer.class, discoverer,
                 "discoveryTasks");
+
+        // NWK_ADDRESS must be added as getNetworkAddress returns null
+        assertTrue(tasksOut.contains(NodeDiscoveryTask.NWK_ADDRESS));
 
         int lastValue = -1;
         for (NodeDiscoveryTask task : tasksOut) {
