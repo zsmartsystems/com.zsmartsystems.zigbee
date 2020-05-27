@@ -175,10 +175,9 @@ public class EmberNcp {
      * The command allows the Host to specify the desired EZSP version and must be sent before any other command. The
      * response provides information about the firmware running on the NCP.
      *
-     * @param desiredVersion the requested version we support
      * @return the {@link EzspVersionResponse}
      */
-    public EzspVersionResponse getVersion(int desiredVersion) {
+    public EzspVersionResponse getVersion() {
         EzspVersionRequest request = new EzspVersionRequest();
         request.setDesiredProtocolVersion(EzspFrame.getEzspVersion());
         EzspTransaction transaction = protocolHandler

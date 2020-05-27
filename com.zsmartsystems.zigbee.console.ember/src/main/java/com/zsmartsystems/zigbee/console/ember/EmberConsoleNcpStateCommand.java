@@ -94,7 +94,7 @@ public class EmberConsoleNcpStateCommand extends EmberConsoleAbstractCommand {
         String mfgName = ncp.getMfgName();
         String mfgBoard = ncp.getMfgBoardName();
         int customVersion = ncp.getMfgCustomVersion();
-        EzspVersionResponse version = ncp.getVersion(5);
+        EzspVersionResponse version = ncp.getVersion();
 
         out.println("Ember NCP state    : " + status);
         out.println("Local Node Type    : " + nwkParameterResponse.getNodeType());
