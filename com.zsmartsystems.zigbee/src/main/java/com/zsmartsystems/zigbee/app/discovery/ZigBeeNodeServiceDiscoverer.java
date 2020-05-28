@@ -154,17 +154,20 @@ public class ZigBeeNodeServiceDiscoverer {
     /**
      * The definition of discovery tasks.
      * <p>
-     * Note that tasks will be run in the order of the enum definition.
+     * Please note that the ordering of the tasks in the enum is significant; a task that needs to be run before another
+     * task must be placed before that other task in the enum. Examples are that the network address must be discovered
+     * before all other tasks can be run, and that the node descriptor must be discovered before the endpoint simple
+     * descriptor.
      */
     public enum NodeDiscoveryTask {
         /**
          * Retrieve NWK Address. Note that this must be first as other tasks require the network address
          */
         NWK_ADDRESS,
-        ASSOCIATED_NODES,
         NODE_DESCRIPTOR,
         POWER_DESCRIPTOR,
         ACTIVE_ENDPOINTS,
+        ASSOCIATED_NODES,
         NEIGHBORS,
         ROUTES
     }
