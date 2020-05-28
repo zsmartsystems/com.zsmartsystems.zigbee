@@ -9,6 +9,7 @@ package com.zsmartsystems.zigbee.transaction;
 
 import java.util.concurrent.ScheduledFuture;
 
+import com.zsmartsystems.zigbee.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -410,7 +411,7 @@ public class ZigBeeTransaction {
         }
         if (transactionFuture != null) {
             synchronized (transactionFuture) {
-                transactionFuture.set(new CommandResult(receivedCommand));
+                transactionFuture.set(new CommandResult(ZigBeeStatus.SUCCESS, receivedCommand));
                 transactionFuture.notify();
             }
         }

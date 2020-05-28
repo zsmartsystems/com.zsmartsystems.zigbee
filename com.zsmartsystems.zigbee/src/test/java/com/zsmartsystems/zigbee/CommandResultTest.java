@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneEnrollResponse;
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
@@ -23,23 +24,57 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
 public class CommandResultTest {
 
     @Test
-    public void testIsError() {
-        CommandResult result = new CommandResult();
-        assertTrue(result.isError());
+    public void testIsSuccessIfResponseReceived() {
+        CommandResult commandResult = new CommandResult(ZigBeeStatus.SUCCESS, new ZoneEnrollResponse(1, 2));
+        assertTrue(commandResult.isSuccess());
 
-        result = new CommandResult(new ZigBeeCommand());
-        assertFalse(result.isError());
-        assertTrue(result.isSuccess());
+        commandResult = new CommandResult(ZigBeeStatus.SUCCESS, new DefaultResponse(1, ZclStatus.SUCCESS));
+        assertTrue(commandResult.isSuccess());
 
-        DefaultResponse response = new DefaultResponse(1, ZclStatus.SUCCESS);
-        result = new CommandResult(response);
-        assertFalse(result.isError());
-        assertTrue(result.isSuccess());
+        commandResult = new CommandResult(ZigBeeStatus.SUCCESS, new DefaultResponse(1, ZclStatus.FAILURE));
+        assertFalse(commandResult.isSuccess());
+    }
 
-        response = new DefaultResponse(2, ZclStatus.FAILURE);
-        result = new CommandResult(response);
-        assertTrue(result.isError());
-        assertFalse(result.isSuccess());
+    @Test
+    public void testIsSuccessIfNoResponseReceived() {
+        CommandResult commandResult = new CommandResult(ZigBeeStatus.SUCCESS, null);
+        assertTrue(commandResult.isSuccess());
+
+        commandResult = new CommandResult(ZigBeeStatus.FAILURE, null);
+        assertFalse(commandResult.isSuccess());
+    }
+
+    @Test
+    public void testIsErrorIfResponseReceived() {
+        CommandResult commandResult = new CommandResult(ZigBeeStatus.SUCCESS, new ZoneEnrollResponse(1, 2));
+        assertFalse(commandResult.isError());
+
+        commandResult = new CommandResult(ZigBeeStatus.SUCCESS, new DefaultResponse(1, ZclStatus.SUCCESS));
+        assertFalse(commandResult.isError());
+
+        commandResult = new CommandResult(ZigBeeStatus.SUCCESS, new DefaultResponse(1, ZclStatus.FAILURE));
+        assertTrue(commandResult.isError());
+    }
+
+    @Test
+    public void testIsErrorIfNoResponseReceived() {
+        CommandResult commandResult = new CommandResult(ZigBeeStatus.SUCCESS, null);
+        assertFalse(commandResult.isError());
+
+        commandResult = new CommandResult(ZigBeeStatus.FAILURE, null);
+        assertTrue(commandResult.isError());
+    }
+
+    @Test
+    public void testIsTimeoutIfResponseReceived() {
+        CommandResult commandResult = new CommandResult(ZigBeeStatus.SUCCESS, new ZoneEnrollResponse(1, 2));
+        assertFalse(commandResult.isTimeout());
+    }
+
+    @Test
+    public void testIsTimeoutIfNoResponseReceived() {
+        CommandResult commandResult = new CommandResult(ZigBeeStatus.FAILURE, null);
+        assertTrue(commandResult.isTimeout());
     }
 
 }

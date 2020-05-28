@@ -12,6 +12,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import com.zsmartsystems.zigbee.CommandResult;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 
 /**
  * Future implementation for asynchronous transactions. Multiple threads may listen for the completion of the
@@ -65,7 +66,7 @@ public class ZigBeeTransactionFuture implements Future<CommandResult> {
         try {
             return get(TIMEOUT_MILLISECONDS, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
-            set(new CommandResult());
+            set(new CommandResult(ZigBeeStatus.FAILURE, null));
             return result;
         }
     }
@@ -78,7 +79,7 @@ public class ZigBeeTransactionFuture implements Future<CommandResult> {
             }
             unit.timedWait(this, timeout);
             if (result == null) {
-                set(new CommandResult());
+                set(new CommandResult(ZigBeeStatus.FAILURE, null));
             }
             return result;
         }
