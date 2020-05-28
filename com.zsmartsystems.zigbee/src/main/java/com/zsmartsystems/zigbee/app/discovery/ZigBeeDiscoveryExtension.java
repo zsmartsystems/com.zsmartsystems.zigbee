@@ -74,10 +74,13 @@ public class ZigBeeDiscoveryExtension
     private boolean extensionStarted = false;
 
     /**
-     * List of tasks to be completed during a mesh update
+     * List of tasks to be completed during a mesh update.
+     * We want to get the neighbors and routes so we have visibility of the mesh. We also default to requesting the
+     * network address to ensure that it hasn't changed.
      */
     private List<NodeDiscoveryTask> meshUpdateTasks = Arrays
-            .asList(new NodeDiscoveryTask[] { NodeDiscoveryTask.NEIGHBORS, NodeDiscoveryTask.ROUTES });
+            .asList(new NodeDiscoveryTask[] { NodeDiscoveryTask.NWK_ADDRESS, NodeDiscoveryTask.NEIGHBORS,
+                    NodeDiscoveryTask.ROUTES });
 
     @Override
     public ZigBeeStatus extensionInitialize(ZigBeeNetworkManager networkManager) {

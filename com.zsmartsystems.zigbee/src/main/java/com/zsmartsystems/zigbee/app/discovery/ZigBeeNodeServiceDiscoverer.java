@@ -12,8 +12,8 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Random;
 import java.util.Set;
@@ -152,15 +152,22 @@ public class ZigBeeNodeServiceDiscoverer {
     private List<NodeDiscoveryTask> meshUpdateTasks = Collections.emptyList();
 
     /**
-     *
-     *
+     * The definition of discovery tasks.
+     * <p>
+     * Please note that the ordering of the tasks in the enum is significant; a task that needs to be run before another
+     * task must be placed before that other task in the enum. Examples are that the network address must be discovered
+     * before all other tasks can be run, and that the node descriptor must be discovered before the endpoint simple
+     * descriptor.
      */
     public enum NodeDiscoveryTask {
+        /**
+         * Retrieve NWK Address. Note that this must be first as other tasks require the network address
+         */
         NWK_ADDRESS,
-        ASSOCIATED_NODES,
         NODE_DESCRIPTOR,
         POWER_DESCRIPTOR,
         ACTIVE_ENDPOINTS,
+        ASSOCIATED_NODES,
         NEIGHBORS,
         ROUTES
     }
@@ -168,7 +175,7 @@ public class ZigBeeNodeServiceDiscoverer {
     /**
      * The list of tasks we need to complete
      */
-    private final Queue<NodeDiscoveryTask> discoveryTasks = new LinkedList<NodeDiscoveryTask>();
+    private final Queue<NodeDiscoveryTask> discoveryTasks = new PriorityQueue<NodeDiscoveryTask>();
 
     private boolean closed = false;
 
@@ -202,6 +209,12 @@ public class ZigBeeNodeServiceDiscoverer {
         // complete. When no tasks are left in the queue, the worker thread will exit.
         synchronized (discoveryTasks) {
             logger.debug("{}: Node SVC Discovery: starting new tasks {}", node.getIeeeAddress(), newTasks);
+
+            // Ensure that we always know the network address
+            if (node.getNetworkAddress() == null) {
+                logger.debug("{}: Node SVC Discovery: network address was not known", node.getIeeeAddress());
+                newTasks.add(NodeDiscoveryTask.NWK_ADDRESS);
+            }
 
             // Remove router/coordinator-only tasks if the device is possibly an end node.
             final boolean isPossibleEndDevice = isPossibleEndDevice();
