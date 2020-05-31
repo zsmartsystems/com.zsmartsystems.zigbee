@@ -15,6 +15,8 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberAesMmoHashContext;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsOption;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberBeaconData;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberBeaconIterator;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberBindingTableEntry;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberBindingType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCertificate283k1Data;
@@ -385,5 +387,13 @@ public class EzspDeserializer {
 
     public EmberGpApplicationId deserializeEmberGpApplicationId() {
         return EmberGpApplicationId.getEmberGpApplicationId(deserializeUInt8());
+    }
+
+    public EmberBeaconIterator deserializeEmberBeaconIterator() {
+        return new EmberBeaconIterator(this);
+    }
+
+    public EmberBeaconData deserializeEmberBeaconData() {
+        return new EmberBeaconData(this);
     }
 }

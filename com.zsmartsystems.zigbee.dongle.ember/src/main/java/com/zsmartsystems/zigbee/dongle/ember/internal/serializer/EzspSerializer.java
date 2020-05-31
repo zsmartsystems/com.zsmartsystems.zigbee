@@ -15,6 +15,7 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberAesMmoHashContext;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberApsOption;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberBeaconData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberBindingTableEntry;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberBindingType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCertificate283k1Data;
@@ -308,5 +309,9 @@ public class EzspSerializer {
 
     public void serializeEmberGpApplicationId(EmberGpApplicationId applicationId) {
         buffer[length++] = applicationId.getKey();
+    }
+
+    public void serializeEmberBeaconData(EmberBeaconData beacon) {
+        beacon.serialize(this);
     }
 }

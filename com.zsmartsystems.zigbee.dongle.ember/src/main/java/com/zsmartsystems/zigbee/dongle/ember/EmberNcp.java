@@ -71,10 +71,10 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetTransientKeyTab
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetTransientKeyTableEntryResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetTransientLinkKeyRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetTransientLinkKeyResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetXncpInfoRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetXncpInfoResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetValueRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetValueResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetXncpInfoRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetXncpInfoResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLeaveNetworkRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLeaveNetworkResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkFoundHandler;
@@ -1016,7 +1016,6 @@ public class EmberNcp {
         EzspTransaction transaction = protocolHandler
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetXncpInfoResponse.class));
         EzspGetXncpInfoResponse response = (EzspGetXncpInfoResponse) transaction.getResponse();
-        EzspStatus status = response.getStatus();
         if (response.getStatus() != EzspStatus.EZSP_SUCCESS) {
             logger.debug("Error sending xncp info: {}", response);
             return null;
