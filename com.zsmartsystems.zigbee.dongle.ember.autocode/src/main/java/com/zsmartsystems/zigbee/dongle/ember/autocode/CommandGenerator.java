@@ -816,6 +816,8 @@ public class CommandGenerator extends ClassGenerator {
             case "EmberTransientKeyData":
             case "EmberGpSinkListEntry":
             case "EmberGpSinkTableEntry":
+            case "EmberBeaconData":
+            case "EmberBeaconIterator":
                 addImport(ezspStructurePackage + "." + dataTypeLocal);
                 return dataTypeLocal + modifier;
             default:
@@ -886,6 +888,8 @@ public class CommandGenerator extends ClassGenerator {
             case "EmberTransientKeyData":
             case "EmberGpSinkListEntry":
             case "EmberGpSinkTableEntry":
+            case "EmberBeaconData":
+            case "EmberBeaconIterator":
                 return dataTypeLocal;
             default:
                 return dataType;
