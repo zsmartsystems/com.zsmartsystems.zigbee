@@ -72,6 +72,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclPressureMeasurementCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclThermostatCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclWindowCoveringCluster;
 
 /**
  * The ZigBee test console. Simple console used for testing the framework.
@@ -102,13 +103,14 @@ public class ZigBeeConsoleMain {
         supportedClientClusters.addAll(Stream
                 .of(ZclBasicCluster.CLUSTER_ID, ZclOnOffCluster.CLUSTER_ID, ZclLevelControlCluster.CLUSTER_ID,
                         ZclColorControlCluster.CLUSTER_ID, ZclPressureMeasurementCluster.CLUSTER_ID,
-                        ZclThermostatCluster.CLUSTER_ID)
+                        ZclThermostatCluster.CLUSTER_ID, ZclWindowCoveringCluster.CLUSTER_ID)
                 .collect(Collectors.toSet()));
 
         final Set<Integer> supportedServerClusters = new TreeSet<>();
         supportedServerClusters.addAll(Stream
                 .of(ZclBasicCluster.CLUSTER_ID, ZclOnOffCluster.CLUSTER_ID, ZclLevelControlCluster.CLUSTER_ID,
-                        ZclColorControlCluster.CLUSTER_ID, ZclPressureMeasurementCluster.CLUSTER_ID)
+                        ZclColorControlCluster.CLUSTER_ID, ZclPressureMeasurementCluster.CLUSTER_ID,
+                        ZclWindowCoveringCluster.CLUSTER_ID)
                 .collect(Collectors.toSet()));
 
         final TransportConfig transportOptions = new TransportConfig();
