@@ -182,8 +182,10 @@ public class ZigBeeZclCommandGenerator extends ZigBeeBaseFieldGenerator {
             out.println("    /**");
             out.println("     * Default constructor.");
             out.println("     *");
-            out.println(
-                    "     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.");
+            if (!command.fields.isEmpty()) {
+                out.println(
+                        "     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.");
+            }
             out.println("     */");
             if (!command.fields.isEmpty()) {
                 out.println("    @Deprecated");

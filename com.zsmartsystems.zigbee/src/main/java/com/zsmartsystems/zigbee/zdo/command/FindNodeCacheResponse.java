@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-13T19:23:13Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-06-06T12:25:30Z")
 public class FindNodeCacheResponse extends ZdoResponse {
     /**
      * The ZDO cluster ID.
@@ -34,7 +34,6 @@ public class FindNodeCacheResponse extends ZdoResponse {
     /**
      * Default constructor.
      *
-     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
      */
     public FindNodeCacheResponse() {
         clusterId = CLUSTER_ID;
