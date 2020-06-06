@@ -63,6 +63,7 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingUnsubscribeCommand
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleSmartEnergyCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleTrustCentreCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleUnbindCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleWindowCoveringCommand;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareCallback;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareStatus;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareUpdate;
@@ -204,6 +205,8 @@ public final class ZigBeeConsole {
 
         newCommands.put("smartenergy", new ZigBeeConsoleSmartEnergyCommand());
         newCommands.put("cbke", new ZigBeeConsoleCbkeCommand());
+
+        newCommands.put("covering", new ZigBeeConsoleWindowCoveringCommand());
 
         zigBeeApi = new ZigBeeApi(networkManager);
 
