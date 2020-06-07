@@ -607,6 +607,9 @@ public class EmberNcp {
                         new EzspSingleResponseTransaction(request, EzspGetTransientKeyTableEntryResponse.class));
         EzspGetTransientKeyTableEntryResponse response = (EzspGetTransientKeyTableEntryResponse) transaction
                 .getResponse();
+        if (response == null) {
+            return null;
+        }
         logger.debug(response.toString());
         lastStatus = response.getStatus();
         if (lastStatus != EmberStatus.EMBER_SUCCESS) {
