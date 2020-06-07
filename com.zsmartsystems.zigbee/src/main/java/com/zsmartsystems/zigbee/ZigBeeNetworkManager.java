@@ -182,7 +182,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
      * The network database - used to save the state of the network and all its nodes
      */
     private final ZigBeeNetworkDatabaseManager databaseManager;
-    
+
     /**
      * An executor service for running notifications in separate threads.
      */
@@ -386,8 +386,6 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
 
         localIeeeAddress = transport.getIeeeAddress();
 
-        addLocalNode();
-
         return ZigBeeStatus.SUCCESS;
     }
 
@@ -400,7 +398,9 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         }
 
         if (nwkAddress == null) {
-            logger.error("{}: Adding local node to network: NWK unknown", ieeeAddress);
+            if (networkState == ZigBeeNetworkState.ONLINE) {
+                logger.error("{}: Adding local node to network: NWK unknown", ieeeAddress);
+            }
             nwkAddress = 0xFFFE;
         }
 
@@ -630,12 +630,6 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
                 removeNode(node);
             }
             databaseManager.clear();
-        }
-
-        ZigBeeNode node = getLocalNode();
-        if (node == null) {
-            logger.error("Local node is unknown during startup");
-            return ZigBeeStatus.INVALID_STATE;
         }
 
         // Start the transport layer
@@ -1883,10 +1877,10 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
     public Integer getLocalNwkAddress() {
         return localNwkAddress;
     }
-    
+
     /**
      * Gets this network manager's {@link NotificationService} instance.
-     * 
+     *
      * @return this network manager's {@link NotificationService} instance.
      */
     public NotificationService getNotificationService() {
