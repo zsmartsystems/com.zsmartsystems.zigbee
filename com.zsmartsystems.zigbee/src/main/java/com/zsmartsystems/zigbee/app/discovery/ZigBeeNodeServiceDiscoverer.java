@@ -666,7 +666,8 @@ public class ZigBeeNodeServiceDiscoverer {
                     synchronized (discoveryTasks) {
                         discoveryTasks.remove(discoveryTask);
                         failedDiscoveryTasks.add(discoveryTask);
-                        // if the network address fails, nothing else will work
+                        // if the network address fails, nothing else will work and this node discoverer instance is
+                        // finished
                         if (discoveryTask == NodeDiscoveryTask.NWK_ADDRESS && node.getNetworkAddress() == null) {
                             finished = true;
                             return;
@@ -693,10 +694,21 @@ public class ZigBeeNodeServiceDiscoverer {
         }
     }
 
+    /**
+     * Indicates whether this node discovery instance has finished its work, meaning either all queued tasks are done,
+     * or the network address discovery task failed and thus other queued tasks will also not succeed.
+     *
+     * @return {@code true} if no more tasks can be run by this node discover
+     */
     public boolean isFinished() {
         return finished;
     }
 
+    /**
+     * Indicates whether discovery task(s) went wrong or not
+     *
+     * @return {@code true} if none of the scheduled discovery tasks have failed
+     */
     public boolean isSuccessful() {
         return failedDiscoveryTasks.isEmpty();
     }
