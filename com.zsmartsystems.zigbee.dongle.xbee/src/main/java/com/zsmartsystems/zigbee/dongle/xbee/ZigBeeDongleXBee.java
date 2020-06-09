@@ -7,17 +7,25 @@
  */
 package com.zsmartsystems.zigbee.dongle.xbee;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
+import com.zsmartsystems.zigbee.ZigBeeExecutors;
 import com.zsmartsystems.zigbee.ZigBeeNwkAddressMode;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.XBeeEventListener;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.XBeeFrameHandler;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.DeliveryStatus;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.EncryptionOptions;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.TransmitOptions;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeEvent;
@@ -36,6 +44,7 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeModemStatusEve
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeOperatingChannelResponse;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeePanIdResponse;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeReceivePacketExplicitEvent;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeResponse;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSetApiEnableCommand;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSetApiModeCommand;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSetCoordinatorEnableCommand;
@@ -48,10 +57,12 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSetScanChannel
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSetSoftwareResetCommand;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSetZigbeeStackProfileCommand;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeTransmitRequestExplicitCommand;
+import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeTransmitStatusResponse;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfigOption;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
+import com.zsmartsystems.zigbee.transport.ZigBeeTransportProgressState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
@@ -63,6 +74,8 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
  *
  */
 public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListener {
+    private final static int RESPONSE_TIMEOUT = 8000;
+
     /**
      * The {@link Logger}.
      */
@@ -125,10 +138,18 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
     final private IeeeAddress groupIeeeAddress = new IeeeAddress("000000000000FFFE");
     final private IeeeAddress broadcastIeeeAddress = new IeeeAddress("000000000000FFFF");
 
+    private ScheduledExecutorService executorService;
+
     final private int MAX_RESET_RETRIES = 3;
 
     public ZigBeeDongleXBee(final ZigBeePort serialPort) {
         this.serialPort = serialPort;
+
+        /*
+         * Create the scheduler with a single thread. This ensures that commands sent to the dongle, and the processing
+         * of responses is performed in order
+         */
+        executorService = ZigBeeExecutors.newScheduledThreadPool(10, "XBeeDongle");
     }
 
     @Override
@@ -283,6 +304,11 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
         if (frameHandler == null) {
             return;
         }
+
+        if (executorService != null) {
+            executorService.shutdownNow();
+        }
+
         frameHandler.setClosing();
         zigbeeTransportReceive.setTransportState(ZigBeeTransportState.OFFLINE);
         serialPort.close();
@@ -342,9 +368,32 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
         }
 
         command.setData(apsFrame.getPayload());
+        command.setFrameId(msgTag);
 
         logger.debug("XBee send: {}", command.toString());
-        frameHandler.sendRequestAsync(command);
+        Future<XBeeResponse> responseFuture = frameHandler.sendRequestAsync(command);
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                // Let the stack know the frame is sent.
+                // We don't really have confirmation of this from the XBee, but this is the best we can do
+                zigbeeTransportReceive.receiveCommandState(msgTag, ZigBeeTransportProgressState.TX_ACK);
+
+                ZigBeeTransportProgressState sentHandlerState = ZigBeeTransportProgressState.RX_NAK;
+                try {
+                    XBeeResponse response = responseFuture.get(RESPONSE_TIMEOUT, TimeUnit.MILLISECONDS);
+                    if (response instanceof XBeeTransmitStatusResponse) {
+                        XBeeTransmitStatusResponse sentHandler = (XBeeTransmitStatusResponse) response;
+                        if (sentHandler.getDeliveryStatus() == DeliveryStatus.SUCCESS) {
+                            sentHandlerState = ZigBeeTransportProgressState.RX_ACK;
+                        }
+                    }
+                } catch (InterruptedException | ExecutionException | TimeoutException e) {
+                }
+
+                zigbeeTransportReceive.receiveCommandState(msgTag, sentHandlerState);
+            }
+        });
     }
 
     @Override
