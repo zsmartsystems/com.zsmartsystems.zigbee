@@ -1703,9 +1703,9 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             nodeDiscoveryComplete.add(node.getIeeeAddress());
             sendNodeAdded = true;
         } else if (!currentNode.isDiscovered() && !currentNode.getIeeeAddress().equals(localIeeeAddress)) {
-            logger.debug("{}: Node {} discovery is not complete - not sending nodeUpdated notification",
+            logger.debug("{}: Node {} discovery is not complete - sending nodeUpdated notification to inform listeners",
                     node.getIeeeAddress(), String.format("%04X", node.getNetworkAddress()));
-            return null;
+            sendNodeAdded = false;
         } else {
             sendNodeAdded = false;
         }

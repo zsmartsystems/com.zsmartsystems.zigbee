@@ -99,7 +99,10 @@ public class ZigBeeDiscoveryExtensionTest {
         Mockito.verify(extension, Mockito.times(1)).startDiscovery(node);
 
         Map<IeeeAddress, ZigBeeNodeServiceDiscoverer> nodeDiscovery = new ConcurrentHashMap<>();
-        nodeDiscovery.put(node.getIeeeAddress(), Mockito.mock(ZigBeeNodeServiceDiscoverer.class));
+        ZigBeeNodeServiceDiscoverer nodeServiceDiscoverer = Mockito.mock(ZigBeeNodeServiceDiscoverer.class);
+        Mockito.when(nodeServiceDiscoverer.isFinished()).thenReturn(true);
+        Mockito.when(nodeServiceDiscoverer.isSuccessful()).thenReturn(true);
+        nodeDiscovery.put(node.getIeeeAddress(), nodeServiceDiscoverer);
         TestUtilities.setField(ZigBeeDiscoveryExtension.class, extension, "nodeDiscovery", nodeDiscovery);
 
         assertEquals(1, extension.getNodeDiscoverers().size());

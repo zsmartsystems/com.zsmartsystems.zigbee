@@ -177,6 +177,8 @@ public class ZigBeeNodeServiceDiscoverer {
      */
     private final Queue<NodeDiscoveryTask> discoveryTasks = new PriorityQueue<NodeDiscoveryTask>();
 
+    private final List<NodeDiscoveryTask> failedDiscoveryTasks = new ArrayList<NodeDiscoveryTask>();
+    private boolean finished = false;
     private boolean closed = false;
 
     /**
@@ -611,6 +613,7 @@ public class ZigBeeNodeServiceDiscoverer {
                     lastDiscoveryCompleted = Calendar.getInstance();
                     logger.debug("{}: Node SVC Discovery: complete", node.getIeeeAddress());
                     networkManager.updateNode(updatedNode);
+                    finished = true;
                     return;
                 }
                 logger.debug("{}: Node SVC Discovery: running {}", node.getIeeeAddress(), discoveryTask);
@@ -662,6 +665,13 @@ public class ZigBeeNodeServiceDiscoverer {
                             discoveryTask, retryCnt);
                     synchronized (discoveryTasks) {
                         discoveryTasks.remove(discoveryTask);
+                        failedDiscoveryTasks.add(discoveryTask);
+                        // if the network address fails, nothing else will work and this node discoverer instance is
+                        // finished
+                        if (discoveryTask == NodeDiscoveryTask.NWK_ADDRESS && node.getNetworkAddress() == null) {
+                            finished = true;
+                            return;
+                        }
                     }
 
                     retryCnt = 0;
@@ -682,6 +692,25 @@ public class ZigBeeNodeServiceDiscoverer {
                 logger.error("{}: Node SVC Discovery: exception: ", node.getIeeeAddress(), e);
             }
         }
+    }
+
+    /**
+     * Indicates whether this node discovery instance has finished its work, meaning either all queued tasks are done,
+     * or the network address discovery task failed and thus other queued tasks will also not succeed.
+     *
+     * @return {@code true} if no more tasks can be run by this node discover
+     */
+    public boolean isFinished() {
+        return finished;
+    }
+
+    /**
+     * Indicates whether discovery task(s) went wrong or not
+     *
+     * @return {@code true} if none of the scheduled discovery tasks have failed
+     */
+    public boolean isSuccessful() {
+        return failedDiscoveryTasks.isEmpty();
     }
 
     /**
