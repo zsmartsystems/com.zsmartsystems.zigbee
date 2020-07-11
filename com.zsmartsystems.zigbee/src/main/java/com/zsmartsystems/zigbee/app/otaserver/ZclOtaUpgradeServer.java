@@ -425,7 +425,8 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
                         return;
                     }
                     ImageUpgradeStatus status = ImageUpgradeStatus.getStatus(statusValue);
-                    if (status != ImageUpgradeStatus.DOWNLOAD_COMPLETE) {
+                    if (status != ImageUpgradeStatus.DOWNLOAD_COMPLETE
+                            && status != ImageUpgradeStatus.WAITING_TO_UPGRADE) {
                         // Client is not in correct state to end upgrade
                         switch (status) {
                             case COUNT_DOWN:
@@ -435,7 +436,6 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
                                 updateStatus(ZigBeeOtaServerStatus.OTA_TRANSFER_IN_PROGRESS);
                                 break;
                             case WAIT_FOR_MORE:
-                            case WAITING_TO_UPGRADE:
                                 updateStatus(ZigBeeOtaServerStatus.OTA_WAITING);
                                 break;
                             case NORMAL:
