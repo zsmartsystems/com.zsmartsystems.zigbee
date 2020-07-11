@@ -37,7 +37,6 @@ import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.ZigBeeProfileType;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.app.ZigBeeNetworkExtension;
-import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.security.ZigBeeCbkeProvider;
 import com.zsmartsystems.zigbee.security.ZigBeeCryptoSuites;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
