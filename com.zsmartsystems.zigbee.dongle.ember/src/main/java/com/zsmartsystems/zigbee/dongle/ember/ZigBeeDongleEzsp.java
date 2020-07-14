@@ -799,7 +799,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         // Update the extendedTimeout flag in the address table.
         // Users should ensure the address table is large enough to hold all nodes on the network.
         logger.debug("{}: NodeDescriptor passed to Ember NCP {}", ieeeAddress, nodeDescriptor);
-        if (!nodeDescriptor.getMacCapabilities().contains(MacCapabilitiesType.RECEIVER_ON_WHEN_IDLE)) {
+        if (!nodeDescriptor.getMacCapabilities().contains(MacCapabilitiesType.RECEIVER_ON_WHEN_IDLE)
+                || nodeDescriptor.getMacCapabilities().contains(MacCapabilitiesType.REDUCED_FUNCTION_DEVICE)) {
             EmberNcp ncp = getEmberNcp();
             ncp.setExtendedTimeout(ieeeAddress, true);
         }
