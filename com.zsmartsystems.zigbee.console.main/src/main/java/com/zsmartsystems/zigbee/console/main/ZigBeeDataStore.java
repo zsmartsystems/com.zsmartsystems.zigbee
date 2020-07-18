@@ -12,7 +12,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.HashSet;
@@ -62,25 +61,30 @@ public class ZigBeeDataStore implements ZigBeeNetworkDataStore {
     }
 
     private XStream openStream() {
-        XStream stream = new XStream(new StaxDriver());
-        stream.alias("ZigBeeKey", ZigBeeKey.class);
-        stream.alias("ZigBeeNode", ZigBeeNodeDao.class);
-        stream.alias("ZigBeeEndpoint", ZigBeeEndpointDao.class);
-        stream.alias("ZclCluster", ZclClusterDao.class);
-        stream.alias("ZclAttribute", ZclAttributeDao.class);
-        stream.alias("MacCapabilitiesType", MacCapabilitiesType.class);
-        stream.alias("ServerCapabilitiesType", ServerCapabilitiesType.class);
-        stream.alias("PowerSourceType", PowerSourceType.class);
-        stream.alias("FrequencyBandType", FrequencyBandType.class);
-        stream.alias("BindingTable", BindingTable.class);
-        stream.alias("IeeeAddress", IeeeAddress.class);
-        stream.registerConverter(new IeeeAddressConverter());
+        try {
+            XStream stream = new XStream(new StaxDriver());
+            stream.alias("ZigBeeKey", ZigBeeKey.class);
+            stream.alias("ZigBeeNode", ZigBeeNodeDao.class);
+            stream.alias("ZigBeeEndpoint", ZigBeeEndpointDao.class);
+            stream.alias("ZclCluster", ZclClusterDao.class);
+            stream.alias("ZclAttribute", ZclAttributeDao.class);
+            stream.alias("MacCapabilitiesType", MacCapabilitiesType.class);
+            stream.alias("ServerCapabilitiesType", ServerCapabilitiesType.class);
+            stream.alias("PowerSourceType", PowerSourceType.class);
+            stream.alias("FrequencyBandType", FrequencyBandType.class);
+            stream.alias("BindingTable", BindingTable.class);
+            stream.alias("IeeeAddress", IeeeAddress.class);
+            stream.registerConverter(new IeeeAddressConverter());
 
-        // stream.registerLocalConverter(ZigBeeKey.class, "key", new KeyArrayConverter());
-        // stream.registerLocalConverter(ZigBeeKey.class, "address", new IeeeAddressConverter());
-        // stream.registerLocalConverter(BindingTable.class, "srcAddr", new IeeeAddressConverter());
-        // stream.registerLocalConverter(BindingTable.class, "dstAddr", new IeeeAddressConverter());
-        return stream;
+            // stream.registerLocalConverter(ZigBeeKey.class, "key", new KeyArrayConverter());
+            // stream.registerLocalConverter(ZigBeeKey.class, "address", new IeeeAddressConverter());
+            // stream.registerLocalConverter(BindingTable.class, "srcAddr", new IeeeAddressConverter());
+            // stream.registerLocalConverter(BindingTable.class, "dstAddr", new IeeeAddressConverter());
+            return stream;
+        } catch (Exception e) {
+            logger.debug("Error opening XStream ", e);
+            return null;
+        }
     }
 
     private File getFile(IeeeAddress address) {
@@ -122,7 +126,7 @@ public class ZigBeeDataStore implements ZigBeeNetworkDataStore {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"))) {
             node = (ZigBeeNodeDao) stream.fromXML(reader);
             logger.info("{}: ZigBee reading network state complete.", address);
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.error("{}: Error reading network state: ", address, e);
         }
 
