@@ -63,6 +63,7 @@ public class ZigBeeDataStore implements ZigBeeNetworkDataStore {
     private XStream openStream() {
         try {
             XStream stream = new XStream(new StaxDriver());
+            XStream.setupDefaultSecurity(stream);
             stream.alias("ZigBeeKey", ZigBeeKey.class);
             stream.alias("ZigBeeNode", ZigBeeNodeDao.class);
             stream.alias("ZigBeeEndpoint", ZigBeeEndpointDao.class);
@@ -80,6 +81,11 @@ public class ZigBeeDataStore implements ZigBeeNetworkDataStore {
             // stream.registerLocalConverter(ZigBeeKey.class, "address", new IeeeAddressConverter());
             // stream.registerLocalConverter(BindingTable.class, "srcAddr", new IeeeAddressConverter());
             // stream.registerLocalConverter(BindingTable.class, "dstAddr", new IeeeAddressConverter());
+
+            stream.allowTypesByWildcard(new String[] {
+                    "com.zsmartsystems.zigbee.**"
+            });
+
             return stream;
         } catch (Exception e) {
             logger.debug("Error opening XStream ", e);
