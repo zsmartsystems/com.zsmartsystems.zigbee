@@ -1413,7 +1413,9 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
     }
 
     /**
-     * Sends a ZDO Leave Request to a device requesting that an end device leave the network.
+     * Sends a ZDO Leave Request to a device requesting that an device leave the network. If the node responds
+     * successfully, the node is removed from the network, and the {@link ZigBeeNetworkNodeListener#nodeRemoved}
+     * notification is called.
      *
      * @param destinationAddress the network address to send the request to - this is the device parent or the the
      *            device we want to leave.
@@ -1668,7 +1670,8 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         if (node == null) {
             return null;
         }
-        logger.debug("{}: Node {} update", node.getIeeeAddress(), String.format("%04X", node.getNetworkAddress()));
+        logger.debug("{}: Node update. NWK Address={}", node.getIeeeAddress(),
+                String.format("%04X", node.getNetworkAddress()));
 
         final ZigBeeNode currentNode;
         currentNode = networkNodes.get(node.getIeeeAddress());

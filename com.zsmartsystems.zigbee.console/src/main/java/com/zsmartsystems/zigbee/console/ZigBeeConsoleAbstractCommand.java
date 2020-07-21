@@ -29,6 +29,8 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  */
 public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleCommand {
 
+    protected static final String WILDCARD = "*";
+
     /**
      * Gets a {@link ZigBeeNode}
      *

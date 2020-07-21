@@ -63,6 +63,8 @@ public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
         String tableHeader = String.format("%-7s  %-4s  %-16s  %-12s  %-9s  %-3s  %-25s  %-25s  %-15s  %-15s",
                 "Network", "Addr", "IEEE Address", "Logical Type", "State", "EP", "Profile", "Device Type",
                 "Manufacturer", "Model");
+
+        out.println("Total known nodes in network: " + nodes.size());
         out.println(tableHeader);
 
         for (Integer nodeId : nodeIds) {

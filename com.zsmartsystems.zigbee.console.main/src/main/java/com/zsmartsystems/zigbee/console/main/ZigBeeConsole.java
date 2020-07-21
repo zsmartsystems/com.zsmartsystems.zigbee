@@ -61,6 +61,9 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingConfigCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingSubscribeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingUnsubscribeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleSmartEnergyCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleSwitchLevelCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleSwitchOffCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleSwitchOnCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleTrustCentreCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleUnbindCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleWindowCoveringCommand;
@@ -150,10 +153,7 @@ public final class ZigBeeConsole {
         commands.put("quit", new QuitCommand());
         commands.put("help", new HelpCommand());
         commands.put("descriptor", new SetDescriptorCommand());
-        commands.put("on", new OnCommand());
-        commands.put("off", new OffCommand());
         commands.put("color", new ColorCommand());
-        commands.put("level", new LevelCommand());
         commands.put("listen", new ListenCommand());
         commands.put("unlisten", new UnlistenCommand());
 
@@ -206,6 +206,9 @@ public final class ZigBeeConsole {
         newCommands.put("smartenergy", new ZigBeeConsoleSmartEnergyCommand());
         newCommands.put("cbke", new ZigBeeConsoleCbkeCommand());
 
+        newCommands.put("on", new ZigBeeConsoleSwitchOnCommand());
+        newCommands.put("off", new ZigBeeConsoleSwitchOffCommand());
+        newCommands.put("level", new ZigBeeConsoleSwitchLevelCommand());
         newCommands.put("covering", new ZigBeeConsoleWindowCoveringCommand());
 
         zigBeeApi = new ZigBeeApi(networkManager);
@@ -583,84 +586,8 @@ public final class ZigBeeConsole {
     }
 
     /**
-     * Switches a device on.
-     */
-    private class OnCommand implements ConsoleCommand {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getDescription() {
-            return "Switches device on.";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getSyntax() {
-            return "on DEVICEID/DEVICELABEL/GROUPID";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length != 2) {
-                return false;
-            }
-
-            final ZigBeeAddress destination = getDestination(zigbeeApi, args[1], out);
-
-            if (destination == null) {
-                return false;
-            }
-
-            final CommandResult response = zigbeeApi.on(destination).get();
-            return defaultResponseProcessing(response, out);
-        }
-    }
-
-    /**
      * Switches a device off.
      */
-    private class OffCommand implements ConsoleCommand {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getDescription() {
-            return "Switches device off.";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getSyntax() {
-            return "off DEVICEID/DEVICELABEL/GROUPID";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length != 2) {
-                return false;
-            }
-
-            final ZigBeeAddress destination = getDestination(zigbeeApi, args[1], out);
-
-            if (destination == null) {
-                return false;
-            }
-
-            final CommandResult response = zigbeeApi.off(destination).get();
-            return defaultResponseProcessing(response, out);
-        }
-    }
 
     /**
      * Changes a light color on device.
@@ -849,61 +776,6 @@ public final class ZigBeeConsole {
             return false;
             // final CommandResult response = zigbeeApi.describe(device, label).get();
             // return defaultResponseProcessing(response, out);
-        }
-    }
-
-    /**
-     * Changes a device level for example lamp brightness.
-     */
-    private class LevelCommand implements ConsoleCommand {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getDescription() {
-            return "Changes device level for example lamp brightness, where LEVEL is between 0 and 1.";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getSyntax() {
-            return "level DEVICEID LEVEL [RATE]";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length < 3) {
-                return false;
-            }
-
-            final ZigBeeAddress destination = getDestination(zigbeeApi, args[1], out);
-            if (destination == null) {
-                return false;
-            }
-
-            float level;
-            try {
-                level = Float.parseFloat(args[2]);
-            } catch (final NumberFormatException e) {
-                return false;
-            }
-
-            float time = (float) 1.0;
-            if (args.length == 4) {
-                try {
-                    time = Float.parseFloat(args[3]);
-                } catch (final NumberFormatException e) {
-                    return false;
-                }
-            }
-
-            final CommandResult response = zigbeeApi.level(destination, level, time).get();
-            return defaultResponseProcessing(response, out);
         }
     }
 
