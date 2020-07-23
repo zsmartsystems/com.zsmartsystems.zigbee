@@ -60,6 +60,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesStructuredCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesStructuredResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesUndividedCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.general.ZclGeneralCommand;
 import com.zsmartsystems.zigbee.zcl.field.AttributeInformation;
 import com.zsmartsystems.zigbee.zcl.field.AttributeRecord;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReport;
@@ -290,6 +291,17 @@ public abstract class ZclCluster {
         command.setApsSecurity(apsSecurityRequired);
 
         return zigbeeEndpoint.sendTransaction(command, new ZclTransactionMatcher());
+    }
+
+    /**
+     * Sends a {@link ZclGeneralCommand} and returns the {@link Future} to the result which will complete when the
+     * remote device response is received, or the request times out.
+     *
+     * @param command the {@link ZclGeneralCommand} to send
+     * @return the command result future
+     */
+    public Future<CommandResult> sendCommand(ZclGeneralCommand command) {
+        return sendCommand((ZclCommand) command);
     }
 
     /**
@@ -612,7 +624,8 @@ public abstract class ZclCluster {
         AttributeRecord record = new AttributeRecord();
         record.setAttributeIdentifier(attributeId);
         record.setDirection(0);
-        final ReadReportingConfigurationCommand command = new ReadReportingConfigurationCommand(Collections.singletonList(record));
+        final ReadReportingConfigurationCommand command = new ReadReportingConfigurationCommand(
+                Collections.singletonList(record));
         command.setClusterId(clusterId);
         command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
 
@@ -774,7 +787,8 @@ public abstract class ZclCluster {
      * @return Command future
      */
     public Future<CommandResult> bind(IeeeAddress address, int endpointId) {
-        final BindRequest command = new BindRequest(zigbeeEndpoint.getIeeeAddress(), zigbeeEndpoint.getEndpointId(), clusterId, 3, address, endpointId);
+        final BindRequest command = new BindRequest(zigbeeEndpoint.getIeeeAddress(), zigbeeEndpoint.getEndpointId(),
+                clusterId, 3, address, endpointId);
         command.setDestinationAddress(new ZigBeeEndpointAddress(zigbeeEndpoint.getEndpointAddress().getAddress()));
         // The transaction is not sent to the Endpoint of this cluster, but to the ZDO endpoint 0 directly.
         return zigbeeEndpoint.getParentNode().sendTransaction(command, command);
@@ -788,7 +802,8 @@ public abstract class ZclCluster {
      * @return Command future
      */
     public Future<CommandResult> unbind(IeeeAddress address, int endpointId) {
-        final UnbindRequest command = new UnbindRequest(zigbeeEndpoint.getIeeeAddress(), zigbeeEndpoint.getEndpointId(), clusterId, 3, address, endpointId);
+        final UnbindRequest command = new UnbindRequest(zigbeeEndpoint.getIeeeAddress(), zigbeeEndpoint.getEndpointId(),
+                clusterId, 3, address, endpointId);
         command.setDestinationAddress(new ZigBeeEndpointAddress(zigbeeEndpoint.getEndpointAddress().getAddress()));
         // The transaction is not sent to the Endpoint of this cluster, but to the ZDO endpoint 0 directly.
         return zigbeeEndpoint.getParentNode().sendTransaction(command, command);
@@ -1329,7 +1344,8 @@ public abstract class ZclCluster {
             }
         }
 
-        DiscoverAttributesResponse response = new DiscoverAttributesResponse(attributeInformation.size() == getLocalAttributes().size(), attributeInformation);
+        DiscoverAttributesResponse response = new DiscoverAttributesResponse(
+                attributeInformation.size() == getLocalAttributes().size(), attributeInformation);
         sendResponse(command, response);
     }
 
@@ -1895,7 +1911,7 @@ public abstract class ZclCluster {
         if (command.isDisableDefaultResponse()) {
             return null;
         }
-        DefaultResponse defaultResponse = new DefaultResponse(command.getCommandId() ,status);
+        DefaultResponse defaultResponse = new DefaultResponse(command.getCommandId(), status);
         defaultResponse.setTransactionId(command.getTransactionId());
         defaultResponse.setDestinationAddress(command.getDestinationAddress());
         defaultResponse.setClusterId(command.getClusterId());
