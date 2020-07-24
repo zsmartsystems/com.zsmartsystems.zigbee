@@ -112,7 +112,8 @@ public class ZclKeyEstablishmentClientTest {
         command.setCommandDirection(ZclCommandDirection.SERVER_TO_CLIENT);
         assertTrue(keClient.commandReceived(command));
 
-        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(1)).sendCommand(ArgumentMatchers.any());
+        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(1))
+                .sendCommand(ArgumentMatchers.any(ZclKeyEstablishmentCommand.class));
 
         // State gets reset back to UNINITIALISED after the FAILURE
         Mockito.verify(seClient, Mockito.timeout(TIMEOUT)).keyEstablishmentCallback(ZigBeeStatus.FAILURE, 0);
@@ -191,7 +192,8 @@ public class ZclKeyEstablishmentClientTest {
         command.setCommandDirection(ZclCommandDirection.SERVER_TO_CLIENT);
         assertTrue(keClient.commandReceived(command));
 
-        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(1)).sendCommand(ArgumentMatchers.any());
+        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(1))
+                .sendCommand(ArgumentMatchers.any(ZclKeyEstablishmentCommand.class));
 
         // State gets reset back to UNINITIALISED after the FAILURE
         Mockito.verify(seClient, Mockito.timeout(TIMEOUT)).keyEstablishmentCallback(ZigBeeStatus.FAILURE, 0);
@@ -276,7 +278,8 @@ public class ZclKeyEstablishmentClientTest {
         command.setCommandDirection(ZclCommandDirection.SERVER_TO_CLIENT);
         assertTrue(keClient.commandReceived(command));
 
-        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(1)).sendCommand(ArgumentMatchers.any());
+        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(1))
+                .sendCommand(ArgumentMatchers.any(ZclKeyEstablishmentCommand.class));
 
         // State gets reset back to UNINITIALISED after the FAILURE
         Mockito.verify(seClient, Mockito.timeout(TIMEOUT)).keyEstablishmentCallback(ZigBeeStatus.FAILURE, 0);

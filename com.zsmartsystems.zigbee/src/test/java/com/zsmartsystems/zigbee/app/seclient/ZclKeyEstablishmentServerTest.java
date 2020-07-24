@@ -88,12 +88,14 @@ public class ZclKeyEstablishmentServerTest {
 
         Mockito.verify(cbkeExchange, Mockito.timeout(TIMEOUT)).getCertificate();
 
-        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(1)).sendCommand(ArgumentMatchers.any());
+        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(1))
+                .sendCommand(ArgumentMatchers.any(ZclKeyEstablishmentCommand.class));
 
         // Send the command again - this time we're in the wrong state so we get an error
         assertTrue(keServer.commandReceived(initiateCommand));
 
-        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(2)).sendCommand(ArgumentMatchers.any());
+        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(2))
+                .sendCommand(ArgumentMatchers.any(ZclKeyEstablishmentCommand.class));
 
         // State gets reset back to UNINITIALISED after the FAILURE
         assertEquals(KeyEstablishmentState.UNINITIALISED,
@@ -153,7 +155,8 @@ public class ZclKeyEstablishmentServerTest {
         initiateCommand.setCommandDirection(ZclCommandDirection.CLIENT_TO_SERVER);
         assertTrue(keServer.commandReceived(initiateCommand));
 
-        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(1)).sendCommand(ArgumentMatchers.any());
+        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(1))
+                .sendCommand(ArgumentMatchers.any(ZclKeyEstablishmentCommand.class));
 
         // State gets reset back to UNINITIALISED after the FAILURE
         assertEquals(KeyEstablishmentState.UNINITIALISED,
@@ -190,7 +193,8 @@ public class ZclKeyEstablishmentServerTest {
         assertTrue(keServer.commandReceived(command));
 
         // State is not initialised
-        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(1)).sendCommand(ArgumentMatchers.any());
+        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(1))
+                .sendCommand(ArgumentMatchers.any(ZclKeyEstablishmentCommand.class));
 
         Mockito.verify(cbkeExchange, Mockito.timeout(TIMEOUT).times(1)).completeKeyExchange(false);
 
@@ -229,7 +233,8 @@ public class ZclKeyEstablishmentServerTest {
         assertTrue(keServer.commandReceived(command));
 
         // State is not initialised
-        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(1)).sendCommand(ArgumentMatchers.any());
+        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(1))
+                .sendCommand(ArgumentMatchers.any(ZclKeyEstablishmentCommand.class));
 
         Mockito.verify(cbkeExchange, Mockito.timeout(TIMEOUT).times(1)).completeKeyExchange(false);
 
@@ -278,7 +283,8 @@ public class ZclKeyEstablishmentServerTest {
         command.setCommandDirection(ZclCommandDirection.CLIENT_TO_SERVER);
         assertTrue(keServer.commandReceived(command));
 
-        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(1)).sendCommand(ArgumentMatchers.any());
+        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(1))
+                .sendCommand(ArgumentMatchers.any(ZclKeyEstablishmentCommand.class));
 
         // State gets reset back to UNINITIALISED after the FAILURE
         assertEquals(KeyEstablishmentState.UNINITIALISED,
@@ -385,7 +391,8 @@ public class ZclKeyEstablishmentServerTest {
 
         Mockito.verify(cbkeExchange, Mockito.timeout(TIMEOUT)).getCertificate();
 
-        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(1)).sendCommand(ArgumentMatchers.any());
+        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(1))
+                .sendCommand(ArgumentMatchers.any(ZclKeyEstablishmentCommand.class));
 
         assertEquals(ZigBeeCryptoSuites.ECC_163K1, keServer.getCryptoSuite());
 
@@ -393,14 +400,16 @@ public class ZclKeyEstablishmentServerTest {
         assertTrue(keServer.commandReceived(dataRequest));
 
         Mockito.verify(cbkeExchange, Mockito.timeout(TIMEOUT)).getCbkeEphemeralData();
-        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(2)).sendCommand(ArgumentMatchers.any());
+        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(2))
+                .sendCommand(ArgumentMatchers.any(ZclKeyEstablishmentCommand.class));
 
         ConfirmKeyDataRequestCommand confirmKey = new ConfirmKeyDataRequestCommand(
                 secureMessageAuthenticationCodeByteArray);
         assertTrue(keServer.commandReceived(confirmKey));
 
         Mockito.verify(cbkeExchange, Mockito.timeout(TIMEOUT)).getResponderMac();
-        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(3)).sendCommand(ArgumentMatchers.any());
+        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(3))
+                .sendCommand(ArgumentMatchers.any(ZclKeyEstablishmentCommand.class));
 
         keServer.shutdown();
         Mockito.verify(keCluster, Mockito.times(1)).removeCommandListener(keServer);
