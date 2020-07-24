@@ -7,9 +7,7 @@
  */
 package com.zsmartsystems.zigbee.app.seclient;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -112,7 +110,8 @@ public class ZclKeyEstablishmentClientTest {
         command.setCommandDirection(ZclCommandDirection.SERVER_TO_CLIENT);
         assertTrue(keClient.commandReceived(command));
 
-        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(1)).sendCommand(ArgumentMatchers.any());
+        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(1))
+                .sendCommand((ZclKeyEstablishmentCommand) ArgumentMatchers.any());
 
         // State gets reset back to UNINITIALISED after the FAILURE
         Mockito.verify(seClient, Mockito.timeout(TIMEOUT)).keyEstablishmentCallback(ZigBeeStatus.FAILURE, 0);
@@ -151,8 +150,7 @@ public class ZclKeyEstablishmentClientTest {
         Mockito.when(cbkeExchange.getCertificate()).thenReturn(local);
         Mockito.when(cbkeExchange.getCbkeEphemeralData()).thenReturn(local);
 
-        InitiateKeyEstablishmentResponse command = new InitiateKeyEstablishmentResponse(
-                1, 0, 0, identity);
+        InitiateKeyEstablishmentResponse command = new InitiateKeyEstablishmentResponse(1, 0, 0, identity);
         command.setCommandDirection(ZclCommandDirection.SERVER_TO_CLIENT);
         assertTrue(keClient.commandReceived(command));
 
@@ -191,7 +189,8 @@ public class ZclKeyEstablishmentClientTest {
         command.setCommandDirection(ZclCommandDirection.SERVER_TO_CLIENT);
         assertTrue(keClient.commandReceived(command));
 
-        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(1)).sendCommand(ArgumentMatchers.any());
+        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(1))
+                .sendCommand((ZclKeyEstablishmentCommand) ArgumentMatchers.any());
 
         // State gets reset back to UNINITIALISED after the FAILURE
         Mockito.verify(seClient, Mockito.timeout(TIMEOUT)).keyEstablishmentCallback(ZigBeeStatus.FAILURE, 0);
@@ -271,12 +270,13 @@ public class ZclKeyEstablishmentClientTest {
 
         ZigBeeCbkeCertificate remoteCert = new CerticomCbkeCertificate(
                 "CAPubKey:0200fde8a7f3d1084224962a4e7c54e69ac3f04da6b8DeviceImplicitCert:0200caa15b4beede65c3139a5c3bc40c9ad153854a270022a300001731f354455354534543410109108301234567890aPrivateKeyReconstructionData:019fcc486fc46980ab4a612725b36f005edff075feDevicePublicKey:020366d312a0abf55654ead3e1624c31faed89c3bb20");
-        InitiateKeyEstablishmentResponse command = new InitiateKeyEstablishmentResponse(
-                1, 22, 33, new ByteArray(remoteCert.getCertificate()));
+        InitiateKeyEstablishmentResponse command = new InitiateKeyEstablishmentResponse(1, 22, 33,
+                new ByteArray(remoteCert.getCertificate()));
         command.setCommandDirection(ZclCommandDirection.SERVER_TO_CLIENT);
         assertTrue(keClient.commandReceived(command));
 
-        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(1)).sendCommand(ArgumentMatchers.any());
+        Mockito.verify(keCluster, Mockito.timeout(TIMEOUT).times(1))
+                .sendCommand((ZclKeyEstablishmentCommand) ArgumentMatchers.any());
 
         // State gets reset back to UNINITIALISED after the FAILURE
         Mockito.verify(seClient, Mockito.timeout(TIMEOUT)).keyEstablishmentCallback(ZigBeeStatus.FAILURE, 0);
