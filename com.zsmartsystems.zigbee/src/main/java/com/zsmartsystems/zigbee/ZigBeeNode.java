@@ -299,8 +299,23 @@ public class ZigBeeNode {
      * FFDs are Coordinators and Routers
      *
      * @return true if the device is a Full Function Device. Returns false if not an FFD or logical type is unknown.
+     * @deprecated use isFullFunctionDevice
      */
+    @Deprecated
     public boolean isFullFuntionDevice() {
+        return isFullFunctionDevice();
+    }
+
+    /**
+     * Returns true if the node is a Full Function Device. Returns false if not an FFD or logical type is unknown.
+     * <p>
+     * A FFD (Full Function Device) is a device that has full levels of functionality.
+     * It can be used for sending and receiving data, but it can also route data from other nodes.
+     * FFDs are Coordinators and Routers
+     *
+     * @return true if the device is a Full Function Device. Returns false if not an FFD or logical type is unknown.
+     */
+    public boolean isFullFunctionDevice() {
         if (nodeDescriptor == null) {
             return false;
         }
@@ -316,8 +331,24 @@ public class ZigBeeNode {
      * do not need to route other traffic and they can be put into a sleep mode when they are not in use.
      *
      * @return true if the device is a Reduced Function Device
+     * @deprecated use isReducedFunctionDevice
      */
+    @Deprecated
     public boolean isReducedFuntionDevice() {
+        return isReducedFunctionDevice();
+    }
+
+    /**
+     * Returns true if the node is a Reduced Function Device. Returns false if not an RFD or logical type is unknown.
+     * <p>
+     * An RFD (Reduced Function Device) is a device that has a reduced level of functionality.
+     * Typically it is an end node which may be typically a sensor or switch. RFDs can only talk to FFDs
+     * as they contain no routing functionality. These devices can be very low power devices because they
+     * do not need to route other traffic and they can be put into a sleep mode when they are not in use.
+     *
+     * @return true if the device is a Reduced Function Device
+     */
+    public boolean isReducedFunctionDevice() {
         if (nodeDescriptor == null) {
             return false;
         }
@@ -917,10 +948,10 @@ public class ZigBeeNode {
     public ZigBeeNodeState getNodeState() {
         return nodeState;
     }
-    
+
     /**
      * Gets the {@link NotificationService} provided by this node's network manager.
-     * 
+     *
      * @return the {@link NotificationService} provided by this node's network manager.
      */
     public NotificationService getNotificationService() {
