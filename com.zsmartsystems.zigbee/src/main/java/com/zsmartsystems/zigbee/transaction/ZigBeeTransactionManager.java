@@ -540,7 +540,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
         synchronized (outstandingTransactions) {
             // Notify the listeners
             for (final ZigBeeTransaction transaction : outstandingTransactions) {
-                logger.debug("notifyTransactionCommand: {} {}", command, transaction);
+                logger.trace("notifyTransactionCommand: {} {}", command, transaction);
                 networkManager.getNotificationService().execute(new Runnable() {
                     @Override
                     public void run() {
