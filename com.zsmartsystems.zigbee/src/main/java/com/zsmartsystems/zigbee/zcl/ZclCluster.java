@@ -288,6 +288,7 @@ public abstract class ZclCluster {
             command.setCommandDirection(ZclCommandDirection.SERVER_TO_CLIENT);
         }
 
+        command.setClusterId(clusterId);
         command.setApsSecurity(apsSecurityRequired);
 
         return zigbeeEndpoint.sendTransaction(command, new ZclTransactionMatcher());

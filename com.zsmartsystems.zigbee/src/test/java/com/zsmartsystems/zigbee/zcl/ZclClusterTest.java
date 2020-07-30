@@ -96,6 +96,21 @@ public class ZclClusterTest {
     }
 
     @Test
+    public void sendCommand() {
+        createEndpoint();
+
+        ZclCluster cluster = new ZclOnOffCluster(endpoint);
+
+        ReadAttributesCommand command = new ReadAttributesCommand(
+                Collections.singletonList(ZclOnOffCluster.ATTR_ONOFF));
+        cluster.sendCommand(command);
+        assertEquals(1, commandCapture.getAllValues().size());
+        ZigBeeCommand txCommand = commandCapture.getValue();
+
+        assertEquals(Integer.valueOf(ZclOnOffCluster.CLUSTER_ID), txCommand.getClusterId());
+    }
+
+    @Test
     public void bind() {
         createEndpoint();
 
