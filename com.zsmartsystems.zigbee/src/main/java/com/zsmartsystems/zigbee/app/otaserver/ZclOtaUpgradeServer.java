@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.app.otaserver;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -20,15 +21,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.CommandResult;
+import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeExecutors;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.app.ZigBeeApplication;
-import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclCommandListener;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageBlockCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageBlockResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.otaupgrade.ImageNotifyCommand;
@@ -463,18 +466,48 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
                     // some time to complete, we retry this a few times.
                     for (int cnt = 0; cnt < CURRENT_FW_VERSION_REQUEST_RETRIES; cnt++) {
                         Thread.sleep(CURRENT_FW_VERSION_REQUEST_DELAY);
-                        Integer fileVersion = (Integer) cluster
-                                .getAttribute(ZclOtaUpgradeCluster.ATTR_CURRENTFILEVERSION).readValue(0);
-                        if (fileVersion == null) {
+                        CommandResult currentVersionCommandResult = cluster.sendCommand(
+                                new ReadAttributesCommand(Arrays.asList(ZclOtaUpgradeCluster.ATTR_CURRENTFILEVERSION)))
+                                .get();
+
+                        if (currentVersionCommandResult == null) {
                             continue;
                         }
 
-                        if (fileVersion.equals(otaFile.getFileVersion())) {
-                            updateStatus(ZigBeeOtaServerStatus.OTA_UPGRADE_COMPLETE);
-                            return;
+                        ZigBeeCommand currentVersionResponse = currentVersionCommandResult.getResponse();
+
+                        if (currentVersionResponse instanceof ReadAttributesResponse) {
+                            ReadAttributesResponse attributesResponse = (ReadAttributesResponse) currentVersionResponse;
+                            logger.debug("{} : OTA file version to be installed={} Received ReadAttributesResponse: {}",
+                                    cluster.getZigBeeAddress(), otaFile.getFileVersion(), attributesResponse);
+
+                            if (!attributesResponse.getRecords().isEmpty()) {
+                                if (attributesResponse.getRecords().get(0).getStatus() == ZclStatus.SUCCESS) {
+                                    Integer fileVersion = (Integer) attributesResponse.getRecords().get(0)
+                                            .getAttributeValue();
+
+                                    if (fileVersion == null) {
+                                        continue;
+                                    }
+
+                                    if (fileVersion.equals(otaFile.getFileVersion())) {
+                                        updateStatus(ZigBeeOtaServerStatus.OTA_UPGRADE_COMPLETE);
+                                        return;
+                                    }
+                                } else if (attributesResponse.getRecords().get(0)
+                                        .getStatus() == ZclStatus.UNSUPPORTED_ATTRIBUTE) {
+                                    // since this attribute is optional in the specification, we take a reply with
+                                    // UNSUPPORTED_ATTRIBUTE as the case where the device is reachable again after it
+                                    // has successfully rebooted
+                                    updateStatus(ZigBeeOtaServerStatus.OTA_UPGRADE_COMPLETE);
+                                    return;
+                                }
+                            }
                         }
                     }
-
+                    logger.debug(
+                            "{} : All attempts to reach the device failed after it should have rebooted, taking this as a failure.",
+                            cluster.getZigBeeAddress());
                     updateStatus(ZigBeeOtaServerStatus.OTA_UPGRADE_FAILED);
                 } catch (InterruptedException | ExecutionException e) {
                     logger.debug("Error during OTA completeUpgrade ", e);
