@@ -77,12 +77,12 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     /**
      * The maximum number of outstanding transactions from all queues
      */
-    private final int MAX_OUTSTANDING_TRANSACTIONS = 9;
+    private final int MAX_OUTSTANDING_TRANSACTIONS = 5;
 
     /**
      * The maximum number of outstanding transactions from sleepy queues
      */
-    private final int MAX_SLEEPY_TRANSACTIONS = 5;
+    private final int MAX_SLEEPY_TRANSACTIONS = 3;
 
     private final int NODE_RETRIES = 2;
     private final int NODE_TRANSACTIONS = 2;
@@ -97,8 +97,8 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     private final int MCAST_DELAY = 1200;
 
     private final int BCAST_RETRIES = 0;
-    private final int BCAST_TRANSACTIONS = 3;
-    private final int BCAST_DELAY = 1200;
+    private final int BCAST_TRANSACTIONS = 2;
+    private final int BCAST_DELAY = 4000;
 
     /**
      * The {@link ZigBeeNetworkManager} to which this manager belongs
