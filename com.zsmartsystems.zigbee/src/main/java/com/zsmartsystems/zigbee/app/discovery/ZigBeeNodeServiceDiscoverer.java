@@ -296,16 +296,35 @@ public class ZigBeeNodeServiceDiscoverer {
     }
 
     /**
-     * Get node descriptor
+     * Request the network address.
+     * <p>
+     * To reduce the number of broadcasts made, we assume initially that all devices have the same address as previous
+     * and send this via unicast. If that fails, then we attempt to rediscover the address using a broadcast.
      *
      * @return true if the message was processed ok
      * @throws ExecutionException
      * @throws InterruptedException
      */
     private boolean requestNetworkAddress() throws InterruptedException, ExecutionException {
+        if (requestNetworkAddress(new ZigBeeEndpointAddress(node.getNetworkAddress()))) {
+            logger.debug("{}: Node SVC Discovery: NetworkAddressRequest confirmed by unicast", node.getIeeeAddress());
+            return true;
+        }
+
+        if (requestNetworkAddress(
+                new ZigBeeEndpointAddress(ZigBeeBroadcastDestination.BROADCAST_ALL_DEVICES.getKey()))) {
+            logger.debug("{}: Node SVC Discovery: NetworkAddressRequest confirmed by broadcast", node.getIeeeAddress());
+        }
+
+        logger.debug("{}: Node SVC Discovery: NetworkAddressRequest failed after unicast and broadcast",
+                node.getIeeeAddress());
+        return false;
+    }
+
+    private boolean requestNetworkAddress(ZigBeeEndpointAddress address)
+            throws InterruptedException, ExecutionException {
         NetworkAddressRequest networkAddressRequest = new NetworkAddressRequest(node.getIeeeAddress(), 0, 0);
-        networkAddressRequest.setDestinationAddress(
-                new ZigBeeEndpointAddress(ZigBeeBroadcastDestination.BROADCAST_ALL_DEVICES.getKey()));
+        networkAddressRequest.setDestinationAddress(address);
 
         CommandResult response = networkManager.sendTransaction(networkAddressRequest, networkAddressRequest).get();
         final NetworkAddressResponse networkAddressResponse = (NetworkAddressResponse) response.getResponse();
@@ -327,7 +346,7 @@ public class ZigBeeNodeServiceDiscoverer {
     }
 
     /**
-     * Get Node Network address and the list of associated devices
+     * Get Node IEEE address and the list of associated devices
      *
      * @return true if the message was processed ok
      * @throws ExecutionException
