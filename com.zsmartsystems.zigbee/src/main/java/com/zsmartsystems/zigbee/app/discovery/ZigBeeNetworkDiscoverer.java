@@ -169,7 +169,7 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
             final DeviceAnnounce announce = (DeviceAnnounce) command;
 
             logger.debug("{}: Device announce received. From {}, for {}", announce.getIeeeAddr(),
-                    String.format("%04X", announce.getSourceAddress()),
+                    String.format("%04X", announce.getSourceAddress().getAddress()),
                     String.format("%04X", announce.getNwkAddrOfInterest()));
             addNode(announce.getIeeeAddr(), announce.getNwkAddrOfInterest());
         }
