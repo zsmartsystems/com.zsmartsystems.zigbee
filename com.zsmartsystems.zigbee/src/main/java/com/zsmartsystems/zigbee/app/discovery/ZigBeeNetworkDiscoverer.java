@@ -201,7 +201,7 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
                     CommandResult response = networkManager.sendTransaction(request, request).get();
                     ieeeAddressResponse = response.getResponse();
 
-                    if (ieeeAddressResponse != null) {
+                    if (ieeeAddressResponse == null) {
                         logger.debug("NWK Discovery: Rediscovery of {} using broadcast",
                                 String.format("%04X", networkAddress));
                         request = new IeeeAddressRequest(networkAddress, 0, 0);
