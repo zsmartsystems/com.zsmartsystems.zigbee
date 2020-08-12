@@ -795,7 +795,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         // TODO: Set the source address correctly?
         apsFrame.setSourceAddress(localNwkAddress);
 
-        apsFrame.setRadius(31);
+        apsFrame.setRadius(8); // TODO: Make this configurable
 
         if (command.getDestinationAddress() instanceof ZigBeeEndpointAddress) {
             apsFrame.setAddressMode(ZigBeeNwkAddressMode.DEVICE);
