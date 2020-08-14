@@ -193,6 +193,10 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
                 logger.debug("NWK Discovery starting node rediscovery {}", String.format("%04X", networkAddress));
 
                 try {
+                    if (Thread.currentThread().isInterrupted()) {
+                        return;
+                    }
+
                     IeeeAddressResponse ieeeAddressResponse = null;
                     logger.debug("NWK Discovery: Rediscovery of {} using unicast",
                             String.format("%04X", networkAddress));
@@ -265,7 +269,7 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
                         nwkAddressResponse = response.getResponse();
                     }
 
-                    if (nwkAddressResponse != null) {
+                    if (nwkAddressResponse == null) {
                         logger.debug("{}: NWK Discovery: Rediscovery using broadcast", ieeeAddress);
                         NetworkAddressRequest request = new NetworkAddressRequest(ieeeAddress, 0, 0);
                         request.setDestinationAddress(

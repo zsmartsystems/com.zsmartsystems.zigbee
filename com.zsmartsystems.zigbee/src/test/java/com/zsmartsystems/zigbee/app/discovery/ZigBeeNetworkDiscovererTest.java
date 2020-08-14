@@ -142,7 +142,7 @@ public class ZigBeeNetworkDiscovererTest {
         Mockito.verify(networkManager).addAnnounceListener(discoverer);
 
         // Then wait for the nodes to be added
-        Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).times(2)).updateNode(nodeCapture.capture());
+        Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).times(1)).updateNode(nodeCapture.capture());
 
         ZigBeeNode node = nodeCapture.getValue();
         assertNotNull(node);
@@ -160,6 +160,7 @@ public class ZigBeeNetworkDiscovererTest {
         IeeeAddress ieeeAddress = new IeeeAddress("123456890ABCDEF");
 
         DeviceAnnounce announce = new DeviceAnnounce(12345, ieeeAddress, null);
+        announce.setSourceAddress(new ZigBeeEndpointAddress(1));
 
         ZigBeeNetworkDiscoverer discoverer = new ZigBeeNetworkDiscoverer(networkManager);
         discoverer.setRetryPeriod(0);
