@@ -140,6 +140,7 @@ public class ZigBeeTransactionQueue {
 
         // We don't cancel outstanding transactions here as the transaction manager is doing that
         outstandingTransactions.clear();
+        queue.clear();
     }
 
     /**
@@ -210,7 +211,7 @@ public class ZigBeeTransactionQueue {
             return null;
         }
         if (transaction.getFuture() == null) {
-            transaction.setFuture(new ZigBeeTransactionFuture());
+            transaction.setFuture(new ZigBeeTransactionFuture(transaction));
         }
 
         transaction.setIeeeAddress(deviceIeeeAdress);
@@ -229,6 +230,16 @@ public class ZigBeeTransactionQueue {
         logger.debug("{}: Added transaction to queue, len={}, transaction={}", queueName, queue.size(), transaction);
 
         return transaction.getFuture();
+    }
+
+    /**
+     * Removes a transaction from the queue
+     *
+     * @param transaction {@link ZigBeeTransaction}
+     * @return true if an element was removed as a result of this call
+     */
+    protected boolean removeFromQueue(ZigBeeTransaction transaction) {
+        return queue.remove(transaction);
     }
 
     /**
@@ -286,7 +297,12 @@ public class ZigBeeTransactionQueue {
      * Notification that a previously released transaction has been completed.
      * <p>
      * This is called from the transaction manager when the transaction completes (either successfully, or
-     * unsuccessfully)
+     * unsuccessfully).
+     * <p>
+     * If the transaction has {@link TransactionState#FAILED}, it will be requeued if it has not exceeded the allowable
+     * number of retries.
+     * <p>
+     * If the transaction has {@link TransactionState#CANCELLED}, it will not be requeued.
      *
      * @param transaction the {@link ZigBeeTransaction} that is complete
      * @param state the {@link TransactionState} of the transaction on completion

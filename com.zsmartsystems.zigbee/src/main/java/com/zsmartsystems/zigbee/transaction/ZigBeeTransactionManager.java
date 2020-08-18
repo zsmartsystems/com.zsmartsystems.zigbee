@@ -348,7 +348,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
         synchronized (this) {
             ZigBeeTransactionQueue queue = getTransactionQueue(transaction);
             if (queue == null) {
-                logger.debug("Error getting queue for {}", transaction);
+                logger.debug("Error getting queue when sending {}", transaction);
                 return null;
             }
 

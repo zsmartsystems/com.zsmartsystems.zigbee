@@ -31,6 +31,7 @@ import com.zsmartsystems.zigbee.transaction.ZigBeeTransaction.TransactionState;
  *
  */
 public class ZigBeeTransactionQueueTest {
+    private final long TIMEOUT = 5000;
 
     @Test
     public void testQueueFifo() {
@@ -142,5 +143,19 @@ public class ZigBeeTransactionQueueTest {
         ZigBeeTransaction rewrittenTransaction = queue.getTransaction();
 
         assertEquals(newAddress, rewrittenTransaction.getDestinationAddress().getAddress());
+    }
+
+    @Test
+    public void testCancel() {
+        ZigBeeTransactionQueue queue = new ZigBeeTransactionQueue("QueueName", null);
+        ZigBeeTransaction transaction = Mockito.mock(ZigBeeTransaction.class);
+        assertEquals(0, queue.size());
+        queue.cancelTransaction(transaction);
+        Mockito.verify(transaction, Mockito.timeout(TIMEOUT).times(1)).cancel();
+        queue.addToQueue(transaction);
+        assertEquals(1, queue.size());
+        queue.cancelTransaction(transaction);
+        Mockito.verify(transaction, Mockito.timeout(TIMEOUT).times(2)).cancel();
+        assertEquals(0, queue.size());
     }
 }

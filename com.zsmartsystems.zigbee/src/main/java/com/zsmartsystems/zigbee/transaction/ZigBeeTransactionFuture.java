@@ -26,6 +26,8 @@ public class ZigBeeTransactionFuture implements Future<CommandResult> {
      */
     private CommandResult result;
 
+    final ZigBeeTransaction transaction;
+
     private boolean cancelled = false;
 
     /**
@@ -34,6 +36,15 @@ public class ZigBeeTransactionFuture implements Future<CommandResult> {
      */
     // Not final for tests
     private static long TIMEOUT_MINUTES = 5;
+
+    /**
+     * Constructur
+     *
+     * @param transaction the {@link ZigBeTransaction} linked to this future
+     */
+    public ZigBeeTransactionFuture(ZigBeeTransaction transaction) {
+        this.transaction = transaction;
+    }
 
     /**
      * Sets the {@link CommandResult}.
@@ -50,7 +61,11 @@ public class ZigBeeTransactionFuture implements Future<CommandResult> {
         if (result != null || cancelled) {
             return false;
         }
+
+        // cancelled must be set to true before cancelling the transaction
+        // as this method will otherwise be called recursively
         cancelled = true;
+        transaction.cancel();
         notifyAll();
         return true;
     }
@@ -71,6 +86,7 @@ public class ZigBeeTransactionFuture implements Future<CommandResult> {
             return get(TIMEOUT_MINUTES, TimeUnit.MINUTES);
         } catch (InterruptedException e) {
             set(new CommandResult(ZigBeeStatus.FAILURE, null));
+            cancel(true);
             return result;
         }
     }
@@ -84,6 +100,7 @@ public class ZigBeeTransactionFuture implements Future<CommandResult> {
             unit.timedWait(this, timeout);
             if (result == null) {
                 set(new CommandResult(ZigBeeStatus.FAILURE, null));
+                cancel(true);
             }
             return result;
         }
