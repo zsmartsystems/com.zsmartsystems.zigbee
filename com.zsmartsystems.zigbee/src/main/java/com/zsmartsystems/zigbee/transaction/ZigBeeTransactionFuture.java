@@ -28,8 +28,12 @@ public class ZigBeeTransactionFuture implements Future<CommandResult> {
 
     private boolean cancelled = false;
 
+    /**
+     * We set the timeout to 5 minutes to be long enough to allow the transaction manager to complete its queuing and
+     * eventual retries
+     */
     // Not final for tests
-    private static long TIMEOUT_MILLISECONDS = 12000;
+    private static long TIMEOUT_MINUTES = 5;
 
     /**
      * Sets the {@link CommandResult}.
@@ -64,7 +68,7 @@ public class ZigBeeTransactionFuture implements Future<CommandResult> {
     @Override
     public CommandResult get() throws InterruptedException, ExecutionException {
         try {
-            return get(TIMEOUT_MILLISECONDS, TimeUnit.MILLISECONDS);
+            return get(TIMEOUT_MINUTES, TimeUnit.MINUTES);
         } catch (InterruptedException e) {
             set(new CommandResult(ZigBeeStatus.FAILURE, null));
             return result;
