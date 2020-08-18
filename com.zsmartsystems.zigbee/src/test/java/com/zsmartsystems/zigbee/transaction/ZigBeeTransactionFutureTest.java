@@ -50,7 +50,7 @@ public class ZigBeeTransactionFutureTest {
         ZigBeeTransactionFuture future = new ZigBeeTransactionFuture();
         assertFalse(future.isDone());
 
-        TestUtilities.setField(ZigBeeTransactionFuture.class, future, "TIMEOUT_MILLISECONDS", (long) 0);
+        TestUtilities.setField(ZigBeeTransactionFuture.class, future, "TIMEOUT_MINUTES", (long) 0);
 
         CommandResult result = future.get();
         assertNull(result.getResponse());
