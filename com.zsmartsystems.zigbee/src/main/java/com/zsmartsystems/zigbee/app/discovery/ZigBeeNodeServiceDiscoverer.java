@@ -314,6 +314,7 @@ public class ZigBeeNodeServiceDiscoverer {
         if (requestNetworkAddress(
                 new ZigBeeEndpointAddress(ZigBeeBroadcastDestination.BROADCAST_ALL_DEVICES.getKey()))) {
             logger.debug("{}: Node SVC Discovery: NetworkAddressRequest confirmed by broadcast", node.getIeeeAddress());
+            return true;
         }
 
         logger.debug("{}: Node SVC Discovery: NetworkAddressRequest failed after unicast and broadcast",
