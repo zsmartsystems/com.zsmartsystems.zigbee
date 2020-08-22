@@ -33,6 +33,7 @@ import org.mockito.Mockito;
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.TestUtilities;
+import com.zsmartsystems.zigbee.ZigBeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeBroadcastDestination;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
@@ -200,7 +201,14 @@ public class ZigBeeTransactionManagerTest {
         Mockito.when(networkManager.getNotificationService()).thenReturn(new NotificationService());
         ZigBeeTransactionManager transactionManager = new ZigBeeTransactionManager(networkManager);
 
+        ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
+        Mockito.when(networkManager.getNode(ArgumentMatchers.anyInt())).thenReturn(node);
+        Mockito.when(node.getIeeeAddress()).thenReturn(new IeeeAddress("1234567890ABCDEF"));
+
+        ZigBeeAddress address = new ZigBeeEndpointAddress(0, 0);
         ZigBeeTransaction transaction = Mockito.mock(ZigBeeTransaction.class);
+        Mockito.when(transaction.getIeeeAddress()).thenReturn(new IeeeAddress("1234567890ABCDEF"));
+        Mockito.when(transaction.getDestinationAddress()).thenReturn(address);
 
         IeeeAddress ieeeAddress = new IeeeAddress("1234567890ABCDEF");
         ZigBeeTransactionQueue queue = Mockito.mock(ZigBeeTransactionQueue.class);
