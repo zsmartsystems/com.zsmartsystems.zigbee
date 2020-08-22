@@ -37,10 +37,80 @@ public class DefaultDeserializerTest {
     }
 
     @Test
-    public void testDeserialize_SIGNED_16_BIT_INTEGER() {
+    public void testDeserialize_SIGNED_16_BIT_INTEGER_positive() {
         int[] valIn = { 0x97, 0x03 };
         int valOut = 0x397;
         testDeserialize(valIn, valOut, ZclDataType.SIGNED_16_BIT_INTEGER);
+    }
+
+    @Test
+    public void testDeserialize_SIGNED_16_BIT_INTEGER_negative() {
+        int[] valIn = { 0xFF, 0xFF };
+        int valOut = -0x1;
+        testDeserialize(valIn, valOut, ZclDataType.SIGNED_16_BIT_INTEGER);
+    }
+
+    @Test
+    public void testDeserialize_SIGNED_24_BIT_INTEGER_positive_small() {
+        int[] valIn = { 0x97, 0x03, 0x00 };
+        int valOut = 0x397;
+        testDeserialize(valIn, valOut, ZclDataType.SIGNED_24_BIT_INTEGER);
+    }
+
+    @Test
+    public void testDeserialize_SIGNED_24_BIT_INTEGER_positive_largest() {
+        int[] valIn = { 0xFF, 0xFF, 0x7F };
+        int valOut = 8388607; // 2^23 - 1
+        testDeserialize(valIn, valOut, ZclDataType.SIGNED_24_BIT_INTEGER);
+    }
+
+    @Test
+    public void testDeserialize_SIGNED_24_BIT_INTEGER_negative_one() {
+        int[] valIn = { 0xFF, 0xFF, 0xFF };
+        int valOut = -0x1;
+        testDeserialize(valIn, valOut, ZclDataType.SIGNED_24_BIT_INTEGER);
+    }
+
+    @Test
+    public void testDeserialize_SIGNED_24_BIT_INTEGER_negative_small() {
+        int[] valIn = { 0xFD, 0xFF, 0xFF };
+        int valOut = -0x3;
+        testDeserialize(valIn, valOut, ZclDataType.SIGNED_24_BIT_INTEGER);
+    }
+
+    @Test
+    public void testDeserialize_SIGNED_24_BIT_INTEGER_negative_largest() {
+        int[] valIn = { 0x00, 0x00, 0x80 };
+        int valOut = -8388608; // -2^23
+        testDeserialize(valIn, valOut, ZclDataType.SIGNED_24_BIT_INTEGER);
+    }
+
+    @Test
+    public void testDeserialize_UNSIGNED_16_BIT_INTEGER_small() {
+        int[] valIn = { 0x03, 0x00 };
+        int valOut = 0x03;
+        testDeserialize(valIn, valOut, ZclDataType.UNSIGNED_16_BIT_INTEGER);
+    }
+
+    @Test
+    public void testDeserialize_UNSIGNED_16_BIT_INTEGER_large() {
+        int[] valIn = { 0xFF, 0xFF };
+        int valOut = 65535;
+        testDeserialize(valIn, valOut, ZclDataType.UNSIGNED_16_BIT_INTEGER);
+    }
+
+    @Test
+    public void testDeserialize_UNSIGNED_24_BIT_INTEGER_small() {
+        int[] valIn = { 0x03, 0x00, 0x00 };
+        int valOut = 0x03;
+        testDeserialize(valIn, valOut, ZclDataType.UNSIGNED_24_BIT_INTEGER);
+    }
+
+    @Test
+    public void testDeserialize_UNSIGNED_24_BIT_INTEGER_large() {
+        int[] valIn = { 0xFF, 0xFF, 0xFF };
+        int valOut = 16777215;
+        testDeserialize(valIn, valOut, ZclDataType.UNSIGNED_24_BIT_INTEGER);
     }
 
     @Test
