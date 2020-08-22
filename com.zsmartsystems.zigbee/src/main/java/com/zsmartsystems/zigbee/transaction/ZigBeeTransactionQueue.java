@@ -9,8 +9,10 @@ package com.zsmartsystems.zigbee.transaction;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.Future;
 
 import org.slf4j.Logger;
@@ -85,7 +87,7 @@ public class ZigBeeTransactionQueue {
     /**
      * The number of transactions currently outstanding from this queue
      */
-    private int outstandingTransactions = 0;
+    private final Set<ZigBeeTransaction> outstandingTransactions = new HashSet<>();
 
     /**
      * The {@link IeeeAddress} of the device for which this queue has transactions ({@code null} in case of a default,
@@ -131,10 +133,13 @@ public class ZigBeeTransactionQueue {
         logger.debug("{}: Queue shutdown", queueName);
         isShutdown = true;
 
-        // Cancel any outstanding transactions
+        // Cancel any queued transactions
         for (ZigBeeTransaction transaction : queue) {
             transaction.cancel();
         }
+
+        // We don't cancel outstanding transactions here as the transaction manager is doing that
+        outstandingTransactions.clear();
     }
 
     /**
@@ -239,13 +244,14 @@ public class ZigBeeTransactionQueue {
      */
     protected ZigBeeTransaction getTransaction() {
         if (queue.isEmpty() || nextReleaseTime > System.currentTimeMillis()
-                || outstandingTransactions >= profile.getMaxOutstandingTransactions()) {
+                || outstandingTransactions.size() >= profile.getMaxOutstandingTransactions() || isShutdown) {
             return null;
         }
-        outstandingTransactions++;
+        ZigBeeTransaction transaction = queue.poll();
+        outstandingTransactions.add(transaction);
         nextReleaseTime = System.currentTimeMillis() + profile.getInterTransactionDelay();
 
-        return queue.poll();
+        return transaction;
     }
 
     /**
@@ -286,13 +292,18 @@ public class ZigBeeTransactionQueue {
      * @param state the {@link TransactionState} of the transaction on completion
      */
     protected void transactionComplete(ZigBeeTransaction transaction, TransactionState state) {
-        outstandingTransactions--;
-        logger.debug("{}: transactionComplete {} {}", queueName, state, outstandingTransactions);
-
         if (isShutdown) {
             transaction.cancel();
             return;
         }
+
+        if (!outstandingTransactions.remove(transaction)) {
+            logger.debug("{}: transactionComplete but not outstanding {} {}", queueName, state,
+                    outstandingTransactions.size());
+            transaction.cancel();
+            return;
+        }
+        logger.debug("{}: transactionComplete {} {}", queueName, state, outstandingTransactions.size());
 
         if (state == TransactionState.FAILED) {
             if (transaction.getSendCnt() < profile.getMaxRetries()) {
@@ -333,7 +344,8 @@ public class ZigBeeTransactionQueue {
     @Override
     public String toString() {
         return "ZigBeeTransactionQueue [queueName=" + queueName + ", deviceIeeeAddress=" + deviceIeeeAdress
-                + ", sleepy=" + sleepy + ", outstandingTransactions=" + outstandingTransactions + ", profile=" + profile
+                + ", sleepy=" + sleepy + ", outstandingTransactions=" + outstandingTransactions.size() + ", profile="
+                + profile
                 + "]";
     }
 }
