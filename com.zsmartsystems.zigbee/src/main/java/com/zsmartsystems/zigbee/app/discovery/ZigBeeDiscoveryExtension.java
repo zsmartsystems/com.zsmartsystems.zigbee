@@ -67,6 +67,12 @@ public class ZigBeeDiscoveryExtension
      */
     private int updatePeriod;
 
+    /**
+     * If set to true, the discovery task will perform a rediscovery if changes such as devices leaving and joining are
+     * detected
+     */
+    private boolean updateOnChange = false;
+
     private ScheduledFuture<?> futureTask = null;
 
     private ZigBeeNetworkManager networkManager;
@@ -97,7 +103,10 @@ public class ZigBeeDiscoveryExtension
         logger.debug("DISCOVERY Extension: Startup");
 
         networkManager.addNetworkNodeListener(this);
-        networkManager.addCommandListener(this);
+
+        if (updateOnChange) {
+            networkManager.addCommandListener(this);
+        }
 
         networkDiscoverer = new ZigBeeNetworkDiscoverer(networkManager);
         networkDiscoverer.startup();
@@ -114,7 +123,10 @@ public class ZigBeeDiscoveryExtension
     @Override
     public void extensionShutdown() {
         networkManager.removeNetworkNodeListener(this);
-        networkManager.removeCommandListener(this);
+
+        if (updateOnChange) {
+            networkManager.removeCommandListener(this);
+        }
 
         stopScheduler();
 
@@ -154,6 +166,23 @@ public class ZigBeeDiscoveryExtension
         }
 
         startScheduler(updatePeriod);
+    }
+
+    /**
+     * The mesh can be set to update when there are changes to the network - eg devices leaving or returning.
+     *
+     * @param updateOnChange true to perform a mesh update when changes are detected
+     */
+    public void setUpdateOnChange(boolean updateOnChange) {
+        if (this.updateOnChange == updateOnChange) {
+            return;
+        }
+        if (updateOnChange) {
+            networkManager.addCommandListener(this);
+        } else {
+            networkManager.removeCommandListener(this);
+        }
+        this.updateOnChange = updateOnChange;
     }
 
     /**
@@ -211,6 +240,12 @@ public class ZigBeeDiscoveryExtension
         }
     }
 
+    @Override
+    public void nodeRemoved(ZigBeeNode node) {
+        logger.debug("{}: DISCOVERY Extension: Removing discoverer", node.getIeeeAddress());
+        stopDiscovery(node);
+    }
+
     private void startDiscoveryIfNecessary(ZigBeeNode node) {
         ZigBeeNodeServiceDiscoverer nodeDiscoverer = nodeDiscovery.get(node.getIeeeAddress());
         // either there is no node discoverer or it has finished its tasks unsuccessfully
@@ -223,12 +258,6 @@ public class ZigBeeDiscoveryExtension
             stopDiscovery(node);
             startDiscovery(node);
         }
-    }
-
-    @Override
-    public void nodeRemoved(ZigBeeNode node) {
-        logger.debug("{}: DISCOVERY Extension: Removing discoverer", node.getIeeeAddress());
-        stopDiscovery(node);
     }
 
     @Override
