@@ -524,6 +524,12 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
                 if (queue.isSleepy()) {
                     sleepyTransactions--;
                 }
+
+                // Note that the queue may have rescheduled the transaction if retries are enabled.
+                // We therefore need to check if the
+                if (!queue.isEmpty() && !outstandingQueues.contains(queue)) {
+                    outstandingQueues.add(queue);
+                }
             }
         }
 
