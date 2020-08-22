@@ -292,6 +292,7 @@ public class ZigBeeTransactionQueue {
      * @param state the {@link TransactionState} of the transaction on completion
      */
     protected void transactionComplete(ZigBeeTransaction transaction, TransactionState state) {
+        System.out.println("ZigBeeTransactionQueue.transactionComplete()");
         if (isShutdown) {
             transaction.cancel();
             return;
