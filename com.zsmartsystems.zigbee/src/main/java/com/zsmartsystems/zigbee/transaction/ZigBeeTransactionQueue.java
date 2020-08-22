@@ -233,16 +233,6 @@ public class ZigBeeTransactionQueue {
     }
 
     /**
-     * Removes a transaction from the queue
-     *
-     * @param transaction {@link ZigBeeTransaction}
-     * @return true if an element was removed as a result of this call
-     */
-    protected boolean removeFromQueue(ZigBeeTransaction transaction) {
-        return queue.remove(transaction);
-    }
-
-    /**
      * Get a transaction from the queue. This method will return the next transaction required to be sent, based on
      * priority and any other internal selection mechanism. If no transaction is available to be sent, or if the queue
      * manager does not want to send a transaction at this time (e.g. due to inter-transaction delays), it will return
@@ -308,26 +298,26 @@ public class ZigBeeTransactionQueue {
      * @param state the {@link TransactionState} of the transaction on completion
      */
     protected void transactionComplete(ZigBeeTransaction transaction, TransactionState state) {
-        System.out.println("ZigBeeTransactionQueue.transactionComplete()");
         if (isShutdown) {
             transaction.cancel();
             return;
         }
 
         if (!outstandingTransactions.remove(transaction)) {
-            logger.debug("{}: transactionComplete but not outstanding {} {}", queueName, state,
+            logger.debug("{}: transactionComplete but not outstanding, state={}, outstanding={}", queueName, state,
                     outstandingTransactions.size());
             transaction.cancel();
             return;
         }
-        logger.debug("{}: transactionComplete {} {}", queueName, state, outstandingTransactions.size());
+        logger.debug("{}: transactionComplete, state={}, outstanding={}", queueName, state,
+                outstandingTransactions.size());
 
         if (state == TransactionState.FAILED) {
             if (transaction.getSendCnt() < profile.getMaxRetries()) {
                 // Transaction failed - requeue
                 addToQueue(transaction);
             } else {
-                logger.debug("{}: transactionComplete exceeded retries {}", queueName, transaction.getSendCnt());
+                logger.debug("{}: transactionComplete exceeded max retries {}", queueName, transaction.getSendCnt());
                 transaction.cancel();
             }
         }

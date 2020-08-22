@@ -33,7 +33,6 @@ import com.zsmartsystems.zigbee.ZigBeeNode.ZigBeeNodeState;
 import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransaction;
-import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionCallback;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionFuture;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
@@ -591,7 +590,7 @@ public class ZigBeeNodeTest {
                 ZigBeeCommand command = (ZigBeeCommand) invocation.getArguments()[0];
 
                 ZigBeeTransactionFuture commandFuture = new ZigBeeTransactionFuture(
-                        Mockito.mock(ZigBeeTransactionCallback.class), Mockito.mock(ZigBeeTransaction.class));
+                        Mockito.mock(ZigBeeTransaction.class));
                 CommandResult result = new CommandResult(responses.get(command.getClusterId()));
                 commandFuture.set(result);
                 return commandFuture;

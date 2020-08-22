@@ -7,7 +7,6 @@
  */
 package com.zsmartsystems.zigbee.transaction;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -25,6 +24,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
@@ -190,8 +190,11 @@ public class ZigBeeTransactionManagerTest {
 
         transactionManager.shutdown();
 
-        await().atMost(TIMEOUT, SECONDS)
+        // Mockito.verify(transactionManager, Mockito.timeout(TIMEOUT).times(1))
+        // .getQueue(new IeeeAddress("1111111111111111"));
+        await().atMost(TIMEOUT, TimeUnit.MILLISECONDS)
                 .until(() -> assertNull(transactionManager.getQueue(new IeeeAddress("1111111111111111"))));
+        System.out.println(cmdResult);
         assertTrue(cmdResult.isCancelled());
     }
 

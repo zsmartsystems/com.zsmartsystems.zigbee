@@ -35,8 +35,7 @@ public class ZigBeeTransactionFutureTest {
 
     @Test
     public void testIsDone() throws InterruptedException, ExecutionException, TimeoutException {
-        ZigBeeTransactionFuture future = new ZigBeeTransactionFuture(Mockito.mock(ZigBeeTransactionCallback.class),
-                Mockito.mock(ZigBeeTransaction.class));
+        ZigBeeTransactionFuture future = new ZigBeeTransactionFuture(Mockito.mock(ZigBeeTransaction.class));
         assertFalse(future.isDone());
 
         CommandResult result = new CommandResult(ZigBeeStatus.FAILURE, null);
@@ -49,7 +48,7 @@ public class ZigBeeTransactionFutureTest {
 
     @Test
     public void testDefaultTimeout() throws Exception {
-        ZigBeeTransactionFuture future = new ZigBeeTransactionFuture(Mockito.mock(ZigBeeTransactionCallback.class),
+        ZigBeeTransactionFuture future = new ZigBeeTransactionFuture(
                 Mockito.mock(ZigBeeTransaction.class));
         assertFalse(future.isDone());
 
@@ -61,8 +60,7 @@ public class ZigBeeTransactionFutureTest {
 
     @Test
     public void testTimeout() throws InterruptedException, ExecutionException, TimeoutException {
-        ZigBeeTransactionFuture future = new ZigBeeTransactionFuture(Mockito.mock(ZigBeeTransactionCallback.class),
-                Mockito.mock(ZigBeeTransaction.class));
+        ZigBeeTransactionFuture future = new ZigBeeTransactionFuture(Mockito.mock(ZigBeeTransaction.class));
         assertFalse(future.isDone());
 
         assertNotNull(future.get(0, TimeUnit.MICROSECONDS));
@@ -76,21 +74,20 @@ public class ZigBeeTransactionFutureTest {
 
     @Test
     public void testCancel() {
-        ZigBeeTransactionCallback callback = Mockito.mock(ZigBeeTransactionCallback.class);
         ZigBeeTransaction transaction = Mockito.mock(ZigBeeTransaction.class);
-        ZigBeeTransactionFuture future = new ZigBeeTransactionFuture(callback, transaction);
+        ZigBeeTransactionFuture future = new ZigBeeTransactionFuture(transaction);
         assertFalse(future.isCancelled());
         assertTrue(future.cancel(true));
-        Mockito.verify(callback, Mockito.timeout(TIMEOUT).times(1)).cancelTransaction(transaction);
+        Mockito.verify(transaction, Mockito.timeout(TIMEOUT).times(1)).cancel();
         assertFalse(future.cancel(true));
-        Mockito.verify(callback, Mockito.timeout(TIMEOUT).times(1)).cancelTransaction(transaction);
+        Mockito.verify(transaction, Mockito.timeout(TIMEOUT).times(1)).cancel();
         assertTrue(future.isCancelled());
     }
 
     @Test
     public void testMultipleThreadIsDone() throws InterruptedException, ExecutionException, TimeoutException {
         // Tests that multiple threads waiting on the same future will be notified when it completes
-        ZigBeeTransactionFuture future = new ZigBeeTransactionFuture(Mockito.mock(ZigBeeTransactionCallback.class),
+        ZigBeeTransactionFuture future = new ZigBeeTransactionFuture(
                 Mockito.mock(ZigBeeTransaction.class));
         assertFalse(future.isDone());
 
@@ -103,7 +100,7 @@ public class ZigBeeTransactionFutureTest {
                 startLatch.countDown();
                 try {
                     future.get();
-                } catch (InterruptedException | ExecutionException e) {
+                } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
                 finishLatch.countDown();
@@ -115,7 +112,7 @@ public class ZigBeeTransactionFutureTest {
                 startLatch.countDown();
                 try {
                     future.get();
-                } catch (InterruptedException | ExecutionException e) {
+                } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
                 finishLatch.countDown();

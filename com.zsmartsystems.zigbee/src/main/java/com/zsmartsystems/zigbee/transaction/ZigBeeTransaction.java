@@ -506,8 +506,9 @@ public class ZigBeeTransaction {
                     break;
             }
         }
-        logger.debug("Transaction state updated: TID {} -> {} == {}", String.format("%02X", transactionId), progress,
-                state);
+        logger.debug("Transaction state changed: nwk={}, TID={}, event={}, state={}",
+                String.format("%04X", command.getDestinationAddress().getAddress()),
+                String.format("%02X", transactionId), progress, state);
     }
 
     @Override
