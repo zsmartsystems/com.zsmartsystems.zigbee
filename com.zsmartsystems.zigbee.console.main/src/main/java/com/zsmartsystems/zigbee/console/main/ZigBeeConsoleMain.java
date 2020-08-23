@@ -22,6 +22,7 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.apache.log4j.xml.DOMConfigurator;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
@@ -51,6 +52,7 @@ import com.zsmartsystems.zigbee.database.ZigBeeNetworkDataStore;
 import com.zsmartsystems.zigbee.dongle.cc2531.ZigBeeDongleTiCc2531;
 import com.zsmartsystems.zigbee.dongle.conbee.ZigBeeDongleConBee;
 import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
 import com.zsmartsystems.zigbee.dongle.telegesis.ZigBeeDongleTelegesis;
 import com.zsmartsystems.zigbee.dongle.xbee.ZigBeeDongleXBee;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
@@ -92,7 +94,7 @@ public class ZigBeeConsoleMain {
      * @param args the command arguments
      */
     public static void main(final String[] args) {
-        // DOMConfigurator.configure("./log4j.xml");
+        DOMConfigurator.configure("./log4j.xml");
 
         final String serialPortName;
         final String dongleName;
@@ -220,14 +222,19 @@ public class ZigBeeConsoleMain {
             dongle = new ZigBeeDongleTiCc2531(serialPort);
             transportOptions.addOption(TransportConfigOption.RADIO_TX_POWER, 3);
         } else if (dongleName.toUpperCase().equals("EMBER")) {
-            dongle = new ZigBeeDongleEzsp(serialPort);
+            ZigBeeDongleEzsp emberDongle = new ZigBeeDongleEzsp(serialPort);
+            dongle = emberDongle;
+
+            emberDongle.updateDefaultConfiguration(EzspConfigId.EZSP_CONFIG_SOURCE_ROUTE_TABLE_SIZE, 32);
+            emberDongle.updateDefaultConfiguration(EzspConfigId.EZSP_CONFIG_APS_UNICAST_MESSAGE_COUNT, 16);
+            emberDongle.updateDefaultConfiguration(EzspConfigId.EZSP_CONFIG_NEIGHBOR_TABLE_SIZE, 24);
 
             transportOptions.addOption(TransportConfigOption.RADIO_TX_POWER, 8);
 
             // Configure the concentrator
             // Max Hops defaults to system max
             ConcentratorConfig concentratorConfig = new ConcentratorConfig();
-            concentratorConfig.setType(ConcentratorType.LOW_RAM);
+            concentratorConfig.setType(ConcentratorType.HIGH_RAM);
             concentratorConfig.setMaxFailures(8);
             concentratorConfig.setMaxHops(0);
             concentratorConfig.setRefreshMinimum(60);
@@ -249,7 +256,7 @@ public class ZigBeeConsoleMain {
             commands.add(EmberConsoleNcpMfglibCommand.class);
             commands.add(EmberConsoleNcpHandlerCommand.class);
 
-            ((ZigBeeDongleEzsp) dongle).setEmberNcpResetProvider(new EmberNcpHardwareReset());
+            emberDongle.setEmberNcpResetProvider(new EmberNcpHardwareReset());
         } else if (dongleName.toUpperCase().equals("XBEE")) {
             dongle = new ZigBeeDongleXBee(serialPort);
         } else if (dongleName.toUpperCase().equals("CONBEE")) {
