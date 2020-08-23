@@ -378,6 +378,7 @@ public class ZigBeeConsoleMain {
 
         ZigBeeDiscoveryExtension discoveryExtension = new ZigBeeDiscoveryExtension();
         discoveryExtension.setUpdatePeriod(0);
+        discoveryExtension.setUpdateOnChange(false);
         networkManager.addExtension(discoveryExtension);
 
         supportedClientClusters.stream().forEach(clusterId -> networkManager.addSupportedClientCluster(clusterId));
