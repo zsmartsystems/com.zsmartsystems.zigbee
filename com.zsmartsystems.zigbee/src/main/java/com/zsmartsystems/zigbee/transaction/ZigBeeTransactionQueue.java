@@ -325,14 +325,14 @@ public class ZigBeeTransactionQueue {
         LinkedList<ZigBeeTransaction> transactions = new LinkedList<>();
 
         synchronized (queue) {
-            ZigBeeTransaction zt = null;
-            while ((zt = queue.poll()) != null) {
-                if (!Objects.equals(zt.getDestinationAddress().getAddress(), newAddress)) {
+            ZigBeeTransaction transaction = null;
+            while ((transaction = queue.poll()) != null) {
+                if (!Objects.equals(transaction.getDestinationAddress().getAddress(), newAddress)) {
                     logger.debug("Rewriting transaction destination address from {} to {} in transaction={}",
-                            zt.getDestinationAddress().getAddress(), newAddress, zt);
-                    zt.getDestinationAddress().setAddress(newAddress);
+                            transaction.getDestinationAddress().getAddress(), newAddress, transaction);
+                    transaction.getDestinationAddress().setAddress(newAddress);
                 }
-                transactions.add(zt);
+                transactions.add(transaction);
             }
 
             for (ZigBeeTransaction trans : transactions) {
@@ -344,7 +344,8 @@ public class ZigBeeTransactionQueue {
     @Override
     public String toString() {
         return "ZigBeeTransactionQueue [queueName=" + queueName + ", deviceIeeeAddress=" + deviceIeeeAdress
-                + ", sleepy=" + sleepy + ", outstandingTransactions=" + outstandingTransactions.size() + ", profile="
+                + ", sleepy=" + sleepy + ", queued=" + queue.size() + ", outstandingTransactions="
+                + outstandingTransactions.size() + ", profile="
                 + profile
                 + "]";
     }

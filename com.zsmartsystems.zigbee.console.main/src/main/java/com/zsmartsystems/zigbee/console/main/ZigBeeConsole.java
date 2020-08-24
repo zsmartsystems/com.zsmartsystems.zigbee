@@ -15,11 +15,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 
@@ -67,6 +70,8 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleSwitchOnCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleTrustCentreCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleUnbindCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleWindowCoveringCommand;
+import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionManager;
+import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionQueue;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareCallback;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareStatus;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareUpdate;
@@ -170,6 +175,7 @@ public final class ZigBeeConsole {
         commands.put("memory", new MemoryCommand());
         commands.put("lqipoll", new LqiPollCommand());
         commands.put("reinitialize", new ReinitializeCommand());
+        commands.put("queues", new TransactionQueuesCommand());
 
         newCommands.put("nodes", new ZigBeeConsoleNodeListCommand());
         newCommands.put("endpoint", new ZigBeeConsoleDescribeEndpointCommand());
@@ -1563,6 +1569,59 @@ public final class ZigBeeConsole {
         }
     }
 
+    private class TransactionQueuesCommand implements ConsoleCommand {
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getDescription() {
+            return "Gets information about transaction queues";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getSyntax() {
+            return "";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, final PrintStream out) throws Exception {
+            ZigBeeTransactionManager transactionManager = (ZigBeeTransactionManager) getField(
+                    ZigBeeNetworkManager.class, networkManager,
+                    "transactionManager");
+
+            final Set<ZigBeeNode> nodes = networkManager.getNodes();
+            final List<Integer> nodeIds = new ArrayList<>();
+
+            for (ZigBeeNode node : nodes) {
+                nodeIds.add(node.getNetworkAddress());
+            }
+
+            Collections.sort(nodeIds);
+            for (Integer nodeId : nodeIds) {
+                ZigBeeNode node = networkManager.getNode(nodeId);
+                ZigBeeTransactionQueue queue = transactionManager.getQueue(node.getIeeeAddress());
+
+                if (queue != null) {
+                    out.println(queue.toString());
+                }
+            }
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                }
+            }).start();
+
+            return true;
+        }
+    }
+
     /**
      * Default processing for command result.
      *
@@ -1673,5 +1732,23 @@ public final class ZigBeeConsole {
                 break;
         }
         return value;
+    }
+
+    /**
+     * Gets the value of the private field
+     *
+     * @param clazz the class where the field resides
+     * @param object the object where the field resides
+     * @param fieldName the field name
+     * @return the {@link Object} containing the field value
+     * @throws Exception
+     */
+    private Object getField(Class clazz, Object object, String fieldName) throws Exception {
+        Field field = clazz.getDeclaredField(fieldName);
+        field.setAccessible(true);
+        Field modifiersField = Field.class.getDeclaredField("modifiers");
+        modifiersField.setAccessible(true);
+        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+        return field.get(object);
     }
 }
