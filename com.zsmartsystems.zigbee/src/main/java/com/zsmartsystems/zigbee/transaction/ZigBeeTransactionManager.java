@@ -332,9 +332,6 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      * @param command the {@link ZigBeeCommand} to send
      */
     public void sendTransaction(ZigBeeCommand command) {
-        if (isShutdown) {
-            return;
-        }
         sendTransaction(command, null);
     }
 
@@ -363,6 +360,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      */
     private ZigBeeTransactionFuture queueTransaction(ZigBeeTransactionQueue queue, ZigBeeTransaction transaction) {
         if (isShutdown) {
+            logger.debug("Transaction Manager is shutdown. Transaction not sent: {}", transaction);
             return null;
         }
 
