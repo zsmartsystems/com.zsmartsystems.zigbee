@@ -32,6 +32,7 @@ import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
+import com.zsmartsystems.zigbee.transaction.ZigBeeTransaction;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionFuture;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
@@ -63,7 +64,8 @@ public class ZigBeeNetworkDiscovererTest {
             public Future<CommandResult> answer(InvocationOnMock invocation) {
                 ZigBeeCommand command = (ZigBeeCommand) invocation.getArguments()[0];
 
-                ZigBeeTransactionFuture commandFuture = new ZigBeeTransactionFuture();
+                ZigBeeTransactionFuture commandFuture = new ZigBeeTransactionFuture(
+                        Mockito.mock(ZigBeeTransaction.class));
                 CommandResult result = new CommandResult(responses.get(command.getClusterId()));
                 commandFuture.set(result);
                 return commandFuture;
@@ -75,7 +77,8 @@ public class ZigBeeNetworkDiscovererTest {
             public Future<CommandResult> answer(InvocationOnMock invocation) {
                 ZigBeeCommand command = (ZigBeeCommand) invocation.getArguments()[0];
 
-                ZigBeeTransactionFuture commandFuture = new ZigBeeTransactionFuture();
+                ZigBeeTransactionFuture commandFuture = new ZigBeeTransactionFuture(
+                        Mockito.mock(ZigBeeTransaction.class));
                 CommandResult result = new CommandResult(responses.get(command.getClusterId()));
                 commandFuture.set(result);
                 return commandFuture;
@@ -98,7 +101,8 @@ public class ZigBeeNetworkDiscovererTest {
         // Add all the required responses to a list
         List<Integer> remotes = new ArrayList<>();
         remotes.add(1);
-        IeeeAddressResponse ieeeResponse = new IeeeAddressResponse(ZdoStatus.SUCCESS, new IeeeAddress("1234567890ABCDEF"), 0, 0, remotes);
+        IeeeAddressResponse ieeeResponse = new IeeeAddressResponse(ZdoStatus.SUCCESS,
+                new IeeeAddress("1234567890ABCDEF"), 0, 0, remotes);
         ieeeResponse.setSourceAddress(new ZigBeeEndpointAddress(0));
         ieeeResponse.setDestinationAddress(new ZigBeeEndpointAddress(0));
         responses.put(ZdoCommandType.IEEE_ADDRESS_REQUEST.getClusterId(), ieeeResponse);
@@ -193,7 +197,8 @@ public class ZigBeeNetworkDiscovererTest {
     public void rediscoverNodeByEui() throws Exception {
         ZigBeeNetworkDiscoverer discoverer = new ZigBeeNetworkDiscoverer(networkManager);
 
-        IeeeAddressResponse ieeeResponse = new IeeeAddressResponse(ZdoStatus.SUCCESS, new IeeeAddress("1111111111111111"), 1111, null, null);
+        IeeeAddressResponse ieeeResponse = new IeeeAddressResponse(ZdoStatus.SUCCESS,
+                new IeeeAddress("1111111111111111"), 1111, null, null);
         ieeeResponse.setSourceAddress(new ZigBeeEndpointAddress(1111));
         ieeeResponse.setDestinationAddress(new ZigBeeEndpointAddress(0));
         responses.put(ZdoCommandType.IEEE_ADDRESS_REQUEST.getClusterId(), ieeeResponse);
@@ -217,7 +222,8 @@ public class ZigBeeNetworkDiscovererTest {
     public void rediscoverNodeByNwk() throws Exception {
         ZigBeeNetworkDiscoverer discoverer = new ZigBeeNetworkDiscoverer(networkManager);
 
-        NetworkAddressResponse nwkResponse = new NetworkAddressResponse(ZdoStatus.SUCCESS, new IeeeAddress("1111111111111111"), 1111, null, null);
+        NetworkAddressResponse nwkResponse = new NetworkAddressResponse(ZdoStatus.SUCCESS,
+                new IeeeAddress("1111111111111111"), 1111, null, null);
         nwkResponse.setSourceAddress(new ZigBeeEndpointAddress(1111));
         nwkResponse.setDestinationAddress(new ZigBeeEndpointAddress(0));
         responses.put(ZdoCommandType.NETWORK_ADDRESS_REQUEST.getClusterId(), nwkResponse);

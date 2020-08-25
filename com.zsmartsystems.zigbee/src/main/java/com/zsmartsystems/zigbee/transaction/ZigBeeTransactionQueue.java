@@ -140,6 +140,7 @@ public class ZigBeeTransactionQueue {
 
         // We don't cancel outstanding transactions here as the transaction manager is doing that
         outstandingTransactions.clear();
+        queue.clear();
     }
 
     /**
@@ -210,7 +211,7 @@ public class ZigBeeTransactionQueue {
             return null;
         }
         if (transaction.getFuture() == null) {
-            transaction.setFuture(new ZigBeeTransactionFuture());
+            transaction.setFuture(new ZigBeeTransactionFuture(transaction));
         }
 
         transaction.setIeeeAddress(deviceIeeeAdress);
@@ -286,7 +287,12 @@ public class ZigBeeTransactionQueue {
      * Notification that a previously released transaction has been completed.
      * <p>
      * This is called from the transaction manager when the transaction completes (either successfully, or
-     * unsuccessfully)
+     * unsuccessfully).
+     * <p>
+     * If the transaction has {@link TransactionState#FAILED}, it will be requeued if it has not exceeded the allowable
+     * number of retries.
+     * <p>
+     * If the transaction has {@link TransactionState#CANCELLED}, it will not be requeued.
      *
      * @param transaction the {@link ZigBeeTransaction} that is complete
      * @param state the {@link TransactionState} of the transaction on completion
@@ -298,19 +304,20 @@ public class ZigBeeTransactionQueue {
         }
 
         if (!outstandingTransactions.remove(transaction)) {
-            logger.debug("{}: transactionComplete but not outstanding {} {}", queueName, state,
+            logger.debug("{}: transactionComplete but not outstanding, state={}, outstanding={}", queueName, state,
                     outstandingTransactions.size());
             transaction.cancel();
             return;
         }
-        logger.debug("{}: transactionComplete {} {}", queueName, state, outstandingTransactions.size());
+        logger.debug("{}: transactionComplete, state={}, outstanding={}", queueName, state,
+                outstandingTransactions.size());
 
         if (state == TransactionState.FAILED) {
             if (transaction.getSendCnt() < profile.getMaxRetries()) {
                 // Transaction failed - requeue
                 addToQueue(transaction);
             } else {
-                logger.debug("{}: transactionComplete exceeded retries {}", queueName, transaction.getSendCnt());
+                logger.debug("{}: transactionComplete exceeded max retries {}", queueName, transaction.getSendCnt());
                 transaction.cancel();
             }
         }

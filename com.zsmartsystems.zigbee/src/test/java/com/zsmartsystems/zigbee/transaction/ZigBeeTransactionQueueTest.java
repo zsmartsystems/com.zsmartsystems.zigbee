@@ -31,6 +31,7 @@ import com.zsmartsystems.zigbee.transaction.ZigBeeTransaction.TransactionState;
  *
  */
 public class ZigBeeTransactionQueueTest {
+    private final long TIMEOUT = 5000;
 
     @Test
     public void testQueueFifo() {

@@ -40,6 +40,7 @@ import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.app.discovery.ZigBeeNodeServiceDiscoverer.NodeDiscoveryTask;
+import com.zsmartsystems.zigbee.transaction.ZigBeeTransaction;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionFuture;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zdo.ZdoCommandType;
@@ -80,7 +81,8 @@ public class ZigBeeNodeServiceDiscovererTest {
             public Future<CommandResult> answer(InvocationOnMock invocation) {
                 ZigBeeCommand command = (ZigBeeCommand) invocation.getArguments()[0];
 
-                ZigBeeTransactionFuture commandFuture = new ZigBeeTransactionFuture();
+                ZigBeeTransactionFuture commandFuture = new ZigBeeTransactionFuture(
+                        Mockito.mock(ZigBeeTransaction.class));
                 CommandResult result = new CommandResult(responses.get(command.getClusterId()));
                 commandFuture.set(result);
                 return commandFuture;

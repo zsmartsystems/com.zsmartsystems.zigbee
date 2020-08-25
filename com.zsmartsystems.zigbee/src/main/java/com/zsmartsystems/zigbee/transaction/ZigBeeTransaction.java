@@ -9,7 +9,6 @@ package com.zsmartsystems.zigbee.transaction;
 
 import java.util.concurrent.ScheduledFuture;
 
-import com.zsmartsystems.zigbee.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +16,7 @@ import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportProgressState;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 
@@ -78,7 +78,12 @@ public class ZigBeeTransaction {
         /**
          * Transaction failed - no response received
          */
-        FAILED
+        FAILED,
+
+        /**
+         * Transaction cancelled
+         */
+        CANCELLED
     }
 
     /**
@@ -327,23 +332,28 @@ public class ZigBeeTransaction {
 
     /**
      * Cancels the transaction. The transaction will immediately be cancelled and the state will be set to
-     * {@link TransactionState#FAILED}.
+     * {@link TransactionState#CANCELLED}.
+     * <p>
      * No further retry will be conducted and the transaction manager will not be notified (the assumption being that
      * the cancellation is made through the transaction manager).
      */
     protected void cancel() {
-        state = TransactionState.FAILED;
-
-        if (timeoutTask != null) {
-            timeoutTask.cancel(false);
+        if (state == TransactionState.CANCELLED) {
+            return;
         }
-        logger.debug("Transaction terminated: {}", this);
+
+        state = TransactionState.CANCELLED;
+        stopTimer();
+
+        logger.debug("Transaction cancelled: {}", this);
         if (transactionFuture != null) {
             synchronized (transactionFuture) {
                 transactionFuture.cancel(false);
-                transactionFuture.notify();
+                transactionFuture = null;
             }
         }
+
+        transactionManager.transactionComplete(this, state);
     }
 
     /**
@@ -378,10 +388,15 @@ public class ZigBeeTransaction {
         }
     }
 
-    private void startTimer(int timeout) {
+    private void stopTimer() {
         if (timeoutTask != null) {
             timeoutTask.cancel(false);
+            timeoutTask = null;
         }
+    }
+
+    private void startTimer(int timeout) {
+        stopTimer();
 
         // Schedule a task to timeout the transaction
         timeoutTask = transactionManager.scheduleTask(new Runnable() {
@@ -394,7 +409,7 @@ public class ZigBeeTransaction {
                     // so it's treated as complete.
                     completeTransaction(completionCommand);
                 } else {
-                    cancelTransaction();
+                    failTransaction();
                 }
             }
         }, timeout);
@@ -406,9 +421,8 @@ public class ZigBeeTransaction {
         }
 
         state = TransactionState.COMPLETE;
-        if (timeoutTask != null) {
-            timeoutTask.cancel(false);
-        }
+        stopTimer();
+
         if (transactionFuture != null) {
             synchronized (transactionFuture) {
                 transactionFuture.set(new CommandResult(ZigBeeStatus.SUCCESS, receivedCommand));
@@ -419,15 +433,13 @@ public class ZigBeeTransaction {
         transactionManager.transactionComplete(this, TransactionState.COMPLETE);
     }
 
-    private void cancelTransaction() {
+    private void failTransaction() {
         if (isTransactionComplete()) {
             return;
         }
 
         state = TransactionState.FAILED;
-        if (timeoutTask != null) {
-            timeoutTask.cancel(false);
-        }
+        stopTimer();
 
         transactionManager.transactionComplete(this, TransactionState.FAILED);
     }
@@ -452,7 +464,7 @@ public class ZigBeeTransaction {
             switch (progress) {
                 case TX_NAK:
                     // The transport layer failed to send the command
-                    cancelTransaction();
+                    failTransaction();
                     break;
                 case TX_ACK:
                     // If we aren't waiting for a response, then we're done
@@ -474,7 +486,7 @@ public class ZigBeeTransaction {
                         // we did receive a response that completed the transaction at application level
                         completeTransaction(completionCommand);
                     } else {
-                        cancelTransaction();
+                        failTransaction();
                     }
                     break;
                 case RX_ACK:
@@ -494,8 +506,9 @@ public class ZigBeeTransaction {
                     break;
             }
         }
-        logger.debug("Transaction state updated: TID {} -> {} == {}", String.format("%02X", transactionId), progress,
-                state);
+        logger.debug("Transaction state changed: nwk={}, TID={}, event={}, state={}",
+                String.format("%04X", command.getDestinationAddress().getAddress()),
+                String.format("%02X", transactionId), progress, state);
     }
 
     @Override
