@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zdo.command.NetworkAddressResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-08-25T13:51:20Z")
 public class NetworkAddressRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * The ZDO cluster ID.
@@ -168,12 +168,8 @@ public class NetworkAddressRequest extends ZdoRequest implements ZigBeeTransacti
 
     @Override
     public boolean isTransactionMatch(ZigBeeCommand request, ZigBeeCommand response) {
-        if (!(response instanceof NetworkAddressResponse)) {
-            return false;
-        }
-
-        return (((NetworkAddressRequest) request).getIeeeAddr()
-                .equals(((NetworkAddressResponse) response).getIeeeAddrRemoteDev()));
+        return (response instanceof NetworkAddressResponse)
+                && ((ZdoRequest) request).getDestinationAddress().equals(((NetworkAddressResponse) response).getSourceAddress());
     }
 
     @Override

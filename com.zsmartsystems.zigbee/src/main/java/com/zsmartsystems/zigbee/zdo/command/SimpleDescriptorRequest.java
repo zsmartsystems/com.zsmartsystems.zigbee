@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zdo.command.SimpleDescriptorResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-08-25T13:51:20Z")
 public class SimpleDescriptorRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * The ZDO cluster ID.
@@ -129,14 +129,8 @@ public class SimpleDescriptorRequest extends ZdoRequest implements ZigBeeTransac
 
     @Override
     public boolean isTransactionMatch(ZigBeeCommand request, ZigBeeCommand response) {
-        if (!(response instanceof SimpleDescriptorResponse)) {
-            return false;
-        }
-
-        return (((SimpleDescriptorRequest) request).getEndpoint()
-                .equals(((SimpleDescriptorResponse) response).getSimpleDescriptor().getEndpoint()))
-                && (((SimpleDescriptorRequest) request).getNwkAddrOfInterest()
-                .equals(((SimpleDescriptorResponse) response).getNwkAddrOfInterest()));
+        return (response instanceof SimpleDescriptorResponse)
+                && ((ZdoRequest) request).getDestinationAddress().equals(((SimpleDescriptorResponse) response).getSourceAddress());
     }
 
     @Override

@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zdo.command.ManagementLqiResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-08-25T13:51:20Z")
 public class ManagementLqiRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * The ZDO cluster ID.
@@ -99,12 +99,8 @@ public class ManagementLqiRequest extends ZdoRequest implements ZigBeeTransactio
 
     @Override
     public boolean isTransactionMatch(ZigBeeCommand request, ZigBeeCommand response) {
-        if (!(response instanceof ManagementLqiResponse)) {
-            return false;
-        }
-
-        return (((ManagementLqiRequest) request).getDestinationAddress()
-                .equals(((ManagementLqiResponse) response).getSourceAddress()));
+        return (response instanceof ManagementLqiResponse)
+                && ((ZdoRequest) request).getDestinationAddress().equals(((ManagementLqiResponse) response).getSourceAddress());
     }
 
     @Override

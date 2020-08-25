@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zdo.command.PowerDescriptorResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-08-25T13:51:20Z")
 public class PowerDescriptorRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * The ZDO cluster ID.
@@ -99,12 +99,8 @@ public class PowerDescriptorRequest extends ZdoRequest implements ZigBeeTransact
 
     @Override
     public boolean isTransactionMatch(ZigBeeCommand request, ZigBeeCommand response) {
-        if (!(response instanceof PowerDescriptorResponse)) {
-            return false;
-        }
-
-        return (((PowerDescriptorRequest) request).getNwkAddrOfInterest()
-                .equals(((PowerDescriptorResponse) response).getNwkAddrOfInterest()));
+        return (response instanceof PowerDescriptorResponse)
+                && ((ZdoRequest) request).getDestinationAddress().equals(((PowerDescriptorResponse) response).getSourceAddress());
     }
 
     @Override

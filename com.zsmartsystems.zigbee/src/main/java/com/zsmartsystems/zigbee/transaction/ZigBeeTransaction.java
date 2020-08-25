@@ -7,6 +7,7 @@
  */
 package com.zsmartsystems.zigbee.transaction;
 
+import java.util.Objects;
 import java.util.concurrent.ScheduledFuture;
 
 import org.slf4j.Logger;
@@ -370,7 +371,8 @@ public class ZigBeeTransaction {
         // Ensure that received command is not processed before command is sent
         // and hence transaction ID for the command set.
         synchronized (command) {
-            if (responseMatcher.isTransactionMatch(command, receivedCommand)) {
+            if (Objects.equals(command.getTransactionId(), receivedCommand.getTransactionId())
+                    && responseMatcher.isTransactionMatch(command, receivedCommand)) {
                 // If the transaction state is TRANSMITTED, then we know that the transport layer
                 // is providing state updates. We need to ensure in this case that we get the RX_ACK or RX_NAK
                 // states so that we know that the transport layer has completed the APS transaction.

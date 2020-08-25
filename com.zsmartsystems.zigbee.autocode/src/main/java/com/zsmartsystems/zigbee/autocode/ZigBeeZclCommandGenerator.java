@@ -19,7 +19,6 @@ import java.util.Map;
 import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlCluster;
 import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlCommand;
 import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlField;
-import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlMatcher;
 
 /**
  *
@@ -291,31 +290,9 @@ public class ZigBeeZclCommandGenerator extends ZigBeeBaseFieldGenerator {
                 out.println();
                 out.println("    @Override");
                 out.println("    public boolean isTransactionMatch(ZigBeeCommand request, ZigBeeCommand response) {");
-                if (command.response.matchers.isEmpty()) {
-                    out.println("        return (response instanceof " + command.response.command + ")");
-                    out.println("                && ((ZdoRequest) request).getDestinationAddress().equals((("
-                            + command.response.command + ") response).getSourceAddress());");
-                } else {
-                    out.println("        if (!(response instanceof " + command.response.command + ")) {");
-                    out.println("            return false;");
-                    out.println("        }");
-                    out.println();
-                    out.print("        return ");
-
-                    boolean first = true;
-                    for (ZigBeeXmlMatcher matcher : command.response.matchers) {
-                        if (first == false) {
-                            out.println();
-                            out.print("                && ");
-                        }
-                        first = false;
-                        out.println("(((" + stringToUpperCamelCase(command.name) + ") request).get"
-                                + matcher.commandField + "()");
-                        out.print("                .equals(((" + command.response.command + ") response).get"
-                                + matcher.responseField + "()))");
-                    }
-                    out.println(";");
-                }
+                out.println("        return (response instanceof " + command.response.command + ")");
+                out.println("                && ((ZdoRequest) request).getDestinationAddress().equals((("
+                        + command.response.command + ") response).getSourceAddress());");
                 out.println("    }");
             }
 

@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.zdo.command.ActiveEndpointsResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-08-25T13:51:20Z")
 public class ActiveEndpointsRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * The ZDO cluster ID.
@@ -99,12 +99,8 @@ public class ActiveEndpointsRequest extends ZdoRequest implements ZigBeeTransact
 
     @Override
     public boolean isTransactionMatch(ZigBeeCommand request, ZigBeeCommand response) {
-        if (!(response instanceof ActiveEndpointsResponse)) {
-            return false;
-        }
-
-        return (((ActiveEndpointsRequest) request).getNwkAddrOfInterest()
-                .equals(((ActiveEndpointsResponse) response).getNwkAddrOfInterest()));
+        return (response instanceof ActiveEndpointsResponse)
+                && ((ZdoRequest) request).getDestinationAddress().equals(((ActiveEndpointsResponse) response).getSourceAddress());
     }
 
     @Override

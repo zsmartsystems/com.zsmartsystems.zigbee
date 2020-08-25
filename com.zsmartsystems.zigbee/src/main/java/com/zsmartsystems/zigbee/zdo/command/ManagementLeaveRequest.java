@@ -29,7 +29,7 @@ import com.zsmartsystems.zigbee.zdo.command.ManagementLeaveResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-08-25T13:51:20Z")
 public class ManagementLeaveRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * The ZDO cluster ID.
@@ -130,12 +130,8 @@ public class ManagementLeaveRequest extends ZdoRequest implements ZigBeeTransact
 
     @Override
     public boolean isTransactionMatch(ZigBeeCommand request, ZigBeeCommand response) {
-        if (!(response instanceof ManagementLeaveResponse)) {
-            return false;
-        }
-
-        return (((ManagementLeaveRequest) request).getDestinationAddress()
-                .equals(((ManagementLeaveResponse) response).getSourceAddress()));
+        return (response instanceof ManagementLeaveResponse)
+                && ((ZdoRequest) request).getDestinationAddress().equals(((ManagementLeaveResponse) response).getSourceAddress());
     }
 
     @Override
