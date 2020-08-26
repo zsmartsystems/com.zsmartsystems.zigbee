@@ -49,6 +49,10 @@ public class EzspReadAndClearCountersRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspReadAndClearCountersRequest []";
+        final StringBuilder builder = new StringBuilder(59);
+        builder.append("EzspReadAndClearCountersRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

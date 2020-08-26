@@ -48,6 +48,10 @@ public class EzspClearStoredBeaconsRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspClearStoredBeaconsRequest []";
+        final StringBuilder builder = new StringBuilder(57);
+        builder.append("EzspClearStoredBeaconsRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

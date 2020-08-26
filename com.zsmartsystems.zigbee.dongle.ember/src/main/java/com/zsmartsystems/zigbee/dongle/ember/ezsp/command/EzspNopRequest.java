@@ -49,6 +49,10 @@ public class EzspNopRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspNopRequest []";
+        final StringBuilder builder = new StringBuilder(42);
+        builder.append("EzspNopRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

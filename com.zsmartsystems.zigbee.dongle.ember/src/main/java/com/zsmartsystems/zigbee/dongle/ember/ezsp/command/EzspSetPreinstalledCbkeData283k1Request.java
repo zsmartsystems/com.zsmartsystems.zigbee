@@ -50,6 +50,10 @@ public class EzspSetPreinstalledCbkeData283k1Request extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspSetPreinstalledCbkeData283k1Request []";
+        final StringBuilder builder = new StringBuilder(67);
+        builder.append("EzspSetPreinstalledCbkeData283k1Request [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

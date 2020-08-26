@@ -48,6 +48,10 @@ public class EzspGetEui64Request extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspGetEui64Request []";
+        final StringBuilder builder = new StringBuilder(47);
+        builder.append("EzspGetEui64Request [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

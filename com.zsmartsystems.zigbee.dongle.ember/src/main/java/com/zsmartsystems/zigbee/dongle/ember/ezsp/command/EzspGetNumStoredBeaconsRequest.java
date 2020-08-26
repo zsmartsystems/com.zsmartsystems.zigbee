@@ -48,6 +48,10 @@ public class EzspGetNumStoredBeaconsRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspGetNumStoredBeaconsRequest []";
+        final StringBuilder builder = new StringBuilder(58);
+        builder.append("EzspGetNumStoredBeaconsRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

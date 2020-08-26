@@ -48,6 +48,10 @@ public class EzspGetCertificateRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspGetCertificateRequest []";
+        final StringBuilder builder = new StringBuilder(53);
+        builder.append("EzspGetCertificateRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

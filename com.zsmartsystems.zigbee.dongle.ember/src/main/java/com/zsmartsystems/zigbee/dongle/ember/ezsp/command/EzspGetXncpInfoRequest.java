@@ -50,6 +50,10 @@ public class EzspGetXncpInfoRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspGetXncpInfoRequest []";
+        final StringBuilder builder = new StringBuilder(50);
+        builder.append("EzspGetXncpInfoRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

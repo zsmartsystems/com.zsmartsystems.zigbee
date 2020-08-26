@@ -235,35 +235,32 @@ public class CommandGenerator extends ClassGenerator {
         out.println("    @Override");
         out.println("    public String toString() {");
 
-        if (parameters == null || parameters.size() == 0) {
-            out.println("        return \"" + className + " []\";");
-        } else {
-            out.println("        final StringBuilder builder = new StringBuilder("
-                    + (className.length() + 3 + (parameters.size() + 1) * 25) + ");");
+        out.println("        final StringBuilder builder = new StringBuilder("
+                + (className.length() + 3 + (parameters.size() + 1) * 25) + ");");
 
-            out.println("        builder.append(\"" + className + " [networkId=\");");
-            out.println("        builder.append(networkId);");
+        out.println("        builder.append(\"" + className + " [networkId=\");");
+        out.println("        builder.append(networkId);");
 
-            for (Parameter parameter : parameters) {
-                if (parameter.auto_size != null) {
-                    continue;
-                }
-
-                out.println("        builder.append(\", " + parameter.name + "=\");");
-                if (parameter.data_type.contains("[")) {
-                    out.println("        for (int cnt = 0; cnt < " + parameter.name + ".length; cnt++) {");
-                    out.println("            if (cnt > 0) {");
-                    out.println("                builder.append(' ');");
-                    out.println("            }");
-                    out.println("            builder.append(" + formatParameterString(parameter) + ");");
-                    out.println("        }");
-                } else {
-                    out.println("        builder.append(" + formatParameterString(parameter) + ");");
-                }
+        for (Parameter parameter : parameters) {
+            if (parameter.auto_size != null) {
+                continue;
             }
-            out.println("        builder.append(']');");
-            out.println("        return builder.toString();");
+
+            out.println("        builder.append(\", " + parameter.name + "=\");");
+            if (parameter.data_type.contains("[")) {
+                out.println("        for (int cnt = 0; cnt < " + parameter.name + ".length; cnt++) {");
+                out.println("            if (cnt > 0) {");
+                out.println("                builder.append(' ');");
+                out.println("            }");
+                out.println("            builder.append(" + formatParameterString(parameter) + ");");
+                out.println("        }");
+            } else {
+                out.println("        builder.append(" + formatParameterString(parameter) + ");");
+            }
         }
+        out.println("        builder.append(']');");
+        out.println("        return builder.toString();");
+
         out.println("    }");
 
         out.println("}");

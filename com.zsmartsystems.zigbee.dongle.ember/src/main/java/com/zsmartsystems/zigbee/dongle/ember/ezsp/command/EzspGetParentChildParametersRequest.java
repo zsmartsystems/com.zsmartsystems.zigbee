@@ -48,6 +48,10 @@ public class EzspGetParentChildParametersRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspGetParentChildParametersRequest []";
+        final StringBuilder builder = new StringBuilder(63);
+        builder.append("EzspGetParentChildParametersRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

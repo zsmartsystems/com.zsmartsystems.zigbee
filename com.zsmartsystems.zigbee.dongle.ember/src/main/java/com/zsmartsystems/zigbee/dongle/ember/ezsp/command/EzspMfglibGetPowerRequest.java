@@ -48,6 +48,10 @@ public class EzspMfglibGetPowerRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspMfglibGetPowerRequest []";
+        final StringBuilder builder = new StringBuilder(53);
+        builder.append("EzspMfglibGetPowerRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

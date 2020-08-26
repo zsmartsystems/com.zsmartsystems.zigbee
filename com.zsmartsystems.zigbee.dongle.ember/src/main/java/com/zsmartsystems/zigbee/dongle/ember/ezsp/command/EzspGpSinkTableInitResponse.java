@@ -35,6 +35,10 @@ public class EzspGpSinkTableInitResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        return "EzspGpSinkTableInitResponse []";
+        final StringBuilder builder = new StringBuilder(55);
+        builder.append("EzspGpSinkTableInitResponse [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

@@ -48,6 +48,10 @@ public class EzspResetToFactoryDefaultsRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspResetToFactoryDefaultsRequest []";
+        final StringBuilder builder = new StringBuilder(61);
+        builder.append("EzspResetToFactoryDefaultsRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }
