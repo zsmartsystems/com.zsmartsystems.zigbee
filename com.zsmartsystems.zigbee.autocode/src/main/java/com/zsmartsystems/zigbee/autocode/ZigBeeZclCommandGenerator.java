@@ -104,6 +104,10 @@ public class ZigBeeZclCommandGenerator extends ZigBeeBaseFieldGenerator {
                 importsAdd(packageRootPrefix + packageZclProtocol + ".ZclDataType");
             }
 
+            if (command.response != null) {
+                importsAdd(packageRootPrefix + ".ZigBeeBroadcastDestination");
+            }
+
             for (final ZigBeeXmlField field : command.fields) {
                 importsAddClass(field);
             }
@@ -290,9 +294,18 @@ public class ZigBeeZclCommandGenerator extends ZigBeeBaseFieldGenerator {
                 out.println();
                 out.println("    @Override");
                 out.println("    public boolean isTransactionMatch(ZigBeeCommand request, ZigBeeCommand response) {");
-                out.println("        return (response instanceof " + command.response.command + ")");
-                out.println("                && ((ZdoRequest) request).getDestinationAddress().equals((("
-                        + command.response.command + ") response).getSourceAddress());");
+                out.println("        if (response instanceof " + command.response.command + ") {");
+                out.println("            return false;");
+                out.println("        }");
+                out.println(
+                        "        int destinationAddress = ((ZdoRequest) request).getDestinationAddress().getAddress();");
+                out.println("        if(!ZigBeeBroadcastDestination.isBroadcast(destinationAddress)) {");
+                out.println("            if (!((ZdoRequest) request).getDestinationAddress().equals((("
+                        + command.response.command + ") response).getSourceAddress())) {");
+                out.println("                return false;");
+                out.println("            }");
+                out.println("        }");
+                out.println("        return true;");
                 out.println("    }");
             }
 

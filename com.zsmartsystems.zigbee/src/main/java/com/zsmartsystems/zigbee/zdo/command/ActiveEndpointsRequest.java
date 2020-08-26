@@ -9,6 +9,7 @@ package com.zsmartsystems.zigbee.zdo.command;
 
 import javax.annotation.Generated;
 
+import com.zsmartsystems.zigbee.ZigBeeBroadcastDestination;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
@@ -28,7 +29,7 @@ import com.zsmartsystems.zigbee.zdo.command.ActiveEndpointsResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-08-25T13:51:20Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-08-26T14:56:13Z")
 public class ActiveEndpointsRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * The ZDO cluster ID.
@@ -99,8 +100,16 @@ public class ActiveEndpointsRequest extends ZdoRequest implements ZigBeeTransact
 
     @Override
     public boolean isTransactionMatch(ZigBeeCommand request, ZigBeeCommand response) {
-        return (response instanceof ActiveEndpointsResponse)
-                && ((ZdoRequest) request).getDestinationAddress().equals(((ActiveEndpointsResponse) response).getSourceAddress());
+        if (response instanceof ActiveEndpointsResponse) {
+            return false;
+        }
+        int destinationAddress = ((ZdoRequest) request).getDestinationAddress().getAddress();
+        if(!ZigBeeBroadcastDestination.isBroadcast(destinationAddress)) {
+            if (!((ZdoRequest) request).getDestinationAddress().equals(((ActiveEndpointsResponse) response).getSourceAddress())) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
