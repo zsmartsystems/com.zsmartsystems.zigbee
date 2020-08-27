@@ -36,6 +36,10 @@ public class EzspSetManufacturerCodeResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        return "EzspSetManufacturerCodeResponse []";
+        final StringBuilder builder = new StringBuilder(59);
+        builder.append("EzspSetManufacturerCodeResponse [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

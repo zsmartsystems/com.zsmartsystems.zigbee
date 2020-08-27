@@ -51,6 +51,10 @@ public class EzspMfglibStartToneRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspMfglibStartToneRequest []";
+        final StringBuilder builder = new StringBuilder(54);
+        builder.append("EzspMfglibStartToneRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

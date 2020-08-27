@@ -48,6 +48,10 @@ public class EzspClearKeyTableRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspClearKeyTableRequest []";
+        final StringBuilder builder = new StringBuilder(52);
+        builder.append("EzspClearKeyTableRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

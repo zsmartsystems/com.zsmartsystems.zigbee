@@ -35,6 +35,10 @@ public class EzspClearStoredBeaconsResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        return "EzspClearStoredBeaconsResponse []";
+        final StringBuilder builder = new StringBuilder(58);
+        builder.append("EzspClearStoredBeaconsResponse [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

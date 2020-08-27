@@ -48,6 +48,10 @@ public class EzspInvalidCommandRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspInvalidCommandRequest []";
+        final StringBuilder builder = new StringBuilder(53);
+        builder.append("EzspInvalidCommandRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

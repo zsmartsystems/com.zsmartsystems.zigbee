@@ -48,6 +48,10 @@ public class EzspClearBindingTableRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspClearBindingTableRequest []";
+        final StringBuilder builder = new StringBuilder(56);
+        builder.append("EzspClearBindingTableRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

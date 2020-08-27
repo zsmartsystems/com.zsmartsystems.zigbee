@@ -50,6 +50,10 @@ public class EzspGenerateCbkeKeys283k1Request extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspGenerateCbkeKeys283k1Request []";
+        final StringBuilder builder = new StringBuilder(60);
+        builder.append("EzspGenerateCbkeKeys283k1Request [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

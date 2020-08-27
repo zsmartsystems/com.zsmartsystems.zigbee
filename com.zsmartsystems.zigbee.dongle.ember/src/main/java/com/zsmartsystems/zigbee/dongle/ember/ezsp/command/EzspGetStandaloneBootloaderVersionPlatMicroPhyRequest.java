@@ -50,6 +50,10 @@ public class EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest extends EzspF
 
     @Override
     public String toString() {
-        return "EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest []";
+        final StringBuilder builder = new StringBuilder(81);
+        builder.append("EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

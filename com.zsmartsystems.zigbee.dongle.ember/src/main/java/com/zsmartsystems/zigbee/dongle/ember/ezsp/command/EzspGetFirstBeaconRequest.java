@@ -49,6 +49,10 @@ public class EzspGetFirstBeaconRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspGetFirstBeaconRequest []";
+        final StringBuilder builder = new StringBuilder(53);
+        builder.append("EzspGetFirstBeaconRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

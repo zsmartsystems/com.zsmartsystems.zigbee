@@ -48,6 +48,10 @@ public class EzspGetCurrentSecurityStateRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspGetCurrentSecurityStateRequest []";
+        final StringBuilder builder = new StringBuilder(62);
+        builder.append("EzspGetCurrentSecurityStateRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

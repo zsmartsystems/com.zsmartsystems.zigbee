@@ -35,6 +35,10 @@ public class EzspClearTransientLinkKeysResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        return "EzspClearTransientLinkKeysResponse []";
+        final StringBuilder builder = new StringBuilder(62);
+        builder.append("EzspClearTransientLinkKeysResponse [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

@@ -35,6 +35,10 @@ public class EzspGpSinkTableClearAllResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        return "EzspGpSinkTableClearAllResponse []";
+        final StringBuilder builder = new StringBuilder(59);
+        builder.append("EzspGpSinkTableClearAllResponse [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

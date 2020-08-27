@@ -49,6 +49,10 @@ public class EzspMfglibStartStreamRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspMfglibStartStreamRequest []";
+        final StringBuilder builder = new StringBuilder(56);
+        builder.append("EzspMfglibStartStreamRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

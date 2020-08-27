@@ -42,6 +42,10 @@ public class EzspSetExtendedTimeoutResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        return "EzspSetExtendedTimeoutResponse []";
+        final StringBuilder builder = new StringBuilder(58);
+        builder.append("EzspSetExtendedTimeoutResponse [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

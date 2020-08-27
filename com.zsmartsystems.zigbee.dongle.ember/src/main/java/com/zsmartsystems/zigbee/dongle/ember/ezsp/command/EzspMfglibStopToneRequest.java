@@ -48,6 +48,10 @@ public class EzspMfglibStopToneRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspMfglibStopToneRequest []";
+        final StringBuilder builder = new StringBuilder(53);
+        builder.append("EzspMfglibStopToneRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

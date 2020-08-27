@@ -49,6 +49,10 @@ public class EzspMfglibEndRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspMfglibEndRequest []";
+        final StringBuilder builder = new StringBuilder(48);
+        builder.append("EzspMfglibEndRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }
