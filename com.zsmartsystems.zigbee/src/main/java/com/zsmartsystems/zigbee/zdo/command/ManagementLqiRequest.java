@@ -9,13 +9,16 @@ package com.zsmartsystems.zigbee.zdo.command;
 
 import javax.annotation.Generated;
 
+import com.zsmartsystems.zigbee.ZigBeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeBroadcastDestination;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
+import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
+import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 import com.zsmartsystems.zigbee.zdo.command.ManagementLqiResponse;
 
 /**
@@ -29,7 +32,7 @@ import com.zsmartsystems.zigbee.zdo.command.ManagementLqiResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-08-26T14:56:13Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-08-28T10:02:45Z")
 public class ManagementLqiRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * The ZDO cluster ID.
@@ -100,12 +103,16 @@ public class ManagementLqiRequest extends ZdoRequest implements ZigBeeTransactio
 
     @Override
     public boolean isTransactionMatch(ZigBeeCommand request, ZigBeeCommand response) {
-        if (response instanceof ManagementLqiResponse) {
+        if (!(response instanceof ManagementLqiResponse)) {
             return false;
         }
-        int destinationAddress = ((ZdoRequest) request).getDestinationAddress().getAddress();
-        if(!ZigBeeBroadcastDestination.isBroadcast(destinationAddress)) {
-            if (!((ZdoRequest) request).getDestinationAddress().equals(((ManagementLqiResponse) response).getSourceAddress())) {
+
+        ZigBeeAddress destinationAddress = ((ZdoRequest) request).getDestinationAddress();
+        ZigBeeAddress sourceAddress = ((ZdoResponse) response).getSourceAddress();
+        ZigBeeEndpointAddress localCoordinator = new ZigBeeEndpointAddress(0, 0);
+
+        if(!ZigBeeBroadcastDestination.isBroadcast(destinationAddress.getAddress())) {
+            if (!localCoordinator.equals(sourceAddress) && !destinationAddress.equals(sourceAddress)) {
                 return false;
             }
         }
