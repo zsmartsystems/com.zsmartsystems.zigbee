@@ -7,8 +7,6 @@
  */
 package com.zsmartsystems.zigbee.transport;
 
-import java.util.Map;
-
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
@@ -112,12 +110,12 @@ public interface ZigBeeTransportTransmit {
     /**
      * Gets the current ZigBee RF channel
      *
-     * @return the current {@link ZigBeeChannel} or {@link ZigBeeChannel.UNKNOWN} on error
+     * @return the current {@link ZigBeeChannel} or {@link ZigBeeChannel#UNKNOWN} on error
      */
     ZigBeeChannel getZigBeeChannel();
 
     /**
-     * Sets the ZigBee RF channel. Setting {@link ZigBeeChannel.UNKNOWN} will perform a scan and use the
+     * Sets the ZigBee RF channel. Setting {@link ZigBeeChannel#UNKNOWN} will perform a scan and use the
      * quietest channel during initialisation.
      *
      * @param channel the {@link ZigBeeChannel} defining the channel to use
@@ -188,19 +186,17 @@ public interface ZigBeeTransportTransmit {
     /**
      * Sets the transport configuration.
      * <p>
-     * This method passes a {@link Map} of {@link TransportConfigOption}s to the transport layer. Each option
-     * must be defined as a {link Object} as defined by the option (see the documentation for
-     * {@link TransportConfigOption}. The transport layer should update its configuration as appropriate - if this will
-     * take any appreciable time to complete, the implementation should perform error checking and then return
-     * {@link TransportConfigResult#SUCCESS}.
+     * The {@link TransportConfig} passed to this method holds a group of {@link TransportConfigOption}s that need to
+     * be updated with the provided values. The requests for setting a {@link TransportConfigOption} with a value can
+     * be added to {@link TransportConfig} with {@link TransportConfig#addOption(TransportConfigOption, Object)}.
+     * The transport layer should update its configuration as appropriate and set the results with an appropriate
+     * {@link ZigBeeStatus}.
      * <p>
-     * This method returns the result of each configuration in the calling {@link TransportConfig}.
-     * If configuration options are invalid, {@link TransportConfigResult#ERROR_INVALID_VALUE} is returned.
-     * If the transport is not in a mode where it can accept a specific configuration change
-     * {@link TransportConfigResult#ERROR_INVALID_VALUE} is returned in the value status
+     * To check if the transport layer updated a particular configuration, use
+     * {@link TransportConfig#getResult(TransportConfigOption)} which should return a {@link ZigBeeStatus#SUCCESS} if
+     * the operation was successful.
      *
      * @param configuration {@link TransportConfig} containing the configuration items
-     * @return {@link Map} of {@link TransportConfigOption} and {@link TransportConfigResult} values with the result
      */
     void updateTransportConfig(TransportConfig configuration);
 
