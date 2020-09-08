@@ -9,6 +9,7 @@ package com.zsmartsystems.zigbee.app.iasclient;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.mockito.ArgumentMatchers.eq;
 
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -157,7 +158,7 @@ public class ZclIasZoneClientTest {
 
         ArgumentCaptor<ZoneEnrollResponse> zoneResposeCapture = ArgumentCaptor.forClass(ZoneEnrollResponse.class);
         Mockito.verify(cluster, Mockito.timeout(TIMEOUT).times(1))
-                .sendCommand(zoneResposeCapture.capture());
+                .sendResponse(eq(command), zoneResposeCapture.capture());
         ZoneEnrollResponse capturedResponse = zoneResposeCapture.getValue();
         assertEquals(EnrollResponseCodeEnum.SUCCESS.getKey(), capturedResponse.getEnrollResponseCode().intValue());
         assertEquals(1, capturedResponse.getZoneId().intValue());
