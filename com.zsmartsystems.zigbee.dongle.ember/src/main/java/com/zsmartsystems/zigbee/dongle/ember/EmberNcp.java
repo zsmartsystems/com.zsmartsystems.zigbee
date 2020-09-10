@@ -85,6 +85,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateRespon
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspReadCountersRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspReadCountersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspScanCompleteHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendManyToOneRouteRequestRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendManyToOneRouteRequestResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetConfigurationValueRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetConfigurationValueResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetExtendedTimeoutRequest;
@@ -106,6 +108,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberAesMmoHashContext;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCertificate283k1Data;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCertificateData;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberConcentratorType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCurrentSecurityState;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyStruct;
@@ -1042,6 +1045,42 @@ public class EmberNcp {
             return null;
         }
         return response;
+    }
+
+    /**
+     * Sends a route request packet that creates routes from every node in the network back to this node. This function
+     * should be called by an application that wishes to communicate with many nodes, for example, a gateway, central
+     * monitor, or controller. A device using this function was referred to as an 'aggregator' in EmberZNet 2.x and
+     * earlier, and is referred to as a 'concentrator' in the ZigBee specification and EmberZNet 3. This function
+     * enables large scale networks, because the other devices do not have to individually perform bandwidth-intensive
+     * route discoveries. Instead, when a remote node sends an APS unicast to a concentrator, its network layer
+     * automatically delivers a special route record packet first, which lists the network ids of all the intermediate
+     * relays. The concentrator can then use source routing to send outbound APS unicasts. (A source routed message is
+     * one in which the entire route is listed in the network layer header.) This allows the concentrator to communicate
+     * with thousands of devices without requiring large route tables on neighboring nodes. This function is only
+     * available in ZigBee Pro (stack profile 2), and cannot be called on end devices. Any router can be a concentrator
+     * (not just the coordinator), and there can be multiple concentrators on a network. Note that a concentrator does
+     * not automatically obtain routes to all network nodes after calling this function. Remote applications must first
+     * initiate an inbound APS unicast. Many-to-one routes are not repaired automatically. Instead, the concentrator
+     * application must call this function to rediscover the routes as necessary, for example, upon failure of a retried
+     * APS message. The reason for this is that there is no scalable one-size-fits-all route repair strategy. A common
+     * and recommended strategy is for the concentrator application to refresh the routes by calling this function
+     * periodically.
+     *
+     * @param concentratorType the {@link EmberConcentratorType}
+     * @param radius the radius (number of hops) to send the MTORR
+     * @return the response {@link EmberStatus}
+     */
+    public EmberStatus sendManyToOneRouteRequest(EmberConcentratorType concentratorType, int radius) {
+        EzspSendManyToOneRouteRequestRequest request = new EzspSendManyToOneRouteRequestRequest();
+        request.setConcentratorType(concentratorType);
+        request.setRadius(radius);
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(
+                        new EzspSingleResponseTransaction(request, EzspSendManyToOneRouteRequestResponse.class));
+        EzspSendManyToOneRouteRequestResponse response = (EzspSendManyToOneRouteRequestResponse) transaction
+                .getResponse();
+        return response.getStatus();
     }
 
     private String intArrayToString(int[] payload) {
