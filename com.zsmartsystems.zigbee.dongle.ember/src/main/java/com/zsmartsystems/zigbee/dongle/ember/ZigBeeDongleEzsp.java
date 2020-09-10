@@ -111,6 +111,11 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     private static final int WAIT_FOR_ONLINE = 5000;
 
     /**
+     * The default number maximum number of hops that the network will support.
+     */
+    private static final int DEFAULT_RADIUS = 8;
+
+    /**
      * Response to the getBootloaderVersion if no bootloader is available
      */
     private static final int BOOTLOADER_INVALID_VERSION = 0xFFFF;
@@ -265,6 +270,14 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     Map<Integer, Integer> fragmentationApsCounters = new HashMap<>();
 
     /**
+     * If the concentrator is enabled during startup, then we want to send an MTORR after the network comes up to
+     * kick-start the routing table update. Otherwise we need to wait for the regular MTORR requests which may take some
+     * time, and could therefore make the network unresponsive, with nodes uncontactable until the routing tables are
+     * rebuilt.
+     */
+    private EmberConcentratorType concentratorType = EmberConcentratorType.UNKNOWN;
+
+    /**
      * Create a {@link ZigBeeDongleEzsp} with the default ASH2 frame handler
      *
      * @param serialPort the {@link ZigBeePort} to use for the connection
@@ -291,7 +304,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_TRUST_CENTER_ADDRESS_CACHE_SIZE, 2);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_STACK_PROFILE, 2);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_INDIRECT_TRANSMISSION_TIMEOUT, 7680);
-        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_MAX_HOPS, 8);
+        stackConfiguration.put(EzspConfigId.EZSP_CONFIG_MAX_HOPS, DEFAULT_RADIUS);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_TX_POWER_MODE, 0);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_SUPPORTED_NETWORKS, 1);
         stackConfiguration.put(EzspConfigId.EZSP_CONFIG_KEY_TABLE_SIZE, 4);
@@ -529,6 +542,18 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 || networkState == EmberNetworkStatus.EMBER_JOINED_NETWORK_NO_PARENT);
         initialised = true;
         handleLinkStateChange(joinedNetwork);
+
+        // If the network is up, and we're acting as a concentrator, send an MTORR to kick-start routing
+        // Note that this does not in itself reqbuild the routing tables - it also relies on commands being sent to
+        // devices to prompt the device to send the routes.
+        // For now we assume that this is handled by the application level sending status requests on startup.
+        if (concentratorType != EmberConcentratorType.UNKNOWN) {
+            int radius = DEFAULT_RADIUS;
+            if (stackConfiguration.get(EzspConfigId.EZSP_CONFIG_MAX_HOPS) != null) {
+                radius = stackConfiguration.get(EzspConfigId.EZSP_CONFIG_MAX_HOPS);
+            }
+            ncp.sendManyToOneRouteRequest(concentratorType, radius);
+        }
 
         return joinedNetwork ? ZigBeeStatus.SUCCESS : ZigBeeStatus.BAD_RESPONSE;
     }
@@ -1402,8 +1427,10 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         logger.debug(concentratorResponse.toString());
 
         if (concentratorResponse.getStatus() == EzspStatus.EZSP_SUCCESS) {
+            concentratorType = concentratorRequest.getConcentratorType();
             return ZigBeeStatus.SUCCESS;
         }
+
         return ZigBeeStatus.FAILURE;
     }
 
