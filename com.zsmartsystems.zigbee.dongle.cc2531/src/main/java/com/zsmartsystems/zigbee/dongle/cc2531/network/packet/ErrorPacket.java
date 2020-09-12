@@ -42,5 +42,7 @@ public class ErrorPacket extends ZToolPacket {
 
     public ErrorPacket() {
         super(new DoubleByte(), new int[] {});
+        setError(true);
     }
+
 }
