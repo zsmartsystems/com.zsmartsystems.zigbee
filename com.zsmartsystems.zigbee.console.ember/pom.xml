@@ -9,7 +9,7 @@
     <parent>
         <groupId>com.zsmartsystems</groupId>
         <artifactId>zigbee</artifactId>
-        <version>1.3.8-SNAPSHOT</version>
+        <version>1.3.8</version>
     </parent>
 
     <dependencies>
@@ -17,19 +17,19 @@
         <dependency>
             <groupId>com.zsmartsystems.zigbee</groupId>
             <artifactId>com.zsmartsystems.zigbee</artifactId>
-            <version>1.3.8-SNAPSHOT</version>
+            <version>1.3.8</version>
         </dependency>
 
         <dependency>
             <groupId>com.zsmartsystems.zigbee</groupId>
             <artifactId>com.zsmartsystems.zigbee.console</artifactId>
-            <version>1.3.8-SNAPSHOT</version>
+            <version>1.3.8</version>
         </dependency>
 
         <dependency>
             <groupId>com.zsmartsystems.zigbee</groupId>
             <artifactId>com.zsmartsystems.zigbee.dongle.ember</artifactId>
-            <version>1.3.8-SNAPSHOT</version>
+            <version>1.3.8</version>
         </dependency>
 
     </dependencies>
