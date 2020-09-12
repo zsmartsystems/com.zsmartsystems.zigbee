@@ -274,7 +274,7 @@ public class ZclIasZoneClient implements ZigBeeApplication, ZclCommandListener {
 
         zoneType = command.getZoneType();
         ZoneEnrollResponse zoneEnrollResponse = new ZoneEnrollResponse(EnrollResponseCodeEnum.SUCCESS.getKey(), zoneId);
-        iasZoneCluster.sendCommand(zoneEnrollResponse);
+        iasZoneCluster.sendResponse(command, zoneEnrollResponse);
         return true;
     }
 
