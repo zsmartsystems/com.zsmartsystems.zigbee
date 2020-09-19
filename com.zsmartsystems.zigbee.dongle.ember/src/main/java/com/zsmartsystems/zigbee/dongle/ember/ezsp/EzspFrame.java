@@ -220,6 +220,7 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_SET_INITIAL_SECURITY_STATE = 0x68;
     protected static final int FRAME_ID_SET_KEY_TABLE_ENTRY = 0x72;
     protected static final int FRAME_ID_SET_MANUFACTURER_CODE = 0x15;
+    protected static final int FRAME_ID_SET_MFG_TOKEN = 0x0C;
     protected static final int FRAME_ID_SET_POLICY = 0x55;
     protected static final int FRAME_ID_SET_POWER_DESCRIPTOR = 0x16;
     protected static final int FRAME_ID_SET_PREINSTALLED_CBKE_DATA = 0xA2;
@@ -375,6 +376,7 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_SET_INITIAL_SECURITY_STATE, EzspSetInitialSecurityStateResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_KEY_TABLE_ENTRY, EzspSetKeyTableEntryResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_MANUFACTURER_CODE, EzspSetManufacturerCodeResponse.class);
+        ezspHandlerMap.put(FRAME_ID_SET_MFG_TOKEN, EzspSetMfgTokenResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_POLICY, EzspSetPolicyResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_POWER_DESCRIPTOR, EzspSetPowerDescriptorResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_PREINSTALLED_CBKE_DATA, EzspSetPreinstalledCbkeDataResponse.class);

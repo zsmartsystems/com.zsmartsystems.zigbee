@@ -43,6 +43,7 @@ import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpMfglibCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpPolicyCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpScanCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpStateCommand;
+import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpTokenCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpValueCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpVersionCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleSecurityStateCommand;
@@ -255,6 +256,7 @@ public class ZigBeeConsoleMain {
             commands.add(EmberConsoleNcpScanCommand.class);
             commands.add(EmberConsoleNcpMfglibCommand.class);
             commands.add(EmberConsoleNcpHandlerCommand.class);
+            commands.add(EmberConsoleNcpTokenCommand.class);
 
             emberDongle.setEmberNcpResetProvider(new EmberNcpHardwareReset());
         } else if (dongleName.toUpperCase().equals("XBEE")) {
