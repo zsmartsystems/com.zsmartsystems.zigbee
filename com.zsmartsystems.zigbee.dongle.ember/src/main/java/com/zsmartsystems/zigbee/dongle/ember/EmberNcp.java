@@ -93,6 +93,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetExtendedTimeout
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetExtendedTimeoutResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetManufacturerCodeRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetManufacturerCodeResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetMfgTokenRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetMfgTokenResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPolicyRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPolicyResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPowerDescriptorRequest;
@@ -859,6 +861,17 @@ public class EmberNcp {
     }
 
     /**
+     * Gets the custom EUI64 (long address) from the manufacturer information block on the NCP
+     *
+     * @return IeeeAddress containing the custom address
+     */
+    public IeeeAddress getMfgCustomEui64() {
+        int[] response = getMfgToken(EzspMfgTokenId.EZSP_MFG_CUSTOM_EUI_64);
+
+        return new IeeeAddress(response);
+    }
+
+    /**
      * Gets the install code stored in the NCP memory
      *
      * @return {@link ByteArray} defining the install code. May be empty if no installation code is defined, or null on
@@ -1093,12 +1106,35 @@ public class EmberNcp {
         return new String(payload, 0, length);
     }
 
-    private int[] getMfgToken(EzspMfgTokenId tokenId) {
+    /**
+     * Reads a manufacturing token and returns the token as an int[] array
+     *
+     * @param tokenId the {@ling EzspMfgTokenId} to read
+     * @return int[] with the token data
+     */
+    public int[] getMfgToken(EzspMfgTokenId tokenId) {
         EzspGetMfgTokenRequest request = new EzspGetMfgTokenRequest();
         request.setTokenId(tokenId);
         EzspTransaction transaction = protocolHandler
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetMfgTokenResponse.class));
         EzspGetMfgTokenResponse response = (EzspGetMfgTokenResponse) transaction.getResponse();
         return response.getTokenData();
+    }
+
+    /**
+     * Writes a manufacturing token
+     *
+     * @param tokenId the {@ling EzspMfgTokenId} to read
+     * @param token int[] with the token data
+     * @return {@link EmberStatus}
+     */
+    public EmberStatus setMfgToken(EzspMfgTokenId tokenId, int[] token) {
+        EzspSetMfgTokenRequest request = new EzspSetMfgTokenRequest();
+        request.setTokenId(tokenId);
+        request.setTokenData(token);
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspSetMfgTokenResponse.class));
+        EzspSetMfgTokenResponse response = (EzspSetMfgTokenResponse) transaction.getResponse();
+        return response.getStatus();
     }
 }

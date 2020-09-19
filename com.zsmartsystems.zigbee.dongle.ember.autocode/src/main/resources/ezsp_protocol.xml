@@ -471,6 +471,38 @@
 	</command>
 
 	<command>
+		<name>setMfgToken</name>
+		<id>0x0C</id>
+		<description>Sets a manufacturing token in the Customer Information Block (CIB) area of the NCP if that token currently unset (fully erased). Cannot be used with EZSP_STACK_CAL_DATA, EZSP_STACK_CAL_FILTER, EZSP_MFG_ASH_CONFIG, or EZSP_MFG_CBKE_DATA token.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>EzspMfgTokenId</data_type>
+				<name>tokenId</name>
+				<description>Which manufacturing token to set.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>tokenDataLength</name>
+				<description>The length of the tokenData parameter in bytes.</description>
+				<auto_size>tokenData</auto_size>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t[]</data_type>
+				<name>tokenData</name>
+				<description>The manufacturing token data.</description>
+				<display>hex[2]</display>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>An EmberStatus value indicating success or the reason for failure.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
 		<name>stackTokenChangedHandler</name>
 		<id>0x0D</id>
 		<description>A callback invoked to inform the application that a stack token has changed.</description>
