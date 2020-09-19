@@ -346,28 +346,12 @@ public class ZigBeeXmlParser {
 
             case "response":
                 ZigBeeXmlResponse response = new ZigBeeXmlResponse();
-                response.matchers = new ArrayList<>();
 
                 e = (Element) node;
                 response.command = e.getAttribute("command").trim();
 
-                for (int temp = 0; temp < nodes.getLength(); temp++) {
-                    if (nodes.item(temp).getNodeName().equals("matcher")) {
-                        response.matchers.add((ZigBeeXmlMatcher) processNode(nodes.item(temp)));
-                    }
-                }
                 System.out.println("Done: Response - " + response.command);
                 return response;
-
-            case "matcher":
-                ZigBeeXmlMatcher matcher = new ZigBeeXmlMatcher();
-
-                e = (Element) node;
-                matcher.commandField = e.getAttribute("commandField").trim();
-                matcher.responseField = e.getAttribute("responseField").trim();
-
-                System.out.println("Done: Matcher - " + matcher.commandField);
-                return matcher;
         }
 
         return null;

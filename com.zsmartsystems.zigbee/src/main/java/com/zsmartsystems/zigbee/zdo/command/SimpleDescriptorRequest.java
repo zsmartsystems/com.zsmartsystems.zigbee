@@ -9,12 +9,16 @@ package com.zsmartsystems.zigbee.zdo.command;
 
 import javax.annotation.Generated;
 
+import com.zsmartsystems.zigbee.ZigBeeAddress;
+import com.zsmartsystems.zigbee.ZigBeeBroadcastDestination;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
+import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoRequest;
+import com.zsmartsystems.zigbee.zdo.ZdoResponse;
 import com.zsmartsystems.zigbee.zdo.command.SimpleDescriptorResponse;
 
 /**
@@ -28,7 +32,7 @@ import com.zsmartsystems.zigbee.zdo.command.SimpleDescriptorResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-08-28T10:02:45Z")
 public class SimpleDescriptorRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * The ZDO cluster ID.
@@ -133,10 +137,16 @@ public class SimpleDescriptorRequest extends ZdoRequest implements ZigBeeTransac
             return false;
         }
 
-        return (((SimpleDescriptorRequest) request).getEndpoint()
-                .equals(((SimpleDescriptorResponse) response).getSimpleDescriptor().getEndpoint()))
-                && (((SimpleDescriptorRequest) request).getNwkAddrOfInterest()
-                .equals(((SimpleDescriptorResponse) response).getNwkAddrOfInterest()));
+        ZigBeeAddress destinationAddress = ((ZdoRequest) request).getDestinationAddress();
+        ZigBeeAddress sourceAddress = ((ZdoResponse) response).getSourceAddress();
+        ZigBeeEndpointAddress localCoordinator = new ZigBeeEndpointAddress(0, 0);
+
+        if(!ZigBeeBroadcastDestination.isBroadcast(destinationAddress.getAddress())) {
+            if (!localCoordinator.equals(sourceAddress) && !destinationAddress.equals(sourceAddress)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
