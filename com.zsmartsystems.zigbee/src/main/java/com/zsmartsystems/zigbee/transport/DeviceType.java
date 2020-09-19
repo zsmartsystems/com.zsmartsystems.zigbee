@@ -14,6 +14,31 @@ package com.zsmartsystems.zigbee.transport;
  *
  */
 public enum DeviceType {
+    /**
+     * ZigBee Coordinator (ZC)
+     * <p>
+     * Will relay messages and can act as a parent to other nodes.
+     */
     COORDINATOR,
-    ROUTER;
+
+    /**
+     * ZigBee Router (ZR)
+     * <p>
+     * Will relay messages and can act as a parent to other nodes.
+     */
+    ROUTER,
+
+    /**
+     * ZigBee End Device (ZED)
+     * <p>
+     * Communicates only with its parent and will not relay messages.
+     */
+    END_DEVICE,
+
+    /**
+     * ZigBee Sleepy End Device (ZSED)
+     * <p>
+     * An end device whose radio can be turned off to save power. The application must poll to receive messages.
+     */
+    SLEEPY_END_DEVICE;
 }
