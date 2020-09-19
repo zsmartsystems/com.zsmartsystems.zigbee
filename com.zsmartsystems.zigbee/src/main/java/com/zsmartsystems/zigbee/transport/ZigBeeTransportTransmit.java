@@ -221,6 +221,14 @@ public interface ZigBeeTransportTransmit {
     }
 
     /**
+     * Sets the default local endpoint Id.
+     *
+     * @param localEndpointId the local endpoint ID
+     */
+    default void setDefaultLocalEndpointId(int localEndpointId) {
+    }
+
+    /**
      * Provides the node descriptor to the transport layer. The {@link NodeDescriptor} contains information that may be
      * of use to the transport layer and this is provided when available.
      * <p>

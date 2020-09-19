@@ -139,7 +139,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
     /**
      * The local endpoint ID used for all ZCL commands
      */
-    private static final int LOCAL_ENDPOINT_ID = 1;
+    private static final int DEFAULT_LOCAL_ENDPOINT_ID = 1;
 
     /**
      * The broadcast endpoint
@@ -207,6 +207,11 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
      * The {@link ZigBeeTransactionManager} responsible for queueing and sending commands, and correlating transactions.
      */
     private final ZigBeeTransactionManager transactionManager;
+
+    /**
+     * The local endpoint ID used for all ZCL commands
+     */
+    private int localEndpointId = DEFAULT_LOCAL_ENDPOINT_ID;
 
     /**
      * The {@link ApsDataEntity} provides APS layer services such as duplicate removal and fragmentation control
@@ -346,6 +351,16 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
     }
 
     /**
+     * Sets the local endpoint ID
+     *
+     * @param localEndpointId
+     */
+    public void setLocalEndpointId(int localEndpointId) {
+        this.localEndpointId = localEndpointId;
+        transport.setDefaultLocalEndpointId(localEndpointId);
+    }
+
+    /**
      * Initializes ZigBee manager components and initializes the transport layer. This call may only be called once in
      * the life of the network.
      * <p>
@@ -416,18 +431,6 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
      */
     public ZigBeeTransportTransmit getZigBeeTransport() {
         return transport;
-    }
-
-    /**
-     * Gets the local node. If not found, or the local IEEE address is not known, this will return null
-     *
-     * @return the local {@link ZigBeeNode} or null if not found or local {@link IeeeAddress} is not known
-     */
-    private ZigBeeNode getLocalNode() {
-        if (localIeeeAddress == null) {
-            return null;
-        }
-        return networkNodes.get(localIeeeAddress);
     }
 
     /**
@@ -1020,7 +1023,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
 
     private ZigBeeCommand receiveZclCommand(final ZclFieldDeserializer fieldDeserializer,
             final ZigBeeApsFrame apsFrame) {
-        if (apsFrame.getDestinationEndpoint() != LOCAL_ENDPOINT_ID
+        if (apsFrame.getDestinationEndpoint() != localEndpointId
                 && apsFrame.getDestinationEndpoint() != BROADCAST_ENDPOINT_ID) {
             logger.debug("Unknown local endpoint for APS frame {}", apsFrame);
             return null;
@@ -1788,7 +1791,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
 
         logger.debug("Adding supported client cluster {}", String.format("%04X", cluster));
         if (clusterMatcher == null) {
-            clusterMatcher = new ClusterMatcher(this, LOCAL_ENDPOINT_ID, defaultProfileId);
+            clusterMatcher = new ClusterMatcher(this, localEndpointId, defaultProfileId);
         }
         clusterMatcher.addClientCluster(cluster);
         return ZigBeeStatus.SUCCESS;
@@ -1812,7 +1815,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
 
         logger.debug("Adding supported server cluster {}", String.format("%04X", cluster));
         if (clusterMatcher == null) {
-            clusterMatcher = new ClusterMatcher(this, LOCAL_ENDPOINT_ID, defaultProfileId);
+            clusterMatcher = new ClusterMatcher(this, localEndpointId, defaultProfileId);
         }
         clusterMatcher.addServerCluster(cluster);
         return ZigBeeStatus.SUCCESS;
