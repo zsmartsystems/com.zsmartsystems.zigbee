@@ -847,7 +847,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             // The ZCL packet is serialised here.
             ZclCommand zclCommand = (ZclCommand) command;
 
-            apsFrame.setSourceEndpoint(1);
+            apsFrame.setSourceEndpoint(localEndpointId);
 
             // Set the profile
             apsFrame.setProfile(defaultProfileId);
