@@ -41,7 +41,7 @@
 		<license.year>2020</license.year>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<slf4j.version>1.7.2</slf4j.version>
+		<slf4j.version>1.7.30</slf4j.version>
 		<log4j.version>1.2.17</log4j.version>
 	</properties>
 
