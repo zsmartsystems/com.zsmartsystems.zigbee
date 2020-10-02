@@ -84,6 +84,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateReques
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspReadCountersRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspReadCountersResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspResetToFactoryDefaultsRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspResetToFactoryDefaultsResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspScanCompleteHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendManyToOneRouteRequestRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendManyToOneRouteRequestResponse;
@@ -1092,6 +1094,21 @@ public class EmberNcp {
                 .sendEzspTransaction(
                         new EzspSingleResponseTransaction(request, EzspSendManyToOneRouteRequestResponse.class));
         EzspSendManyToOneRouteRequestResponse response = (EzspSendManyToOneRouteRequestResponse) transaction
+                .getResponse();
+        return response.getStatus();
+    }
+
+    /**
+     * Reset the NCP to factory default.
+     *
+     * @return the response {@link EzspStatus}
+     */
+    public EzspStatus resetToFactoryDefaults() {
+        EzspResetToFactoryDefaultsRequest request = new EzspResetToFactoryDefaultsRequest();
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(
+                        new EzspSingleResponseTransaction(request, EzspResetToFactoryDefaultsResponse.class));
+        EzspResetToFactoryDefaultsResponse response = (EzspResetToFactoryDefaultsResponse) transaction
                 .getResponse();
         return response.getStatus();
     }
