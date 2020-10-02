@@ -2555,7 +2555,7 @@
 			<parameter>
 				<data_type>EzspStatus</data_type>
 				<name>status</name>
-				<description>An EzspStatus value indicating success or the reason for failure. </description>
+				<description>An EzspStatus value indicating success or the reason for failure.</description>
 			</parameter>
 		</response_parameters>
 	</command>
