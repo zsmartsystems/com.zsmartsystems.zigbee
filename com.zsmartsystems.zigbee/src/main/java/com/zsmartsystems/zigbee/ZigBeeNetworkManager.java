@@ -176,7 +176,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
     /**
      * {@link AtomicInteger} used to generate APS header counters
      */
-    private final static AtomicInteger apsCounter = new AtomicInteger();
+    private final AtomicInteger apsCounter = new AtomicInteger();
 
     /**
      * The network database - used to save the state of the network and all its nodes
