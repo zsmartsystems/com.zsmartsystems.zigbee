@@ -50,6 +50,7 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommandsSupportedCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleDescribeEndpointCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleDescribeNodeCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleDeviceFingerprintCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleDeviceInformationCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleInstallKeyCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleLinkKeyCommand;
@@ -190,6 +191,7 @@ public final class ZigBeeConsole {
         newCommands.put("attsupported", new ZigBeeConsoleAttributeSupportedCommand());
         newCommands.put("cmdsupported", new ZigBeeConsoleCommandsSupportedCommand());
 
+        newCommands.put("fingerprint", new ZigBeeConsoleDeviceFingerprintCommand());
         newCommands.put("info", new ZigBeeConsoleDeviceInformationCommand());
         newCommands.put("join", new ZigBeeConsoleNetworkJoinCommand());
         newCommands.put("leave", new ZigBeeConsoleNetworkLeaveCommand());

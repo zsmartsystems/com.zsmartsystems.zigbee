@@ -70,10 +70,14 @@ import com.zsmartsystems.zigbee.transport.ZigBeePort.FlowControl;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclColorControlCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclGroupsCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclIasZoneCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclIdentifyCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclPollControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclPressureMeasurementCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclScenesCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclThermostatCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclWindowCoveringCluster;
 
@@ -104,16 +108,20 @@ public class ZigBeeConsoleMain {
 
         final Set<Integer> supportedClientClusters = new TreeSet<>();
         supportedClientClusters.addAll(Stream
-                .of(ZclBasicCluster.CLUSTER_ID, ZclOnOffCluster.CLUSTER_ID, ZclLevelControlCluster.CLUSTER_ID,
+                .of(ZclBasicCluster.CLUSTER_ID, ZclIdentifyCluster.CLUSTER_ID, ZclGroupsCluster.CLUSTER_ID,
+                        ZclScenesCluster.CLUSTER_ID,
+                        ZclPollControlCluster.CLUSTER_ID, ZclOnOffCluster.CLUSTER_ID, ZclLevelControlCluster.CLUSTER_ID,
                         ZclColorControlCluster.CLUSTER_ID, ZclPressureMeasurementCluster.CLUSTER_ID,
-                        ZclThermostatCluster.CLUSTER_ID, ZclWindowCoveringCluster.CLUSTER_ID)
+                        ZclThermostatCluster.CLUSTER_ID, ZclWindowCoveringCluster.CLUSTER_ID, 1000)
                 .collect(Collectors.toSet()));
 
         final Set<Integer> supportedServerClusters = new TreeSet<>();
         supportedServerClusters.addAll(Stream
-                .of(ZclBasicCluster.CLUSTER_ID, ZclOnOffCluster.CLUSTER_ID, ZclLevelControlCluster.CLUSTER_ID,
+                .of(ZclBasicCluster.CLUSTER_ID, ZclIdentifyCluster.CLUSTER_ID, ZclGroupsCluster.CLUSTER_ID,
+                        ZclScenesCluster.CLUSTER_ID,
+                        ZclPollControlCluster.CLUSTER_ID, ZclOnOffCluster.CLUSTER_ID, ZclLevelControlCluster.CLUSTER_ID,
                         ZclColorControlCluster.CLUSTER_ID, ZclPressureMeasurementCluster.CLUSTER_ID,
-                        ZclWindowCoveringCluster.CLUSTER_ID)
+                        ZclWindowCoveringCluster.CLUSTER_ID, 1000)
                 .collect(Collectors.toSet()));
 
         final TransportConfig transportOptions = new TransportConfig();
