@@ -1047,10 +1047,8 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
 
         ZclCommand command;
         if (zclHeader.getDirection() == ZclCommandDirection.SERVER_TO_CLIENT) {
-            if (clusterMatcher != null && !clusterMatcher.isClientSupported(apsFrame.getCluster())) {
+            if (!isClientClusterSupported(apsFrame.getCluster())) {
                 logger.debug("Unsupported local client cluster {}", String.format("%04X", apsFrame.getCluster()));
-                createDefaultResponse(apsFrame, zclHeader, ZclStatus.FAILURE);
-                return null;
             }
             ZclCluster cluster = endpoint.getInputCluster(apsFrame.getCluster());
             if (cluster == null) {
@@ -1077,7 +1075,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             }
             command = cluster.getResponseFromId(zclHeader.getFrameType(), zclHeader.getCommandId());
         } else {
-            if (clusterMatcher != null && !clusterMatcher.isServerSupported(apsFrame.getCluster())) {
+            if (!isServerClusterSupported(apsFrame.getCluster())) {
                 logger.debug("Unsupported local server cluster {}", String.format("%04X", apsFrame.getCluster()));
                 createDefaultResponse(apsFrame, zclHeader, ZclStatus.FAILURE);
                 return null;
@@ -1819,6 +1817,32 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         }
         clusterMatcher.addServerCluster(cluster);
         return ZigBeeStatus.SUCCESS;
+    }
+
+    /**
+     * Checks if the local device (ie the framework) is supporting the specified client cluster.
+     *
+     * @param cluster the supported client cluster ID
+     * @return true if the client cluster is supported locally
+     */
+    public boolean isClientClusterSupported(int cluster) {
+        if (clusterMatcher == null) {
+            return true;
+        }
+        return clusterMatcher.isClientSupported(cluster);
+    }
+
+    /**
+     * Checks if the local device (ie the framework) is supporting the specified server cluster.
+     *
+     * @param cluster the supported server cluster ID
+     * @return true if the server cluster is supported locally
+     */
+    public boolean isServerClusterSupported(int cluster) {
+        if (clusterMatcher == null) {
+            return true;
+        }
+        return clusterMatcher.isServerSupported(cluster);
     }
 
     /**

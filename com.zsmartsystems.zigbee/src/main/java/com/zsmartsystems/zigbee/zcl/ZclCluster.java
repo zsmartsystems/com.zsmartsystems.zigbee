@@ -112,7 +112,7 @@ public abstract class ZclCluster {
      * After initialisation, the list will contain an empty list. Once a successful call to
      * {@link #discoverAttributes()} has been made, the list will reflect the attributes supported by the remote device.
      */
-    private final Set<Integer> supportedAttributes = new TreeSet<>();
+    private final Set<Integer> supportedAttributes = new HashSet<>();
 
     /**
      * A boolean used to record if the list of supported attributes has been recovered from the remote device. This is
@@ -822,13 +822,13 @@ public abstract class ZclCluster {
         synchronized (supportedAttributes) {
             if (!supportedAttributesKnown) {
                 if (isClient) {
-                    return clientAttributes.keySet();
+                    return new TreeSet<>(clientAttributes.keySet());
                 } else {
-                    return serverAttributes.keySet();
+                    return new TreeSet<>(serverAttributes.keySet());
                 }
             }
 
-            return supportedAttributes;
+            return new TreeSet<>(supportedAttributes);
         }
     }
 
@@ -951,7 +951,7 @@ public abstract class ZclCluster {
      */
     public Set<Integer> getSupportedCommandsReceived() {
         synchronized (supportedCommandsReceived) {
-            return new HashSet<>(supportedCommandsReceived);
+            return new TreeSet<>(supportedCommandsReceived);
         }
     }
 
@@ -1059,7 +1059,7 @@ public abstract class ZclCluster {
      */
     public Set<Integer> getSupportedCommandsGenerated() {
         synchronized (supportedCommandsGenerated) {
-            return new HashSet<>(supportedCommandsGenerated);
+            return new TreeSet<>(supportedCommandsGenerated);
         }
     }
 
@@ -1556,10 +1556,10 @@ public abstract class ZclCluster {
         dao.setClusterId(clusterId);
         dao.setClient(isClient);
         if (supportedAttributesKnown) {
-            dao.setSupportedAttributes(Collections.unmodifiableSet(new TreeSet<>(supportedAttributes)));
+            dao.setSupportedAttributes(Collections.unmodifiableSet(new HashSet<>(supportedAttributes)));
         }
-        dao.setSupportedCommandsGenerated(Collections.unmodifiableSet(new TreeSet<>(supportedCommandsGenerated)));
-        dao.setSupportedCommandsReceived(Collections.unmodifiableSet(new TreeSet<>(supportedCommandsReceived)));
+        dao.setSupportedCommandsGenerated(Collections.unmodifiableSet(new HashSet<>(supportedCommandsGenerated)));
+        dao.setSupportedCommandsReceived(Collections.unmodifiableSet(new HashSet<>(supportedCommandsReceived)));
         Collection<ZclAttribute> daoZclAttributes;
         if (isClient) {
             daoZclAttributes = clientAttributes.values();

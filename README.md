@@ -292,12 +292,14 @@ Note that the console is currently being refactored and this readme only documen
 |node             |Provides detailed information about a node                                             |
 |endpoint         |Provides detailed information about an endpoint                                        |
 |info             |Get basic info about a device                                                          |
+|fingerprint      |Get detailed information about a device                                                |
 |read             |Read an attribute                                                                      |
 |write            |Write an attribute                                                                     |
 |bind             |Binds a device to another device                                                       |
 |unbind           |Unbinds a device from another device                                                   |
 |bindtable        |Reads and displays the binding table from a node                                       |
 |attsupported     |Check what attributes are supported within a cluster                                   |
+|cmdsupported     |Check what commanda are supported within a cluster                                     |
 |subscribe        |Subscribe to attribute reports                                                         |
 |unsubscribe      |Unsubscribe from attribute reports                                                     |
 |reportcfg        |Read the reporting configuration of an attribute                                       |
@@ -307,6 +309,10 @@ Note that the console is currently being refactored and this readme only documen
 |netstart         |Join or Form a network as a router or coordinator                                      |
 |netbackup        |Backup or restores the state of the dongle                                             |
 |discovery        |Gets information on the network discovery tasks                                        |
+|on               |Turns a device on                                                                      |
+|off              |Turns a device off                                                                     |
+|level            |Sets the level on a level control device                                               |
+|covering         |Sets the level on a window covering device                                             |
 
 
 ### Ember NCP Commands

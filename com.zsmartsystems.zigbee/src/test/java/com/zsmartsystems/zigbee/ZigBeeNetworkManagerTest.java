@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -44,7 +43,6 @@ import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaUpgradeExtension;
 import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDataStore;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDatabaseManager;
-import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
 import com.zsmartsystems.zigbee.serialization.DefaultSerializer;
@@ -846,7 +844,7 @@ public class ZigBeeNetworkManagerTest
 
         Mockito.doNothing().when(mockedTransport).sendCommand(ArgumentMatchers.anyInt(),
                 mockedApsFrameListener.capture());
-        
+
         return networkManager;
     }
 
@@ -1406,8 +1404,23 @@ public class ZigBeeNetworkManagerTest
         TestUtilities.outputTestHeader();
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
 
-        networkManager.addSupportedClientCluster(123);
-        networkManager.addSupportedServerCluster(456);
+        // Always true when no clusters added
+        assertTrue(networkManager.isClientClusterSupported(123));
+        assertTrue(networkManager.isServerClusterSupported(456));
+
+        assertEquals(ZigBeeStatus.INVALID_STATE, networkManager.addSupportedClientCluster(123));
+
+        TestUtilities.setField(ZigBeeNetworkManager.class, networkManager, "networkState",
+                ZigBeeNetworkState.INITIALISING);
+
+        assertEquals(ZigBeeStatus.SUCCESS, networkManager.addSupportedClientCluster(123));
+        assertEquals(ZigBeeStatus.SUCCESS, networkManager.addSupportedServerCluster(456));
+
+        assertTrue(networkManager.isClientClusterSupported(123));
+        assertTrue(networkManager.isServerClusterSupported(456));
+
+        assertFalse(networkManager.isClientClusterSupported(999));
+        assertFalse(networkManager.isServerClusterSupported(999));
     }
 
 }
