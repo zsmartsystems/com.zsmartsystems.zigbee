@@ -301,7 +301,9 @@ public class ZclIasZoneClient implements ZigBeeApplication, ZclCommandListener {
     private class AutoEnrollmentTask implements Runnable {
         @Override
         public void run() {
-            iasZoneCluster.sendCommand(new ZoneEnrollResponse(EnrollResponseCodeEnum.SUCCESS.getKey(), zoneId));
+            ZoneEnrollResponse zoneEnrollResponse = new ZoneEnrollResponse(EnrollResponseCodeEnum.SUCCESS.getKey(), zoneId);
+            zoneEnrollResponse.setDisableDefaultResponse(true);
+            iasZoneCluster.sendCommand(zoneEnrollResponse);
         }
     }
 }
