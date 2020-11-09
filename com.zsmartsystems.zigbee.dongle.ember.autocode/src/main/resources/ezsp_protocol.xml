@@ -3078,7 +3078,7 @@
 			</parameter>
 			<parameter>
 				<data_type>uint32_t</data_type>
-				<name>gpdSecurityFrameCounterLength</name>
+				<name>gpdSecurityFrameCounter</name>
 				<description>The security frame counter of the incoming GDPF.</description>
 			</parameter>
 			<parameter>

@@ -88,7 +88,7 @@ public class EzspGpepIncomingMessageHandler extends EzspFrameResponse {
      * <p>
      * EZSP type is <i>uint32_t</i> - Java type is {@link int}
      */
-    private int gpdSecurityFrameCounterLength;
+    private int gpdSecurityFrameCounter;
 
     /**
      * The gpdCommandId of the incoming GPDF.
@@ -134,7 +134,7 @@ public class EzspGpepIncomingMessageHandler extends EzspFrameResponse {
         gpdfSecurityKeyType = deserializer.deserializeEmberGpKeyType();
         autoCommissioning = deserializer.deserializeBool();
         rxAfterTx = deserializer.deserializeBool();
-        gpdSecurityFrameCounterLength = deserializer.deserializeUInt32();
+        gpdSecurityFrameCounter = deserializer.deserializeUInt32();
         gpdCommandId = deserializer.deserializeUInt8();
         mic = deserializer.deserializeUInt32();
         proxyTableIndex = deserializer.deserializeUInt8();
@@ -307,19 +307,19 @@ public class EzspGpepIncomingMessageHandler extends EzspFrameResponse {
      * <p>
      * EZSP type is <i>uint32_t</i> - Java type is {@link int}
      *
-     * @return the current gpdSecurityFrameCounterLength as {@link int}
+     * @return the current gpdSecurityFrameCounter as {@link int}
      */
-    public int getGpdSecurityFrameCounterLength() {
-        return gpdSecurityFrameCounterLength;
+    public int getGpdSecurityFrameCounter() {
+        return gpdSecurityFrameCounter;
     }
 
     /**
      * The security frame counter of the incoming GDPF.
      *
-     * @param gpdSecurityFrameCounterLength the gpdSecurityFrameCounterLength to set as {@link int}
+     * @param gpdSecurityFrameCounter the gpdSecurityFrameCounter to set as {@link int}
      */
-    public void setGpdSecurityFrameCounterLength(int gpdSecurityFrameCounterLength) {
-        this.gpdSecurityFrameCounterLength = gpdSecurityFrameCounterLength;
+    public void setGpdSecurityFrameCounter(int gpdSecurityFrameCounter) {
+        this.gpdSecurityFrameCounter = gpdSecurityFrameCounter;
     }
 
     /**
@@ -423,8 +423,8 @@ public class EzspGpepIncomingMessageHandler extends EzspFrameResponse {
         builder.append(autoCommissioning);
         builder.append(", rxAfterTx=");
         builder.append(rxAfterTx);
-        builder.append(", gpdSecurityFrameCounterLength=");
-        builder.append(gpdSecurityFrameCounterLength);
+        builder.append(", gpdSecurityFrameCounter=");
+        builder.append(gpdSecurityFrameCounter);
         builder.append(", gpdCommandId=");
         builder.append(gpdCommandId);
         builder.append(", mic=");
