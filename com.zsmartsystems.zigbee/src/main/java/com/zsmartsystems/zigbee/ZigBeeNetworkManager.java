@@ -1194,8 +1194,9 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
                     logger.debug("{}: Node has left, but wasn't found in the network.", networkAddress);
                 } else {
                     // Mark the node as OFFLINE
-                    node.setNodeState(ZigBeeNodeState.OFFLINE);
-                    updateNode(node);
+                    ZigBeeNode updatedNode = new ZigBeeNode(this, node.getIeeeAddress());
+                    updatedNode.setNodeState(ZigBeeNodeState.OFFLINE);
+                    updateNode(updatedNode);
                 }
                 break;
 
@@ -1209,7 +1210,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
                 break;
         }
 
-        // Notify the listeners
+        // Notify the announce listeners
         for (final ZigBeeAnnounceListener announceListener : announceListeners) {
             notificationService.execute(new Runnable() {
                 @Override
