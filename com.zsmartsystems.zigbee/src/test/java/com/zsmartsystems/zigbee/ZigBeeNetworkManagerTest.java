@@ -1198,7 +1198,7 @@ public class ZigBeeNetworkManagerTest
                 ArgumentMatchers.any(IeeeAddress.class));
 
         manager.nodeStatusUpdate(ZigBeeNodeStatus.DEVICE_LEFT, 1234, new IeeeAddress("1234567890ABCDEF"));
-        Mockito.verify(node, Mockito.times(1)).setNodeState(ZigBeeNodeState.OFFLINE);
+        Mockito.verify(node, Mockito.times(1)).updateNode(ArgumentMatchers.any(ZigBeeNode.class));
 
         Mockito.verify(announceListener, Mockito.timeout(TIMEOUT).times(2)).deviceStatusUpdate(
                 ArgumentMatchers.any(ZigBeeNodeStatus.class), ArgumentMatchers.any(Integer.class),
