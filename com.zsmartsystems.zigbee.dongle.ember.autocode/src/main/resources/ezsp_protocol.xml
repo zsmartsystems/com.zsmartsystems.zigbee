@@ -1132,6 +1132,67 @@
 	</command>
 
 	<command>
+		<name>getSourceRouteTableTotalSize</name>
+		<id>0xC3</id>
+		<description>Returns the source route table total size.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>sourceRouteTableTotalSize</name>
+				<description>Total size of source route table.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>getSourceRouteTableFilledSize</name>
+		<id>0xC2</id>
+		<description>Returns the number of filled entries in source route table.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>sourceRouteTableFilledSize</name>
+				<description>The number of filled entries in source route table.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>getSourceRouteTableEntry</name>
+		<id>0xC1</id>
+		<description>Returns information about a source route table entry</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>index</name>
+				<description>The index of the entry of interest in the source route table. Possible indexes range from zero to SOURCE_ROUTE_TABLE_FILLED_SIZE.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>EMBER_SUCCESS if there is source route entry at index. EMBER_SOURCE_ROUTE_FAILURE if there is no source route at index.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>destination</name>
+				<description>The node ID of the destination in that entry.</description>
+				<display>hex[4]</display>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>closerIndex</name>
+				<description>The closer node index for this source route table entry.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
 		<name>getNeighbor</name>
 		<id>0x79</id>
 		<description>Returns the neighbor table entry at the given index. The number of active neighbors can be obtained using the neighborCount command.</description>

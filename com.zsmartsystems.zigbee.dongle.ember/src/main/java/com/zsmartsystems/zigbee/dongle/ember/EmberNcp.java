@@ -109,6 +109,10 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStartScanRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStartScanResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetSourceRouteTableEntryRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetSourceRouteTableEntryResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetSourceRouteTableFilledSizeRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetSourceRouteTableFilledSizeResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberAesMmoHashContext;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCertificate283k1Data;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCertificateData;
@@ -1153,5 +1157,38 @@ public class EmberNcp {
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspSetMfgTokenResponse.class));
         EzspSetMfgTokenResponse response = (EzspSetMfgTokenResponse) transaction.getResponse();
         return response.getStatus();
+    }
+
+    /**
+     * Returns the NCP source route table filled size (i.e number of entries in the table).
+     *
+     * @return the {@link EzspGetSourceRouteTableFilledSizeResponse}
+     */
+    public EzspGetSourceRouteTableFilledSizeResponse getSourceRouteTableFilledSize() {
+        EzspGetSourceRouteTableFilledSizeRequest request = new EzspGetSourceRouteTableFilledSizeRequest();
+        EzspTransaction transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction(request, EzspGetSourceRouteTableFilledSizeResponse.class));
+        EzspGetSourceRouteTableFilledSizeResponse response = (EzspGetSourceRouteTableFilledSizeResponse) transaction
+                .getResponse();
+        lastStatus = null;
+
+        return response;
+    }
+
+    /**
+     * Returns the NCP source route table entry at given index.
+     *
+     * @return the {@link EzspGetSourceRouteTableEntryResponse}
+     */
+    public EzspGetSourceRouteTableEntryResponse getSourceRouteTableEntry(int index) {
+        EzspGetSourceRouteTableEntryRequest request = new EzspGetSourceRouteTableEntryRequest();
+        request.setIndex(index);
+        EzspTransaction transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction(request, EzspGetSourceRouteTableEntryResponse.class));
+        EzspGetSourceRouteTableEntryResponse response = (EzspGetSourceRouteTableEntryResponse) transaction
+                .getResponse();
+        lastStatus = null;
+
+        return response;
     }
 }

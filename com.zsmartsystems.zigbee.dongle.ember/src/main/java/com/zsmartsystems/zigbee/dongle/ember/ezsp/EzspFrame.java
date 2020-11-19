@@ -148,6 +148,9 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_GET_PARENT_CHILD_PARAMETERS = 0x29;
     protected static final int FRAME_ID_GET_POLICY = 0x56;
     protected static final int FRAME_ID_GET_ROUTE_TABLE_ENTRY = 0x7B;
+    protected static final int FRAME_ID_GET_SOURCE_ROUTE_TABLE_ENTRY = 0xC1;
+    protected static final int FRAME_ID_GET_SOURCE_ROUTE_TABLE_FILLED_SIZE = 0xC2;
+    protected static final int FRAME_ID_GET_SOURCE_ROUTE_TABLE_TOTAL_SIZE = 0xC3;
     protected static final int FRAME_ID_GET_STANDALONE_BOOTLOADER_VERSION_PLAT_MICRO_PHY = 0x91;
     protected static final int FRAME_ID_GET_TRANSIENT_KEY_TABLE_ENTRY = 0x6D;
     protected static final int FRAME_ID_GET_TRANSIENT_LINK_KEY = 0xCE;
@@ -304,6 +307,9 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_GET_PARENT_CHILD_PARAMETERS, EzspGetParentChildParametersResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_POLICY, EzspGetPolicyResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_ROUTE_TABLE_ENTRY, EzspGetRouteTableEntryResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GET_SOURCE_ROUTE_TABLE_ENTRY, EzspGetSourceRouteTableEntryResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GET_SOURCE_ROUTE_TABLE_FILLED_SIZE, EzspGetSourceRouteTableFilledSizeResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GET_SOURCE_ROUTE_TABLE_TOTAL_SIZE, EzspGetSourceRouteTableTotalSizeResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_STANDALONE_BOOTLOADER_VERSION_PLAT_MICRO_PHY, EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_TRANSIENT_KEY_TABLE_ENTRY, EzspGetTransientKeyTableEntryResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_TRANSIENT_LINK_KEY, EzspGetTransientLinkKeyResponse.class);
