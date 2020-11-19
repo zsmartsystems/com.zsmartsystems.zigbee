@@ -40,6 +40,7 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkState;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeReadCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeReadAllCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeSupportedCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeWriteCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleBindCommand;
@@ -186,6 +187,7 @@ public final class ZigBeeConsole {
         newCommands.put("bindtable", new ZigBeeConsoleBindingTableCommand());
 
         newCommands.put("read", new ZigBeeConsoleAttributeReadCommand());
+        newCommands.put("readall", new ZigBeeConsoleAttributeReadAllCommand());
         newCommands.put("write", new ZigBeeConsoleAttributeWriteCommand());
 
         newCommands.put("attsupported", new ZigBeeConsoleAttributeSupportedCommand());
