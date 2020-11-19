@@ -1,0 +1,82 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0B01">
+    <name>Meter Identification</name>
+    <description>This cluster provides attributes and commands for determining advanced information about utility metering device.</description>
+
+    <attribute code="0x0000" type="CHARACTER_STRING" side="server" optional="false" writable="false" reportable="false">
+        <name>Company Name</name>
+        <description>This attribute defines the meter manufacturer name, decided by manufacturer.</description>
+    </attribute>
+    <attribute code="0x0001" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF">
+        <name>Meter Type ID</name>
+        <description>This attribute defines the Meter installation features, decided by manufacturer.</description>
+    </attribute>
+    <attribute code="0x0004" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF">
+        <name>Data Quality ID</name>
+        <description>This attribute defines the Meter Simple Metering information certification type, decided by manufacturer.</description>
+    </attribute>
+    <attribute code="0x0005" type="CHARACTER_STRING" side="server" optional="true" writable="true" reportable="false">
+        <name>Customer Name</name>
+    </attribute>
+    <attribute code="0x0006" type="CHARACTER_STRING" side="server" optional="true" writable="false" reportable="false">
+        <name>Model</name>
+        <description>This attribute defines the meter model name, decided by manufacturer.</description>
+    </attribute>
+    <attribute code="0x0007" type="CHARACTER_STRING" side="server" optional="true" writable="false" reportable="false">
+        <name>Part Number</name>
+        <description>This attribute defines the meter part number, decided by manufacturer.</description>
+    </attribute>
+    <attribute code="0x0008" type="CHARACTER_STRING" side="server" optional="true" writable="false" reportable="false">
+        <name>Product Revision</name>
+        <description>This attribute defines the meter revision code, decided by manufacturer.</description>
+    </attribute>
+    <attribute code="0x000A" type="CHARACTER_STRING" side="server" optional="true" writable="false" reportable="false">
+        <name>Software Revision</name>
+        <description>This attribute defines the meter software revision code, decided by manufacturer.</description>
+    </attribute>
+    <attribute code="0x000B" type="CHARACTER_STRING" side="server" optional="true" writable="false" reportable="false">
+        <name>Utility Name</name>
+    </attribute>
+    <attribute code="0x000C" type="CHARACTER_STRING" side="server" optional="false" writable="false" reportable="false">
+        <name>POD</name>
+        <description>This attribute is the unique identification ID of the premise connection point. It is also a contractual information known by the clients and indicated in the bill.</description>
+    </attribute>
+    <attribute code="0x000D" type="SIGNED_24_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x000000" maximum="0xFFFFFF">
+        <name>Available Power</name>
+        <description>This attribute represents the InstantaneousDemand that can be distributed to the customer (e.g., 3.3KW power) without any risk of overload. The Available Power SHALL use the same formatting conventions as the one used in the simple metering cluster formatting attribute set for the InstantaneousDemand attribute, i.e., the UnitOfMeasure and DemandFormatting.</description>
+    </attribute>
+    <attribute code="0x000E" type="SIGNED_24_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" minimum="0x000000" maximum="0xFFFFFF">
+        <name>Power Threshold</name>
+        <description>This attribute represents a threshold of InstantaneousDemand distributed to the customer (e.g., 4.191KW) that will lead to an imminent risk of overload. The PowerThreshold SHALL use the same formatting conventions as the one used in the AvailablePower attributes and therefore in the simple metering cluster formatting attribute set for the InstantaneousDemand attribute, i.e., the UnitOfMeasure and DemandFormatting.</description>
+    </attribute>
+
+    <constant class="MeterTypeEnum">
+        <name>Meter Type</name>
+        <value code="0x0000" name="Utility Primary Meter">
+        </value>
+        <value code="0x0001" name="Utility Production Meter">
+        </value>
+        <value code="0x0002" name="Utility Secondary Meter">
+        </value>
+        <value code="0x0100" name="Private Primary Meter">
+        </value>
+        <value code="0x0101" name="Private Production Meter">
+        </value>
+        <value code="0x0102" name="Private Secondary Meters">
+        </value>
+        <value code="0x0110" name="Generic Meter">
+        </value>
+    </constant>
+
+    <constant class="DataQualityEnum">
+        <name>Data Quality</name>
+        <value code="0x0000" name="All Data Certified">
+        </value>
+        <value code="0x0001" name="Only Instantaneous Power not Certified">
+        </value>
+        <value code="0x0002" name="Only Cumulated Consumption not Certified">
+        </value>
+        <value code="0x0003" name="Not Certified data">
+        </value>
+    </constant>
+</cluster>
