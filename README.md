@@ -331,6 +331,7 @@ The following commands are available if the transport layer is using the Silabs 
 |ncpsecuritystate |Gets the current NCP security state and configuration                         |
 |ncptransientkey  |Adds a transient link key to the NCP                                          |
 |ncpmmohash       |Uses the NCP to perform the MMO hash                                          |
+|ncpsrcroutetable |List the NCP source route table                                               |
 
 ### Telegesis Commands
 
