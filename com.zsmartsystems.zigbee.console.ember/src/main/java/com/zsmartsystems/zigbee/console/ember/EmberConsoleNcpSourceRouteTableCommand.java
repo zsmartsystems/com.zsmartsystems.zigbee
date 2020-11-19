@@ -49,7 +49,7 @@ public class EmberConsoleNcpSourceRouteTableCommand extends EmberConsoleAbstract
         out.println(String.format("%-20s  %-20s", "Destination", "Closer Index"));
         for (int index = 0; index < entriesCount; index++) {
             EzspGetSourceRouteTableEntryResponse entry = ncp.getSourceRouteTableEntry(index);
-            out.println(String.format("%04X (%d)  %-20d", entry.getDestination(), entry.getCloserIndex()));
+            out.println(String.format("%04X (%d)  %20d", entry.getDestination(), entry.getCloserIndex()));
         }
     }
 }
