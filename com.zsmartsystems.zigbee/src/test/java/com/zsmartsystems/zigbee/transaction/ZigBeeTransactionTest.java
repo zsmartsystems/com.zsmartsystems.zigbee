@@ -41,7 +41,7 @@ public class ZigBeeTransactionTest {
         ZigBeeCommand command = Mockito.mock(ZigBeeCommand.class);
         ZigBeeTransactionMatcher matcher = Mockito.mock(ZigBeeTransactionMatcher.class);
 
-        ZigBeeTransactionFuture transactionFuture = new ZigBeeTransactionFuture();
+        ZigBeeTransactionFuture transactionFuture = new ZigBeeTransactionFuture(Mockito.mock(ZigBeeTransaction.class));
 
         ZigBeeTransaction transaction = new ZigBeeTransaction(transactionManager, command, matcher);
         transaction.setFuture(transactionFuture);
@@ -97,11 +97,10 @@ public class ZigBeeTransactionTest {
     @Test
     public void testTxNak() {
         ZigBeeTransactionManager transactionManager = Mockito.mock(ZigBeeTransactionManager.class);
-        ZigBeeCommand command = Mockito.mock(ZigBeeCommand.class);
-        Mockito.when(command.getTransactionId()).thenReturn(12);
+        ZigBeeCommand command = createCommand(false);
         ZigBeeTransactionMatcher matcher = Mockito.mock(ZigBeeTransactionMatcher.class);
 
-        ZigBeeTransactionFuture transactionFuture = new ZigBeeTransactionFuture();
+        ZigBeeTransactionFuture transactionFuture = new ZigBeeTransactionFuture(Mockito.mock(ZigBeeTransaction.class));
 
         ZigBeeTransaction transaction = new ZigBeeTransaction(transactionManager, command, matcher);
         transaction.setFuture(transactionFuture);
@@ -137,12 +136,10 @@ public class ZigBeeTransactionTest {
     @Test
     public void testRxNak() {
         ZigBeeTransactionManager transactionManager = Mockito.mock(ZigBeeTransactionManager.class);
-        ZigBeeCommand command = Mockito.mock(ZigBeeCommand.class);
-        Mockito.when(command.getTransactionId()).thenReturn(12);
-        Mockito.when(command.isAckRequest()).thenReturn(true);
+        ZigBeeCommand command = createCommand(true);
         ZigBeeTransactionMatcher matcher = Mockito.mock(ZigBeeTransactionMatcher.class);
 
-        ZigBeeTransactionFuture transactionFuture = new ZigBeeTransactionFuture();
+        ZigBeeTransactionFuture transactionFuture = new ZigBeeTransactionFuture(Mockito.mock(ZigBeeTransaction.class));
 
         ZigBeeTransaction transaction = new ZigBeeTransaction(transactionManager, command, matcher);
         transaction.setFuture(transactionFuture);
@@ -168,15 +165,13 @@ public class ZigBeeTransactionTest {
     @Test
     public void testMatchedAfterRxAck() {
         ZigBeeTransactionManager transactionManager = Mockito.mock(ZigBeeTransactionManager.class);
-        ZigBeeCommand command = Mockito.mock(ZigBeeCommand.class);
-        Mockito.when(command.getTransactionId()).thenReturn(12);
-        Mockito.when(command.isAckRequest()).thenReturn(true);
+        ZigBeeCommand command = createCommand(true);
         ZigBeeTransactionMatcher matcher = Mockito.mock(ZigBeeTransactionMatcher.class);
 
-        ZigBeeCommand request = Mockito.mock(ZigBeeCommand.class);
+        ZigBeeCommand request = createCommand(false);
         Mockito.when(matcher.isTransactionMatch(command, request)).thenReturn(true);
 
-        ZigBeeTransactionFuture transactionFuture = new ZigBeeTransactionFuture();
+        ZigBeeTransactionFuture transactionFuture = new ZigBeeTransactionFuture(Mockito.mock(ZigBeeTransaction.class));
 
         ZigBeeTransaction transaction = new ZigBeeTransaction(transactionManager, command, matcher);
         transaction.setFuture(transactionFuture);
@@ -205,15 +200,13 @@ public class ZigBeeTransactionTest {
     @Test
     public void testMatchedBeforeRxAck() {
         ZigBeeTransactionManager transactionManager = Mockito.mock(ZigBeeTransactionManager.class);
-        ZigBeeCommand command = Mockito.mock(ZigBeeCommand.class);
-        Mockito.when(command.getTransactionId()).thenReturn(12);
-        Mockito.when(command.isAckRequest()).thenReturn(true);
+        ZigBeeCommand command = createCommand(true);
         ZigBeeTransactionMatcher matcher = Mockito.mock(ZigBeeTransactionMatcher.class);
 
-        ZigBeeCommand request = Mockito.mock(ZigBeeCommand.class);
+        ZigBeeCommand request = createCommand(false);
         Mockito.when(matcher.isTransactionMatch(command, request)).thenReturn(true);
 
-        ZigBeeTransactionFuture transactionFuture = new ZigBeeTransactionFuture();
+        ZigBeeTransactionFuture transactionFuture = new ZigBeeTransactionFuture(Mockito.mock(ZigBeeTransaction.class));
 
         ZigBeeTransaction transaction = new ZigBeeTransaction(transactionManager, command, matcher);
         transaction.setFuture(transactionFuture);
@@ -248,10 +241,10 @@ public class ZigBeeTransactionTest {
         Mockito.when(command.getDestinationAddress()).thenReturn(new ZigBeeEndpointAddress(1234, 5));
         ZigBeeTransactionMatcher matcher = Mockito.mock(ZigBeeTransactionMatcher.class);
 
-        ZigBeeCommand request = Mockito.mock(ZigBeeCommand.class);
+        ZigBeeCommand request = createCommand(false);
         Mockito.when(matcher.isTransactionMatch(command, request)).thenReturn(true);
 
-        ZigBeeTransactionFuture transactionFuture = new ZigBeeTransactionFuture();
+        ZigBeeTransactionFuture transactionFuture = new ZigBeeTransactionFuture(Mockito.mock(ZigBeeTransaction.class));
 
         ZigBeeTransaction transaction = new ZigBeeTransaction(transactionManager, command, matcher);
         transaction.setFuture(transactionFuture);
@@ -280,15 +273,13 @@ public class ZigBeeTransactionTest {
     @Test
     public void testMatchedBeforeRxNak() {
         ZigBeeTransactionManager transactionManager = Mockito.mock(ZigBeeTransactionManager.class);
-        ZigBeeCommand command = Mockito.mock(ZigBeeCommand.class);
-        Mockito.when(command.getTransactionId()).thenReturn(12);
-        Mockito.when(command.isAckRequest()).thenReturn(true);
+        ZigBeeCommand command = createCommand(true);
         ZigBeeTransactionMatcher matcher = Mockito.mock(ZigBeeTransactionMatcher.class);
 
-        ZigBeeCommand request = Mockito.mock(ZigBeeCommand.class);
+        ZigBeeCommand request = createCommand(false);
         Mockito.when(matcher.isTransactionMatch(command, request)).thenReturn(true);
 
-        ZigBeeTransactionFuture transactionFuture = new ZigBeeTransactionFuture();
+        ZigBeeTransactionFuture transactionFuture = new ZigBeeTransactionFuture(Mockito.mock(ZigBeeTransaction.class));
 
         ZigBeeTransaction transaction = new ZigBeeTransaction(transactionManager, command, matcher);
         transaction.setFuture(transactionFuture);
@@ -315,10 +306,9 @@ public class ZigBeeTransactionTest {
 
     public void testSendOnly(ZigBeeTransportProgressState state) {
         ZigBeeTransactionManager transactionManager = Mockito.mock(ZigBeeTransactionManager.class);
-        ZigBeeCommand command = Mockito.mock(ZigBeeCommand.class);
-        Mockito.when(command.getTransactionId()).thenReturn(12);
+        ZigBeeCommand command = createCommand(false);
 
-        ZigBeeTransactionFuture transactionFuture = new ZigBeeTransactionFuture();
+        ZigBeeTransactionFuture transactionFuture = new ZigBeeTransactionFuture(Mockito.mock(ZigBeeTransaction.class));
 
         ZigBeeTransaction transaction = new ZigBeeTransaction(transactionManager, command, null);
         transaction.setTimerPeriod1(Integer.MAX_VALUE);
@@ -357,25 +347,21 @@ public class ZigBeeTransactionTest {
     @Test
     public void testThatTxAckCompletesTransactionWhenNoApsAckRequired() {
         ZigBeeTransactionManager transactionManager = Mockito.mock(ZigBeeTransactionManager.class);
-        ZigBeeCommand command = Mockito.mock(ZigBeeCommand.class);
-        Mockito.when(command.getTransactionId()).thenReturn(12);
-        Mockito.when(command.isAckRequest()).thenReturn(false);
+        ZigBeeCommand command = createCommand(false);
         ZigBeeTransactionMatcher matcher = Mockito.mock(ZigBeeTransactionMatcher.class);
 
         ZigBeeTransaction transaction = new ZigBeeTransaction(transactionManager, command, matcher);
 
         transaction.transactionStatusReceived(ZigBeeTransportProgressState.TX_ACK, 12);
 
-        Mockito.verify(transactionManager, Mockito.times(1)).transactionComplete(transaction, TransactionState.COMPLETE);
+        Mockito.verify(transactionManager, Mockito.times(1)).transactionComplete(transaction,
+                TransactionState.COMPLETE);
     }
-
 
     @Test
     public void testThatTxAckDoesntCompletesTransactionWhenApsAckRequired() {
         ZigBeeTransactionManager transactionManager = Mockito.mock(ZigBeeTransactionManager.class);
-        ZigBeeCommand command = Mockito.mock(ZigBeeCommand.class);
-        Mockito.when(command.getTransactionId()).thenReturn(12);
-        Mockito.when(command.isAckRequest()).thenReturn(true);
+        ZigBeeCommand command = createCommand(true);
         ZigBeeTransactionMatcher matcher = Mockito.mock(ZigBeeTransactionMatcher.class);
 
         ZigBeeTransaction transaction = new ZigBeeTransaction(transactionManager, command, matcher);
@@ -390,13 +376,12 @@ public class ZigBeeTransactionTest {
         // Note that this test does not use the transport transaction state feedback,
         // so the transaction should complete as soon as the matcher is happy.
         ZigBeeTransactionManager transactionManager = Mockito.mock(ZigBeeTransactionManager.class);
-        ZigBeeCommand command = Mockito.mock(ZigBeeCommand.class);
-        Mockito.when(command.getTransactionId()).thenReturn(12);
+        ZigBeeCommand command = createCommand(false);
 
-        ZigBeeTransactionFuture transactionFuture = new ZigBeeTransactionFuture();
+        ZigBeeTransactionFuture transactionFuture = new ZigBeeTransactionFuture(Mockito.mock(ZigBeeTransaction.class));
 
-        ZigBeeCommand matchRequest = Mockito.mock(ZigBeeCommand.class);
-        ZigBeeCommand nomatchRequest = Mockito.mock(ZigBeeCommand.class);
+        ZigBeeCommand matchRequest = createCommand(false);
+        ZigBeeCommand nomatchRequest = createCommand(false);
         ZigBeeTransactionMatcher matcher = Mockito.mock(ZigBeeTransactionMatcher.class);
         Mockito.when(matcher.isTransactionMatch(command, matchRequest)).thenReturn(true);
         Mockito.when(matcher.isTransactionMatch(command, nomatchRequest)).thenReturn(false);
@@ -454,5 +439,13 @@ public class ZigBeeTransactionTest {
         IeeeAddress address = new IeeeAddress();
         transaction.setIeeeAddress(address);
         assertEquals(address, transaction.getIeeeAddress());
+    }
+
+    private ZigBeeCommand createCommand(boolean ackRequest) {
+        ZigBeeCommand command = Mockito.mock(ZigBeeCommand.class);
+        Mockito.when(command.getTransactionId()).thenReturn(12);
+        Mockito.when(command.isAckRequest()).thenReturn(ackRequest);
+        Mockito.when(command.getDestinationAddress()).thenReturn(new ZigBeeEndpointAddress(1234, 5));
+        return command;
     }
 }

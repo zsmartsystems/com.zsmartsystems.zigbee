@@ -48,6 +48,10 @@ public class EzspNeighborCountRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspNeighborCountRequest []";
+        final StringBuilder builder = new StringBuilder(52);
+        builder.append("EzspNeighborCountRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

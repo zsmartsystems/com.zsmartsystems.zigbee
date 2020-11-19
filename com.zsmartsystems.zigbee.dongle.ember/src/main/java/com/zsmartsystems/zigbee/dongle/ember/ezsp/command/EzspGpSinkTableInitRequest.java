@@ -48,6 +48,10 @@ public class EzspGpSinkTableInitRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspGpSinkTableInitRequest []";
+        final StringBuilder builder = new StringBuilder(54);
+        builder.append("EzspGpSinkTableInitRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

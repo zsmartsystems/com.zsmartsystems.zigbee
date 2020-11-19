@@ -36,6 +36,10 @@ public class EzspNopResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        return "EzspNopResponse []";
+        final StringBuilder builder = new StringBuilder(43);
+        builder.append("EzspNopResponse [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

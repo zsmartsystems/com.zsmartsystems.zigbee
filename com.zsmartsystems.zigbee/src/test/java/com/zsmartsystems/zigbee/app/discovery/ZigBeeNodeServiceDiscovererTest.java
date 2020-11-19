@@ -15,8 +15,11 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledFuture;
 
@@ -37,6 +40,7 @@ import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.app.discovery.ZigBeeNodeServiceDiscoverer.NodeDiscoveryTask;
+import com.zsmartsystems.zigbee.transaction.ZigBeeTransaction;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionFuture;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zdo.ZdoCommandType;
@@ -49,12 +53,10 @@ import com.zsmartsystems.zigbee.zdo.command.NetworkAddressResponse;
 import com.zsmartsystems.zigbee.zdo.command.NodeDescriptorResponse;
 import com.zsmartsystems.zigbee.zdo.command.PowerDescriptorResponse;
 import com.zsmartsystems.zigbee.zdo.command.SimpleDescriptorResponse;
-import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.LogicalType;
 import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor;
 import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor.CurrentPowerModeType;
-import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
 import com.zsmartsystems.zigbee.zdo.field.SimpleDescriptor;
 
 /**
@@ -79,7 +81,8 @@ public class ZigBeeNodeServiceDiscovererTest {
             public Future<CommandResult> answer(InvocationOnMock invocation) {
                 ZigBeeCommand command = (ZigBeeCommand) invocation.getArguments()[0];
 
-                ZigBeeTransactionFuture commandFuture = new ZigBeeTransactionFuture();
+                ZigBeeTransactionFuture commandFuture = new ZigBeeTransactionFuture(
+                        Mockito.mock(ZigBeeTransaction.class));
                 CommandResult result = new CommandResult(responses.get(command.getClusterId()));
                 commandFuture.set(result);
                 return commandFuture;
@@ -146,7 +149,8 @@ public class ZigBeeNodeServiceDiscovererTest {
         nwkResponse.setDestinationAddress(new ZigBeeEndpointAddress(0));
         responses.put(ZdoCommandType.NETWORK_ADDRESS_REQUEST.getClusterId(), nwkResponse);
 
-        IeeeAddressResponse ieeeResponse = new IeeeAddressResponse(ZdoStatus.SUCCESS, new IeeeAddress("1234567890ABCDEF"), null, null, null);
+        IeeeAddressResponse ieeeResponse = new IeeeAddressResponse(ZdoStatus.SUCCESS,
+                new IeeeAddress("1234567890ABCDEF"), null, null, null);
         ieeeResponse.setSourceAddress(new ZigBeeEndpointAddress(123));
         ieeeResponse.setDestinationAddress(new ZigBeeEndpointAddress(0));
         responses.put(ZdoCommandType.IEEE_ADDRESS_REQUEST.getClusterId(), ieeeResponse);
@@ -179,7 +183,8 @@ public class ZigBeeNodeServiceDiscovererTest {
         List<Integer> outputClusterList = new ArrayList<Integer>();
         simpleDescriptor.setInputClusterList(inputClusterList);
         simpleDescriptor.setOutputClusterList(outputClusterList);
-        SimpleDescriptorResponse simpleResponse = new SimpleDescriptorResponse(ZdoStatus.SUCCESS, 0, null, simpleDescriptor);
+        SimpleDescriptorResponse simpleResponse = new SimpleDescriptorResponse(ZdoStatus.SUCCESS, 0, null,
+                simpleDescriptor);
         simpleResponse.setSourceAddress(new ZigBeeEndpointAddress(123));
         simpleResponse.setDestinationAddress(new ZigBeeEndpointAddress(0, 1));
         responses.put(ZdoCommandType.SIMPLE_DESCRIPTOR_REQUEST.getClusterId(), simpleResponse);
@@ -189,7 +194,8 @@ public class ZigBeeNodeServiceDiscovererTest {
         lqiRequest.setDestinationAddress(new ZigBeeEndpointAddress(0));
         responses.put(ZdoCommandType.MANAGEMENT_LQI_REQUEST.getClusterId(), lqiRequest);
 
-        ManagementRoutingResponse routingResponse = new ManagementRoutingResponse(ZdoStatus.SUCCESS, 0, 0, new ArrayList<>());
+        ManagementRoutingResponse routingResponse = new ManagementRoutingResponse(ZdoStatus.SUCCESS, 0, 0,
+                new ArrayList<>());
         routingResponse.setSourceAddress(new ZigBeeEndpointAddress(123));
         routingResponse.setDestinationAddress(new ZigBeeEndpointAddress(0));
         responses.put(ZdoCommandType.MANAGEMENT_ROUTING_REQUEST.getClusterId(), routingResponse);
@@ -307,5 +313,38 @@ public class ZigBeeNodeServiceDiscovererTest {
         assertTrue(discoverer.getTasks().contains(NodeDiscoveryTask.NEIGHBORS));
 
         discoverer.stopDiscovery();
+    }
+
+    @Test
+    public void taskPriority() throws Exception {
+        ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
+        Mockito.when(node.getLogicalType()).thenReturn(LogicalType.UNKNOWN);
+        Mockito.when(node.getIeeeAddress()).thenReturn(new IeeeAddress("1234567890ABCDEF"));
+        Mockito.when(node.getNetworkAddress()).thenReturn(null);
+
+        ZigBeeNodeServiceDiscoverer discoverer = new ZigBeeNodeServiceDiscoverer(networkManager, node);
+
+        Set<NodeDiscoveryTask> tasks = new HashSet<NodeDiscoveryTask>();
+
+        // NWK_ADDRESS should always be highest priority as all other tasks depend on it
+        assertEquals(0, NodeDiscoveryTask.NWK_ADDRESS.ordinal());
+
+        tasks.add(NodeDiscoveryTask.NEIGHBORS);
+        tasks.add(NodeDiscoveryTask.ROUTES);
+        tasks.add(NodeDiscoveryTask.NODE_DESCRIPTOR);
+
+        TestUtilities.invokeMethod(ZigBeeNodeServiceDiscoverer.class, discoverer, "startDiscovery", Set.class, tasks);
+        Queue<NodeDiscoveryTask> tasksOut = (Queue<NodeDiscoveryTask>) TestUtilities.getField(
+                ZigBeeNodeServiceDiscoverer.class, discoverer,
+                "discoveryTasks");
+
+        // NWK_ADDRESS must be added as getNetworkAddress returns null
+        assertTrue(tasksOut.contains(NodeDiscoveryTask.NWK_ADDRESS));
+
+        int lastValue = -1;
+        for (NodeDiscoveryTask task : tasksOut) {
+            assertTrue(task.ordinal() > lastValue);
+            lastValue = task.ordinal();
+        }
     }
 }

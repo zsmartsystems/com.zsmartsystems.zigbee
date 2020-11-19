@@ -48,6 +48,10 @@ public class EzspGetNetworkParametersRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspGetNetworkParametersRequest []";
+        final StringBuilder builder = new StringBuilder(59);
+        builder.append("EzspGetNetworkParametersRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

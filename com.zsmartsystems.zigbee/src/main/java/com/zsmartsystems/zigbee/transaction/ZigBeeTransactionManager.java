@@ -16,6 +16,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
+import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -34,7 +35,6 @@ import com.zsmartsystems.zigbee.ZigBeeExecutors;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
-import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransaction.TransactionState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportProgressState;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.MacCapabilitiesType;
@@ -78,15 +78,15 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     /**
      * The maximum number of outstanding transactions from all queues
      */
-    private final int MAX_OUTSTANDING_TRANSACTIONS = 9;
+    private final int MAX_OUTSTANDING_TRANSACTIONS = 5;
 
     /**
      * The maximum number of outstanding transactions from sleepy queues
      */
-    private final int MAX_SLEEPY_TRANSACTIONS = 5;
+    private final int MAX_SLEEPY_TRANSACTIONS = 3;
 
     private final int NODE_RETRIES = 2;
-    private final int NODE_TRANSACTIONS = 2;
+    private final int NODE_TRANSACTIONS = 1;
     private final int NODE_DELAY = 50;
 
     private final int SLEEPY_RETRIES = 2;
@@ -98,8 +98,8 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     private final int MCAST_DELAY = 1200;
 
     private final int BCAST_RETRIES = 0;
-    private final int BCAST_TRANSACTIONS = 3;
-    private final int BCAST_DELAY = 1200;
+    private final int BCAST_TRANSACTIONS = 2;
+    private final int BCAST_DELAY = 4000;
 
     /**
      * The {@link ZigBeeNetworkManager} to which this manager belongs
@@ -125,6 +125,11 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      * A counter holding the number of sleepy transactions
      */
     private int sleepyTransactions = 0;
+
+    /**
+     * Flag set to true after the shutdown method has been called
+     */
+    private boolean isShutdown = false;
 
     /**
      * Executor service to execute update threads for discovery or mesh updates etc.
@@ -187,21 +192,16 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      */
     public void shutdown() {
         logger.debug("Transaction Manager: Shutdown");
-
+        isShutdown = true;
+        executorService.shutdown();
         networkManager.removeNetworkNodeListener(this);
 
-        executorService.shutdownNow();
-
-        if (timeoutTask != null) {
-            timeoutTask.cancel(false);
-        }
-
+        stopRequeueTimer();
         broadcastQueue.shutdown();
         multicastQueue.shutdown();
         for (ZigBeeTransactionQueue queue : nodeQueue.values()) {
             queue.shutdown();
         }
-
         nodeQueue.clear();
 
         synchronized (outstandingTransactions) {
@@ -215,6 +215,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
                 });
             }
         }
+        executorService.shutdownNow();
     }
 
     /**
@@ -347,13 +348,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
         ZigBeeTransaction transaction = new ZigBeeTransaction(this, command, responseMatcher);
 
         synchronized (this) {
-            ZigBeeTransactionQueue queue = getTransactionQueue(transaction);
-            if (queue == null) {
-                logger.debug("Error getting queue for {}", transaction);
-                return null;
-            }
-
-            return queueTransaction(queue, transaction);
+            return queueTransaction(getTransactionQueue(transaction, true), transaction);
         }
     }
 
@@ -364,6 +359,11 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      * @return the future {@link CommandResult}
      */
     private ZigBeeTransactionFuture queueTransaction(ZigBeeTransactionQueue queue, ZigBeeTransaction transaction) {
+        if (isShutdown) {
+            logger.debug("Transaction Manager is shutdown. Transaction not sent: {}", transaction);
+            return null;
+        }
+
         queue.addToQueue(transaction);
         if (!queue.isEmpty() && !outstandingQueues.contains(queue)) {
             outstandingQueues.add(queue);
@@ -376,14 +376,13 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
 
     /**
      * Gets the transaction queue for a specific transaction. If there is no existing queue relevant for the
-     * transaction, one will be created.
-     * <p>
-     * This method will only return null if the node address is unknown, and therefore no queue can be created.
+     * transaction, one will be created if createIfNotExist is true.
      *
      * @param transaction the {@link ZigBeeTransaction}
-     * @return the {@link ZigBeeTransactionQueue} or null if no queue could be derived
+     * @param createIfNotExist if true the queue will be created if it doesn't exist
+     * @return the {@link ZigBeeTransactionQueue} or null if the queue did not exist and createIfNotExist was not true
      */
-    private ZigBeeTransactionQueue getTransactionQueue(ZigBeeTransaction transaction) {
+    private ZigBeeTransactionQueue getTransactionQueue(ZigBeeTransaction transaction, boolean createIfNotExist) {
         ZigBeeAddress address = transaction.getDestinationAddress();
         if (address instanceof ZigBeeEndpointAddress && !ZigBeeBroadcastDestination.isBroadcast(address.getAddress())) {
             // Get the IEEE address
@@ -394,7 +393,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
             }
             // Add the transaction to the device queue - if it doesn't currently exist, create it
             ZigBeeTransactionQueue queue = nodeQueue.get(node.getIeeeAddress());
-            if (queue == null) {
+            if (queue == null && createIfNotExist) {
                 logger.debug("{}: Creating new Transaction Queue", node.getIeeeAddress());
                 queue = new ZigBeeTransactionQueue(node.getIeeeAddress().toString(), node.getIeeeAddress());
                 setQueueType(node, queue);
@@ -515,15 +514,25 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
         logger.debug("Transaction complete: {}", transaction);
         removeTransactionListener(transaction);
 
+        if (isShutdown) {
+            return;
+        }
+
         synchronized (this) {
-            ZigBeeTransactionQueue queue = getTransactionQueue(transaction);
+            ZigBeeTransactionQueue queue = getTransactionQueue(transaction, false);
             if (queue == null) {
                 logger.debug("Transaction complete: No queue found {}", transaction);
             } else {
                 queue.transactionComplete(transaction, state);
 
-                if (queue.isSleepy()) {
+                if (queue.isSleepy() && sleepyTransactions > 0) {
                     sleepyTransactions--;
+                }
+
+                // Note that the queue may have rescheduled the transaction if retries are enabled.
+                // We therefore need to check if the
+                if (!queue.isEmpty() && !outstandingQueues.contains(queue)) {
+                    outstandingQueues.add(queue);
                 }
             }
         }
@@ -541,7 +550,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
         synchronized (outstandingTransactions) {
             // Notify the listeners
             for (final ZigBeeTransaction transaction : outstandingTransactions) {
-                logger.debug("notifyTransactionCommand: {} {}", command, transaction);
+                logger.trace("notifyTransactionCommand: {} {}", command, transaction);
                 networkManager.getNotificationService().execute(new Runnable() {
                     @Override
                     public void run() {
@@ -602,7 +611,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
         // Remove any outstanding transactions from this queue that have already been sent
         synchronized (outstandingTransactions) {
             for (ZigBeeTransaction transaction : outstandingTransactions) {
-                if (getTransactionQueue(transaction) == queue) {
+                if (getTransactionQueue(transaction, false) == queue) {
                     transaction.cancel();
                 }
             }
@@ -621,9 +630,11 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      */
     private void sendNextTransaction() {
         synchronized (this) {
-            if (timeoutTask != null) {
-                timeoutTask.cancel(false);
-            }
+            logger.debug(
+                    "Transaction Manager: Send Next transaction. outstandingTransactions={}, outstandingQueues={}, sleepy={}/{}",
+                    outstandingTransactions.size(), outstandingQueues.size(), sleepyTransactions,
+                    maxSleepyTransactions);
+            stopRequeueTimer();
 
             ZigBeeTransaction transaction;
 
@@ -703,12 +714,23 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      */
     private void startRequeueTimer(final long timeout) {
         // Schedule a task to kick off the next transaction
-        timeoutTask = scheduleTask(new Runnable() {
-            @Override
-            public void run() {
-                sendNextTransaction();
-            }
-        }, timeout);
+        try {
+            timeoutTask = scheduleTask(new Runnable() {
+                @Override
+                public void run() {
+                    sendNextTransaction();
+                }
+            }, timeout);
+        } catch (RejectedExecutionException e) {
+            logger.debug("Unable to start requeue timer.");
+        }
+    }
+
+    private void stopRequeueTimer() {
+        if (timeoutTask != null) {
+            timeoutTask.cancel(false);
+            timeoutTask = null;
+        }
     }
 
     @Override
@@ -746,7 +768,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
                 int sleepyCnt = 0;
                 // The queue type changed - resync the sleepyTransactions counter
                 for (ZigBeeTransaction transaction : outstandingTransactions) {
-                    ZigBeeTransactionQueue transactionQueue = getTransactionQueue(transaction);
+                    ZigBeeTransactionQueue transactionQueue = getTransactionQueue(transaction, true);
                     if (transactionQueue != null && transactionQueue.isSleepy()) {
                         sleepyCnt++;
                         continue;

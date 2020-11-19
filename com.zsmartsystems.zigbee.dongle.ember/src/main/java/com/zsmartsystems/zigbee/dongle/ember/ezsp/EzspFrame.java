@@ -105,6 +105,7 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_CHILD_JOIN_HANDLER = 0x23;
     protected static final int FRAME_ID_CLEAR_BINDING_TABLE = 0x2A;
     protected static final int FRAME_ID_CLEAR_KEY_TABLE = 0xB1;
+    protected static final int FRAME_ID_CLEAR_STORED_BEACONS = 0x3C;
     protected static final int FRAME_ID_CLEAR_TEMPORARY_DATA_MAYBE_STORE_LINK_KEY = 0xA1;
     protected static final int FRAME_ID_CLEAR_TEMPORARY_DATA_MAYBE_STORE_LINK_KEY283K1 = 0xEE;
     protected static final int FRAME_ID_CLEAR_TRANSIENT_LINK_KEYS = 0x6B;
@@ -134,13 +135,16 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_GET_CURRENT_SECURITY_STATE = 0x69;
     protected static final int FRAME_ID_GET_EUI64 = 0x26;
     protected static final int FRAME_ID_GET_EXTENDED_TIMEOUT = 0x7F;
+    protected static final int FRAME_ID_GET_FIRST_BEACON = 0x3D;
     protected static final int FRAME_ID_GET_KEY = 0x6A;
     protected static final int FRAME_ID_GET_KEY_TABLE_ENTRY = 0x71;
     protected static final int FRAME_ID_GET_LIBRARY_STATUS = 0x01;
     protected static final int FRAME_ID_GET_MFG_TOKEN = 0x0B;
     protected static final int FRAME_ID_GET_NEIGHBOR = 0x79;
     protected static final int FRAME_ID_GET_NETWORK_PARAMETERS = 0x28;
+    protected static final int FRAME_ID_GET_NEXT_BEACON = 0x3D;
     protected static final int FRAME_ID_GET_NODE_ID = 0x27;
+    protected static final int FRAME_ID_GET_NUM_STORED_BEACONS = 0x08;
     protected static final int FRAME_ID_GET_PARENT_CHILD_PARAMETERS = 0x29;
     protected static final int FRAME_ID_GET_POLICY = 0x56;
     protected static final int FRAME_ID_GET_ROUTE_TABLE_ENTRY = 0x7B;
@@ -216,6 +220,7 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_SET_INITIAL_SECURITY_STATE = 0x68;
     protected static final int FRAME_ID_SET_KEY_TABLE_ENTRY = 0x72;
     protected static final int FRAME_ID_SET_MANUFACTURER_CODE = 0x15;
+    protected static final int FRAME_ID_SET_MFG_TOKEN = 0x0C;
     protected static final int FRAME_ID_SET_POLICY = 0x55;
     protected static final int FRAME_ID_SET_POWER_DESCRIPTOR = 0x16;
     protected static final int FRAME_ID_SET_PREINSTALLED_CBKE_DATA = 0xA2;
@@ -256,6 +261,7 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_CHILD_JOIN_HANDLER, EzspChildJoinHandler.class);
         ezspHandlerMap.put(FRAME_ID_CLEAR_BINDING_TABLE, EzspClearBindingTableResponse.class);
         ezspHandlerMap.put(FRAME_ID_CLEAR_KEY_TABLE, EzspClearKeyTableResponse.class);
+        ezspHandlerMap.put(FRAME_ID_CLEAR_STORED_BEACONS, EzspClearStoredBeaconsResponse.class);
         ezspHandlerMap.put(FRAME_ID_CLEAR_TEMPORARY_DATA_MAYBE_STORE_LINK_KEY, EzspClearTemporaryDataMaybeStoreLinkKeyResponse.class);
         ezspHandlerMap.put(FRAME_ID_CLEAR_TEMPORARY_DATA_MAYBE_STORE_LINK_KEY283K1, EzspClearTemporaryDataMaybeStoreLinkKey283k1Response.class);
         ezspHandlerMap.put(FRAME_ID_CLEAR_TRANSIENT_LINK_KEYS, EzspClearTransientLinkKeysResponse.class);
@@ -285,13 +291,16 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_GET_CURRENT_SECURITY_STATE, EzspGetCurrentSecurityStateResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_EUI64, EzspGetEui64Response.class);
         ezspHandlerMap.put(FRAME_ID_GET_EXTENDED_TIMEOUT, EzspGetExtendedTimeoutResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GET_FIRST_BEACON, EzspGetFirstBeaconResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_KEY, EzspGetKeyResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_KEY_TABLE_ENTRY, EzspGetKeyTableEntryResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_LIBRARY_STATUS, EzspGetLibraryStatusResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_MFG_TOKEN, EzspGetMfgTokenResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_NEIGHBOR, EzspGetNeighborResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_NETWORK_PARAMETERS, EzspGetNetworkParametersResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GET_NEXT_BEACON, EzspGetNextBeaconResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_NODE_ID, EzspGetNodeIdResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GET_NUM_STORED_BEACONS, EzspGetNumStoredBeaconsResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_PARENT_CHILD_PARAMETERS, EzspGetParentChildParametersResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_POLICY, EzspGetPolicyResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_ROUTE_TABLE_ENTRY, EzspGetRouteTableEntryResponse.class);
@@ -367,6 +376,7 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_SET_INITIAL_SECURITY_STATE, EzspSetInitialSecurityStateResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_KEY_TABLE_ENTRY, EzspSetKeyTableEntryResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_MANUFACTURER_CODE, EzspSetManufacturerCodeResponse.class);
+        ezspHandlerMap.put(FRAME_ID_SET_MFG_TOKEN, EzspSetMfgTokenResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_POLICY, EzspSetPolicyResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_POWER_DESCRIPTOR, EzspSetPowerDescriptorResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_PREINSTALLED_CBKE_DATA, EzspSetPreinstalledCbkeDataResponse.class);

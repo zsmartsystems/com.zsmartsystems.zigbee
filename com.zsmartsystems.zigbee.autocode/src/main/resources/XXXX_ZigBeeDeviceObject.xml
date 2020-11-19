@@ -15,7 +15,6 @@
             <name>Start Index</name>
         </field>
         <response command="NetworkAddressResponse">
-            <matcher commandField="IeeeAddr" responseField="IeeeAddrRemoteDev" />
         </response>
     </command>
     <command code="0x0001" source="client">
@@ -32,7 +31,6 @@
             <name>Start Index</name>
         </field>
         <response command="IeeeAddressResponse">
-            <matcher commandField="NwkAddrOfInterest" responseField="NwkAddrRemoteDev" />
         </response>
     </command>
     <command code="0x0002" source="client">
@@ -43,7 +41,6 @@
             <format>hex[4]</format>
         </field>
         <response command="NodeDescriptorResponse">
-            <matcher commandField="NwkAddrOfInterest" responseField="NwkAddrOfInterest" />
         </response>
     </command>
     <command code="0x0003" source="client">
@@ -54,7 +51,6 @@
             <format>hex[4]</format>
         </field>
         <response command="PowerDescriptorResponse">
-            <matcher commandField="NwkAddrOfInterest" responseField="NwkAddrOfInterest" />
         </response>
     </command>
     <command code="0x0004" source="client">
@@ -68,8 +64,6 @@
             <name>Endpoint</name>
         </field>
         <response command="SimpleDescriptorResponse">
-            <matcher commandField="Endpoint" responseField="SimpleDescriptor().getEndpoint" />
-            <matcher commandField="NwkAddrOfInterest" responseField="NwkAddrOfInterest" />
         </response>
     </command>
     <command code="0x0005" source="client">
@@ -80,7 +74,6 @@
             <format>hex[4]</format>
         </field>
         <response command="ActiveEndpointsResponse">
-            <matcher commandField="NwkAddrOfInterest" responseField="NwkAddrOfInterest" />
         </response>
     </command>
     <command code="0x0006" source="client">
@@ -117,7 +110,6 @@
             <format>hex[4]</format>
         </field>
         <response command="ComplexDescriptorResponse">
-            <matcher commandField="NwkAddrOfInterest" responseField="NwkAddrOfInterest" />
         </response>
     </command>
     <command code="0x11" source="client">
@@ -128,7 +120,6 @@
             <format>hex[4]</format>
         </field>
         <response command="UserDescriptorResponse">
-            <matcher commandField="NwkAddrOfInterest" responseField="NwkAddrOfInterest" />
         </response>
     </command>
     <command code="0x0012" source="client">
@@ -363,7 +354,6 @@
             <name>Start Index</name>
         </field>
         <response command="ManagementLqiResponse">
-            <matcher commandField="DestinationAddress" responseField="SourceAddress" />
         </response>
     </command>
     <command code="0x0032" source="client">
@@ -373,7 +363,6 @@
             <name>Start Index</name>
         </field>
         <response command="ManagementRoutingResponse">
-            <matcher commandField="DestinationAddress" responseField="SourceAddress" />
         </response>
     </command>
     <command code="0x0033" source="client">
@@ -395,7 +384,6 @@
             <name>Remove Children_Rejoin</name>
         </field>
         <response command="ManagementLeaveResponse">
-            <matcher commandField="DestinationAddress" responseField="SourceAddress" />
         </response>
     </command>
     <command code="0x0035" source="client">

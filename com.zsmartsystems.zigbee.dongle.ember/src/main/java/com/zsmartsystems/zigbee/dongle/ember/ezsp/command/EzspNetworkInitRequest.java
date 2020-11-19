@@ -50,6 +50,10 @@ public class EzspNetworkInitRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspNetworkInitRequest []";
+        final StringBuilder builder = new StringBuilder(50);
+        builder.append("EzspNetworkInitRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

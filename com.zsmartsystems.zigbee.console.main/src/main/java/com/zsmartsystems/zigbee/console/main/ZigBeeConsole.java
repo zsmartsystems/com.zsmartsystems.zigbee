@@ -15,11 +15,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 
@@ -47,6 +50,7 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommandsSupportedCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleDescribeEndpointCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleDescribeNodeCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleDeviceFingerprintCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleDeviceInformationCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleInstallKeyCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleLinkKeyCommand;
@@ -61,8 +65,14 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingConfigCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingSubscribeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingUnsubscribeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleSmartEnergyCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleSwitchLevelCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleSwitchOffCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleSwitchOnCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleTrustCentreCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleUnbindCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleWindowCoveringCommand;
+import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionManager;
+import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionQueue;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareCallback;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareStatus;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareUpdate;
@@ -149,10 +159,7 @@ public final class ZigBeeConsole {
         commands.put("quit", new QuitCommand());
         commands.put("help", new HelpCommand());
         commands.put("descriptor", new SetDescriptorCommand());
-        commands.put("on", new OnCommand());
-        commands.put("off", new OffCommand());
         commands.put("color", new ColorCommand());
-        commands.put("level", new LevelCommand());
         commands.put("listen", new ListenCommand());
         commands.put("unlisten", new UnlistenCommand());
 
@@ -169,6 +176,7 @@ public final class ZigBeeConsole {
         commands.put("memory", new MemoryCommand());
         commands.put("lqipoll", new LqiPollCommand());
         commands.put("reinitialize", new ReinitializeCommand());
+        commands.put("queues", new TransactionQueuesCommand());
 
         newCommands.put("nodes", new ZigBeeConsoleNodeListCommand());
         newCommands.put("endpoint", new ZigBeeConsoleDescribeEndpointCommand());
@@ -183,6 +191,7 @@ public final class ZigBeeConsole {
         newCommands.put("attsupported", new ZigBeeConsoleAttributeSupportedCommand());
         newCommands.put("cmdsupported", new ZigBeeConsoleCommandsSupportedCommand());
 
+        newCommands.put("fingerprint", new ZigBeeConsoleDeviceFingerprintCommand());
         newCommands.put("info", new ZigBeeConsoleDeviceInformationCommand());
         newCommands.put("join", new ZigBeeConsoleNetworkJoinCommand());
         newCommands.put("leave", new ZigBeeConsoleNetworkLeaveCommand());
@@ -204,6 +213,11 @@ public final class ZigBeeConsole {
 
         newCommands.put("smartenergy", new ZigBeeConsoleSmartEnergyCommand());
         newCommands.put("cbke", new ZigBeeConsoleCbkeCommand());
+
+        newCommands.put("on", new ZigBeeConsoleSwitchOnCommand());
+        newCommands.put("off", new ZigBeeConsoleSwitchOffCommand());
+        newCommands.put("level", new ZigBeeConsoleSwitchLevelCommand());
+        newCommands.put("covering", new ZigBeeConsoleWindowCoveringCommand());
 
         zigBeeApi = new ZigBeeApi(networkManager);
 
@@ -580,84 +594,8 @@ public final class ZigBeeConsole {
     }
 
     /**
-     * Switches a device on.
-     */
-    private class OnCommand implements ConsoleCommand {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getDescription() {
-            return "Switches device on.";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getSyntax() {
-            return "on DEVICEID/DEVICELABEL/GROUPID";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length != 2) {
-                return false;
-            }
-
-            final ZigBeeAddress destination = getDestination(zigbeeApi, args[1], out);
-
-            if (destination == null) {
-                return false;
-            }
-
-            final CommandResult response = zigbeeApi.on(destination).get();
-            return defaultResponseProcessing(response, out);
-        }
-    }
-
-    /**
      * Switches a device off.
      */
-    private class OffCommand implements ConsoleCommand {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getDescription() {
-            return "Switches device off.";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getSyntax() {
-            return "off DEVICEID/DEVICELABEL/GROUPID";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length != 2) {
-                return false;
-            }
-
-            final ZigBeeAddress destination = getDestination(zigbeeApi, args[1], out);
-
-            if (destination == null) {
-                return false;
-            }
-
-            final CommandResult response = zigbeeApi.off(destination).get();
-            return defaultResponseProcessing(response, out);
-        }
-    }
 
     /**
      * Changes a light color on device.
@@ -846,61 +784,6 @@ public final class ZigBeeConsole {
             return false;
             // final CommandResult response = zigbeeApi.describe(device, label).get();
             // return defaultResponseProcessing(response, out);
-        }
-    }
-
-    /**
-     * Changes a device level for example lamp brightness.
-     */
-    private class LevelCommand implements ConsoleCommand {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getDescription() {
-            return "Changes device level for example lamp brightness, where LEVEL is between 0 and 1.";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getSyntax() {
-            return "level DEVICEID LEVEL [RATE]";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length < 3) {
-                return false;
-            }
-
-            final ZigBeeAddress destination = getDestination(zigbeeApi, args[1], out);
-            if (destination == null) {
-                return false;
-            }
-
-            float level;
-            try {
-                level = Float.parseFloat(args[2]);
-            } catch (final NumberFormatException e) {
-                return false;
-            }
-
-            float time = (float) 1.0;
-            if (args.length == 4) {
-                try {
-                    time = Float.parseFloat(args[3]);
-                } catch (final NumberFormatException e) {
-                    return false;
-                }
-            }
-
-            final CommandResult response = zigbeeApi.level(destination, level, time).get();
-            return defaultResponseProcessing(response, out);
         }
     }
 
@@ -1688,6 +1571,59 @@ public final class ZigBeeConsole {
         }
     }
 
+    private class TransactionQueuesCommand implements ConsoleCommand {
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getDescription() {
+            return "Gets information about transaction queues";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getSyntax() {
+            return "";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, final PrintStream out) throws Exception {
+            ZigBeeTransactionManager transactionManager = (ZigBeeTransactionManager) getField(
+                    ZigBeeNetworkManager.class, networkManager,
+                    "transactionManager");
+
+            final Set<ZigBeeNode> nodes = networkManager.getNodes();
+            final List<Integer> nodeIds = new ArrayList<>();
+
+            for (ZigBeeNode node : nodes) {
+                nodeIds.add(node.getNetworkAddress());
+            }
+
+            Collections.sort(nodeIds);
+            for (Integer nodeId : nodeIds) {
+                ZigBeeNode node = networkManager.getNode(nodeId);
+                ZigBeeTransactionQueue queue = transactionManager.getQueue(node.getIeeeAddress());
+
+                if (queue != null) {
+                    out.println(queue.toString());
+                }
+            }
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                }
+            }).start();
+
+            return true;
+        }
+    }
+
     /**
      * Default processing for command result.
      *
@@ -1798,5 +1734,23 @@ public final class ZigBeeConsole {
                 break;
         }
         return value;
+    }
+
+    /**
+     * Gets the value of the private field
+     *
+     * @param clazz the class where the field resides
+     * @param object the object where the field resides
+     * @param fieldName the field name
+     * @return the {@link Object} containing the field value
+     * @throws Exception
+     */
+    private Object getField(Class clazz, Object object, String fieldName) throws Exception {
+        Field field = clazz.getDeclaredField(fieldName);
+        field.setAccessible(true);
+        Field modifiersField = Field.class.getDeclaredField("modifiers");
+        modifiersField.setAccessible(true);
+        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+        return field.get(object);
     }
 }

@@ -471,6 +471,38 @@
 	</command>
 
 	<command>
+		<name>setMfgToken</name>
+		<id>0x0C</id>
+		<description>Sets a manufacturing token in the Customer Information Block (CIB) area of the NCP if that token currently unset (fully erased). Cannot be used with EZSP_STACK_CAL_DATA, EZSP_STACK_CAL_FILTER, EZSP_MFG_ASH_CONFIG, or EZSP_MFG_CBKE_DATA token.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>EzspMfgTokenId</data_type>
+				<name>tokenId</name>
+				<description>Which manufacturing token to set.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>tokenDataLength</name>
+				<description>The length of the tokenData parameter in bytes.</description>
+				<auto_size>tokenData</auto_size>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t[]</data_type>
+				<name>tokenData</name>
+				<description>The manufacturing token data.</description>
+				<display>hex[2]</display>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>An EmberStatus value indicating success or the reason for failure.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
 		<name>stackTokenChangedHandler</name>
 		<id>0x0D</id>
 		<description>A callback invoked to inform the application that a stack token has changed.</description>
@@ -1604,7 +1636,6 @@
 		</response_parameters>
 	</command>
 
-
 	<command>
 		<name>messageSentHandler</name>
 		<id>0x3F</id>
@@ -1621,6 +1652,7 @@
 				<data_type>uint16_t</data_type>
 				<name>indexOrDestination</name>
 				<description>The destination to which the message was sent, for direct unicasts, or the address table or binding index for other unicasts. The value is unspecified for multicasts and broadcasts.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>EmberApsFrame</data_type>
@@ -2523,7 +2555,7 @@
 			<parameter>
 				<data_type>EzspStatus</data_type>
 				<name>status</name>
-				<description>An EzspStatus value indicating success or the reason for failure. </description>
+				<description>An EzspStatus value indicating success or the reason for failure.</description>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -2796,8 +2828,73 @@
 			</parameter>
 		</response_parameters>
 	</command>
-	
-		<command>
+
+	<command>
+		<name>getFirstBeacon</name>
+		<id>0x3D</id>
+		<description>Returns the first beacon in the cache. Beacons are stored in cache after issuing an active scan.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>EMBER_SUCCESS if first beacon found, EMBER_BAD_ARGUMENT if input parameters are invalid, EMBER_INVALID_CALL if no beacons stored, EMBER_ERR_FATAL if no first beacon found.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberBeaconIterator</data_type>
+				<name>beaconIterator</name>
+				<description>The iterator to use when returning the first beacon. This argument must not be NULL.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>getNextBeacon</name>
+		<id>0x3D</id>
+		<description>Returns the next beacon in the cache. Beacons are stored in cache after issuing an active scan.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>EMBER_SUCCESS if next beacon found, EMBER_BAD_ARGUMENT if input parameters are invalid, EMBER_ERR_FATAL if no next beacon found.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberBeaconData</data_type>
+				<name>beacon</name>
+				<description>The next beacon retrieved. It is assumed that emberGetFirstBeacon has been called first. This argument must not be NULL.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>getNumStoredBeacons</name>
+		<id>0x08</id>
+		<description>Returns the number of cached beacons that have been collected from a scan.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>numBeacons</name>
+				<description>The number of cached beacons that have been collected from a scan.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>clearStoredBeacons</name>
+		<id>0x3C</id>
+		<description>Clears all cached beacons that have been collected from a scan.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+		</response_parameters>
+	</command>
+
+	<command>
 		<name>gpProxyTableProcessGpPairing</name>
 		<id>0xC9</id>
 		<description>Update the GP Proxy table based on a GP pairing.</description>
@@ -2981,7 +3078,7 @@
 			</parameter>
 			<parameter>
 				<data_type>uint32_t</data_type>
-				<name>gpdSecurityFrameCounterLength</name>
+				<name>gpdSecurityFrameCounter</name>
 				<description>The security frame counter of the incoming GDPF.</description>
 			</parameter>
 			<parameter>
@@ -3649,9 +3746,6 @@
 		</parameters>
 	</structure>
 
-
-
-
 	<structure>
 		<name>EmberNetworkParameters</name>
 		<description>Network parameters.</description>
@@ -4018,6 +4112,95 @@
 				<data_type>EmberEUI64</data_type>
 				<name>partnerEUI64</name>
 				<description>The IEEE address of the partner device also in possession of the key.</description>
+			</parameter>
+		</parameters>
+	</structure>
+
+	<structure>
+		<name>EmberBeaconData</name>
+		<description>Beacon data structure.</description>
+		<parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>channel</name>
+				<description>The channel of the received beacon.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>lqi</name>
+				<description>The LQI of the received beacon.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>rssi</name>
+				<description>The RSSI of the received beacon.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>depth</name>
+				<description>The depth of the received beacon.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>nwkUpdateId</name>
+				<description>The network update ID of the received beacon.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>power</name>
+				<description>The power level of the received beacon. This field is valid only if the beacon is an enhanced beacon.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>parentPriority</name>
+				<description>The TC connectivity and long uptime from capacity field.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16_t</data_type>
+				<name>panId</name>
+				<description>The PAN ID of the received beacon.</description>
+			</parameter>
+			<parameter>
+				<data_type>ExtendedPanId</data_type>
+				<name>extendedPanId</name>
+				<description>The extended PAN ID of the received beacon.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>sender</name>
+				<description>The sender of the received beacon.</description>
+			</parameter>
+			<parameter>
+				<data_type>bool</data_type>
+				<name>enhanced</name>
+				<description>Whether or not the beacon is enhanced.</description>
+			</parameter>
+			<parameter>
+				<data_type>bool</data_type>
+				<name>permitJoin</name>
+				<description>Whether the beacon is advertising permit join.</description>
+			</parameter>
+			<parameter>
+				<data_type>bool</data_type>
+				<name>hasCapacity</name>
+				<description>Whether the beacon is advertising capacity.</description>
+			</parameter>
+		</parameters>
+	</structure>
+
+	<structure>
+		<name>EmberBeaconIterator</name>
+		<description>Defines an iterator that is used to loop over cached beacons. Do not write to fields denoted as Private.</description>
+		<parameters>
+			<parameter>
+				<data_type>EmberBeaconData</data_type>
+				<name>beacon</name>
+				<description>The channel of the received beacon.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>index</name>
+				<description>(Private) The index of the retrieved beacon.</description>
 			</parameter>
 		</parameters>
 	</structure>

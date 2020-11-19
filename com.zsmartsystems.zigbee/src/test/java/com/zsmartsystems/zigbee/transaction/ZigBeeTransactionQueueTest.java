@@ -7,7 +7,11 @@
  */
 package com.zsmartsystems.zigbee.transaction;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import java.util.concurrent.Future;
@@ -27,6 +31,7 @@ import com.zsmartsystems.zigbee.transaction.ZigBeeTransaction.TransactionState;
  *
  */
 public class ZigBeeTransactionQueueTest {
+    private final long TIMEOUT = 5000;
 
     @Test
     public void testQueueFifo() {
@@ -100,12 +105,20 @@ public class ZigBeeTransactionQueueTest {
         assertNull(queue.getTransaction());
         assertEquals(0, queue.size());
         assertTrue(queue.isEmpty());
+        System.out.println(queue);
+
+        // Completing transactions that are not outstanding will be cancelled
+        ZigBeeTransaction transactionUnqueued = Mockito.mock(ZigBeeTransaction.class);
+        queue.transactionComplete(transactionUnqueued, TransactionState.TRANSMITTED);
+        Mockito.verify(transactionUnqueued, Mockito.times(1)).cancel();
 
         System.out.println(queue);
         queue.shutdown();
 
+        // Can't add transactions after shutdown
         assertNull(queue.addToQueue(Mockito.mock(ZigBeeTransaction.class)));
 
+        // Unknown transactions, or transactions after shutdown are cancelled
         ZigBeeTransaction transactionShutdown = Mockito.mock(ZigBeeTransaction.class);
         queue.transactionComplete(transactionShutdown, TransactionState.TRANSMITTED);
         Mockito.verify(transactionShutdown, Mockito.times(1)).cancel();

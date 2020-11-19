@@ -12,8 +12,8 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Random;
 import java.util.Set;
@@ -152,15 +152,22 @@ public class ZigBeeNodeServiceDiscoverer {
     private List<NodeDiscoveryTask> meshUpdateTasks = Collections.emptyList();
 
     /**
-     *
-     *
+     * The definition of discovery tasks.
+     * <p>
+     * Please note that the ordering of the tasks in the enum is significant; a task that needs to be run before another
+     * task must be placed before that other task in the enum. Examples are that the network address must be discovered
+     * before all other tasks can be run, and that the node descriptor must be discovered before the endpoint simple
+     * descriptor.
      */
     public enum NodeDiscoveryTask {
+        /**
+         * Retrieve NWK Address. Note that this must be first as other tasks require the network address
+         */
         NWK_ADDRESS,
-        ASSOCIATED_NODES,
         NODE_DESCRIPTOR,
         POWER_DESCRIPTOR,
         ACTIVE_ENDPOINTS,
+        ASSOCIATED_NODES,
         NEIGHBORS,
         ROUTES
     }
@@ -168,8 +175,10 @@ public class ZigBeeNodeServiceDiscoverer {
     /**
      * The list of tasks we need to complete
      */
-    private final Queue<NodeDiscoveryTask> discoveryTasks = new LinkedList<NodeDiscoveryTask>();
+    private final Queue<NodeDiscoveryTask> discoveryTasks = new PriorityQueue<NodeDiscoveryTask>();
 
+    private final List<NodeDiscoveryTask> failedDiscoveryTasks = new ArrayList<NodeDiscoveryTask>();
+    private boolean finished = false;
     private boolean closed = false;
 
     /**
@@ -202,6 +211,12 @@ public class ZigBeeNodeServiceDiscoverer {
         // complete. When no tasks are left in the queue, the worker thread will exit.
         synchronized (discoveryTasks) {
             logger.debug("{}: Node SVC Discovery: starting new tasks {}", node.getIeeeAddress(), newTasks);
+
+            // Ensure that we always know the network address
+            if (node.getNetworkAddress() == null) {
+                logger.debug("{}: Node SVC Discovery: network address was not known", node.getIeeeAddress());
+                newTasks.add(NodeDiscoveryTask.NWK_ADDRESS);
+            }
 
             // Remove router/coordinator-only tasks if the device is possibly an end node.
             final boolean isPossibleEndDevice = isPossibleEndDevice();
@@ -281,16 +296,36 @@ public class ZigBeeNodeServiceDiscoverer {
     }
 
     /**
-     * Get node descriptor
+     * Request the network address.
+     * <p>
+     * To reduce the number of broadcasts made, we assume initially that all devices have the same address as previous
+     * and send this via unicast. If that fails, then we attempt to rediscover the address using a broadcast.
      *
      * @return true if the message was processed ok
      * @throws ExecutionException
      * @throws InterruptedException
      */
     private boolean requestNetworkAddress() throws InterruptedException, ExecutionException {
+        if (requestNetworkAddress(new ZigBeeEndpointAddress(node.getNetworkAddress()))) {
+            logger.debug("{}: Node SVC Discovery: NetworkAddressRequest confirmed by unicast", node.getIeeeAddress());
+            return true;
+        }
+
+        if (requestNetworkAddress(
+                new ZigBeeEndpointAddress(ZigBeeBroadcastDestination.BROADCAST_ALL_DEVICES.getKey()))) {
+            logger.debug("{}: Node SVC Discovery: NetworkAddressRequest confirmed by broadcast", node.getIeeeAddress());
+            return true;
+        }
+
+        logger.debug("{}: Node SVC Discovery: NetworkAddressRequest failed after unicast and broadcast",
+                node.getIeeeAddress());
+        return false;
+    }
+
+    private boolean requestNetworkAddress(ZigBeeEndpointAddress address)
+            throws InterruptedException, ExecutionException {
         NetworkAddressRequest networkAddressRequest = new NetworkAddressRequest(node.getIeeeAddress(), 0, 0);
-        networkAddressRequest.setDestinationAddress(
-                new ZigBeeEndpointAddress(ZigBeeBroadcastDestination.BROADCAST_ALL_DEVICES.getKey()));
+        networkAddressRequest.setDestinationAddress(address);
 
         CommandResult response = networkManager.sendTransaction(networkAddressRequest, networkAddressRequest).get();
         final NetworkAddressResponse networkAddressResponse = (NetworkAddressResponse) response.getResponse();
@@ -312,7 +347,7 @@ public class ZigBeeNodeServiceDiscoverer {
     }
 
     /**
-     * Get Node Network address and the list of associated devices
+     * Get Node IEEE address and the list of associated devices
      *
      * @return true if the message was processed ok
      * @throws ExecutionException
@@ -598,6 +633,7 @@ public class ZigBeeNodeServiceDiscoverer {
                     lastDiscoveryCompleted = Calendar.getInstance();
                     logger.debug("{}: Node SVC Discovery: complete", node.getIeeeAddress());
                     networkManager.updateNode(updatedNode);
+                    finished = true;
                     return;
                 }
                 logger.debug("{}: Node SVC Discovery: running {}", node.getIeeeAddress(), discoveryTask);
@@ -649,6 +685,13 @@ public class ZigBeeNodeServiceDiscoverer {
                             discoveryTask, retryCnt);
                     synchronized (discoveryTasks) {
                         discoveryTasks.remove(discoveryTask);
+                        failedDiscoveryTasks.add(discoveryTask);
+                        // if the network address fails, nothing else will work and this node discoverer instance is
+                        // finished
+                        if (discoveryTask == NodeDiscoveryTask.NWK_ADDRESS && node.getNetworkAddress() == null) {
+                            finished = true;
+                            return;
+                        }
                     }
 
                     retryCnt = 0;
@@ -669,6 +712,25 @@ public class ZigBeeNodeServiceDiscoverer {
                 logger.error("{}: Node SVC Discovery: exception: ", node.getIeeeAddress(), e);
             }
         }
+    }
+
+    /**
+     * Indicates whether this node discovery instance has finished its work, meaning either all queued tasks are done,
+     * or the network address discovery task failed and thus other queued tasks will also not succeed.
+     *
+     * @return {@code true} if no more tasks can be run by this node discover
+     */
+    public boolean isFinished() {
+        return finished;
+    }
+
+    /**
+     * Indicates whether discovery task(s) went wrong or not
+     *
+     * @return {@code true} if none of the scheduled discovery tasks have failed
+     */
+    public boolean isSuccessful() {
+        return failedDiscoveryTasks.isEmpty();
     }
 
     /**

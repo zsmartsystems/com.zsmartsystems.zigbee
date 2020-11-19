@@ -60,6 +60,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesStructuredCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesStructuredResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.WriteAttributesUndividedCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.general.ZclGeneralCommand;
 import com.zsmartsystems.zigbee.zcl.field.AttributeInformation;
 import com.zsmartsystems.zigbee.zcl.field.AttributeRecord;
 import com.zsmartsystems.zigbee.zcl.field.AttributeReport;
@@ -111,7 +112,7 @@ public abstract class ZclCluster {
      * After initialisation, the list will contain an empty list. Once a successful call to
      * {@link #discoverAttributes()} has been made, the list will reflect the attributes supported by the remote device.
      */
-    private final Set<Integer> supportedAttributes = new TreeSet<>();
+    private final Set<Integer> supportedAttributes = new HashSet<>();
 
     /**
      * A boolean used to record if the list of supported attributes has been recovered from the remote device. This is
@@ -287,9 +288,21 @@ public abstract class ZclCluster {
             command.setCommandDirection(ZclCommandDirection.SERVER_TO_CLIENT);
         }
 
+        command.setClusterId(clusterId);
         command.setApsSecurity(apsSecurityRequired);
 
         return zigbeeEndpoint.sendTransaction(command, new ZclTransactionMatcher());
+    }
+
+    /**
+     * Sends a {@link ZclGeneralCommand} and returns the {@link Future} to the result which will complete when the
+     * remote device response is received, or the request times out.
+     *
+     * @param command the {@link ZclGeneralCommand} to send
+     * @return the command result future
+     */
+    public Future<CommandResult> sendCommand(ZclGeneralCommand command) {
+        return sendCommand((ZclCommand) command);
     }
 
     /**
@@ -612,7 +625,8 @@ public abstract class ZclCluster {
         AttributeRecord record = new AttributeRecord();
         record.setAttributeIdentifier(attributeId);
         record.setDirection(0);
-        final ReadReportingConfigurationCommand command = new ReadReportingConfigurationCommand(Collections.singletonList(record));
+        final ReadReportingConfigurationCommand command = new ReadReportingConfigurationCommand(
+                Collections.singletonList(record));
         command.setClusterId(clusterId);
         command.setDestinationAddress(zigbeeEndpoint.getEndpointAddress());
 
@@ -774,7 +788,8 @@ public abstract class ZclCluster {
      * @return Command future
      */
     public Future<CommandResult> bind(IeeeAddress address, int endpointId) {
-        final BindRequest command = new BindRequest(zigbeeEndpoint.getIeeeAddress(), zigbeeEndpoint.getEndpointId(), clusterId, 3, address, endpointId);
+        final BindRequest command = new BindRequest(zigbeeEndpoint.getIeeeAddress(), zigbeeEndpoint.getEndpointId(),
+                clusterId, 3, address, endpointId);
         command.setDestinationAddress(new ZigBeeEndpointAddress(zigbeeEndpoint.getEndpointAddress().getAddress()));
         // The transaction is not sent to the Endpoint of this cluster, but to the ZDO endpoint 0 directly.
         return zigbeeEndpoint.getParentNode().sendTransaction(command, command);
@@ -788,7 +803,8 @@ public abstract class ZclCluster {
      * @return Command future
      */
     public Future<CommandResult> unbind(IeeeAddress address, int endpointId) {
-        final UnbindRequest command = new UnbindRequest(zigbeeEndpoint.getIeeeAddress(), zigbeeEndpoint.getEndpointId(), clusterId, 3, address, endpointId);
+        final UnbindRequest command = new UnbindRequest(zigbeeEndpoint.getIeeeAddress(), zigbeeEndpoint.getEndpointId(),
+                clusterId, 3, address, endpointId);
         command.setDestinationAddress(new ZigBeeEndpointAddress(zigbeeEndpoint.getEndpointAddress().getAddress()));
         // The transaction is not sent to the Endpoint of this cluster, but to the ZDO endpoint 0 directly.
         return zigbeeEndpoint.getParentNode().sendTransaction(command, command);
@@ -806,13 +822,13 @@ public abstract class ZclCluster {
         synchronized (supportedAttributes) {
             if (!supportedAttributesKnown) {
                 if (isClient) {
-                    return clientAttributes.keySet();
+                    return new TreeSet<>(clientAttributes.keySet());
                 } else {
-                    return serverAttributes.keySet();
+                    return new TreeSet<>(serverAttributes.keySet());
                 }
             }
 
-            return supportedAttributes;
+            return new TreeSet<>(supportedAttributes);
         }
     }
 
@@ -935,7 +951,7 @@ public abstract class ZclCluster {
      */
     public Set<Integer> getSupportedCommandsReceived() {
         synchronized (supportedCommandsReceived) {
-            return new HashSet<>(supportedCommandsReceived);
+            return new TreeSet<>(supportedCommandsReceived);
         }
     }
 
@@ -1043,7 +1059,7 @@ public abstract class ZclCluster {
      */
     public Set<Integer> getSupportedCommandsGenerated() {
         synchronized (supportedCommandsGenerated) {
-            return new HashSet<>(supportedCommandsGenerated);
+            return new TreeSet<>(supportedCommandsGenerated);
         }
     }
 
@@ -1329,7 +1345,8 @@ public abstract class ZclCluster {
             }
         }
 
-        DiscoverAttributesResponse response = new DiscoverAttributesResponse(attributeInformation.size() == getLocalAttributes().size(), attributeInformation);
+        DiscoverAttributesResponse response = new DiscoverAttributesResponse(
+                attributeInformation.size() == getLocalAttributes().size(), attributeInformation);
         sendResponse(command, response);
     }
 
@@ -1539,10 +1556,10 @@ public abstract class ZclCluster {
         dao.setClusterId(clusterId);
         dao.setClient(isClient);
         if (supportedAttributesKnown) {
-            dao.setSupportedAttributes(Collections.unmodifiableSet(new TreeSet<>(supportedAttributes)));
+            dao.setSupportedAttributes(Collections.unmodifiableSet(new HashSet<>(supportedAttributes)));
         }
-        dao.setSupportedCommandsGenerated(Collections.unmodifiableSet(new TreeSet<>(supportedCommandsGenerated)));
-        dao.setSupportedCommandsReceived(Collections.unmodifiableSet(new TreeSet<>(supportedCommandsReceived)));
+        dao.setSupportedCommandsGenerated(Collections.unmodifiableSet(new HashSet<>(supportedCommandsGenerated)));
+        dao.setSupportedCommandsReceived(Collections.unmodifiableSet(new HashSet<>(supportedCommandsReceived)));
         Collection<ZclAttribute> daoZclAttributes;
         if (isClient) {
             daoZclAttributes = clientAttributes.values();
@@ -1895,7 +1912,7 @@ public abstract class ZclCluster {
         if (command.isDisableDefaultResponse()) {
             return null;
         }
-        DefaultResponse defaultResponse = new DefaultResponse(command.getCommandId() ,status);
+        DefaultResponse defaultResponse = new DefaultResponse(command.getCommandId(), status);
         defaultResponse.setTransactionId(command.getTransactionId());
         defaultResponse.setDestinationAddress(command.getDestinationAddress());
         defaultResponse.setClusterId(command.getClusterId());

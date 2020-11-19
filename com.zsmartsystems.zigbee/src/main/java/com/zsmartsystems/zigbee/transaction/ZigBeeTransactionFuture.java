@@ -11,7 +11,11 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.zsmartsystems.zigbee.CommandResult;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 
 /**
  * Future implementation for asynchronous transactions. Multiple threads may listen for the completion of the
@@ -21,14 +25,34 @@ import com.zsmartsystems.zigbee.CommandResult;
  */
 public class ZigBeeTransactionFuture implements Future<CommandResult> {
     /**
+     * The logger.
+     */
+    private final Logger logger = LoggerFactory.getLogger(ZigBeeTransactionFuture.class);
+
+    /**
      * The {@link CommandResult}
      */
     private CommandResult result;
 
+    final ZigBeeTransaction transaction;
+
     private boolean cancelled = false;
 
+    /**
+     * We set the timeout to 5 minutes to be long enough to allow the transaction manager to complete its queuing and
+     * eventual retries
+     */
     // Not final for tests
-    private static long TIMEOUT_MILLISECONDS = 12000;
+    private static long TIMEOUT_MINUTES = 5;
+
+    /**
+     * Constructor
+     *
+     * @param transaction the {@link ZigBeTransaction} linked to this future
+     */
+    public ZigBeeTransactionFuture(ZigBeeTransaction transaction) {
+        this.transaction = transaction;
+    }
 
     /**
      * Sets the {@link CommandResult}.
@@ -45,7 +69,11 @@ public class ZigBeeTransactionFuture implements Future<CommandResult> {
         if (result != null || cancelled) {
             return false;
         }
+
+        // cancelled must be set to true before cancelling the transaction
+        // as this method will otherwise be called recursively
         cancelled = true;
+        transaction.cancel();
         notifyAll();
         return true;
     }
@@ -61,11 +89,15 @@ public class ZigBeeTransactionFuture implements Future<CommandResult> {
     }
 
     @Override
-    public CommandResult get() throws InterruptedException, ExecutionException {
+    public CommandResult get() throws ExecutionException {
+        long start = System.currentTimeMillis();
         try {
-            return get(TIMEOUT_MILLISECONDS, TimeUnit.MILLISECONDS);
+            return get(TIMEOUT_MINUTES, TimeUnit.MINUTES);
         } catch (InterruptedException e) {
-            set(new CommandResult());
+            logger.debug("TransactionFuture interrupted after {}ms: {}", System.currentTimeMillis() - start,
+                    transaction);
+            set(new CommandResult(ZigBeeStatus.FAILURE, null));
+            cancel(true);
             return result;
         }
     }
@@ -78,9 +110,16 @@ public class ZigBeeTransactionFuture implements Future<CommandResult> {
             }
             unit.timedWait(this, timeout);
             if (result == null) {
-                set(new CommandResult());
+                set(new CommandResult(ZigBeeStatus.FAILURE, null));
+                cancel(true);
             }
             return result;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "ZigBeeTransactionFuture [cancelled=" + cancelled + ", transaction=" + transaction + ", result=" + result
+                + "]";
     }
 }

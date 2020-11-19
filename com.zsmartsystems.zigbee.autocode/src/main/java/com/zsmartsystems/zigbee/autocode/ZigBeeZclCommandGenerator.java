@@ -19,7 +19,6 @@ import java.util.Map;
 import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlCluster;
 import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlCommand;
 import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlField;
-import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlMatcher;
 
 /**
  *
@@ -105,6 +104,13 @@ public class ZigBeeZclCommandGenerator extends ZigBeeBaseFieldGenerator {
                 importsAdd(packageRootPrefix + packageZclProtocol + ".ZclDataType");
             }
 
+            if (command.response != null) {
+                importsAdd(packageRootPrefix + ".ZigBeeBroadcastDestination");
+                importsAdd(packageRootPrefix + ".ZigBeeAddress");
+                importsAdd(packageRootPrefix + ".ZigBeeEndpointAddress");
+                importsAdd(packageRootPrefix + packageZdp + ".ZdoResponse");
+            }
+
             for (final ZigBeeXmlField field : command.fields) {
                 importsAddClass(field);
             }
@@ -182,8 +188,10 @@ public class ZigBeeZclCommandGenerator extends ZigBeeBaseFieldGenerator {
             out.println("    /**");
             out.println("     * Default constructor.");
             out.println("     *");
-            out.println(
-                    "     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.");
+            if (!command.fields.isEmpty()) {
+                out.println(
+                        "     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.");
+            }
             out.println("     */");
             if (!command.fields.isEmpty()) {
                 out.println("    @Deprecated");
@@ -289,31 +297,22 @@ public class ZigBeeZclCommandGenerator extends ZigBeeBaseFieldGenerator {
                 out.println();
                 out.println("    @Override");
                 out.println("    public boolean isTransactionMatch(ZigBeeCommand request, ZigBeeCommand response) {");
-                if (command.response.matchers.isEmpty()) {
-                    out.println("        return (response instanceof " + command.response.command + ")");
-                    out.println("                && ((ZdoRequest) request).getDestinationAddress().equals((("
-                            + command.response.command + ") response).getSourceAddress());");
-                } else {
-                    out.println("        if (!(response instanceof " + command.response.command + ")) {");
-                    out.println("            return false;");
-                    out.println("        }");
-                    out.println();
-                    out.print("        return ");
-
-                    boolean first = true;
-                    for (ZigBeeXmlMatcher matcher : command.response.matchers) {
-                        if (first == false) {
-                            out.println();
-                            out.print("                && ");
-                        }
-                        first = false;
-                        out.println("(((" + stringToUpperCamelCase(command.name) + ") request).get"
-                                + matcher.commandField + "()");
-                        out.print("                .equals(((" + command.response.command + ") response).get"
-                                + matcher.responseField + "()))");
-                    }
-                    out.println(";");
-                }
+                out.println("        if (!(response instanceof " + command.response.command + ")) {");
+                out.println("            return false;");
+                out.println("        }");
+                out.println();
+                out.println(
+                        "        ZigBeeAddress destinationAddress = ((ZdoRequest) request).getDestinationAddress();");
+                out.println("        ZigBeeAddress sourceAddress = ((ZdoResponse) response).getSourceAddress();");
+                out.println("        ZigBeeEndpointAddress localCoordinator = new ZigBeeEndpointAddress(0, 0);");
+                out.println();
+                out.println("        if(!ZigBeeBroadcastDestination.isBroadcast(destinationAddress.getAddress())) {");
+                out.println(
+                        "            if (!localCoordinator.equals(sourceAddress) && !destinationAddress.equals(sourceAddress)) {");
+                out.println("                return false;");
+                out.println("            }");
+                out.println("        }");
+                out.println("        return true;");
                 out.println("    }");
             }
 

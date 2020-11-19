@@ -7,7 +7,6 @@
  */
 package com.zsmartsystems.zigbee.transaction;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -25,6 +24,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
@@ -33,6 +33,7 @@ import org.mockito.Mockito;
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.TestUtilities;
+import com.zsmartsystems.zigbee.ZigBeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeBroadcastDestination;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
@@ -189,8 +190,11 @@ public class ZigBeeTransactionManagerTest {
 
         transactionManager.shutdown();
 
-        await().atMost(TIMEOUT, SECONDS)
+        // Mockito.verify(transactionManager, Mockito.timeout(TIMEOUT).times(1))
+        // .getQueue(new IeeeAddress("1111111111111111"));
+        await().atMost(TIMEOUT, TimeUnit.MILLISECONDS)
                 .until(() -> assertNull(transactionManager.getQueue(new IeeeAddress("1111111111111111"))));
+        System.out.println(cmdResult);
         assertTrue(cmdResult.isCancelled());
     }
 
@@ -200,7 +204,14 @@ public class ZigBeeTransactionManagerTest {
         Mockito.when(networkManager.getNotificationService()).thenReturn(new NotificationService());
         ZigBeeTransactionManager transactionManager = new ZigBeeTransactionManager(networkManager);
 
+        ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
+        Mockito.when(networkManager.getNode(ArgumentMatchers.anyInt())).thenReturn(node);
+        Mockito.when(node.getIeeeAddress()).thenReturn(new IeeeAddress("1234567890ABCDEF"));
+
+        ZigBeeAddress address = new ZigBeeEndpointAddress(0, 0);
         ZigBeeTransaction transaction = Mockito.mock(ZigBeeTransaction.class);
+        Mockito.when(transaction.getIeeeAddress()).thenReturn(new IeeeAddress("1234567890ABCDEF"));
+        Mockito.when(transaction.getDestinationAddress()).thenReturn(address);
 
         IeeeAddress ieeeAddress = new IeeeAddress("1234567890ABCDEF");
         ZigBeeTransactionQueue queue = Mockito.mock(ZigBeeTransactionQueue.class);

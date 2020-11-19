@@ -29,6 +29,8 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  */
 public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleCommand {
 
+    protected static final String WILDCARD = "*";
+
     /**
      * Gets a {@link ZigBeeNode}
      *
@@ -188,6 +190,19 @@ public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleComma
         } catch (final NumberFormatException e) {
             throw new IllegalArgumentException("Integer '" + integer + "' uses an invalid number format.");
         }
+    }
+
+    /**
+     * Parses a percentage as a string to an integer. The string should be in the range 0-100, and the returned integer
+     * is in the range 0-254 as per the ZigBee standard.
+     *
+     * @param percentage a {@link String} of the percentage value
+     * @return the integer in the range 0-254 as per the ZigBee standard
+     * @throws IllegalArgumentException
+     */
+    protected Integer parsePercentage(final String percentage) throws IllegalArgumentException {
+        int value = parseInteger(percentage);
+        return (int) (value * 254.0f / 100.0f + 0.5f);
     }
 
     /**

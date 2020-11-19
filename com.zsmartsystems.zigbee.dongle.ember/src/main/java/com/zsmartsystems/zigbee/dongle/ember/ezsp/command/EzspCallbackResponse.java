@@ -35,6 +35,10 @@ public class EzspCallbackResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        return "EzspCallbackResponse []";
+        final StringBuilder builder = new StringBuilder(48);
+        builder.append("EzspCallbackResponse [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

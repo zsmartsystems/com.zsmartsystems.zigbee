@@ -36,6 +36,10 @@ public class EzspSetPowerDescriptorResponse extends EzspFrameResponse {
 
     @Override
     public String toString() {
-        return "EzspSetPowerDescriptorResponse []";
+        final StringBuilder builder = new StringBuilder(58);
+        builder.append("EzspSetPowerDescriptorResponse [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

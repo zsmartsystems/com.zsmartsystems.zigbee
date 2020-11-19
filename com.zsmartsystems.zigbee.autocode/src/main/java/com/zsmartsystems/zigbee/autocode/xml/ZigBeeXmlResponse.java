@@ -7,8 +7,6 @@
  */
 package com.zsmartsystems.zigbee.autocode.xml;
 
-import java.util.List;
-
 /**
  *
  * @author Chris Jackson (zsmartsystems.com)
@@ -16,5 +14,4 @@ import java.util.List;
  */
 public class ZigBeeXmlResponse {
     public String command;
-    public List<ZigBeeXmlMatcher> matchers;
 }

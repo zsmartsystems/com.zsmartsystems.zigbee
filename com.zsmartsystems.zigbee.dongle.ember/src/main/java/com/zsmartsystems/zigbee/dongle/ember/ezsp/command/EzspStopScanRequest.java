@@ -48,6 +48,10 @@ public class EzspStopScanRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspStopScanRequest []";
+        final StringBuilder builder = new StringBuilder(47);
+        builder.append("EzspStopScanRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

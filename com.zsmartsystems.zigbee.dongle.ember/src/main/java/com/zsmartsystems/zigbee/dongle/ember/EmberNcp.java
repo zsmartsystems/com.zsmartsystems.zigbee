@@ -71,10 +71,10 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetTransientKeyTab
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetTransientKeyTableEntryResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetTransientLinkKeyRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetTransientLinkKeyResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetXncpInfoRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetXncpInfoResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetValueRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetValueResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetXncpInfoRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetXncpInfoResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLeaveNetworkRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLeaveNetworkResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkFoundHandler;
@@ -84,13 +84,19 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateReques
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspReadCountersRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspReadCountersResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspResetToFactoryDefaultsRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspResetToFactoryDefaultsResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspScanCompleteHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendManyToOneRouteRequestRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendManyToOneRouteRequestResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetConfigurationValueRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetConfigurationValueResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetExtendedTimeoutRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetExtendedTimeoutResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetManufacturerCodeRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetManufacturerCodeResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetMfgTokenRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetMfgTokenResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPolicyRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPolicyResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPowerDescriptorRequest;
@@ -106,6 +112,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberAesMmoHashContext;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCertificate283k1Data;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCertificateData;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberConcentratorType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCurrentSecurityState;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyStruct;
@@ -175,10 +182,9 @@ public class EmberNcp {
      * The command allows the Host to specify the desired EZSP version and must be sent before any other command. The
      * response provides information about the firmware running on the NCP.
      *
-     * @param desiredVersion the requested version we support
      * @return the {@link EzspVersionResponse}
      */
-    public EzspVersionResponse getVersion(int desiredVersion) {
+    public EzspVersionResponse getVersion() {
         EzspVersionRequest request = new EzspVersionRequest();
         request.setDesiredProtocolVersion(EzspFrame.getEzspVersion());
         EzspTransaction transaction = protocolHandler
@@ -608,6 +614,9 @@ public class EmberNcp {
                         new EzspSingleResponseTransaction(request, EzspGetTransientKeyTableEntryResponse.class));
         EzspGetTransientKeyTableEntryResponse response = (EzspGetTransientKeyTableEntryResponse) transaction
                 .getResponse();
+        if (response == null) {
+            return null;
+        }
         logger.debug(response.toString());
         lastStatus = response.getStatus();
         if (lastStatus != EmberStatus.EMBER_SUCCESS) {
@@ -854,6 +863,17 @@ public class EmberNcp {
     }
 
     /**
+     * Gets the custom EUI64 (long address) from the manufacturer information block on the NCP
+     *
+     * @return IeeeAddress containing the custom address
+     */
+    public IeeeAddress getMfgCustomEui64() {
+        int[] response = getMfgToken(EzspMfgTokenId.EZSP_MFG_CUSTOM_EUI_64);
+
+        return new IeeeAddress(response);
+    }
+
+    /**
      * Gets the install code stored in the NCP memory
      *
      * @return {@link ByteArray} defining the install code. May be empty if no installation code is defined, or null on
@@ -1016,7 +1036,6 @@ public class EmberNcp {
         EzspTransaction transaction = protocolHandler
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetXncpInfoResponse.class));
         EzspGetXncpInfoResponse response = (EzspGetXncpInfoResponse) transaction.getResponse();
-        EzspStatus status = response.getStatus();
         if (response.getStatus() != EzspStatus.EZSP_SUCCESS) {
             logger.debug("Error sending xncp info: {}", response);
             return null;
@@ -1043,6 +1062,57 @@ public class EmberNcp {
         return response;
     }
 
+    /**
+     * Sends a route request packet that creates routes from every node in the network back to this node. This function
+     * should be called by an application that wishes to communicate with many nodes, for example, a gateway, central
+     * monitor, or controller. A device using this function was referred to as an 'aggregator' in EmberZNet 2.x and
+     * earlier, and is referred to as a 'concentrator' in the ZigBee specification and EmberZNet 3. This function
+     * enables large scale networks, because the other devices do not have to individually perform bandwidth-intensive
+     * route discoveries. Instead, when a remote node sends an APS unicast to a concentrator, its network layer
+     * automatically delivers a special route record packet first, which lists the network ids of all the intermediate
+     * relays. The concentrator can then use source routing to send outbound APS unicasts. (A source routed message is
+     * one in which the entire route is listed in the network layer header.) This allows the concentrator to communicate
+     * with thousands of devices without requiring large route tables on neighboring nodes. This function is only
+     * available in ZigBee Pro (stack profile 2), and cannot be called on end devices. Any router can be a concentrator
+     * (not just the coordinator), and there can be multiple concentrators on a network. Note that a concentrator does
+     * not automatically obtain routes to all network nodes after calling this function. Remote applications must first
+     * initiate an inbound APS unicast. Many-to-one routes are not repaired automatically. Instead, the concentrator
+     * application must call this function to rediscover the routes as necessary, for example, upon failure of a retried
+     * APS message. The reason for this is that there is no scalable one-size-fits-all route repair strategy. A common
+     * and recommended strategy is for the concentrator application to refresh the routes by calling this function
+     * periodically.
+     *
+     * @param concentratorType the {@link EmberConcentratorType}
+     * @param radius the radius (number of hops) to send the MTORR
+     * @return the response {@link EmberStatus}
+     */
+    public EmberStatus sendManyToOneRouteRequest(EmberConcentratorType concentratorType, int radius) {
+        EzspSendManyToOneRouteRequestRequest request = new EzspSendManyToOneRouteRequestRequest();
+        request.setConcentratorType(concentratorType);
+        request.setRadius(radius);
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(
+                        new EzspSingleResponseTransaction(request, EzspSendManyToOneRouteRequestResponse.class));
+        EzspSendManyToOneRouteRequestResponse response = (EzspSendManyToOneRouteRequestResponse) transaction
+                .getResponse();
+        return response.getStatus();
+    }
+
+    /**
+     * Reset the NCP to factory default.
+     *
+     * @return the response {@link EzspStatus}
+     */
+    public EzspStatus resetToFactoryDefaults() {
+        EzspResetToFactoryDefaultsRequest request = new EzspResetToFactoryDefaultsRequest();
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(
+                        new EzspSingleResponseTransaction(request, EzspResetToFactoryDefaultsResponse.class));
+        EzspResetToFactoryDefaultsResponse response = (EzspResetToFactoryDefaultsResponse) transaction
+                .getResponse();
+        return response.getStatus();
+    }
+
     private String intArrayToString(int[] payload) {
         int length = payload.length;
         for (int cnt = 0; cnt < length; cnt++) {
@@ -1053,12 +1123,35 @@ public class EmberNcp {
         return new String(payload, 0, length);
     }
 
-    private int[] getMfgToken(EzspMfgTokenId tokenId) {
+    /**
+     * Reads a manufacturing token and returns the token as an int[] array
+     *
+     * @param tokenId the {@ling EzspMfgTokenId} to read
+     * @return int[] with the token data
+     */
+    public int[] getMfgToken(EzspMfgTokenId tokenId) {
         EzspGetMfgTokenRequest request = new EzspGetMfgTokenRequest();
         request.setTokenId(tokenId);
         EzspTransaction transaction = protocolHandler
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetMfgTokenResponse.class));
         EzspGetMfgTokenResponse response = (EzspGetMfgTokenResponse) transaction.getResponse();
         return response.getTokenData();
+    }
+
+    /**
+     * Writes a manufacturing token
+     *
+     * @param tokenId the {@ling EzspMfgTokenId} to read
+     * @param token int[] with the token data
+     * @return {@link EmberStatus}
+     */
+    public EmberStatus setMfgToken(EzspMfgTokenId tokenId, int[] token) {
+        EzspSetMfgTokenRequest request = new EzspSetMfgTokenRequest();
+        request.setTokenId(tokenId);
+        request.setTokenData(token);
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspSetMfgTokenResponse.class));
+        EzspSetMfgTokenResponse response = (EzspSetMfgTokenResponse) transaction.getResponse();
+        return response.getStatus();
     }
 }

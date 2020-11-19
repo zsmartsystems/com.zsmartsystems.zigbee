@@ -9,8 +9,10 @@ package com.zsmartsystems.zigbee.transaction;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.Future;
 
 import org.slf4j.Logger;
@@ -85,7 +87,7 @@ public class ZigBeeTransactionQueue {
     /**
      * The number of transactions currently outstanding from this queue
      */
-    private int outstandingTransactions = 0;
+    private final Set<ZigBeeTransaction> outstandingTransactions = new HashSet<>();
 
     /**
      * The {@link IeeeAddress} of the device for which this queue has transactions ({@code null} in case of a default,
@@ -131,10 +133,14 @@ public class ZigBeeTransactionQueue {
         logger.debug("{}: Queue shutdown", queueName);
         isShutdown = true;
 
-        // Cancel any outstanding transactions
+        // Cancel any queued transactions
         for (ZigBeeTransaction transaction : queue) {
             transaction.cancel();
         }
+
+        // We don't cancel outstanding transactions here as the transaction manager is doing that
+        outstandingTransactions.clear();
+        queue.clear();
     }
 
     /**
@@ -205,7 +211,7 @@ public class ZigBeeTransactionQueue {
             return null;
         }
         if (transaction.getFuture() == null) {
-            transaction.setFuture(new ZigBeeTransactionFuture());
+            transaction.setFuture(new ZigBeeTransactionFuture(transaction));
         }
 
         transaction.setIeeeAddress(deviceIeeeAdress);
@@ -239,13 +245,14 @@ public class ZigBeeTransactionQueue {
      */
     protected ZigBeeTransaction getTransaction() {
         if (queue.isEmpty() || nextReleaseTime > System.currentTimeMillis()
-                || outstandingTransactions >= profile.getMaxOutstandingTransactions()) {
+                || outstandingTransactions.size() >= profile.getMaxOutstandingTransactions() || isShutdown) {
             return null;
         }
-        outstandingTransactions++;
+        ZigBeeTransaction transaction = queue.poll();
+        outstandingTransactions.add(transaction);
         nextReleaseTime = System.currentTimeMillis() + profile.getInterTransactionDelay();
 
-        return queue.poll();
+        return transaction;
     }
 
     /**
@@ -280,26 +287,37 @@ public class ZigBeeTransactionQueue {
      * Notification that a previously released transaction has been completed.
      * <p>
      * This is called from the transaction manager when the transaction completes (either successfully, or
-     * unsuccessfully)
+     * unsuccessfully).
+     * <p>
+     * If the transaction has {@link TransactionState#FAILED}, it will be requeued if it has not exceeded the allowable
+     * number of retries.
+     * <p>
+     * If the transaction has {@link TransactionState#CANCELLED}, it will not be requeued.
      *
      * @param transaction the {@link ZigBeeTransaction} that is complete
      * @param state the {@link TransactionState} of the transaction on completion
      */
     protected void transactionComplete(ZigBeeTransaction transaction, TransactionState state) {
-        outstandingTransactions--;
-        logger.debug("{}: transactionComplete {} {}", queueName, state, outstandingTransactions);
-
         if (isShutdown) {
             transaction.cancel();
             return;
         }
+
+        if (!outstandingTransactions.remove(transaction)) {
+            logger.debug("{}: transactionComplete but not outstanding, state={}, outstanding={}", queueName, state,
+                    outstandingTransactions.size());
+            transaction.cancel();
+            return;
+        }
+        logger.debug("{}: transactionComplete, state={}, outstanding={}", queueName, state,
+                outstandingTransactions.size());
 
         if (state == TransactionState.FAILED) {
             if (transaction.getSendCnt() < profile.getMaxRetries()) {
                 // Transaction failed - requeue
                 addToQueue(transaction);
             } else {
-                logger.debug("{}: transactionComplete exceeded retries {}", queueName, transaction.getSendCnt());
+                logger.debug("{}: transactionComplete exceeded max retries {}", queueName, transaction.getSendCnt());
                 transaction.cancel();
             }
         }
@@ -314,14 +332,14 @@ public class ZigBeeTransactionQueue {
         LinkedList<ZigBeeTransaction> transactions = new LinkedList<>();
 
         synchronized (queue) {
-            ZigBeeTransaction zt = null;
-            while ((zt = queue.poll()) != null) {
-                if (!Objects.equals(zt.getDestinationAddress().getAddress(), newAddress)) {
+            ZigBeeTransaction transaction = null;
+            while ((transaction = queue.poll()) != null) {
+                if (!Objects.equals(transaction.getDestinationAddress().getAddress(), newAddress)) {
                     logger.debug("Rewriting transaction destination address from {} to {} in transaction={}",
-                            zt.getDestinationAddress().getAddress(), newAddress, zt);
-                    zt.getDestinationAddress().setAddress(newAddress);
+                            transaction.getDestinationAddress().getAddress(), newAddress, transaction);
+                    transaction.getDestinationAddress().setAddress(newAddress);
                 }
-                transactions.add(zt);
+                transactions.add(transaction);
             }
 
             for (ZigBeeTransaction trans : transactions) {
@@ -333,7 +351,9 @@ public class ZigBeeTransactionQueue {
     @Override
     public String toString() {
         return "ZigBeeTransactionQueue [queueName=" + queueName + ", deviceIeeeAddress=" + deviceIeeeAdress
-                + ", sleepy=" + sleepy + ", outstandingTransactions=" + outstandingTransactions + ", profile=" + profile
+                + ", sleepy=" + sleepy + ", queued=" + queue.size() + ", outstandingTransactions="
+                + outstandingTransactions.size() + ", profile="
+                + profile
                 + "]";
     }
 }

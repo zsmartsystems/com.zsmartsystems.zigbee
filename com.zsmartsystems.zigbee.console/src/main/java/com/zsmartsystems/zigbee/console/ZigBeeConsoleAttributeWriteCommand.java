@@ -103,7 +103,7 @@ public class ZigBeeConsoleAttributeWriteCommand extends ZigBeeConsoleAbstractCom
         }
 
         final Object value = parseValue(attributeValueParam, dataType);
-        final CommandResult result = cluster.writeAttribute(attributeId, ZclDataType.ORDERED_SEQUENCE_ARRAY, value)
+        final CommandResult result = cluster.writeAttribute(attributeId, dataType, value)
                 .get();
         if (result.isSuccess()) {
             final WriteAttributesResponse response = result.getResponse();

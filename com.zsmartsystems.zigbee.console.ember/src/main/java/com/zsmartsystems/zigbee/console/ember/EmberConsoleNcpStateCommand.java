@@ -93,23 +93,25 @@ public class EmberConsoleNcpStateCommand extends EmberConsoleAbstractCommand {
 
         String mfgName = ncp.getMfgName();
         String mfgBoard = ncp.getMfgBoardName();
+        IeeeAddress mfgIeee = ncp.getMfgCustomEui64();
         int customVersion = ncp.getMfgCustomVersion();
-        EzspVersionResponse version = ncp.getVersion(5);
+        EzspVersionResponse version = ncp.getVersion();
 
-        out.println("Ember NCP state    : " + status);
-        out.println("Local Node Type    : " + nwkParameterResponse.getNodeType());
-        out.println("IEEE Address       : " + ieeeAddress);
-        out.println("NWK Address        : " + String.format("%04X", nwkAddress));
-        out.println("Network PAN Id     : " + String.format("%04X", nwkParameters.getPanId()));
-        out.println("Network EPAN Id    : " + nwkParameters.getExtendedPanId());
-        out.println("Radio Channel      : " + nwkParameters.getRadioChannel());
-        out.println("Network Manager Id : " + String.format("%04X", nwkParameters.getNwkManagerId()));
-        out.println("Radio TX Power     : " + nwkParameters.getRadioTxPower());
-        out.println("Join Method        : " + nwkParameters.getJoinMethod());
-        out.println("Board Name         : " + mfgBoard);
-        out.println("Manufacturer Name  : " + mfgName);
-        out.println("Stack Version      : " + printVersion(version.getStackVersion()));
-        out.println("Custom Version     : " + printVersion(customVersion));
+        out.println("Ember NCP state     : " + status);
+        out.println("Local Node Type     : " + nwkParameterResponse.getNodeType());
+        out.println("IEEE Address        : " + ieeeAddress);
+        out.println("Custom IEEE Address : " + mfgIeee);
+        out.println("NWK Address         : " + String.format("%04X", nwkAddress));
+        out.println("Network PAN Id      : " + String.format("%04X", nwkParameters.getPanId()));
+        out.println("Network EPAN Id     : " + nwkParameters.getExtendedPanId());
+        out.println("Radio Channel       : " + nwkParameters.getRadioChannel());
+        out.println("Network Manager Id  : " + String.format("%04X", nwkParameters.getNwkManagerId()));
+        out.println("Radio TX Power      : " + nwkParameters.getRadioTxPower());
+        out.println("Join Method         : " + nwkParameters.getJoinMethod());
+        out.println("Board Name          : " + mfgBoard);
+        out.println("Manufacturer Name   : " + mfgName);
+        out.println("Stack Version       : " + printVersion(version.getStackVersion()));
+        out.println("Custom Version      : " + printVersion(customVersion));
     }
 
     private String printVersion(int version) {

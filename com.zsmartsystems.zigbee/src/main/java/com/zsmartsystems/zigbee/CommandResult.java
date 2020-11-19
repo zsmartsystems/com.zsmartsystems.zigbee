@@ -23,20 +23,44 @@ public class CommandResult {
      * The response command.
      */
     private final ZigBeeCommand response;
+    private final ZigBeeStatus commandSentSuccessfully;
 
     /**
      * Constructor which sets the received response command or null if timeout occurs.
      *
      * @param response the response command.
+     * @deprecated Use {@link #CommandResult(ZigBeeStatus, ZigBeeCommand)} instead
      */
+    @Deprecated
     public CommandResult(final ZigBeeCommand response) {
+        if (response != null) {
+            this.commandSentSuccessfully = ZigBeeStatus.SUCCESS;
+        } else {
+            this.commandSentSuccessfully = ZigBeeStatus.FAILURE;
+        }
+        this.response = response;
+    }
+
+    /**
+     * Constructor which sets the received response command and if the command was sent successfully.
+     *
+     * @param commandSentSuccessfully if the command was sent successfully
+     * @param response                the response command
+     */
+
+    public CommandResult(final ZigBeeStatus commandSentSuccessfully, final ZigBeeCommand response) {
+        this.commandSentSuccessfully = commandSentSuccessfully;
         this.response = response;
     }
 
     /**
      * Constructor for timeout situations.
+     *
+     * @deprecated Use {@link #CommandResult(ZigBeeStatus, ZigBeeCommand)} instead
      */
+    @Deprecated
     public CommandResult() {
+        commandSentSuccessfully = ZigBeeStatus.FAILURE;
         response = null;
     }
 
@@ -55,7 +79,7 @@ public class CommandResult {
      * @return TRUE if timeout occurred
      */
     public boolean isTimeout() {
-        return response == null;
+        return commandSentSuccessfully != ZigBeeStatus.SUCCESS;
     }
 
     /**
@@ -64,10 +88,14 @@ public class CommandResult {
      * @return true if the command resulted in an error
      */
     public boolean isError() {
-        if (hasStatusCode()) {
-            return getStatusCode() != 0;
+        if (commandSentSuccessfully == ZigBeeStatus.SUCCESS) {
+            if (hasStatusCode()) {
+                return getStatusCode() != 0;
+            } else {
+                return false;
+            }
         } else {
-            return response == null;
+            return true;
         }
     }
 

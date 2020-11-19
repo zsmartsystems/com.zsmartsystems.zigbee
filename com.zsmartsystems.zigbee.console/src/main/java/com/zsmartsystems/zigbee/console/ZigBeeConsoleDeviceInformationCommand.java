@@ -16,6 +16,7 @@ import java.util.TreeMap;
 
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
 
@@ -90,11 +91,34 @@ public class ZigBeeConsoleDeviceInformationCommand extends ZigBeeConsoleAbstract
             }
         }
 
-        final ZigBeeEndpoint endpoint = getEndpoint(networkManager, args[1]);
-        if (endpoint == null) {
-            throw new IllegalArgumentException("Endpoint '" + args[1] + "' not found.");
+        List<ZigBeeEndpoint> endpoints = new ArrayList<>();
+        if (WILDCARD.equals(args[1])) {
+            for (ZigBeeNode node : networkManager.getNodes()) {
+                for (ZigBeeEndpoint endpoint : node.getEndpoints()) {
+                    if (endpoint.getInputCluster(ZclBasicCluster.CLUSTER_ID) != null) {
+                        endpoints.add(endpoint);
+                        break;
+                    }
+                }
+
+            }
+        } else {
+            endpoints.add(getEndpoint(networkManager, args[1]));
         }
 
+        for (ZigBeeEndpoint endpoint : endpoints) {
+            Map<String, String> responses = getEndpointInfo(endpoint, commands, refresh, out);
+
+            out.println("Device information for endpoint " + endpoint.getEndpointAddress());
+            out.println("Node Info             Value");
+            for (Entry<String, String> command : responses.entrySet()) {
+                out.println(String.format("%-20s  ", command.getKey()) + command.getValue());
+            }
+        }
+    }
+
+    private Map<String, String> getEndpointInfo(ZigBeeEndpoint endpoint, List<Integer> commands, long refresh,
+            PrintStream out) {
         ZclBasicCluster basicCluster = (ZclBasicCluster) endpoint.getInputCluster(0);
         if (basicCluster == null) {
             throw new IllegalArgumentException("Can't find basic cluster for " + endpoint.getEndpointAddress());
@@ -117,10 +141,7 @@ public class ZigBeeConsoleDeviceInformationCommand extends ZigBeeConsoleAbstract
             }
         }
 
-        out.println("Node Info             Value");
-        for (Entry<String, String> command : responses.entrySet()) {
-            out.println(String.format("%-20s  ", command.getKey()) + command.getValue());
-        }
+        return responses;
     }
 
 }

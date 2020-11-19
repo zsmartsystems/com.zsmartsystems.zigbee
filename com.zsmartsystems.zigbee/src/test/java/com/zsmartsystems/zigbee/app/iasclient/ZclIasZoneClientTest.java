@@ -9,6 +9,8 @@ package com.zsmartsystems.zigbee.app.iasclient;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.eq;
 
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -27,6 +29,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneEnrollRequestCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneEnrollResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneStateEnum;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneTypeEnum;
+import org.mockito.stubbing.Answer;
 
 /**
  *
@@ -157,9 +160,54 @@ public class ZclIasZoneClientTest {
 
         ArgumentCaptor<ZoneEnrollResponse> zoneResposeCapture = ArgumentCaptor.forClass(ZoneEnrollResponse.class);
         Mockito.verify(cluster, Mockito.timeout(TIMEOUT).times(1))
-                .sendCommand(zoneResposeCapture.capture());
+                .sendResponse(eq(command), zoneResposeCapture.capture());
         ZoneEnrollResponse capturedResponse = zoneResposeCapture.getValue();
         assertEquals(EnrollResponseCodeEnum.SUCCESS.getKey(), capturedResponse.getEnrollResponseCode().intValue());
         assertEquals(1, capturedResponse.getZoneId().intValue());
+    }
+
+    @Test
+    public void testAutoEnrollResponse() {
+
+        int zoneId = 1;
+        IeeeAddress ieeeAddress = new IeeeAddress("1234567890ABCDEF");
+        ZigBeeNetworkManager networkManager = Mockito.mock(ZigBeeNetworkManager.class);
+        ZclIasZoneClient client = new ZclIasZoneClient(networkManager, ieeeAddress, zoneId);
+        client.setAutoEnrollDelay(0);
+
+        ZclIasZoneCluster cluster = Mockito.mock(ZclIasZoneCluster.class);
+        Mockito.when(cluster.getZigBeeAddress()).thenReturn(new ZigBeeEndpointAddress(1, 1));
+
+        ZclAttribute attributeZoneState = Mockito.mock(ZclAttribute.class);
+        Mockito.when(attributeZoneState.readValue(0)).thenReturn(ZoneStateEnum.NOT_ENROLLED.getKey());
+
+        ZclAttribute attributeIasCieAddress = Mockito.mock(ZclAttribute.class);
+        Mockito.when(attributeIasCieAddress.readValue(0)).thenReturn(new IeeeAddress("1234567890ABCDEF"));
+
+        ZclAttribute attributeZoneId = Mockito.mock(ZclAttribute.class);
+        Mockito.when(attributeZoneId.readValue(0)).thenReturn(zoneId);
+
+        ZclAttribute attributeZoneType = Mockito.mock(ZclAttribute.class);
+        Mockito.when(attributeZoneType.readValue(Long.MAX_VALUE)).thenReturn(ZoneTypeEnum.FIRE_SENSOR.getKey());
+
+        Mockito.when(cluster.getAttribute(ZclIasZoneCluster.ATTR_ZONESTATE)).thenReturn(attributeZoneState);
+        Mockito.when(cluster.getAttribute(ZclIasZoneCluster.ATTR_IASCIEADDRESS)).thenReturn(attributeIasCieAddress);
+        Mockito.when(cluster.getAttribute(ZclIasZoneCluster.ATTR_ZONEID)).thenReturn(attributeZoneId);
+        Mockito.when(cluster.getAttribute(ZclIasZoneCluster.ATTR_ZONETYPE)).thenReturn(attributeZoneType);
+
+        Mockito.doAnswer((Answer<Void>) invocation -> {
+            Runnable runnable = (Runnable) invocation.getArguments()[0];
+            new Thread(runnable).start();
+            return null;
+        }).when(networkManager).scheduleTask(ArgumentMatchers.any(Runnable.class), ArgumentMatchers.any(long.class));
+
+        client.appStartup(cluster);
+        ArgumentCaptor<ZoneEnrollResponse> zoneResponseCapture = ArgumentCaptor.forClass(ZoneEnrollResponse.class);
+        Mockito.verify(cluster, Mockito.timeout(TIMEOUT).times(1))
+                .sendCommand(zoneResponseCapture.capture());
+        ZoneEnrollResponse capturedResponse = zoneResponseCapture.getValue();
+        assertTrue(capturedResponse.isDisableDefaultResponse());
+        assertEquals(EnrollResponseCodeEnum.SUCCESS.getKey(), capturedResponse.getEnrollResponseCode().intValue());
+        assertEquals(zoneId, capturedResponse.getZoneId().intValue());
     }
 }

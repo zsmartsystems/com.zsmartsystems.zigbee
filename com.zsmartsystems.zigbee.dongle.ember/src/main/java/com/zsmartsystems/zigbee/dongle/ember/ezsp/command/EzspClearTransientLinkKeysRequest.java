@@ -48,6 +48,10 @@ public class EzspClearTransientLinkKeysRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspClearTransientLinkKeysRequest []";
+        final StringBuilder builder = new StringBuilder(61);
+        builder.append("EzspClearTransientLinkKeysRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

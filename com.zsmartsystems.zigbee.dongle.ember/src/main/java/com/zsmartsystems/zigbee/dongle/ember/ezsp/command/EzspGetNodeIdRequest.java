@@ -48,6 +48,10 @@ public class EzspGetNodeIdRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspGetNodeIdRequest []";
+        final StringBuilder builder = new StringBuilder(48);
+        builder.append("EzspGetNodeIdRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

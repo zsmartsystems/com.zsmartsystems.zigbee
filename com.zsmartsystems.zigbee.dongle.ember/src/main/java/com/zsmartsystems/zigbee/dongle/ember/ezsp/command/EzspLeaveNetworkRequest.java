@@ -50,6 +50,10 @@ public class EzspLeaveNetworkRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspLeaveNetworkRequest []";
+        final StringBuilder builder = new StringBuilder(51);
+        builder.append("EzspLeaveNetworkRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }
