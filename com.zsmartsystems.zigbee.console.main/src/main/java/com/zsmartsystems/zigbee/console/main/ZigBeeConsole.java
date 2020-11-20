@@ -71,6 +71,7 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleSwitchOnCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleTrustCentreCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleUnbindCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleWindowCoveringCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleRoutingTableCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleNeighborsListCommand;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionManager;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionQueue;
@@ -220,6 +221,7 @@ public final class ZigBeeConsole {
         newCommands.put("level", new ZigBeeConsoleSwitchLevelCommand());
         newCommands.put("covering", new ZigBeeConsoleWindowCoveringCommand());
 
+        newCommands.put("routingtable", new ZigBeeConsoleRoutingTableCommand());
         newCommands.put("neighbors", new ZigBeeConsoleNeighborsListCommand());
 
         zigBeeApi = new ZigBeeApi(networkManager);
