@@ -52,7 +52,7 @@ public class ZigBeeConsoleAttributeReadCommand extends ZigBeeConsoleAbstractComm
     @Override
     public void process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out)
             throws IllegalArgumentException, InterruptedException, ExecutionException {
-        if (args.length < 3) {
+        if (args.length < 2) {
             throw new IllegalArgumentException("Invalid number of arguments");
         }
 
