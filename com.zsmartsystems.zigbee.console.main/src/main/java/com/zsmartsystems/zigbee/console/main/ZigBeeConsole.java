@@ -1749,9 +1749,9 @@ public final class ZigBeeConsole {
             case UNSIGNED_16_BIT_INTEGER:
                 value = Integer.parseInt(stringValue);
                 break;
-            // case UNSIGNED_24_BIT_INTEGER:
-            // value = Integer.parseInt(stringValue);
-            // break;
+            case UNSIGNED_24_BIT_INTEGER:
+                value = Integer.parseInt(stringValue);
+                break;
             case UNSIGNED_32_BIT_INTEGER:
                 value = Integer.parseInt(stringValue);
                 break;
