@@ -456,6 +456,12 @@ public class EmberNcp {
                 new EzspSingleResponseTransaction(request, EzspSetConfigurationValueResponse.class));
         EzspSetConfigurationValueResponse response = (EzspSetConfigurationValueResponse) transaction.getResponse();
         lastStatus = null;
+
+        if(response == null)
+        {
+            return null;
+        }
+
         logger.debug(response.toString());
 
         return response.getStatus();
