@@ -11,11 +11,11 @@
         <name>Occupancy Sensor Type</name>
         <description>The OccupancySensorType attribute specifies the type of the occupancy sensor.</description>
     </attribute>
-    <attribute code="0x0010" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false" minimum="0x00" maximum="0xFFFE" default="0x00">
+    <attribute code="0x0010" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false" minimum="0x00" maximum="0xFFFE" default="0x00">
         <name>PIR Occupied To Unoccupied Delay</name>
         <description>The PIROccupiedToUnoccupiedDelay attribute is 8-bits in length and specifies the time delay, in seconds, before the PIR sensor changes to its occupied state when the sensed area becomes unoccupied. This attribute, along with PIRUnoccupiedToOccupiedTime, may be used to reduce sensor &apos;chatter&apos; when used in an area where occupation changes frequently.</description>
     </attribute>
-    <attribute code="0x0011" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false" minimum="0x00" maximum="0xFFFE" default="0x00">
+    <attribute code="0x0011" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false" minimum="0x00" maximum="0xFFFE" default="0x00">
         <name>PIR Unoccupied To Occupied Delay</name>
         <description>The PIRUnoccupiedToOccupiedDelay attribute is 8-bits in length and specifies the time delay, in seconds, before the PIR sensor changes to its unoccupied state when the sensed area becomes occupied.</description>
     </attribute>
