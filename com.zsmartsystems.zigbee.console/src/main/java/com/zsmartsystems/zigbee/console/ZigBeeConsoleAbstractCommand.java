@@ -289,6 +289,9 @@ public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleComma
             case SIGNED_16_BIT_INTEGER:
                 value = Integer.parseInt(stringValue);
                 break;
+            case SIGNED_24_BIT_INTEGER:
+                value = Integer.parseInt(stringValue);
+                break;
             case SIGNED_32_BIT_INTEGER:
                 value = Integer.parseInt(stringValue);
                 break;
