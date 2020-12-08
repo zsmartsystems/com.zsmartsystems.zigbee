@@ -11,6 +11,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
@@ -69,9 +70,20 @@ public class ZigBeeConsoleSwitchOffCommand extends ZigBeeConsoleAbstractCommand 
             }
         }
 
+        CommandResult result;
         for (ZclOnOffCluster cluster : clusters) {
             OffCommand command = new OffCommand();
-            cluster.sendCommand(command);
+            try {
+                result = cluster.sendCommand(command).get();
+            } catch (Exception e) {
+                out.println("[Endpoint: " + cluster.getZigBeeAddress() + "] Fail to send command [" + e.getMessage() + "]");
+                return;
+            }
+            if(result.isError() || result.isTimeout()) {
+                out.println("[Endpoint: " + cluster.getZigBeeAddress() + "] Command failed [error = " + result.isError() + " , timeout = " + result.isTimeout() + "]");
+                return;
+            }
+            out.println("[Endpoint: " + cluster.getZigBeeAddress() + "] Command has been successfully sent");
         }
     }
 }
