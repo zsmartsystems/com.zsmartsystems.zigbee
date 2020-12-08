@@ -66,6 +66,8 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleSwitchOnCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleTrustCentreCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleUnbindCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleWindowCoveringCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleFactoryResetCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleSetPollIntervalCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleRoutingTableCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleNeighborsListCommand;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionManager;
@@ -215,6 +217,8 @@ public final class ZigBeeConsole {
         newCommands.put("off", new ZigBeeConsoleSwitchOffCommand());
         newCommands.put("level", new ZigBeeConsoleSwitchLevelCommand());
         newCommands.put("covering", new ZigBeeConsoleWindowCoveringCommand());
+        newCommands.put("setpollinterval", new ZigBeeConsoleSetPollIntervalCommand());
+        newCommands.put("factoryreset", new ZigBeeConsoleFactoryResetCommand());
 
         newCommands.put("routingtable", new ZigBeeConsoleRoutingTableCommand());
         newCommands.put("neighbors", new ZigBeeConsoleNeighborsListCommand());
