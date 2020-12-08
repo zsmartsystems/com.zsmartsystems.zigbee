@@ -97,6 +97,7 @@ public class ZigBeeCodeGenerator {
         zclParser.addFile("src/main/resources/0705_Prepayment.xml");
         zclParser.addFile("src/main/resources/0800_KeyEstablishment.xml");
 
+        zclParser.addFile("src/main/resources/0B01_MeterIdentification.xml");
         zclParser.addFile("src/main/resources/0B04_ElectricalMeasurement.xml");
         zclParser.addFile("src/main/resources/0B05_Diagnostics.xml");
 

@@ -36,12 +36,12 @@ public class ZigBeeConsoleAttributeReadCommand extends ZigBeeConsoleAbstractComm
 
     @Override
     public String getDescription() {
-        return "Read one or more attributes.";
+        return "Read one or more attributes. If no attribute specified, all attributes will be read.";
     }
 
     @Override
     public String getSyntax() {
-        return "ENDPOINT CLUSTER ATTRIBUTE1 [ATTRIBUTE2 ...] [PERIOD=x] [CYCLES=x]";
+        return "ENDPOINT CLUSTER [ATTRIBUTE1 ATTRIBUTE2 ...] [PERIOD=x] [CYCLES=x]";
     }
 
     @Override
@@ -52,7 +52,7 @@ public class ZigBeeConsoleAttributeReadCommand extends ZigBeeConsoleAbstractComm
     @Override
     public void process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out)
             throws IllegalArgumentException, InterruptedException, ExecutionException {
-        if (args.length < 4) {
+        if (args.length < 2) {
             throw new IllegalArgumentException("Invalid number of arguments");
         }
 
@@ -81,6 +81,17 @@ public class ZigBeeConsoleAttributeReadCommand extends ZigBeeConsoleAbstractComm
             ZclAttribute attribute = cluster.getAttribute(attributeId);
             attributes.put(attributeId,
                     attribute != null ? attribute.getName() : String.format("Attribute %d", attributeId));
+        }
+
+        if(attributes.isEmpty()) {
+            if(!cluster.discoverAttributes(false, null).get()) {
+                out.println("Failed to discover attributes");
+            }
+            cluster.getAttributes().forEach(zclAttribute -> {
+                if(zclAttribute.isImplemented()) {
+                    attributes.put(zclAttribute.getId(), zclAttribute.getName());
+                }
+            });
         }
 
         StringBuilder strAttributes = new StringBuilder();

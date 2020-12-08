@@ -37,6 +37,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclIlluminanceMeasurementCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclKeyEstablishmentCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclMessagingCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclMeterIdentificationCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclMeteringCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclMultistateInputBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclMultistateOutputBasicCluster;
@@ -67,7 +68,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclWindowCoveringCluster;
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T21:54:11Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-11-19T09:19:31Z")
 public enum ZclClusterType {
     BASIC(0x0000, ZclBasicCluster.class, "Basic"),
     POWER_CONFIGURATION(0x0001, ZclPowerConfigurationCluster.class, "Power Configuration"),
@@ -113,6 +114,7 @@ public enum ZclClusterType {
     SMART_ENERGY_TUNNELING(0x0704, ZclSmartEnergyTunnelingCluster.class, "Smart Energy Tunneling"),
     PREPAYMENT(0x0705, ZclPrepaymentCluster.class, "Prepayment"),
     KEY_ESTABLISHMENT(0x0800, ZclKeyEstablishmentCluster.class, "Key Establishment"),
+    METER_IDENTIFICATION(0x0B01, ZclMeterIdentificationCluster.class, "Meter Identification"),
     ELECTRICAL_MEASUREMENT(0x0B04, ZclElectricalMeasurementCluster.class, "Electrical Measurement"),
     DIAGNOSTICS(0x0B05, ZclDiagnosticsCluster.class, "Diagnostics");
 

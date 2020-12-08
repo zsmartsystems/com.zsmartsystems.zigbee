@@ -325,7 +325,7 @@ public class ZigBeeConsoleMain {
             if (cmdline.hasOption("channel")) {
                 channel = parseDecimalOrHexInt(cmdline.getOptionValue("channel"));
             } else {
-                channel = 11;
+                channel = -1;
             }
             if (cmdline.hasOption("pan")) {
                 pan = parseDecimalOrHexInt(cmdline.getOptionValue("pan"));
