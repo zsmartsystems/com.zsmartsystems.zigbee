@@ -23,7 +23,7 @@
     <command code="0x02" source="client">
         <name>Set Long Poll Interval Command</name>
         <description>The Set Long Poll Interval command is used to set the Read Only LongPollInterval attribute. &lt;br&gt; When the Poll Control Server receives the Set Long Poll Interval Command, it SHOULD check its internal minimal limit and the attributes relationship if the new Long Poll Interval is acceptable. If the new value is acceptable, the new value SHALL be saved to the LongPollInterval attribute. If the new value is not acceptable, the Poll Control Server SHALL send a default response of INVALID_VALUE and the LongPollInterval attribute value is not updated.</description>
-        <field type="UNSIGNED_16_BIT_INTEGER">
+        <field type="UNSIGNED_32_BIT_INTEGER">
             <name>New Long Poll Interval</name>
         </field>
     </command>
@@ -63,8 +63,8 @@
         <name>Long Poll Interval Min</name>
         <description>The Poll Control Server MAYoptionally provide its own minimum value for the LongPollIntervalto protect against  another  device  setting  the  value  to  too  short  a  time  resulting  in  an  inadvertent  power  drain  on  the device.</description>
     </attribute>
-    <attribute code="0x0006" type="UNSIGNED_32_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" default="0x00000000">
-        <name>Fast Poll Timeout Min</name>
+    <attribute code="0x0006" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" default="0x00000000">
+        <name>Fast Poll Timeout Max</name>
         <description>The Poll Control Server MAY optionally provide its own maximum value for the FastPollTimeout to avoid it being set to too high a value resulting in an inadvertent power drain on the device.</description>
     </attribute>
 

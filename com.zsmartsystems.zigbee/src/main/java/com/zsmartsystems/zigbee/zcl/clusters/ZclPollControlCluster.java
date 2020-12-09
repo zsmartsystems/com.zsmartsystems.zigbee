@@ -45,7 +45,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-08T14:21:24Z")
 public class ZclPollControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -130,7 +130,7 @@ public class ZclPollControlCluster extends ZclCluster {
      * FastPollTimeout to avoid it being set to too high a value resulting in an inadvertent
      * power drain on the device.
      */
-    public static final int ATTR_FASTPOLLTIMEOUTMIN = 0x0006;
+    public static final int ATTR_FASTPOLLTIMEOUTMAX = 0x0006;
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
@@ -149,7 +149,7 @@ public class ZclPollControlCluster extends ZclCluster {
         attributeMap.put(ATTR_FASTPOLLTIMEOUT, new ZclAttribute(this, ATTR_FASTPOLLTIMEOUT, "Fast Poll Timeout", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, true));
         attributeMap.put(ATTR_CHECKININTERVALMIN, new ZclAttribute(this, ATTR_CHECKININTERVALMIN, "Checkin Interval Min", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
         attributeMap.put(ATTR_LONGPOLLINTERVALMIN, new ZclAttribute(this, ATTR_LONGPOLLINTERVALMIN, "Long Poll Interval Min", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_FASTPOLLTIMEOUTMIN, new ZclAttribute(this, ATTR_FASTPOLLTIMEOUTMIN, "Fast Poll Timeout Min", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_FASTPOLLTIMEOUTMAX, new ZclAttribute(this, ATTR_FASTPOLLTIMEOUTMAX, "Fast Poll Timeout Max", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
 
         return attributeMap;
     }
@@ -765,7 +765,7 @@ public class ZclPollControlCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Fast Poll Timeout Min</i> attribute [attribute ID <b>0x0006</b>].
+     * Get the <i>Fast Poll Timeout Max</i> attribute [attribute ID <b>0x0006</b>].
      * <p>
      * The Poll Control Server may optionally provide its own maximum value for the
      * FastPollTimeout to avoid it being set to too high a value resulting in an inadvertent
@@ -779,12 +779,12 @@ public class ZclPollControlCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
     @Deprecated
-    public Future<CommandResult> getFastPollTimeoutMinAsync() {
-        return read(serverAttributes.get(ATTR_FASTPOLLTIMEOUTMIN));
+    public Future<CommandResult> getFastPollTimeoutMaxAsync() {
+        return read(serverAttributes.get(ATTR_FASTPOLLTIMEOUTMAX));
     }
 
     /**
-     * Synchronously get the <i>Fast Poll Timeout Min</i> attribute [attribute ID <b>0x0006</b>].
+     * Synchronously get the <i>Fast Poll Timeout Max</i> attribute [attribute ID <b>0x0006</b>].
      * <p>
      * The Poll Control Server may optionally provide its own maximum value for the
      * FastPollTimeout to avoid it being set to too high a value resulting in an inadvertent
@@ -806,16 +806,16 @@ public class ZclPollControlCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Integer getFastPollTimeoutMin(final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_FASTPOLLTIMEOUTMIN).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_FASTPOLLTIMEOUTMIN).getLastValue();
+    public Integer getFastPollTimeoutMax(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_FASTPOLLTIMEOUTMAX).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_FASTPOLLTIMEOUTMAX).getLastValue();
         }
 
-        return (Integer) readSync(serverAttributes.get(ATTR_FASTPOLLTIMEOUTMIN));
+        return (Integer) readSync(serverAttributes.get(ATTR_FASTPOLLTIMEOUTMAX));
     }
 
     /**
-     * Set reporting for the <i>Fast Poll Timeout Min</i> attribute [attribute ID <b>0x0006</b>].
+     * Set reporting for the <i>Fast Poll Timeout Max</i> attribute [attribute ID <b>0x0006</b>].
      * <p>
      * The Poll Control Server may optionally provide its own maximum value for the
      * FastPollTimeout to avoid it being set to too high a value resulting in an inadvertent
@@ -832,8 +832,8 @@ public class ZclPollControlCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval, Object reportableChange)}
      */
     @Deprecated
-    public Future<CommandResult> setFastPollTimeoutMinReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
-        return setReporting(serverAttributes.get(ATTR_FASTPOLLTIMEOUTMIN), minInterval, maxInterval, reportableChange);
+    public Future<CommandResult> setFastPollTimeoutMaxReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
+        return setReporting(serverAttributes.get(ATTR_FASTPOLLTIMEOUTMAX), minInterval, maxInterval, reportableChange);
     }
 
     /**
