@@ -333,9 +333,10 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
             logger.debug("Unable to find CBKE Client for endpoint {}", endpoint);
             return ZigBeeStatus.FAILURE;
         }
-        keClient.start();
 
         logger.debug("Manually starting CBKE Client for endpoint {}", endpoint);
+        keClient.start();
+
         return ZigBeeStatus.SUCCESS;
     }
 
