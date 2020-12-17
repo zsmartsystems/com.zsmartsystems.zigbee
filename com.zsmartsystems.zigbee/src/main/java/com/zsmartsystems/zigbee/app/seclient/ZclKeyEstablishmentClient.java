@@ -251,12 +251,13 @@ public class ZclKeyEstablishmentClient implements ZclCommandListener {
             return false;
         }
 
-        if (state != KeyEstablishmentState.UNINITIALISED) {
+        if (state != KeyEstablishmentState.UNINITIALISED && state != KeyEstablishmentState.FAILED) {
             logger.debug("{}: CBKE Key Establishment Client: Initiate key establishment failed - state is {}",
                     ieeeAddress, state);
 
             return false;
         }
+        state = KeyEstablishmentState.UNINITIALISED;
 
         cbkeExchange = cbkeProvider.getCbkeKeyExchangeInitiator();
         if (cbkeExchange == null) {
