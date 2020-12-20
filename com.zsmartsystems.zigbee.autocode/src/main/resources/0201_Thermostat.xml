@@ -17,10 +17,10 @@
         <field type="ENUMERATION_8_BIT">
             <name>Number Of Transitions</name>
         </field>
-        <field type="ENUMERATION_8_BIT" class="DayOfWeekEnum">
+        <field type="BITMAP_8_BIT" class="DayOfWeekEnum">
             <name>Day Of Week</name>
         </field>
-        <field type="ENUMERATION_8_BIT" class="ModeForSequenceEnum">
+        <field type="BITMAP_8_BIT" class="ModeForSequenceEnum">
             <name>Mode</name>
         </field>
         <field type="UNSIGNED_16_BIT_INTEGER">
@@ -54,10 +54,10 @@
         <field type="ENUMERATION_8_BIT">
             <name>Number Of Transitions</name>
         </field>
-        <field type="ENUMERATION_8_BIT" class="DayOfWeekEnum">
+        <field type="BITMAP_8_BIT" class="DayOfWeekEnum">
             <name>Day Of Week</name>
         </field>
-        <field type="ENUMERATION_8_BIT" class="ModeForSequenceEnum">
+        <field type="BITMAP_8_BIT" class="ModeForSequenceEnum">
             <name>Mode</name>
         </field>
         <field type="UNSIGNED_16_BIT_INTEGER">
@@ -131,7 +131,7 @@
     <attribute code="0x0009" type="BITMAP_8_BIT" side="server" optional="true" writable="false" reportable="false">
         <name>Hvac System Type Configuration</name>
     </attribute>
-    <attribute code="0x0010" type="SIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0xE7" maximum="0x19" default="0x00">
+    <attribute code="0x0010" type="SIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0xE7" maximum="0x19" default="0x00">
         <name>Local Temperature Calibration</name>
     </attribute>
     <attribute code="0x0011" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" default="0x0A28">
@@ -158,7 +158,7 @@
     <attribute code="0x0018" type="SIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x954D" maximum="0x7FFF" default="0x0C80">
         <name>Max Cool Setpoint Limit</name>
     </attribute>
-    <attribute code="0x0019" type="SIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x0A" maximum="0x19" default="0x19">
+    <attribute code="0x0019" type="SIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x0A" maximum="0x19" default="0x19">
         <name>Min Setpoint Dead Band</name>
     </attribute>
     <attribute code="0x001A" type="BITMAP_8_BIT" side="server" optional="true" writable="false" reportable="false" default="0x00">
@@ -170,11 +170,86 @@
     <attribute code="0x001C" type="ENUMERATION_8_BIT" side="server" optional="false" writable="false" reportable="false" default="0x01">
         <name>System Mode</name>
     </attribute>
-    <attribute code="0x001D" type="ENUMERATION_8_BIT" side="server" optional="true" writable="false" reportable="false" default="0x00">
+    <attribute code="0x001D" type="BITMAP_8_BIT" side="server" optional="true" writable="false" reportable="false" default="0x00">
         <name>Alarm Mask</name>
     </attribute>
     <attribute code="0x001E" type="ENUMERATION_8_BIT" side="server" optional="true" writable="false" reportable="false">
         <name>Thermostat Running Mode</name>
+    </attribute>
+    <attribute code="0x0020" type="ENUMERATION_8_BIT" side="server" optional="true" writable="false" reportable="false" minimum="0x00" maximum="0x06">
+        <name>Start Of Week</name>
+    </attribute>
+    <attribute code="0x0021" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x00" maximum="0xFF">
+        <name>Numer Of Weekly Transitions</name>
+    </attribute>
+    <attribute code="0x0022" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x00" maximum="0xFF">
+        <name>Numer Of Daily Transitions</name>
+    </attribute>
+    <attribute code="0x0023" type="ENUMERATION_8_BIT" side="server" optional="true" writable="true" reportable="false" minimum="0x00" maximum="0x01" default="0x00">
+        <name>Temperature Setpoint Hold</name>
+    </attribute>
+    <attribute code="0x0024" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false" minimum="0x05A0" maximum="0xFFFF" default="0xFFFF">
+        <name>Temperature Setpoint Hold Duration</name>
+    </attribute>
+    <attribute code="0x0025" type="BITMAP_8_BIT" side="server" optional="true" writable="true" reportable="false">
+        <name>Thermostat Programming Operation Mode</name>
+    </attribute>
+    <attribute code="0x0029" type="BITMAP_16_BIT" side="server" optional="true" writable="false" reportable="false">
+        <name>Thermostat Running State</name>
+    </attribute>
+    <attribute code="0x0030" type="ENUMERATION_8_BIT" side="server" optional="true" writable="false" reportable="false" minimum="0x00" maximum="0xFF" default="0x00">
+        <name>Setpoint Change Source</name>
+    </attribute>
+    <attribute code="0x0031" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x8000">
+        <name>Setpoint Change Amount</name>
+    </attribute>
+    <attribute code="0x0032" type="UTCTIME" side="server" optional="true" writable="false" reportable="false">
+        <name>Setpoint Change Source Timestamp</name>
+    </attribute>
+    <attribute code="0x0034" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false" default="0xFF">
+        <name>Occupied Setback</name>
+    </attribute>
+    <attribute code="0x0035" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" default="0xFF">
+        <name>Occupied Setback Min</name>
+    </attribute>
+    <attribute code="0x0036" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" default="0xFF">
+        <name>Occupied Setback Max</name>
+    </attribute>
+    <attribute code="0x0037" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false" default="0xFF">
+        <name>Unoccupied Setback</name>
+    </attribute>
+    <attribute code="0x0038" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" default="0xFF">
+        <name>Unoccupied Setback Min</name>
+    </attribute>
+    <attribute code="0x0039" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" default="0xFF">
+        <name>Unoccupied Setback Max</name>
+    </attribute>
+    <attribute code="0x003A" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false" minimum="0x00" maximum="0xFF" default="0xFF">
+        <name>Emergency Heat Delta</name>
+    </attribute>
+    <attribute code="0x0040" type="ENUMERATION_8_BIT" side="server" optional="true" writable="true" reportable="false" minimum="0x00" maximum="0x04" default="0x00">
+        <name>AC Type</name>
+    </attribute>
+    <attribute code="0x0041" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false" minimum="0x0000" maximum="0xFFFF" default="0x0000">
+        <name>AC Capacity</name>
+    </attribute>
+    <attribute code="0x0042" type="ENUMERATION_8_BIT" side="server" optional="true" writable="true" reportable="false" minimum="0x00" maximum="0x03" default="0x00">
+        <name>AC Refrigerant Type</name>
+    </attribute>
+    <attribute code="0x0043" type="ENUMERATION_8_BIT" side="server" optional="true" writable="true" reportable="false" minimum="0x00" maximum="0x03" default="0x00">
+        <name>AC Compressor Type</name>
+    </attribute>
+    <attribute code="0x0044" type="BITMAP_32_BIT" side="server" optional="true" writable="true" reportable="false">
+        <name>AC Error Code</name>
+    </attribute>
+    <attribute code="0x0045" type="ENUMERATION_8_BIT" side="server" optional="true" writable="true" reportable="false" minimum="0x00" maximum="0x05" default="0x00">
+        <name>AC Louver Position</name>
+    </attribute>
+    <attribute code="0x0046" type="SIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x954D" maximum="0x7FFF">
+        <name>AC Coil Temperature</name>
+    </attribute>
+    <attribute code="0x0047" type="ENUMERATION_8_BIT" side="server" optional="true" writable="true" reportable="false" minimum="0x00" maximum="0xFF" default="0x00">
+        <name>AC Capacity Format</name>
     </attribute>
 
     <constant type="BITMAP_8_BIT" class="DayOfWeekBitmap">
@@ -210,6 +285,92 @@
         <value code="0x01" name="Cool Setpoint">
         </value>
         <value code="0x02" name="Heat And Cool Setpoints">
+        </value>
+    </constant>
+    <constant type="ENUMERATION_8_BIT" class="StartOfWeekEnum">
+        <name>Start Of Week</name>
+        <value code="0x00" name="Sunday">
+        </value>
+        <value code="0x01" name="Monday">
+        </value>
+        <value code="0x02" name="Tuesday">
+        </value>
+        <value code="0x03" name="Wednesday">
+        </value>
+        <value code="0x04" name="Thursday">
+        </value>
+        <value code="0x05" name="Friday">
+        </value>
+        <value code="0x06" name="Saturday">
+        </value>
+    </constant>
+    <constant type="ENUMERATION_8_BIT" class="TemperatureSetpointHoldEnum">
+        <name>Temperature Setpoint Hold</name>
+        <value code="0x00" name="Setpoint Hold Off">
+        </value>
+        <value code="0x01" name="Setpoint Hold On">
+        </value>
+    </constant>
+    <constant type="ENUMERATION_8_BIT" class="SetpointChangeSourceEnum">
+        <name>Setpoint Change Source</name>
+        <value code="0x00" name="Manual user-initiated">
+        </value>
+        <value code="0x01" name="Schedule/internal programming-initiated">
+        </value>
+        <value code="0x02" name="Externally-initiated">
+        </value>
+    </constant>
+    <constant type="ENUMERATION_8_BIT" class="ACTypeEnum">
+        <name>AC Type</name>
+        <value code="0x00" name="Reserved">
+        </value>
+        <value code="0x01" name="Cooling and Fixed Speed">
+        </value>
+        <value code="0x02" name="Heat Pump and Fixed Speed">
+        </value>
+        <value code="0x03" name="Cooling and Inverter">
+        </value>
+        <value code="0x04" name="Heat Pump and Inverter">
+        </value>
+    </constant>
+    <constant type="ENUMERATION_8_BIT" class="ACRefrigerantTypeEnum">
+        <name>AC Refrigerant Type</name>
+        <value code="0x00" name="Reserved">
+        </value>
+        <value code="0x01" name="R22">
+        </value>
+        <value code="0x02" name="R410a">
+        </value>
+        <value code="0x03" name="R407c">
+        </value>
+    </constant>
+    <constant type="ENUMERATION_8_BIT" class="ACCompressorTypeEnum">
+        <name>AC Compressor Type</name>
+        <value code="0x00" name="Reserved">
+        </value>
+        <value code="0x01" name="T1">
+        </value>
+        <value code="0x02" name="T2">
+        </value>
+        <value code="0x03" name="T3">
+        </value>
+    </constant>
+    <constant type="ENUMERATION_8_BIT" class="ACLouverPositionEnum">
+        <name>AC Louver Position</name>
+        <value code="0x01" name="Fully Closed">
+        </value>
+        <value code="0x02" name="Fully Open">
+        </value>
+        <value code="0x03" name="Quarter Open">
+        </value>
+        <value code="0x04" name="Half Open">
+        </value>
+        <value code="0x05" name="Three Quarters Open">
+        </value>
+    </constant>
+    <constant type="ENUMERATION_8_BIT" class="ACCapacityFormatEnum">
+        <name>AC Capacity Format</name>
+        <value code="0x00" name="BTUh">
         </value>
     </constant>
 </cluster>

@@ -32,7 +32,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-19T21:05:40Z")
 public class SetWeeklySchedule extends ZclThermostatCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -241,8 +241,8 @@ public class SetWeeklySchedule extends ZclThermostatCommand {
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
         serializer.serialize(numberOfTransitions, ZclDataType.ENUMERATION_8_BIT);
-        serializer.serialize(dayOfWeek, ZclDataType.ENUMERATION_8_BIT);
-        serializer.serialize(mode, ZclDataType.ENUMERATION_8_BIT);
+        serializer.serialize(dayOfWeek, ZclDataType.BITMAP_8_BIT);
+        serializer.serialize(mode, ZclDataType.BITMAP_8_BIT);
         serializer.serialize(transition, ZclDataType.UNSIGNED_16_BIT_INTEGER);
         serializer.serialize(heatSet, ZclDataType.SIGNED_16_BIT_INTEGER);
         serializer.serialize(coolSet, ZclDataType.SIGNED_16_BIT_INTEGER);
@@ -251,8 +251,8 @@ public class SetWeeklySchedule extends ZclThermostatCommand {
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
         numberOfTransitions = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        dayOfWeek = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        mode = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        dayOfWeek = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        mode = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
         transition = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         heatSet = (Integer) deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
         coolSet = (Integer) deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
