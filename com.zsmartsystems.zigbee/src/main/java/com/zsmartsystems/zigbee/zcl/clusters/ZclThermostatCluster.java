@@ -7,6 +7,7 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters;
 
+import java.util.Calendar;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.Future;
@@ -35,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-19T21:05:40Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-20T07:40:15Z")
 public class ZclThermostatCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -110,6 +111,31 @@ public class ZclThermostatCluster extends ZclCluster {
     public static final int ATTR_SYSTEMMODE = 0x001C;
     public static final int ATTR_ALARMMASK = 0x001D;
     public static final int ATTR_THERMOSTATRUNNINGMODE = 0x001E;
+    public static final int ATTR_STARTOFWEEK = 0x0020;
+    public static final int ATTR_NUMEROFWEEKLYTRANSITIONS = 0x0021;
+    public static final int ATTR_NUMEROFDAILYTRANSITIONS = 0x0022;
+    public static final int ATTR_TEMPERATURESETPOINTHOLD = 0x0023;
+    public static final int ATTR_TEMPERATURESETPOINTHOLDDURATION = 0x0024;
+    public static final int ATTR_THERMOSTATPROGRAMMINGOPERATIONMODE = 0x0025;
+    public static final int ATTR_THERMOSTATRUNNINGSTATE = 0x0029;
+    public static final int ATTR_SETPOINTCHANGESOURCE = 0x0030;
+    public static final int ATTR_SETPOINTCHANGEAMOUNT = 0x0031;
+    public static final int ATTR_SETPOINTCHANGESOURCETIMESTAMP = 0x0032;
+    public static final int ATTR_OCCUPIEDSETBACK = 0x0034;
+    public static final int ATTR_OCCUPIEDSETBACKMIN = 0x0035;
+    public static final int ATTR_OCCUPIEDSETBACKMAX = 0x0036;
+    public static final int ATTR_UNOCCUPIEDSETBACK = 0x0037;
+    public static final int ATTR_UNOCCUPIEDSETBACKMIN = 0x0038;
+    public static final int ATTR_UNOCCUPIEDSETBACKMAX = 0x0039;
+    public static final int ATTR_EMERGENCYHEATDELTA = 0x003A;
+    public static final int ATTR_ACTYPE = 0x0040;
+    public static final int ATTR_ACCAPACITY = 0x0041;
+    public static final int ATTR_ACREFRIGERANTTYPE = 0x0042;
+    public static final int ATTR_ACCOMPRESSORTYPE = 0x0043;
+    public static final int ATTR_ACERRORCODE = 0x0044;
+    public static final int ATTR_ACLOUVERPOSITION = 0x0045;
+    public static final int ATTR_ACCOILTEMPERATURE = 0x0046;
+    public static final int ATTR_ACCAPACITYFORMAT = 0x0047;
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
@@ -147,6 +173,31 @@ public class ZclThermostatCluster extends ZclCluster {
         attributeMap.put(ATTR_SYSTEMMODE, new ZclAttribute(this, ATTR_SYSTEMMODE, "System Mode", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
         attributeMap.put(ATTR_ALARMMASK, new ZclAttribute(this, ATTR_ALARMMASK, "Alarm Mask", ZclDataType.BITMAP_8_BIT, false, true, false, false));
         attributeMap.put(ATTR_THERMOSTATRUNNINGMODE, new ZclAttribute(this, ATTR_THERMOSTATRUNNINGMODE, "Thermostat Running Mode", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
+        attributeMap.put(ATTR_STARTOFWEEK, new ZclAttribute(this, ATTR_STARTOFWEEK, "Start Of Week", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
+        attributeMap.put(ATTR_NUMEROFWEEKLYTRANSITIONS, new ZclAttribute(this, ATTR_NUMEROFWEEKLYTRANSITIONS, "Numer Of Weekly Transitions", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_NUMEROFDAILYTRANSITIONS, new ZclAttribute(this, ATTR_NUMEROFDAILYTRANSITIONS, "Numer Of Daily Transitions", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_TEMPERATURESETPOINTHOLD, new ZclAttribute(this, ATTR_TEMPERATURESETPOINTHOLD, "Temperature Setpoint Hold", ZclDataType.ENUMERATION_8_BIT, false, true, true, false));
+        attributeMap.put(ATTR_TEMPERATURESETPOINTHOLDDURATION, new ZclAttribute(this, ATTR_TEMPERATURESETPOINTHOLDDURATION, "Temperature Setpoint Hold Duration", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_THERMOSTATPROGRAMMINGOPERATIONMODE, new ZclAttribute(this, ATTR_THERMOSTATPROGRAMMINGOPERATIONMODE, "Thermostat Programming Operation Mode", ZclDataType.BITMAP_8_BIT, false, true, true, false));
+        attributeMap.put(ATTR_THERMOSTATRUNNINGSTATE, new ZclAttribute(this, ATTR_THERMOSTATRUNNINGSTATE, "Thermostat Running State", ZclDataType.BITMAP_16_BIT, false, true, false, false));
+        attributeMap.put(ATTR_SETPOINTCHANGESOURCE, new ZclAttribute(this, ATTR_SETPOINTCHANGESOURCE, "Setpoint Change Source", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
+        attributeMap.put(ATTR_SETPOINTCHANGEAMOUNT, new ZclAttribute(this, ATTR_SETPOINTCHANGEAMOUNT, "Setpoint Change Amount", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_SETPOINTCHANGESOURCETIMESTAMP, new ZclAttribute(this, ATTR_SETPOINTCHANGESOURCETIMESTAMP, "Setpoint Change Source Timestamp", ZclDataType.UTCTIME, false, true, false, false));
+        attributeMap.put(ATTR_OCCUPIEDSETBACK, new ZclAttribute(this, ATTR_OCCUPIEDSETBACK, "Occupied Setback", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_OCCUPIEDSETBACKMIN, new ZclAttribute(this, ATTR_OCCUPIEDSETBACKMIN, "Occupied Setback Min", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_OCCUPIEDSETBACKMAX, new ZclAttribute(this, ATTR_OCCUPIEDSETBACKMAX, "Occupied Setback Max", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_UNOCCUPIEDSETBACK, new ZclAttribute(this, ATTR_UNOCCUPIEDSETBACK, "Unoccupied Setback", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_UNOCCUPIEDSETBACKMIN, new ZclAttribute(this, ATTR_UNOCCUPIEDSETBACKMIN, "Unoccupied Setback Min", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_UNOCCUPIEDSETBACKMAX, new ZclAttribute(this, ATTR_UNOCCUPIEDSETBACKMAX, "Unoccupied Setback Max", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_EMERGENCYHEATDELTA, new ZclAttribute(this, ATTR_EMERGENCYHEATDELTA, "Emergency Heat Delta", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_ACTYPE, new ZclAttribute(this, ATTR_ACTYPE, "AC Type", ZclDataType.ENUMERATION_8_BIT, false, true, true, false));
+        attributeMap.put(ATTR_ACCAPACITY, new ZclAttribute(this, ATTR_ACCAPACITY, "AC Capacity", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_ACREFRIGERANTTYPE, new ZclAttribute(this, ATTR_ACREFRIGERANTTYPE, "AC Refrigerant Type", ZclDataType.ENUMERATION_8_BIT, false, true, true, false));
+        attributeMap.put(ATTR_ACCOMPRESSORTYPE, new ZclAttribute(this, ATTR_ACCOMPRESSORTYPE, "AC Compressor Type", ZclDataType.ENUMERATION_8_BIT, false, true, true, false));
+        attributeMap.put(ATTR_ACERRORCODE, new ZclAttribute(this, ATTR_ACERRORCODE, "AC Error Code", ZclDataType.BITMAP_32_BIT, false, true, true, false));
+        attributeMap.put(ATTR_ACLOUVERPOSITION, new ZclAttribute(this, ATTR_ACLOUVERPOSITION, "AC Louver Position", ZclDataType.ENUMERATION_8_BIT, false, true, true, false));
+        attributeMap.put(ATTR_ACCOILTEMPERATURE, new ZclAttribute(this, ATTR_ACCOILTEMPERATURE, "AC Coil Temperature", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_ACCAPACITYFORMAT, new ZclAttribute(this, ATTR_ACCAPACITYFORMAT, "AC Capacity Format", ZclDataType.ENUMERATION_8_BIT, false, true, true, false));
 
         return attributeMap;
     }
@@ -1400,6 +1451,1264 @@ public class ZclThermostatCluster extends ZclCluster {
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_THERMOSTATRUNNINGMODE));
+    }
+
+    /**
+     * Get the <i>Start Of Week</i> attribute [attribute ID <b>0x0020</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getStartOfWeekAsync() {
+        return read(serverAttributes.get(ATTR_STARTOFWEEK));
+    }
+
+    /**
+     * Synchronously get the <i>Start Of Week</i> attribute [attribute ID <b>0x0020</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getStartOfWeek(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_STARTOFWEEK).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_STARTOFWEEK).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_STARTOFWEEK));
+    }
+
+    /**
+     * Get the <i>Numer Of Weekly Transitions</i> attribute [attribute ID <b>0x0021</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getNumerOfWeeklyTransitionsAsync() {
+        return read(serverAttributes.get(ATTR_NUMEROFWEEKLYTRANSITIONS));
+    }
+
+    /**
+     * Synchronously get the <i>Numer Of Weekly Transitions</i> attribute [attribute ID <b>0x0021</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getNumerOfWeeklyTransitions(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_NUMEROFWEEKLYTRANSITIONS).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_NUMEROFWEEKLYTRANSITIONS).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_NUMEROFWEEKLYTRANSITIONS));
+    }
+
+    /**
+     * Get the <i>Numer Of Daily Transitions</i> attribute [attribute ID <b>0x0022</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getNumerOfDailyTransitionsAsync() {
+        return read(serverAttributes.get(ATTR_NUMEROFDAILYTRANSITIONS));
+    }
+
+    /**
+     * Synchronously get the <i>Numer Of Daily Transitions</i> attribute [attribute ID <b>0x0022</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getNumerOfDailyTransitions(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_NUMEROFDAILYTRANSITIONS).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_NUMEROFDAILYTRANSITIONS).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_NUMEROFDAILYTRANSITIONS));
+    }
+
+    /**
+     * Set the <i>Temperature Setpoint Hold</i> attribute [attribute ID <b>0x0023</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param temperatureSetpointHold the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setTemperatureSetpointHold(final Integer value) {
+        return write(serverAttributes.get(ATTR_TEMPERATURESETPOINTHOLD), value);
+    }
+
+    /**
+     * Get the <i>Temperature Setpoint Hold</i> attribute [attribute ID <b>0x0023</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getTemperatureSetpointHoldAsync() {
+        return read(serverAttributes.get(ATTR_TEMPERATURESETPOINTHOLD));
+    }
+
+    /**
+     * Synchronously get the <i>Temperature Setpoint Hold</i> attribute [attribute ID <b>0x0023</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getTemperatureSetpointHold(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_TEMPERATURESETPOINTHOLD).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TEMPERATURESETPOINTHOLD).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_TEMPERATURESETPOINTHOLD));
+    }
+
+    /**
+     * Set the <i>Temperature Setpoint Hold Duration</i> attribute [attribute ID <b>0x0024</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param temperatureSetpointHoldDuration the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setTemperatureSetpointHoldDuration(final Integer value) {
+        return write(serverAttributes.get(ATTR_TEMPERATURESETPOINTHOLDDURATION), value);
+    }
+
+    /**
+     * Get the <i>Temperature Setpoint Hold Duration</i> attribute [attribute ID <b>0x0024</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getTemperatureSetpointHoldDurationAsync() {
+        return read(serverAttributes.get(ATTR_TEMPERATURESETPOINTHOLDDURATION));
+    }
+
+    /**
+     * Synchronously get the <i>Temperature Setpoint Hold Duration</i> attribute [attribute ID <b>0x0024</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getTemperatureSetpointHoldDuration(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_TEMPERATURESETPOINTHOLDDURATION).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_TEMPERATURESETPOINTHOLDDURATION).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_TEMPERATURESETPOINTHOLDDURATION));
+    }
+
+    /**
+     * Set the <i>Thermostat Programming Operation Mode</i> attribute [attribute ID <b>0x0025</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param thermostatProgrammingOperationMode the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setThermostatProgrammingOperationMode(final Integer value) {
+        return write(serverAttributes.get(ATTR_THERMOSTATPROGRAMMINGOPERATIONMODE), value);
+    }
+
+    /**
+     * Get the <i>Thermostat Programming Operation Mode</i> attribute [attribute ID <b>0x0025</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getThermostatProgrammingOperationModeAsync() {
+        return read(serverAttributes.get(ATTR_THERMOSTATPROGRAMMINGOPERATIONMODE));
+    }
+
+    /**
+     * Synchronously get the <i>Thermostat Programming Operation Mode</i> attribute [attribute ID <b>0x0025</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getThermostatProgrammingOperationMode(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_THERMOSTATPROGRAMMINGOPERATIONMODE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_THERMOSTATPROGRAMMINGOPERATIONMODE).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_THERMOSTATPROGRAMMINGOPERATIONMODE));
+    }
+
+    /**
+     * Get the <i>Thermostat Running State</i> attribute [attribute ID <b>0x0029</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getThermostatRunningStateAsync() {
+        return read(serverAttributes.get(ATTR_THERMOSTATRUNNINGSTATE));
+    }
+
+    /**
+     * Synchronously get the <i>Thermostat Running State</i> attribute [attribute ID <b>0x0029</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getThermostatRunningState(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_THERMOSTATRUNNINGSTATE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_THERMOSTATRUNNINGSTATE).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_THERMOSTATRUNNINGSTATE));
+    }
+
+    /**
+     * Get the <i>Setpoint Change Source</i> attribute [attribute ID <b>0x0030</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getSetpointChangeSourceAsync() {
+        return read(serverAttributes.get(ATTR_SETPOINTCHANGESOURCE));
+    }
+
+    /**
+     * Synchronously get the <i>Setpoint Change Source</i> attribute [attribute ID <b>0x0030</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getSetpointChangeSource(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_SETPOINTCHANGESOURCE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_SETPOINTCHANGESOURCE).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_SETPOINTCHANGESOURCE));
+    }
+
+    /**
+     * Get the <i>Setpoint Change Amount</i> attribute [attribute ID <b>0x0031</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getSetpointChangeAmountAsync() {
+        return read(serverAttributes.get(ATTR_SETPOINTCHANGEAMOUNT));
+    }
+
+    /**
+     * Synchronously get the <i>Setpoint Change Amount</i> attribute [attribute ID <b>0x0031</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getSetpointChangeAmount(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_SETPOINTCHANGEAMOUNT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_SETPOINTCHANGEAMOUNT).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_SETPOINTCHANGEAMOUNT));
+    }
+
+    /**
+     * Get the <i>Setpoint Change Source Timestamp</i> attribute [attribute ID <b>0x0032</b>].
+     * <p>
+     * The attribute is of type {@link Calendar}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getSetpointChangeSourceTimestampAsync() {
+        return read(serverAttributes.get(ATTR_SETPOINTCHANGESOURCETIMESTAMP));
+    }
+
+    /**
+     * Synchronously get the <i>Setpoint Change Source Timestamp</i> attribute [attribute ID <b>0x0032</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Calendar}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Calendar} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Calendar getSetpointChangeSourceTimestamp(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_SETPOINTCHANGESOURCETIMESTAMP).isLastValueCurrent(refreshPeriod)) {
+            return (Calendar) serverAttributes.get(ATTR_SETPOINTCHANGESOURCETIMESTAMP).getLastValue();
+        }
+
+        return (Calendar) readSync(serverAttributes.get(ATTR_SETPOINTCHANGESOURCETIMESTAMP));
+    }
+
+    /**
+     * Set the <i>Occupied Setback</i> attribute [attribute ID <b>0x0034</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param occupiedSetback the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setOccupiedSetback(final Integer value) {
+        return write(serverAttributes.get(ATTR_OCCUPIEDSETBACK), value);
+    }
+
+    /**
+     * Get the <i>Occupied Setback</i> attribute [attribute ID <b>0x0034</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getOccupiedSetbackAsync() {
+        return read(serverAttributes.get(ATTR_OCCUPIEDSETBACK));
+    }
+
+    /**
+     * Synchronously get the <i>Occupied Setback</i> attribute [attribute ID <b>0x0034</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getOccupiedSetback(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_OCCUPIEDSETBACK).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_OCCUPIEDSETBACK).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_OCCUPIEDSETBACK));
+    }
+
+    /**
+     * Get the <i>Occupied Setback Min</i> attribute [attribute ID <b>0x0035</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getOccupiedSetbackMinAsync() {
+        return read(serverAttributes.get(ATTR_OCCUPIEDSETBACKMIN));
+    }
+
+    /**
+     * Synchronously get the <i>Occupied Setback Min</i> attribute [attribute ID <b>0x0035</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getOccupiedSetbackMin(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_OCCUPIEDSETBACKMIN).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_OCCUPIEDSETBACKMIN).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_OCCUPIEDSETBACKMIN));
+    }
+
+    /**
+     * Get the <i>Occupied Setback Max</i> attribute [attribute ID <b>0x0036</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getOccupiedSetbackMaxAsync() {
+        return read(serverAttributes.get(ATTR_OCCUPIEDSETBACKMAX));
+    }
+
+    /**
+     * Synchronously get the <i>Occupied Setback Max</i> attribute [attribute ID <b>0x0036</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getOccupiedSetbackMax(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_OCCUPIEDSETBACKMAX).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_OCCUPIEDSETBACKMAX).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_OCCUPIEDSETBACKMAX));
+    }
+
+    /**
+     * Set the <i>Unoccupied Setback</i> attribute [attribute ID <b>0x0037</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param unoccupiedSetback the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setUnoccupiedSetback(final Integer value) {
+        return write(serverAttributes.get(ATTR_UNOCCUPIEDSETBACK), value);
+    }
+
+    /**
+     * Get the <i>Unoccupied Setback</i> attribute [attribute ID <b>0x0037</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getUnoccupiedSetbackAsync() {
+        return read(serverAttributes.get(ATTR_UNOCCUPIEDSETBACK));
+    }
+
+    /**
+     * Synchronously get the <i>Unoccupied Setback</i> attribute [attribute ID <b>0x0037</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getUnoccupiedSetback(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_UNOCCUPIEDSETBACK).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_UNOCCUPIEDSETBACK).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_UNOCCUPIEDSETBACK));
+    }
+
+    /**
+     * Get the <i>Unoccupied Setback Min</i> attribute [attribute ID <b>0x0038</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getUnoccupiedSetbackMinAsync() {
+        return read(serverAttributes.get(ATTR_UNOCCUPIEDSETBACKMIN));
+    }
+
+    /**
+     * Synchronously get the <i>Unoccupied Setback Min</i> attribute [attribute ID <b>0x0038</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getUnoccupiedSetbackMin(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_UNOCCUPIEDSETBACKMIN).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_UNOCCUPIEDSETBACKMIN).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_UNOCCUPIEDSETBACKMIN));
+    }
+
+    /**
+     * Get the <i>Unoccupied Setback Max</i> attribute [attribute ID <b>0x0039</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getUnoccupiedSetbackMaxAsync() {
+        return read(serverAttributes.get(ATTR_UNOCCUPIEDSETBACKMAX));
+    }
+
+    /**
+     * Synchronously get the <i>Unoccupied Setback Max</i> attribute [attribute ID <b>0x0039</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getUnoccupiedSetbackMax(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_UNOCCUPIEDSETBACKMAX).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_UNOCCUPIEDSETBACKMAX).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_UNOCCUPIEDSETBACKMAX));
+    }
+
+    /**
+     * Set the <i>Emergency Heat Delta</i> attribute [attribute ID <b>0x003A</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param emergencyHeatDelta the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setEmergencyHeatDelta(final Integer value) {
+        return write(serverAttributes.get(ATTR_EMERGENCYHEATDELTA), value);
+    }
+
+    /**
+     * Get the <i>Emergency Heat Delta</i> attribute [attribute ID <b>0x003A</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getEmergencyHeatDeltaAsync() {
+        return read(serverAttributes.get(ATTR_EMERGENCYHEATDELTA));
+    }
+
+    /**
+     * Synchronously get the <i>Emergency Heat Delta</i> attribute [attribute ID <b>0x003A</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getEmergencyHeatDelta(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_EMERGENCYHEATDELTA).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_EMERGENCYHEATDELTA).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_EMERGENCYHEATDELTA));
+    }
+
+    /**
+     * Set the <i>AC Type</i> attribute [attribute ID <b>0x0040</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param acType the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setAcType(final Integer value) {
+        return write(serverAttributes.get(ATTR_ACTYPE), value);
+    }
+
+    /**
+     * Get the <i>AC Type</i> attribute [attribute ID <b>0x0040</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getAcTypeAsync() {
+        return read(serverAttributes.get(ATTR_ACTYPE));
+    }
+
+    /**
+     * Synchronously get the <i>AC Type</i> attribute [attribute ID <b>0x0040</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getAcType(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_ACTYPE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACTYPE).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_ACTYPE));
+    }
+
+    /**
+     * Set the <i>AC Capacity</i> attribute [attribute ID <b>0x0041</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param acCapacity the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setAcCapacity(final Integer value) {
+        return write(serverAttributes.get(ATTR_ACCAPACITY), value);
+    }
+
+    /**
+     * Get the <i>AC Capacity</i> attribute [attribute ID <b>0x0041</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getAcCapacityAsync() {
+        return read(serverAttributes.get(ATTR_ACCAPACITY));
+    }
+
+    /**
+     * Synchronously get the <i>AC Capacity</i> attribute [attribute ID <b>0x0041</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getAcCapacity(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_ACCAPACITY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACCAPACITY).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_ACCAPACITY));
+    }
+
+    /**
+     * Set the <i>AC Refrigerant Type</i> attribute [attribute ID <b>0x0042</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param acRefrigerantType the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setAcRefrigerantType(final Integer value) {
+        return write(serverAttributes.get(ATTR_ACREFRIGERANTTYPE), value);
+    }
+
+    /**
+     * Get the <i>AC Refrigerant Type</i> attribute [attribute ID <b>0x0042</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getAcRefrigerantTypeAsync() {
+        return read(serverAttributes.get(ATTR_ACREFRIGERANTTYPE));
+    }
+
+    /**
+     * Synchronously get the <i>AC Refrigerant Type</i> attribute [attribute ID <b>0x0042</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getAcRefrigerantType(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_ACREFRIGERANTTYPE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACREFRIGERANTTYPE).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_ACREFRIGERANTTYPE));
+    }
+
+    /**
+     * Set the <i>AC Compressor Type</i> attribute [attribute ID <b>0x0043</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param acCompressorType the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setAcCompressorType(final Integer value) {
+        return write(serverAttributes.get(ATTR_ACCOMPRESSORTYPE), value);
+    }
+
+    /**
+     * Get the <i>AC Compressor Type</i> attribute [attribute ID <b>0x0043</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getAcCompressorTypeAsync() {
+        return read(serverAttributes.get(ATTR_ACCOMPRESSORTYPE));
+    }
+
+    /**
+     * Synchronously get the <i>AC Compressor Type</i> attribute [attribute ID <b>0x0043</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getAcCompressorType(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_ACCOMPRESSORTYPE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACCOMPRESSORTYPE).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_ACCOMPRESSORTYPE));
+    }
+
+    /**
+     * Set the <i>AC Error Code</i> attribute [attribute ID <b>0x0044</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param acErrorCode the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setAcErrorCode(final Integer value) {
+        return write(serverAttributes.get(ATTR_ACERRORCODE), value);
+    }
+
+    /**
+     * Get the <i>AC Error Code</i> attribute [attribute ID <b>0x0044</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getAcErrorCodeAsync() {
+        return read(serverAttributes.get(ATTR_ACERRORCODE));
+    }
+
+    /**
+     * Synchronously get the <i>AC Error Code</i> attribute [attribute ID <b>0x0044</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getAcErrorCode(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_ACERRORCODE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACERRORCODE).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_ACERRORCODE));
+    }
+
+    /**
+     * Set the <i>AC Louver Position</i> attribute [attribute ID <b>0x0045</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param acLouverPosition the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setAcLouverPosition(final Integer value) {
+        return write(serverAttributes.get(ATTR_ACLOUVERPOSITION), value);
+    }
+
+    /**
+     * Get the <i>AC Louver Position</i> attribute [attribute ID <b>0x0045</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getAcLouverPositionAsync() {
+        return read(serverAttributes.get(ATTR_ACLOUVERPOSITION));
+    }
+
+    /**
+     * Synchronously get the <i>AC Louver Position</i> attribute [attribute ID <b>0x0045</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getAcLouverPosition(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_ACLOUVERPOSITION).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACLOUVERPOSITION).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_ACLOUVERPOSITION));
+    }
+
+    /**
+     * Get the <i>AC Coil Temperature</i> attribute [attribute ID <b>0x0046</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getAcCoilTemperatureAsync() {
+        return read(serverAttributes.get(ATTR_ACCOILTEMPERATURE));
+    }
+
+    /**
+     * Synchronously get the <i>AC Coil Temperature</i> attribute [attribute ID <b>0x0046</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getAcCoilTemperature(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_ACCOILTEMPERATURE).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACCOILTEMPERATURE).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_ACCOILTEMPERATURE));
+    }
+
+    /**
+     * Set the <i>AC Capacity Format</i> attribute [attribute ID <b>0x0047</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param acCapacityFormat the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setAcCapacityFormat(final Integer value) {
+        return write(serverAttributes.get(ATTR_ACCAPACITYFORMAT), value);
+    }
+
+    /**
+     * Get the <i>AC Capacity Format</i> attribute [attribute ID <b>0x0047</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getAcCapacityFormatAsync() {
+        return read(serverAttributes.get(ATTR_ACCAPACITYFORMAT));
+    }
+
+    /**
+     * Synchronously get the <i>AC Capacity Format</i> attribute [attribute ID <b>0x0047</b>].
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getAcCapacityFormat(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_ACCAPACITYFORMAT).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_ACCAPACITYFORMAT).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_ACCAPACITYFORMAT));
     }
 
     /**
