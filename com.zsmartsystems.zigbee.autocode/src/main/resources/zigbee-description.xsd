@@ -97,6 +97,20 @@
 						<xs:attribute type="xs:string" name="class" use="optional" />
 					</xs:complexType>
 				</xs:element>
+				<xs:element name="scenes" maxOccurs="1" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="extensionfield" maxOccurs="1" minOccurs="1">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element type="xs:string" name="attribute" maxOccurs="unbounded" minOccurs="1"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute type="xs:string" name="class" use="optional" />
+					</xs:complexType>
+				</xs:element>
 			</xs:sequence>
 			<xs:attribute type="xs:string" name="code" />
 		</xs:complexType>

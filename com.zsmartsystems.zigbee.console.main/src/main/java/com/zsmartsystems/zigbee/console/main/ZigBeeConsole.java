@@ -70,6 +70,7 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingConfigCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingSubscribeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingUnsubscribeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleRoutingTableCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleSceneCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleSetPollIntervalCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleSmartEnergyCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleSwitchLevelCommand;
@@ -211,6 +212,7 @@ public final class ZigBeeConsole {
         newCommands.put("smartenergy", new ZigBeeConsoleSmartEnergyCommand());
         newCommands.put("cbke", new ZigBeeConsoleCbkeCommand());
         newCommands.put("group", new ZigBeeConsoleGroupCommand());
+        newCommands.put("scene", new ZigBeeConsoleSceneCommand());
 
         newCommands.put("on", new ZigBeeConsoleSwitchOnCommand());
         newCommands.put("off", new ZigBeeConsoleSwitchOffCommand());

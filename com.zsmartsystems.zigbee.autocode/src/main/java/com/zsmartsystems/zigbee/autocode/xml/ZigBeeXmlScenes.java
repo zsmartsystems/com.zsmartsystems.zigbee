@@ -7,20 +7,11 @@
  */
 package com.zsmartsystems.zigbee.autocode.xml;
 
-import java.util.List;
-
 /**
  *
  * @author Chris Jackson (zsmartsystems.com)
  *
  */
-public class ZigBeeXmlCluster {
-    public String name;
-    public Integer code;
-    public List<ZigBeeXmlDescription> description;
-    public List<ZigBeeXmlCommand> commands;
-    public List<ZigBeeXmlAttribute> attributes;
-    public List<ZigBeeXmlConstant> constants;
-    public List<ZigBeeXmlStructure> structures;
-    public ZigBeeXmlScenes scenes;
+public class ZigBeeXmlScenes {
+    public ZigBeeXmlExtensionField extensionField;
 }

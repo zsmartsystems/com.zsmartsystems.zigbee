@@ -15,6 +15,7 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
+import com.zsmartsystems.zigbee.zcl.field.ExtensionFieldSet;
 import com.zsmartsystems.zigbee.zcl.field.ZclArrayList;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
@@ -99,6 +100,10 @@ public class DefaultSerializer implements ZigBeeSerializer {
             case N_X_ATTRIBUTE_STATUS_RECORD:
                 break;
             case N_X_EXTENSION_FIELD_SET:
+                List<ExtensionFieldSet> extensionFieldSets = (List<ExtensionFieldSet>) data;
+                for (ExtensionFieldSet extensionFieldSet : extensionFieldSets) {
+                    extensionFieldSet.serialize(this);
+                }
                 break;
             case N_X_NEIGHBORS_INFORMATION:
                 break;

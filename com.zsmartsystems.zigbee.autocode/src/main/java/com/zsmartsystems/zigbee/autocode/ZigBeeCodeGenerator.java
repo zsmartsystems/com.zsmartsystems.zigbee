@@ -122,6 +122,8 @@ public class ZigBeeCodeGenerator {
         new ZigBeeZclStructureGenerator(zclClusters, generatedDate, zclTypes);
         new ZigBeeZclClusterTypeGenerator(zclClusters, generatedDate, zclTypes);
 
+        new ZigBeeZclSceneGenerator(zclClusters, generatedDate, zclTypes);
+
         new ZigBeeZclCommandGenerator(zdoClusters, generatedDate, zclTypes);
 
         zclParser = new ZigBeeXmlParser();
