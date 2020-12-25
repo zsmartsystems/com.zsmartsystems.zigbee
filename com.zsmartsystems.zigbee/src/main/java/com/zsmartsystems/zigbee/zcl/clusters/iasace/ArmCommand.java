@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
 public class ArmCommand extends ZclIasAceCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -72,7 +72,7 @@ public class ArmCommand extends ZclIasAceCommand {
     /**
      * Default constructor.
      *
-     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default constructor and setters.
      */
     @Deprecated
     public ArmCommand() {
