@@ -35,7 +35,7 @@ import com.zsmartsystems.zigbee.zdo.command.BindResponse;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-08-28T10:02:45Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
 public class BindRequest extends ZdoRequest implements ZigBeeTransactionMatcher {
     /**
      * The ZDO cluster ID.
@@ -91,7 +91,7 @@ public class BindRequest extends ZdoRequest implements ZigBeeTransactionMatcher 
     /**
      * Default constructor.
      *
-     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default constructor and setters.
      */
     @Deprecated
     public BindRequest() {
