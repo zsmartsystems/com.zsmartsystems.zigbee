@@ -1355,8 +1355,8 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
      * Devices can only join the network when joining is enabled. It is not advised to leave joining enabled permanently
      * since it allows devices to join the network without the installer knowing.
      *
-     * @param duration sets the duration of the join enable. Setting this to 0 disables joining. As per ZigBee 3, a
-     *            value of 255 is not permitted and will be ignored.
+     * @param duration sets the duration in seconds of the join being enabled. Setting this to 0 disables joining.
+     *                As per ZigBee 3, a value of 255 is not permitted and will be ignored.
      * @return {@link ZigBeeStatus} with the status of function
      */
     public ZigBeeStatus permitJoin(final int duration) {
@@ -1371,8 +1371,8 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
      * since it allows devices to join the network without the installer knowing.
      *
      * @param destination the {@link ZigBeeEndpointAddress} to send the join request to
-     * @param duration sets the duration of the join enable. Setting this to 0 disables joining. As per ZigBee 3, a
-     *            value of 255 is not permitted and will be ignored.
+     * @param duration sets the duration in seconds of the join being enabled. Setting this to 0 disables joining.
+     *                 As per ZigBee 3, a value of 255 is not permitted and will be ignored.
      * @return {@link ZigBeeStatus} with the status of function
      */
     public ZigBeeStatus permitJoin(final ZigBeeEndpointAddress destination, final int duration) {
