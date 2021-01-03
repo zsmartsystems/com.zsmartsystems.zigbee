@@ -31,6 +31,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import com.zsmartsystems.zigbee.zcl.clusters.onoff.OffCommand;
 import org.awaitility.Awaitility;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -500,6 +501,50 @@ public class ZigBeeNetworkManagerTest
         TestUtilities.setField(ZigBeeNetworkManager.class, networkManager, "networkState", ZigBeeNetworkState.ONLINE);
         networkManager.receiveCommand(apsFrame);
         Mockito.verify(listener, Mockito.never()).commandReceived(ArgumentMatchers.any(ZigBeeCommand.class));
+    }
+
+    @Test
+    public void testNodeMarkedAsOnlineWhenCommandIsReceived() throws Exception {
+        TestUtilities.outputTestHeader();
+        ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
+        networkManager.setSerializer(DefaultSerializer.class, DefaultDeserializer.class);
+
+        ZigBeeEndpoint endpoint = Mockito.mock(ZigBeeEndpoint.class);
+        ZclCluster cluster = new ZclOnOffCluster(endpoint);
+        Mockito.when(endpoint.getOutputCluster(cluster.getClusterId())).thenReturn(cluster);
+
+        IeeeAddress nodeIeeeAddress = new IeeeAddress("1111111111111111");
+        int nodeNwkAddress = 1234;
+        int testNodeEndpointId = 5;
+        ZigBeeNode node = new ZigBeeNode(mockZigBeeNetworkManager(), nodeIeeeAddress, nodeNwkAddress);
+        node.setNodeState(ZigBeeNodeState.UNKNOWN);
+        node.addEndpoint(new ZigBeeEndpoint(node, testNodeEndpointId));
+        networkManager.updateNode(node);
+
+        ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
+        apsFrame.setSourceAddress(nodeNwkAddress);
+        apsFrame.setDestinationAddress(0);
+        apsFrame.setApsCounter(1);
+
+        apsFrame.setCluster(ZclOnOffCluster.CLUSTER_ID);
+        apsFrame.setDestinationEndpoint(1);
+        apsFrame.setProfile(0x104);
+        apsFrame.setSourceEndpoint(testNodeEndpointId);
+
+        ZclHeader zclHeader = new ZclHeader();
+        zclHeader.setCommandId(OffCommand.COMMAND_ID);
+        zclHeader.setFrameType(ZclFrameType.ENTIRE_PROFILE_COMMAND);
+        zclHeader.setSequenceNumber(1);
+        zclHeader.setDirection(ZclCommandDirection.CLIENT_TO_SERVER);
+
+        DefaultSerializer serializer = new DefaultSerializer();
+        ZclFieldSerializer fieldSerializer = new ZclFieldSerializer(serializer);
+
+        apsFrame.setPayload(zclHeader.serialize(fieldSerializer, new int[]{}));
+
+        TestUtilities.setField(ZigBeeNetworkManager.class, networkManager, "networkState", ZigBeeNetworkState.ONLINE);
+        networkManager.receiveCommand(apsFrame);
+        assertEquals(ZigBeeNodeState.ONLINE, networkManager.getNode(nodeIeeeAddress).getNodeState());
     }
 
     @Test
