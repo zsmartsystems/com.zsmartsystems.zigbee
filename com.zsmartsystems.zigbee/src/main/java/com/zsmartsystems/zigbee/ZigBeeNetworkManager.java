@@ -919,6 +919,15 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             }
         }
 
+        // Set node state to ONLINE
+        int sourceAddress = apsFrame.getSourceAddress();
+        ZigBeeNode zigBeeNode = getNode(sourceAddress);
+        if (zigBeeNode != null) {
+            ZigBeeNode updatedNode = new ZigBeeNode(this, zigBeeNode.getIeeeAddress(), sourceAddress);
+            updatedNode.setNodeState(ZigBeeNodeState.ONLINE);
+            refreshNode(updatedNode);
+        }
+
         // Create the deserialiser
         Constructor<? extends ZigBeeDeserializer> constructor;
         ZigBeeDeserializer deserializer;
