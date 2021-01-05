@@ -17,31 +17,31 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-20T07:40:15Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum ACLouverPositionEnum {
 
     /**
-     * Fully Closed
+     * Fully Closed, 1, 0x0001
      */
     FULLY_CLOSED(0x0001),
 
     /**
-     * Fully Open
+     * Fully Open, 2, 0x0002
      */
     FULLY_OPEN(0x0002),
 
     /**
-     * Quarter Open
+     * Quarter Open, 3, 0x0003
      */
     QUARTER_OPEN(0x0003),
 
     /**
-     * Half Open
+     * Half Open, 4, 0x0004
      */
     HALF_OPEN(0x0004),
 
     /**
-     * Three Quarters Open
+     * Three Quarters Open, 5, 0x0005
      */
     THREE_QUARTERS_OPEN(0x0005);
 

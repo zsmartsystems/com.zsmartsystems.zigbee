@@ -17,16 +17,16 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum IntervalChannelEnum {
 
     /**
-     * Consumption Delivered
+     * Consumption Delivered, 0, 0x0000
      */
     CONSUMPTION_DELIVERED(0x0000),
 
     /**
-     * Consumption Received
+     * Consumption Received, 1, 0x0001
      */
     CONSUMPTION_RECEIVED(0x0001);
 

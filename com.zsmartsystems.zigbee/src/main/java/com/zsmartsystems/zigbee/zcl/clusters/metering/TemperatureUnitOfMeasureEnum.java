@@ -17,36 +17,36 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-26T17:06:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum TemperatureUnitOfMeasureEnum {
 
     /**
-     * Degrees Kelvin
+     * Degrees Kelvin, 0, 0x0000
      */
     DEGREES_KELVIN(0x0000),
 
     /**
-     * Degrees Celsius
+     * Degrees Celsius, 1, 0x0001
      */
     DEGREES_CELSIUS(0x0001),
 
     /**
-     * Degrees Fahrenheit
+     * Degrees Fahrenheit, 2, 0x0002
      */
     DEGREES_FAHRENHEIT(0x0002),
 
     /**
-     * Degrees Kelvin BCD
+     * Degrees Kelvin BCD, 128, 0x0080
      */
     DEGREES_KELVIN_BCD(0x0080),
 
     /**
-     * Degrees Celsius BCD
+     * Degrees Celsius BCD, 129, 0x0081
      */
     DEGREES_CELSIUS_BCD(0x0081),
 
     /**
-     * Degrees Fahrenheit BCD
+     * Degrees Fahrenheit BCD, 130, 0x0082
      */
     DEGREES_FAHRENHEIT_BCD(0x0082);
 

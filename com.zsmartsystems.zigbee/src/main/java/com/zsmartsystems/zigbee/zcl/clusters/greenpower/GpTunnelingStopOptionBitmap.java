@@ -17,21 +17,21 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T21:54:11Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum GpTunnelingStopOptionBitmap {
 
     /**
-     * Application ID
+     * Application ID, 7, 0x0007
      */
     APPLICATION_ID(0x0007),
 
     /**
-     * Also Derived Group
+     * Also Derived Group, 8, 0x0008
      */
     ALSO_DERIVED_GROUP(0x0008),
 
     /**
-     * Also Commissioned Group
+     * Also Commissioned Group, 16, 0x0010
      */
     ALSO_COMMISSIONED_GROUP(0x0010);
 

@@ -17,16 +17,16 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum IasAceAudibleNotificationEnum {
 
     /**
-     * Mute
+     * Mute, 0, 0x0000
      */
     MUTE(0x0000),
 
     /**
-     * Default Sound
+     * Default Sound, 1, 0x0001
      */
     DEFAULT_SOUND(0x0001);
 

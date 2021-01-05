@@ -17,66 +17,66 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T21:54:11Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum GpPairingOptionBitmap {
 
     /**
-     * Application ID
+     * Application ID, 7, 0x0007
      */
     APPLICATION_ID(0x0007),
 
     /**
-     * Add Sink
+     * Add Sink, 8, 0x0008
      */
     ADD_SINK(0x0008),
 
     /**
-     * Remove Gpd
+     * Remove Gpd, 16, 0x0010
      */
     REMOVE_GPD(0x0010),
 
     /**
-     * Communication Mode
+     * Communication Mode, 96, 0x0060
      */
     COMMUNICATION_MODE(0x0060),
 
     /**
-     * Gpd Fixed
+     * Gpd Fixed, 128, 0x0080
      */
     GPD_FIXED(0x0080),
 
     /**
-     * Gpd MAC Sequence Number Capabilities
+     * Gpd MAC Sequence Number Capabilities, 256, 0x0100
      */
     GPD_MAC_SEQUENCE_NUMBER_CAPABILITIES(0x0100),
 
     /**
-     * Security Level
+     * Security Level, 1536, 0x0600
      */
     SECURITY_LEVEL(0x0600),
 
     /**
-     * Security Key Type
+     * Security Key Type, 14336, 0x3800
      */
     SECURITY_KEY_TYPE(0x3800),
 
     /**
-     * Gpd Security Frame Counter Present
+     * Gpd Security Frame Counter Present, 16384, 0x4000
      */
     GPD_SECURITY_FRAME_COUNTER_PRESENT(0x4000),
 
     /**
-     * Gpd Security Key Present
+     * Gpd Security Key Present, 32768, 0x8000
      */
     GPD_SECURITY_KEY_PRESENT(0x8000),
 
     /**
-     * Assigned Alias Present
+     * Assigned Alias Present, 65536, 0x10000
      */
     ASSIGNED_ALIAS_PRESENT(0x10000),
 
     /**
-     * Forwarding Radius Present
+     * Forwarding Radius Present, 131072, 0x20000
      */
     FORWARDING_RADIUS_PRESENT(0x20000);
 

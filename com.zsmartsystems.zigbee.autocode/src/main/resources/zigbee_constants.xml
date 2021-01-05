@@ -2,104 +2,129 @@
 	xsi:noNamespaceSchemaLocation="zigbee-description.xsd">
 	<constant class="ZigBeeDeviceType">
 		<name>ZigBee Device Type</name>
-        <value code="0x0000" name="On/Off Switch" />
-		<value code="0x0001" name="Level Control Switch" />
-		<value code="0x0002" name="On/Off Output" />
-		<value code="0x0003" name="Level Controllable Output" />
-		<value code="0x0004" name="Scene Selector" />
-		<value code="0x0005" name="Configuration Tool" />
-		<value code="0x0006" name="Remote Control" />
-		<value code="0x0007" name="Combined Interface" />
-		<value code="0x0008" name="Range Extender" />
-		<value code="0x0009" name="Mains Power Outlet" />
-		<value code="0x000A" name="Door Lock" />
-		<value code="0x000B" name="Door Lock Controller" />
-		<value code="0x000C" name="Simple Sensor" />
-		<value code="0x000D" name="Consumption Awareness Device" />
-		<value code="0x0010" name="Data Collection Unit" />
-		<value code="0x0020" name="ZigBee SIM Card" />
-		<value code="0x0021" name="ZigBee Mobile Terminal" />
-		<value code="0x0026" name="ZigBee Global Platform Card" />
-		<value code="0x0030" name="Customer Handheld Device" />
-		<value code="0x0031" name="Retail Associate Handheld Device " />
-		<value code="0x0032" name="Intelligent Shopping Cart" />
-		<value code="0x0033" name="Electronic Shelf Label" />
-		<value code="0x0034" name="Customer Information Point" />
-		<value code="0x0035" name="Customer Card" />
-		<value code="0x004A" name="Constructed BACnet Device" />
-		<value code="0x004B" name="BACnet Tunneled Device" />
-		<value code="0x0050" name="Home Gateway" />
-		<value code="0x0051" name="Smart Plug" />
-		<value code="0x0052" name="White Goods" />
-		<value code="0x0053" name="Meter Interface" />
-		<value code="0x0060" name="ZGP Proxy" />
-		<value code="0x0061" name="ZGP Proxy Basic" />
-		<value code="0x0062" name="ZGP Target Plus" />
-		<value code="0x0063" name="ZGP Target" />
-		<value code="0x0064" name="ZGP Commissioning Tool" />
-		<value code="0x0065" name="ZGP Combo" />
-		<value code="0x0066" name="ZGP Combo Basic" />
-		<value code="0x0067" name="Environmental Sensor" />
-		<value code="0x0100" name="On/Off Light" />
-		<value code="0x0101" name="Dimmable Light" />
-		<value code="0x0102" name="Color Dimmable Light" />
-		<value code="0x0103" name="On/Off Light Switch" />
-		<value code="0x0104" name="Dimmer Switch" />
-		<value code="0x0105" name="Color Dimmer Switch" />
-		<value code="0x0106" name="Light Sensor" />
-		<value code="0x0107" name="Occupancy Sensor" />
-		<value code="0x0108" name="On/Off Ballast" />
-		<value code="0x0109" name="Dimmable Ballast" />
-		<value code="0x010A" name="On/off plug-in unit" />
-		<value code="0x010B" name="Dimmable plug-in unit" />
-		<value code="0x010C" name="Color temperature light" />
-		<value code="0x010D" name="Extended color light" />
-		<value code="0x010E" name="Light level sensor" />
-		<value code="0x0120" name="ZigBee Access Point" />
-		<value code="0x0121" name="ZigBee Information node" />
-		<value code="0x0122" name="ZigBee Information Terminal" />
-		<value code="0x0200" name="Shade" />
-		<value code="0x0201" name="Shade Controller" />
-		<value code="0x0202" name="Window Covering Device" />
-		<value code="0x0203" name="Window Covering Controller" />
-		<value code="0x0204" name="Barrier Device" />
-		<value code="0x0205" name="Barrier Device Controller" />
-		<value code="0x0220" name="Point of sale" />
-		<value code="0x0221" name="Ticketing machine" />
-		<value code="0x0222" name="Pay controller" />
-		<value code="0x0223" name="Billing unit" />
-		<value code="0x0224" name="Charging unit" />
-		<value code="0x0300" name="Heating/Cooling Unit" />
-		<value code="0x0301" name="Thermostat" />
-		<value code="0x0302" name="Temperature Sensor" />
-		<value code="0x0303" name="Pump" />
-		<value code="0x0304" name="Pump Controller" />
-		<value code="0x0305" name="Pressure Sensor" />
-		<value code="0x0306" name="Flow Sensor" />
-		<value code="0x0307" name="Mini Split AC" />
-		<value code="0x0400" name="IAS Control and Indicating Equipment" />
-		<value code="0x0401" name="IAS Ancillary Control Equipment" />
-		<value code="0x0402" name="IAS Zone" />
-		<value code="0x0403" name="IAS Warning Device" />
-		<value code="0x0500" name="Energy Service Interface" />
-		<value code="0x0501" name="Metering Device" />
-		<value code="0x0502" name="In-Home Display" />
-		<value code="0x0503" name="Programmable Communicating Thermostat" />
-		<value code="0x0504" name="Load Control Device" />
-		<value code="0x0505" name="Smart Appliance" />
-		<value code="0x0506" name="Prepayment Terminal" />
-		<value code="0x0507" name="Physical Device" />
-		<value code="0x0508" name="Remote Communications Device" />
-		<value code="0x0509" name="ERL Interface" />
-		<value code="0x050A" name="Electric Vehicle Station Equipment" />
-		<value code="0x0800" name="Color controller" />
-		<value code="0x0810" name="Color scene controller" />
-		<value code="0x0820" name="Non-color controller" />
-		<value code="0x0830" name="Non-color scene controller" />
-		<value code="0x0840" name="Control bridge" />
-		<value code="0x0850" name="On/off sensor" />
-		<value code="0x0F00" name="Generic Multifunction Healthcare Device" />
+        <value code="0x0000" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="On/Off Switch" />
+		<value code="0x0001" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Level Control Switch" />
+		<value code="0x0002" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="On/Off Output" />
+		<value code="0x0003" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Level Controllable Output" />
+		<value code="0x0004" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Scene Selector" />
+		<value code="0x0005" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Configuration Tool" />
+		<value code="0x0006" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Remote Control" />
+		<value code="0x0007" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Combined Interface" />
+		<value code="0x0008" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Range Extender" />
+		<value code="0x0009" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Mains Power Outlet" />
+		<value code="0x000A" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Door Lock" />
+		<value code="0x000B" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Door Lock Controller" />
+		<value code="0x000C" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Simple Sensor" />
+		<value code="0x000D" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Consumption Awareness Device" />
+		<value code="0x0010" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Data Collection Unit" />
+		<value code="0x0020" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="ZigBee SIM Card" />
+		<value code="0x0021" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="ZigBee Mobile Terminal" />
+		<value code="0x0026" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="ZigBee Global Platform Card" />
+		<value code="0x0030" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Customer Handheld Device" />
+		<value code="0x0031" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Retail Associate Handheld Device " />
+		<value code="0x0032" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Intelligent Shopping Cart" />
+		<value code="0x0033" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Electronic Shelf Label" />
+		<value code="0x0034" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Customer Information Point" />
+		<value code="0x0035" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Customer Card" />
+		<value code="0x004A" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Constructed BACnet Device" />
+		<value code="0x004B" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="BACnet Tunneled Device" />
+		<value code="0x0050" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Home Gateway" />
+		<value code="0x0051" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Smart Plug" />
+		<value code="0x0052" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="White Goods" />
+		<value code="0x0053" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Meter Interface" />
+		<value code="0x0060" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="ZGP Proxy" />
+		<value code="0x0061" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="ZGP Proxy Basic" />
+		<value code="0x0062" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="ZGP Target Plus" />
+		<value code="0x0063" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="ZGP Target" />
+		<value code="0x0064" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="ZGP Commissioning Tool" />
+		<value code="0x0065" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="ZGP Combo" />
+		<value code="0x0066" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="ZGP Combo Basic" />
+		<value code="0x0067" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Environmental Sensor" />
+		<value code="0x0100" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="On/Off Light" />
+		<value code="0x0101" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Dimmable Light" />
+		<value code="0x0102" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Color Dimmable Light" />
+		<value code="0x0103" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="On/Off Light Switch" />
+		<value code="0x0104" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Dimmer Switch" />
+		<value code="0x0105" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Color Dimmer Switch" />
+		<value code="0x0106" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Light Sensor" />
+		<value code="0x0107" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Occupancy Sensor" />
+		<value code="0x0108" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="On/Off Ballast" />
+		<value code="0x0109" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Dimmable Ballast" />
+		<value code="0x010A" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="On/off plug-in unit" />
+		<value code="0x010B" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Dimmable plug-in unit" />
+		<value code="0x010C" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Color temperature light" />
+		<value code="0x010D" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Extended color light" />
+		<value code="0x010E" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Light level sensor" />
+		<value code="0x0120" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="ZigBee Access Point" />
+		<value code="0x0121" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="ZigBee Information node" />
+		<value code="0x0122" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="ZigBee Information Terminal" />
+		<value code="0x0200" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Shade" />
+		<value code="0x0201" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Shade Controller" />
+		<value code="0x0202" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Window Covering Device" />
+		<value code="0x0203" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Window Covering Controller" />
+		<value code="0x0204" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Barrier Device" />
+		<value code="0x0205" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Barrier Device Controller" />
+		<value code="0x0220" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Point of sale" />
+		<value code="0x0221" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Ticketing machine" />
+		<value code="0x0222" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Pay controller" />
+		<value code="0x0223" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Billing unit" />
+		<value code="0x0224" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Charging unit" />
+		<value code="0x0300" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Heating/Cooling Unit" />
+		<value code="0x0301" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Thermostat" />
+		<value code="0x0302" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Temperature Sensor" />
+		<value code="0x0303" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Pump" />
+		<value code="0x0304" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Pump Controller" />
+		<value code="0x0305" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Pressure Sensor" />
+		<value code="0x0306" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Flow Sensor" />
+		<value code="0x0307" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Mini Split AC" />
+		<value code="0x0400" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="IAS Control and Indicating Equipment" />
+		<value code="0x0401" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="IAS Ancillary Control Equipment" />
+		<value code="0x0402" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="IAS Zone" />
+		<value code="0x0403" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="IAS Warning Device" />
+		<value code="0x0500" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Energy Service Interface" />
+		<value code="0x0501" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Metering Device" />
+		<value code="0x0502" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="In-Home Display" />
+		<value code="0x0503" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Programmable Communicating Thermostat" />
+		<value code="0x0504" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Load Control Device" />
+		<value code="0x0505" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Smart Appliance" />
+		<value code="0x0506" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Prepayment Terminal" />
+		<value code="0x0507" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Physical Device" />
+		<value code="0x0508" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Remote Communications Device" />
+		<value code="0x0509" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="ERL Interface" />
+		<value code="0x050A" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Electric Vehicle Station Equipment" />
+		<value code="0x0800" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Color controller" />
+		<value code="0x0810" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Color scene controller" />
+		<value code="0x0820" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Non-color controller" />
+		<value code="0x0830" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Non-color scene controller" />
+		<value code="0x0840" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Control bridge" />
+		<value code="0x0850" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="On/off sensor" />
+		<value code="0x0F00" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Generic Multifunction Healthcare Device" />
+
+		<value code="0x0000" scope="ZigBeeProfileType.ZIGBEE_LIGHT_LINK" name="ZLL On/Off Light" />		
+		<value code="0x0010" scope="ZigBeeProfileType.ZIGBEE_LIGHT_LINK" name="ZLL On/Off Plug-in Unit" />		
+		<value code="0x0100" scope="ZigBeeProfileType.ZIGBEE_LIGHT_LINK" name="ZLL Dimmable Light" />		
+		<value code="0x0110" scope="ZigBeeProfileType.ZIGBEE_LIGHT_LINK" name="ZLL Dimmable Plug-in Unit" />		
+		<value code="0x0200" scope="ZigBeeProfileType.ZIGBEE_LIGHT_LINK" name="ZLL Color Light" />		
+		<value code="0x0210" scope="ZigBeeProfileType.ZIGBEE_LIGHT_LINK" name="ZLL Extended Color Light" />		
+		<value code="0x0220" scope="ZigBeeProfileType.ZIGBEE_LIGHT_LINK" name="ZLL Color Temperature Light" />		
+		<value code="0x0800" scope="ZigBeeProfileType.ZIGBEE_LIGHT_LINK" name="ZLL Color Controller" />		
+		<value code="0x0810" scope="ZigBeeProfileType.ZIGBEE_LIGHT_LINK" name="ZLL Color Scene Controller" />		
+		<value code="0x0820" scope="ZigBeeProfileType.ZIGBEE_LIGHT_LINK" name="ZLL Non-color Controller" />		
+		<value code="0x0830" scope="ZigBeeProfileType.ZIGBEE_LIGHT_LINK" name="ZLL Non-color Scene Controller" />		
+		<value code="0x0840" scope="ZigBeeProfileType.ZIGBEE_LIGHT_LINK" name="ZLL Control Bridge" />		
+		<value code="0x0850" scope="ZigBeeProfileType.ZIGBEE_LIGHT_LINK" name="ZLL On/Off Sensor" />	
+
+		<value code="0x0008" scope="ZigBeeProfileType.ZIGBEE_SMART_ENERGY" name="SEP Range Extender" />
+		<value code="0x0500" scope="ZigBeeProfileType.ZIGBEE_SMART_ENERGY" name="SEP Energy Service Interface" />
+		<value code="0x0501" scope="ZigBeeProfileType.ZIGBEE_SMART_ENERGY" name="SEP Metering Device" />
+		<value code="0x0502" scope="ZigBeeProfileType.ZIGBEE_SMART_ENERGY" name="SEP In-Home Display" />
+		<value code="0x0503" scope="ZigBeeProfileType.ZIGBEE_SMART_ENERGY" name="SEP Programmable Communicating Thermostat" />
+		<value code="0x0504" scope="ZigBeeProfileType.ZIGBEE_SMART_ENERGY" name="SEP Load Control Device" />
+		<value code="0x0505" scope="ZigBeeProfileType.ZIGBEE_SMART_ENERGY" name="SEP Smart Appliance" />
+		<value code="0x0506" scope="ZigBeeProfileType.ZIGBEE_SMART_ENERGY" name="SEP Prepayment Terminal" />
+		<value code="0x0507" scope="ZigBeeProfileType.ZIGBEE_SMART_ENERGY" name="SEP Physical Device" />	
 	</constant>
+	
 	<constant class="ZigBeeProfileType">
 		<name>ZigBee Profile Type</name>
 		<description></description>
@@ -110,6 +135,7 @@
 		<value code="0xC059" name="Manufacturer Telegesis" />
 		<value code="0xC105" name="Manufacturer Digi" />
 	</constant>
+	
 	<constant class="ZigBeeStackType">
 		<name>ZigBee Stack Type</name>
 		<description></description>

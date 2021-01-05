@@ -17,21 +17,21 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum SetpointAdjustModeEnum {
 
     /**
-     * Heat Setpoint
+     * Heat Setpoint, 0, 0x0000
      */
     HEAT_SETPOINT(0x0000),
 
     /**
-     * Cool Setpoint
+     * Cool Setpoint, 1, 0x0001
      */
     COOL_SETPOINT(0x0001),
 
     /**
-     * Heat And Cool Setpoints
+     * Heat And Cool Setpoints, 2, 0x0002
      */
     HEAT_AND_COOL_SETPOINTS(0x0002);
 

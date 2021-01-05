@@ -17,41 +17,41 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum PowerSourceEnum {
 
     /**
-     * Unknown
+     * Unknown, 0, 0x0000
      */
     UNKNOWN(0x0000),
 
     /**
-     * Mains Single Phase
+     * Mains Single Phase, 1, 0x0001
      */
     MAINS_SINGLE_PHASE(0x0001),
 
     /**
-     * Mains Three Phase
+     * Mains Three Phase, 2, 0x0002
      */
     MAINS_THREE_PHASE(0x0002),
 
     /**
-     * Battery
+     * Battery, 3, 0x0003
      */
     BATTERY(0x0003),
 
     /**
-     * DC Source
+     * DC Source, 4, 0x0004
      */
     DC_SOURCE(0x0004),
 
     /**
-     * Emergency Mains Constant
+     * Emergency Mains Constant, 5, 0x0005
      */
     EMERGENCY_MAINS_CONSTANT(0x0005),
 
     /**
-     * Emergency Mains Changeover
+     * Emergency Mains Changeover, 6, 0x0006
      */
     EMERGENCY_MAINS_CHANGEOVER(0x0006);
 

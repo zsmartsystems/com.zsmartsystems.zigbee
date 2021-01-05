@@ -17,41 +17,41 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum IasAceArmNotificationEnum {
 
     /**
-     * All Zones Disarmed
+     * All Zones Disarmed, 0, 0x0000
      */
     ALL_ZONES_DISARMED(0x0000),
 
     /**
-     * Only Day Home Zones Armed
+     * Only Day Home Zones Armed, 1, 0x0001
      */
     ONLY_DAY_HOME_ZONES_ARMED(0x0001),
 
     /**
-     * Only Night Sleep Zones Armed
+     * Only Night Sleep Zones Armed, 2, 0x0002
      */
     ONLY_NIGHT_SLEEP_ZONES_ARMED(0x0002),
 
     /**
-     * All Zones Armed
+     * All Zones Armed, 3, 0x0003
      */
     ALL_ZONES_ARMED(0x0003),
 
     /**
-     * Invalid Arm Disarm Code
+     * Invalid Arm Disarm Code, 4, 0x0004
      */
     INVALID_ARM_DISARM_CODE(0x0004),
 
     /**
-     * Not Ready To Arm
+     * Not Ready To Arm, 5, 0x0005
      */
     NOT_READY_TO_ARM(0x0005),
 
     /**
-     * Already Disarmed
+     * Already Disarmed, 6, 0x0006
      */
     ALREADY_DISARMED(0x0006);
 

@@ -55,7 +55,8 @@ public class ZigBeeConsoleDescribeEndpointCommand extends ZigBeeConsoleAbstractC
         final ZigBeeEndpoint endpoint = getEndpoint(networkManager, args[1]);
 
         ZigBeeProfileType profile = ZigBeeProfileType.getByValue(endpoint.getProfileId());
-        ZigBeeDeviceType device = ZigBeeDeviceType.getByValue(endpoint.getDeviceId());
+        ZigBeeDeviceType device = ZigBeeDeviceType.getByValue(ZigBeeProfileType.getByValue(endpoint.getProfileId()),
+                endpoint.getDeviceId());
 
         out.println("IEEE Address     : " + endpoint.getIeeeAddress());
         out.println("Network Address  : " + endpoint.getParentNode().getNetworkAddress());

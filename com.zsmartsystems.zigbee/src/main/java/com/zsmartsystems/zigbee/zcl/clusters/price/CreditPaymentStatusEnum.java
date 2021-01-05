@@ -17,31 +17,31 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum CreditPaymentStatusEnum {
 
     /**
-     * Pending
+     * Pending, 0, 0x0000
      */
     PENDING(0x0000),
 
     /**
-     * Received/Paid
+     * Received/Paid, 1, 0x0001
      */
     RECEIVED_PAID(0x0001),
 
     /**
-     * Overdue
+     * Overdue, 2, 0x0002
      */
     OVERDUE(0x0002),
 
     /**
-     * Two Payments Overdue
+     * Two Payments Overdue, 3, 0x0003
      */
     TWO_PAYMENTS_OVERDUE(0x0003),
 
     /**
-     * Three Payments Overdue
+     * Three Payments Overdue, 4, 0x0004
      */
     THREE_PAYMENTS_OVERDUE(0x0004);
 

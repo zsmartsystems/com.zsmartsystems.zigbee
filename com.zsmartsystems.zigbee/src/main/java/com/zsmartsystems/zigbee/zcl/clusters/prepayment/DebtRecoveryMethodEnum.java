@@ -17,21 +17,21 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum DebtRecoveryMethodEnum {
 
     /**
-     * Time Based
+     * Time Based, 0, 0x0000
      */
     TIME_BASED(0x0000),
 
     /**
-     * Percentage Based
+     * Percentage Based, 1, 0x0001
      */
     PERCENTAGE_BASED(0x0001),
 
     /**
-     * Catch Up Based
+     * Catch Up Based, 2, 0x0002
      */
     CATCH_UP_BASED(0x0002);
 

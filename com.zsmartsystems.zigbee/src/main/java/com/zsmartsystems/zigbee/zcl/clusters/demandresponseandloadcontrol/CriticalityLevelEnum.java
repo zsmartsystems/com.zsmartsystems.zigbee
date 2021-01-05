@@ -17,81 +17,81 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum CriticalityLevelEnum {
 
     /**
-     * Green
+     * Green, 1, 0x0001
      */
     GREEN(0x0001),
 
     /**
-     * Level 1
+     * Level 1, 2, 0x0002
      */
     LEVEL_1(0x0002),
 
     /**
-     * Level 2
+     * Level 2, 3, 0x0003
      */
     LEVEL_2(0x0003),
 
     /**
-     * Level 3
+     * Level 3, 4, 0x0004
      */
     LEVEL_3(0x0004),
 
     /**
-     * Level 4
+     * Level 4, 5, 0x0005
      */
     LEVEL_4(0x0005),
 
     /**
-     * Level 5
+     * Level 5, 6, 0x0006
      */
     LEVEL_5(0x0006),
 
     /**
-     * Emergency
+     * Emergency, 7, 0x0007
      */
     EMERGENCY(0x0007),
 
     /**
-     * Planned Outage
+     * Planned Outage, 8, 0x0008
      */
     PLANNED_OUTAGE(0x0008),
 
     /**
-     * Service Disconnect
+     * Service Disconnect, 9, 0x0009
      */
     SERVICE_DISCONNECT(0x0009),
 
     /**
-     * Utility Defined 1
+     * Utility Defined 1, 10, 0x000A
      */
     UTILITY_DEFINED_1(0x000A),
 
     /**
-     * Utility Defined 2
+     * Utility Defined 2, 11, 0x000B
      */
     UTILITY_DEFINED_2(0x000B),
 
     /**
-     * Utility Defined 3
+     * Utility Defined 3, 12, 0x000C
      */
     UTILITY_DEFINED_3(0x000C),
 
     /**
-     * Utility Defined 4
+     * Utility Defined 4, 13, 0x000D
      */
     UTILITY_DEFINED_4(0x000D),
 
     /**
-     * Utility Defined 5
+     * Utility Defined 5, 14, 0x000E
      */
     UTILITY_DEFINED_5(0x000E),
 
     /**
-     * Utility Defined 6
+     * Utility Defined 6, 15, 0x000F
      */
     UTILITY_DEFINED_6(0x000F);
 

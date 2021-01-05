@@ -7,16 +7,15 @@
  */
 package com.zsmartsystems.zigbee.autocode.xml;
 
-import java.util.List;
+import java.math.BigInteger;
 
 /**
  *
  * @author Chris Jackson (zsmartsystems.com)
  *
  */
-public class ZigBeeXmlConstant {
+public class ZigBeeXmlConstantValue {
+    public String scope;
+    public BigInteger code;
     public String name;
-    public String className;
-    public List<ZigBeeXmlDescription> description;
-    public List<ZigBeeXmlConstantValue> values;
 }

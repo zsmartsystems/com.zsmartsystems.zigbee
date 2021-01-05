@@ -17,26 +17,26 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T21:54:11Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum GpSinkCommissioningModeOptionsBitmap {
 
     /**
-     * Action
+     * Action, 1, 0x0001
      */
     ACTION(0x0001),
 
     /**
-     * Involve Gpm In Security
+     * Involve Gpm In Security, 2, 0x0002
      */
     INVOLVE_GPM_IN_SECURITY(0x0002),
 
     /**
-     * Involve Gpm In Pairing
+     * Involve Gpm In Pairing, 4, 0x0004
      */
     INVOLVE_GPM_IN_PAIRING(0x0004),
 
     /**
-     * Involve Proxies
+     * Involve Proxies, 8, 0x0008
      */
     INVOLVE_PROXIES(0x0008);
 

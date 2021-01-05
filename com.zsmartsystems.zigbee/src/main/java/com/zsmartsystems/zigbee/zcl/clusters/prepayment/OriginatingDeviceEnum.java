@@ -17,21 +17,21 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum OriginatingDeviceEnum {
 
     /**
-     * Energy Service Interface
+     * Energy Service Interface, 0, 0x0000
      */
     ENERGY_SERVICE_INTERFACE(0x0000),
 
     /**
-     * Meter
+     * Meter, 1, 0x0001
      */
     METER(0x0001),
 
     /**
-     * In Home Display Device
+     * In Home Display Device, 2, 0x0002
      */
     IN_HOME_DISPLAY_DEVICE(0x0002);
 

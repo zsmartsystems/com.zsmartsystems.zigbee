@@ -12,13 +12,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlCluster;
 import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlConstant;
+import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlConstantValue;
 
 /**
  *
@@ -104,7 +103,7 @@ public class ZigBeeZclConstantGenerator extends ZigBeeBaseClassGenerator {
         out.println("public enum " + className + " {");
 
         boolean first = true;
-        for (final Entry<BigInteger, String> value : constant.values.entrySet()) {
+        for (final ZigBeeXmlConstantValue value : constant.values) {
             if (!first) {
                 out.println(",");
             }
@@ -112,14 +111,22 @@ public class ZigBeeZclConstantGenerator extends ZigBeeBaseClassGenerator {
 
             out.println();
             out.println("    /**");
-            out.println("     * " + value.getValue());
+            out.println("     * " + value.name + ", " + value.code + ", 0x" + String.format("%04X", value.code));
             // if (constant.description.size() != 0) {
             // out.println(" * <p>");
             // outputWithLinebreak(out, " ", constant.description);
             // }
             out.println("     */");
-            out.print(
-                    "    " + stringToConstant(value.getValue()) + "(0x" + String.format("%04X", value.getKey()) + ")");
+            if ("ZigBeeDeviceType".equals(className)) {
+                out.print(
+                        "    " + stringToConstant(value.name) + "(" +
+                                value.scope + ", 0x" + String.format("%04X", value.code)
+                                + ")");
+            } else {
+                out.print(
+                        "    " + stringToConstant(value.name) + "(0x" + String.format("%04X", value.code)
+                                + ")");
+            }
         }
         out.println(";");
 
@@ -134,15 +141,31 @@ public class ZigBeeZclConstantGenerator extends ZigBeeBaseClassGenerator {
         out.println("    static {");
         out.println("        idMap = new HashMap<Integer, " + className + ">();");
         out.println("        for (" + className + " enumValue : values()) {");
-        out.println("            idMap.put(enumValue.key, enumValue);");
+        if ("ZigBeeDeviceType".equals(className)) {
+            out.println("            idMap.put(enumValue.profilekey, enumValue);");
+        } else {
+            out.println("            idMap.put(enumValue.key, enumValue);");
+        }
         out.println("        }");
         out.println("    }");
         out.println();
         out.println("    private final int key;");
+        if ("ZigBeeDeviceType".equals(className)) {
+            out.println("    private final int profilekey;");
+        }
         out.println();
-        out.println("    private " + className + "(final int key) {");
-        out.println("        this.key = key;");
-        out.println("    }");
+
+        if ("ZigBeeDeviceType".equals(className)) {
+            out.println("    private " + className + "(final ZigBeeProfileType profile, final int key) {");
+            out.println("        this.key = key;");
+            out.println("        this.profilekey = key & 0xffff + (profile.ordinal() << 16);");
+            out.println("    }");
+        } else {
+            out.println("    private " + className + "(final int key) {");
+            out.println("        this.key = key;");
+            out.println("    }");
+        }
+
         out.println();
 
         out.println("    public int getKey() {");
@@ -150,8 +173,23 @@ public class ZigBeeZclConstantGenerator extends ZigBeeBaseClassGenerator {
         out.println("    }");
         out.println();
         out.println("    public static " + className + " getByValue(final int value) {");
-        out.println("        return idMap.get(value);");
+        if ("ZigBeeDeviceType".equals(className)) {
+            out.println(
+                    "        int id = value & 0xffff + (ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.ordinal() << 16);");
+            out.println("        return idMap.get(id);");
+        } else {
+            out.println("        return idMap.get(value);");
+        }
         out.println("    }");
+
+        if ("ZigBeeDeviceType".equals(className)) {
+            out.println();
+            out.println("    public static " + className
+                    + " getByValue(final ZigBeeProfileType profile, final int value) {");
+            out.println("        int id = value & 0xffff + (profile.ordinal() << 16);");
+            out.println("        return idMap.get(id);");
+            out.println("    }");
+        }
 
         out.println("}");
 

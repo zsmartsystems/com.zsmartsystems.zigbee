@@ -17,16 +17,16 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T21:54:11Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum GpPairingConfigurationActionsBitmap {
 
     /**
-     * Action
+     * Action, 7, 0x0007
      */
     ACTION(0x0007),
 
     /**
-     * Send Gp Pairing
+     * Send Gp Pairing, 8, 0x0008
      */
     SEND_GP_PAIRING(0x0008);
 

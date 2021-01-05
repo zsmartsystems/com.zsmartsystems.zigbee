@@ -167,7 +167,9 @@ public class ZigBeeConsoleDeviceFingerprintCommand extends ZigBeeConsoleAbstract
         out.println();
         out.print("| | |> Device Type              " + String.format("%04X", endpoint.getDeviceId()));
         if (ZigBeeDeviceType.getByValue(endpoint.getDeviceId()) != null) {
-            out.print("  " + ZigBeeDeviceType.getByValue(endpoint.getDeviceId()).toString());
+            out.print("  " + ZigBeeDeviceType
+                    .getByValue(ZigBeeProfileType.getByValue(endpoint.getProfileId()), endpoint.getDeviceId())
+                    .toString());
         }
         out.println();
 

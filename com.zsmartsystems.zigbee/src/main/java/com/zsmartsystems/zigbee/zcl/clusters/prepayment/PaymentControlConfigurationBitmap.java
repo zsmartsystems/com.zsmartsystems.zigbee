@@ -17,56 +17,56 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum PaymentControlConfigurationBitmap {
 
     /**
-     * Disconnection Enabled
+     * Disconnection Enabled, 1, 0x0001
      */
     DISCONNECTION_ENABLED(0x0001),
 
     /**
-     * Prepayment Enabled
+     * Prepayment Enabled, 2, 0x0002
      */
     PREPAYMENT_ENABLED(0x0002),
 
     /**
-     * Credit Management Enabled
+     * Credit Management Enabled, 4, 0x0004
      */
     CREDIT_MANAGEMENT_ENABLED(0x0004),
 
     /**
-     * Credit Display Enabled
+     * Credit Display Enabled, 16, 0x0010
      */
     CREDIT_DISPLAY_ENABLED(0x0010),
 
     /**
-     * Account Base
+     * Account Base, 64, 0x0040
      */
     ACCOUNT_BASE(0x0040),
 
     /**
-     * Contactor Fitted
+     * Contactor Fitted, 128, 0x0080
      */
     CONTACTOR_FITTED(0x0080),
 
     /**
-     * Standing Charge Configuration
+     * Standing Charge Configuration, 256, 0x0100
      */
     STANDING_CHARGE_CONFIGURATION(0x0100),
 
     /**
-     * Emergency Standing Charge Configuration
+     * Emergency Standing Charge Configuration, 512, 0x0200
      */
     EMERGENCY_STANDING_CHARGE_CONFIGURATION(0x0200),
 
     /**
-     * Debt Configuration
+     * Debt Configuration, 1024, 0x0400
      */
     DEBT_CONFIGURATION(0x0400),
 
     /**
-     * Emergency Debt Configuration
+     * Emergency Debt Configuration, 2048, 0x0800
      */
     EMERGENCY_DEBT_CONFIGURATION(0x0800);
 

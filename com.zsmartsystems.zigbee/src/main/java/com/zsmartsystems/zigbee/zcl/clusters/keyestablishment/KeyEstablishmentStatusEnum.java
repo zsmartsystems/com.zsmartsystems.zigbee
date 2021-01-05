@@ -17,36 +17,36 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum KeyEstablishmentStatusEnum {
 
     /**
-     * Unknown Issuer
+     * Unknown Issuer, 1, 0x0001
      */
     UNKNOWN_ISSUER(0x0001),
 
     /**
-     * Bad Key Confirm
+     * Bad Key Confirm, 2, 0x0002
      */
     BAD_KEY_CONFIRM(0x0002),
 
     /**
-     * Bad Message
+     * Bad Message, 3, 0x0003
      */
     BAD_MESSAGE(0x0003),
 
     /**
-     * No Resources
+     * No Resources, 4, 0x0004
      */
     NO_RESOURCES(0x0004),
 
     /**
-     * Unsupported Suite
+     * Unsupported Suite, 5, 0x0005
      */
     UNSUPPORTED_SUITE(0x0005),
 
     /**
-     * Invalid Certificate
+     * Invalid Certificate, 6, 0x0006
      */
     INVALID_CERTIFICATE(0x0006);
 

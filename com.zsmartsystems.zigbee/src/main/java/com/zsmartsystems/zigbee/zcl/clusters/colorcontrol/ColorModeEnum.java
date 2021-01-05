@@ -17,21 +17,21 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum ColorModeEnum {
 
     /**
-     * Current Hue And Current Saturation
+     * Current Hue And Current Saturation, 0, 0x0000
      */
     CURRENT_HUE_AND_CURRENT_SATURATION(0x0000),
 
     /**
-     * Current X And Current Y
+     * Current X And Current Y, 1, 0x0001
      */
     CURRENT_X_AND_CURRENT_Y(0x0001),
 
     /**
-     * Color Temperature
+     * Color Temperature, 2, 0x0002
      */
     COLOR_TEMPERATURE(0x0002);
 

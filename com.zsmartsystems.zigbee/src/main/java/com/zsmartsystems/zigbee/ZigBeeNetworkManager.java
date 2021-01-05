@@ -540,8 +540,10 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
                     String.format("%04X", defaultDeviceId), networkState);
             return ZigBeeStatus.INVALID_STATE;
         }
-        logger.debug("Default device ID set to {} [{}]", String.format("%04X", defaultDeviceId),
-                ZigBeeDeviceType.getByValue(defaultDeviceId));
+        logger.debug("Default device ID set to {} [{}] for profile {} [{}]", String.format("%04X", defaultDeviceId),
+                ZigBeeDeviceType.getByValue(ZigBeeProfileType.getByValue(defaultProfileId), defaultDeviceId),
+                String.format("%04X", defaultProfileId),
+                ZigBeeProfileType.getByValue(defaultProfileId));
         transport.setDefaultDeviceId(defaultDeviceId);
         return ZigBeeStatus.SUCCESS;
     }

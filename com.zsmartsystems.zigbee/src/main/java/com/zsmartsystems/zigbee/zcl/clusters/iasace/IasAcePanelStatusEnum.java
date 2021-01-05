@@ -17,61 +17,61 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum IasAcePanelStatusEnum {
 
     /**
-     * Panel Disarmed
+     * Panel Disarmed, 0, 0x0000
      */
     PANEL_DISARMED(0x0000),
 
     /**
-     * Armed Stay
+     * Armed Stay, 1, 0x0001
      */
     ARMED_STAY(0x0001),
 
     /**
-     * Armed Night
+     * Armed Night, 2, 0x0002
      */
     ARMED_NIGHT(0x0002),
 
     /**
-     * Armed Away
+     * Armed Away, 3, 0x0003
      */
     ARMED_AWAY(0x0003),
 
     /**
-     * Exit Delay
+     * Exit Delay, 4, 0x0004
      */
     EXIT_DELAY(0x0004),
 
     /**
-     * Entry Delay
+     * Entry Delay, 5, 0x0005
      */
     ENTRY_DELAY(0x0005),
 
     /**
-     * Not Ready To Arm
+     * Not Ready To Arm, 6, 0x0006
      */
     NOT_READY_TO_ARM(0x0006),
 
     /**
-     * In Alarm
+     * In Alarm, 7, 0x0007
      */
     IN_ALARM(0x0007),
 
     /**
-     * Arming Stay
+     * Arming Stay, 8, 0x0008
      */
     ARMING_STAY(0x0008),
 
     /**
-     * Arming Night
+     * Arming Night, 9, 0x0009
      */
     ARMING_NIGHT(0x0009),
 
     /**
-     * Arming Away
+     * Arming Away, 10, 0x000A
      */
     ARMING_AWAY(0x000A);
 

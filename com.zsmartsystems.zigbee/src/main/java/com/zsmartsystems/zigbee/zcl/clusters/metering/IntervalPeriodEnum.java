@@ -17,46 +17,46 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum IntervalPeriodEnum {
 
     /**
-     * Daily
+     * Daily, 0, 0x0000
      */
     DAILY(0x0000),
 
     /**
-     * Minutes 60
+     * Minutes 60, 1, 0x0001
      */
     MINUTES_60(0x0001),
 
     /**
-     * Minutes 30
+     * Minutes 30, 2, 0x0002
      */
     MINUTES_30(0x0002),
 
     /**
-     * Minutes 15
+     * Minutes 15, 3, 0x0003
      */
     MINUTES_15(0x0003),
 
     /**
-     * Minutes 10
+     * Minutes 10, 4, 0x0004
      */
     MINUTES_10(0x0004),
 
     /**
-     * Minutes 7p 5
+     * Minutes 7p 5, 5, 0x0005
      */
     MINUTES_7P_5(0x0005),
 
     /**
-     * Minutes 5
+     * Minutes 5, 6, 0x0006
      */
     MINUTES_5(0x0006),
 
     /**
-     * Minutes 2p 5
+     * Minutes 2p 5, 7, 0x0007
      */
     MINUTES_2P_5(0x0007);
 

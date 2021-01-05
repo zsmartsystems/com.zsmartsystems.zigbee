@@ -17,16 +17,16 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T22:03:06Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum StepModeEnum {
 
     /**
-     * Up
+     * Up, 1, 0x0001
      */
     UP(0x0001),
 
     /**
-     * Down
+     * Down, 3, 0x0003
      */
     DOWN(0x0003);
 

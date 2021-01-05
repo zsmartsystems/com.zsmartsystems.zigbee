@@ -17,16 +17,16 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T21:54:11Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum GpProxyTableResponseStatusEnum {
 
     /**
-     * Success
+     * Success, 0, 0x0000
      */
     SUCCESS(0x0000),
 
     /**
-     * Not_Found
+     * Not_Found, 139, 0x008B
      */
     NOT_FOUND(0x008B);
 

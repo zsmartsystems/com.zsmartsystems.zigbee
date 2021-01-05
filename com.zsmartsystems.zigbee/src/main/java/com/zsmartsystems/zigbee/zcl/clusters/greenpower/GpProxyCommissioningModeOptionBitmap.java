@@ -17,26 +17,26 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T21:54:11Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum GpProxyCommissioningModeOptionBitmap {
 
     /**
-     * Action
+     * Action, 1, 0x0001
      */
     ACTION(0x0001),
 
     /**
-     * Exit Mode
+     * Exit Mode, 14, 0x000E
      */
     EXIT_MODE(0x000E),
 
     /**
-     * Channel Present
+     * Channel Present, 16, 0x0010
      */
     CHANNEL_PRESENT(0x0010),
 
     /**
-     * Unicast Communication
+     * Unicast Communication, 32, 0x0020
      */
     UNICAST_COMMUNICATION(0x0020);
 
