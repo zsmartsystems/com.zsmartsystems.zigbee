@@ -17,31 +17,31 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum ColorCapabilitiesEnum {
 
     /**
-     * Hue And Saturation
+     * Hue And Saturation, 1, 0x0001
      */
     HUE_AND_SATURATION(0x0001),
 
     /**
-     * Enhanced Hue
+     * Enhanced Hue, 2, 0x0002
      */
     ENHANCED_HUE(0x0002),
 
     /**
-     * Color Loop
+     * Color Loop, 4, 0x0004
      */
     COLOR_LOOP(0x0004),
 
     /**
-     * XY Attribute
+     * XY Attribute, 8, 0x0008
      */
     XY_ATTRIBUTE(0x0008),
 
     /**
-     * Color Temperature
+     * Color Temperature, 16, 0x0010
      */
     COLOR_TEMPERATURE(0x0010);
 

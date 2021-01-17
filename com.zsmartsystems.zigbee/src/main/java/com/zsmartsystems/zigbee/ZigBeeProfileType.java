@@ -17,36 +17,36 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-08-15T18:28:04Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum ZigBeeProfileType {
 
     /**
-     * ZigBee Home Automation
+     * ZigBee Home Automation, 260, 0x0104
      */
     ZIGBEE_HOME_AUTOMATION(0x0104),
 
     /**
-     * ZigBee Smart Energy
+     * ZigBee Smart Energy, 265, 0x0109
      */
     ZIGBEE_SMART_ENERGY(0x0109),
 
     /**
-     * ZigBee Green Power
+     * ZigBee Green Power, 41230, 0xA10E
      */
     ZIGBEE_GREEN_POWER(0xA10E),
 
     /**
-     * Manufacturer Telegesis
-     */
-    MANUFACTURER_TELEGESIS(0xC059),
-
-    /**
-     * ZigBee Light Link
+     * ZigBee Light Link, 49246, 0xC05E
      */
     ZIGBEE_LIGHT_LINK(0xC05E),
 
     /**
-     * Manufacturer Digi
+     * Manufacturer Telegesis, 49241, 0xC059
+     */
+    MANUFACTURER_TELEGESIS(0xC059),
+
+    /**
+     * Manufacturer Digi, 49413, 0xC105
      */
     MANUFACTURER_DIGI(0xC105);
 

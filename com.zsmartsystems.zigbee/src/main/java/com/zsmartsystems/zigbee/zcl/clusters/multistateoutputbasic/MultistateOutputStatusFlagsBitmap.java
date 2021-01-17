@@ -17,26 +17,26 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum MultistateOutputStatusFlagsBitmap {
 
     /**
-     * In_Alarm
+     * In_Alarm, 1, 0x0001
      */
     IN_ALARM(0x0001),
 
     /**
-     * Fault
+     * Fault, 2, 0x0002
      */
     FAULT(0x0002),
 
     /**
-     * Overridden
+     * Overridden, 4, 0x0004
      */
     OVERRIDDEN(0x0004),
 
     /**
-     * Out Of Service
+     * Out Of Service, 8, 0x0008
      */
     OUT_OF_SERVICE(0x0008);
 

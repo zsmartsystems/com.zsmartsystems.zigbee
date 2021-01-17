@@ -17,41 +17,41 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-20T07:40:15Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum StartOfWeekEnum {
 
     /**
-     * Sunday
+     * Sunday, 0, 0x0000
      */
     SUNDAY(0x0000),
 
     /**
-     * Monday
+     * Monday, 1, 0x0001
      */
     MONDAY(0x0001),
 
     /**
-     * Tuesday
+     * Tuesday, 2, 0x0002
      */
     TUESDAY(0x0002),
 
     /**
-     * Wednesday
+     * Wednesday, 3, 0x0003
      */
     WEDNESDAY(0x0003),
 
     /**
-     * Thursday
+     * Thursday, 4, 0x0004
      */
     THURSDAY(0x0004),
 
     /**
-     * Friday
+     * Friday, 5, 0x0005
      */
     FRIDAY(0x0005),
 
     /**
-     * Saturday
+     * Saturday, 6, 0x0006
      */
     SATURDAY(0x0006);
 

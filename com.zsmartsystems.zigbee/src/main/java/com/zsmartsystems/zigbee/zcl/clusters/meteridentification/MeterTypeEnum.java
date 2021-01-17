@@ -17,41 +17,41 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-11-19T09:19:31Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum MeterTypeEnum {
 
     /**
-     * Utility Primary Meter
+     * Utility Primary Meter, 0, 0x0000
      */
     UTILITY_PRIMARY_METER(0x0000),
 
     /**
-     * Utility Production Meter
+     * Utility Production Meter, 1, 0x0001
      */
     UTILITY_PRODUCTION_METER(0x0001),
 
     /**
-     * Utility Secondary Meter
+     * Utility Secondary Meter, 2, 0x0002
      */
     UTILITY_SECONDARY_METER(0x0002),
 
     /**
-     * Private Primary Meter
+     * Private Primary Meter, 256, 0x0100
      */
     PRIVATE_PRIMARY_METER(0x0100),
 
     /**
-     * Private Production Meter
+     * Private Production Meter, 257, 0x0101
      */
     PRIVATE_PRODUCTION_METER(0x0101),
 
     /**
-     * Private Secondary Meters
+     * Private Secondary Meters, 258, 0x0102
      */
     PRIVATE_SECONDARY_METERS(0x0102),
 
     /**
-     * Generic Meter
+     * Generic Meter, 272, 0x0110
      */
     GENERIC_METER(0x0110);
 

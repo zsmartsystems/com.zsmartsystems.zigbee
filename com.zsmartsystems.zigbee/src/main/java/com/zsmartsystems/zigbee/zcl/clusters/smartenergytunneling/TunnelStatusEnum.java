@@ -17,31 +17,31 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum TunnelStatusEnum {
 
     /**
-     * Success
+     * Success, 0, 0x0000
      */
     SUCCESS(0x0000),
 
     /**
-     * Busy
+     * Busy, 1, 0x0001
      */
     BUSY(0x0001),
 
     /**
-     * No More Tunnel Ids
+     * No More Tunnel Ids, 2, 0x0002
      */
     NO_MORE_TUNNEL_IDS(0x0002),
 
     /**
-     * Protocol Not Supported
+     * Protocol Not Supported, 3, 0x0003
      */
     PROTOCOL_NOT_SUPPORTED(0x0003),
 
     /**
-     * Flow Control Not Supported
+     * Flow Control Not Supported, 4, 0x0004
      */
     FLOW_CONTROL_NOT_SUPPORTED(0x0004);
 

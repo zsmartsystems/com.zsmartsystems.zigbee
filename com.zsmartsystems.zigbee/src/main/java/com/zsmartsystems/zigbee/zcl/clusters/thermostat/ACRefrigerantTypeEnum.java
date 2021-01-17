@@ -17,26 +17,26 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-20T07:40:15Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum ACRefrigerantTypeEnum {
 
     /**
-     * Reserved
+     * Reserved, 0, 0x0000
      */
     RESERVED(0x0000),
 
     /**
-     * R22
+     * R22, 1, 0x0001
      */
     R22(0x0001),
 
     /**
-     * R410a
+     * R410a, 2, 0x0002
      */
     R410A(0x0002),
 
     /**
-     * R407c
+     * R407c, 3, 0x0003
      */
     R407C(0x0003);
 

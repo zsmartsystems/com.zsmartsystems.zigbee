@@ -17,51 +17,51 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum PrepaySnapshotPayloadCauseBitmap {
 
     /**
-     * General
+     * General, 1, 0x0001
      */
     GENERAL(0x0001),
 
     /**
-     * Change Of Tariff Information
+     * Change Of Tariff Information, 8, 0x0008
      */
     CHANGE_OF_TARIFF_INFORMATION(0x0008),
 
     /**
-     * Change Of Price Matrix
+     * Change Of Price Matrix, 16, 0x0010
      */
     CHANGE_OF_PRICE_MATRIX(0x0010),
 
     /**
-     * Manually Triggered From Client
+     * Manually Triggered From Client, 1024, 0x0400
      */
     MANUALLY_TRIGGERED_FROM_CLIENT(0x0400),
 
     /**
-     * Change Of Tenancy
+     * Change Of Tenancy, 4096, 0x1000
      */
     CHANGE_OF_TENANCY(0x1000),
 
     /**
-     * Change Of Supplier
+     * Change Of Supplier, 8192, 0x2000
      */
     CHANGE_OF_SUPPLIER(0x2000),
 
     /**
-     * Change Of Meter Mode
+     * Change Of Meter Mode, 16384, 0x4000
      */
     CHANGE_OF_METER_MODE(0x4000),
 
     /**
-     * Top Up Addition
+     * Top Up Addition, 262144, 0x40000
      */
     TOP_UP_ADDITION(0x40000),
 
     /**
-     * Debt Credit Addition
+     * Debt Credit Addition, 524288, 0x80000
      */
     DEBT_CREDIT_ADDITION(0x80000);
 

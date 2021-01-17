@@ -17,36 +17,36 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T21:54:11Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum GpPairingSearchOptionBitmap {
 
     /**
-     * Application ID
+     * Application ID, 7, 0x0007
      */
     APPLICATION_ID(0x0007),
 
     /**
-     * Request Unicast Sinks
+     * Request Unicast Sinks, 8, 0x0008
      */
     REQUEST_UNICAST_SINKS(0x0008),
 
     /**
-     * Request Derived Groupcast Sinks
+     * Request Derived Groupcast Sinks, 16, 0x0010
      */
     REQUEST_DERIVED_GROUPCAST_SINKS(0x0010),
 
     /**
-     * Request Commissioned Groupcast Sinks
+     * Request Commissioned Groupcast Sinks, 32, 0x0020
      */
     REQUEST_COMMISSIONED_GROUPCAST_SINKS(0x0020),
 
     /**
-     * Request Gpd Security Frame Counter
+     * Request Gpd Security Frame Counter, 64, 0x0040
      */
     REQUEST_GPD_SECURITY_FRAME_COUNTER(0x0040),
 
     /**
-     * Request Gpd Security Key
+     * Request Gpd Security Key, 128, 0x0080
      */
     REQUEST_GPD_SECURITY_KEY(0x0080);
 

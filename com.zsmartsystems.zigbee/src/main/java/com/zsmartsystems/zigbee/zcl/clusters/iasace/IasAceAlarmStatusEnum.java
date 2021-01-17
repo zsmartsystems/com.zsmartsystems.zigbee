@@ -17,41 +17,41 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum IasAceAlarmStatusEnum {
 
     /**
-     * No Alarm
+     * No Alarm, 0, 0x0000
      */
     NO_ALARM(0x0000),
 
     /**
-     * Burglar
+     * Burglar, 1, 0x0001
      */
     BURGLAR(0x0001),
 
     /**
-     * Fire
+     * Fire, 2, 0x0002
      */
     FIRE(0x0002),
 
     /**
-     * Emergency
+     * Emergency, 3, 0x0003
      */
     EMERGENCY(0x0003),
 
     /**
-     * Police Panic
+     * Police Panic, 4, 0x0004
      */
     POLICE_PANIC(0x0004),
 
     /**
-     * Fire Panic
+     * Fire Panic, 5, 0x0005
      */
     FIRE_PANIC(0x0005),
 
     /**
-     * Emergency Panic
+     * Emergency Panic, 6, 0x0006
      */
     EMERGENCY_PANIC(0x0006);
 

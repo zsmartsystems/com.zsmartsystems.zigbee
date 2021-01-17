@@ -17,51 +17,51 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum MeasurementTypeEnum {
 
     /**
-     * AC Active Measurement
+     * AC Active Measurement, 0, 0x0000
      */
     AC_ACTIVE_MEASUREMENT(0x0000),
 
     /**
-     * AC Reactive Measurement
+     * AC Reactive Measurement, 1, 0x0001
      */
     AC_REACTIVE_MEASUREMENT(0x0001),
 
     /**
-     * AC Apparent Measurement
+     * AC Apparent Measurement, 2, 0x0002
      */
     AC_APPARENT_MEASUREMENT(0x0002),
 
     /**
-     * Phase A Measurement
+     * Phase A Measurement, 4, 0x0004
      */
     PHASE_A_MEASUREMENT(0x0004),
 
     /**
-     * Phase B Measurement
+     * Phase B Measurement, 8, 0x0008
      */
     PHASE_B_MEASUREMENT(0x0008),
 
     /**
-     * Phase C Measurement
+     * Phase C Measurement, 16, 0x0010
      */
     PHASE_C_MEASUREMENT(0x0010),
 
     /**
-     * DC Measurement
+     * DC Measurement, 32, 0x0020
      */
     DC_MEASUREMENT(0x0020),
 
     /**
-     * Harmonics Measurement
+     * Harmonics Measurement, 64, 0x0040
      */
     HARMONICS_MEASUREMENT(0x0040),
 
     /**
-     * Power Quality Measurement
+     * Power Quality Measurement, 128, 0x0080
      */
     POWER_QUALITY_MEASUREMENT(0x0080);
 

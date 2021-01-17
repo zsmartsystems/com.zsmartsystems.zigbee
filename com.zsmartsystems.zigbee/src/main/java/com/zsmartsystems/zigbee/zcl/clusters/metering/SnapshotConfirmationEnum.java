@@ -17,16 +17,16 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum SnapshotConfirmationEnum {
 
     /**
-     * Accepted
+     * Accepted, 0, 0x0000
      */
     ACCEPTED(0x0000),
 
     /**
-     * Snapshot Cause Not Supported
+     * Snapshot Cause Not Supported, 1, 0x0001
      */
     SNAPSHOT_CAUSE_NOT_SUPPORTED(0x0001);
 

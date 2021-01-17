@@ -17,46 +17,46 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum DayOfWeekBitmap {
 
     /**
-     * Sunday
+     * Sunday, 1, 0x0001
      */
     SUNDAY(0x0001),
 
     /**
-     * Monday
+     * Monday, 2, 0x0002
      */
     MONDAY(0x0002),
 
     /**
-     * Tuesday
+     * Tuesday, 4, 0x0004
      */
     TUESDAY(0x0004),
 
     /**
-     * Wednesday
+     * Wednesday, 8, 0x0008
      */
     WEDNESDAY(0x0008),
 
     /**
-     * Thursday
+     * Thursday, 16, 0x0010
      */
     THURSDAY(0x0010),
 
     /**
-     * Friday
+     * Friday, 32, 0x0020
      */
     FRIDAY(0x0020),
 
     /**
-     * Saturday
+     * Saturday, 64, 0x0040
      */
     SATURDAY(0x0040),
 
     /**
-     * Away Or Vacation
+     * Away Or Vacation, 128, 0x0080
      */
     AWAY_OR_VACATION(0x0080);
 

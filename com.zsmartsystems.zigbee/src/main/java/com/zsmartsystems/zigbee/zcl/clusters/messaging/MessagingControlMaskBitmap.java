@@ -17,26 +17,26 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum MessagingControlMaskBitmap {
 
     /**
-     * Trans Mechanism
+     * Trans Mechanism, 3, 0x0003
      */
     TRANS_MECHANISM(0x0003),
 
     /**
-     * Message Urgency
+     * Message Urgency, 12, 0x000C
      */
     MESSAGE_URGENCY(0x000C),
 
     /**
-     * Enhanced Confirmation Request
+     * Enhanced Confirmation Request, 32, 0x0020
      */
     ENHANCED_CONFIRMATION_REQUEST(0x0020),
 
     /**
-     * Message Confirmation
+     * Message Confirmation, 128, 0x0080
      */
     MESSAGE_CONFIRMATION(0x0080);
 

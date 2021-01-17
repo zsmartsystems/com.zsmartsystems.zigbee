@@ -20,66 +20,66 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum DeviceClassBitmap {
 
     /**
-     * Hvac Compressor Or Furnace
+     * Hvac Compressor Or Furnace, 1, 0x0001
      */
     HVAC_COMPRESSOR_OR_FURNACE(0x0001),
 
     /**
-     * Strip Heat Baseboard Heat
+     * Strip Heat Baseboard Heat, 2, 0x0002
      */
     STRIP_HEAT_BASEBOARD_HEAT(0x0002),
 
     /**
-     * Water Heater
+     * Water Heater, 4, 0x0004
      */
     WATER_HEATER(0x0004),
 
     /**
-     * Pool Pump Spa Jacuzzi
+     * Pool Pump Spa Jacuzzi, 8, 0x0008
      */
     POOL_PUMP_SPA_JACUZZI(0x0008),
 
     /**
-     * Smart Appliances
+     * Smart Appliances, 16, 0x0010
      */
     SMART_APPLIANCES(0x0010),
 
     /**
-     * Irrigation Pump
+     * Irrigation Pump, 32, 0x0020
      */
     IRRIGATION_PUMP(0x0020),
 
     /**
-     * Managed C And I Loads
+     * Managed C And I Loads, 64, 0x0040
      */
     MANAGED_C_AND_I_LOADS(0x0040),
 
     /**
-     * Simple Misc Loads
+     * Simple Misc Loads, 128, 0x0080
      */
     SIMPLE_MISC_LOADS(0x0080),
 
     /**
-     * Exterior Lighting
+     * Exterior Lighting, 256, 0x0100
      */
     EXTERIOR_LIGHTING(0x0100),
 
     /**
-     * Interior Lighting
+     * Interior Lighting, 512, 0x0200
      */
     INTERIOR_LIGHTING(0x0200),
 
     /**
-     * Electric Vehicle
+     * Electric Vehicle, 1024, 0x0400
      */
     ELECTRIC_VEHICLE(0x0400),
 
     /**
-     * Generation Systems
+     * Generation Systems, 2048, 0x0800
      */
     GENERATION_SYSTEMS(0x0800);
 

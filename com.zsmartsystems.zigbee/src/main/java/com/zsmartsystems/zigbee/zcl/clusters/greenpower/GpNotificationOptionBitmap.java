@@ -17,56 +17,56 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T21:54:11Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum GpNotificationOptionBitmap {
 
     /**
-     * Application ID
+     * Application ID, 7, 0x0007
      */
     APPLICATION_ID(0x0007),
 
     /**
-     * Also Unicast
+     * Also Unicast, 8, 0x0008
      */
     ALSO_UNICAST(0x0008),
 
     /**
-     * Also Derived Group
+     * Also Derived Group, 16, 0x0010
      */
     ALSO_DERIVED_GROUP(0x0010),
 
     /**
-     * Also Commissioned Group
+     * Also Commissioned Group, 32, 0x0020
      */
     ALSO_COMMISSIONED_GROUP(0x0020),
 
     /**
-     * Security Level
+     * Security Level, 192, 0x00C0
      */
     SECURITY_LEVEL(0x00C0),
 
     /**
-     * Security Key Type
+     * Security Key Type, 1792, 0x0700
      */
     SECURITY_KEY_TYPE(0x0700),
 
     /**
-     * Rx After Tx
+     * Rx After Tx, 2048, 0x0800
      */
     RX_AFTER_TX(0x0800),
 
     /**
-     * Gp Tx Queue Full
+     * Gp Tx Queue Full, 4096, 0x1000
      */
     GP_TX_QUEUE_FULL(0x1000),
 
     /**
-     * Bidirectional Capability
+     * Bidirectional Capability, 8192, 0x2000
      */
     BIDIRECTIONAL_CAPABILITY(0x2000),
 
     /**
-     * Proxy Info Present
+     * Proxy Info Present, 16384, 0x4000
      */
     PROXY_INFO_PRESENT(0x4000);
 

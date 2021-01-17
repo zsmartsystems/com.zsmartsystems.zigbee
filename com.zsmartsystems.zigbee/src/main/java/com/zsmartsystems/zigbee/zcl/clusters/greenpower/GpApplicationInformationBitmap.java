@@ -17,26 +17,26 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T21:54:11Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum GpApplicationInformationBitmap {
 
     /**
-     * Manufacture ID Present
+     * Manufacture ID Present, 1, 0x0001
      */
     MANUFACTURE_ID_PRESENT(0x0001),
 
     /**
-     * Model ID Present
+     * Model ID Present, 2, 0x0002
      */
     MODEL_ID_PRESENT(0x0002),
 
     /**
-     * Gpd Commands Present
+     * Gpd Commands Present, 4, 0x0004
      */
     GPD_COMMANDS_PRESENT(0x0004),
 
     /**
-     * Cluster List Present
+     * Cluster List Present, 8, 0x0008
      */
     CLUSTER_LIST_PRESENT(0x0008);
 

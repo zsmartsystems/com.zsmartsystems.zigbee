@@ -17,31 +17,31 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-20T07:40:15Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum ACTypeEnum {
 
     /**
-     * Reserved
+     * Reserved, 0, 0x0000
      */
     RESERVED(0x0000),
 
     /**
-     * Cooling and Fixed Speed
+     * Cooling and Fixed Speed, 1, 0x0001
      */
     COOLING_AND_FIXED_SPEED(0x0001),
 
     /**
-     * Heat Pump and Fixed Speed
+     * Heat Pump and Fixed Speed, 2, 0x0002
      */
     HEAT_PUMP_AND_FIXED_SPEED(0x0002),
 
     /**
-     * Cooling and Inverter
+     * Cooling and Inverter, 3, 0x0003
      */
     COOLING_AND_INVERTER(0x0003),
 
     /**
-     * Heat Pump and Inverter
+     * Heat Pump and Inverter, 4, 0x0004
      */
     HEAT_PUMP_AND_INVERTER(0x0004);
 

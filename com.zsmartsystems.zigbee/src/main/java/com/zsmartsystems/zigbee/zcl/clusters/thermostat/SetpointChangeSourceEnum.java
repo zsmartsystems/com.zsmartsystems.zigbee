@@ -17,21 +17,21 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-20T07:40:15Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum SetpointChangeSourceEnum {
 
     /**
-     * Manual user-initiated
+     * Manual user-initiated, 0, 0x0000
      */
     MANUAL_USER_INITIATED(0x0000),
 
     /**
-     * Schedule/internal programming-initiated
+     * Schedule/internal programming-initiated, 1, 0x0001
      */
     SCHEDULE_INTERNAL_PROGRAMMING_INITIATED(0x0001),
 
     /**
-     * Externally-initiated
+     * Externally-initiated, 2, 0x0002
      */
     EXTERNALLY_INITIATED(0x0002);
 

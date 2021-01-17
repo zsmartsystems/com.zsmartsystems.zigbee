@@ -17,36 +17,36 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum DebtAmountTypeEnum {
 
     /**
-     * Type 1 Absolute
+     * Type 1 Absolute, 0, 0x0000
      */
     TYPE_1_ABSOLUTE(0x0000),
 
     /**
-     * Type 1 Incremental
+     * Type 1 Incremental, 1, 0x0001
      */
     TYPE_1_INCREMENTAL(0x0001),
 
     /**
-     * Type 2 Absolute
+     * Type 2 Absolute, 2, 0x0002
      */
     TYPE_2_ABSOLUTE(0x0002),
 
     /**
-     * Type 2 Incremental
+     * Type 2 Incremental, 3, 0x0003
      */
     TYPE_2_INCREMENTAL(0x0003),
 
     /**
-     * Type 3 Absolute
+     * Type 3 Absolute, 4, 0x0004
      */
     TYPE_3_ABSOLUTE(0x0004),
 
     /**
-     * Type 3 Incremental
+     * Type 3 Incremental, 5, 0x0005
      */
     TYPE_3_INCREMENTAL(0x0005);
 

@@ -17,16 +17,16 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum PrepaySnapshotPayloadTypeEnum {
 
     /**
-     * Debt Credit Status
+     * Debt Credit Status, 0, 0x0000
      */
     DEBT_CREDIT_STATUS(0x0000),
 
     /**
-     * Not Used
+     * Not Used, 255, 0x00FF
      */
     NOT_USED(0x00FF);
 

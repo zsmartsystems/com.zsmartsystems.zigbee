@@ -17,16 +17,16 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-20T07:40:15Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum TemperatureSetpointHoldEnum {
 
     /**
-     * Setpoint Hold Off
+     * Setpoint Hold Off, 0, 0x0000
      */
     SETPOINT_HOLD_OFF(0x0000),
 
     /**
-     * Setpoint Hold On
+     * Setpoint Hold On, 1, 0x0001
      */
     SETPOINT_HOLD_ON(0x0001);
 

@@ -17,16 +17,16 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum EventControlBitmap {
 
     /**
-     * Randomized Start Time
+     * Randomized Start Time, 1, 0x0001
      */
     RANDOMIZED_START_TIME(0x0001),
 
     /**
-     * Randomized End Time
+     * Randomized End Time, 2, 0x0002
      */
     RANDOMIZED_END_TIME(0x0002);
 

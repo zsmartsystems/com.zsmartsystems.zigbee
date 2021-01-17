@@ -17,26 +17,26 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-11-19T09:19:31Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum DataQualityEnum {
 
     /**
-     * All Data Certified
+     * All Data Certified, 0, 0x0000
      */
     ALL_DATA_CERTIFIED(0x0000),
 
     /**
-     * Only Instantaneous Power not Certified
+     * Only Instantaneous Power not Certified, 1, 0x0001
      */
     ONLY_INSTANTANEOUS_POWER_NOT_CERTIFIED(0x0001),
 
     /**
-     * Only Cumulated Consumption not Certified
+     * Only Cumulated Consumption not Certified, 2, 0x0002
      */
     ONLY_CUMULATED_CONSUMPTION_NOT_CERTIFIED(0x0002),
 
     /**
-     * Not Certified data
+     * Not Certified data, 3, 0x0003
      */
     NOT_CERTIFIED_DATA(0x0003);
 

@@ -17,146 +17,146 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum UnitOfMeasureEnum {
 
     /**
-     * Kilo Watt Hours
+     * Kilo Watt Hours, 0, 0x0000
      */
     KILO_WATT_HOURS(0x0000),
 
     /**
-     * Cubic Meter Per Hour
+     * Cubic Meter Per Hour, 1, 0x0001
      */
     CUBIC_METER_PER_HOUR(0x0001),
 
     /**
-     * Cubic Feet Per Hour
+     * Cubic Feet Per Hour, 2, 0x0002
      */
     CUBIC_FEET_PER_HOUR(0x0002),
 
     /**
-     * Centum Cubic Feet Per Hour
+     * Centum Cubic Feet Per Hour, 3, 0x0003
      */
     CENTUM_CUBIC_FEET_PER_HOUR(0x0003),
 
     /**
-     * Us Gallons Per Hour
+     * Us Gallons Per Hour, 4, 0x0004
      */
     US_GALLONS_PER_HOUR(0x0004),
 
     /**
-     * Imperial Gallons Per Hour
+     * Imperial Gallons Per Hour, 5, 0x0005
      */
     IMPERIAL_GALLONS_PER_HOUR(0x0005),
 
     /**
-     * Bt Us Or Btu Per Hour
+     * Bt Us Or Btu Per Hour, 6, 0x0006
      */
     BT_US_OR_BTU_PER_HOUR(0x0006),
 
     /**
-     * Liters Or Liters Per Hour
+     * Liters Or Liters Per Hour, 7, 0x0007
      */
     LITERS_OR_LITERS_PER_HOUR(0x0007),
 
     /**
-     * Kpa Gauge
+     * Kpa Gauge, 8, 0x0008
      */
     KPA_GAUGE(0x0008),
 
     /**
-     * Kpa Absolute
+     * Kpa Absolute, 9, 0x0009
      */
     KPA_ABSOLUTE(0x0009),
 
     /**
-     * Mcf Or Mcf Per Second
+     * Mcf Or Mcf Per Second, 10, 0x000A
      */
     MCF_OR_MCF_PER_SECOND(0x000A),
 
     /**
-     * Unitless
+     * Unitless, 11, 0x000B
      */
     UNITLESS(0x000B),
 
     /**
-     * Mj Or Mj Per Second
+     * Mj Or Mj Per Second, 12, 0x000C
      */
     MJ_OR_MJ_PER_SECOND(0x000C),
 
     /**
-     * K Var Or K Var Hours
+     * K Var Or K Var Hours, 13, 0x000D
      */
     K_VAR_OR_K_VAR_HOURS(0x000D),
 
     /**
-     * Kilo Watt Hours Bcd
+     * Kilo Watt Hours Bcd, 128, 0x0080
      */
     KILO_WATT_HOURS_BCD(0x0080),
 
     /**
-     * Cubic Meter Per Hour Bcd
+     * Cubic Meter Per Hour Bcd, 129, 0x0081
      */
     CUBIC_METER_PER_HOUR_BCD(0x0081),
 
     /**
-     * Cubic Feet Per Hour Bcd
+     * Cubic Feet Per Hour Bcd, 130, 0x0082
      */
     CUBIC_FEET_PER_HOUR_BCD(0x0082),
 
     /**
-     * Centum Cubic Feet Per Hour Bcd
+     * Centum Cubic Feet Per Hour Bcd, 131, 0x0083
      */
     CENTUM_CUBIC_FEET_PER_HOUR_BCD(0x0083),
 
     /**
-     * Us Gallons Per Hour Bcd
+     * Us Gallons Per Hour Bcd, 132, 0x0084
      */
     US_GALLONS_PER_HOUR_BCD(0x0084),
 
     /**
-     * Imperial Gallons Per Hour Bcd
+     * Imperial Gallons Per Hour Bcd, 133, 0x0085
      */
     IMPERIAL_GALLONS_PER_HOUR_BCD(0x0085),
 
     /**
-     * Bt Us Or Btu Per Hour Bcd
+     * Bt Us Or Btu Per Hour Bcd, 134, 0x0086
      */
     BT_US_OR_BTU_PER_HOUR_BCD(0x0086),
 
     /**
-     * Liters Or Liters Per Hour Bcd
+     * Liters Or Liters Per Hour Bcd, 135, 0x0087
      */
     LITERS_OR_LITERS_PER_HOUR_BCD(0x0087),
 
     /**
-     * Kpa Guage Bcd
+     * Kpa Guage Bcd, 136, 0x0088
      */
     KPA_GUAGE_BCD(0x0088),
 
     /**
-     * Kpa Absolute Bcd
+     * Kpa Absolute Bcd, 137, 0x0089
      */
     KPA_ABSOLUTE_BCD(0x0089),
 
     /**
-     * Mcf Or Mcf Per Second Bcd
+     * Mcf Or Mcf Per Second Bcd, 138, 0x008A
      */
     MCF_OR_MCF_PER_SECOND_BCD(0x008A),
 
     /**
-     * Unitless Bcd
+     * Unitless Bcd, 139, 0x008B
      */
     UNITLESS_BCD(0x008B),
 
     /**
-     * Mj Or Mj Per Second Bcd
+     * Mj Or Mj Per Second Bcd, 140, 0x008C
      */
     MJ_OR_MJ_PER_SECOND_BCD(0x008C),
 
     /**
-     * K Var Or K Var Hours Bcd
+     * K Var Or K Var Hours Bcd, 141, 0x008D
      */
     K_VAR_OR_K_VAR_HOURS_BCD(0x008D);
 

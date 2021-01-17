@@ -17,41 +17,41 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T21:54:11Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum GpCommissioningNotificationOptionBitmap {
 
     /**
-     * Application ID
+     * Application ID, 7, 0x0007
      */
     APPLICATION_ID(0x0007),
 
     /**
-     * Rx After Tx
+     * Rx After Tx, 8, 0x0008
      */
     RX_AFTER_TX(0x0008),
 
     /**
-     * Security Level
+     * Security Level, 48, 0x0030
      */
     SECURITY_LEVEL(0x0030),
 
     /**
-     * Security Key Type
+     * Security Key Type, 448, 0x01C0
      */
     SECURITY_KEY_TYPE(0x01C0),
 
     /**
-     * Security Processing Failed
+     * Security Processing Failed, 512, 0x0200
      */
     SECURITY_PROCESSING_FAILED(0x0200),
 
     /**
-     * Bidirectional Capability
+     * Bidirectional Capability, 1024, 0x0400
      */
     BIDIRECTIONAL_CAPABILITY(0x0400),
 
     /**
-     * Proxy Info Present
+     * Proxy Info Present, 2048, 0x0800
      */
     PROXY_INFO_PRESENT(0x0800);
 

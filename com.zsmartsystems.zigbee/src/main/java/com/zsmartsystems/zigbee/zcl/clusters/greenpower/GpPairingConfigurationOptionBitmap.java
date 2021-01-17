@@ -17,46 +17,46 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T21:54:11Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum GpPairingConfigurationOptionBitmap {
 
     /**
-     * Application ID
+     * Application ID, 7, 0x0007
      */
     APPLICATION_ID(0x0007),
 
     /**
-     * Communication Mode
+     * Communication Mode, 24, 0x0018
      */
     COMMUNICATION_MODE(0x0018),
 
     /**
-     * Sequence Number Capabilities
+     * Sequence Number Capabilities, 32, 0x0020
      */
     SEQUENCE_NUMBER_CAPABILITIES(0x0020),
 
     /**
-     * Rx On Capability
+     * Rx On Capability, 64, 0x0040
      */
     RX_ON_CAPABILITY(0x0040),
 
     /**
-     * Fixed Location
+     * Fixed Location, 128, 0x0080
      */
     FIXED_LOCATION(0x0080),
 
     /**
-     * Assigned Alias
+     * Assigned Alias, 256, 0x0100
      */
     ASSIGNED_ALIAS(0x0100),
 
     /**
-     * Security Use
+     * Security Use, 512, 0x0200
      */
     SECURITY_USE(0x0200),
 
     /**
-     * Application Information Present
+     * Application Information Present, 1024, 0x0400
      */
     APPLICATION_INFORMATION_PRESENT(0x0400);
 

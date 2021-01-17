@@ -17,21 +17,21 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum SwitchTypeEnum {
 
     /**
-     * Toggle
+     * Toggle, 0, 0x0000
      */
     TOGGLE(0x0000),
 
     /**
-     * Momentary
+     * Momentary, 1, 0x0001
      */
     MOMENTARY(0x0001),
 
     /**
-     * Multifunction
+     * Multifunction, 2, 0x0002
      */
     MULTIFUNCTION(0x0002);
 
