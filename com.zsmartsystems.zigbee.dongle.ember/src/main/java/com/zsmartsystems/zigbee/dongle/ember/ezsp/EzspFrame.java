@@ -148,6 +148,10 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_GET_PARENT_CHILD_PARAMETERS = 0x29;
     protected static final int FRAME_ID_GET_POLICY = 0x56;
     protected static final int FRAME_ID_GET_ROUTE_TABLE_ENTRY = 0x7B;
+    protected static final int FRAME_ID_GET_ROUTING_SHORTCUT_THRESHOLD = 0xD1;
+    protected static final int FRAME_ID_GET_SOURCE_ROUTE_TABLE_ENTRY = 0xC1;
+    protected static final int FRAME_ID_GET_SOURCE_ROUTE_TABLE_FILLED_SIZE = 0xC2;
+    protected static final int FRAME_ID_GET_SOURCE_ROUTE_TABLE_TOTAL_SIZE = 0xC3;
     protected static final int FRAME_ID_GET_STANDALONE_BOOTLOADER_VERSION_PLAT_MICRO_PHY = 0x91;
     protected static final int FRAME_ID_GET_TRANSIENT_KEY_TABLE_ENTRY = 0x6D;
     protected static final int FRAME_ID_GET_TRANSIENT_LINK_KEY = 0xCE;
@@ -227,7 +231,9 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_SET_PREINSTALLED_CBKE_DATA283K1 = 0xED;
     protected static final int FRAME_ID_SET_RADIO_CHANNEL = 0x9A;
     protected static final int FRAME_ID_SET_RADIO_POWER = 0x99;
+    protected static final int FRAME_ID_SET_ROUTING_SHORTCUT_THRESHOLD = 0xD0;
     protected static final int FRAME_ID_SET_SOURCE_ROUTE = 0x5A;
+    protected static final int FRAME_ID_SET_SOURCE_ROUTE_DISCOVERY_MODE = 0x5A;
     protected static final int FRAME_ID_SET_VALUE = 0xAB;
     protected static final int FRAME_ID_STACK_STATUS_HANDLER = 0x19;
     protected static final int FRAME_ID_STACK_TOKEN_CHANGED_HANDLER = 0x0D;
@@ -304,6 +310,10 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_GET_PARENT_CHILD_PARAMETERS, EzspGetParentChildParametersResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_POLICY, EzspGetPolicyResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_ROUTE_TABLE_ENTRY, EzspGetRouteTableEntryResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GET_ROUTING_SHORTCUT_THRESHOLD, EzspGetRoutingShortcutThresholdResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GET_SOURCE_ROUTE_TABLE_ENTRY, EzspGetSourceRouteTableEntryResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GET_SOURCE_ROUTE_TABLE_FILLED_SIZE, EzspGetSourceRouteTableFilledSizeResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GET_SOURCE_ROUTE_TABLE_TOTAL_SIZE, EzspGetSourceRouteTableTotalSizeResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_STANDALONE_BOOTLOADER_VERSION_PLAT_MICRO_PHY, EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_TRANSIENT_KEY_TABLE_ENTRY, EzspGetTransientKeyTableEntryResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_TRANSIENT_LINK_KEY, EzspGetTransientLinkKeyResponse.class);
@@ -383,7 +393,9 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_SET_PREINSTALLED_CBKE_DATA283K1, EzspSetPreinstalledCbkeData283k1Response.class);
         ezspHandlerMap.put(FRAME_ID_SET_RADIO_CHANNEL, EzspSetRadioChannelResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_RADIO_POWER, EzspSetRadioPowerResponse.class);
+        ezspHandlerMap.put(FRAME_ID_SET_ROUTING_SHORTCUT_THRESHOLD, EzspSetRoutingShortcutThresholdResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_SOURCE_ROUTE, EzspSetSourceRouteResponse.class);
+        ezspHandlerMap.put(FRAME_ID_SET_SOURCE_ROUTE_DISCOVERY_MODE, EzspSetSourceRouteDiscoveryModeResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_VALUE, EzspSetValueResponse.class);
         ezspHandlerMap.put(FRAME_ID_STACK_STATUS_HANDLER, EzspStackStatusHandler.class);
         ezspHandlerMap.put(FRAME_ID_STACK_TOKEN_CHANGED_HANDLER, EzspStackTokenChangedHandler.class);

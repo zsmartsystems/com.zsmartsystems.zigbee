@@ -65,6 +65,14 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetParentChildPara
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetParentChildParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetPolicyRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetPolicyResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetRouteTableEntryRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetRouteTableEntryResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetSourceRouteTableEntryRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetSourceRouteTableEntryResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetSourceRouteTableFilledSizeRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetSourceRouteTableFilledSizeResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetSourceRouteTableTotalSizeRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetSourceRouteTableTotalSizeResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetTransientKeyTableEntryRequest;
@@ -121,6 +129,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberLibraryId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberLibraryStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberRouteTableEntry;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberSourceRouteTableEntry;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberTransientKeyData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
@@ -457,8 +467,7 @@ public class EmberNcp {
         EzspSetConfigurationValueResponse response = (EzspSetConfigurationValueResponse) transaction.getResponse();
         lastStatus = null;
 
-        if(response == null)
-        {
+        if (response == null) {
             return null;
         }
 
@@ -807,6 +816,79 @@ public class EmberNcp {
         EzspAddOrUpdateKeyTableEntryResponse response = (EzspAddOrUpdateKeyTableEntryResponse) transaction
                 .getResponse();
         return response.getStatus();
+    }
+
+    /**
+     * Returns an entry from the routing table
+     *
+     * @param index The index of the entry of interest in the route table
+     * @return the {@link EmberRouteTableEntry}.
+     */
+    public EmberRouteTableEntry getRouteTableEntry(int index) {
+        EzspGetRouteTableEntryRequest request = new EzspGetRouteTableEntryRequest();
+        request.setIndex(index);
+        EzspTransaction transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction(request, EzspGetRouteTableEntryResponse.class));
+        EzspGetRouteTableEntryResponse response = (EzspGetRouteTableEntryResponse) transaction
+                .getResponse();
+        return response.getValue();
+    }
+
+    /**
+     * Returns an entry from the source routing table
+     *
+     * @param index The index of the entry of interest in the source route table or null if the route didn't exist
+     * @return the {@link EmberSourceRouteTableEntry}.
+     */
+    public EmberSourceRouteTableEntry getSourceRouteTableEntry(int index) {
+        EzspGetSourceRouteTableEntryRequest request = new EzspGetSourceRouteTableEntryRequest();
+        request.setIndex(index);
+        EzspTransaction transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction(request, EzspGetSourceRouteTableEntryResponse.class));
+        EzspGetSourceRouteTableEntryResponse response = (EzspGetSourceRouteTableEntryResponse) transaction
+                .getResponse();
+        if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
+            return null;
+        }
+        // response.get
+        EmberSourceRouteTableEntry routeTableEntry = new EmberSourceRouteTableEntry();
+        routeTableEntry.setDestination(response.getDestination());
+        routeTableEntry.setCloserIndex(response.getCloserIndex());
+        return routeTableEntry;
+    }
+
+    /**
+     * Returns the source route table total size.
+     *
+     * @return Total size of source route table.
+     */
+    public int getSourceRouteTableTotalSize() {
+        EzspGetSourceRouteTableTotalSizeRequest request = new EzspGetSourceRouteTableTotalSizeRequest();
+        EzspTransaction transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction(request, EzspGetSourceRouteTableTotalSizeResponse.class));
+        EzspGetSourceRouteTableTotalSizeResponse response = (EzspGetSourceRouteTableTotalSizeResponse) transaction
+                .getResponse();
+        if (response == null) {
+            return 0;
+        }
+        return response.getSourceRouteTableTotalSize();
+    }
+
+    /**
+     * Returns the number of filled entries in source route table.
+     *
+     * @return The number of filled entries in source route table.
+     */
+    public int getSourceRouteTableFilledSize() {
+        EzspGetSourceRouteTableFilledSizeRequest request = new EzspGetSourceRouteTableFilledSizeRequest();
+        EzspTransaction transaction = protocolHandler.sendEzspTransaction(
+                new EzspSingleResponseTransaction(request, EzspGetSourceRouteTableFilledSizeResponse.class));
+        EzspGetSourceRouteTableFilledSizeResponse response = (EzspGetSourceRouteTableFilledSizeResponse) transaction
+                .getResponse();
+        if (response == null) {
+            return 0;
+        }
+        return response.getSourceRouteTableFilledSize();
     }
 
     /**
