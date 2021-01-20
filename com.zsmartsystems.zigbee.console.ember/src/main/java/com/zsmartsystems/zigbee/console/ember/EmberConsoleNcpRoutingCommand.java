@@ -88,40 +88,39 @@ public class EmberConsoleNcpRoutingCommand extends EmberConsoleAbstractCommand {
         out.println("Discovery Table Size Config    : " + configDiscoveryTableSize);
         out.println("Route Table Size Config        : " + configRouteTableSize);
         out.println("Source Route Table Size Config : " + configSourceRouteTableSize);
-        out.println("Source Route Table Size        : " + sourceRouteFill + "/" + sourceRouteSize);
+        out.println("Source Route Table Size Usage  : " + sourceRouteFill + "/" + sourceRouteSize);
 
         out.println();
-        out.println("Destination   Next   Age    Concentrator   Status");
+        out.println("NCP Route Table :");
+        out.println();
+        out.println(String.format("%-15s  %-15s  %-6s  %-15s  %-15s", "Destination", "Next", "Age", "Concentrator", "Status"));
         for (EmberRouteTableEntry route : routeTableMap.values()) {
-            out.println(
-                    String.format("%04X  %5d", route.getDestination(), route.getDestination()) + "   "
-                            + String.format("%04X", route.getNextHop())
-                            + "   " + String.format("%04X",
-                                    route.getAge())
-                            + "   " + concentratorType.get(route.getConcentratorType()) + "           "
-                            + (route.getConcentratorType() == 2
-                                    ? (routeStatus.get(route.getStatus()) == null ? ""
-                                            : routeStatus.get(route.getStatus()))
-                                    : ""));
+            out.println(String.format("%-15s  %-15s  %-6s  %-15s  %-15s",
+                String.format("%04X (%5d)", route.getDestination(), route.getDestination()),
+                String.format("%04X (%5d)", route.getNextHop(), route.getNextHop()),
+                String.format("%04X", route.getAge()),
+                concentratorType.get(route.getConcentratorType()),
+                route.getConcentratorType() == 2 ? (routeStatus.get(route.getStatus()) == null ? "" : routeStatus.get(route.getStatus())) : ""));
         }
 
         out.println();
-        out.println("IDX   Destination   Closer   | Route");
-        int index = 0;
-        for (EmberSourceRouteTableEntry entry : sourceRouteTable) {
-            index++;
+        out.println("NCP Source Route Table :");
+        out.println();
+        out.println(String.format("%-6s  %-15s  %-10s  |  %s", "IDX", "Destination", "Closer IDX", "Route"));
+        for (int i = 0; i < sourceRouteTable.size(); ++i) {
+            EmberSourceRouteTableEntry entry = sourceRouteTable.get(i);
             if (entry == null) {
                 continue;
             }
 
             List<Integer> route = new ArrayList<>();
-            walkTheRoute(sourceRouteTable, route, index);
+            walkTheRoute(sourceRouteTable, route, i);
 
-            out.println(
-                    String.format("%3d   %04X  %5d   %3d      | %s", index, entry.getDestination(),
-                            entry.getDestination(),
-                            entry.getCloserIndex(),
-                            printRoute(route)));
+            out.println(String.format("%6s  %-15s  %-10s  |  %s",
+                "#" + i,
+                String.format("%04X (%5d)", entry.getDestination(), entry.getDestination()),
+                entry.getCloserIndex() != 255 ? "#" + entry.getCloserIndex() : "NCP",
+                printRoute(route)));
         }
     }
 
@@ -129,7 +128,7 @@ public class EmberConsoleNcpRoutingCommand extends EmberConsoleAbstractCommand {
             int index) {
         EmberSourceRouteTableEntry routeTable = sourceRouteTable.get(index);
         route.add(routeTable.getDestination());
-        if (routeTable.getCloserIndex() == -1) {
+        if (routeTable.getCloserIndex() == -1 || routeTable.getCloserIndex() == 255) {
             return;
         }
 
