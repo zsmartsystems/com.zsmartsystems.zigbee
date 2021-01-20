@@ -17,26 +17,26 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum TimeStatusBitmap {
 
     /**
-     * Master
+     * Master, 1, 0x0001
      */
     MASTER(0x0001),
 
     /**
-     * Synchronized
+     * Synchronized, 2, 0x0002
      */
     SYNCHRONIZED(0x0002),
 
     /**
-     * Master Zone DST
+     * Master Zone DST, 4, 0x0004
      */
     MASTER_ZONE_DST(0x0004),
 
     /**
-     * Superseding
+     * Superseding, 8, 0x0008
      */
     SUPERSEDING(0x0008);
 

@@ -68,6 +68,7 @@ The following clusters are currently supported -:
 | 0704 | SMART_ENERGY_TUNNELING | The tunneling cluster provides an interface for tunneling protocols. It is comprised of commands and attributes required to transport any existing metering communication protocol within the payload of standard ZigBee frames (including the handling of issues such as addressing, fragmentation and flow control). Examples for such protocols are DLMS/COSEM, IEC61107, ANSI C12, M-Bus, ClimateTalk etc. |
 | 0705 | PREPAYMENT | The Prepayment Cluster provides the facility to pass messages relating to the accounting functionality of a meter between devices on the HAN. It allows for the implementation of a system conforming to the set of standards relating to Payment Electricity Meters (IEC 62055) and also for the case where the accounting function is remote from the meter. Prepayment is used in situations where the supply of a service may be interrupted or enabled under the control of the meter or system in relation to a payment tariff. The accounting process may be within the meter or elsewhere in the system. The amount of available credit is decremented as the service is consumed and is incremented through payments made by the consumer. Such a system allows the consumer to better manage their energy consumption and reduces the risk of bad debt owing to the supplier. |
 | 0800 | KEY_ESTABLISHMENT | This cluster provides attributes and commands to perform mutual authentication and establish keys between two ZigBee devices. |
+| 0B01 | METER_IDENTIFICATION | This cluster provides attributes and commands for determining advanced information about utility metering device. |
 | 0B04 | ELECTRICAL_MEASUREMENT | This cluster provides a mechanism for querying data about the electrical properties as measured by the device. This cluster may be implemented on any device type and be implemented on a per-endpoint basis. For example, a power  strip device could represent each outlet on a  different endpoint and report electrical  information for each individual outlet. The only caveat is that if you implement an attribute that has an associated multiplier and divisor, then you must implement the associated multiplier and divisor attributes. For example if you implement DCVoltage, you must also implement DCVoltageMultiplier and DCVoltageDivisor. |
 | 0B05 | DIAGNOSTICS | The diagnostics cluster provides access to information regarding the operation of the ZigBee stack over time. This information is useful to installers and other network administrators who wish to know how a particular device is functioning on the network. |
 
@@ -331,6 +332,8 @@ The following commands are available if the transport layer is using the Silabs 
 |ncpsecuritystate |Gets the current NCP security state and configuration                         |
 |ncptransientkey  |Adds a transient link key to the NCP                                          |
 |ncpmmohash       |Uses the NCP to perform the MMO hash                                          |
+|ncprouting       |Prints the NCP routing tables and information                                 |
+
 
 ### Telegesis Commands
 

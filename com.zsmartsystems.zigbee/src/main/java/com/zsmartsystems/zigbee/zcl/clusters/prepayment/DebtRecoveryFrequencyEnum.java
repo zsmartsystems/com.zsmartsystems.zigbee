@@ -17,31 +17,31 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum DebtRecoveryFrequencyEnum {
 
     /**
-     * Per Hour
+     * Per Hour, 0, 0x0000
      */
     PER_HOUR(0x0000),
 
     /**
-     * Per Day
+     * Per Day, 1, 0x0001
      */
     PER_DAY(0x0001),
 
     /**
-     * Per Week
+     * Per Week, 2, 0x0002
      */
     PER_WEEK(0x0002),
 
     /**
-     * Per Month
+     * Per Month, 3, 0x0003
      */
     PER_MONTH(0x0003),
 
     /**
-     * Per Quarter
+     * Per Quarter, 4, 0x0004
      */
     PER_QUARTER(0x0004);
 

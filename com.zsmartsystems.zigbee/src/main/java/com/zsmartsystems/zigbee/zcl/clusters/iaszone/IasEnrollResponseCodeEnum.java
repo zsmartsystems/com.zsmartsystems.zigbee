@@ -17,26 +17,26 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum IasEnrollResponseCodeEnum {
 
     /**
-     * Success
+     * Success, 0, 0x0000
      */
     SUCCESS(0x0000),
 
     /**
-     * Not Supported
+     * Not Supported, 1, 0x0001
      */
     NOT_SUPPORTED(0x0001),
 
     /**
-     * No Enroll Permit
+     * No Enroll Permit, 2, 0x0002
      */
     NO_ENROLL_PERMIT(0x0002),
 
     /**
-     * Too Many Zones
+     * Too Many Zones, 3, 0x0003
      */
     TOO_MANY_ZONES(0x0003);
 

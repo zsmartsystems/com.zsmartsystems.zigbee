@@ -17,26 +17,26 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T21:54:11Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum GpDeviceIdEnum {
 
     /**
-     * Gp Simple Generice Two State Switch
+     * Gp Simple Generice Two State Switch, 0, 0x0000
      */
     GP_SIMPLE_GENERICE_TWO_STATE_SWITCH(0x0000),
 
     /**
-     * Gp On Off Switch
+     * Gp On Off Switch, 8, 0x0008
      */
     GP_ON_OFF_SWITCH(0x0008),
 
     /**
-     * Gp Level Control Switch
+     * Gp Level Control Switch, 16, 0x0010
      */
     GP_LEVEL_CONTROL_SWITCH(0x0010),
 
     /**
-     * Gp Indoor Environment Snesor
+     * Gp Indoor Environment Snesor, 24, 0x0018
      */
     GP_INDOOR_ENVIRONMENT_SNESOR(0x0018);
 

@@ -17,16 +17,16 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum PriceNumberOfPriceTiersAndRegisterTierBitmap {
 
     /**
-     * Register Tier
+     * Register Tier, 15, 0x000F
      */
     REGISTER_TIER(0x000F),
 
     /**
-     * Number Of Price Tiers
+     * Number Of Price Tiers, 240, 0x00F0
      */
     NUMBER_OF_PRICE_TIERS(0x00F0);
 

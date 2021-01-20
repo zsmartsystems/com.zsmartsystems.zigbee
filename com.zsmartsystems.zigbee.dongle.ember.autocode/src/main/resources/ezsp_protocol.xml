@@ -1978,6 +1978,121 @@
 	</command>
 
 	<command>
+		<name>getSourceRouteTableTotalSize</name>
+		<id>0xC3</id>
+		<description>Returns the source route table total size.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>sourceRouteTableTotalSize</name>
+				<description>Total size of source route table.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>getSourceRouteTableFilledSize</name>
+		<id>0xC2</id>
+		<description>Returns the number of filled entries in source route table.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>sourceRouteTableFilledSize</name>
+				<description>The number of filled entries in source route table.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>getSourceRouteTableEntry</name>
+		<id>0xC1</id>
+		<description>Returns information about a source route table entry.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>index</name>
+				<description>The index of the entry of interest in the source route table. Possible indexes range from zero to SOURCE_ROUTE_TABLE_FILLED_SIZE.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>EMBER_SUCCESS if there is source route entry at index. EMBER_SOURCE_ROUTE_FAILURE if there is no source route at index.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>destination</name>
+				<description>The node ID of the destination in that entry.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>closerIndex</name>
+				<description>The closer node index for this source route table entry.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>getRoutingShortcutThreshold</name>
+		<id>0xD1</id>
+		<description>Gets the routing shortcut threshold used to differentiate between directly using a neighbour vs. performing routing.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>routingShortcutThresh</name>
+				<description>The routing shortcut threshold.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>setRoutingShortcutThreshold</name>
+		<id>0xD0</id>
+		<description>Sets the routing shortcut threshold to directly use a neighbour instead of performing routing.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>costThresh</name>
+				<description>The routing shortcut threshold to configure</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>An EmberStatus value indicating success or the reason for failure.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>setSourceRouteDiscoveryMode</name>
+		<id>0x5A</id>
+		<description>: Sets source route discovery(MTORR) mode to on, off, reschedule.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>mode</name>
+				<description>Source route discovery mode: off:0, on:1, reschedule:2</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>uint32_t</data_type>
+				<name>remainingTime</name>
+				<description>Remaining time(ms) until next MTORR broadcast if the mode is on, MAX_INT32U_VALUE if the mode is off.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
 		<name>incomingRouteRecordHandler</name>
 		<id>0x59</id>
 		<description>Reports the arrival of a route record command frame.</description>
@@ -7452,4 +7567,24 @@
 			</value>
 		</values>
 	</enum>
+
+
+<!-- Note that this definition is not defined by Silabs, but is added here for convenience -->
+	<structure>
+		<name>EmberSourceRouteTableEntry</name>
+		<description>A source route table entry stores information about the next hop along the route to the destination.</description>
+		<parameters>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>destination</name>
+				<description>The node ID of the destination in that entry.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>closerIndex</name>
+				<description>The closer node index for this source route table entry.</description>
+			</parameter>
+		</parameters>
+	</structure>
+
 </protocol>

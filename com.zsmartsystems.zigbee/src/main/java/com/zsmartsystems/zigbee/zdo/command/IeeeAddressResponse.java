@@ -30,7 +30,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoStatus;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-02-01T18:52:16Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
 public class IeeeAddressResponse extends ZdoResponse {
     /**
      * The ZDO cluster ID.
@@ -60,7 +60,7 @@ public class IeeeAddressResponse extends ZdoResponse {
     /**
      * Default constructor.
      *
-     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default constructor and setters.
      */
     @Deprecated
     public IeeeAddressResponse() {

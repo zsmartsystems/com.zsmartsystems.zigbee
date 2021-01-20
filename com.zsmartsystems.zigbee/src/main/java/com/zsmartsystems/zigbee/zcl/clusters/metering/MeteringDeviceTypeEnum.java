@@ -17,71 +17,71 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-10-26T17:06:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum MeteringDeviceTypeEnum {
 
     /**
-     * Electric Metering
+     * Electric Metering, 0, 0x0000
      */
     ELECTRIC_METERING(0x0000),
 
     /**
-     * Gas Metering
+     * Gas Metering, 1, 0x0001
      */
     GAS_METERING(0x0001),
 
     /**
-     * Water Metering
+     * Water Metering, 2, 0x0002
      */
     WATER_METERING(0x0002),
 
     /**
-     * Thermal Metering
+     * Thermal Metering, 3, 0x0003
      */
     THERMAL_METERING(0x0003),
 
     /**
-     * Pressure Metering
+     * Pressure Metering, 4, 0x0004
      */
     PRESSURE_METERING(0x0004),
 
     /**
-     * Heat Metering
+     * Heat Metering, 5, 0x0005
      */
     HEAT_METERING(0x0005),
 
     /**
-     * Cooling Metering
+     * Cooling Metering, 6, 0x0006
      */
     COOLING_METERING(0x0006),
 
     /**
-     * Mirrored Gas Metering
+     * Mirrored Gas Metering, 128, 0x0080
      */
     MIRRORED_GAS_METERING(0x0080),
 
     /**
-     * Mirrored Water Metering
+     * Mirrored Water Metering, 129, 0x0081
      */
     MIRRORED_WATER_METERING(0x0081),
 
     /**
-     * Mirrored Thermal Metering
+     * Mirrored Thermal Metering, 130, 0x0082
      */
     MIRRORED_THERMAL_METERING(0x0082),
 
     /**
-     * Mirrored Pressure Metering
+     * Mirrored Pressure Metering, 131, 0x0083
      */
     MIRRORED_PRESSURE_METERING(0x0083),
 
     /**
-     * Mirrored Heat Metering
+     * Mirrored Heat Metering, 132, 0x0084
      */
     MIRRORED_HEAT_METERING(0x0084),
 
     /**
-     * Mirrored Cooling Metering
+     * Mirrored Cooling Metering, 133, 0x0085
      */
     MIRRORED_COOLING_METERING(0x0085);
 

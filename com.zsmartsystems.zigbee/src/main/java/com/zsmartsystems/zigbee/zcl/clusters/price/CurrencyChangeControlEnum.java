@@ -17,26 +17,26 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum CurrencyChangeControlEnum {
 
     /**
-     * Clear Billing Info
+     * Clear Billing Info, 1, 0x0001
      */
     CLEAR_BILLING_INFO(0x0001),
 
     /**
-     * Convert Billing Info Using New Currency
+     * Convert Billing Info Using New Currency, 2, 0x0002
      */
     CONVERT_BILLING_INFO_USING_NEW_CURRENCY(0x0002),
 
     /**
-     * Clear Old Consumption Data
+     * Clear Old Consumption Data, 4, 0x0004
      */
     CLEAR_OLD_CONSUMPTION_DATA(0x0004),
 
     /**
-     * Convert Old Consumption Data Using New Currency
+     * Convert Old Consumption Data Using New Currency, 8, 0x0008
      */
     CONVERT_OLD_CONSUMPTION_DATA_USING_NEW_CURRENCY(0x0008);
 

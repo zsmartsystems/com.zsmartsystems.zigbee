@@ -289,8 +289,14 @@ public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleComma
             case SIGNED_16_BIT_INTEGER:
                 value = Integer.parseInt(stringValue);
                 break;
+            case SIGNED_24_BIT_INTEGER:
+                value = Integer.parseInt(stringValue);
+                break;
             case SIGNED_32_BIT_INTEGER:
                 value = Integer.parseInt(stringValue);
+                break;
+            case SIGNED_48_BIT_INTEGER:
+                value = Long.parseLong(stringValue);
                 break;
             case UNSIGNED_8_BIT_INTEGER:
                 value = Integer.parseInt(stringValue);
@@ -298,8 +304,14 @@ public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleComma
             case UNSIGNED_16_BIT_INTEGER:
                 value = Integer.parseInt(stringValue);
                 break;
+            case UNSIGNED_24_BIT_INTEGER:
+                value = Integer.parseInt(stringValue);
+                break;
             case UNSIGNED_32_BIT_INTEGER:
                 value = Integer.parseInt(stringValue);
+                break;
+            case UNSIGNED_48_BIT_INTEGER:
+                value = Long.parseLong(stringValue);
                 break;
             default:
                 throw new IllegalArgumentException("Data type " + zclDataType + " is not supported.");

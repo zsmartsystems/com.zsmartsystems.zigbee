@@ -17,16 +17,16 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum ModeForSequenceBitmap {
 
     /**
-     * Heat Setpoint Field Present
+     * Heat Setpoint Field Present, 1, 0x0001
      */
     HEAT_SETPOINT_FIELD_PRESENT(0x0001),
 
     /**
-     * Cool Setpoint Field Present
+     * Cool Setpoint Field Present, 2, 0x0002
      */
     COOL_SETPOINT_FIELD_PRESENT(0x0002);
 

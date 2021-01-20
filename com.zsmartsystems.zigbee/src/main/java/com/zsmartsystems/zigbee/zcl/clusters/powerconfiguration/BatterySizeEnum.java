@@ -17,56 +17,56 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum BatterySizeEnum {
 
     /**
-     * No Battery
+     * No Battery, 0, 0x0000
      */
     NO_BATTERY(0x0000),
 
     /**
-     * Build In
+     * Build In, 1, 0x0001
      */
     BUILD_IN(0x0001),
 
     /**
-     * Other
+     * Other, 2, 0x0002
      */
     OTHER(0x0002),
 
     /**
-     * AA Cell
+     * AA Cell, 3, 0x0003
      */
     AA_CELL(0x0003),
 
     /**
-     * AAA Cell
+     * AAA Cell, 4, 0x0004
      */
     AAA_CELL(0x0004),
 
     /**
-     * C Cell
+     * C Cell, 5, 0x0005
      */
     C_CELL(0x0005),
 
     /**
-     * D Cell
+     * D Cell, 6, 0x0006
      */
     D_CELL(0x0006),
 
     /**
-     * CR 2 Cell
+     * CR 2 Cell, 7, 0x0007
      */
     CR_2_CELL(0x0007),
 
     /**
-     * CR 123 A Cell
+     * CR 123 A Cell, 8, 0x0008
      */
     CR_123_A_CELL(0x0008),
 
     /**
-     * Unknown
+     * Unknown, 255, 0x00FF
      */
     UNKNOWN(0x00FF);
 

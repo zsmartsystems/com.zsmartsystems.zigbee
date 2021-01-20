@@ -17,11 +17,11 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum MessagingExtendedControlMaskBitmap {
 
     /**
-     * Message Confirmation Status
+     * Message Confirmation Status, 1, 0x0001
      */
     MESSAGE_CONFIRMATION_STATUS(0x0001);
 

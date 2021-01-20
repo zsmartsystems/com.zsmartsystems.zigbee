@@ -7,9 +7,7 @@
  */
 package com.zsmartsystems.zigbee.autocode.xml;
 
-import java.math.BigInteger;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -20,5 +18,5 @@ public class ZigBeeXmlConstant {
     public String name;
     public String className;
     public List<ZigBeeXmlDescription> description;
-    public Map<BigInteger, String> values;
+    public List<ZigBeeXmlConstantValue> values;
 }

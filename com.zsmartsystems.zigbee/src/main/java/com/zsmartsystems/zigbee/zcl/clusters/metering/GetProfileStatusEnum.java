@@ -17,36 +17,36 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum GetProfileStatusEnum {
 
     /**
-     * Success
+     * Success, 0, 0x0000
      */
     SUCCESS(0x0000),
 
     /**
-     * Undefined Interval Channel Requested
+     * Undefined Interval Channel Requested, 1, 0x0001
      */
     UNDEFINED_INTERVAL_CHANNEL_REQUESTED(0x0001),
 
     /**
-     * Interval Channel Not Supported
+     * Interval Channel Not Supported, 2, 0x0002
      */
     INTERVAL_CHANNEL_NOT_SUPPORTED(0x0002),
 
     /**
-     * Invalid End Time
+     * Invalid End Time, 3, 0x0003
      */
     INVALID_END_TIME(0x0003),
 
     /**
-     * More Periods Requested Than Can Be Returned
+     * More Periods Requested Than Can Be Returned, 4, 0x0004
      */
     MORE_PERIODS_REQUESTED_THAN_CAN_BE_RETURNED(0x0004),
 
     /**
-     * No Intervals Available For The Requested Time
+     * No Intervals Available For The Requested Time, 5, 0x0005
      */
     NO_INTERVALS_AVAILABLE_FOR_THE_REQUESTED_TIME(0x0005);
 

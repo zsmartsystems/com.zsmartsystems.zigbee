@@ -17,21 +17,21 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-07-04T21:54:11Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum GpTranslationTableUpdateOptionBitmap {
 
     /**
-     * Application ID
+     * Application ID, 7, 0x0007
      */
     APPLICATION_ID(0x0007),
 
     /**
-     * Action
+     * Action, 24, 0x0018
      */
     ACTION(0x0018),
 
     /**
-     * Number Of Translations
+     * Number Of Translations, 224, 0x00E0
      */
     NUMBER_OF_TRANSLATIONS(0x00E0);
 

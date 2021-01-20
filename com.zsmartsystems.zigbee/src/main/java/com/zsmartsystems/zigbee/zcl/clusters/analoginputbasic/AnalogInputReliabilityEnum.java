@@ -17,51 +17,51 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-04-13T12:49:59Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum AnalogInputReliabilityEnum {
 
     /**
-     * No - Fault - Detected
+     * No - Fault - Detected, 0, 0x0000
      */
     NO_FAULT_DETECTED(0x0000),
 
     /**
-     * Over - Range
+     * Over - Range, 2, 0x0002
      */
     OVER_RANGE(0x0002),
 
     /**
-     * Under - Range
+     * Under - Range, 3, 0x0003
      */
     UNDER_RANGE(0x0003),
 
     /**
-     * Open - Loop
+     * Open - Loop, 4, 0x0004
      */
     OPEN_LOOP(0x0004),
 
     /**
-     * Shorted - Loop
+     * Shorted - Loop, 5, 0x0005
      */
     SHORTED_LOOP(0x0005),
 
     /**
-     * Unreliable - Other
+     * Unreliable - Other, 7, 0x0007
      */
     UNRELIABLE_OTHER(0x0007),
 
     /**
-     * Process - Error
+     * Process - Error, 8, 0x0008
      */
     PROCESS_ERROR(0x0008),
 
     /**
-     * Multi - State - Fault
+     * Multi - State - Fault, 9, 0x0009
      */
     MULTI_STATE_FAULT(0x0009),
 
     /**
-     * Configuration - Error
+     * Configuration - Error, 10, 0x000A
      */
     CONFIGURATION_ERROR(0x000A);
 

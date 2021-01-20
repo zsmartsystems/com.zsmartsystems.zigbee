@@ -11,7 +11,6 @@ import java.io.File;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -260,7 +259,7 @@ public class ZigBeeXmlParser {
 
                 constant.className = e.getAttribute("class").trim();
 
-                constant.values = new TreeMap<>();
+                constant.values = new ArrayList<>();
 
                 for (int temp = 0; temp < nodes.getLength(); temp++) {
                     if (nodes.item(temp).getNodeName().equals("name")) {
@@ -274,9 +273,11 @@ public class ZigBeeXmlParser {
                     }
                     if (nodes.item(temp).getNodeName().equals("value")) {
                         e = (Element) nodes.item(temp);
-                        String name = e.getAttribute("name").trim();
-                        BigInteger value = getInteger(e.getAttribute("code").trim());
-                        constant.values.put(value, name);
+                        ZigBeeXmlConstantValue value = new ZigBeeXmlConstantValue();
+                        value.scope = e.getAttribute("scope").trim();
+                        value.name = e.getAttribute("name").trim();
+                        value.code = getInteger(e.getAttribute("code").trim());
+                        constant.values.add(value);
                     }
                 }
 

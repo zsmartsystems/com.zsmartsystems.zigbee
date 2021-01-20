@@ -17,56 +17,56 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum IasZoneStatusBitmap {
 
     /**
-     * Alarm 1
+     * Alarm 1, 1, 0x0001
      */
     ALARM_1(0x0001),
 
     /**
-     * Alarm 2
+     * Alarm 2, 2, 0x0002
      */
     ALARM_2(0x0002),
 
     /**
-     * Tamper
+     * Tamper, 4, 0x0004
      */
     TAMPER(0x0004),
 
     /**
-     * Battery
+     * Battery, 8, 0x0008
      */
     BATTERY(0x0008),
 
     /**
-     * Supervision Reports
+     * Supervision Reports, 16, 0x0010
      */
     SUPERVISION_REPORTS(0x0010),
 
     /**
-     * Restore Reports
+     * Restore Reports, 32, 0x0020
      */
     RESTORE_REPORTS(0x0020),
 
     /**
-     * Trouble
+     * Trouble, 64, 0x0040
      */
     TROUBLE(0x0040),
 
     /**
-     * AC
+     * AC, 128, 0x0080
      */
     AC(0x0080),
 
     /**
-     * Test
+     * Test, 256, 0x0100
      */
     TEST(0x0100),
 
     /**
-     * Battery Defect
+     * Battery Defect, 512, 0x0200
      */
     BATTERY_DEFECT(0x0200);
 

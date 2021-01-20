@@ -30,7 +30,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T12:33:13Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
 public class SetLongPollIntervalCommand extends ZclPollControlCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -50,7 +50,7 @@ public class SetLongPollIntervalCommand extends ZclPollControlCommand {
     /**
      * Default constructor.
      *
-     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default contructor and setters.
+     * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default constructor and setters.
      */
     @Deprecated
     public SetLongPollIntervalCommand() {
@@ -98,12 +98,12 @@ public class SetLongPollIntervalCommand extends ZclPollControlCommand {
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
-        serializer.serialize(newLongPollInterval, ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        serializer.serialize(newLongPollInterval, ZclDataType.UNSIGNED_32_BIT_INTEGER);
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        newLongPollInterval = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        newLongPollInterval = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
     }
 
     @Override

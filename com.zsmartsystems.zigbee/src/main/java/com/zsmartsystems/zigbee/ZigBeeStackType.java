@@ -17,26 +17,26 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-06-15T20:20:47Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum ZigBeeStackType {
 
     /**
-     * ZigBee 2006
+     * ZigBee 2006, 0, 0x0000
      */
     ZIGBEE_2006(0x0000),
 
     /**
-     * ZigBee 2007
+     * ZigBee 2007, 1, 0x0001
      */
     ZIGBEE_2007(0x0001),
 
     /**
-     * ZigBee Pro
+     * ZigBee Pro, 2, 0x0002
      */
     ZIGBEE_PRO(0x0002),
 
     /**
-     * ZigBee IP
+     * ZigBee IP, 3, 0x0003
      */
     ZIGBEE_IP(0x0003);
 

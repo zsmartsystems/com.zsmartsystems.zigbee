@@ -17,14 +17,9 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.IntSummaryStatistics;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
@@ -71,6 +66,10 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleSwitchOnCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleTrustCentreCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleUnbindCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleWindowCoveringCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleFactoryResetCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleSetPollIntervalCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleRoutingTableCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleNeighborsListCommand;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionManager;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionQueue;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareCallback;
@@ -218,6 +217,11 @@ public final class ZigBeeConsole {
         newCommands.put("off", new ZigBeeConsoleSwitchOffCommand());
         newCommands.put("level", new ZigBeeConsoleSwitchLevelCommand());
         newCommands.put("covering", new ZigBeeConsoleWindowCoveringCommand());
+        newCommands.put("setpollinterval", new ZigBeeConsoleSetPollIntervalCommand());
+        newCommands.put("factoryreset", new ZigBeeConsoleFactoryResetCommand());
+
+        newCommands.put("routingtable", new ZigBeeConsoleRoutingTableCommand());
+        newCommands.put("neighbors", new ZigBeeConsoleNeighborsListCommand());
 
         zigBeeApi = new ZigBeeApi(networkManager);
 
@@ -511,6 +515,32 @@ public final class ZigBeeConsole {
      * Prints help on console.
      */
     private class HelpCommand implements ConsoleCommand {
+
+        private class CommandEntry implements Comparable<CommandEntry> {
+
+            private final String command;
+
+            private final String description;
+
+            public String getCommand() {
+                return command;
+            }
+
+            public String getDescription() {
+                return description;
+            }
+
+            public CommandEntry(String command, String description) {
+                this.command = command;
+                this.description = description;
+            }
+
+            @Override
+            public int compareTo(CommandEntry o) {
+                return Objects.compare(this.command, o.getCommand(), String::compareTo);
+            }
+        }
+        
         /**
          * {@inheritDoc}
          */
@@ -543,14 +573,13 @@ public final class ZigBeeConsole {
                     return false;
                 }
             } else if (args.length == 1) {
-                final List<String> commandList = new ArrayList<String>(commands.keySet());
+                final List<CommandEntry> commandList = new ArrayList<>();
+                commandList.addAll(commands.entrySet().stream().map(entry -> new CommandEntry(entry.getKey(), entry.getValue().getDescription())).collect(Collectors.toList()));
+                commandList.addAll(newCommands.entrySet().stream().map(entry -> new CommandEntry(entry.getKey(), entry.getValue().getDescription())).collect(Collectors.toList()));
                 Collections.sort(commandList);
                 print("Commands:", out);
-                for (final String command : commands.keySet()) {
-                    print(command + " - " + commands.get(command).getDescription(), out);
-                }
-                for (final String command : newCommands.keySet()) {
-                    print(command + " - " + newCommands.get(command).getDescription(), out);
+                for (final CommandEntry command : commandList) {
+                    print(command.getCommand() + " - " + command.getDescription(), out);
                 }
             } else {
                 return false;
@@ -1724,9 +1753,9 @@ public final class ZigBeeConsole {
             case UNSIGNED_16_BIT_INTEGER:
                 value = Integer.parseInt(stringValue);
                 break;
-            // case UNSIGNED_24_BIT_INTEGER:
-            // value = Integer.parseInt(stringValue);
-            // break;
+            case UNSIGNED_24_BIT_INTEGER:
+                value = Integer.parseInt(stringValue);
+                break;
             case UNSIGNED_32_BIT_INTEGER:
                 value = Integer.parseInt(stringValue);
                 break;

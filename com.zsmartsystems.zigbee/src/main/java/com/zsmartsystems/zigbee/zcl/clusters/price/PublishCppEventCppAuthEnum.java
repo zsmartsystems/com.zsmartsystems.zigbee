@@ -17,26 +17,26 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2019-02-09T15:28:08Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
 public enum PublishCppEventCppAuthEnum {
 
     /**
-     * Pending
+     * Pending, 0, 0x0000
      */
     PENDING(0x0000),
 
     /**
-     * Accepted
+     * Accepted, 1, 0x0001
      */
     ACCEPTED(0x0001),
 
     /**
-     * Rejected
+     * Rejected, 2, 0x0002
      */
     REJECTED(0x0002),
 
     /**
-     * Forced
+     * Forced, 3, 0x0003
      */
     FORCED(0x0003);
 

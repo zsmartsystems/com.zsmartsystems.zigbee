@@ -52,7 +52,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-24T10:14:44Z")
 public class ZclLevelControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -75,6 +75,33 @@ public class ZclLevelControlCluster extends ZclCluster {
      * is complete - it is specified in 1/10ths of a second.
      */
     public static final int ATTR_REMAININGTIME = 0x0001;
+    /**
+     * The MinLevel attribute indicates the minimum value of CurrentLevel that is capable of
+     * being assigned.
+     */
+    public static final int ATTR_MINIMUMLEVEL = 0x0002;
+    /**
+     * The MaxLevel attribute indicates the maximum value of CurrentLevel that is capable of
+     * being assigned.
+     */
+    public static final int ATTR_MAXIMUMLEVEL = 0x0003;
+    /**
+     * The CurrentFrequency attribute represents the frequency that the devices is at
+     * CurrentLevel. A CurrentFrequency of 0 is unknown.
+     */
+    public static final int ATTR_CURRENTFREQUENCY = 0x0004;
+    /**
+     * The MinFrequency attribute indicates the minimum value of CurrentFrequency that is
+     * capable of being assigned. MinFrequency shall be less than or equal to MaxFrequency. A
+     * value of 0 indicates undefined.
+     */
+    public static final int ATTR_MINIMUMFREQUENCY = 0x0005;
+    /**
+     * The MaxFrequency attribute indicates the maximum value of CurrentFrequency that is
+     * capable of being assigned. MaxFrequency shall be greater than or equal to
+     * MinFrequency. A value of 0 indicates undefined.
+     */
+    public static final int ATTR_MAXIMUMFREQUENCY = 0x0006;
     public static final int ATTR_OPTIONS = 0x000F;
     /**
      * The OnOffTransitionTime attribute represents the time taken to move to or from the
@@ -128,6 +155,11 @@ public class ZclLevelControlCluster extends ZclCluster {
 
         attributeMap.put(ATTR_CURRENTLEVEL, new ZclAttribute(this, ATTR_CURRENTLEVEL, "Current Level", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, true));
         attributeMap.put(ATTR_REMAININGTIME, new ZclAttribute(this, ATTR_REMAININGTIME, "Remaining Time", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_MINIMUMLEVEL, new ZclAttribute(this, ATTR_MINIMUMLEVEL, "Minimum Level", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_MAXIMUMLEVEL, new ZclAttribute(this, ATTR_MAXIMUMLEVEL, "Maximum Level", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_CURRENTFREQUENCY, new ZclAttribute(this, ATTR_CURRENTFREQUENCY, "Current Frequency", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, true));
+        attributeMap.put(ATTR_MINIMUMFREQUENCY, new ZclAttribute(this, ATTR_MINIMUMFREQUENCY, "Minimum Frequency", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_MAXIMUMFREQUENCY, new ZclAttribute(this, ATTR_MAXIMUMFREQUENCY, "Maximum Frequency", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
         attributeMap.put(ATTR_OPTIONS, new ZclAttribute(this, ATTR_OPTIONS, "Options", ZclDataType.BITMAP_8_BIT, false, true, false, false));
         attributeMap.put(ATTR_ONOFFTRANSITIONTIME, new ZclAttribute(this, ATTR_ONOFFTRANSITIONTIME, "On Off Transition Time", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
         attributeMap.put(ATTR_ONLEVEL, new ZclAttribute(this, ATTR_ONLEVEL, "On Level", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
@@ -301,6 +333,250 @@ public class ZclLevelControlCluster extends ZclCluster {
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_REMAININGTIME));
+    }
+
+    /**
+     * Get the <i>Minimum Level</i> attribute [attribute ID <b>0x0002</b>].
+     * <p>
+     * The MinLevel attribute indicates the minimum value of CurrentLevel that is capable of
+     * being assigned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getMinimumLevelAsync() {
+        return read(serverAttributes.get(ATTR_MINIMUMLEVEL));
+    }
+
+    /**
+     * Synchronously get the <i>Minimum Level</i> attribute [attribute ID <b>0x0002</b>].
+     * <p>
+     * The MinLevel attribute indicates the minimum value of CurrentLevel that is capable of
+     * being assigned.
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getMinimumLevel(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_MINIMUMLEVEL).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MINIMUMLEVEL).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_MINIMUMLEVEL));
+    }
+
+    /**
+     * Get the <i>Maximum Level</i> attribute [attribute ID <b>0x0003</b>].
+     * <p>
+     * The MaxLevel attribute indicates the maximum value of CurrentLevel that is capable of
+     * being assigned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getMaximumLevelAsync() {
+        return read(serverAttributes.get(ATTR_MAXIMUMLEVEL));
+    }
+
+    /**
+     * Synchronously get the <i>Maximum Level</i> attribute [attribute ID <b>0x0003</b>].
+     * <p>
+     * The MaxLevel attribute indicates the maximum value of CurrentLevel that is capable of
+     * being assigned.
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getMaximumLevel(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_MAXIMUMLEVEL).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MAXIMUMLEVEL).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_MAXIMUMLEVEL));
+    }
+
+    /**
+     * Get the <i>Current Frequency</i> attribute [attribute ID <b>0x0004</b>].
+     * <p>
+     * The CurrentFrequency attribute represents the frequency that the devices is at
+     * CurrentLevel. A CurrentFrequency of 0 is unknown.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getCurrentFrequencyAsync() {
+        return read(serverAttributes.get(ATTR_CURRENTFREQUENCY));
+    }
+
+    /**
+     * Synchronously get the <i>Current Frequency</i> attribute [attribute ID <b>0x0004</b>].
+     * <p>
+     * The CurrentFrequency attribute represents the frequency that the devices is at
+     * CurrentLevel. A CurrentFrequency of 0 is unknown.
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getCurrentFrequency(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_CURRENTFREQUENCY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_CURRENTFREQUENCY).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_CURRENTFREQUENCY));
+    }
+
+    /**
+     * Get the <i>Minimum Frequency</i> attribute [attribute ID <b>0x0005</b>].
+     * <p>
+     * The MinFrequency attribute indicates the minimum value of CurrentFrequency that is
+     * capable of being assigned. MinFrequency shall be less than or equal to MaxFrequency. A
+     * value of 0 indicates undefined.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getMinimumFrequencyAsync() {
+        return read(serverAttributes.get(ATTR_MINIMUMFREQUENCY));
+    }
+
+    /**
+     * Synchronously get the <i>Minimum Frequency</i> attribute [attribute ID <b>0x0005</b>].
+     * <p>
+     * The MinFrequency attribute indicates the minimum value of CurrentFrequency that is
+     * capable of being assigned. MinFrequency shall be less than or equal to MaxFrequency. A
+     * value of 0 indicates undefined.
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getMinimumFrequency(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_MINIMUMFREQUENCY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MINIMUMFREQUENCY).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_MINIMUMFREQUENCY));
+    }
+
+    /**
+     * Get the <i>Maximum Frequency</i> attribute [attribute ID <b>0x0006</b>].
+     * <p>
+     * The MaxFrequency attribute indicates the maximum value of CurrentFrequency that is
+     * capable of being assigned. MaxFrequency shall be greater than or equal to
+     * MinFrequency. A value of 0 indicates undefined.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getMaximumFrequencyAsync() {
+        return read(serverAttributes.get(ATTR_MAXIMUMFREQUENCY));
+    }
+
+    /**
+     * Synchronously get the <i>Maximum Frequency</i> attribute [attribute ID <b>0x0006</b>].
+     * <p>
+     * The MaxFrequency attribute indicates the maximum value of CurrentFrequency that is
+     * capable of being assigned. MaxFrequency shall be greater than or equal to
+     * MinFrequency. A value of 0 indicates undefined.
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getMaximumFrequency(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_MAXIMUMFREQUENCY).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_MAXIMUMFREQUENCY).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_MAXIMUMFREQUENCY));
     }
 
     /**
