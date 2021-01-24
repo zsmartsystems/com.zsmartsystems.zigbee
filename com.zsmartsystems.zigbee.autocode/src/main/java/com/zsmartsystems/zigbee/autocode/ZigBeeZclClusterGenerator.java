@@ -419,6 +419,9 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
 
             final LinkedList<ZigBeeXmlField> fields = new LinkedList<ZigBeeXmlField>(command.fields);
             for (final ZigBeeXmlField field : fields) {
+                if (getAutoSized(fields, stringToLowerCamelCase(field.name)) != null) {
+                    continue;
+                }
                 out.println("     * @param " + stringToLowerCamelCase(field.name) + " {@link " + getDataTypeClass(field)
                         + "} " + field.name);
             }
@@ -440,6 +443,9 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
 
             boolean first = true;
             for (final ZigBeeXmlField field : fields) {
+                if (getAutoSized(fields, stringToLowerCamelCase(field.name)) != null) {
+                    continue;
+                }
                 if (first == false) {
                     out.print(", ");
                 }
@@ -457,6 +463,9 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
                 out.println("        // Set the fields");
 
                 for (final ZigBeeXmlField field : fields) {
+                    if (getAutoSized(fields, stringToLowerCamelCase(field.name)) != null) {
+                        continue;
+                    }
                     out.println("        command.set" + stringToUpperCamelCase(field.name) + "("
                             + stringToLowerCamelCase(field.name) + ");");
                 }

@@ -75,12 +75,17 @@ public class ZigBeeEndpoint {
     /**
      * List of input clusters supported by the endpoint
      */
-    private final Map<Integer, ZclCluster> inputClusters = new ConcurrentHashMap<Integer, ZclCluster>();
+    private final Map<Integer, ZclCluster> inputClusters = new ConcurrentHashMap<>();
 
     /**
      * List of output clusters supported by the endpoint
      */
-    private final Map<Integer, ZclCluster> outputClusters = new ConcurrentHashMap<Integer, ZclCluster>();
+    private final Map<Integer, ZclCluster> outputClusters = new ConcurrentHashMap<>();
+
+    /**
+     * List of groups configured in this endpoint
+     */
+    // private final Map<Integer, String> groups = new ConcurrentHashMap<>();
 
     /**
      * Map of {@link ZigBeeApplication}s that are available to this endpoint. Applications are added

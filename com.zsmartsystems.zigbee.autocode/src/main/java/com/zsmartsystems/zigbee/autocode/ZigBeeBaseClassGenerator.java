@@ -460,6 +460,18 @@ public abstract class ZigBeeBaseClassGenerator {
         // return field.implementationClass;
     }
 
+    protected ZigBeeXmlField getAutoSized(List<ZigBeeXmlField> fields, String name) {
+        for (ZigBeeXmlField field : fields) {
+            if (field.sizer != null) {
+                System.out.println();
+            }
+            if (name.equals(field.sizer)) {
+                return field;
+            }
+        }
+        return null;
+    }
+
     protected void importsAddClass(ZigBeeXmlField field) {
         importsAddClassInternal(getDataTypeClass(field));
     }

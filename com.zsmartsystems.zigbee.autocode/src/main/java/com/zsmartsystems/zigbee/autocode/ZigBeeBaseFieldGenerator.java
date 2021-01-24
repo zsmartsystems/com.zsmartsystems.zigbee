@@ -293,6 +293,7 @@ public class ZigBeeBaseFieldGenerator extends ZigBeeBaseClassGenerator {
         }
     }
 
+    @Override
     protected ZigBeeXmlField getAutoSized(List<ZigBeeXmlField> fields, String name) {
         if (name == null) {
             return null;

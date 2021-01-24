@@ -34,7 +34,7 @@ public class ZigBeeTransactionFuture implements Future<CommandResult> {
      */
     private CommandResult result;
 
-    final ZigBeeTransaction transaction;
+    private final ZigBeeTransaction transaction;
 
     private boolean cancelled = false;
 

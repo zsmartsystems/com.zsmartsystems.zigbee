@@ -12,7 +12,7 @@ import java.util.Arrays;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
-import com.zsmartsystems.zigbee.ZigBeeGroupAddress;
+import com.zsmartsystems.zigbee.groups.ZigBeeGroupAddress;
 
 /**
  *

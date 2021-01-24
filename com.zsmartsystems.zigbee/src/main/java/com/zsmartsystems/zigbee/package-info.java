@@ -92,6 +92,16 @@
  * {@link com.zsmartsystems.zigbee.zcl.ZclAttribute#setReporting(int, int)} and
  * {@link com.zsmartsystems.zigbee.zcl.ZclAttribute#setReporting(int, int, Object)} methods. Note that the latter is
  * used for attributes that are defined as analog attributes and it allows the setting of a "report on change" value.
+ *
+ * <h3>Group Management</h3>
+ * General management of ZigBee multicast groups should be performed though the group methods available in the
+ * {@link ZigBeeNetworkManager} class. These methods provide a centralised way to manage groups - adding and removing
+ * members etc. Using these methods rather than the individual {@link ZclGroupsCluster} methods in each endpoint will
+ * ensure that group information is maintained centrally and available to applications.
+ * Internally, the {@link ZigBeeNetworkGroupManager} class provides the central management of groups, providing the
+ * functionality for the {@link ZigBeeNetworkManager} methods.
+ * <p>
+ *
  */
 
 package com.zsmartsystems.zigbee;

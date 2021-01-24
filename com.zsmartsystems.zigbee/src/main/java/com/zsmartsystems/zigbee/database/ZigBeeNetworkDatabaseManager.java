@@ -300,4 +300,12 @@ public class ZigBeeNetworkDatabaseManager implements ZigBeeNetworkNodeListener {
         dataStore.writeNode(node.getDao());
     }
 
+    public Object readKey(String key) {
+        return dataStore.readObject(key);
+    }
+
+    public void writeKey(String key, Object value) {
+        dataStore.writeObject(key, value);
+    }
+
 }

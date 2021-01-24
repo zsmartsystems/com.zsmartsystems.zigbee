@@ -24,11 +24,6 @@ public class ExtensionFieldSet implements ZclListItemField {
     private int clusterId;
 
     /**
-     * The data length.
-     */
-    // private int length;
-
-    /**
      * The extension data.
      */
     private int[] data;
