@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.serialization;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,6 +21,7 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
+import com.zsmartsystems.zigbee.zcl.field.ExtensionFieldSet;
 import com.zsmartsystems.zigbee.zcl.field.ZclArrayList;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
@@ -276,6 +278,15 @@ public class SerializerIntegrationTest {
         valIn.add(Integer.valueOf(4));
         valIn.add(Integer.valueOf(1));
         testSerializer(valIn, ZclDataType.ORDERED_SEQUENCE_ARRAY);
+    }
+
+    @Test
+    public void testDeserialize_N_X_EXTENSION_FIELD_SET() {
+        List<ExtensionFieldSet> extensionFields = new ArrayList<>();
+        extensionFields.add(new ExtensionFieldSet(0x1001, new ByteArray(new int[] { 0x11, 0x12, 0x13 })));
+        extensionFields.add(new ExtensionFieldSet(0x2002, new ByteArray(new int[] { 0x21, 0x22, 0x23 })));
+        extensionFields.add(new ExtensionFieldSet(0x3003, new ByteArray(new int[] { 0x31, 0x32, 0x33 })));
+        testSerializer(extensionFields, ZclDataType.N_X_EXTENSION_FIELD_SET);
     }
 
     private void testSerializer(Object objectIn, ZclDataType type) {

@@ -81,4 +81,10 @@
         <value code="0xFF" name="Previous">
         </value>
 	</constant>
+
+    <scenes>
+        <extensionfield>
+        	<attribute>On Off</attribute>
+        </extensionfield>
+    </scenes>
 </cluster>

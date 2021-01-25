@@ -139,6 +139,9 @@ public class ZigBeeXmlParser {
                     if (nodes.item(temp).getNodeName().equals("struct")) {
                         cluster.structures.add((ZigBeeXmlStructure) processNode(nodes.item(temp)));
                     }
+                    if (nodes.item(temp).getNodeName().equals("scenes")) {
+                        cluster.scenes = (ZigBeeXmlScenes) processNode(nodes.item(temp));
+                    }
                 }
                 System.out.println("Done: Cluster - " + cluster.name);
                 return cluster;
@@ -353,6 +356,33 @@ public class ZigBeeXmlParser {
 
                 System.out.println("Done: Response - " + response.command);
                 return response;
+
+            case "scenes":
+                ZigBeeXmlScenes scenes = new ZigBeeXmlScenes();
+
+                e = (Element) node;
+                for (int temp = 0; temp < nodes.getLength(); temp++) {
+                    if (nodes.item(temp).getNodeName().equals("extensionfield")) {
+                        scenes.extensionField = (ZigBeeXmlExtensionField) processNode(nodes.item(temp));
+                    }
+                }
+
+                System.out.println("Done: Scenes - " + scenes);
+                return scenes;
+
+            case "extensionfield":
+                ZigBeeXmlExtensionField extensionField = new ZigBeeXmlExtensionField();
+                extensionField.attributes = new ArrayList<>();
+
+                e = (Element) node;
+                for (int temp = 0; temp < nodes.getLength(); temp++) {
+                    if (nodes.item(temp).getNodeName().equals("attribute")) {
+                        extensionField.attributes.add(nodes.item(temp).getTextContent().trim());
+                    }
+                }
+
+                System.out.println("Done: ExtensionField - " + extensionField);
+                return extensionField;
         }
 
         return null;

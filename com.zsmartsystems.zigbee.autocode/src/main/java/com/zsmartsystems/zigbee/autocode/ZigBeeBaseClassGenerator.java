@@ -188,12 +188,13 @@ public abstract class ZigBeeBaseClassGenerator {
         return val.substring(0, 1).toLowerCase() + val.substring(1);
     }
 
-    protected PrintStream  getClassOut(File packageFile, String className) throws FileNotFoundException, UnsupportedEncodingException {
+    protected PrintStream getClassOut(File packageFile, String className)
+            throws FileNotFoundException, UnsupportedEncodingException {
         packageFile.mkdirs();
         final File classFile = new File(packageFile + File.separator + className + ".java");
         System.out.println("Generating: " + classFile.getAbsolutePath());
         final FileOutputStream fileOutputStream = new FileOutputStream(classFile, false);
-        return new PrintStream (fileOutputStream,false,"UTF-8");
+        return new PrintStream(fileOutputStream, false, "UTF-8");
     }
 
     protected void importsClear() {

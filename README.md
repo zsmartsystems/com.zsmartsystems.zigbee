@@ -318,6 +318,7 @@ Note that the console is currently being refactored and this readme only documen
 |color            |Sets the color on a color control device                                               |
 |covering         |Sets the level on a window covering device                                             |
 |group            |Configures multicast groups                                                            |
+|scene            |Configures scenes                                                                      |
 
 
 ### Ember NCP Commands

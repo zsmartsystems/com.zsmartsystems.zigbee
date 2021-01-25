@@ -16,7 +16,6 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.groups.ZigBeeGroup;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
-import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.MoveToLevelCommand;
 
 /**
@@ -55,7 +54,7 @@ public class ZigBeeConsoleSwitchLevelCommand extends ZigBeeConsoleAbstractComman
 
         int level = parsePercentage(args[2]);
         int rate = 10;
-        if (args.length == 3) {
+        if (args.length == 4) {
             rate = parseInteger(args[3]);
         }
 
@@ -80,7 +79,7 @@ public class ZigBeeConsoleSwitchLevelCommand extends ZigBeeConsoleAbstractComman
 
             ZigBeeEndpoint endpoint = getEndpoint(networkManager, args[1]);
             ZclLevelControlCluster cluster = (ZclLevelControlCluster) endpoint
-                    .getInputCluster(ZclOnOffCluster.CLUSTER_ID);
+                    .getInputCluster(ZclLevelControlCluster.CLUSTER_ID);
             if (cluster != null) {
                 clusters.add(cluster);
             }

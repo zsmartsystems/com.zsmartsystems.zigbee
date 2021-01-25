@@ -133,4 +133,10 @@
         <description></description>
     </attribute>
 
+    <scenes>
+        <extensionfield>
+        	<attribute>Current Level</attribute>
+        	<attribute>Current Frequency</attribute>
+        </extensionfield>
+    </scenes>
 </cluster>
