@@ -220,7 +220,7 @@ public class ZigBeeGroup implements Comparable<Object> {
 
         CommandResult cmdResult;
         try {
-            cmdResult = cluster.sendCommand(new AddGroupCommand(groupId, label)).get();
+            cmdResult = cluster.sendCommand(new AddGroupCommand(groupId, (label == null ? "" : label))).get();
             if (cmdResult.isError()) {
                 logger.debug("{}: Unable to add group {}", address.getAddress(), groupId);
                 return;
