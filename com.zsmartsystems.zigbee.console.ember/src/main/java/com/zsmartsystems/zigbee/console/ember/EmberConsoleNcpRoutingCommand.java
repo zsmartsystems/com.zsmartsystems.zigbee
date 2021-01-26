@@ -90,12 +90,13 @@ public class EmberConsoleNcpRoutingCommand extends EmberConsoleAbstractCommand {
         out.println("Source Route Table Size Config : " + configSourceRouteTableSize);
         out.println("Source Route Table Size Usage  : " + sourceRouteFill + "/" + sourceRouteSize);
 
+        final String ncpRouteTableFormat = "%-15s  %-15s  %-6s  %-15s  %-15s";
         out.println();
         out.println("NCP Route Table :");
         out.println();
-        out.println(String.format("%-15s  %-15s  %-6s  %-15s  %-15s", "Destination", "Next", "Age", "Concentrator", "Status"));
+        out.println(String.format(ncpRouteTableFormat, "Destination", "Next", "Age", "Concentrator", "Status"));
         for (EmberRouteTableEntry route : routeTableMap.values()) {
-            out.println(String.format("%-15s  %-15s  %-6s  %-15s  %-15s",
+            out.println(String.format(ncpRouteTableFormat,
                 String.format("%04X (%5d)", route.getDestination(), route.getDestination()),
                 String.format("%04X (%5d)", route.getNextHop(), route.getNextHop()),
                 String.format("%04X", route.getAge()),
@@ -103,10 +104,11 @@ public class EmberConsoleNcpRoutingCommand extends EmberConsoleAbstractCommand {
                 route.getConcentratorType() == 2 ? (routeStatus.get(route.getStatus()) == null ? "" : routeStatus.get(route.getStatus())) : ""));
         }
 
+        final String ncpSourceRouteTableFormat = "%-6s  %-15s  %-10s  |  %s";
         out.println();
         out.println("NCP Source Route Table :");
         out.println();
-        out.println(String.format("%-6s  %-15s  %-10s  |  %s", "IDX", "Destination", "Closer IDX", "Route"));
+        out.println(String.format(ncpSourceRouteTableFormat, "IDX", "Destination", "Closer IDX", "Route"));
         for (int i = 0; i < sourceRouteTable.size(); ++i) {
             EmberSourceRouteTableEntry entry = sourceRouteTable.get(i);
             if (entry == null) {
@@ -116,7 +118,7 @@ public class EmberConsoleNcpRoutingCommand extends EmberConsoleAbstractCommand {
             List<Integer> route = new ArrayList<>();
             walkTheRoute(sourceRouteTable, route, i);
 
-            out.println(String.format("%6s  %-15s  %-10s  |  %s",
+            out.println(String.format(ncpSourceRouteTableFormat,
                 "#" + i,
                 String.format("%04X (%5d)", entry.getDestination(), entry.getDestination()),
                 entry.getCloserIndex() != 255 ? "#" + entry.getCloserIndex() : "NCP",
