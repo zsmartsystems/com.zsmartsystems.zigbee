@@ -786,6 +786,7 @@ public class ZigBeeNode {
         boolean updated = false;
 
         if (node.getNodeState() != ZigBeeNodeState.UNKNOWN && nodeState != node.getNodeState()) {
+            logger.debug("{}: Node state updated from {} to {}", ieeeAddress, nodeState, node.getNodeState());
             nodeState = node.getNodeState();
             updated = true;
         }
@@ -935,7 +936,6 @@ public class ZigBeeNode {
         if (nodeState.equals(state)) {
             return false;
         }
-        logger.debug("{}: Node state updated from {} to {}", ieeeAddress, nodeState, state);
         nodeState = state;
         return true;
     }
