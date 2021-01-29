@@ -20,6 +20,7 @@ import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.scenes.AddSceneCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.scenes.AddSceneResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.scenes.CopySceneCommand;
@@ -57,7 +58,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-29T21:31:36Z")
 public class ZclScenesCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -910,7 +911,7 @@ public class ZclScenesCluster extends ZclCluster {
     /**
      * The Add Scene Response
      *
-     * @param status {@link Integer} Status
+     * @param status {@link ZclStatus} Status
      * @param groupId {@link Integer} Group ID
      * @param sceneId {@link Integer} Scene ID
      * @return the {@link Future<CommandResult>} command result future
@@ -924,7 +925,7 @@ public class ZclScenesCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new addSceneResponse(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> addSceneResponse(Integer status, Integer groupId, Integer sceneId) {
+    public Future<CommandResult> addSceneResponse(ZclStatus status, Integer groupId, Integer sceneId) {
         AddSceneResponse command = new AddSceneResponse();
 
         // Set the fields
@@ -938,7 +939,7 @@ public class ZclScenesCluster extends ZclCluster {
     /**
      * The View Scene Response
      *
-     * @param status {@link Integer} Status
+     * @param status {@link ZclStatus} Status
      * @param groupId {@link Integer} Group ID
      * @param sceneId {@link Integer} Scene ID
      * @param transitionTime {@link Integer} Transition Time
@@ -955,7 +956,7 @@ public class ZclScenesCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new viewSceneResponse(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> viewSceneResponse(Integer status, Integer groupId, Integer sceneId, Integer transitionTime, String sceneName, List<ExtensionFieldSet> extensionFieldSets) {
+    public Future<CommandResult> viewSceneResponse(ZclStatus status, Integer groupId, Integer sceneId, Integer transitionTime, String sceneName, List<ExtensionFieldSet> extensionFieldSets) {
         ViewSceneResponse command = new ViewSceneResponse();
 
         // Set the fields
@@ -972,7 +973,7 @@ public class ZclScenesCluster extends ZclCluster {
     /**
      * The Remove Scene Response
      *
-     * @param status {@link Integer} Status
+     * @param status {@link ZclStatus} Status
      * @param groupId {@link Integer} Group ID
      * @param sceneId {@link Integer} Scene ID
      * @return the {@link Future<CommandResult>} command result future
@@ -986,7 +987,7 @@ public class ZclScenesCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new removeSceneResponse(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> removeSceneResponse(Integer status, Integer groupId, Integer sceneId) {
+    public Future<CommandResult> removeSceneResponse(ZclStatus status, Integer groupId, Integer sceneId) {
         RemoveSceneResponse command = new RemoveSceneResponse();
 
         // Set the fields
@@ -1000,7 +1001,7 @@ public class ZclScenesCluster extends ZclCluster {
     /**
      * The Remove All Scenes Response
      *
-     * @param status {@link Integer} Status
+     * @param status {@link ZclStatus} Status
      * @param groupId {@link Integer} Group ID
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.3.0.
@@ -1013,7 +1014,7 @@ public class ZclScenesCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new removeAllScenesResponse(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> removeAllScenesResponse(Integer status, Integer groupId) {
+    public Future<CommandResult> removeAllScenesResponse(ZclStatus status, Integer groupId) {
         RemoveAllScenesResponse command = new RemoveAllScenesResponse();
 
         // Set the fields
@@ -1026,7 +1027,7 @@ public class ZclScenesCluster extends ZclCluster {
     /**
      * The Store Scene Response
      *
-     * @param status {@link Integer} Status
+     * @param status {@link ZclStatus} Status
      * @param groupId {@link Integer} Group ID
      * @param sceneId {@link Integer} Scene ID
      * @return the {@link Future<CommandResult>} command result future
@@ -1040,7 +1041,7 @@ public class ZclScenesCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new storeSceneResponse(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> storeSceneResponse(Integer status, Integer groupId, Integer sceneId) {
+    public Future<CommandResult> storeSceneResponse(ZclStatus status, Integer groupId, Integer sceneId) {
         StoreSceneResponse command = new StoreSceneResponse();
 
         // Set the fields
@@ -1054,7 +1055,7 @@ public class ZclScenesCluster extends ZclCluster {
     /**
      * The Get Scene Membership Response
      *
-     * @param status {@link Integer} Status
+     * @param status {@link ZclStatus} Status
      * @param capacity {@link Integer} Capacity
      * @param groupId {@link Integer} Group ID
      * @param sceneCount {@link Integer} Scene Count
@@ -1070,7 +1071,7 @@ public class ZclScenesCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new getSceneMembershipResponse(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> getSceneMembershipResponse(Integer status, Integer capacity, Integer groupId, Integer sceneCount, List<Integer> sceneList) {
+    public Future<CommandResult> getSceneMembershipResponse(ZclStatus status, Integer capacity, Integer groupId, Integer sceneCount, List<Integer> sceneList) {
         GetSceneMembershipResponse command = new GetSceneMembershipResponse();
 
         // Set the fields
@@ -1086,7 +1087,7 @@ public class ZclScenesCluster extends ZclCluster {
     /**
      * The Enhanced Add Scene Response
      *
-     * @param status {@link Integer} Status
+     * @param status {@link ZclStatus} Status
      * @param groupId {@link Integer} Group ID
      * @param sceneId {@link Integer} Scene ID
      * @return the {@link Future<CommandResult>} command result future
@@ -1100,7 +1101,7 @@ public class ZclScenesCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new enhancedAddSceneResponse(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> enhancedAddSceneResponse(Integer status, Integer groupId, Integer sceneId) {
+    public Future<CommandResult> enhancedAddSceneResponse(ZclStatus status, Integer groupId, Integer sceneId) {
         EnhancedAddSceneResponse command = new EnhancedAddSceneResponse();
 
         // Set the fields
@@ -1114,7 +1115,7 @@ public class ZclScenesCluster extends ZclCluster {
     /**
      * The Enhanced View Scene Response
      *
-     * @param status {@link Integer} Status
+     * @param status {@link ZclStatus} Status
      * @param groupId {@link Integer} Group ID
      * @param sceneId {@link Integer} Scene ID
      * @param transitionTime {@link Integer} Transition Time
@@ -1131,7 +1132,7 @@ public class ZclScenesCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new enhancedViewSceneResponse(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> enhancedViewSceneResponse(Integer status, Integer groupId, Integer sceneId, Integer transitionTime, String sceneName, List<ExtensionFieldSet> extensionFieldSets) {
+    public Future<CommandResult> enhancedViewSceneResponse(ZclStatus status, Integer groupId, Integer sceneId, Integer transitionTime, String sceneName, List<ExtensionFieldSet> extensionFieldSets) {
         EnhancedViewSceneResponse command = new EnhancedViewSceneResponse();
 
         // Set the fields
@@ -1148,7 +1149,7 @@ public class ZclScenesCluster extends ZclCluster {
     /**
      * The Copy Scene Response
      *
-     * @param status {@link Integer} Status
+     * @param status {@link ZclStatus} Status
      * @param groupId {@link Integer} Group ID
      * @param sceneId {@link Integer} Scene ID
      * @return the {@link Future<CommandResult>} command result future
@@ -1162,7 +1163,7 @@ public class ZclScenesCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new copySceneResponse(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> copySceneResponse(Integer status, Integer groupId, Integer sceneId) {
+    public Future<CommandResult> copySceneResponse(ZclStatus status, Integer groupId, Integer sceneId) {
         CopySceneResponse command = new CopySceneResponse();
 
         // Set the fields

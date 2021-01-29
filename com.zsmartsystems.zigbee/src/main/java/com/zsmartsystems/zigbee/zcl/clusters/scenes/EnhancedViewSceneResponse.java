@@ -13,6 +13,7 @@ import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.field.ExtensionFieldSet;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
@@ -25,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-29T21:31:36Z")
 public class EnhancedViewSceneResponse extends ZclScenesCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -40,7 +41,7 @@ public class EnhancedViewSceneResponse extends ZclScenesCommand {
     /**
      * Status command message field.
      */
-    private Integer status;
+    private ZclStatus status;
 
     /**
      * Group ID command message field.
@@ -83,7 +84,7 @@ public class EnhancedViewSceneResponse extends ZclScenesCommand {
     /**
      * Constructor providing all required parameters.
      *
-     * @param status {@link Integer} Status
+     * @param status {@link ZclStatus} Status
      * @param groupId {@link Integer} Group ID
      * @param sceneId {@link Integer} Scene ID
      * @param transitionTime {@link Integer} Transition Time
@@ -91,7 +92,7 @@ public class EnhancedViewSceneResponse extends ZclScenesCommand {
      * @param extensionFieldSets {@link List<ExtensionFieldSet>} Extension Field Sets
      */
     public EnhancedViewSceneResponse(
-            Integer status,
+            ZclStatus status,
             Integer groupId,
             Integer sceneId,
             Integer transitionTime,
@@ -116,7 +117,7 @@ public class EnhancedViewSceneResponse extends ZclScenesCommand {
      *
      * @return the Status
      */
-    public Integer getStatus() {
+    public ZclStatus getStatus() {
         return status;
     }
 
@@ -127,7 +128,7 @@ public class EnhancedViewSceneResponse extends ZclScenesCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setStatus(final Integer status) {
+    public void setStatus(final ZclStatus status) {
         this.status = status;
     }
 
@@ -233,7 +234,7 @@ public class EnhancedViewSceneResponse extends ZclScenesCommand {
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
-        serializer.serialize(status, ZclDataType.ENUMERATION_8_BIT);
+        serializer.serialize(status, ZclDataType.ZCL_STATUS);
         serializer.serialize(groupId, ZclDataType.UNSIGNED_16_BIT_INTEGER);
         serializer.serialize(sceneId, ZclDataType.UNSIGNED_8_BIT_INTEGER);
         serializer.serialize(transitionTime, ZclDataType.UNSIGNED_16_BIT_INTEGER);
@@ -243,7 +244,7 @@ public class EnhancedViewSceneResponse extends ZclScenesCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        status = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        status = (ZclStatus) deserializer.deserialize(ZclDataType.ZCL_STATUS);
         groupId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         sceneId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         transitionTime = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);

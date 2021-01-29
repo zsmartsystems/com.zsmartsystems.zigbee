@@ -13,6 +13,7 @@ import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -24,7 +25,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-29T21:31:36Z")
 public class GetSceneMembershipResponse extends ZclScenesCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -39,7 +40,7 @@ public class GetSceneMembershipResponse extends ZclScenesCommand {
     /**
      * Status command message field.
      */
-    private Integer status;
+    private ZclStatus status;
 
     /**
      * Capacity command message field.
@@ -77,14 +78,14 @@ public class GetSceneMembershipResponse extends ZclScenesCommand {
     /**
      * Constructor providing all required parameters.
      *
-     * @param status {@link Integer} Status
+     * @param status {@link ZclStatus} Status
      * @param capacity {@link Integer} Capacity
      * @param groupId {@link Integer} Group ID
      * @param sceneCount {@link Integer} Scene Count
      * @param sceneList {@link List<Integer>} Scene List
      */
     public GetSceneMembershipResponse(
-            Integer status,
+            ZclStatus status,
             Integer capacity,
             Integer groupId,
             Integer sceneCount,
@@ -107,7 +108,7 @@ public class GetSceneMembershipResponse extends ZclScenesCommand {
      *
      * @return the Status
      */
-    public Integer getStatus() {
+    public ZclStatus getStatus() {
         return status;
     }
 
@@ -118,7 +119,7 @@ public class GetSceneMembershipResponse extends ZclScenesCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setStatus(final Integer status) {
+    public void setStatus(final ZclStatus status) {
         this.status = status;
     }
 
@@ -204,7 +205,7 @@ public class GetSceneMembershipResponse extends ZclScenesCommand {
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
-        serializer.serialize(status, ZclDataType.ENUMERATION_8_BIT);
+        serializer.serialize(status, ZclDataType.ZCL_STATUS);
         serializer.serialize(capacity, ZclDataType.UNSIGNED_8_BIT_INTEGER);
         serializer.serialize(groupId, ZclDataType.UNSIGNED_16_BIT_INTEGER);
         serializer.serialize(sceneCount, ZclDataType.UNSIGNED_8_BIT_INTEGER);
@@ -213,7 +214,7 @@ public class GetSceneMembershipResponse extends ZclScenesCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        status = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        status = (ZclStatus) deserializer.deserialize(ZclDataType.ZCL_STATUS);
         capacity = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         groupId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         sceneCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
