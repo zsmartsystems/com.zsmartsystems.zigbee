@@ -183,7 +183,7 @@ public class ZigBeeConsoleSceneCommand extends ZigBeeConsoleAbstractCommand {
                 if (args[2].equalsIgnoreCase("VIEW")) {
                     ViewSceneResponse response = (ViewSceneResponse) result.getResponse();
 
-                    status = ZclStatus.getStatus(response.getStatus());
+                    status = response.getStatus();
                     sceneId = response.getSceneId();
                     groupId = response.getGroupId();
                     sceneName = response.getSceneName();
@@ -192,7 +192,7 @@ public class ZigBeeConsoleSceneCommand extends ZigBeeConsoleAbstractCommand {
                 } else {
                     EnhancedViewSceneResponse response = (EnhancedViewSceneResponse) result.getResponse();
 
-                    status = ZclStatus.getStatus(response.getStatus());
+                    status = response.getStatus();
                     sceneId = response.getSceneId();
                     groupId = response.getGroupId();
                     sceneName = response.getSceneName();

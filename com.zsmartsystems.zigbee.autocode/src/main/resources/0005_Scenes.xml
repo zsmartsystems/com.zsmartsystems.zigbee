@@ -127,7 +127,7 @@
 
     <command code="0x00" source="server">
         <name>Add Scene Response</name>
-        <field type="ENUMERATION_8_BIT">
+        <field type="ZCL_STATUS">
             <name>Status</name>
         </field>
         <field type="UNSIGNED_16_BIT_INTEGER">
@@ -139,7 +139,7 @@
     </command>
     <command code="0x01" source="server">
         <name>View Scene Response</name>
-        <field type="ENUMERATION_8_BIT">
+        <field type="ZCL_STATUS">
             <name>Status</name>
         </field>
         <field type="UNSIGNED_16_BIT_INTEGER">
@@ -160,7 +160,7 @@
     </command>
     <command code="0x02" source="server">
         <name>Remove Scene Response</name>
-        <field type="ENUMERATION_8_BIT">
+        <field type="ZCL_STATUS">
             <name>Status</name>
         </field>
         <field type="UNSIGNED_16_BIT_INTEGER">
@@ -172,7 +172,7 @@
     </command>
     <command code="0x03" source="server">
         <name>Remove All Scenes Response</name>
-        <field type="ENUMERATION_8_BIT">
+        <field type="ZCL_STATUS">
             <name>Status</name>
         </field>
         <field type="UNSIGNED_16_BIT_INTEGER">
@@ -181,7 +181,7 @@
     </command>
     <command code="0x04" source="server">
         <name>Store Scene Response</name>
-        <field type="ENUMERATION_8_BIT">
+        <field type="ZCL_STATUS">
             <name>Status</name>
         </field>
         <field type="UNSIGNED_16_BIT_INTEGER">
@@ -193,7 +193,7 @@
     </command>
     <command code="0x06" source="server">
         <name>Get Scene Membership Response</name>
-        <field type="ENUMERATION_8_BIT">
+        <field type="ZCL_STATUS">
             <name>Status</name>
         </field>
         <field type="UNSIGNED_8_BIT_INTEGER">
@@ -211,7 +211,7 @@
     </command>
        <command code="0x40" source="server">
         <name>Enhanced Add Scene Response</name>
-        <field type="ENUMERATION_8_BIT">
+        <field type="ZCL_STATUS">
             <name>Status</name>
         </field>
         <field type="UNSIGNED_16_BIT_INTEGER">
@@ -223,7 +223,7 @@
     </command>
     <command code="0x41" source="server">
         <name>Enhanced View Scene Response</name>
-        <field type="ENUMERATION_8_BIT">
+        <field type="ZCL_STATUS">
             <name>Status</name>
         </field>
         <field type="UNSIGNED_16_BIT_INTEGER">
@@ -244,7 +244,7 @@
     </command>
     <command code="0x42" source="server">
         <name>Copy Scene Response</name>
-        <field type="ENUMERATION_8_BIT">
+        <field type="ZCL_STATUS">
             <name>Status</name>
         </field>
         <field type="UNSIGNED_16_BIT_INTEGER">

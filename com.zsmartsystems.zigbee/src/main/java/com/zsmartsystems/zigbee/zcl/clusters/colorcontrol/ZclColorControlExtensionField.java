@@ -20,7 +20,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-20T21:27:13Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-29T21:31:36Z")
 public class ZclColorControlExtensionField extends ExtensionFieldSet {
 
     /**
@@ -67,7 +67,7 @@ public class ZclColorControlExtensionField extends ExtensionFieldSet {
 
     /**
      * The ColorLoopActive attribute specifies the current active status of the color loop.
-     * If this attribute has the value 0x00, the color loop SHALLnot be active. If this
+     * If this attribute has the value 0x00, the color loop shall not be active. If this
      * attribute has the value 0x01, the color loop shall be active. All other values (0x02 –
      * 0xff) are reserved.
      */
@@ -198,7 +198,7 @@ public class ZclColorControlExtensionField extends ExtensionFieldSet {
 
     /**
      * The ColorLoopActive attribute specifies the current active status of the color loop.
-     * If this attribute has the value 0x00, the color loop SHALLnot be active. If this
+     * If this attribute has the value 0x00, the color loop shall not be active. If this
      * attribute has the value 0x01, the color loop shall be active. All other values (0x02 –
      * 0xff) are reserved.
      *

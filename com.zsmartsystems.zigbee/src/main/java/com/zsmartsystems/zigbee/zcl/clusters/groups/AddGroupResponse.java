@@ -11,6 +11,7 @@ import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -25,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-29T21:34:54Z")
 public class AddGroupResponse extends ZclGroupsCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -40,7 +41,7 @@ public class AddGroupResponse extends ZclGroupsCommand {
     /**
      * Status command message field.
      */
-    private Integer status;
+    private ZclStatus status;
 
     /**
      * Group ID command message field.
@@ -63,11 +64,11 @@ public class AddGroupResponse extends ZclGroupsCommand {
     /**
      * Constructor providing all required parameters.
      *
-     * @param status {@link Integer} Status
+     * @param status {@link ZclStatus} Status
      * @param groupId {@link Integer} Group ID
      */
     public AddGroupResponse(
-            Integer status,
+            ZclStatus status,
             Integer groupId) {
 
         clusterId = CLUSTER_ID;
@@ -84,7 +85,7 @@ public class AddGroupResponse extends ZclGroupsCommand {
      *
      * @return the Status
      */
-    public Integer getStatus() {
+    public ZclStatus getStatus() {
         return status;
     }
 
@@ -95,7 +96,7 @@ public class AddGroupResponse extends ZclGroupsCommand {
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setStatus(final Integer status) {
+    public void setStatus(final ZclStatus status) {
         this.status = status;
     }
 
@@ -121,13 +122,13 @@ public class AddGroupResponse extends ZclGroupsCommand {
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
-        serializer.serialize(status, ZclDataType.ENUMERATION_8_BIT);
+        serializer.serialize(status, ZclDataType.ZCL_STATUS);
         serializer.serialize(groupId, ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        status = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        status = (ZclStatus) deserializer.deserialize(ZclDataType.ZCL_STATUS);
         groupId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
