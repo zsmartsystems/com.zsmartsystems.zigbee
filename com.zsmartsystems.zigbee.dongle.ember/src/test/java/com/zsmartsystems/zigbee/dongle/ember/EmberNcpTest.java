@@ -8,7 +8,11 @@
 package com.zsmartsystems.zigbee.dongle.ember;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+
+import java.util.Collection;
 
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -33,6 +37,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetParentChildPara
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetParentChildParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLeaveNetworkRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLeaveNetworkResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkFoundHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateRequest;
@@ -184,12 +189,45 @@ public class EmberNcpTest {
     }
 
     @Test
-    public void doActiveScan() {
+    public void doActiveScanSUCCESS() {
         EzspScanCompleteHandler scanComplete = Mockito.mock(EzspScanCompleteHandler.class);
         Mockito.when(scanComplete.getStatus()).thenReturn(EmberStatus.EMBER_SUCCESS);
         EmberNcp ncp = getEmberNcp(scanComplete);
 
-        ncp.doActiveScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, 123);
+        Collection<EzspNetworkFoundHandler> response = ncp.doActiveScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, 123);
+        assertNotNull(response);
+        assertEquals(0, response.size());
+
+        Mockito.verify(handler, Mockito.times(1)).sendEzspTransaction(ezspTransactionCapture.capture());
+
+        EzspFrameRequest request = ezspTransactionCapture.getValue().getRequest();
+        assertTrue(request instanceof EzspStartScanRequest);
+        assertEquals(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, ((EzspStartScanRequest) request).getChannelMask());
+    }
+
+    @Test
+    public void doActiveScanERROR() {
+        EzspScanCompleteHandler scanComplete = Mockito.mock(EzspScanCompleteHandler.class);
+        Mockito.when(scanComplete.getStatus()).thenReturn(EmberStatus.EMBER_INVALID_CALL);
+        EmberNcp ncp = getEmberNcp(scanComplete);
+
+        Collection<EzspNetworkFoundHandler> response = ncp.doActiveScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, 123);
+        assertNull(response);
+
+        Mockito.verify(handler, Mockito.times(1)).sendEzspTransaction(ezspTransactionCapture.capture());
+
+        EzspFrameRequest request = ezspTransactionCapture.getValue().getRequest();
+        assertTrue(request instanceof EzspStartScanRequest);
+        assertEquals(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, ((EzspStartScanRequest) request).getChannelMask());
+    }
+
+    @Test
+    public void doActiveScanInvalid() {
+        EzspNetworkFoundHandler networkFound = Mockito.mock(EzspNetworkFoundHandler.class);
+        EmberNcp ncp = getEmberNcp(networkFound);
+
+        Collection<EzspNetworkFoundHandler> response = ncp.doActiveScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, 123);
+        assertNull(response);
 
         Mockito.verify(handler, Mockito.times(1)).sendEzspTransaction(ezspTransactionCapture.capture());
 
