@@ -7,7 +7,7 @@ ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=0/1, profile=0104, cluster
 AddGroupCommand [Groups: 0/0 -> 0/1, cluster=0004, TID=18, groupId=1, groupName=hello]
 
 ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=0/1, profile=0104, cluster=0004, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=C2, payload=19 18 00 00 01 00]
-AddGroupResponse [Groups: 0/1 -> 0/1, cluster=0004, TID=18, status=0, groupId=1]
+AddGroupResponse [Groups: 0/1 -> 0/1, cluster=0004, TID=18, status=SUCCESS, groupId=1]
 
 ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=0/1, profile=0104, cluster=0004, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=09, payload=01 09 02 00 00]
 GetGroupMembershipCommand [Groups: 0/1 -> 0/1, cluster=0004, TID=09, groupList=[]]
@@ -22,4 +22,4 @@ ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=0/1, profile=0104, cluster
 ViewGroupCommand [Groups: 0/0 -> 0/1, cluster=0004, TID=10, groupId=1]
 
 ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=0/1, profile=0104, cluster=0004, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=51, payload=19 10 01 00 01 00 00]
-ViewGroupResponse [Groups: 0/1 -> 0/1, cluster=0004, TID=10, status=0, groupId=1, groupName=]
+ViewGroupResponse [Groups: 0/1 -> 0/1, cluster=0004, TID=10, status=SUCCESS, groupId=1, groupName=]
