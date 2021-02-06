@@ -837,12 +837,17 @@ public class EmberNcp {
                 Arrays.asList(EzspStartScanResponse.class, EzspNetworkFoundHandler.class));
         EzspTransaction transaction = protocolHandler.sendEzspTransaction(
                 new EzspMultiResponseTransaction(activeScan, EzspScanCompleteHandler.class, relatedResponses));
-        EzspScanCompleteHandler activeScanCompleteResponse = (EzspScanCompleteHandler) transaction.getResponse();
-        logger.debug(activeScanCompleteResponse.toString());
+        logger.debug("Active scan response: {}", transaction.getResponse());
+        if (transaction.getResponse() instanceof EzspScanCompleteHandler) {
+            EzspScanCompleteHandler activeScanCompleteResponse = (EzspScanCompleteHandler) transaction.getResponse();
 
-        if (activeScanCompleteResponse.getStatus() != EmberStatus.EMBER_SUCCESS) {
-            lastStatus = activeScanCompleteResponse.getStatus();
-            logger.debug("Error during active scan: {}", activeScanCompleteResponse);
+            if (activeScanCompleteResponse.getStatus() != EmberStatus.EMBER_SUCCESS) {
+                lastStatus = activeScanCompleteResponse.getStatus();
+                logger.debug("Error during active scan: {}", activeScanCompleteResponse);
+                return null;
+            }
+        } else {
+            logger.debug("Invalid response during active scan: {}", transaction.getResponse());
             return null;
         }
 
