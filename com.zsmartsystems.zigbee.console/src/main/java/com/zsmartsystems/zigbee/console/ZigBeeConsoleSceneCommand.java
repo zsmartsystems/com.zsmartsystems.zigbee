@@ -235,7 +235,7 @@ public class ZigBeeConsoleSceneCommand extends ZigBeeConsoleAbstractCommand {
 
         ZclScenesCluster scenesCluster = (ZclScenesCluster) endpoint.getInputCluster(ZclScenesCluster.CLUSTER_ID);
 
-        RecallSceneCommand recall = new RecallSceneCommand(groupId, sceneId);
+        RecallSceneCommand recall = new RecallSceneCommand(groupId, sceneId, 0xffff);
         scenesCluster.sendCommand(recall);
     }
 
