@@ -58,7 +58,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-29T21:31:36Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-02-12T14:13:22Z")
 public class ZclScenesCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -760,6 +760,7 @@ public class ZclScenesCluster extends ZclCluster {
      *
      * @param groupId {@link Integer} Group ID
      * @param sceneId {@link Integer} Scene ID
+     * @param transitionTime {@link Integer} Transition Time
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.3.0.
      * Use extended ZclCommand class constructors to instantiate the command
@@ -771,12 +772,13 @@ public class ZclScenesCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new recallSceneCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> recallSceneCommand(Integer groupId, Integer sceneId) {
+    public Future<CommandResult> recallSceneCommand(Integer groupId, Integer sceneId, Integer transitionTime) {
         RecallSceneCommand command = new RecallSceneCommand();
 
         // Set the fields
         command.setGroupId(groupId);
         command.setSceneId(sceneId);
+        command.setTransitionTime(transitionTime);
 
         return sendCommand(command);
     }

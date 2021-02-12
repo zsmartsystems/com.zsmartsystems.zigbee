@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-02-12T14:13:22Z")
 public class RecallSceneCommand extends ZclScenesCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -47,6 +47,18 @@ public class RecallSceneCommand extends ZclScenesCommand {
     private Integer sceneId;
 
     /**
+     * Transition Time command message field.
+     * <p>
+     * If the Transition Time field is present in the command payload and its value is not equal
+     * to 0xFFFF, this field shall indicate the transition time in 1/10ths of a second. In all
+     * other cases (command payload field not present or value equal to 0xFFFF), The scene
+     * transition time field of the Scene Table entry shall indicate the transition time. The
+     * transition time determines how long the transition takes from the old cluster state to
+     * the new cluster state.
+     */
+    private Integer transitionTime;
+
+    /**
      * Default constructor.
      *
      * @deprecated from release 1.3.0. Use the parameterised constructor instead of the default constructor and setters.
@@ -64,10 +76,12 @@ public class RecallSceneCommand extends ZclScenesCommand {
      *
      * @param groupId {@link Integer} Group ID
      * @param sceneId {@link Integer} Scene ID
+     * @param transitionTime {@link Integer} Transition Time
      */
     public RecallSceneCommand(
             Integer groupId,
-            Integer sceneId) {
+            Integer sceneId,
+            Integer transitionTime) {
 
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
@@ -76,6 +90,7 @@ public class RecallSceneCommand extends ZclScenesCommand {
 
         this.groupId = groupId;
         this.sceneId = sceneId;
+        this.transitionTime = transitionTime;
     }
 
     /**
@@ -118,27 +133,65 @@ public class RecallSceneCommand extends ZclScenesCommand {
         this.sceneId = sceneId;
     }
 
+    /**
+     * Gets Transition Time.
+     * <p>
+     * If the Transition Time field is present in the command payload and its value is not equal
+     * to 0xFFFF, this field shall indicate the transition time in 1/10ths of a second. In all
+     * other cases (command payload field not present or value equal to 0xFFFF), The scene
+     * transition time field of the Scene Table entry shall indicate the transition time. The
+     * transition time determines how long the transition takes from the old cluster state to
+     * the new cluster state.
+     *
+     * @return the Transition Time
+     */
+    public Integer getTransitionTime() {
+        return transitionTime;
+    }
+
+    /**
+     * Sets Transition Time.
+     * <p>
+     * If the Transition Time field is present in the command payload and its value is not equal
+     * to 0xFFFF, this field shall indicate the transition time in 1/10ths of a second. In all
+     * other cases (command payload field not present or value equal to 0xFFFF), The scene
+     * transition time field of the Scene Table entry shall indicate the transition time. The
+     * transition time determines how long the transition takes from the old cluster state to
+     * the new cluster state.
+     *
+     * @param transitionTime the Transition Time
+     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
+     */
+    @Deprecated
+    public void setTransitionTime(final Integer transitionTime) {
+        this.transitionTime = transitionTime;
+    }
+
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
         serializer.serialize(groupId, ZclDataType.UNSIGNED_16_BIT_INTEGER);
         serializer.serialize(sceneId, ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        serializer.serialize(transitionTime, ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
         groupId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         sceneId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        transitionTime = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(75);
+        final StringBuilder builder = new StringBuilder(109);
         builder.append("RecallSceneCommand [");
         builder.append(super.toString());
         builder.append(", groupId=");
         builder.append(groupId);
         builder.append(", sceneId=");
         builder.append(sceneId);
+        builder.append(", transitionTime=");
+        builder.append(transitionTime);
         builder.append(']');
         return builder.toString();
     }
