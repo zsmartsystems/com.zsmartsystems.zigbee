@@ -47,7 +47,7 @@ public class ZigBeeConsoleNetworkJoinCommand extends ZigBeeConsoleAbstractComman
 
         final int join;
         if ("enable".equalsIgnoreCase(args[1])) {
-            join = 255;
+            join = 254;
         } else if ("disable".equalsIgnoreCase(args[1])) {
             join = 0;
         } else {
