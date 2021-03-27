@@ -54,14 +54,14 @@
 
 	<distributionManagement>
 		<repository>
-			<id>bintray-zsmartsystems-com.zsmartsystems</id>
-			<name>zsmartsystems-com.zsmartsystems</name>
-			<url>https://api.bintray.com/maven/zsmartsystems/com.zsmartsystems/zigbee/;publish=1</url>
+			<id>zsmartsystems-sonatype-release</id>
+			<name>Sonatype Release</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
 		</repository>
 		<snapshotRepository>
-			<id>snapshots-zsmartsystems-com.zsmartsystems</id>
-			<name>zsmartsystems-com.zsmartsystems</name>
-			<url>https://oss.jfrog.org/artifactory/oss-snapshot-local/</url>
+			<id>zsmartsystems-sonatype-snapshot</id>
+			<name>Sonatype Snapshot</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
 
