@@ -362,20 +362,7 @@ The following commands are available if the transport layer is using the Teleges
 
 ## Maven
 
-The repositories below may be used for the RELEASE and SNAPSHOT versions respectively -:
-
-```
-<repository>
-    <id>bintray-zsmartsystems-com.zsmartsystems</id>
-    <name>zsmartsystems-com.zsmartsystems</name>
-    <url>https://api.bintray.com/maven/zsmartsystems/com.zsmartsystems/zigbee/;publish=1</url>
-</repository>
-<snapshotRepository>
-    <id>snapshots-zsmartsystems-com.zsmartsystems</id>
-    <name>zsmartsystems-com.zsmartsystems</name>
-    <url>https://oss.jfrog.org/artifactory/oss-snapshot-local/</url>
-</snapshotRepository>
-```
+The library is published directly to the maven central repository, and the following dependency can be specified -:
 
 ```
 <dependency>
