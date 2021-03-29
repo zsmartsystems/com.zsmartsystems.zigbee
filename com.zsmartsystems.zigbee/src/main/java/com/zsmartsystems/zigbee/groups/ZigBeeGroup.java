@@ -277,7 +277,13 @@ public class ZigBeeGroup implements Comparable<Object> {
     /**
      * Sends a {@link ZclCommand} and returns the {@link Future} to the result which will complete when the remote
      * device response is received, or the request times out.
-     *
+     * <p>
+     * It should be noted that multicast APS commands are broadcast on the Zigbee network, and as such there are
+     * restrictions on the number of multicast commands that can be sent at once. In general, a Zigbee network will
+     * limit the number of outstanding broadcasts to approximately one every second. It should be noted that this is the
+     * total number of broadcasts - not just the broadcasts sent from the coordinator or a specific device, and will
+     * therefore include ZDO messages for address resolution, etc.
+     * <p>
      * Note: Currently this will only send commands to servers.
      *
      * @param command the {@link ZclCommand} to send
