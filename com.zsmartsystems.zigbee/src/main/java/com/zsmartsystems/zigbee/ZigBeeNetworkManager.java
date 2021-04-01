@@ -645,10 +645,6 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
      */
     public ZigBeeStatus startup(boolean reinitialize) {
         logger.debug("ZigBeeNetworkManager startup: reinitialize={}, networkState={}", reinitialize, networkState);
-        if (networkState != ZigBeeNetworkState.INITIALISING) {
-            logger.error("ZigBeeNetworkManager startup: Can't be called when networkState={}", networkState);
-            return ZigBeeStatus.INVALID_STATE;
-        }
 
         if (reinitialize) {
             // Remove all nodes other than the local node
