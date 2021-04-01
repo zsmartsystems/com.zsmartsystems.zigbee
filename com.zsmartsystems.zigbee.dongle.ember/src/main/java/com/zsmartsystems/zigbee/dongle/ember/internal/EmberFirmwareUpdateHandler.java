@@ -9,6 +9,7 @@ package com.zsmartsystems.zigbee.dongle.ember.internal;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +41,7 @@ public class EmberFirmwareUpdateHandler {
     private final int XMODEM_MAX_RETRIES = 10;
     private final int XMODEL_CRC_POLYNOMIAL = 0x1021;
     private final int BOOTLOAD_BAUD_RATE = 115200;
+    private final int DATA_CHUNK_SIZE = 128;
 
     private final int CRN = '\n';
     private final int SOH = 0x01;
@@ -232,6 +234,16 @@ public class EmberFirmwareUpdateHandler {
         return false;
     }
 
+    private ByteBuffer readChunk(InputStream is) throws IOException {
+        ByteBuffer byteBuffer = ByteBuffer.allocate(DATA_CHUNK_SIZE);
+        int data;
+        // read until we either got DATA_CHUNK_SIZE bytes or the stream has reached its end
+        while (byteBuffer.hasRemaining() && (data = is.read()) != -1) {
+            byteBuffer.put((byte) data);
+        }
+        return byteBuffer;
+    }
+
     /**
      * Transfers the file using the XModem protocol
      *
@@ -269,11 +281,11 @@ public class EmberFirmwareUpdateHandler {
                         return false;
                     }
 
-                    // Output 128 bytes
-                    byte[] data = new byte[128];
-                    done = (firmware.read(data) != 128);
+                    // Output DATA_CHUNK_SIZE bytes
+                    ByteBuffer data = readChunk(firmware);
+                    done = data.position() < DATA_CHUNK_SIZE;
                     int crc = 0;
-                    for (int value : data) {
+                    for (int value : data.array()) {
                         serialPort.write(value);
                         for (int i = 0; i < 8; i++) {
                             boolean bit = ((value >> (7 - i) & 1) == 1);
