@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2020 by the respective copyright holders.
+ * Copyright (c) 2016-2021 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -17,7 +17,14 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.IntSummaryStatistics;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
@@ -28,7 +35,6 @@ import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeCommandListener;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
-import com.zsmartsystems.zigbee.ZigBeeGroupAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
 import com.zsmartsystems.zigbee.ZigBeeNetworkState;
@@ -41,14 +47,18 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleBindCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleBindingTableCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleCbkeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleChannelCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleColorCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommandsSupportedCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleDescribeEndpointCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleDescribeNodeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleDeviceFingerprintCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleDeviceInformationCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleFactoryResetCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleGroupCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleInstallKeyCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleLinkKeyCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleNeighborsListCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleNetworkBackupCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleNetworkDiscoveryCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleNetworkJoinCommand;
@@ -59,6 +69,9 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleOtaUpgradeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingConfigCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingSubscribeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingUnsubscribeCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleRoutingTableCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleSceneCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleSetPollIntervalCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleSmartEnergyCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleSwitchLevelCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleSwitchOffCommand;
@@ -66,21 +79,15 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleSwitchOnCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleTrustCentreCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleUnbindCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleWindowCoveringCommand;
-import com.zsmartsystems.zigbee.console.ZigBeeConsoleFactoryResetCommand;
-import com.zsmartsystems.zigbee.console.ZigBeeConsoleSetPollIntervalCommand;
-import com.zsmartsystems.zigbee.console.ZigBeeConsoleRoutingTableCommand;
-import com.zsmartsystems.zigbee.console.ZigBeeConsoleNeighborsListCommand;
+import com.zsmartsystems.zigbee.groups.ZigBeeGroup;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionManager;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionQueue;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareCallback;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareStatus;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareUpdate;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
-import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
-import com.zsmartsystems.zigbee.zcl.clusters.groups.GetGroupMembershipResponse;
-import com.zsmartsystems.zigbee.zcl.clusters.groups.ViewGroupResponse;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.command.ManagementLqiRequest;
@@ -146,19 +153,9 @@ public final class ZigBeeConsole {
 
         createCommands(newCommands, transportCommands);
 
-        commands.put("groupadd", new GroupAddCommand());
-        commands.put("groupremove", new GroupRemoveCommand());
-        commands.put("grouplist", new GroupListCommand());
-
-        commands.put("membershipadd", new MembershipAddCommand());
-        commands.put("membershipremove", new MembershipRemoveCommand());
-        commands.put("membershipview", new MembershipViewCommand());
-        commands.put("membershiplist", new MembershipListCommand());
-
         commands.put("quit", new QuitCommand());
         commands.put("help", new HelpCommand());
         commands.put("descriptor", new SetDescriptorCommand());
-        commands.put("color", new ColorCommand());
         commands.put("listen", new ListenCommand());
         commands.put("unlisten", new UnlistenCommand());
 
@@ -212,10 +209,13 @@ public final class ZigBeeConsole {
 
         newCommands.put("smartenergy", new ZigBeeConsoleSmartEnergyCommand());
         newCommands.put("cbke", new ZigBeeConsoleCbkeCommand());
+        newCommands.put("group", new ZigBeeConsoleGroupCommand());
+        newCommands.put("scene", new ZigBeeConsoleSceneCommand());
 
         newCommands.put("on", new ZigBeeConsoleSwitchOnCommand());
         newCommands.put("off", new ZigBeeConsoleSwitchOffCommand());
         newCommands.put("level", new ZigBeeConsoleSwitchLevelCommand());
+        newCommands.put("color", new ZigBeeConsoleColorCommand());
         newCommands.put("covering", new ZigBeeConsoleWindowCoveringCommand());
         newCommands.put("setpollinterval", new ZigBeeConsoleSetPollIntervalCommand());
         newCommands.put("factoryreset", new ZigBeeConsoleFactoryResetCommand());
@@ -422,13 +422,17 @@ public final class ZigBeeConsole {
         }
 
         try {
-            for (final ZigBeeGroupAddress group : zigbeeApi.getGroups()) {
+            for (final ZigBeeGroup group : networkManager.getGroups()) {
                 if (destinationIdentifier.equals(group.getLabel())) {
-                    return group;
+                    return group.getAddress();
                 }
             }
             final int groupId = Integer.parseInt(destinationIdentifier);
-            return zigbeeApi.getGroup(groupId);
+            ZigBeeGroup group = networkManager.getGroup(groupId);
+            if (group == null) {
+                return null;
+            }
+            return group.getAddress();
         } catch (final NumberFormatException e) {
             return null;
         }
@@ -540,7 +544,7 @@ public final class ZigBeeConsole {
                 return Objects.compare(this.command, o.getCommand(), String::compareTo);
             }
         }
-        
+
         /**
          * {@inheritDoc}
          */
@@ -574,8 +578,12 @@ public final class ZigBeeConsole {
                 }
             } else if (args.length == 1) {
                 final List<CommandEntry> commandList = new ArrayList<>();
-                commandList.addAll(commands.entrySet().stream().map(entry -> new CommandEntry(entry.getKey(), entry.getValue().getDescription())).collect(Collectors.toList()));
-                commandList.addAll(newCommands.entrySet().stream().map(entry -> new CommandEntry(entry.getKey(), entry.getValue().getDescription())).collect(Collectors.toList()));
+                commandList.addAll(commands.entrySet().stream()
+                        .map(entry -> new CommandEntry(entry.getKey(), entry.getValue().getDescription()))
+                        .collect(Collectors.toList()));
+                commandList.addAll(newCommands.entrySet().stream()
+                        .map(entry -> new CommandEntry(entry.getKey(), entry.getValue().getDescription()))
+                        .collect(Collectors.toList()));
                 Collections.sort(commandList);
                 print("Commands:", out);
                 for (final CommandEntry command : commandList) {
@@ -584,191 +592,6 @@ public final class ZigBeeConsole {
             } else {
                 return false;
             }
-
-            return true;
-        }
-    }
-
-    /**
-     * Lists groups in gateway network state.
-     */
-    private class GroupListCommand implements ConsoleCommand {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getDescription() {
-            return "Lists groups in gateway network state.";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getSyntax() {
-            return "grouplist";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) {
-            final List<ZigBeeGroupAddress> groups = zigbeeApi.getGroups();
-            for (final ZigBeeGroupAddress group : groups) {
-                print(Integer.toString(group.getGroupId()) + "      " + group.getLabel(), out);
-            }
-            return true;
-        }
-    }
-
-    /**
-     * Switches a device off.
-     */
-
-    /**
-     * Changes a light color on device.
-     */
-    private class ColorCommand implements ConsoleCommand {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getDescription() {
-            return "Changes light color.";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getSyntax() {
-            return "color DEVICEID RED GREEN BLUE";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length != 5) {
-                return false;
-            }
-
-            final ZigBeeAddress destination = getDestination(zigbeeApi, args[1], out);
-            if (destination == null) {
-                return false;
-            }
-
-            float red;
-            try {
-                red = Float.parseFloat(args[2]);
-            } catch (final NumberFormatException e) {
-                return false;
-            }
-            float green;
-            try {
-                green = Float.parseFloat(args[3]);
-            } catch (final NumberFormatException e) {
-                return false;
-            }
-            float blue;
-            try {
-                blue = Float.parseFloat(args[4]);
-            } catch (final NumberFormatException e) {
-                return false;
-            }
-
-            final CommandResult response = zigbeeApi.color(destination, red, green, blue, 1).get();
-            return defaultResponseProcessing(response, out);
-        }
-    }
-
-    /**
-     * Adds group to gateway network state. Does not affect actual ZigBee network.
-     */
-    private class GroupAddCommand implements ConsoleCommand {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getDescription() {
-            return "Adds group to gateway network state.";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getSyntax() {
-            return "groupadd GROUPID GROUPLABEL";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length != 3) {
-                return false;
-            }
-
-            final int groupId;
-            try {
-                groupId = Integer.parseInt(args[1]);
-            } catch (final NumberFormatException e) {
-                return false;
-            }
-
-            final String label = args[2];
-            ZigBeeGroupAddress group = new ZigBeeGroupAddress();
-            group.setLabel(label);
-            networkManager.addGroup(group);
-
-            return true;
-        }
-    }
-
-    /**
-     * Removes group from network state but does not affect actual ZigBeet network.
-     */
-    private class GroupRemoveCommand implements ConsoleCommand {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getDescription() {
-            return "Removes group from gateway network state.";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getSyntax() {
-            return "groupremove GROUP";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length != 2) {
-                return false;
-            }
-
-            final ZigBeeAddress destination = getDestination(zigbeeApi, args[1], out);
-            if (destination == null) {
-                return false;
-            }
-            if (!(destination instanceof ZigBeeGroupAddress)) {
-                return false;
-            }
-
-            final ZigBeeGroupAddress group = (ZigBeeGroupAddress) destination;
-
-            networkManager.removeGroup(group.getGroupId());
 
             return true;
         }
@@ -977,218 +800,6 @@ public final class ZigBeeConsole {
             }
 
             throw new UnsupportedOperationException();
-        }
-    }
-
-    /**
-     * Adds group membership to device.
-     */
-    private class MembershipAddCommand implements ConsoleCommand {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getDescription() {
-            return "Adds group membership to device.";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getSyntax() {
-            return "membershipadd [DEVICE] [GROUPID] [GROUPNAME]";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length != 4) {
-                return false;
-            }
-
-            final ZigBeeEndpoint device = getDevice(zigbeeApi, args[1]);
-            if (device == null) {
-                print("Device not found.", out);
-                return false;
-            }
-
-            final int groupId;
-            try {
-                groupId = Integer.parseInt(args[2]);
-            } catch (final NumberFormatException e) {
-                return false;
-            }
-
-            final String groupName = args[3];
-
-            final CommandResult result = zigbeeApi.addMembership(device, groupId, groupName).get();
-
-            return defaultResponseProcessing(result, out);
-
-        }
-    }
-
-    /**
-     * Removes device group membership from device.
-     */
-    private class MembershipRemoveCommand implements ConsoleCommand {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getDescription() {
-            return "Removes group membership from device.";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getSyntax() {
-            return "membershipremove [DEVICE] [GROUPID]";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length != 3) {
-                return false;
-            }
-
-            final ZigBeeEndpoint device = getDevice(zigbeeApi, args[1]);
-            if (device == null) {
-                print("Device not found.", out);
-                return false;
-            }
-
-            final int groupId;
-            try {
-                groupId = Integer.parseInt(args[2]);
-            } catch (final NumberFormatException e) {
-                return false;
-            }
-
-            final CommandResult result = zigbeeApi.removeMembership(device, groupId).get();
-
-            return defaultResponseProcessing(result, out);
-        }
-    }
-
-    /**
-     * Views group name from device group membership.
-     */
-    private class MembershipViewCommand implements ConsoleCommand {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getDescription() {
-            return "Views group name from device group membership.";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getSyntax() {
-            return "membershipview [DEVICE] [GROUPID]";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length != 3) {
-                return false;
-            }
-
-            final ZigBeeEndpoint device = getDevice(zigbeeApi, args[1]);
-            if (device == null) {
-                print("Device not found.", out);
-                return false;
-            }
-
-            final int groupId;
-            try {
-                groupId = Integer.parseInt(args[2]);
-            } catch (final NumberFormatException e) {
-                return false;
-            }
-
-            final CommandResult result = zigbeeApi.viewMembership(device, groupId).get();
-
-            if (result.isSuccess()) {
-                final ViewGroupResponse response = result.getResponse();
-                final int statusCode = response.getStatus();
-                if (statusCode == 0) {
-                    out.println("Group name: " + response.getGroupName());
-                } else {
-                    final ZclStatus status = ZclStatus.getStatus((byte) statusCode);
-                    out.println("Error reading group name: " + status);
-                }
-                return true;
-            } else {
-                out.println("Error executing command: " + result);
-                return true;
-            }
-        }
-    }
-
-    /**
-     * Lists group memberships from device.
-     */
-    private class MembershipListCommand implements ConsoleCommand {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getDescription() {
-            return "Lists group memberships from device.";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getSyntax() {
-            return "membershiplist [DEVICE]";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) throws Exception {
-            if (args.length != 2) {
-                return false;
-            }
-
-            final ZigBeeEndpoint device = getDevice(zigbeeApi, args[1]);
-            if (device == null) {
-                print("Device not found.", out);
-                return false;
-            }
-
-            final CommandResult result = zigbeeApi.getGroupMemberships(device).get();
-            if (result.isSuccess()) {
-                final GetGroupMembershipResponse response = result.getResponse();
-                out.print("Member of groups:");
-                for (final Integer value : response.getGroupList()) {
-                    out.print(' ');
-                    out.print(value);
-                }
-                out.println();
-                return true;
-            } else {
-                out.println("Error executing command: " + result);
-                return true;
-            }
         }
     }
 

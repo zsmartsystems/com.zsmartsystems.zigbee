@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2020 by the respective copyright holders.
+ * Copyright (c) 2016-2021 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -17,26 +17,26 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-07T07:33:30Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-21T21:21:39Z")
 public enum StartUpOnOffEnum {
 
     /**
-     * Off
+     * Off, 0, 0x0000
      */
     OFF(0x0000),
 
     /**
-     * On
+     * On, 1, 0x0001
      */
     ON(0x0001),
 
     /**
-     * Toggle
+     * Toggle, 2, 0x0002
      */
     TOGGLE(0x0002),
 
     /**
-     * Previous
+     * Previous, 255, 0x00FF
      */
     PREVIOUS(0x00FF);
 

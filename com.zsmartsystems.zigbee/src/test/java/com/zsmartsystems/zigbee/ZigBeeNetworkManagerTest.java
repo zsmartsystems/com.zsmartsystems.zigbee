@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2020 by the respective copyright holders.
+ * Copyright (c) 2016-2021 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -44,6 +44,8 @@ import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaUpgradeExtension;
 import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDataStore;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDatabaseManager;
+import com.zsmartsystems.zigbee.groups.ZigBeeGroup;
+import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
 import com.zsmartsystems.zigbee.serialization.DefaultSerializer;
@@ -59,6 +61,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclColorControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclDemandResponseAndLoadControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclElectricalMeasurementCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclGroupsCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclIasZoneCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclKeyEstablishmentCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
@@ -248,25 +251,20 @@ public class ZigBeeNetworkManagerTest
         TestUtilities.outputTestHeader();
         ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
 
-        networkManager.addGroup(new ZigBeeGroupAddress(1));
+        networkManager.addGroup(1);
         assertEquals(1, networkManager.getGroups().size());
-        networkManager.addGroup(new ZigBeeGroupAddress(1));
+        networkManager.addGroup(1);
         assertEquals(1, networkManager.getGroups().size());
 
-        networkManager.addGroup(new ZigBeeGroupAddress(2));
+        networkManager.addGroup(2);
         assertEquals(2, networkManager.getGroups().size());
 
-        networkManager.removeGroup(2);
+        networkManager.deleteGroup(2);
         assertEquals(1, networkManager.getGroups().size());
         assertNull(networkManager.getGroup(1).getLabel());
 
-        ZigBeeGroupAddress group = networkManager.getGroup(1);
+        ZigBeeGroup group = networkManager.getGroup(1);
         assertEquals(1, group.getGroupId());
-        group.setLabel("Group Label");
-        networkManager.updateGroup(group);
-        assertEquals(1, networkManager.getGroups().size());
-
-        assertEquals("Group Label", networkManager.getGroup(1).getLabel());
     }
 
     @Test
@@ -855,6 +853,13 @@ public class ZigBeeNetworkManagerTest
                 .sendTransaction(ArgumentMatchers.any(ZigBeeCommand.class));
     }
 
+    @Test
+    public void getGroupManager() throws Exception {
+        ZigBeeNetworkManager networkManager = mockZigBeeNetworkManager();
+
+        assertNotNull(networkManager.getGroupManager());
+    }
+
     private ZigBeeNetworkManager mockZigBeeNetworkManager() throws Exception {
         mockedTransport = Mockito.mock(ZigBeeTransportTransmit.class);
         mockedStateListener = Mockito.mock(ZigBeeNetworkStateListener.class);
@@ -943,6 +948,9 @@ public class ZigBeeNetworkManagerTest
         cluster = new ZclBasicCluster(endpoint);
         Mockito.when(endpoint.getInputCluster(0x0000)).thenReturn(cluster);
         Mockito.when(endpoint.getOutputCluster(0x0000)).thenReturn(cluster);
+        cluster = new ZclGroupsCluster(endpoint);
+        Mockito.when(endpoint.getInputCluster(0x0004)).thenReturn(cluster);
+        Mockito.when(endpoint.getOutputCluster(0x0004)).thenReturn(cluster);
         cluster = new ZclOnOffCluster(endpoint);
         Mockito.when(endpoint.getInputCluster(0x0006)).thenReturn(cluster);
         Mockito.when(endpoint.getOutputCluster(0x0006)).thenReturn(cluster);

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2020 by the respective copyright holders.
+ * Copyright (c) 2016-2021 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -1018,12 +1018,17 @@ public class EmberNcp {
                 Arrays.asList(EzspStartScanResponse.class, EzspNetworkFoundHandler.class));
         EzspTransaction transaction = protocolHandler.sendEzspTransaction(
                 new EzspMultiResponseTransaction(activeScan, EzspScanCompleteHandler.class, relatedResponses));
-        EzspScanCompleteHandler activeScanCompleteResponse = (EzspScanCompleteHandler) transaction.getResponse();
-        logger.debug(activeScanCompleteResponse.toString());
+        logger.debug("Active scan response: {}", transaction.getResponse());
+        if (transaction.getResponse() instanceof EzspScanCompleteHandler) {
+            EzspScanCompleteHandler activeScanCompleteResponse = (EzspScanCompleteHandler) transaction.getResponse();
 
-        if (activeScanCompleteResponse.getStatus() != EmberStatus.EMBER_SUCCESS) {
-            lastStatus = activeScanCompleteResponse.getStatus();
-            logger.debug("Error during active scan: {}", activeScanCompleteResponse);
+            if (activeScanCompleteResponse.getStatus() != EmberStatus.EMBER_SUCCESS) {
+                lastStatus = activeScanCompleteResponse.getStatus();
+                logger.debug("Error during active scan: {}", activeScanCompleteResponse);
+                return null;
+            }
+        } else {
+            logger.debug("Invalid response during active scan: {}", transaction.getResponse());
             return null;
         }
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2020 by the respective copyright holders.
+ * Copyright (c) 2016-2021 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,24 +7,20 @@
  */
 package com.zsmartsystems.zigbee.console.main;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.Future;
 
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
-import com.zsmartsystems.zigbee.ZigBeeGroupAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.groups.ZigBeeGroup;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclTransactionMatcher;
-import com.zsmartsystems.zigbee.zcl.clusters.ZclColorControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.AddGroupCommand;
-import com.zsmartsystems.zigbee.zcl.clusters.groups.GetGroupMembershipCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.RemoveGroupCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.ViewGroupCommand;
 
@@ -67,17 +63,8 @@ public class ZigBeeApi {
      * @param groupId the group ID
      * @return the ZigBee group or null if no exists with given group ID.
      */
-    public ZigBeeGroupAddress getGroup(final int groupId) {
+    public ZigBeeGroup getGroup(final int groupId) {
         return networkManager.getGroup(groupId);
-    }
-
-    /**
-     * Gets all groups.
-     *
-     * @return list of groups.
-     */
-    public List<ZigBeeGroupAddress> getGroups() {
-        return networkManager.getGroups();
     }
 
     /**
@@ -118,44 +105,6 @@ public class ZigBeeApi {
         }
         ZclOnOffCluster cluster = (ZclOnOffCluster) endpoint.getInputCluster(ZclOnOffCluster.CLUSTER_ID);
         return cluster.offCommand();
-    }
-
-    /**
-     * Colors device light.
-     *
-     * @param destination the {@link ZigBeeAddress}
-     * @param red the red component [0..1]
-     * @param green the green component [0..1]
-     * @param blue the blue component [0..1]
-     * @param time the in seconds
-     * @return the command result future.
-     */
-    public Future<CommandResult> color(final ZigBeeAddress destination, final double red, final double green,
-            final double blue, double time) {
-
-        final Cie cie = Cie.rgb2cie(red, green, blue);
-
-        int x = (int) (cie.x * 65536);
-        int y = (int) (cie.y * 65536);
-        if (x > 65279) {
-            x = 65279;
-        }
-        if (y > 65279) {
-            y = 65279;
-        }
-
-        if (!(destination instanceof ZigBeeEndpointAddress)) {
-            return null;
-        }
-        ZigBeeEndpointAddress endpointAddress = (ZigBeeEndpointAddress) destination;
-        ZigBeeEndpoint endpoint = networkManager.getNode(endpointAddress.getAddress())
-                .getEndpoint(endpointAddress.getEndpoint());
-        if (endpoint == null) {
-            return null;
-        }
-        ZclColorControlCluster cluster = (ZclColorControlCluster) endpoint
-                .getInputCluster(ZclColorControlCluster.CLUSTER_ID);
-        return cluster.moveToColorCommand(x, y, (int) (time * 10));
     }
 
     /**
@@ -203,22 +152,6 @@ public class ZigBeeApi {
         command.setGroupId(groupId);
         command.setGroupName(groupName);
 
-        command.setDestinationAddress(device.getEndpointAddress());
-
-        return networkManager.sendTransaction(command, new ZclTransactionMatcher());
-    }
-
-    /**
-     * Gets group memberships from device.
-     *
-     * @param device the device
-     * @return the command result future
-     */
-    public Future<CommandResult> getGroupMemberships(final ZigBeeEndpoint device) {
-        final GetGroupMembershipCommand command = new GetGroupMembershipCommand();
-
-        command.setGroupCount(0);
-        command.setGroupList(Collections.<Integer> emptyList());
         command.setDestinationAddress(device.getEndpointAddress());
 
         return networkManager.sendTransaction(command, new ZclTransactionMatcher());

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2020 by the respective copyright holders.
+ * Copyright (c) 2016-2021 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -188,12 +188,13 @@ public abstract class ZigBeeBaseClassGenerator {
         return val.substring(0, 1).toLowerCase() + val.substring(1);
     }
 
-    protected PrintStream  getClassOut(File packageFile, String className) throws FileNotFoundException, UnsupportedEncodingException {
+    protected PrintStream getClassOut(File packageFile, String className)
+            throws FileNotFoundException, UnsupportedEncodingException {
         packageFile.mkdirs();
         final File classFile = new File(packageFile + File.separator + className + ".java");
         System.out.println("Generating: " + classFile.getAbsolutePath());
         final FileOutputStream fileOutputStream = new FileOutputStream(classFile, false);
-        return new PrintStream (fileOutputStream,false,"UTF-8");
+        return new PrintStream(fileOutputStream, false, "UTF-8");
     }
 
     protected void importsClear() {
@@ -458,6 +459,18 @@ public abstract class ZigBeeBaseClassGenerator {
 
         // }
         // return field.implementationClass;
+    }
+
+    protected ZigBeeXmlField getAutoSized(List<ZigBeeXmlField> fields, String name) {
+        for (ZigBeeXmlField field : fields) {
+            if (field.sizer != null) {
+                System.out.println();
+            }
+            if (name.equals(field.sizer)) {
+                return field;
+            }
+        }
+        return null;
     }
 
     protected void importsAddClass(ZigBeeXmlField field) {

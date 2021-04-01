@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2020 by the respective copyright holders.
+ * Copyright (c) 2016-2021 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -19,6 +19,7 @@ import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.AddGroupCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.AddGroupIfIdentifyingCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.AddGroupResponse;
@@ -62,7 +63,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-29T21:34:54Z")
 public class ZclGroupsCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -289,7 +290,6 @@ public class ZclGroupsCluster extends ZclCluster {
      * The get group membership command allows the sending device to inquire about the group
      * membership of the receiving device and endpoint in a number of ways.
      *
-     * @param groupCount {@link Integer} Group Count
      * @param groupList {@link List<Integer>} Group List
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.3.0.
@@ -302,11 +302,10 @@ public class ZclGroupsCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new getGroupMembershipCommand(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> getGroupMembershipCommand(Integer groupCount, List<Integer> groupList) {
+    public Future<CommandResult> getGroupMembershipCommand(List<Integer> groupList) {
         GetGroupMembershipCommand command = new GetGroupMembershipCommand();
 
         // Set the fields
-        command.setGroupCount(groupCount);
         command.setGroupList(groupList);
 
         return sendCommand(command);
@@ -397,7 +396,7 @@ public class ZclGroupsCluster extends ZclCluster {
      * The add group response is sent by the groups cluster server in response to an add group
      * command.
      *
-     * @param status {@link Integer} Status
+     * @param status {@link ZclStatus} Status
      * @param groupId {@link Integer} Group ID
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.3.0.
@@ -410,7 +409,7 @@ public class ZclGroupsCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new addGroupResponse(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> addGroupResponse(Integer status, Integer groupId) {
+    public Future<CommandResult> addGroupResponse(ZclStatus status, Integer groupId) {
         AddGroupResponse command = new AddGroupResponse();
 
         // Set the fields
@@ -426,7 +425,7 @@ public class ZclGroupsCluster extends ZclCluster {
      * The view group response command is sent by the groups cluster server in response to a view
      * group command.
      *
-     * @param status {@link Integer} Status
+     * @param status {@link ZclStatus} Status
      * @param groupId {@link Integer} Group ID
      * @param groupName {@link String} Group Name
      * @return the {@link Future<CommandResult>} command result future
@@ -440,7 +439,7 @@ public class ZclGroupsCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new viewGroupResponse(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> viewGroupResponse(Integer status, Integer groupId, String groupName) {
+    public Future<CommandResult> viewGroupResponse(ZclStatus status, Integer groupId, String groupName) {
         ViewGroupResponse command = new ViewGroupResponse();
 
         // Set the fields
@@ -458,7 +457,6 @@ public class ZclGroupsCluster extends ZclCluster {
      * response to a get group membership command.
      *
      * @param capacity {@link Integer} Capacity
-     * @param groupCount {@link Integer} Group Count
      * @param groupList {@link List<Integer>} Group List
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.3.0.
@@ -471,12 +469,11 @@ public class ZclGroupsCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new getGroupMembershipResponse(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> getGroupMembershipResponse(Integer capacity, Integer groupCount, List<Integer> groupList) {
+    public Future<CommandResult> getGroupMembershipResponse(Integer capacity, List<Integer> groupList) {
         GetGroupMembershipResponse command = new GetGroupMembershipResponse();
 
         // Set the fields
         command.setCapacity(capacity);
-        command.setGroupCount(groupCount);
         command.setGroupList(groupList);
 
         return sendCommand(command);
@@ -488,7 +485,7 @@ public class ZclGroupsCluster extends ZclCluster {
      * The remove group response command is generated by an application entity in response to
      * the receipt of a remove group command.
      *
-     * @param status {@link Integer} Status
+     * @param status {@link ZclStatus} Status
      * @param groupId {@link Integer} Group ID
      * @return the {@link Future<CommandResult>} command result future
      * @deprecated As of release 1.3.0.
@@ -501,7 +498,7 @@ public class ZclGroupsCluster extends ZclCluster {
      * with <code>cluster.sendCommand(new removeGroupResponse(parameters ...))</code>
      */
     @Deprecated
-    public Future<CommandResult> removeGroupResponse(Integer status, Integer groupId) {
+    public Future<CommandResult> removeGroupResponse(ZclStatus status, Integer groupId) {
         RemoveGroupResponse command = new RemoveGroupResponse();
 
         // Set the fields

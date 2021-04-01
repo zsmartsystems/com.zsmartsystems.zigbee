@@ -68,6 +68,10 @@
         <field type="UNSIGNED_8_BIT_INTEGER">
             <name>Scene ID</name>
         </field>
+        <field type="UNSIGNED_16_BIT_INTEGER">
+            <name>Transition Time</name>
+            <description>If the Transition Time field is present in the command payload and its value is not equal to 0xFFFF, this field SHALL indicate the transition time in 1/10ths of a second. In all other cases (command payload field not present or value equal to 0xFFFF), The scene transition time field of the Scene Table entry SHALL indicate the transition time. The transition time determines how long the transition takes from the old cluster state to the new cluster state.</description>
+        </field>
     </command>
     <command code="0x06" source="client">
         <name>Get Scene Membership Command</name>
@@ -127,7 +131,7 @@
 
     <command code="0x00" source="server">
         <name>Add Scene Response</name>
-        <field type="ENUMERATION_8_BIT">
+        <field type="ZCL_STATUS">
             <name>Status</name>
         </field>
         <field type="UNSIGNED_16_BIT_INTEGER">
@@ -139,7 +143,7 @@
     </command>
     <command code="0x01" source="server">
         <name>View Scene Response</name>
-        <field type="ENUMERATION_8_BIT">
+        <field type="ZCL_STATUS">
             <name>Status</name>
         </field>
         <field type="UNSIGNED_16_BIT_INTEGER">
@@ -160,7 +164,7 @@
     </command>
     <command code="0x02" source="server">
         <name>Remove Scene Response</name>
-        <field type="ENUMERATION_8_BIT">
+        <field type="ZCL_STATUS">
             <name>Status</name>
         </field>
         <field type="UNSIGNED_16_BIT_INTEGER">
@@ -172,7 +176,7 @@
     </command>
     <command code="0x03" source="server">
         <name>Remove All Scenes Response</name>
-        <field type="ENUMERATION_8_BIT">
+        <field type="ZCL_STATUS">
             <name>Status</name>
         </field>
         <field type="UNSIGNED_16_BIT_INTEGER">
@@ -181,7 +185,7 @@
     </command>
     <command code="0x04" source="server">
         <name>Store Scene Response</name>
-        <field type="ENUMERATION_8_BIT">
+        <field type="ZCL_STATUS">
             <name>Status</name>
         </field>
         <field type="UNSIGNED_16_BIT_INTEGER">
@@ -193,7 +197,7 @@
     </command>
     <command code="0x06" source="server">
         <name>Get Scene Membership Response</name>
-        <field type="ENUMERATION_8_BIT">
+        <field type="ZCL_STATUS">
             <name>Status</name>
         </field>
         <field type="UNSIGNED_8_BIT_INTEGER">
@@ -211,7 +215,7 @@
     </command>
        <command code="0x40" source="server">
         <name>Enhanced Add Scene Response</name>
-        <field type="ENUMERATION_8_BIT">
+        <field type="ZCL_STATUS">
             <name>Status</name>
         </field>
         <field type="UNSIGNED_16_BIT_INTEGER">
@@ -223,7 +227,7 @@
     </command>
     <command code="0x41" source="server">
         <name>Enhanced View Scene Response</name>
-        <field type="ENUMERATION_8_BIT">
+        <field type="ZCL_STATUS">
             <name>Status</name>
         </field>
         <field type="UNSIGNED_16_BIT_INTEGER">
@@ -244,7 +248,7 @@
     </command>
     <command code="0x42" source="server">
         <name>Copy Scene Response</name>
-        <field type="ENUMERATION_8_BIT">
+        <field type="ZCL_STATUS">
             <name>Status</name>
         </field>
         <field type="UNSIGNED_16_BIT_INTEGER">

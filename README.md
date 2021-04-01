@@ -281,6 +281,8 @@ Example -:
 
 ## Console Commands
 
+Where an address is required, endpoints can use the format `123/1` (destination/endpoint), or in hexadecimal (`0xed1/1`). Group addresses can be subsituted by preceding the address with a `#` - eg `#123` or `#0xed1`.
+
 ### General Commands
 
 Note that the console is currently being refactored and this readme only documents the commands that have been migrated. For a full list of commands, use the _help_ command in the console.
@@ -313,7 +315,10 @@ Note that the console is currently being refactored and this readme only documen
 |on               |Turns a device on                                                                      |
 |off              |Turns a device off                                                                     |
 |level            |Sets the level on a level control device                                               |
+|color            |Sets the color on a color control device                                               |
 |covering         |Sets the level on a window covering device                                             |
+|group            |Configures multicast groups                                                            |
+|scene            |Configures scenes                                                                      |
 
 
 ### Ember NCP Commands
@@ -357,20 +362,7 @@ The following commands are available if the transport layer is using the Teleges
 
 ## Maven
 
-The repositories below may be used for the RELEASE and SNAPSHOT versions respectively -:
-
-```
-<repository>
-    <id>bintray-zsmartsystems-com.zsmartsystems</id>
-    <name>zsmartsystems-com.zsmartsystems</name>
-    <url>https://api.bintray.com/maven/zsmartsystems/com.zsmartsystems/zigbee/;publish=1</url>
-</repository>
-<snapshotRepository>
-    <id>snapshots-zsmartsystems-com.zsmartsystems</id>
-    <name>zsmartsystems-com.zsmartsystems</name>
-    <url>https://oss.jfrog.org/artifactory/oss-snapshot-local/</url>
-</snapshotRepository>
-```
+The library is published directly to the maven central repository, and the following dependency can be specified -:
 
 ```
 <dependency>

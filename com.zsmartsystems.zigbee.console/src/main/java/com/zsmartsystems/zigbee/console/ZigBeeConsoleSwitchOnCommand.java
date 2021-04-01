@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2020 by the respective copyright holders.
+ * Copyright (c) 2016-2021 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -15,6 +15,7 @@ import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.groups.ZigBeeGroup;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.onoff.OnCommand;
 
@@ -63,6 +64,13 @@ public class ZigBeeConsoleSwitchOnCommand extends ZigBeeConsoleAbstractCommand {
                 }
             }
         } else {
+            ZigBeeGroup group = getGroup(networkManager, args[1]);
+            if (group != null) {
+                OnCommand command = new OnCommand();
+                group.sendCommand(command);
+                return;
+            }
+
             ZigBeeEndpoint endpoint = getEndpoint(networkManager, args[1]);
             ZclOnOffCluster cluster = (ZclOnOffCluster) endpoint.getInputCluster(ZclOnOffCluster.CLUSTER_ID);
             if (cluster != null) {
@@ -76,11 +84,13 @@ public class ZigBeeConsoleSwitchOnCommand extends ZigBeeConsoleAbstractCommand {
             try {
                 result = cluster.sendCommand(command).get();
             } catch (Exception e) {
-                out.println("[Endpoint: " + cluster.getZigBeeAddress() + "] Fail to send command [" + e.getMessage() + "]");
+                out.println(
+                        "[Endpoint: " + cluster.getZigBeeAddress() + "] Fail to send command [" + e.getMessage() + "]");
                 return;
             }
-            if(result.isError() || result.isTimeout()) {
-                out.println("[Endpoint: " + cluster.getZigBeeAddress() + "] Command failed [error = " + result.isError() + " , timeout = " + result.isTimeout() + "]");
+            if (result.isError() || result.isTimeout()) {
+                out.println("[Endpoint: " + cluster.getZigBeeAddress() + "] Command failed [error = " + result.isError()
+                        + " , timeout = " + result.isTimeout() + "]");
                 return;
             }
             out.println("[Endpoint: " + cluster.getZigBeeAddress() + "] Command has been successfully sent");

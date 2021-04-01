@@ -1,0 +1,25 @@
+# This file contains commands that will be parsed, and processed in the tests.
+# The format must be two lines, with a ZigBeeApsFrame frame followed by the ZigBeeCommand it translates to
+# Comments can be added with the # on the first character and empty lines are allowed
+
+
+ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=0/1, profile=0104, cluster=0004, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=22, payload=01 18 00 01 00 05 68 65 6C 6C 6F]
+AddGroupCommand [Groups: 0/0 -> 0/1, cluster=0004, TID=18, groupId=1, groupName=hello]
+
+ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=0/1, profile=0104, cluster=0004, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=C2, payload=19 18 00 00 01 00]
+AddGroupResponse [Groups: 0/1 -> 0/1, cluster=0004, TID=18, status=SUCCESS, groupId=1]
+
+ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=0/1, profile=0104, cluster=0004, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=09, payload=01 09 02 00 00]
+GetGroupMembershipCommand [Groups: 0/1 -> 0/1, cluster=0004, TID=09, groupList=[]]
+
+ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=0/1, profile=0104, cluster=0004, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=97, payload=19 09 02 10 00]
+GetGroupMembershipResponse [Groups: 0/1 -> 0/1, cluster=0004, TID=09, capacity=16, groupList=[]]
+
+ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=0/1, profile=0104, cluster=0004, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=E1, payload=19 16 02 0F 01 01 00]
+GetGroupMembershipResponse [Groups: 0/1 -> 0/1, cluster=0004, TID=16, capacity=15, groupList=[1]]
+
+ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=0/1, profile=0104, cluster=0004, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=16, payload=01 10 01 01 00]
+ViewGroupCommand [Groups: 0/0 -> 0/1, cluster=0004, TID=10, groupId=1]
+
+ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=0/1, profile=0104, cluster=0004, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=51, payload=19 10 01 00 01 00 00]
+ViewGroupResponse [Groups: 0/1 -> 0/1, cluster=0004, TID=10, status=SUCCESS, groupId=1, groupName=]

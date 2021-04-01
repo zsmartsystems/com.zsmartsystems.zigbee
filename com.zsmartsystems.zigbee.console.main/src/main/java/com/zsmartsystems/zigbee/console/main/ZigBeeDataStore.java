@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2020 by the respective copyright holders.
+ * Copyright (c) 2016-2021 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -97,6 +97,10 @@ public class ZigBeeDataStore implements ZigBeeNetworkDataStore {
         return new File(networkId + address + ".xml");
     }
 
+    private File getFile(String key) {
+        return new File(networkId + "keystore/" + key + ".xml");
+    }
+
     @Override
     public Set<IeeeAddress> readNetworkNodes() {
         Set<IeeeAddress> nodes = new HashSet<>();
@@ -160,6 +164,25 @@ public class ZigBeeDataStore implements ZigBeeNetworkDataStore {
         if (!file.delete()) {
             logger.error("{}: Error removing network state", address);
         }
+    }
+
+    @Override
+    public void writeObject(String key, Object object) {
+        XStream stream = openStream();
+        File file = getFile(key);
+
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"))) {
+            stream.marshal(object, new PrettyPrintWriter(writer));
+            writer.close();
+            logger.info("{}: ZigBee saving key complete.", key);
+        } catch (Exception e) {
+            logger.error("{}: Error writing key: ", key, e);
+        }
+    }
+
+    @Override
+    public Object readObject(String key) {
+        return null;
     }
 
 }

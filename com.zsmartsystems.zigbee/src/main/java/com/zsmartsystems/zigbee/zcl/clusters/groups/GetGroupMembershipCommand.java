@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2020 by the respective copyright holders.
+ * Copyright (c) 2016-2021 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.groups;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Generated;
@@ -27,7 +28,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-21T21:21:39Z")
 public class GetGroupMembershipCommand extends ZclGroupsCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -38,11 +39,6 @@ public class GetGroupMembershipCommand extends ZclGroupsCommand {
      * The command ID.
      */
     public static int COMMAND_ID = 0x02;
-
-    /**
-     * Group Count command message field.
-     */
-    private Integer groupCount;
 
     /**
      * Group List command message field.
@@ -65,11 +61,9 @@ public class GetGroupMembershipCommand extends ZclGroupsCommand {
     /**
      * Constructor providing all required parameters.
      *
-     * @param groupCount {@link Integer} Group Count
      * @param groupList {@link List<Integer>} Group List
      */
     public GetGroupMembershipCommand(
-            Integer groupCount,
             List<Integer> groupList) {
 
         clusterId = CLUSTER_ID;
@@ -77,28 +71,7 @@ public class GetGroupMembershipCommand extends ZclGroupsCommand {
         genericCommand = false;
         commandDirection = ZclCommandDirection.CLIENT_TO_SERVER;
 
-        this.groupCount = groupCount;
         this.groupList = groupList;
-    }
-
-    /**
-     * Gets Group Count.
-     *
-     * @return the Group Count
-     */
-    public Integer getGroupCount() {
-        return groupCount;
-    }
-
-    /**
-     * Sets Group Count.
-     *
-     * @param groupCount the Group Count
-     * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
-     */
-    @Deprecated
-    public void setGroupCount(final Integer groupCount) {
-        this.groupCount = groupCount;
     }
 
     /**
@@ -123,14 +96,23 @@ public class GetGroupMembershipCommand extends ZclGroupsCommand {
 
     @Override
     public void serialize(final ZclFieldSerializer serializer) {
-        serializer.serialize(groupCount, ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        serializer.serialize(groupList, ZclDataType.N_X_UNSIGNED_16_BIT_INTEGER);
+        serializer.serialize(groupList.size(), ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        for (int cnt = 0; cnt < groupList.size(); cnt++) {
+            serializer.serialize(groupList.get(cnt), ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        }
     }
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        groupCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        groupList = (List<Integer>) deserializer.deserialize(ZclDataType.N_X_UNSIGNED_16_BIT_INTEGER);
+        // Create lists
+        groupList = new ArrayList<Integer>();
+
+        Integer groupCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        if (groupCount != null) {
+            for (int cnt = 0; cnt < groupCount; cnt++) {
+                groupList.add((Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER));
+            }
+        }
     }
 
     @Override
@@ -138,8 +120,6 @@ public class GetGroupMembershipCommand extends ZclGroupsCommand {
         final StringBuilder builder = new StringBuilder(87);
         builder.append("GetGroupMembershipCommand [");
         builder.append(super.toString());
-        builder.append(", groupCount=");
-        builder.append(groupCount);
         builder.append(", groupList=");
         builder.append(groupList);
         builder.append(']');

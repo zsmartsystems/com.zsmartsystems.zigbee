@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2020 by the respective copyright holders.
+ * Copyright (c) 2016-2021 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -17,6 +17,7 @@ import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
+import com.zsmartsystems.zigbee.zcl.field.ExtensionFieldSet;
 import com.zsmartsystems.zigbee.zcl.field.ZclArrayList;
 import com.zsmartsystems.zigbee.zcl.field.ZclDataPair;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
@@ -153,6 +154,13 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
             case N_X_ATTRIBUTE_STATUS_RECORD:
                 break;
             case N_X_EXTENSION_FIELD_SET:
+                List<ExtensionFieldSet> extensionFieldSets = new ArrayList<ExtensionFieldSet>();
+                while (index < payload.length) {
+                    ExtensionFieldSet extensionFieldSet = new ExtensionFieldSet();
+                    extensionFieldSet.deserialize(this);
+                    extensionFieldSets.add(extensionFieldSet);
+                }
+                value[0] = extensionFieldSets;
                 break;
             case N_X_NEIGHBORS_INFORMATION:
                 break;

@@ -2,7 +2,7 @@
 	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0300">
     <name>Color Control</name>
     <description>This cluster provides an interface for changing the color of a light. Color is specified according to the Commission Internationale de l&apos;&#201;clairage (CIE) specification CIE 1931 Color Space. Color control is carried out in terms of x,y values, as defined by this specification.</description>
-    <description>Additionally, color MAY optionally be controlled in terms of color temperature, or as hue and saturation values based on optionally variable RGB and W color points. It is recommended that the hue and saturation are interpreted according to the HSV (aka HSB) color model.</description>
+    <description>Additionally, color may optionally be controlled in terms of color temperature, or as hue and saturation values based on optionally variable RGB and W color points. It is recommended that the hue and saturation are interpreted according to the HSV (aka HSB) color model.</description>
     <description>Control over luminance is not included, as this is provided by means of the Level Control cluster of the General library. It is recommended that the level provided by this cluster be interpreted as representing a proportion of the maximum intensity achievable at the current color.</description>
     <command code="0x00" source="client">
         <name>Move To Hue Command</name>
@@ -291,7 +291,7 @@
     </attribute>
     <attribute code="0x4002" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false">
         <name>Color Loop Active</name>
-        <description>The ColorLoopActive attribute specifies the current active status of the color loop. If this attribute has the value 0x00, the color loop SHALLnot be active. If this attribute has the value 0x01, the color loop SHALL be active. All other values (0x02 &#8211; 0xff) are reserved.</description>
+        <description>The ColorLoopActive attribute specifies the current active status of the color loop. If this attribute has the value 0x00, the color loop SHALL not be active. If this attribute has the value 0x01, the color loop SHALL be active. All other values (0x02 &#8211; 0xff) are reserved.</description>
     </attribute>
     <attribute code="0x4003" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false">
         <name>Color Loop Direction</name>
@@ -361,4 +361,17 @@
         <value code="0x03" name="Down">
         </value>
     </constant>
+    
+    <scenes>
+        <extensionfield>
+        	<attribute>Current X</attribute>
+        	<attribute>Current Y</attribute>
+        	<attribute>Enhanced Current Hue</attribute>
+        	<attribute>Current Saturation</attribute>
+        	<attribute>Color Loop Active</attribute>
+        	<attribute>Color Loop Direction</attribute>
+        	<attribute>Color Loop Time</attribute>
+        	<attribute>Color Temperature</attribute>
+        </extensionfield>
+    </scenes>
 </cluster>

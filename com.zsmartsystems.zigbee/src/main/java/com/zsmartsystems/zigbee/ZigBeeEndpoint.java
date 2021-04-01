@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2020 by the respective copyright holders.
+ * Copyright (c) 2016-2021 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -75,12 +75,17 @@ public class ZigBeeEndpoint {
     /**
      * List of input clusters supported by the endpoint
      */
-    private final Map<Integer, ZclCluster> inputClusters = new ConcurrentHashMap<Integer, ZclCluster>();
+    private final Map<Integer, ZclCluster> inputClusters = new ConcurrentHashMap<>();
 
     /**
      * List of output clusters supported by the endpoint
      */
-    private final Map<Integer, ZclCluster> outputClusters = new ConcurrentHashMap<Integer, ZclCluster>();
+    private final Map<Integer, ZclCluster> outputClusters = new ConcurrentHashMap<>();
+
+    /**
+     * List of groups configured in this endpoint
+     */
+    // private final Map<Integer, String> groups = new ConcurrentHashMap<>();
 
     /**
      * Map of {@link ZigBeeApplication}s that are available to this endpoint. Applications are added

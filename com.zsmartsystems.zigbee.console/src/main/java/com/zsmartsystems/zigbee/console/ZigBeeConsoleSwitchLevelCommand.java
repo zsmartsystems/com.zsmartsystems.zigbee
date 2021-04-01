@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2020 by the respective copyright holders.
+ * Copyright (c) 2016-2021 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -14,8 +14,8 @@ import java.util.List;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.groups.ZigBeeGroup;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
-import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.levelcontrol.MoveToLevelCommand;
 
 /**
@@ -52,6 +52,12 @@ public class ZigBeeConsoleSwitchLevelCommand extends ZigBeeConsoleAbstractComman
             throw new IllegalArgumentException("Invalid number of arguments");
         }
 
+        int level = parsePercentage(args[2]);
+        int rate = 10;
+        if (args.length == 4) {
+            rate = parseInteger(args[3]);
+        }
+
         List<ZclLevelControlCluster> clusters = new ArrayList<>();
         if (WILDCARD.equals(args[1])) {
             for (ZigBeeNode node : networkManager.getNodes()) {
@@ -64,19 +70,19 @@ public class ZigBeeConsoleSwitchLevelCommand extends ZigBeeConsoleAbstractComman
                 }
             }
         } else {
+            ZigBeeGroup group = getGroup(networkManager, args[1]);
+            if (group != null) {
+                MoveToLevelCommand command = new MoveToLevelCommand(level, rate);
+                group.sendCommand(command);
+                return;
+            }
+
             ZigBeeEndpoint endpoint = getEndpoint(networkManager, args[1]);
             ZclLevelControlCluster cluster = (ZclLevelControlCluster) endpoint
-                    .getInputCluster(ZclOnOffCluster.CLUSTER_ID);
+                    .getInputCluster(ZclLevelControlCluster.CLUSTER_ID);
             if (cluster != null) {
                 clusters.add(cluster);
             }
-        }
-
-        int level = parsePercentage(args[2]);
-
-        int rate = 10;
-        if (args.length == 3) {
-            rate = parseInteger(args[3]);
         }
 
         for (ZclLevelControlCluster cluster : clusters) {
