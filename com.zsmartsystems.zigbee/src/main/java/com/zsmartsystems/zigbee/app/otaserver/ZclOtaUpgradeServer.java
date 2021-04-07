@@ -451,12 +451,11 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
                     }
 
                     updateStatus(ZigBeeOtaServerStatus.OTA_UPGRADE_FIRMWARE_RESTARTING);
-                    CommandResult response = cluster.sendCommand(new UpgradeEndResponse(
-                            otaFile.getManufacturerCode(),
-                            otaFile.getImageType(),
-                            otaFile.getFileVersion(),
-                            0,
-                            0)).get();
+                    UpgradeEndResponse upgradeEndResponse = new UpgradeEndResponse(otaFile.getManufacturerCode(),
+                            otaFile.getImageType(), otaFile.getFileVersion(), 0, 0);
+                    upgradeEndResponse.setDisableDefaultResponse(true);
+
+                    CommandResult response = cluster.sendCommand(upgradeEndResponse).get();
                     if (!(response.isSuccess() || response.isTimeout())) {
                         updateStatus(ZigBeeOtaServerStatus.OTA_UPGRADE_FAILED);
                         return;
