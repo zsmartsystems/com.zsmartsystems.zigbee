@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2020 by the respective copyright holders.
+ * Copyright (c) 2016-2021 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -11,66 +11,59 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
+import com.fazecast.jSerialComm.SerialPort;
 
-import jssc.SerialPortEvent;
-import jssc.SerialPortEventListener;
-import jssc.SerialPortException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
- * The default/reference Java serial port implementation using serial events to provide a non-blocking read call.
+ * The default/reference Java serial port implementation using jSerialComm library
  *
- * @author Chris Jackson
+ * @author Ziver Koc
  */
-public class ZigBeeSerialPort implements ZigBeePort, SerialPortEventListener {
+public class ZigBeeSerialPort implements ZigBeePort {
     /**
      * The logger.
      */
     private final static Logger logger = LoggerFactory.getLogger(ZigBeeSerialPort.class);
 
     /**
-     * The portName portName.
+     * The default baud rate.
      */
-    private jssc.SerialPort serialPort;
+    public static final int DEFAULT_BAUD_RATE = 38400;
 
     /**
-     * The port identifier.
+     * The default flow control.
      */
+    public static final FlowControl DEFAULT_FLOW_CONTROL = FlowControl.FLOWCONTROL_OUT_NONE;
+
     private final String portName;
-
-    /**
-     * The baud rate.
-     */
     private final int baudRate;
-
-    /**
-     * True to enable RTS / CTS flow control
-     */
     private final FlowControl flowControl;
+    private SerialPort serialPort;
+    private InputStream serialInputStream;
+    private OutputStream serialOutputStream;
+
 
     /**
-     * The circular fifo queue for receive data
+     * Constructor which sets port name to given value and baud rate to default.
+     *
+     * @param portName the port name
      */
-    private int[] buffer = new int[512];
+    public ZigBeeSerialPort(String portName) {
+        this(portName, DEFAULT_BAUD_RATE);
+    }
 
     /**
-     * The receive buffer end pointer (where we put the newly received data)
+     * Constructor setting port name and baud rate.
+     *
+     * @param portName the port name
+     * @param baudRate the default baud rate
      */
-    private int end = 0;
-
-    /**
-     * The receive buffer start pointer (where we take the data to pass to the application)
-     */
-    private int start = 0;
-
-    /**
-     * The length of the receive buffer
-     */
-    private int maxLength = 512;
-
-    /**
-     * Synchronisation object for buffer queue manipulation
-     */
-    private Object bufferSynchronisationObject = new Object();
+    public ZigBeeSerialPort(String portName, int baudRate) {
+        this(portName, baudRate, DEFAULT_FLOW_CONTROL);
+    }
 
     /**
      * Constructor setting port name and baud rate.
@@ -92,14 +85,7 @@ public class ZigBeeSerialPort implements ZigBeePort, SerialPortEventListener {
 
     @Override
     public boolean open(int baudRate) {
-        try {
-            openSerialPort(portName, baudRate, flowControl);
-
-            return true;
-        } catch (Exception e) {
-            logger.warn("Unable to open serial port: " + e.getMessage());
-            return false;
-        }
+        return open(baudRate, flowControl);
     }
 
     @Override
@@ -109,7 +95,8 @@ public class ZigBeeSerialPort implements ZigBeePort, SerialPortEventListener {
 
             return true;
         } catch (Exception e) {
-            logger.warn("Unable to open serial port: " + e.getMessage());
+            logger.error("Unable to open serial port: " + e.getMessage());
+            close();
             return false;
         }
     }
@@ -128,152 +115,109 @@ public class ZigBeeSerialPort implements ZigBeePort, SerialPortEventListener {
 
         logger.debug("Opening port {} at {} baud with {}.", portName, baudRate, flowControl);
 
-        serialPort = new jssc.SerialPort(portName);
-        try {
-            serialPort.openPort();
-            serialPort.setParams(baudRate, 8, 1, 0, true, true);
-            switch (flowControl) {
-                case FLOWCONTROL_OUT_NONE:
-                    serialPort.setFlowControlMode(jssc.SerialPort.FLOWCONTROL_NONE);
-                    break;
-                case FLOWCONTROL_OUT_RTSCTS:
-                    serialPort.setFlowControlMode(
-                            jssc.SerialPort.FLOWCONTROL_RTSCTS_IN | jssc.SerialPort.FLOWCONTROL_RTSCTS_OUT);
-                    break;
-                case FLOWCONTROL_OUT_XONOFF:
-                    serialPort.setFlowControlMode(
-                            jssc.SerialPort.FLOWCONTROL_XONXOFF_OUT | jssc.SerialPort.FLOWCONTROL_XONXOFF_IN);
-                    break;
-                default:
-                    break;
-            }
-            serialPort.addEventListener(this);
-        } catch (SerialPortException e) {
-            logger.error("Error opening serial port.", e);
-            throw new RuntimeException("Failed to open serial port: " + portName, e);
+        serialPort = SerialPort.getCommPort(portName);
+        serialPort.setBaudRate(baudRate);
+        serialPort.setComPortTimeouts(
+                SerialPort.TIMEOUT_READ_BLOCKING, 0, 0);
+
+        if (!serialPort.openPort()) {
+            throw new RuntimeException("Error opening serial port: " + portName);
+        }
+
+        serialInputStream = serialPort.getInputStream();
+        serialOutputStream = serialPort.getOutputStream();
+
+        switch (flowControl) {
+            case FLOWCONTROL_OUT_NONE:
+                serialPort.setFlowControl(SerialPort.FLOW_CONTROL_DISABLED);
+                break;
+            case FLOWCONTROL_OUT_RTSCTS:
+                serialPort.setFlowControl(
+                        SerialPort.FLOW_CONTROL_RTS_ENABLED | SerialPort.FLOW_CONTROL_CTS_ENABLED);
+                break;
+            case FLOWCONTROL_OUT_XONOFF:
+                serialPort.setFlowControl(
+                        SerialPort.FLOW_CONTROL_XONXOFF_IN_ENABLED | SerialPort.FLOW_CONTROL_XONXOFF_OUT_ENABLED);
+                break;
+            default:
+                break;
         }
     }
 
     @Override
     public void close() {
-        try {
-            if (serialPort != null) {
-                synchronized (this) {
-                    serialPort.removeEventListener();
-                    serialPort.closePort();
-                    serialPort = null;
-                    this.notify();
-                }
+        if (serialPort == null)
+            return;
 
-                logger.info("Serial port '" + portName + "' closed.");
-            }
+        try {
+            logger.info("Closing Serial port: '" + portName + "'");
+            purgeRxBuffer();
+            serialPort.closePort();
+
+            serialInputStream = null;
+            serialOutputStream = null;
+            serialPort = null;
         } catch (Exception e) {
-            logger.warn("Error closing serial port: '" + portName + "'", e);
+            logger.warn("Error closing portName portName: '" + portName + "'", e);
         }
     }
 
     @Override
     public void write(int value) {
-        if (serialPort == null) {
-            return;
-        }
+        if (serialOutputStream == null)
+            throw new RuntimeException("Unable to write, Serial port is not open.");
+
         try {
-            serialPort.writeInt(value);
-        } catch (SerialPortException e) {
-            e.printStackTrace();
+            serialOutputStream.write(value);
+        } catch (IOException e) {
+            logger.error("Was unable to write to serial port.", e);
         }
     }
 
     @Override
     public int read() {
-        return read(9999999);
+        return read(0);
     }
 
     @Override
     public int read(int timeout) {
-        long endTime = System.currentTimeMillis() + timeout;
+        if (serialInputStream == null)
+            throw new RuntimeException("Unable to read, Serial port is not open.");
 
         try {
-            while (System.currentTimeMillis() < endTime) {
-                synchronized (bufferSynchronisationObject) {
-                    if (start != end) {
-                        int value = buffer[start++];
-                        if (start >= maxLength) {
-                            start = 0;
-                        }
-                        return value;
-                    }
-                }
+            if (serialPort.getReadTimeout() != timeout)
+                serialPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING, timeout, 0);
 
-                synchronized (this) {
-                    if (serialPort == null) {
-                        return -1;
-                    }
-
-                    wait(endTime - System.currentTimeMillis());
-                }
-            }
-            return -1;
-        } catch (InterruptedException e) {
+            return serialInputStream.read();
+        } catch (IOException e) {
+            logger.error("Was unable to read from serial port.", e);
         }
         return -1;
     }
 
     @Override
-    public void serialEvent(SerialPortEvent event) {
-        if (event.isRXCHAR() & event.getEventValue() > 0) {
-            try {
-                int[] input = serialPort.readIntArray();
-                if (input == null) {
-                    logger.warn("Nothing read from serial port.");
-                    return;
-                }
-
-                synchronized (bufferSynchronisationObject) {
-                    for (int recv : input) {
-                        buffer[end++] = recv;
-                        if (end >= maxLength) {
-                            end = 0;
-                        }
-                        if (end == start) {
-                            logger.warn("Serial buffer overrun.");
-                            if (++start == maxLength) {
-                                start = 0;
-                            }
-                        }
-                    }
-                }
-            } catch (SerialPortException e) {
-                logger.error("Error while handling serial event.", e);
-            }
-
-            synchronized (this) {
-                this.notify();
-            }
-        }
-    }
-
-    @Override
     public void purgeRxBuffer() {
-        synchronized (bufferSynchronisationObject) {
-            start = 0;
-            end = 0;
+        if (serialOutputStream == null)
+            return;
+
+        try {
+            serialOutputStream.flush();
+        } catch (IOException e) {
+            logger.error("Was unable to flush serial data.", e);
         }
     }
 
     public boolean setDtr(boolean state) {
-        try {
-            return serialPort.setDTR(state);
-        } catch (SerialPortException e) {
-            return false;
-        }
+        if (state)
+            return serialPort.setDTR();
+        else
+            return serialPort.clearDTR();
     }
 
     public boolean setRts(boolean state) {
-        try {
-            return serialPort.setRTS(state);
-        } catch (SerialPortException e) {
-            return false;
-        }
+        if (state)
+            return serialPort.setRTS();
+        else
+            return serialPort.clearRTS();
     }
 }
