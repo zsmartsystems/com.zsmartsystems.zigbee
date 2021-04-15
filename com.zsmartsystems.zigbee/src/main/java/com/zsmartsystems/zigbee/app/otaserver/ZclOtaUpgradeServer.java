@@ -529,7 +529,7 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
      * @return the current firmware version on the remote device
      */
     public Integer getCurrentFileVersion() {
-        return (Integer) cluster.getAttribute(ZclOtaUpgradeCluster.ATTR_CURRENTFILEVERSION).readValue(Long.MAX_VALUE);
+        return (Integer) cluster.getAttribute(ZclOtaUpgradeCluster.ATTR_CURRENTFILEVERSION).readValue(0);
     }
 
     /**
