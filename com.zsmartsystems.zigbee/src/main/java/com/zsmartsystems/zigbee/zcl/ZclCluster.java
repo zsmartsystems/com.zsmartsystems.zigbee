@@ -311,8 +311,9 @@ public abstract class ZclCluster {
      *
      * @param command the {@link ZclCommand} to which the response is being sent
      * @param response the {@link ZclCommand} to send
+     * @return the response result future
      */
-    protected void sendResponse(ZclCommand command, ZclCommand response) {
+    protected Future<CommandResult> sendResponse(ZclCommand command, ZclCommand response) {
         response.setDestinationAddress(command.getSourceAddress());
         response.setCommandDirection(command.getCommandDirection().getResponseDirection());
         response.setTransactionId(command.getTransactionId());
@@ -324,7 +325,7 @@ public abstract class ZclCluster {
 
         response.setApsSecurity(apsSecurityRequired);
 
-        zigbeeEndpoint.sendTransaction(response);
+        return sendCommand(response);
     }
 
     /**

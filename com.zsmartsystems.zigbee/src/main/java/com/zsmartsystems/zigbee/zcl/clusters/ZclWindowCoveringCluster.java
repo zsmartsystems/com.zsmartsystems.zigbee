@@ -36,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-04-23T10:36:53Z")
 public class ZclWindowCoveringCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -252,8 +252,8 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * @param command the {@link ZclWindowCoveringCommand} to which the response is being sent
      * @param response the {@link ZclWindowCoveringCommand} to send
      */
-    public void sendResponse(ZclWindowCoveringCommand command, ZclWindowCoveringCommand response) {
-        super.sendResponse(command, response);
+    public Future<CommandResult> sendResponse(ZclWindowCoveringCommand command, ZclWindowCoveringCommand response) {
+        return super.sendResponse(command, response);
     }
 
     /**

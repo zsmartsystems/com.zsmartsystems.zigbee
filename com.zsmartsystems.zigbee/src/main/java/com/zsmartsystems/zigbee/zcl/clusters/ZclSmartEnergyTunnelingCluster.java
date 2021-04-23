@@ -66,7 +66,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-04-23T10:36:53Z")
 public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -160,8 +160,8 @@ public class ZclSmartEnergyTunnelingCluster extends ZclCluster {
      * @param command the {@link ZclSmartEnergyTunnelingCommand} to which the response is being sent
      * @param response the {@link ZclSmartEnergyTunnelingCommand} to send
      */
-    public void sendResponse(ZclSmartEnergyTunnelingCommand command, ZclSmartEnergyTunnelingCommand response) {
-        super.sendResponse(command, response);
+    public Future<CommandResult> sendResponse(ZclSmartEnergyTunnelingCommand command, ZclSmartEnergyTunnelingCommand response) {
+        return super.sendResponse(command, response);
     }
 
     /**

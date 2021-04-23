@@ -59,7 +59,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-21T21:21:39Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-04-23T10:36:53Z")
 public class ZclColorControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -309,8 +309,8 @@ public class ZclColorControlCluster extends ZclCluster {
      * @param command the {@link ZclColorControlCommand} to which the response is being sent
      * @param response the {@link ZclColorControlCommand} to send
      */
-    public void sendResponse(ZclColorControlCommand command, ZclColorControlCommand response) {
-        super.sendResponse(command, response);
+    public Future<CommandResult> sendResponse(ZclColorControlCommand command, ZclColorControlCommand response) {
+        return super.sendResponse(command, response);
     }
 
     /**

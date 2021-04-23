@@ -50,7 +50,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.iasace.ZoneStatusChangedCommand;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-04-23T10:36:53Z")
 public class ZclIasAceCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -138,8 +138,8 @@ public class ZclIasAceCluster extends ZclCluster {
      * @param command the {@link ZclIasAceCommand} to which the response is being sent
      * @param response the {@link ZclIasAceCommand} to send
      */
-    public void sendResponse(ZclIasAceCommand command, ZclIasAceCommand response) {
-        super.sendResponse(command, response);
+    public Future<CommandResult> sendResponse(ZclIasAceCommand command, ZclIasAceCommand response) {
+        return super.sendResponse(command, response);
     }
 
     /**
