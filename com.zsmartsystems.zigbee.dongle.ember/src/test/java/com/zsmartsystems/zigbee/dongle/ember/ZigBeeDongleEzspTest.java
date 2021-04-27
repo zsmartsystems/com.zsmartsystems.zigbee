@@ -40,6 +40,7 @@ import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspChildJoinHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIncomingMessageHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMessageSentHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateRequest;
@@ -274,6 +275,7 @@ public class ZigBeeDongleEzspTest {
 
         final EmberNcp ncp = Mockito.mock(EmberNcp.class);
         Mockito.when(ncp.getNwkAddress()).thenReturn(1243);
+        Mockito.when(ncp.getNetworkParameters()).thenReturn(Mockito.mock(EzspGetNetworkParametersResponse.class));
         ZigBeeDongleEzsp dongle = new ZigBeeDongleEzsp(null) {
             @Override
             public EmberNcp getEmberNcp() {

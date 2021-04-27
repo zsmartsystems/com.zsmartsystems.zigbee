@@ -1010,6 +1010,11 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                     logger.debug("Ember: Link State up running");
 
                     EmberNcp ncp = getEmberNcp();
+
+                    // Ensure we synchronise the network parameters
+                    // This allows the system to read back the actual network parameters
+                    networkParameters = ncp.getNetworkParameters().getParameters();
+
                     int addr = ncp.getNwkAddress();
                     if (addr != 0xFFFE) {
                         nwkAddress = addr;
