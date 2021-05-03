@@ -415,6 +415,19 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
      * @return true if the upgrade is in a state to be completed, otherwise false.
      */
     public boolean completeUpgrade() {
+        return completeUpgrade(null);
+    }
+    
+    /**
+     * Instruct the server to complete the upgrade. This is only possible if the client state is
+     * {@link ImageUpgradeStatus#DOWNLOAD_COMPLETE}.
+     * The server will check the client status before sending the upgrade end response command.
+     * The caller will be notified through the {@link ZigBeeOtaStatusCallback} of the completion status of this method.
+     *
+     * @param command the received {@link UpgradeEndCommand}
+     * @return true if the upgrade is in a state to be completed, otherwise false.
+     */
+    public boolean completeUpgrade(UpgradeEndCommand command) {
         // TODO: Handle the time?
         new Thread("OtaCompleteUpgrade") {
             @Override
@@ -451,11 +464,19 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
                     }
 
                     updateStatus(ZigBeeOtaServerStatus.OTA_UPGRADE_FIRMWARE_RESTARTING);
+                    
                     UpgradeEndResponse upgradeEndResponse = new UpgradeEndResponse(otaFile.getManufacturerCode(),
                             otaFile.getImageType(), otaFile.getFileVersion(), 0, 0);
-                    upgradeEndResponse.setDisableDefaultResponse(true);
+                    
+                    // If we received a UpgradeEndCommand then send the UpgradeEndResponse as a response. Otherwise send
+                    // it as a commands
+                    CommandResult response;
+                    if (command != null) {
+                        response = cluster.sendResponse(command, upgradeEndResponse).get();
+                    } else {
+                        response = cluster.sendCommand(upgradeEndResponse).get();
+                    }
 
-                    CommandResult response = cluster.sendCommand(upgradeEndResponse).get();
                     if (!(response.isSuccess() || response.isTimeout())) {
                         updateStatus(ZigBeeOtaServerStatus.OTA_UPGRADE_FAILED);
                         return;
@@ -871,7 +892,7 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
             default:
                 updateStatus(ZigBeeOtaServerStatus.OTA_TRANSFER_COMPLETE);
                 if (autoUpgrade) {
-                    completeUpgrade();
+                    completeUpgrade(command);
                 }
                 break;
         }
