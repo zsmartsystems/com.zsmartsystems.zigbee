@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.IntSummaryStatistics;
@@ -86,8 +87,11 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareCallback;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareStatus;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareUpdate;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
+import com.zsmartsystems.zigbee.zcl.ZclAttribute;
+import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneStatusChangeNotificationCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.command.ManagementLqiRequest;
@@ -116,7 +120,7 @@ public final class ZigBeeConsole {
     /**
      * Whether to print attribute reports.
      */
-    private boolean printAttributeReports = false;
+    private boolean listeningModeEnabled = false;
 
     private long initialMemory;
 
@@ -252,8 +256,27 @@ public final class ZigBeeConsole {
         networkManager.addCommandListener(new ZigBeeCommandListener() {
             @Override
             public void commandReceived(ZigBeeCommand command) {
-                if (printAttributeReports && command instanceof ReportAttributesCommand) {
-                    print("Received: " + command.toString(), System.out);
+                if (listeningModeEnabled) {
+                    if (command instanceof ReportAttributesCommand) {
+                        final ZigBeeNode node = networkManager.getNode(command.getSourceAddress().getAddress());
+                        final ZclCluster cluster = node.getEndpoints().stream()
+                            .filter(endpoint -> endpoint.getInputCluster(command.getClusterId()) != null).findFirst()
+                            .map(endpoint -> endpoint.getInputCluster(command.getClusterId())).get();
+                        ReportAttributesCommand reportAttributesCommand = (ReportAttributesCommand) command;
+                        reportAttributesCommand.getReports().stream().forEach(attributeReport -> {
+                            ZclAttribute attribute = null;
+                            if (cluster != null) {
+                                attribute = cluster.getAttribute(attributeReport.getAttributeIdentifier());
+                            }
+                            print("[" + LocalDateTime.now().toString() + "] - Received attribute report [Device=" + command.getSourceAddress() +
+                                ", Cluster=" + command.getClusterId() +
+                                ", Attribute=" + (attribute != null ? attribute.getName() + "(" + attributeReport.getAttributeIdentifier() + ")" : attributeReport.getAttributeIdentifier())
+                                + ", AttributeValue = " + attributeReport.getAttributeValue() + "]", System.out);
+                        });
+                    }
+                    if(command instanceof ZoneStatusChangeNotificationCommand) {
+                        print(command.toString(), System.out);
+                    }
                 }
             }
         });
@@ -640,7 +663,7 @@ public final class ZigBeeConsole {
     }
 
     /**
-     * Starts listening to reports of given attribute.
+     * Enable console listening mode.
      */
     private class ListenCommand implements ConsoleCommand {
         /**
@@ -648,7 +671,7 @@ public final class ZigBeeConsole {
          */
         @Override
         public String getDescription() {
-            return "Listen to attribute reports.";
+            return "Enable console listening mode.";
         }
 
         /**
@@ -668,16 +691,16 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            printAttributeReports = true;
+            listeningModeEnabled = true;
 
-            out.println("Printing received attribute reports.");
+            out.println("Listening mode enabled. Attribute reports and IAS notifications will be printed.");
 
             return true;
         }
     }
 
     /**
-     * Unlisten from reports of given attribute.
+     * Disable console listening mode.
      */
     private class UnlistenCommand implements ConsoleCommand {
         /**
@@ -685,7 +708,7 @@ public final class ZigBeeConsole {
          */
         @Override
         public String getDescription() {
-            return "Unlisten from attribute reports.";
+            return "Disable console listening mode.";
         }
 
         /**
@@ -705,9 +728,9 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            printAttributeReports = false;
+            listeningModeEnabled = false;
 
-            out.println("Ignoring received attribute reports.");
+            out.println("Listening mode enabled. Attribute reports and IAS notifications will be ignored.");
 
             return true;
         }
