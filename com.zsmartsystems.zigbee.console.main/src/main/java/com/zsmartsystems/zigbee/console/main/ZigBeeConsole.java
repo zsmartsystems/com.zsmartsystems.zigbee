@@ -730,7 +730,7 @@ public final class ZigBeeConsole {
 
             listeningModeEnabled = false;
 
-            out.println("Listening mode enabled. Attribute reports and IAS notifications will be ignored.");
+            out.println("Listening mode disabled. Attribute reports and IAS notifications will be ignored.");
 
             return true;
         }
