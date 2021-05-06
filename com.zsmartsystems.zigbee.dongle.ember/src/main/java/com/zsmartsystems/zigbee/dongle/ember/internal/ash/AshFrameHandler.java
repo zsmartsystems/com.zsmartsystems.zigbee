@@ -779,7 +779,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
     @Override
     public EzspTransaction sendEzspTransaction(EzspTransaction ezspTransaction) {
-        logger.debug("TX EZSP: {}", ezspTransaction.getRequest());
+        logger.debug("ASH TX EZSP: {}", ezspTransaction.getRequest());
 
         Future<EzspFrame> futureResponse = sendEzspRequestAsync(ezspTransaction);
         if (futureResponse == null) {
