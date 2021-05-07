@@ -276,9 +276,9 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
             out.println("     * @param response the {@link " + commandClassName + "} to send");
             out.println("     */");
             out.println(
-                    "    public void sendResponse(" + commandClassName + " command, " + commandClassName
+                    "    public Future<CommandResult> sendResponse(" + commandClassName + " command, " + commandClassName
                             + " response) {");
-            out.println("        super.sendResponse(command, response);");
+            out.println("        return super.sendResponse(command, response);");
             out.println("    }");
         }
 

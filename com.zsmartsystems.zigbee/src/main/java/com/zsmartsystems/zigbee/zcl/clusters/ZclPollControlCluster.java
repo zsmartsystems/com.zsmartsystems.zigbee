@@ -45,7 +45,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-08T14:21:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-04-23T10:36:53Z")
 public class ZclPollControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -202,8 +202,8 @@ public class ZclPollControlCluster extends ZclCluster {
      * @param command the {@link ZclPollControlCommand} to which the response is being sent
      * @param response the {@link ZclPollControlCommand} to send
      */
-    public void sendResponse(ZclPollControlCommand command, ZclPollControlCommand response) {
-        super.sendResponse(command, response);
+    public Future<CommandResult> sendResponse(ZclPollControlCommand command, ZclPollControlCommand response) {
+        return super.sendResponse(command, response);
     }
 
     /**

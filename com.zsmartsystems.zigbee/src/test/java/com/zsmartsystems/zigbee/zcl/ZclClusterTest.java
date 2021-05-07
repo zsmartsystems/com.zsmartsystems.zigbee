@@ -236,7 +236,7 @@ public class ZclClusterTest {
         attributeReport.setTransactionId(123);
 
         cluster.handleCommand(attributeReport);
-        Mockito.verify(endpoint, Mockito.timeout(TIMEOUT).times(1)).sendTransaction(commandCapture.capture());
+        Mockito.verify(endpoint, Mockito.timeout(TIMEOUT).times(1)).sendTransaction(commandCapture.capture(), matcherCapture.capture());
         ZigBeeCommand command = commandCapture.getValue();
         System.out.println(command);
         assertTrue(command instanceof DefaultResponse);
@@ -290,7 +290,7 @@ public class ZclClusterTest {
         attributeReport.setTransactionId(56);
 
         cluster.handleCommand(attributeReport);
-        Mockito.verify(endpoint, Mockito.timeout(TIMEOUT).times(1)).sendTransaction(commandCapture.capture());
+        Mockito.verify(endpoint, Mockito.timeout(TIMEOUT).times(1)).sendTransaction(commandCapture.capture(), matcherCapture.capture());
         ZigBeeCommand command = commandCapture.getValue();
         System.out.println(command);
         assertTrue(command instanceof DefaultResponse);
@@ -346,7 +346,7 @@ public class ZclClusterTest {
         assertEquals(1, commandListeners.size());
         cluster.handleCommand(command);
 
-        Mockito.verify(endpoint, Mockito.timeout(TIMEOUT).times(1)).sendTransaction(commandCapture.capture());
+        Mockito.verify(endpoint, Mockito.timeout(TIMEOUT).times(1)).sendTransaction(commandCapture.capture(), matcherCapture.capture());
         ZigBeeCommand response = commandCapture.getValue();
         assertTrue(response instanceof DefaultResponse);
         System.out.println(response);
@@ -361,7 +361,7 @@ public class ZclClusterTest {
 
         Mockito.when(command.isGenericCommand()).thenReturn(true);
         cluster.handleCommand(command);
-        Mockito.verify(endpoint, Mockito.timeout(TIMEOUT).times(2)).sendTransaction(commandCapture.capture());
+        Mockito.verify(endpoint, Mockito.timeout(TIMEOUT).times(2)).sendTransaction(commandCapture.capture(), matcherCapture.capture());
         response = commandCapture.getValue();
         assertTrue(response instanceof DefaultResponse);
         System.out.println(response);
@@ -374,7 +374,7 @@ public class ZclClusterTest {
         Mockito.when(command.getTransactionId()).thenReturn(++tid);
         Mockito.when(command.isGenericCommand()).thenReturn(true);
         cluster.handleCommand(command);
-        Mockito.verify(endpoint, Mockito.timeout(TIMEOUT).times(3)).sendTransaction(commandCapture.capture());
+        Mockito.verify(endpoint, Mockito.timeout(TIMEOUT).times(3)).sendTransaction(commandCapture.capture(), matcherCapture.capture());
         response = commandCapture.getValue();
         assertTrue(response instanceof DefaultResponse);
         System.out.println(response);
@@ -387,7 +387,7 @@ public class ZclClusterTest {
         Mockito.when(command.getTransactionId()).thenReturn(++tid);
 
         cluster.handleCommand(command);
-        Mockito.verify(endpoint, Mockito.timeout(TIMEOUT).times(4)).sendTransaction(commandCapture.capture());
+        Mockito.verify(endpoint, Mockito.timeout(TIMEOUT).times(4)).sendTransaction(commandCapture.capture(), matcherCapture.capture());
         response = commandCapture.getValue();
         assertTrue(response instanceof DefaultResponse);
         System.out.println(response);
@@ -406,7 +406,7 @@ public class ZclClusterTest {
         cluster.handleCommand(command);
         Mockito.verify(listenerMock, Mockito.timeout(TIMEOUT).times(5)).commandReceived(zclCommandCapture.capture());
         assertEquals(command, zclCommandCapture.getValue());
-        Mockito.verify(endpoint, Mockito.timeout(TIMEOUT).times(5)).sendTransaction(commandCapture.capture());
+        Mockito.verify(endpoint, Mockito.timeout(TIMEOUT).times(5)).sendTransaction(commandCapture.capture(), matcherCapture.capture());
         response = commandCapture.getValue();
         assertTrue(response instanceof DefaultResponse);
         System.out.println(response);
@@ -417,7 +417,7 @@ public class ZclClusterTest {
         command.setTransactionId(++tid);
         cluster.handleCommand(command);
         assertEquals(command, zclCommandCapture.getValue());
-        Mockito.verify(endpoint, Mockito.timeout(TIMEOUT).times(5)).sendTransaction(commandCapture.capture());
+        Mockito.verify(endpoint, Mockito.timeout(TIMEOUT).times(5)).sendTransaction(commandCapture.capture(), matcherCapture.capture());
 
         cluster.removeCommandListener(listenerMock);
         assertEquals(0, commandListeners.size());
@@ -881,7 +881,6 @@ public class ZclClusterTest {
         record.setAttributeValue(Integer.valueOf(123));
         records.add(record);
         WriteAttributesCommand command = new WriteAttributesCommand(records);
-        command.setClusterId(ZclBasicCluster.CLUSTER_ID);
         command.setSourceAddress(new ZigBeeEndpointAddress(1234));
         command.setDestinationAddress(new ZigBeeEndpointAddress(5678));
         command.setCommandDirection(ZclCommandDirection.CLIENT_TO_SERVER);
@@ -892,7 +891,8 @@ public class ZclClusterTest {
         WriteAttributesResponse response = (WriteAttributesResponse) commandCapture.getValue();
         System.out.println(response);
 
-        assertEquals(Integer.valueOf(ZclBasicCluster.CLUSTER_ID), response.getClusterId());
+        // Since we send the command to the OnOffCluster we expect it to respond with its ID.  
+        assertEquals(Integer.valueOf(ZclOnOffCluster.CLUSTER_ID), response.getClusterId());
         assertEquals(ZclCommandDirection.SERVER_TO_CLIENT, response.getCommandDirection());
         assertEquals(1, response.getRecords().size());
         assertEquals(Integer.valueOf(55), response.getTransactionId());
