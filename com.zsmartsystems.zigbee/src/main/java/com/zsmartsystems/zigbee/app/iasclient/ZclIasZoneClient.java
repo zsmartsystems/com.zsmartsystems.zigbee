@@ -268,12 +268,15 @@ public class ZclIasZoneClient implements ZigBeeApplication, ZclCommandListener {
      * @param the {@link ZclCommand} to send as the response
      */
     private boolean handleZoneEnrollRequestCommand(ZoneEnrollRequestCommand command) {
+        logger.debug("{}: received enroll request {}", iasZoneCluster.getZigBeeAddress(), command);
         if (autoEnrollmentTask != null) {
+            logger.debug("{}: cancel running enrollment task", iasZoneCluster.getZigBeeAddress());
             autoEnrollmentTask.cancel(true);
         }
 
         zoneType = command.getZoneType();
         ZoneEnrollResponse zoneEnrollResponse = new ZoneEnrollResponse(EnrollResponseCodeEnum.SUCCESS.getKey(), zoneId);
+        logger.debug("{}: sending enroll response {}", iasZoneCluster.getZigBeeAddress(), zoneEnrollResponse);
         iasZoneCluster.sendResponse(command, zoneEnrollResponse);
         return true;
     }
@@ -303,6 +306,7 @@ public class ZclIasZoneClient implements ZigBeeApplication, ZclCommandListener {
         public void run() {
             ZoneEnrollResponse zoneEnrollResponse = new ZoneEnrollResponse(EnrollResponseCodeEnum.SUCCESS.getKey(), zoneId);
             zoneEnrollResponse.setDisableDefaultResponse(true);
+            logger.debug("{}: sending enroll response {}", iasZoneCluster.getZigBeeAddress(), zoneEnrollResponse);
             iasZoneCluster.sendCommand(zoneEnrollResponse);
         }
     }
