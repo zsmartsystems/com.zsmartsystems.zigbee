@@ -1594,21 +1594,6 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
     }
 
     /**
-     * Starts a rediscovery on a node. This will send a {@link NetworkAddressRequest} as a broadcast and will receive
-     * the response to trigger a full discovery.
-     *
-     * @param address the {@link IeeeAddress} of the node to rediscover
-     */
-    public void rediscoverNode(IeeeAddress address) {
-        ZigBeeDiscoveryExtension networkDiscoverer = (ZigBeeDiscoveryExtension) getExtension(
-                ZigBeeDiscoveryExtension.class);
-        if (networkDiscoverer == null) {
-            return;
-        }
-        networkDiscoverer.rediscoverNode(address);
-    }
-
-    /**
      * Gets a {@link Set} of {@link ZigBeeNode}s known by the network
      *
      * @return {@link Set} of {@link ZigBeeNode}s
