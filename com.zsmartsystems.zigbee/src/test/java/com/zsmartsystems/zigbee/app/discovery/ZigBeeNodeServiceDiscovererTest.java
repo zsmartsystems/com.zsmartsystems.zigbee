@@ -203,7 +203,7 @@ public class ZigBeeNodeServiceDiscovererTest {
         discoverer.startDiscovery();
 
         // Then wait for the node to be updated
-        Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).times(1)).updateNode(nodeCapture.capture());
+        Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).times(1)).addOrUpdateNode(nodeCapture.capture());
 
         ZigBeeNode discoveredNode = nodeCapture.getValue();
         assertEquals(new IeeeAddress("1234567890ABCDEF"), discoveredNode.getIeeeAddress());
@@ -245,7 +245,7 @@ public class ZigBeeNodeServiceDiscovererTest {
 
         Mockito.verify(futureTask, Mockito.times(1)).cancel(true);
 
-        Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).times(1)).updateNode(nodeCapture.capture());
+        Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).times(1)).addOrUpdateNode(nodeCapture.capture());
 
         assertNotNull(discoverer.getLastDiscoveryStarted());
         assertNotNull(discoverer.getLastDiscoveryCompleted());

@@ -45,7 +45,6 @@ import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDataStore;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDatabaseManager;
 import com.zsmartsystems.zigbee.groups.ZigBeeGroup;
-import com.zsmartsystems.zigbee.internal.NotificationService;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
 import com.zsmartsystems.zigbee.serialization.DefaultSerializer;
@@ -126,7 +125,7 @@ public class ZigBeeNetworkManagerTest
         // Add a node and make sure it's in the list
         TestUtilities.setField(ZigBeeNetworkManager.class, networkManager, "networkState", ZigBeeNetworkState.ONLINE);
 
-        networkManager.updateNode(node1);
+        networkManager.addOrUpdateNode(node1);
         assertEquals(1, networkManager.getNodes().size());
         assertEquals(LogicalType.ROUTER, networkManager.getNode(new IeeeAddress("1234567890ABCDEF")).getLogicalType());
         Mockito.verify(mockedNodeListener, Mockito.timeout(TIMEOUT)).nodeAdded(node1);
@@ -134,7 +133,7 @@ public class ZigBeeNetworkManagerTest
                 .setNodeDescriptor(new IeeeAddress("1234567890ABCDEF"), nodeDescriptor);
 
         // Add it again to make sure it's not duplicated, and we don't get a notification as there is no change
-        networkManager.updateNode(node1);
+        networkManager.addOrUpdateNode(node1);
         assertEquals(1, networkManager.getNodes().size());
         Mockito.verify(mockedNodeListener, Mockito.timeout(TIMEOUT).times(1)).nodeAdded(node1);
         Mockito.verify(mockedNodeListener, Mockito.timeout(TIMEOUT).times(0)).nodeUpdated(node1);
@@ -143,7 +142,7 @@ public class ZigBeeNetworkManagerTest
 
         // Adding the endpoint will cause the nodeAdded notification, not nodeUpdated
         node1dup.addEndpoint(node1Endpoint1);
-        networkManager.updateNode(node1dup);
+        networkManager.addOrUpdateNode(node1dup);
         Mockito.verify(mockedNodeListener, Mockito.timeout(TIMEOUT).times(2)).nodeAdded(node1);
         Mockito.verify(mockedNodeListener, Mockito.timeout(TIMEOUT).times(0)).nodeUpdated(node1);
 
@@ -152,18 +151,18 @@ public class ZigBeeNetworkManagerTest
         TestUtilities.setField(ZigBeeNetworkManager.class, networkManager, "nodeDiscoveryComplete", completeList);
 
         // Add it again to make sure it's not duplicated and we get the updated callback
-        networkManager.updateNode(node1dup);
+        networkManager.addOrUpdateNode(node1dup);
         assertEquals(1, networkManager.getNodes().size());
         Mockito.verify(mockedNodeListener, Mockito.timeout(TIMEOUT).times(2)).nodeAdded(node1);
         Mockito.verify(mockedNodeListener, Mockito.timeout(TIMEOUT).times(0)).nodeUpdated(node1);
 
         // Add a null node to make sure it's not added and we get the updated callback
-        networkManager.updateNode(null);
+        networkManager.addOrUpdateNode(null);
         assertEquals(1, networkManager.getNodes().size());
         Mockito.verify(mockedNodeListener, Mockito.timeout(TIMEOUT).times(2)).nodeAdded(node1);
 
         // Add a new node to make sure it's added
-        networkManager.updateNode(node2);
+        networkManager.addOrUpdateNode(node2);
         assertEquals(2, networkManager.getNodes().size());
         Mockito.verify(mockedNodeListener, Mockito.timeout(TIMEOUT).times(1)).nodeAdded(node2);
 
@@ -173,7 +172,7 @@ public class ZigBeeNetworkManagerTest
 
         // Add a duplicate of the node, but with a different NWK address
         node1dup.setNetworkAddress(4321);
-        networkManager.updateNode(node1dup);
+        networkManager.addOrUpdateNode(node1dup);
         assertEquals(2, networkManager.getNodes().size());
         assertEquals(node1, networkManager.getNode(new IeeeAddress("1234567890ABCDEF")));
 
@@ -237,11 +236,11 @@ public class ZigBeeNetworkManagerTest
         node1.setNetworkAddress(1234);
         ZigBeeNode node2 = new ZigBeeNode(Mockito.mock(ZigBeeNetworkManager.class), new IeeeAddress(address));
         node2.setNetworkAddress(5678);
-        networkManager.updateNode(node1);
+        networkManager.addOrUpdateNode(node1);
         assertEquals(1, networkManager.getNodes().size());
         ZigBeeNode nodeWeGot = networkManager.getNode(new IeeeAddress(address));
         assertEquals(Integer.valueOf(1234), nodeWeGot.getNetworkAddress());
-        networkManager.updateNode(node2);
+        networkManager.addOrUpdateNode(node2);
         assertEquals(1, networkManager.getNodes().size());
         assertEquals(Integer.valueOf(5678), nodeWeGot.getNetworkAddress());
     }
@@ -351,7 +350,7 @@ public class ZigBeeNetworkManagerTest
         Mockito.when(node.getNetworkAddress()).thenReturn(1234);
         Mockito.when(node.getEndpoint(5)).thenReturn(endpoint);
 
-        networkManager.updateNode(node);
+        networkManager.addOrUpdateNode(node);
 
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
         apsFrame.setSourceAddress(1234);
@@ -411,7 +410,7 @@ public class ZigBeeNetworkManagerTest
         Mockito.when(node.getNetworkAddress()).thenReturn(1234);
         Mockito.when(node.getEndpoint(5)).thenReturn(endpoint);
 
-        networkManager.updateNode(node);
+        networkManager.addOrUpdateNode(node);
 
         TestUtilities.setField(ZigBeeNetworkManager.class, networkManager, "networkState", ZigBeeNetworkState.ONLINE);
 
@@ -474,7 +473,7 @@ public class ZigBeeNetworkManagerTest
         Mockito.when(node.getNetworkAddress()).thenReturn(1234);
         Mockito.when(node.getEndpoint(5)).thenReturn(endpoint);
 
-        networkManager.updateNode(node);
+        networkManager.addOrUpdateNode(node);
 
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
         apsFrame.setSourceAddress(1234);
@@ -517,7 +516,7 @@ public class ZigBeeNetworkManagerTest
         ZigBeeNode node = new ZigBeeNode(mockZigBeeNetworkManager(), nodeIeeeAddress, nodeNwkAddress);
         node.setNodeState(ZigBeeNodeState.UNKNOWN);
         node.addEndpoint(new ZigBeeEndpoint(node, testNodeEndpointId));
-        networkManager.updateNode(node);
+        networkManager.addOrUpdateNode(node);
 
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
         apsFrame.setSourceAddress(nodeNwkAddress);
@@ -573,7 +572,7 @@ public class ZigBeeNetworkManagerTest
                 }
             }
         });
-        networkManager.updateNode(node);
+        networkManager.addOrUpdateNode(node);
 
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
         apsFrame.setSourceAddress(0x1234);
@@ -636,7 +635,7 @@ public class ZigBeeNetworkManagerTest
                 }
             }
         });
-        networkManager.updateNode(node);
+        networkManager.addOrUpdateNode(node);
 
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
         apsFrame.setSourceAddress(0x1234);
@@ -688,7 +687,7 @@ public class ZigBeeNetworkManagerTest
         Mockito.when(node.getIeeeAddress()).thenReturn(new IeeeAddress("1234567890ABCDEF"));
         Mockito.when(node.getNetworkAddress()).thenReturn(0x1234);
         Mockito.when(node.getNodeDescriptor()).thenReturn(nodeDescriptor);
-        manager.updateNode(node);
+        manager.addOrUpdateNode(node);
 
         Mockito.when(mockedTransport.getNwkAddress()).thenReturn(Integer.valueOf(0));
         Mockito.when(mockedTransport.getIeeeAddress()).thenReturn(new IeeeAddress("1234567890ABCDEF"));
@@ -990,7 +989,7 @@ public class ZigBeeNetworkManagerTest
         Mockito.when(node.getNetworkAddress()).thenReturn(0);
         Mockito.when(node.getEndpoint(1)).thenReturn(endpoint);
 
-        networkManager.updateNode(node);
+        networkManager.addOrUpdateNode(node);
 
         TestUtilities.setField(ZigBeeNetworkManager.class, networkManager, "networkState", ZigBeeNetworkState.ONLINE);
         networkManager.receiveCommand(apsFrame);
@@ -1173,7 +1172,7 @@ public class ZigBeeNetworkManagerTest
         assertEquals(ZigBeeStatus.INVALID_STATE, manager.startup(false));
 
         ZigBeeNode localNode = new ZigBeeNode(manager, new IeeeAddress("1234567890ABCDEF"), 0);
-        manager.updateNode(localNode);
+        manager.addOrUpdateNode(localNode);
 
         ZigBeeNode node = manager.getNode(new IeeeAddress("1234567890ABCDEF"));
         assertNotNull(node);
@@ -1233,7 +1232,7 @@ public class ZigBeeNetworkManagerTest
 
         ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
         Mockito.when(node.getIeeeAddress()).thenReturn(new IeeeAddress("1234567890ABCDEF"));
-        manager.updateNode(node);
+        manager.addOrUpdateNode(node);
 
         ZigBeeAnnounceListener announceListener = Mockito.mock(ZigBeeAnnounceListener.class);
         manager.addAnnounceListener(announceListener);

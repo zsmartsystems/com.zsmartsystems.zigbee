@@ -197,7 +197,7 @@ public class ZigBeeNetworkDatabaseManager implements ZigBeeNetworkNodeListener {
             }
             node.setDao(nodeDao);
             logger.debug("{}: Data store: Node was restored.", nodeAddress);
-            networkManager.updateNode(node);
+            networkManager.addOrUpdateNode(node);
         }
 
         networkManager.addNetworkNodeListener(this);

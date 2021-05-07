@@ -445,7 +445,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
 
         logger.debug("{}: Adding local node to network, NWK={}", ieeeAddress, String.format("%04X", nwkAddress));
         ZigBeeNode node = new ZigBeeNode(this, ieeeAddress, nwkAddress);
-        updateNode(node);
+        addOrUpdateNode(node);
     }
 
     /**
@@ -1236,7 +1236,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
                     // Mark the node as OFFLINE
                     ZigBeeNode updatedNode = new ZigBeeNode(this, node.getIeeeAddress());
                     updatedNode.setNodeState(ZigBeeNodeState.OFFLINE);
-                    updateNode(updatedNode);
+                    addOrUpdateNode(updatedNode);
                 }
                 break;
 
@@ -1691,7 +1691,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
      *
      * @param node the {@link ZigBeeNode} to add or update
      */
-    public void updateNode(final ZigBeeNode node) {
+    public void addOrUpdateNode(final ZigBeeNode node) {
         if (node == null) {
             return;
         }
