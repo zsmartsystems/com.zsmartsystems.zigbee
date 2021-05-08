@@ -28,6 +28,7 @@ import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
 import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor;
 import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
 import com.zsmartsystems.zigbee.zdo.field.SimpleDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.ParentAnnounceChildInfo;
 
 /**
  * The default implementation of the {@link ZigBeeDeserializer}
@@ -332,6 +333,11 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 Float float32 = Float.intBitsToFloat(payload[index++] + (payload[index++] << 8)
                         + (payload[index++] << 16) + (payload[index++] << 24));
                 value[0] = float32.doubleValue();
+                break;
+            case PARENT_ANNOUNCE_CHILD_INFO:
+                ParentAnnounceChildInfo parentAnnounceChildInfo = new ParentAnnounceChildInfo();
+                parentAnnounceChildInfo.deserialize(this);
+                value[0] = parentAnnounceChildInfo;
                 break;
             default:
                 throw new IllegalArgumentException("No reader defined in " + ZigBeeDeserializer.class.getSimpleName()

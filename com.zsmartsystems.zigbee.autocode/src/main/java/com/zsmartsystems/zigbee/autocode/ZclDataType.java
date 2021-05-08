@@ -120,6 +120,7 @@ public class ZclDataType {
         dataTypeMapping.put("BYTE_ARRAY", new DataTypeMap("ByteArray", 0, 0, false));
         dataTypeMapping.put("RAW_OCTET", new DataTypeMap("ByteArray", 0, 0, false));
         dataTypeMapping.put("IMAGE_UPGRADE_STATUS", new DataTypeMap("ImageUpgradeStatus", 0, 0, false));
+        dataTypeMapping.put("PARENT_ANNOUNCE_CHILD_INFO", new DataTypeMap("ParentAnnounceChildInfo", 0, 0, false));
     };
 
     public static Map<String, DataTypeMap> getDataTypeMapping() {

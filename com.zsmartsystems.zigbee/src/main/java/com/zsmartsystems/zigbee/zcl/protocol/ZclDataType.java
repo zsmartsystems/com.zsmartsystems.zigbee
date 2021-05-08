@@ -38,6 +38,7 @@ import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor;
 import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
 import com.zsmartsystems.zigbee.zdo.field.SimpleDescriptor;
 import com.zsmartsystems.zigbee.zdo.field.UserDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.ParentAnnounceChildInfo;
 
 /**
  * Enumeration of the ZCL data types
@@ -136,7 +137,8 @@ public enum ZclDataType {
     ZDO_STATUS(ZdoStatus.class, 0x00, false),
     UNSIGNED_8_BIT_INTEGER_ARRAY(int[].class, 0x00, false),
     RAW_OCTET(ByteArray.class, 0x00, false),
-    ZIGBEE_DATA_TYPE(ZclDataType.class, 0x00, false);
+    ZIGBEE_DATA_TYPE(ZclDataType.class, 0x00, false),
+    PARENT_ANNOUNCE_CHILD_INFO(ParentAnnounceChildInfo.class, 0x00, false);
 
     private final Class<?> dataClass;
     private final int typeId;
