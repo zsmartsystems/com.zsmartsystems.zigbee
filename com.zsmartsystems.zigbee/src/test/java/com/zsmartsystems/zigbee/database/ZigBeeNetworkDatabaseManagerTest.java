@@ -94,7 +94,7 @@ public class ZigBeeNetworkDatabaseManagerTest {
 
         databaseManager.startup();
         Mockito.verify(networkManager, Mockito.times(1)).addNetworkNodeListener(databaseManager);
-        Mockito.verify(networkManager, Mockito.times(1)).updateNode(ArgumentMatchers.any(ZigBeeNode.class));
+        Mockito.verify(networkManager, Mockito.times(1)).addOrUpdateNode(ArgumentMatchers.any(ZigBeeNode.class));
 
         databaseManager.setDeferredWriteTime(Integer.MAX_VALUE);
 

@@ -337,7 +337,7 @@ public class ZigBeeNodeServiceDiscoverer {
 
         if (networkAddressResponse.getStatus() == ZdoStatus.SUCCESS) {
             if (updatedNode.setNetworkAddress(networkAddressResponse.getNwkAddrRemoteDev())) {
-                networkManager.updateNode(updatedNode);
+                networkManager.addOrUpdateNode(updatedNode);
             }
 
             return true;
@@ -632,7 +632,7 @@ public class ZigBeeNodeServiceDiscoverer {
                 if (discoveryTask == null) {
                     lastDiscoveryCompleted = Calendar.getInstance();
                     logger.debug("{}: Node SVC Discovery: complete", node.getIeeeAddress());
-                    networkManager.updateNode(updatedNode);
+                    networkManager.addOrUpdateNode(updatedNode);
                     finished = true;
                     return;
                 }

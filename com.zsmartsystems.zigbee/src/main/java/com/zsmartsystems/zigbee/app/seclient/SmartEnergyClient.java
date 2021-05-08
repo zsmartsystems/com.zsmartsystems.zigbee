@@ -505,7 +505,7 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
                             logger.debug("SEP Extension: Exception getting node descriptor for address - {}",
                                     trustCentre.getIeeeAddress());
                         }
-                        networkManager.updateNode(trustCentre);
+                        networkManager.addOrUpdateNode(trustCentre);
 
                         updateClientState(SmartEnergyClientState.DISCOVER_KEY_ESTABLISHMENT_CLUSTER);
                         timerStart(TIMER_IMMEDIATE);
@@ -760,7 +760,7 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
                 ZclKeyEstablishmentCluster keCluster = new ZclKeyEstablishmentCluster(keEndpoint);
                 keEndpoint.addInputCluster(keCluster);
 
-                networkManager.updateNode(updatedTrustCentre);
+                networkManager.addOrUpdateNode(updatedTrustCentre);
 
                 // Advance the state machine
                 updateClientState(SmartEnergyClientState.PERFORM_KEY_ESTABLISHMENT);
@@ -774,7 +774,7 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
                     // This node is unknown to us - get the long address
                     IeeeAddress ieeeAddress = requestIeeeAddress(response.getSourceAddress().getAddress());
                     node = new ZigBeeNode(networkManager, ieeeAddress);
-                    networkManager.updateNode(node);
+                    networkManager.addOrUpdateNode(node);
                 }
 
                 // Check if this node is authorised to communicate securely
@@ -799,7 +799,7 @@ public class SmartEnergyClient implements ZigBeeNetworkExtension, ZigBeeCommandL
                     updatedNode.addEndpoint(endpoint);
                 }
                 setProfileSecurity(updatedNode);
-                networkManager.updateNode(updatedNode);
+                networkManager.addOrUpdateNode(updatedNode);
 
                 discoveryComplete();
                 break;
