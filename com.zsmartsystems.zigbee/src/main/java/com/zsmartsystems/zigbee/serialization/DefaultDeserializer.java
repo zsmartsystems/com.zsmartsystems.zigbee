@@ -22,7 +22,13 @@ import com.zsmartsystems.zigbee.zcl.field.ZclArrayList;
 import com.zsmartsystems.zigbee.zcl.field.ZclDataPair;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
-import com.zsmartsystems.zigbee.zdo.field.*;
+import com.zsmartsystems.zigbee.zdo.field.BindingTable;
+import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
+import com.zsmartsystems.zigbee.zdo.field.SimpleDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.ParentAnnounceChildInfo;
 
 /**
  * The default implementation of the {@link ZigBeeDeserializer}

@@ -30,7 +30,15 @@ import com.zsmartsystems.zigbee.zcl.field.ReadAttributeStatusRecord;
 import com.zsmartsystems.zigbee.zcl.field.WriteAttributeRecord;
 import com.zsmartsystems.zigbee.zcl.field.WriteAttributeStatusRecord;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
-import com.zsmartsystems.zigbee.zdo.field.*;
+import com.zsmartsystems.zigbee.zdo.field.BindingTable;
+import com.zsmartsystems.zigbee.zdo.field.ComplexDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
+import com.zsmartsystems.zigbee.zdo.field.SimpleDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.UserDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.ParentAnnounceChildInfo;
 
 /**
  * Enumeration of the ZCL data types
