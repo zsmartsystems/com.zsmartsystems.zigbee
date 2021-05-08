@@ -1766,7 +1766,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             return null;
         }
 
-        if (currentNode.getNodeDescriptor() != null) {
+        if (node.getNodeDescriptor() != null && currentNode.getNodeDescriptor() != null) {
             notificationService.execute(new Runnable() {
                 @Override
                 public void run() {
