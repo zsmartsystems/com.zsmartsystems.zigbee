@@ -185,6 +185,18 @@ public class ZigBeeSerialPort implements ZigBeePort, SerialPortEventListener {
     }
 
     @Override
+    public void write(int[] bytes) {
+        if (serialPort == null) {
+            return;
+        }
+        try {
+            serialPort.writeIntArray(bytes);
+        } catch (SerialPortException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public int read() {
         return read(9999999);
     }

@@ -121,6 +121,10 @@ public class XBeeFrameHandlerTest {
         }
 
         @Override
+        public void write(int[] bytes) {
+        }
+
+        @Override
         public int read(int timeout) {
             return read();
         }

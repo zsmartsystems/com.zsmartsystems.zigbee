@@ -274,31 +274,38 @@ public class ConBeeFrameHandler {
         StringBuilder result = new StringBuilder();
         // Send the data
         logger.debug("CONBEE TX: {}", frame);
-        serialPort.write(SLIP_END);
+        final int[] dataBuffer = frame.getOutputBuffer();
+        List<Integer> data = new ArrayList<>(dataBuffer.length * 2);
 
-        for (int val : frame.getOutputBuffer()) {
+        data.add(SLIP_END);
+
+        for (int val : dataBuffer) {
             result.append(String.format(" %02X", val));
             // logger.debug("CONBEE TX: {}", String.format("%02X", val));
             switch (val) {
                 case SLIP_END:
                     // logger.debug("CONBEE TX: [ESC]");
-                    serialPort.write(SLIP_ESC);
-                    serialPort.write(SLIP_ESC_END);
+                    data.add(SLIP_ESC);
+                    data.add(SLIP_ESC_END);
                     break;
                 case SLIP_ESC:
                     // logger.debug("CONBEE TX: [ESC]");
-                    serialPort.write(SLIP_ESC);
-                    serialPort.write(SLIP_ESC_ESC);
+                    data.add(SLIP_ESC);
+                    data.add(SLIP_ESC_ESC);
                     break;
                 default:
-                    serialPort.write(val);
+                    data.add(val);
                     break;
             }
         }
 
         logger.debug("CONBEE TX:{}", result.toString());
 
-        serialPort.write(SLIP_END);
+        data.add(SLIP_END);
+
+        int[] outputBuffer = new int[data.size()];
+        for(int i = 0; i < data.size(); ++i) outputBuffer[i] = data.get(i);
+        serialPort.write(outputBuffer);
 
         startRetryTimer();
     }

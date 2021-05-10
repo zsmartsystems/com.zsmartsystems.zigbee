@@ -355,11 +355,11 @@ public class TelegesisFrameHandler {
 
             // Send the data
             StringBuilder builder = new StringBuilder();
-            for (int sendByte : nextFrame.serialize()) {
+            int[] frameData = nextFrame.serialize();
+            for (int sendByte : frameData) {
                 builder.append(String.format("%c", sendByte));
-                serialPort.write(sendByte);
             }
-            logger.debug("TX Telegesis Data:{}", builder.toString());
+            serialPort.write(frameData);
 
             // Start the timeout
             startTimer();

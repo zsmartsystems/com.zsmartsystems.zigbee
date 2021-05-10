@@ -168,6 +168,13 @@ public class EmberFirmwareUpdateHandlerTest {
         }
 
         @Override
+        public void write(int[] bytes) {
+            for(int value : bytes) {
+                output[cnt++] = (byte) value;
+            }
+        }
+
+        @Override
         public int read(int timeout) {
             return read();
         }

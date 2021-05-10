@@ -168,6 +168,13 @@ public class AshFrameHandlerTest {
         }
 
         @Override
+        public void write(int[] bytes) {
+            for(int value : bytes) {
+                outputData.add(value);
+            }
+        }
+
+        @Override
         public int read(int timeout) {
             return read();
         }

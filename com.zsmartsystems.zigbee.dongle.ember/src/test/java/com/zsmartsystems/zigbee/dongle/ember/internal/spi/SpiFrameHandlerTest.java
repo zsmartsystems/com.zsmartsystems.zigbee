@@ -321,6 +321,13 @@ public class SpiFrameHandlerTest {
         }
 
         @Override
+        public void write(int[] bytes) {
+            for(int value : bytes) {
+                portOutData.add(value);
+            }
+        }
+
+        @Override
         public int read(int timeout) {
             return read();
         }

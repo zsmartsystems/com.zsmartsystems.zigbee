@@ -81,6 +81,10 @@ public class Cc2351TestPacket {
         }
 
         @Override
+        public void write(int[] bytes) {
+        }
+
+        @Override
         public int read(int timeout) {
             return read();
         }
