@@ -41,6 +41,7 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
 import com.zsmartsystems.zigbee.ZigBeeNetworkState;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.app.discovery.ZigBeeDiscoveryExtension;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeReadCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeSupportedCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeWriteCommand;
@@ -971,7 +972,11 @@ public final class ZigBeeConsole {
             IeeeAddress address = new IeeeAddress(args[1]);
 
             print("Sending rediscovery request for address " + address, out);
-            networkManager.rediscoverNode(address);
+            ZigBeeDiscoveryExtension networkDiscoverer = (ZigBeeDiscoveryExtension) networkManager.getExtension(ZigBeeDiscoveryExtension.class);
+            if (networkDiscoverer == null) {
+                return false;
+            }
+            networkDiscoverer.rediscoverNode(address);
             return true;
         }
     }
