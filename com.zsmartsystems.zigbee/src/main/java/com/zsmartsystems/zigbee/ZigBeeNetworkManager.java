@@ -444,8 +444,13 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         }
 
         logger.debug("{}: Adding local node to network, NWK={}", ieeeAddress, String.format("%04X", nwkAddress));
-        ZigBeeNode node = new ZigBeeNode(this, ieeeAddress, nwkAddress);
-        updateNode(node);
+
+        if (networkNodes.containsKey(ieeeAddress)) {
+            return;
+        }
+
+        ZigBeeNode newNode = new ZigBeeNode(this, ieeeAddress, nwkAddress);
+        networkNodes.put(newNode.getIeeeAddress(), newNode);
     }
 
     /**
