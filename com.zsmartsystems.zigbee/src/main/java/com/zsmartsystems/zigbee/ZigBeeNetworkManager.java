@@ -1767,19 +1767,6 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             });
         }
 
-        final boolean sendNodeAdded;
-        if (!nodeDiscoveryComplete.contains(currentNode.getIeeeAddress()) && currentNode.isDiscovered()
-                || currentNode.getIeeeAddress().equals(localIeeeAddress)) {
-            nodeDiscoveryComplete.add(node.getIeeeAddress());
-            sendNodeAdded = true;
-        } else if (!currentNode.isDiscovered() && !currentNode.getIeeeAddress().equals(localIeeeAddress)) {
-            logger.debug("{}: Node {} discovery is not complete - sending nodeUpdated notification to inform listeners",
-                    node.getIeeeAddress(), String.format("%04X", node.getNetworkAddress()));
-            sendNodeAdded = false;
-        } else {
-            sendNodeAdded = false;
-        }
-
         synchronized (this) {
             if (networkState != ZigBeeNetworkState.ONLINE) {
                 return null;
@@ -1794,11 +1781,8 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
                     notificationService.execute(new Runnable() {
                         @Override
                         public void run() {
-                            if (sendNodeAdded) {
-                                listener.nodeAdded(currentNode);
-                            } else {
-                                listener.nodeUpdated(currentNode);
-                            }
+                            logger.debug("node updated call - refreshNode");
+                            listener.nodeUpdated(currentNode);
                             latch.countDown();
                         }
                     });
