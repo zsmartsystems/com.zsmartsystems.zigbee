@@ -170,7 +170,7 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
             logger.debug("{}: Device announce received. From {}, for {}", announce.getIeeeAddr(),
                     String.format("%04X", announce.getSourceAddress().getAddress()),
                     String.format("%04X", announce.getNwkAddrOfInterest()));
-            addNode(announce.getIeeeAddr(), announce.getNwkAddrOfInterest());
+            addNode(announce.getIeeeAddr(), announce.getNwkAddrOfInterest(), announce.getCapability());
         }
     }
 
@@ -431,16 +431,23 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
         return true;
     }
 
+    private void addNode(final IeeeAddress ieeeAddress, int networkAddress) {
+        addNode(ieeeAddress, networkAddress, null);
+    }
+
     /**
      * Updates {@link ZigBeeNode} and adds it to the {@link ZigBeeNetworkManager}
      *
      * @param ieeeAddress the {@link IeeeAddress} of the newly announced node
      * @param networkAddress the network address of the newly announced node
      */
-    private void addNode(final IeeeAddress ieeeAddress, int networkAddress) {
+    private void addNode(final IeeeAddress ieeeAddress, int networkAddress, Integer macCapabilities) {
         logger.debug("{}: NWK Discovery add node {}", ieeeAddress, String.format("%04X", networkAddress));
         ZigBeeNode node = new ZigBeeNode(networkManager, ieeeAddress, networkAddress);
         node.setNodeState(ZigBeeNodeState.ONLINE);
+        if(macCapabilities != null) {
+            node.setMacCapabilities(macCapabilities);
+        }
         networkManager.updateNode(node);
     }
 }

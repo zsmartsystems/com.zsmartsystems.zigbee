@@ -418,8 +418,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
      */
     private boolean setQueueType(ZigBeeNode node, ZigBeeTransactionQueue queue) {
         boolean sleepy;
-        if (node.getNodeDescriptor() != null
-                && !node.getNodeDescriptor().getMacCapabilities().contains(MacCapabilitiesType.RECEIVER_ON_WHEN_IDLE)) {
+        if (node.isReceiverOnWhenIdle() != null && !node.isReceiverOnWhenIdle()) {
             queue.setProfile(defaultSleepyProfile);
             sleepy = true;
         } else {

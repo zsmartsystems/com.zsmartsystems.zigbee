@@ -15,6 +15,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
@@ -71,6 +72,12 @@ public class ZigBeeNode {
      * parent, or there is a network address conflict.
      */
     private Integer networkAddress;
+
+    /**
+     * The MAC capability flags field is eight bits in length and specifies the node capabilities, as required by the
+     * IEEE 802.15.4-2003 MAC sub-layer.
+     */
+    private final Set<MacCapabilitiesType> macCapabilities = new TreeSet<>();
 
     /**
      * The {@link NodeDescriptor} for the node.
@@ -215,6 +222,36 @@ public class ZigBeeNode {
         return networkAddress;
     }
 
+    public void setMacCapabilities(int macCapabilities) {
+        this.macCapabilities.clear();
+        if ((macCapabilities & 0x01) != 0) {
+            this.macCapabilities.add(MacCapabilitiesType.ALTERNATIVE_PAN);
+        }
+        if ((macCapabilities & 0x02) != 0) {
+            this.macCapabilities.add(MacCapabilitiesType.FULL_FUNCTION_DEVICE);
+        } else {
+            this.macCapabilities.add(MacCapabilitiesType.REDUCED_FUNCTION_DEVICE);
+        }
+        if ((macCapabilities & 0x04) != 0) {
+            this.macCapabilities.add(MacCapabilitiesType.MAINS_POWER);
+        }
+        if ((macCapabilities & 0x08) != 0) {
+            this.macCapabilities.add(MacCapabilitiesType.RECEIVER_ON_WHEN_IDLE);
+        }
+        if ((macCapabilities & 0x40) != 0) {
+            this.macCapabilities.add(MacCapabilitiesType.SECURITY_CAPABLE);
+        }
+    }
+
+    public void setMacCapabilities(Set<MacCapabilitiesType> macCapabilities) {
+        this.macCapabilities.clear();
+        this.macCapabilities.addAll(macCapabilities);
+    }
+
+    public Set<MacCapabilitiesType> getMacCapabilities() {
+        return macCapabilities;
+    }
+
     /**
      * Sets the {@link NodeDescriptor} for this node.
      *
@@ -316,10 +353,13 @@ public class ZigBeeNode {
      * @return true if the device is a Full Function Device. Returns false if not an FFD or logical type is unknown.
      */
     public boolean isFullFunctionDevice() {
-        if (nodeDescriptor == null) {
-            return false;
+        if (nodeDescriptor != null) {
+            return nodeDescriptor.getMacCapabilities().contains(MacCapabilitiesType.FULL_FUNCTION_DEVICE);
         }
-        return nodeDescriptor.getMacCapabilities().contains(MacCapabilitiesType.FULL_FUNCTION_DEVICE);
+        if(macCapabilities != null) {
+            return macCapabilities.contains(MacCapabilitiesType.FULL_FUNCTION_DEVICE);
+        }
+        return false;
     }
 
     /**
@@ -349,22 +389,43 @@ public class ZigBeeNode {
      * @return true if the device is a Reduced Function Device
      */
     public boolean isReducedFunctionDevice() {
-        if (nodeDescriptor == null) {
-            return false;
+        if (nodeDescriptor != null) {
+            return nodeDescriptor.getMacCapabilities().contains(MacCapabilitiesType.REDUCED_FUNCTION_DEVICE);
         }
-        return nodeDescriptor.getMacCapabilities().contains(MacCapabilitiesType.REDUCED_FUNCTION_DEVICE);
+        if(macCapabilities != null) {
+            return macCapabilities.contains(MacCapabilitiesType.REDUCED_FUNCTION_DEVICE);
+        }
+        return false;
     }
 
     /**
-     * Returns true if the node is capable of supporting security. This tests the {@link NodeDescriptor}.
+     * Returns true if the node is capable of supporting security.
      *
      * @return true if the node is capable of supporting security
      */
     public boolean isSecurityCapable() {
-        if (nodeDescriptor == null) {
-            return false;
+        if (nodeDescriptor != null) {
+            return nodeDescriptor.getMacCapabilities().contains(MacCapabilitiesType.SECURITY_CAPABLE);
         }
-        return nodeDescriptor.getMacCapabilities().contains(MacCapabilitiesType.SECURITY_CAPABLE);
+        if(macCapabilities != null) {
+            return macCapabilities.contains(MacCapabilitiesType.SECURITY_CAPABLE);
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if the node's received in ON when idle.
+     *
+     * @return true if the node's received in ON when idle
+     */
+    public Boolean isReceiverOnWhenIdle() {
+        if (nodeDescriptor != null) {
+            return nodeDescriptor.getMacCapabilities().contains(MacCapabilitiesType.RECEIVER_ON_WHEN_IDLE);
+        }
+        if(macCapabilities != null) {
+            return macCapabilities.contains(MacCapabilitiesType.RECEIVER_ON_WHEN_IDLE);
+        }
+        return null;
     }
 
     /**
@@ -760,17 +821,6 @@ public class ZigBeeNode {
     }
 
     /**
-     * Checks if basic device discovery is complete. This ensures that we have received the {@link NodeDescriptor} and
-     * the {@link SimpleDescriptor} so that we know the endpoints.
-     *
-     * @return true if basic device information is known
-     */
-    public boolean isDiscovered() {
-        return nodeDescriptor != null && nodeDescriptor.getLogicalType() != LogicalType.UNKNOWN
-                && endpoints.size() != 0;
-    }
-
-    /**
      * Updates the node. This will copy data from another node into this node. Updated elements are checked for equality
      * and the method will only return true if the node data has been changed.
      *
@@ -797,6 +847,15 @@ public class ZigBeeNode {
                     node.getNetworkAddress());
             updated = true;
             networkAddress = node.getNetworkAddress();
+        }
+
+        if (node.getMacCapabilities() != null
+                && (macCapabilities == null || !macCapabilities.equals(node.getMacCapabilities()))) {
+            logger.debug("{}: MAC capabilities updated from {} to {}", ieeeAddress, macCapabilities,
+                    node.getMacCapabilities());
+            updated = true;
+            macCapabilities.clear();
+            macCapabilities.addAll(node.getMacCapabilities());
         }
 
         if (node.getNodeDescriptor() != null
@@ -877,6 +936,7 @@ public class ZigBeeNode {
 
         dao.setIeeeAddress(ieeeAddress);
         dao.setNetworkAddress(getNetworkAddress());
+        dao.setMacCapabilities(macCapabilities);
         dao.setNodeDescriptor(nodeDescriptor);
         dao.setPowerDescriptor(powerDescriptor);
         dao.setBindingTable(bindingTable);
@@ -893,6 +953,7 @@ public class ZigBeeNode {
     public void setDao(ZigBeeNodeDao dao) {
         ieeeAddress = dao.getIeeeAddress();
         setNetworkAddress(dao.getNetworkAddress());
+        setMacCapabilities(dao.getMacCapabilities());
         setNodeDescriptor(dao.getNodeDescriptor());
         setPowerDescriptor(dao.getPowerDescriptor());
         if (dao.getBindingTable() != null) {

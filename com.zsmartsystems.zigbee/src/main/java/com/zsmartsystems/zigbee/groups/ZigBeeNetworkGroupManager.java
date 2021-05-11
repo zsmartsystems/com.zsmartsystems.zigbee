@@ -294,8 +294,7 @@ public class ZigBeeNetworkGroupManager {
 
                         for (ZigBeeNode node : networkManager.getNodes()) {
                             // Only nodes that always listen can participate in multicasting
-                            if (node.getNodeDescriptor() == null || !node.getNodeDescriptor().getMacCapabilities()
-                                    .contains(MacCapabilitiesType.RECEIVER_ON_WHEN_IDLE)) {
+                            if (node.isReceiverOnWhenIdle() == null || !node.isReceiverOnWhenIdle()) {
                                 logger.debug("{}: Not discovering groups as RECEIVER_ON_WHEN_IDLE check failed",
                                         node.getIeeeAddress());
                                 continue;

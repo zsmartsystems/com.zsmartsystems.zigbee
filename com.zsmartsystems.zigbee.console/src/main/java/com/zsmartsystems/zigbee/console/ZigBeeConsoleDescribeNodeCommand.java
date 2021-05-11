@@ -64,6 +64,7 @@ public class ZigBeeConsoleDescribeNodeCommand extends ZigBeeConsoleAbstractComma
 
         out.println("IEEE Address     : " + node.getIeeeAddress());
         out.println("Network Address  : " + node.getNetworkAddress());
+        out.println("MAC Capabilities : " + node.getMacCapabilities());
         out.println("Node Descriptor  : " + node.getNodeDescriptor());
         out.println("Power Descriptor : " + node.getPowerDescriptor());
         out.println("Associations     : " + node.getAssociatedDevices().toString());
