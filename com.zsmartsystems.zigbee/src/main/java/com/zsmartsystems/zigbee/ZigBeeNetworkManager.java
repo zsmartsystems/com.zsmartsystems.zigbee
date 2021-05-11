@@ -1241,6 +1241,11 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
 
             // Leave the join/rejoin notifications for the discovery handler
             case UNSECURED_JOIN:
+                // We only care about devices that have joined or rejoined
+                logger.debug("{}: Device status updated. NWK={}", ieeeAddress, String.format("%04X", networkAddress));
+                ZigBeeNode updatedNode = new ZigBeeNode(this, ieeeAddress, networkAddress);
+                updatedNode.setNodeState(ZigBeeNodeState.ONLINE);
+                updateNode(updatedNode);
                 break;
             case SECURED_REJOIN:
             case UNSECURED_REJOIN:

@@ -141,22 +141,6 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
     }
 
     @Override
-    public void deviceStatusUpdate(final ZigBeeNodeStatus deviceStatus, final Integer networkAddress,
-            final IeeeAddress ieeeAddress) {
-        switch (deviceStatus) {
-            case UNSECURED_JOIN:
-            case SECURED_REJOIN:
-            case UNSECURED_REJOIN:
-                // We only care about devices that have joined or rejoined
-                logger.debug("{}: Device status updated. NWK={}", ieeeAddress, String.format("%04X", networkAddress));
-                addNode(ieeeAddress, networkAddress);
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Override
     public void announceUnknownDevice(final Integer networkAddress) {
         startNodeDiscovery(networkAddress);
     }
