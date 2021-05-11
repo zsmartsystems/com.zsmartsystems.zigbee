@@ -461,35 +461,6 @@ public class ZigBeeNodeTest {
     }
 
     @Test
-    public void isDiscovered() throws Exception {
-        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
-        ZigBeeNode node = new ZigBeeNode(getMocketNetworkManager(), new IeeeAddress("1234567890"));
-        ZigBeeNetworkEndpointListener listener = Mockito.mock(ZigBeeNetworkEndpointListener.class);
-        node.addNetworkEndpointListener(listener);
-
-        assertFalse(node.isDiscovered());
-        assertNotNull(node.getEndpoints());
-
-        NodeDescriptor descriptor = new NodeDescriptor(0, 3333, 74, true, 6666, 0, 6, 4444, true, 8);
-        node.setNodeDescriptor(descriptor);
-        assertFalse(node.isDiscovered());
-
-        ZigBeeEndpoint endpoint = new ZigBeeEndpoint(node, 1);
-        node.addEndpoint(endpoint);
-        assertTrue(node.isDiscovered());
-        Mockito.verify(listener, Mockito.timeout(TIMEOUT)).deviceAdded(endpoint);
-
-        assertEquals(endpoint, node.getEndpoint(1));
-        assertEquals(1, node.getEndpoints().size());
-
-        node.removeEndpoint(1);
-        assertEquals(0, node.getEndpoints().size());
-        Mockito.verify(listener, Mockito.timeout(TIMEOUT)).deviceRemoved(endpoint);
-
-        node.removeNetworkEndpointListener(listener);
-    }
-
-    @Test
     public void commandReceived() {
         System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ZigBeeNetworkManager networkManager = getMocketNetworkManager();

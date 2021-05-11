@@ -557,7 +557,6 @@ public class ZigBeeNetworkManagerTest
         ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
         Mockito.when(node.getIeeeAddress()).thenReturn(new IeeeAddress("1111111111111111"));
         Mockito.when(node.getNetworkAddress()).thenReturn(Integer.valueOf(0x1234));
-        Mockito.when(node.isDiscovered()).thenReturn(true);
         Mockito.when(node.getEndpoint(5)).thenReturn(endpoint);
         Mockito.when(node.updateNode(ArgumentMatchers.any())).thenReturn(true);
 
@@ -620,7 +619,6 @@ public class ZigBeeNetworkManagerTest
         ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
         Mockito.when(node.getIeeeAddress()).thenReturn(new IeeeAddress("1111111111111111"));
         Mockito.when(node.getNetworkAddress()).thenReturn(Integer.valueOf(0x1234));
-        Mockito.when(node.isDiscovered()).thenReturn(true);
         Mockito.when(node.getEndpoint(5)).thenReturn(endpoint);
         Mockito.when(node.updateNode(ArgumentMatchers.any())).thenReturn(true);
 

@@ -34,7 +34,6 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ZigBeeNode.ZigBeeNodeState;
 import com.zsmartsystems.zigbee.app.ZigBeeNetworkExtension;
-import com.zsmartsystems.zigbee.app.discovery.ZigBeeDiscoveryExtension;
 import com.zsmartsystems.zigbee.aps.ApsDataEntity;
 import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDataStore;
@@ -227,11 +226,6 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
      * The listeners of the ZigBee network state.
      */
     private List<ZigBeeNetworkStateListener> stateListeners = Collections.unmodifiableList(new ArrayList<>());
-
-    /**
-     * A Set used to remember if node discovery has been completed. This is used to manage the lifecycle notifications.
-     */
-    private Set<IeeeAddress> nodeDiscoveryComplete = Collections.synchronizedSet(new HashSet<>());
 
     /**
      * The serializer class used to serialize commands to data packets
@@ -1645,8 +1639,6 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
 
         logger.debug("{}: Node {} is removed from the network", node.getIeeeAddress(),
                 String.format("%04X", node.getNetworkAddress()));
-
-        nodeDiscoveryComplete.remove(node.getIeeeAddress());
 
         // Don't update if the node is not known
         // We especially don't want to notify listeners of a device we removed, that didn't exist!
