@@ -29,6 +29,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import com.zsmartsystems.zigbee.zdo.command.DeviceAnnounce;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1022,6 +1023,13 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
                     node.commandReceived(finalCommand, apsFrame.getReceivedRssi(), apsFrame.getReceivedLqi());
                 }
             });
+        }
+
+        if (command instanceof DeviceAnnounce) {
+            final DeviceAnnounce deviceAnnounce = (DeviceAnnounce) command;
+            node.setMacCapabilities(deviceAnnounce.getCapability());
+            logger.debug("{}: Save DeviceAnnounce reported MAC capabilities", node.getIeeeAddress());
+            updateNode(node);
         }
 
         // Notify the listeners
