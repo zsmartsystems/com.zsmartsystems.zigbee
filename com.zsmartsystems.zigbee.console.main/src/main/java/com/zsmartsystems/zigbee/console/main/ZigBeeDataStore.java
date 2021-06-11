@@ -47,11 +47,13 @@ public class ZigBeeDataStore implements ZigBeeNetworkDataStore {
      */
     private final static Logger logger = LoggerFactory.getLogger(ZigBeeDataStore.class);
 
+    private final static String KEYSTORE = "keystore";
+
     private final String networkId;
 
     public ZigBeeDataStore(String networkId) {
         this.networkId = "database/" + networkId + "/";
-        File file = new File(this.networkId);
+        File file = new File(this.networkId + "/" + KEYSTORE);
         if (file.exists()) {
             return;
         }
@@ -98,7 +100,7 @@ public class ZigBeeDataStore implements ZigBeeNetworkDataStore {
     }
 
     private File getFile(String key) {
-        return new File(networkId + "keystore/" + key + ".xml");
+        return new File(networkId + KEYSTORE + "/" + key + ".xml");
     }
 
     @Override
