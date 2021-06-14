@@ -59,6 +59,13 @@ public interface ZigBeePort {
     void write(int value);
 
     /**
+     * Write data to serial port. This should be non-blocking.
+     *
+     * @param bytes the bytes to write.
+     */
+    void write(int[] bytes);
+
+    /**
      * Read a value from the port. This should block until a byte is available.
      *
      * @return the data byte (integer) read from the port
