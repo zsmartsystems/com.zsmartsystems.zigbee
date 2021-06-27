@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
@@ -109,6 +110,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPolicyRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPolicyResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPowerDescriptorRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPowerDescriptorResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetRadioChannelRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetRadioChannelResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetRadioPowerRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetRadioPowerResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetValueRequest;
@@ -1245,6 +1248,26 @@ public class EmberNcp {
         EzspTransaction transaction = protocolHandler
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspSetMfgTokenResponse.class));
         EzspSetMfgTokenResponse response = (EzspSetMfgTokenResponse) transaction.getResponse();
+        return response.getStatus();
+    }
+
+    /**
+     * Sets the channel to use for sending and receiving messages. For a list of available radio
+     * channels, see the technical specification for the RF communication module in your
+     * Developer Kit.
+     * <p>
+     * <b>Note:</b> Care should be taken when using this API, as all devices on a network must use
+     * the same channel.
+     *
+     * @param channel the new {@link ZigBeeChannel}
+     * @return {@link EmberStatus} with the response code
+     */
+    public EmberStatus setRadioChannel(ZigBeeChannel channel) {
+        EzspSetRadioChannelRequest request = new EzspSetRadioChannelRequest();
+        request.setChannel(channel.getChannel());
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspSetRadioChannelResponse.class));
+        EzspSetRadioChannelResponse response = (EzspSetRadioChannelResponse) transaction.getResponse();
         return response.getStatus();
     }
 }
