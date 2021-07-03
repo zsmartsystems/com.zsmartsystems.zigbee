@@ -43,7 +43,7 @@ public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleComma
     protected ZigBeeNode getNode(ZigBeeNetworkManager networkManager, final String nodeId)
             throws IllegalArgumentException {
         try {
-            Integer nwkAddress = Integer.parseInt(nodeId);
+            Integer nwkAddress = getInteger(nodeId);
             if (networkManager.getNode(nwkAddress) != null) {
                 return networkManager.getNode(nwkAddress);
             }
