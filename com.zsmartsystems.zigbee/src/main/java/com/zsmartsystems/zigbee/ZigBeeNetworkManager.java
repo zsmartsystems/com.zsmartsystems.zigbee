@@ -1755,8 +1755,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         logger.debug("{}: Node update. NWK Address={}", node.getIeeeAddress(),
                 String.format("%04X", node.getNetworkAddress()));
 
-        final ZigBeeNode currentNode;
-        currentNode = networkNodes.get(node.getIeeeAddress());
+        final ZigBeeNode currentNode = networkNodes.get(node.getIeeeAddress());
 
         // Return if we don't know this node
         if (currentNode == null) {
@@ -1772,12 +1771,11 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             return null;
         }
 
-        if (node.getNodeDescriptor() != null && networkNodes.get(node.getIeeeAddress()) != null && Objects
-                .equals(networkNodes.get(node.getIeeeAddress()).getNodeDescriptor(), node.getNodeDescriptor())) {
+        if (node.getNodeDescriptor() != null && currentNode.getNodeDescriptor() != null) {
             notificationService.execute(new Runnable() {
                 @Override
                 public void run() {
-                    transport.setNodeDescriptor(node.getIeeeAddress(), node.getNodeDescriptor());
+                    transport.setNodeDescriptor(currentNode.getIeeeAddress(), currentNode.getNodeDescriptor());
                 }
             });
         }
@@ -1785,11 +1783,11 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         final boolean sendNodeAdded;
         if (!nodeDiscoveryComplete.contains(currentNode.getIeeeAddress()) && currentNode.isDiscovered()
                 || currentNode.getIeeeAddress().equals(localIeeeAddress)) {
-            nodeDiscoveryComplete.add(node.getIeeeAddress());
+            nodeDiscoveryComplete.add(currentNode.getIeeeAddress());
             sendNodeAdded = true;
         } else if (!currentNode.isDiscovered() && !currentNode.getIeeeAddress().equals(localIeeeAddress)) {
             logger.debug("{}: Node {} discovery is not complete - sending nodeUpdated notification to inform listeners",
-                    node.getIeeeAddress(), String.format("%04X", node.getNetworkAddress()));
+                    currentNode.getIeeeAddress(), String.format("%04X", currentNode.getNetworkAddress()));
             sendNodeAdded = false;
         } else {
             sendNodeAdded = false;
@@ -1823,15 +1821,15 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             try {
                 // TODO: Set the timer properly
                 if (latch.await(2, TimeUnit.SECONDS)) {
-                    logger.trace("{}: Refresh Node notifyListener LATCH Complete", node.getIeeeAddress());
+                    logger.trace("{}: Refresh Node notifyListener LATCH Complete", currentNode.getIeeeAddress());
                     return true;
                 } else {
-                    logger.trace("{}: Refresh Node notifyListener LATCH Timeout, remaining = {}", node.getIeeeAddress(),
+                    logger.trace("{}: Refresh Node notifyListener LATCH Timeout, remaining = {}", currentNode.getIeeeAddress(),
                             latch.getCount());
                     return false;
                 }
             } catch (InterruptedException e) {
-                logger.trace("{}: Refresh Node notifyListener LATCH Interrupted, remaining = {}", node.getIeeeAddress(),
+                logger.trace("{}: Refresh Node notifyListener LATCH Interrupted, remaining = {}", currentNode.getIeeeAddress(),
                         latch.getCount());
                 return false;
             }
