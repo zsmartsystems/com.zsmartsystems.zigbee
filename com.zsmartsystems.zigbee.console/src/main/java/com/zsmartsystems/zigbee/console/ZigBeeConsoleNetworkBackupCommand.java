@@ -137,28 +137,28 @@ public class ZigBeeConsoleNetworkBackupCommand extends ZigBeeConsoleAbstractComm
         ZigBeeKey linkKey = parseKey(secondsSinceBackup, parameters[9], parameters[10], parameters[11], parameters[12]);
 
         out.println("Restoring network as " + parameters[1] + " after " + getTimeSince(secondsSinceBackup));
-        out.println("PAN ID                       :");
-        out.println("Extended PAN ID              :");
-        out.println("Channel                      :");
-        out.println("Network Key                  :" + networkKey);
+        out.println("PAN ID                       : " + pan);
+        out.println("Extended PAN ID              : " + epan);
+        out.println("Channel                      : " + channel);
+        out.println("Network Key                  : " + networkKey);
         if (networkKey.hasSequenceNumber()) {
-            out.println("Network Key Sequence         :" + networkKey.getSequenceNumber());
+            out.println("Network Key Sequence         : " + networkKey.getSequenceNumber());
         }
         if (networkKey.hasIncomingFrameCounter()) {
-            out.println("Network Key Incoming Counter :" + networkKey.getIncomingFrameCounter());
+            out.println("Network Key Incoming Counter : " + networkKey.getIncomingFrameCounter());
         }
-        if (networkKey.hasIncomingFrameCounter()) {
-            out.println("Network Key Outgoing Counter :" + networkKey.getOutgoingFrameCounter());
+        if (networkKey.hasOutgoingFrameCounter()) {
+            out.println("Network Key Outgoing Counter : " + networkKey.getOutgoingFrameCounter());
         }
-        out.println("Link Key       :" + linkKey);
+        out.println("Link Key       : " + linkKey);
         if (linkKey.hasSequenceNumber()) {
-            out.println("Link Key Sequence            :" + linkKey.getSequenceNumber());
+            out.println("Link Key Sequence            : " + linkKey.getSequenceNumber());
         }
         if (linkKey.hasIncomingFrameCounter()) {
-            out.println("Link Key Incoming Counter    :" + linkKey.getIncomingFrameCounter());
+            out.println("Link Key Incoming Counter    : " + linkKey.getIncomingFrameCounter());
         }
-        if (linkKey.hasIncomingFrameCounter()) {
-            out.println("Link Key Outgoing Counter    :" + linkKey.getOutgoingFrameCounter());
+        if (linkKey.hasOutgoingFrameCounter()) {
+            out.println("Link Key Outgoing Counter    : " + linkKey.getOutgoingFrameCounter());
         }
 
         networkManager.setZigBeePanId(pan);
