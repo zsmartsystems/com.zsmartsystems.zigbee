@@ -84,6 +84,8 @@ public class ZigBeeCodeGenerator {
         zclParser.addFile("src/main/resources/0404_FlowMeasurement.xml");
         zclParser.addFile("src/main/resources/0405_RelativeHumidityMeasurement.xml");
         zclParser.addFile("src/main/resources/0406_OccupancySensing.xml");
+        zclParser.addFile("src/main/resources/0407_LeafWetness.xml");
+        zclParser.addFile("src/main/resources/0408_SoilMoisture.xml");
 
         zclParser.addFile("src/main/resources/0500_IasZone.xml");
         zclParser.addFile("src/main/resources/0501_IasAce.xml");
