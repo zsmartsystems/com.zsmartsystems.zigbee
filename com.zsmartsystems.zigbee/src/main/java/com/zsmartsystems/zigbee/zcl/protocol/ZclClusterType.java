@@ -35,6 +35,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclIdentifyCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclIlluminanceLevelSensingCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclIlluminanceMeasurementCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclKeyEstablishmentCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclLeafWetnessMeasurementCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclMessagingCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclMeterIdentificationCluster;
@@ -55,6 +56,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclRelativeHumidityMeasurementClust
 import com.zsmartsystems.zigbee.zcl.clusters.ZclRssiLocationCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclScenesCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclSmartEnergyTunnelingCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclSoilMoistureMeasurementCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclTemperatureMeasurementCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclThermostatCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclThermostatUserInterfaceConfigurationCluster;
@@ -68,7 +70,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclWindowCoveringCluster;
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-11-19T09:19:31Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-07-25T03:42:36Z")
 public enum ZclClusterType {
     BASIC(0x0000, ZclBasicCluster.class, "Basic"),
     POWER_CONFIGURATION(0x0001, ZclPowerConfigurationCluster.class, "Power Configuration"),
@@ -104,6 +106,8 @@ public enum ZclClusterType {
     FLOW_MEASUREMENT(0x0404, ZclFlowMeasurementCluster.class, "Flow Measurement"),
     RELATIVE_HUMIDITY_MEASUREMENT(0x0405, ZclRelativeHumidityMeasurementCluster.class, "Relative Humidity Measurement"),
     OCCUPANCY_SENSING(0x0406, ZclOccupancySensingCluster.class, "Occupancy Sensing"),
+    LEAF_WETNESS_MEASUREMENT(0x0407, ZclLeafWetnessMeasurementCluster.class, "Leaf Wetness Measurement"),
+    SOIL_MOISTURE_MEASUREMENT(0x0408, ZclSoilMoistureMeasurementCluster.class, "Soil Moisture Measurement"),
     IAS_ZONE(0x0500, ZclIasZoneCluster.class, "IAS Zone"),
     IAS_ACE(0x0501, ZclIasAceCluster.class, "IAS ACE"),
     IAS_WD(0x0502, ZclIasWdCluster.class, "IAS WD"),
