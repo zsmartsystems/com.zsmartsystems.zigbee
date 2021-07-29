@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
@@ -38,5 +39,7 @@ public class ZigBeeDeviceTypeTest {
         assertEquals(0x0107, ZigBeeDeviceType.OCCUPANCY_SENSOR.getKey());
         assertEquals(0x0301, ZigBeeDeviceType.THERMOSTAT.getKey());
         assertEquals(0x0402, ZigBeeDeviceType.IAS_ZONE.getKey());
+
+        assertNull(ZigBeeDeviceType.getByValue(ZigBeeProfileType.ZIGBEE_GREEN_POWER, 0x1111));
     }
 }
