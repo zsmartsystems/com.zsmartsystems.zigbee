@@ -393,7 +393,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
                 }
                 try {
                     ezspFrame = recvQueue.take();
-                    logger.debug("ASH took EZSP frame to receive queue. Queue length {}", recvQueue.size());
+                    logger.debug("ASH took EZSP frame from receive queue. Queue length {}", recvQueue.size());
                     notifyTransactionComplete(ezspFrame);
                     frameHandler.handlePacket(ezspFrame);
                 } catch (final Exception e) {
