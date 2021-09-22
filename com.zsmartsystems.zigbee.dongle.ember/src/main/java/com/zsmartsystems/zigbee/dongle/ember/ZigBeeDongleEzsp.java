@@ -509,7 +509,9 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         if (reinitialize) {
             logger.debug("Reinitialising Ember NCP network as {}", deviceType);
             if (deviceType == DeviceType.COORDINATOR) {
-                netInitialiser.formNetwork(networkParameters, linkKey, networkKey);
+                if (netInitialiser.formNetwork(networkParameters, linkKey, networkKey) != ZigBeeStatus.SUCCESS) {
+                    return ZigBeeStatus.NO_NETWORK;
+                }
             } else {
                 netInitialiser.joinNetwork(networkParameters, linkKey);
             }
