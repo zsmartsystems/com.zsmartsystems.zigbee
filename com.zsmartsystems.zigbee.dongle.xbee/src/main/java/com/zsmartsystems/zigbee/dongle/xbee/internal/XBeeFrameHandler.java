@@ -377,7 +377,7 @@ public class XBeeFrameHandler {
             int[] outputBuffer = new int[data.size()];
             for(int i = 0; i < data.size(); ++i) outputBuffer[i] = data.get(i);
             serialPort.write(outputBuffer);
-            
+
             // Start the timeout
             startTimer();
         }

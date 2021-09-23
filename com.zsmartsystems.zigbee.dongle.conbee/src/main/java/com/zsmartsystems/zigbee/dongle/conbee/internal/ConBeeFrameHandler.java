@@ -19,6 +19,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -274,6 +275,7 @@ public class ConBeeFrameHandler {
         StringBuilder result = new StringBuilder();
         // Send the data
         logger.debug("CONBEE TX: {}", frame);
+
         final int[] dataBuffer = frame.getOutputBuffer();
         List<Integer> data = new ArrayList<>(dataBuffer.length * 2);
 

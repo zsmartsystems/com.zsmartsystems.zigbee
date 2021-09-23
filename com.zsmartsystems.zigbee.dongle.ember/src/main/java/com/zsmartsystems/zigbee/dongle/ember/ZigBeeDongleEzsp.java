@@ -38,6 +38,7 @@ import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.aps.ZigBeeApsFrameFragment;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspChildJoinHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIncomingMessageHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLaunchStandaloneBootloaderRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLaunchStandaloneBootloaderResponse;
@@ -508,7 +509,9 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         if (reinitialize) {
             logger.debug("Reinitialising Ember NCP network as {}", deviceType);
             if (deviceType == DeviceType.COORDINATOR) {
-                netInitialiser.formNetwork(networkParameters, linkKey, networkKey);
+                if (netInitialiser.formNetwork(networkParameters, linkKey, networkKey) != ZigBeeStatus.SUCCESS) {
+                    return ZigBeeStatus.NO_NETWORK;
+                }
             } else {
                 netInitialiser.joinNetwork(networkParameters, linkKey);
             }
@@ -1029,7 +1032,13 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     @Override
     public ZigBeeChannel getZigBeeChannel() {
-        return ZigBeeChannel.create(networkParameters.getRadioChannel());
+        if (networkStateUp) {
+            EmberNcp ncp = getEmberNcp();
+            EzspGetNetworkParametersResponse networkParameters = ncp.getNetworkParameters();
+            return ZigBeeChannel.create(networkParameters.getParameters().getRadioChannel());
+        } else {
+            return ZigBeeChannel.create(networkParameters.getRadioChannel());
+        }
     }
 
     @Override
@@ -1038,7 +1047,12 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             logger.debug("Unable to set channel outside of 2.4GHz channels: {}", channel);
             return ZigBeeStatus.INVALID_ARGUMENTS;
         }
-        networkParameters.setRadioChannel(channel.getChannel());
+        if (networkStateUp) {
+            EmberNcp ncp = getEmberNcp();
+            ncp.setRadioChannel(channel);
+        } else {
+            networkParameters.setRadioChannel(channel.getChannel());
+        }
         return ZigBeeStatus.SUCCESS;
     }
 

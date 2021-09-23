@@ -360,6 +360,7 @@ public class TelegesisFrameHandler {
                 builder.append(String.format("%c", sendByte));
             }
             serialPort.write(frameData);
+            logger.debug("TX Telegesis Data:{}", builder.toString());
 
             // Start the timeout
             startTimer();

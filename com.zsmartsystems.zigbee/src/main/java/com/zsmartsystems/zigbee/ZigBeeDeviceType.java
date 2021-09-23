@@ -17,7 +17,7 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-07-28T08:05:27Z")
 public enum ZigBeeDeviceType {
 
     /**
@@ -169,41 +169,6 @@ public enum ZigBeeDeviceType {
      * Meter Interface, 83, 0x0053
      */
     METER_INTERFACE(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION, 0x0053),
-
-    /**
-     * ZGP Proxy, 96, 0x0060
-     */
-    ZGP_PROXY(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION, 0x0060),
-
-    /**
-     * ZGP Proxy Basic, 97, 0x0061
-     */
-    ZGP_PROXY_BASIC(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION, 0x0061),
-
-    /**
-     * ZGP Target Plus, 98, 0x0062
-     */
-    ZGP_TARGET_PLUS(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION, 0x0062),
-
-    /**
-     * ZGP Target, 99, 0x0063
-     */
-    ZGP_TARGET(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION, 0x0063),
-
-    /**
-     * ZGP Commissioning Tool, 100, 0x0064
-     */
-    ZGP_COMMISSIONING_TOOL(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION, 0x0064),
-
-    /**
-     * ZGP Combo, 101, 0x0065
-     */
-    ZGP_COMBO(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION, 0x0065),
-
-    /**
-     * ZGP Combo Basic, 102, 0x0066
-     */
-    ZGP_COMBO_BASIC(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION, 0x0066),
 
     /**
      * Environmental Sensor, 103, 0x0067
@@ -504,6 +469,41 @@ public enum ZigBeeDeviceType {
      * Generic Multifunction Healthcare Device, 3840, 0x0F00
      */
     GENERIC_MULTIFUNCTION_HEALTHCARE_DEVICE(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION, 0x0F00),
+
+    /**
+     * ZGP Proxy, 96, 0x0060
+     */
+    ZGP_PROXY(ZigBeeProfileType.ZIGBEE_GREEN_POWER, 0x0060),
+
+    /**
+     * ZGP Proxy Basic, 97, 0x0061
+     */
+    ZGP_PROXY_BASIC(ZigBeeProfileType.ZIGBEE_GREEN_POWER, 0x0061),
+
+    /**
+     * ZGP Target Plus, 98, 0x0062
+     */
+    ZGP_TARGET_PLUS(ZigBeeProfileType.ZIGBEE_GREEN_POWER, 0x0062),
+
+    /**
+     * ZGP Target, 99, 0x0063
+     */
+    ZGP_TARGET(ZigBeeProfileType.ZIGBEE_GREEN_POWER, 0x0063),
+
+    /**
+     * ZGP Commissioning Tool, 100, 0x0064
+     */
+    ZGP_COMMISSIONING_TOOL(ZigBeeProfileType.ZIGBEE_GREEN_POWER, 0x0064),
+
+    /**
+     * ZGP Combo, 101, 0x0065
+     */
+    ZGP_COMBO(ZigBeeProfileType.ZIGBEE_GREEN_POWER, 0x0065),
+
+    /**
+     * ZGP Combo Basic, 102, 0x0066
+     */
+    ZGP_COMBO_BASIC(ZigBeeProfileType.ZIGBEE_GREEN_POWER, 0x0066),
 
     /**
      * ZLL On/Off Light, 0, 0x0000

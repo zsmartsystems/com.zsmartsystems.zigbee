@@ -17,7 +17,7 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-07-28T08:05:27Z")
 public enum ZigBeeProfileType {
 
     /**
@@ -31,9 +31,9 @@ public enum ZigBeeProfileType {
     ZIGBEE_SMART_ENERGY(0x0109),
 
     /**
-     * ZigBee Green Power, 41230, 0xA10E
+     * ZigBee Green Power, 41440, 0xA1E0
      */
-    ZIGBEE_GREEN_POWER(0xA10E),
+    ZIGBEE_GREEN_POWER(0xA1E0),
 
     /**
      * ZigBee Light Link, 49246, 0xC05E

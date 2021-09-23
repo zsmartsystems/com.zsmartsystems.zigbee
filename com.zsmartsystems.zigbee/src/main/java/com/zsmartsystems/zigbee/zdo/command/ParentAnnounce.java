@@ -31,7 +31,7 @@ import com.zsmartsystems.zigbee.zdo.field.ParentAnnounceChildInfo;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-05-08T19:54:20Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-07-28T09:52:40Z")
 public class ParentAnnounce extends ZdoRequest {
     /**
      * The ZDO cluster ID.

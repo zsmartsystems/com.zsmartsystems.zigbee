@@ -387,9 +387,7 @@ public class ZigBeeDongleTelegesis
         }
 
         // Create and start the frame handler
-        frameHandler = new TelegesisFrameHandler(this);
-        frameHandler.start(serialPort);
-        frameHandler.addEventListener(this);
+        initializeFrameHandler(serialPort);
 
         initialiseCriticalConfiguration();
 
@@ -429,6 +427,13 @@ public class ZigBeeDongleTelegesis
         }
 
         return ZigBeeStatus.SUCCESS;
+    }
+
+    private void initializeFrameHandler(ZigBeePort serialPort) {
+        // Create and start the frame handler
+        frameHandler = new TelegesisFrameHandler(this);
+        frameHandler.start(serialPort);
+        frameHandler.addEventListener(this);
     }
 
     @Override
@@ -523,6 +528,7 @@ public class ZigBeeDongleTelegesis
         zigbeeTransportReceive.setTransportState(ZigBeeTransportState.OFFLINE);
         serialPort.close();
         frameHandler.close();
+        frameHandler = null;
         logger.debug("Telegesis dongle shutdown.");
     }
 
@@ -976,18 +982,20 @@ public class ZigBeeDongleTelegesis
 
     @Override
     public boolean updateFirmware(final InputStream firmware, final ZigBeeTransportFirmwareCallback callback) {
-        if (frameHandler == null) {
-            logger.debug("frameHandler is uninitialised in updateFirmware");
+        if (frameHandler != null) {
+            logger.debug("Telegesis Frame Handler is operating in updateFirmware");
             return false;
         }
+
+        zigbeeTransportReceive.setTransportState(ZigBeeTransportState.OFFLINE);
+        callback.firmwareUpdateCallback(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_STARTED);
 
         if (!serialPort.open()) {
             logger.error("Unable to open Telegesis serial port");
             return false;
         }
 
-        zigbeeTransportReceive.setTransportState(ZigBeeTransportState.OFFLINE);
-        callback.firmwareUpdateCallback(ZigBeeTransportFirmwareStatus.FIRMWARE_UPDATE_STARTED);
+        initializeFrameHandler(serialPort);
 
         // Send the bootload command, but ignore the response since there doesn't seem to be one
         // despite what the documentation seems to indicate

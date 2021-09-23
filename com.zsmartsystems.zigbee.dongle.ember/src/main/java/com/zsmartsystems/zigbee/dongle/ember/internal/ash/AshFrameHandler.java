@@ -13,6 +13,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -63,18 +65,18 @@ public class AshFrameHandler implements EzspProtocolHandler {
     /**
      * The receive timeout settings - min/initial/max - defined in milliseconds
      */
-    private final static int T_RX_ACK_MIN = 400;
-    private final static int T_RX_ACK_INIT = 1600;
-    private final static int T_RX_ACK_MAX = 3200;
+    private static final int T_RX_ACK_MIN = 400;
+    private static final int T_RX_ACK_INIT = 1600;
+    private static final int T_RX_ACK_MAX = 3200;
     private int receiveTimeout = T_RX_ACK_INIT;
 
-    private final static int T_CON_HOLDOFF = 1250;
+    private static final int T_CON_HOLDOFF = 1250;
     private int connectTimeout = T_CON_HOLDOFF;
 
     /**
      * Maximum number of consecutive timeouts allowed while waiting to receive an ACK
      */
-    private final static int ACK_TIMEOUTS = 4;
+    private static final int ACK_TIMEOUTS = 4;
     private int retries = 0;
 
     /**
@@ -84,14 +86,16 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
     private long sentTime;
 
-    private final static int ASH_CANCEL_BYTE = 0x1A;
-    private final static int ASH_FLAG_BYTE = 0x7E;
-    private final static int ASH_SUBSTITUTE_BYTE = 0x18;
-    private final static int ASH_XON_BYTE = 0x11;
-    private final static int ASH_OFF_BYTE = 0x13;
-    private final static int ASH_TIMEOUT = -1;
+    private static final int ASH_CANCEL_BYTE = 0x1A;
+    private static final int ASH_FLAG_BYTE = 0x7E;
+    private static final int ASH_SUBSTITUTE_BYTE = 0x18;
+    private static final int ASH_XON_BYTE = 0x11;
+    private static final int ASH_OFF_BYTE = 0x13;
+    private static final int ASH_TIMEOUT = -1;
 
-    private final static int ASH_MAX_LENGTH = 220;
+    private static final int ASH_MAX_LENGTH = 220;
+
+    private static final int RX_QUEUE_LEN = 10;
 
     /**
      * Timeout after which sending an EZSP transaction is aborted.
@@ -108,6 +112,8 @@ public class AshFrameHandler implements EzspProtocolHandler {
     private long statsRxNaks = 0;
     private long statsRxData = 0;
     private long statsRxErrs = 0;
+
+    private final BlockingQueue<EzspFrameResponse> recvQueue = new ArrayBlockingQueue<>(RX_QUEUE_LEN);
 
     /**
      * The queue of {@link EzspFrameRequest} frames waiting to be sent
@@ -138,9 +144,14 @@ public class AshFrameHandler implements EzspProtocolHandler {
     private ZigBeePort port;
 
     /**
-     * The parser parserThread.
+     * The parser parser thread.
      */
-    private Thread parserThread;
+    private AshReceiveParserThread parserThread;
+
+    /**
+     * The processor thread
+     */
+    private AshReceiveProcessorThread processorThread;
 
     /**
      * Flag reflecting that parser has been closed and parser parserThread
@@ -161,135 +172,11 @@ public class AshFrameHandler implements EzspProtocolHandler {
     public void start(final ZigBeePort port) {
         this.port = port;
 
-        parserThread = new Thread("AshFrameHandler") {
-            @Override
-            public void run() {
-                logger.debug("AshFrameHandler thread started");
+        processorThread = new AshReceiveProcessorThread();
+        processorThread.setDaemon(true);
+        processorThread.start();
 
-                int exceptionCnt = 0;
-
-                // Ensure that a NAK is only sent for the first error in a sequence and a
-                // valid response is required before sending another NAK.
-                boolean rejectionCondition = false;
-
-                while (!closeHandler) {
-                    try {
-                        int[] packetData = getPacket();
-                        if (packetData == null) {
-                            continue;
-                        }
-
-                        final AshFrame packet = AshFrame.createFromInput(packetData);
-                        AshFrame responseFrame = null;
-                        if (packet == null) {
-                            logger.debug("<-- RX ASH error: BAD PACKET {}", frameToString(packetData));
-
-                            // Send a NAK and set rejection condition
-                            if (!rejectionCondition) {
-                                rejectionCondition = true;
-                                responseFrame = new AshFrameNak(ackNum);
-                            }
-                        } else {
-                            logger.debug("<-- RX ASH frame: {}", packet.toString());
-
-                            // Reset the exception counter
-                            exceptionCnt = 0;
-
-                            // Extract the flags for DATA/ACK/NAK frames
-                            switch (packet.getFrameType()) {
-                                case DATA:
-                                    statsRxData++;
-
-                                    // Always use the ackNum - even if this frame is discarded
-                                    ackSentQueue(packet.getAckNum());
-
-                                    AshFrameData dataPacket = (AshFrameData) packet;
-
-                                    // Check for out of sequence frame number
-                                    if (packet.getFrmNum() == ackNum) {
-                                        // Clear rejection condition
-                                        rejectionCondition = false;
-
-                                        // Frame was in sequence - prepare the response
-                                        ackNum = (ackNum + 1) & 0x07;
-                                        responseFrame = new AshFrameAck(ackNum);
-
-                                        // Get the EZSP frame
-                                        EzspFrameResponse response = EzspFrame
-                                                .createHandler(dataPacket.getDataBuffer());
-                                        logger.trace("ASH RX EZSP: {}", response);
-                                        if (response == null) {
-                                            logger.debug("ASH: No frame handler created for {}", packet);
-                                        } else {
-                                            notifyTransactionComplete(response);
-                                            handleIncomingFrame(response);
-                                        }
-                                    } else if (!dataPacket.getReTx()) {
-                                        // Send a NAK - this is out of sequence and not a retransmission
-                                        logger.debug("ASH: Frame out of sequence - expected {}, received {}", ackNum,
-                                                packet.getFrmNum());
-
-                                        // Send a NAK and set rejection condition
-                                        if (!rejectionCondition) {
-                                            rejectionCondition = true;
-                                            responseFrame = new AshFrameNak(ackNum);
-                                        }
-                                    } else {
-                                        // Send an ACK - this was out of sequence but was a retransmission
-                                        responseFrame = new AshFrameAck(ackNum);
-                                    }
-                                    break;
-                                case ACK:
-                                    statsRxAcks++;
-                                    ackSentQueue(packet.getAckNum());
-                                    break;
-                                case NAK:
-                                    statsRxNaks++;
-                                    sendRetry();
-                                    break;
-                                case RSTACK:
-                                    // Stack has been reset!
-                                    handleReset((AshFrameRstAck) packet);
-                                    break;
-                                case ERROR:
-                                    // Stack has entered FAILED state
-                                    handleError((AshFrameError) packet);
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-
-                        // Due to possible I/O buffering, it is important to note that the Host could receive several
-                        // valid or invalid frames after triggering a reset of the NCP. The Host must discard all frames
-                        // and errors until a valid RSTACK frame is received.
-                        if (!stateConnected) {
-                            continue;
-                        }
-
-                        // Send the next frame
-                        // Note that ASH protocol requires the host always sends an ack.
-                        // Piggybacking on data packets is not allowed
-                        if (responseFrame != null) {
-                            sendFrame(responseFrame);
-                        }
-
-                        sendNextFrame();
-                    } catch (final IOException e) {
-                        logger.error("AshFrameHandler IOException: ", e);
-
-                        if (exceptionCnt++ > 10) {
-                            logger.error("AshFrameHandler exception count exceeded");
-                            closeHandler = true;
-                        }
-                    } catch (final Exception e) {
-                        logger.error("AshFrameHandler Exception: ", e);
-                    }
-                }
-                logger.debug("AshFrameHandler exited.");
-            }
-        };
-
+        parserThread = new AshReceiveParserThread();
         parserThread.setDaemon(true);
         parserThread.start();
     }
@@ -346,12 +233,172 @@ public class AshFrameHandler implements EzspProtocolHandler {
         return null;
     }
 
-    private void handleIncomingFrame(EzspFrame ezspFrame) {
+    private void handleIncomingFrame(EzspFrameResponse ezspFrame) {
         if (stateConnected && ezspFrame != null) {
-            try {
-                frameHandler.handlePacket(ezspFrame);
-            } catch (final Exception e) {
-                logger.error("AshFrameHandler Exception processing EZSP frame: ", e);
+            synchronized (recvQueue) {
+                recvQueue.add(ezspFrame);
+                logger.debug("ASH added EZSP frame to receive queue. Queue length {}", recvQueue.size());
+                recvQueue.notify();
+            }
+        } else {
+            logger.debug("ASH unable to add EZSP frame to receive queue. connected {}", stateConnected);
+        }
+    }
+
+    private class AshReceiveParserThread extends Thread {
+        AshReceiveParserThread() {
+            super("AshReceiveParserThread");
+        }
+
+        @Override
+        public void run() {
+            logger.debug("AshReceiveParserThread thread started");
+
+            setPriority(Thread.MAX_PRIORITY);
+
+            int exceptionCnt = 0;
+
+            // Ensure that a NAK is only sent for the first error in a sequence and a
+            // valid response is required before sending another NAK.
+            boolean rejectionCondition = false;
+
+            while (!closeHandler) {
+                try {
+                    int[] packetData = getPacket();
+                    if (packetData == null) {
+                        continue;
+                    }
+
+                    final AshFrame packet = AshFrame.createFromInput(packetData);
+                    AshFrame responseFrame = null;
+                    if (packet == null) {
+                        logger.debug("<-- RX ASH error: BAD PACKET {}", frameToString(packetData));
+
+                        // Send a NAK and set rejection condition
+                        if (!rejectionCondition) {
+                            rejectionCondition = true;
+                            responseFrame = new AshFrameNak(ackNum);
+                        }
+                    } else {
+                        logger.debug("<-- RX ASH frame: {}", packet.toString());
+
+                        // Reset the exception counter
+                        exceptionCnt = 0;
+
+                        // Extract the flags for DATA/ACK/NAK frames
+                        switch (packet.getFrameType()) {
+                            case DATA:
+                                statsRxData++;
+
+                                // Always use the ackNum - even if this frame is discarded
+                                ackSentQueue(packet.getAckNum());
+
+                                AshFrameData dataPacket = (AshFrameData) packet;
+
+                                // Check for out of sequence frame number
+                                if (packet.getFrmNum() == ackNum) {
+                                    // Clear rejection condition
+                                    rejectionCondition = false;
+
+                                    // Frame was in sequence - prepare the response
+                                    ackNum = (ackNum + 1) & 0x07;
+                                    responseFrame = new AshFrameAck(ackNum);
+
+                                    // Get the EZSP frame
+                                    EzspFrameResponse response = EzspFrame
+                                            .createHandler(dataPacket.getDataBuffer());
+                                    logger.trace("ASH RX EZSP: {}", response);
+                                    if (response == null) {
+                                        logger.debug("ASH: No frame handler created for {}", packet);
+                                    } else {
+                                        handleIncomingFrame(response);
+                                    }
+                                } else if (!dataPacket.getReTx()) {
+                                    // Send a NAK - this is out of sequence and not a retransmission
+                                    logger.debug("ASH: Frame out of sequence - expected {}, received {}", ackNum,
+                                            packet.getFrmNum());
+
+                                    // Send a NAK and set rejection condition
+                                    if (!rejectionCondition) {
+                                        rejectionCondition = true;
+                                        responseFrame = new AshFrameNak(ackNum);
+                                    }
+                                } else {
+                                    // Send an ACK - this was out of sequence but was a retransmission
+                                    responseFrame = new AshFrameAck(ackNum);
+                                }
+                                break;
+                            case ACK:
+                                statsRxAcks++;
+                                ackSentQueue(packet.getAckNum());
+                                break;
+                            case NAK:
+                                statsRxNaks++;
+                                sendRetry();
+                                break;
+                            case RSTACK:
+                                // Stack has been reset!
+                                handleReset((AshFrameRstAck) packet);
+                                break;
+                            case ERROR:
+                                // Stack has entered FAILED state
+                                handleError((AshFrameError) packet);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    // Due to possible I/O buffering, it is important to note that the Host could receive several
+                    // valid or invalid frames after triggering a reset of the NCP. The Host must discard all frames
+                    // and errors until a valid RSTACK frame is received.
+                    if (!stateConnected) {
+                        continue;
+                    }
+
+                    // Send the next frame
+                    // Note that ASH protocol requires the host always sends an ack.
+                    // Piggybacking on data packets is not allowed
+                    if (responseFrame != null) {
+                        sendFrame(responseFrame);
+                    }
+
+                    sendNextFrame();
+                } catch (final IOException e) {
+                    logger.error("AshReceiveParserThread IOException: ", e);
+
+                    if (exceptionCnt++ > 10) {
+                        logger.error("AshReceiveParserThread exception count exceeded");
+                        closeHandler = true;
+                    }
+                } catch (final Exception e) {
+                    logger.error("AshReceiveParserThread Exception: ", e);
+                }
+            }
+            logger.debug("AshReceiveParserThread exited.");
+        }
+    }
+
+    private class AshReceiveProcessorThread extends Thread {
+        AshReceiveProcessorThread() {
+            super("AshReceiveProcessorThread");
+        }
+
+        @Override
+        public void run() {
+            EzspFrameResponse ezspFrame;
+            while (!interrupted()) {
+                if (closeHandler) {
+                    break;
+                }
+                try {
+                    ezspFrame = recvQueue.take();
+                    logger.debug("ASH took EZSP frame from receive queue. Queue length {}", recvQueue.size());
+                    notifyTransactionComplete(ezspFrame);
+                    frameHandler.handlePacket(ezspFrame);
+                } catch (final Exception e) {
+                    logger.error("AshFrameHandler Exception processing EZSP frame: ", e);
+                }
             }
         }
     }
@@ -399,6 +446,10 @@ public class AshFrameHandler implements EzspProtocolHandler {
         setClosing();
         stopRetryTimer();
         stateConnected = false;
+
+        synchronized (recvQueue) {
+            recvQueue.notify();
+        }
 
         clearTransactionQueue();
 

@@ -170,8 +170,8 @@ public class TelegesisFirmwareUpdateHandlerTest {
 
         @Override
         public void write(int[] bytes) {
-            for(int value : bytes) {
-                output[cnt++] = (byte) value;
+            for(int val : bytes) {
+                output[cnt++] = (byte) val;
             }
         }
 

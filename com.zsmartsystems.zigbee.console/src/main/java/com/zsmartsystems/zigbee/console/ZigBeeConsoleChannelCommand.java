@@ -44,8 +44,13 @@ public class ZigBeeConsoleChannelCommand extends ZigBeeConsoleAbstractCommand {
     @Override
     public void process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out)
             throws IllegalArgumentException, InterruptedException, ExecutionException {
-        if (args.length < 2 || args.length > 2) {
+        if (args.length > 2) {
             throw new IllegalArgumentException("Invalid number of arguments");
+        }
+
+        if (args.length == 1) {
+            out.println("Channel is currently " + networkManager.getZigBeeChannel().toString());
+            return;
         }
 
         String channelParam = args[1];
@@ -68,6 +73,10 @@ public class ZigBeeConsoleChannelCommand extends ZigBeeConsoleAbstractCommand {
 
         if (channel == null) {
             throw new IllegalArgumentException("Unable to pass ZigBeeChannel from " + channelParam);
+        }
+
+        if (channel == ZigBeeChannel.UNKNOWN) {
+            throw new IllegalArgumentException("Invalid ZigBee channel " + channelParam);
         }
 
         ZigBeeStatus response = networkManager.setZigBeeChannel(channel);

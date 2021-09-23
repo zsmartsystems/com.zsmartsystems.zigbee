@@ -21,6 +21,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -169,8 +170,8 @@ public class AshFrameHandlerTest {
 
         @Override
         public void write(int[] bytes) {
-            for(int value : bytes) {
-                outputData.add(value);
+            for(int val : bytes) {
+                outputData.add(val);
             }
         }
 

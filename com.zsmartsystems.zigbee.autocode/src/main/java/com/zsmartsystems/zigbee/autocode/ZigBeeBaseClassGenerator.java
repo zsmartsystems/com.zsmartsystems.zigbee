@@ -503,7 +503,7 @@ public abstract class ZigBeeBaseClassGenerator {
         }
 
         String packageName;
-        if (type.contains("Descriptor")) {
+        if (type.contains("Descriptor") || type.contains("Announce")) {
             packageName = packageZdpDescriptors;
         } else {
             packageName = packageZclField;
