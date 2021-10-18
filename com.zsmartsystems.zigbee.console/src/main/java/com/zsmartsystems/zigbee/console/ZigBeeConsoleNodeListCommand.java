@@ -89,7 +89,8 @@ public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
                 profileType = ZigBeeProfileType.getByValue(endpoint.getProfileId()).toString();
             }
             String deviceType;
-            if (ZigBeeDeviceType.getByValue(endpoint.getDeviceId()) == null) {
+            if (ZigBeeDeviceType.getByValue(endpoint.getDeviceId()) == null
+                    || ZigBeeProfileType.getByValue(endpoint.getProfileId()) == null) {
                 deviceType = String.format("%04X", endpoint.getDeviceId());
             } else {
                 deviceType = ZigBeeDeviceType
