@@ -74,22 +74,35 @@ public class ZigBeeConsoleDescribeNodeCommand extends ZigBeeConsoleAbstractComma
             out.print(String.format("            %-3d  : ", endpoint.getEndpointId()));
             outputEndpoint(out, endpoint);
         }
-        out.println("Neighbors:");
+        out.println("Neighbors        :");
         for (NeighborTable neighbor : node.getNeighbors()) {
             out.println(neighbor.toString());
         }
-        out.println("Routes:");
+        out.println("Routes           :");
         for (RoutingTable route : node.getRoutes()) {
             out.println(route.toString());
         }
     }
 
     private void outputEndpoint(PrintStream out, ZigBeeEndpoint endpoint) {
-        out.println("Profile     " + String.format("%04X ", endpoint.getProfileId())
-                + ZigBeeProfileType.getByValue(endpoint.getProfileId()));
-        out.println("                 : Device Type " + String.format("%04X ", endpoint.getDeviceId())
-                + ZigBeeDeviceType.getByValue(ZigBeeProfileType.getByValue(endpoint.getProfileId()),
-                        endpoint.getDeviceId()));
+        String profileType;
+        if (ZigBeeProfileType.getByValue(endpoint.getProfileId()) == null) {
+            profileType = String.format("%04X", endpoint.getProfileId());
+        } else {
+            profileType = ZigBeeProfileType.getByValue(endpoint.getProfileId()).toString();
+        }
+        String deviceType;
+        if (ZigBeeDeviceType.getByValue(endpoint.getDeviceId()) == null
+                || ZigBeeProfileType.getByValue(endpoint.getProfileId()) == null) {
+            deviceType = String.format("%04X", endpoint.getDeviceId());
+        } else {
+            deviceType = ZigBeeDeviceType
+                    .getByValue(ZigBeeProfileType.getByValue(endpoint.getProfileId()), endpoint.getDeviceId())
+                    .toString();
+        }
+
+        out.println("Profile     " + profileType);
+        out.println("                 : Device Type " + deviceType);
         for (Integer clusterId : endpoint.getInputClusterIds()) {
             ZclClusterType clusterType = ZclClusterType.getValueById(clusterId);
             String clusterTypeLabel = clusterType != null ? clusterType.toString() : String.format("0x%04X", clusterId);
