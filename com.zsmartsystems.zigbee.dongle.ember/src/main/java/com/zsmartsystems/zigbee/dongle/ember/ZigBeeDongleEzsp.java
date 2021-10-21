@@ -978,7 +978,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         if (response instanceof EzspChildJoinHandler) {
             EzspChildJoinHandler joinHandler = (EzspChildJoinHandler) response;
             zigbeeTransportReceive.nodeStatusUpdate(
-                    joinHandler.getJoining() ? ZigBeeNodeStatus.UNSECURED_JOIN : ZigBeeNodeStatus.DEVICE_LEFT,
+                    joinHandler.getJoining() ? ZigBeeNodeStatus.UNSECURED_JOIN_OR_REJOIN : ZigBeeNodeStatus.DEVICE_LEFT,
                     joinHandler.getChildId(), joinHandler.getChildEui64());
             return;
         }

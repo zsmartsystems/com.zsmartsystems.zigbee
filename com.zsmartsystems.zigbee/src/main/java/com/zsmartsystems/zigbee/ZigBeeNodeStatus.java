@@ -33,7 +33,12 @@ public enum ZigBeeNodeStatus {
     /**
      * A device has left the network
      */
-    DEVICE_LEFT
+    DEVICE_LEFT,
+
+    /**
+     * A device has joined or rejoined the network without security
+     */
+    UNSECURED_JOIN_OR_REJOIN,
 
     ;
 
