@@ -1025,7 +1025,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             });
         }
 
-        if (command instanceof DeviceAnnounce) {
+        if (node != null && command instanceof DeviceAnnounce) {
             final DeviceAnnounce deviceAnnounce = (DeviceAnnounce) command;
             node.setMacCapabilities(deviceAnnounce.getCapability());
             logger.debug("{}: Save DeviceAnnounce reported MAC capabilities", node.getIeeeAddress());
