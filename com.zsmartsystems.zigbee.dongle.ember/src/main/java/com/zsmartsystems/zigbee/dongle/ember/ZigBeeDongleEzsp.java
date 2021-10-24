@@ -1304,10 +1304,10 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                         ezspVersion.getProtocolVersion(), EzspFrame.getEzspVersion());
                 return false;
             }
-
-            ezspVersion = ncp.getVersion();
-            logger.debug(ezspVersion.toString());
         }
+
+        ezspVersion = ncp.getVersion();
+        logger.debug(ezspVersion.toString());
 
         StringBuilder builder = new StringBuilder(60);
         builder.append("EZSP Version=");
