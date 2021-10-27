@@ -36,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-04-23T10:36:53Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-10-27T08:02:53Z")
 public class ZclThermostatCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -159,8 +159,8 @@ public class ZclThermostatCluster extends ZclCluster {
         attributeMap.put(ATTR_PIHEATINGDEMAND, new ZclAttribute(this, ATTR_PIHEATINGDEMAND, "Pi Heating Demand", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, true));
         attributeMap.put(ATTR_HVACSYSTEMTYPECONFIGURATION, new ZclAttribute(this, ATTR_HVACSYSTEMTYPECONFIGURATION, "Hvac System Type Configuration", ZclDataType.BITMAP_8_BIT, false, true, false, false));
         attributeMap.put(ATTR_LOCALTEMPERATURECALIBRATION, new ZclAttribute(this, ATTR_LOCALTEMPERATURECALIBRATION, "Local Temperature Calibration", ZclDataType.SIGNED_8_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_OCCUPIEDCOOLINGSETPOINT, new ZclAttribute(this, ATTR_OCCUPIEDCOOLINGSETPOINT, "Occupied Cooling Setpoint", ZclDataType.SIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_OCCUPIEDHEATINGSETPOINT, new ZclAttribute(this, ATTR_OCCUPIEDHEATINGSETPOINT, "Occupied Heating Setpoint", ZclDataType.SIGNED_16_BIT_INTEGER, true, true, false, false));
+        attributeMap.put(ATTR_OCCUPIEDCOOLINGSETPOINT, new ZclAttribute(this, ATTR_OCCUPIEDCOOLINGSETPOINT, "Occupied Cooling Setpoint", ZclDataType.SIGNED_16_BIT_INTEGER, true, true, true, false));
+        attributeMap.put(ATTR_OCCUPIEDHEATINGSETPOINT, new ZclAttribute(this, ATTR_OCCUPIEDHEATINGSETPOINT, "Occupied Heating Setpoint", ZclDataType.SIGNED_16_BIT_INTEGER, true, true, true, false));
         attributeMap.put(ATTR_UNOCCUPIEDCOOLINGSETPOINT, new ZclAttribute(this, ATTR_UNOCCUPIEDCOOLINGSETPOINT, "Unoccupied Cooling Setpoint", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, false, false));
         attributeMap.put(ATTR_UNOCCUPIEDHEATINGSETPOINT, new ZclAttribute(this, ATTR_UNOCCUPIEDHEATINGSETPOINT, "Unoccupied Heating Setpoint", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, false, false));
         attributeMap.put(ATTR_MINHEATSETPOINTLIMIT, new ZclAttribute(this, ATTR_MINHEATSETPOINTLIMIT, "Min Heat Setpoint Limit", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, false, false));
@@ -796,6 +796,22 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
+     * Set the <i>Occupied Cooling Setpoint</i> attribute [attribute ID <b>0x0011</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param occupiedCoolingSetpoint the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setOccupiedCoolingSetpoint(final Integer value) {
+        return write(serverAttributes.get(ATTR_OCCUPIEDCOOLINGSETPOINT), value);
+    }
+
+    /**
      * Get the <i>Occupied Cooling Setpoint</i> attribute [attribute ID <b>0x0011</b>].
      * <p>
      * The attribute is of type {@link Integer}.
@@ -853,6 +869,22 @@ public class ZclThermostatCluster extends ZclCluster {
     @Deprecated
     public Future<CommandResult> setOccupiedCoolingSetpointReporting(final int minInterval, final int maxInterval, final Object reportableChange) {
         return setReporting(serverAttributes.get(ATTR_OCCUPIEDCOOLINGSETPOINT), minInterval, maxInterval, reportableChange);
+    }
+
+    /**
+     * Set the <i>Occupied Heating Setpoint</i> attribute [attribute ID <b>0x0012</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param occupiedHeatingSetpoint the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setOccupiedHeatingSetpoint(final Integer value) {
+        return write(serverAttributes.get(ATTR_OCCUPIEDHEATINGSETPOINT), value);
     }
 
     /**

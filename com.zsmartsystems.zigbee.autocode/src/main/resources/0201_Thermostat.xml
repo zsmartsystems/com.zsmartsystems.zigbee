@@ -134,10 +134,10 @@
     <attribute code="0x0010" type="SIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0xE7" maximum="0x19" default="0x00">
         <name>Local Temperature Calibration</name>
     </attribute>
-    <attribute code="0x0011" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" default="0x0A28">
+    <attribute code="0x0011" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="true" reportable="false" default="0x0A28">
         <name>Occupied Cooling Setpoint</name>
     </attribute>
-    <attribute code="0x0012" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="false" reportable="false" default="0x07D0">
+    <attribute code="0x0012" type="SIGNED_16_BIT_INTEGER" side="server" optional="false" writable="true" reportable="false" default="0x07D0">
         <name>Occupied Heating Setpoint</name>
     </attribute>
     <attribute code="0x0013" type="SIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" default="0x0A28">
