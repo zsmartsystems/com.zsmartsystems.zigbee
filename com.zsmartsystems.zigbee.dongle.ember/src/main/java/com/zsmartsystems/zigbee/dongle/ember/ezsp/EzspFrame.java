@@ -101,7 +101,6 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_CALCULATE_SMACS283K1_HANDLER = 0xEB;
     protected static final int FRAME_ID_CALCULATE_SMACS_HANDLER = 0xA0;
     protected static final int FRAME_ID_CALLBACK = 0x06;
-    protected static final int FRAME_ID_CHANGE_SOURCE_ROUTE_HANDLER = 0xC4;
     protected static final int FRAME_ID_CHILD_JOIN_HANDLER = 0x23;
     protected static final int FRAME_ID_CLEAR_BINDING_TABLE = 0x2A;
     protected static final int FRAME_ID_CLEAR_KEY_TABLE = 0xB1;
@@ -171,6 +170,7 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_ID_CONFLICT_HANDLER = 0x7C;
     protected static final int FRAME_ID_INCOMING_MANY_TO_ONE_ROUTE_REQUEST_HANDLER = 0x7D;
     protected static final int FRAME_ID_INCOMING_MESSAGE_HANDLER = 0x45;
+    protected static final int FRAME_ID_INCOMING_NETWORK_STATUS_HANDLER = 0xC4;
     protected static final int FRAME_ID_INCOMING_ROUTE_ERROR_HANDLER = 0x80;
     protected static final int FRAME_ID_INCOMING_ROUTE_RECORD_HANDLER = 0x59;
     protected static final int FRAME_ID_INCOMING_SENDER_EUI64_HANDLER = 0x62;
@@ -263,7 +263,6 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_CALCULATE_SMACS283K1_HANDLER, EzspCalculateSmacs283k1Handler.class);
         ezspHandlerMap.put(FRAME_ID_CALCULATE_SMACS_HANDLER, EzspCalculateSmacsHandler.class);
         ezspHandlerMap.put(FRAME_ID_CALLBACK, EzspCallbackResponse.class);
-        ezspHandlerMap.put(FRAME_ID_CHANGE_SOURCE_ROUTE_HANDLER, EzspChangeSourceRouteHandler.class);
         ezspHandlerMap.put(FRAME_ID_CHILD_JOIN_HANDLER, EzspChildJoinHandler.class);
         ezspHandlerMap.put(FRAME_ID_CLEAR_BINDING_TABLE, EzspClearBindingTableResponse.class);
         ezspHandlerMap.put(FRAME_ID_CLEAR_KEY_TABLE, EzspClearKeyTableResponse.class);
@@ -333,6 +332,7 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_ID_CONFLICT_HANDLER, EzspIdConflictHandler.class);
         ezspHandlerMap.put(FRAME_ID_INCOMING_MANY_TO_ONE_ROUTE_REQUEST_HANDLER, EzspIncomingManyToOneRouteRequestHandler.class);
         ezspHandlerMap.put(FRAME_ID_INCOMING_MESSAGE_HANDLER, EzspIncomingMessageHandler.class);
+        ezspHandlerMap.put(FRAME_ID_INCOMING_NETWORK_STATUS_HANDLER, EzspIncomingNetworkStatusHandler.class);
         ezspHandlerMap.put(FRAME_ID_INCOMING_ROUTE_ERROR_HANDLER, EzspIncomingRouteErrorHandler.class);
         ezspHandlerMap.put(FRAME_ID_INCOMING_ROUTE_RECORD_HANDLER, EzspIncomingRouteRecordHandler.class);
         ezspHandlerMap.put(FRAME_ID_INCOMING_SENDER_EUI64_HANDLER, EzspIncomingSenderEui64Handler.class);
