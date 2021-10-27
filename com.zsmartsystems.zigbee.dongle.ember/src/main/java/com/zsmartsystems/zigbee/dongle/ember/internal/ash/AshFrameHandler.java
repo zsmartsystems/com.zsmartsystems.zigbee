@@ -26,6 +26,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,6 +62,8 @@ public class AshFrameHandler implements EzspProtocolHandler {
      * The logger.
      */
     private final Logger logger = LoggerFactory.getLogger(AshFrameHandler.class);
+
+    private final Logger ezspDongleLogger = LoggerFactory.getLogger(ZigBeeDongleEzsp.class);
 
     /**
      * The receive timeout settings - min/initial/max - defined in milliseconds
@@ -828,6 +831,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
     @Override
     public EzspTransaction sendEzspTransaction(EzspTransaction ezspTransaction) {
+        ezspDongleLogger.debug("TX EZSP: {}", ezspTransaction.getRequest());
         logger.debug("ASH TX EZSP: {}", ezspTransaction.getRequest());
 
         Future<EzspFrame> futureResponse = sendEzspRequestAsync(ezspTransaction);
