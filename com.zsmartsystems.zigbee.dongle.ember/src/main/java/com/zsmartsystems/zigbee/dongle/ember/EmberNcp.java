@@ -834,6 +834,9 @@ public class EmberNcp {
                 new EzspSingleResponseTransaction(request, EzspGetRouteTableEntryResponse.class));
         EzspGetRouteTableEntryResponse response = (EzspGetRouteTableEntryResponse) transaction
                 .getResponse();
+        if(response.getStatus() != EmberStatus.EMBER_SUCCESS) {
+            return null;
+        }
         return response.getValue();
     }
 
