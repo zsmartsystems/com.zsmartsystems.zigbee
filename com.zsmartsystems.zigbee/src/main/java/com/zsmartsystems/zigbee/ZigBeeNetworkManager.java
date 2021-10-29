@@ -1232,6 +1232,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         switch (deviceStatus) {
             // Device has gone - lets remove it
             case DEVICE_LEFT:
+            case UNTRUSTED_DEVICE_LEFT:
                 // Find the node
                 ZigBeeNode node = getNode(ieeeAddress);
                 if (node == null) {

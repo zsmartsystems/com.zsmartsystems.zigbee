@@ -40,6 +40,11 @@ public enum ZigBeeNodeStatus {
      */
     UNSECURED_JOIN_OR_REJOIN,
 
+    /**
+     * A device has left the network (untrusted)
+     */
+    UNTRUSTED_DEVICE_LEFT,
+
     ;
 
 }
