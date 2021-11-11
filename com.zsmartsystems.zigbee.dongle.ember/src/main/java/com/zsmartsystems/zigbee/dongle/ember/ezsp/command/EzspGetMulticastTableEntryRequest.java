@@ -11,10 +11,9 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
 
 /**
- * Class to implement the Ember EZSP command <b>getRoutingShortcutThreshold</b>.
+ * Class to implement the Ember EZSP command <b>getMulticastTableEntry</b>.
  * <p>
- * Gets the routing shortcut threshold used to differentiate between directly using a
- * neighbour vs. performing routing.
+ * Gets an entry from the multicast table.
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>
@@ -22,8 +21,15 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
  *
  * @author Chris Jackson - Initial contribution of Java code generator
  */
-public class EzspGetRoutingShortcutThresholdRequest extends EzspFrameRequest {
-    public static final int FRAME_ID = 0xD1;
+public class EzspGetMulticastTableEntryRequest extends EzspFrameRequest {
+    public static final int FRAME_ID = 0x63;
+
+    /**
+     * The index of a multicast table entry.
+     * <p>
+     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
+     */
+    private int index;
 
     /**
      * Serialiser used to serialise to binary line data
@@ -33,9 +39,29 @@ public class EzspGetRoutingShortcutThresholdRequest extends EzspFrameRequest {
     /**
      * Request constructor
      */
-    public EzspGetRoutingShortcutThresholdRequest() {
+    public EzspGetMulticastTableEntryRequest() {
         frameId = FRAME_ID;
         serializer = new EzspSerializer();
+    }
+
+    /**
+     * The index of a multicast table entry.
+     * <p>
+     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
+     *
+     * @return the current index as {@link int}
+     */
+    public int getIndex() {
+        return index;
+    }
+
+    /**
+     * The index of a multicast table entry.
+     *
+     * @param index the index to set as {@link int}
+     */
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     @Override
@@ -44,14 +70,17 @@ public class EzspGetRoutingShortcutThresholdRequest extends EzspFrameRequest {
         serializeHeader(serializer);
 
         // Serialize the fields
+        serializer.serializeUInt8(index);
         return serializer.getPayload();
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(66);
-        builder.append("EzspGetRoutingShortcutThresholdRequest [networkId=");
+        final StringBuilder builder = new StringBuilder(86);
+        builder.append("EzspGetMulticastTableEntryRequest [networkId=");
         builder.append(networkId);
+        builder.append(", index=");
+        builder.append(index);
         builder.append(']');
         return builder.toString();
     }

@@ -44,6 +44,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyStructBitmas
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberLibraryStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberMacPassthroughType;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberMulticastTableEntry;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNeighborTableEntry;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus;
@@ -212,6 +213,17 @@ public class EzspDeserializer {
 
     public EmberApsFrame deserializeEmberApsFrame() {
         return new EmberApsFrame(this);
+    }
+
+    public EmberMulticastTableEntry deserializeEmberMulticastTableEntry() {
+        // Some version of the protocol don't send the last uint8 field (networkIndex)
+        // So in order to avoid overflow we need to pad the array
+        if (buffer.length - position < 4) {
+            int[] fixedBuffer = new int[buffer.length + 1];
+            System.arraycopy(buffer, 0, fixedBuffer, 0, buffer.length);
+            buffer = fixedBuffer;
+        }
+        return new EmberMulticastTableEntry(this);
     }
 
     public Set<EmberApsOption> deserializeEmberApsOption() {

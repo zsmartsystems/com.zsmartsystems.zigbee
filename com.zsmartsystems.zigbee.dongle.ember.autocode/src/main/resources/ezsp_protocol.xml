@@ -533,6 +533,56 @@
 	</command>
 
 	<command>
+		<name>getMulticastTableEntry</name>
+		<id>0x63</id>
+		<description>Gets an entry from the multicast table.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>index</name>
+				<description>The index of a multicast table entry.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>An EmberStatus value indicating success or the reason for failure.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberMulticastTableEntry</data_type>
+				<name>value</name>
+				<description>The contents of the multicast entry.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>setMulticastTableEntry</name>
+		<id>0x64</id>
+		<description>Sets an entry in the multicast table.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>index</name>
+				<description>The index of a multicast table entry</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberMulticastTableEntry</data_type>
+				<name>value</name>
+				<description>The contents of the multicast entry.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>An EmberStatus value indicating success or the reason for failure.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
 		<name>changeSourceRouteHandler</name>
 		<id>0xC4</id>
 		<description>Change the source route entry in a source route table.</description>
@@ -4491,6 +4541,29 @@
 				<data_type>EmberKeyData</data_type>
 				<name>gpdKey</name>
 				<description>The key to use for GPD.</description>
+			</parameter>
+		</parameters>
+	</structure>
+	
+	<structure>
+		<name>EmberMulticastTableEntry</name>
+		<description>A multicast table entry indicates that a particular endpoint is a member of a particular multicast group. Only devices with an endpoint in a multicast group will receive messages sent to that multicast group.</description>
+		<parameters>
+			<parameter>
+				<data_type>EmberMulticastId</data_type>
+				<name>multicastId</name>
+				<description>The multicast group ID.</description>
+				<display>hex[4]</display>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>endpoint</name>
+				<description>The endpoint that is a member, or 0 if this entry is not in use (the ZDO is not a member of any multicast groups.)</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>networkIndex</name>
+				<description>The network index of the network the entry is related to.</description>
 			</parameter>
 		</parameters>
 	</structure>
