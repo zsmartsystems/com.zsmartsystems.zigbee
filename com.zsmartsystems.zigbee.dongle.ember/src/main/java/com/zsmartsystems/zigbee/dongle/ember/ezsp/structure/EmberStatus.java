@@ -453,6 +453,16 @@ public enum EmberStatus {
     EMBER_PAN_ID_CHANGED(0x009A),
 
     /**
+     * The network has been opened for joining.
+     */
+    EMBER_NETWORK_OPENED(0x009C),
+
+    /**
+     * The network has been closed for joining.
+     */
+    EMBER_NETWORK_CLOSED(0x009D),
+
+    /**
      * An attempt to join or rejoin the network failed because no router beacons could be heard by the
      * joining node.
      */

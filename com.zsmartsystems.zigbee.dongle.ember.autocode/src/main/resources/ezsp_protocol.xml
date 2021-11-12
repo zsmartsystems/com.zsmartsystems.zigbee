@@ -5493,6 +5493,11 @@
 				<enum_value>0x38</enum_value>
 				<description>The length of time, in seconds, that a trust center will allow a Trust Center (insecure) rejoin for a device that is using the well-known link key. This timeout takes effect once rejoins using the well-known key has been allowed. This command updates the emAllowTcRejoinsUsingWellKnownKeyTimeoutSec value.</description>
 			</value>
+			<value>
+				<name>EZSP_CONFIG_CTUNE_VALUE</name>
+				<enum_value>0x39</enum_value>
+				<description>Valid range of a CTUNE value is 0x0000-0x01FF. Higher order bits (0xFE00) of the 16-bit value are ignored.</description>
+			</value>
 		</values>
 	</enum>
 
@@ -5889,6 +5894,16 @@
 				<name>EMBER_PAN_ID_CHANGED</name>
 				<enum_value>0x009A</enum_value>
 				<description>The local PAN ID has changed. The application can obtain the new PAN ID by calling emberGetPanId().</description>
+			</value>
+			<value>
+				<name>EMBER_NETWORK_OPENED</name>
+				<enum_value>0x009C</enum_value>
+				<description>The network has been opened for joining.</description>
+			</value>
+			<value>
+				<name>EMBER_NETWORK_CLOSED</name>
+				<enum_value>0x009D</enum_value>
+				<description>The network has been closed for joining.</description>
 			</value>
 			<value>
 				<name>EMBER_NO_BEACONS</name>
@@ -7295,6 +7310,31 @@
 				<name>EZSP_VALUE_MAX_BEACONS_TO_STORE</name>
 				<enum_value>0x3D</enum_value>
 				<description>When scanning, configure the maximum number of beacons to store in cache. Each beacon consumes one packet buffer in RAM.</description>
+			</value>
+			<value>
+				<name>EZSP_VALUE_END_DEVICE_TIMEOUT_OPTIONS_MASK</name>
+				<enum_value>0x3E</enum_value>
+				<description>Set the mask to filter out unacceptable child timeout options on a router.</description>
+			</value>
+			<value>
+				<name>EZSP_VALUE_END_DEVICE_KEEP_ALIVE_SUPPORT_MODE</name>
+				<enum_value>0x3F</enum_value>
+				<description>The end device keep-alive mode supported by the parent.</description>
+			</value>
+			<value>
+				<name>EZSP_VALUE_GPIO_RADIO_POWER_MASK</name>
+				<enum_value>0x40</enum_value>
+				<description>Sets the mask that controls which pins will have their GPIO configuration and output values set to their power-up and power-down values when the NCP powers the radio up and down.</description>
+			</value>
+			<value>
+				<name>EZSP_VALUE_ACTIVE_RADIO_CONFIG</name>
+				<enum_value>0x41</enum_value>
+				<description>Return the active radio config. Read only. Values are 0: Default, 1: Antenna Diversity, 2: Co-Existence, 3: Antenna diversity and Co-Existence.</description>
+			</value>
+			<value>
+				<name>EZSP_VALUE_NWK_OPEN_DURATION</name>
+				<enum_value>0x42</enum_value>
+				<description>Return the number of seconds the network will remain open. A return value of 0 indicates that the network is closed. Read only.</description>
 			</value>
 		</values>
 	</enum>
