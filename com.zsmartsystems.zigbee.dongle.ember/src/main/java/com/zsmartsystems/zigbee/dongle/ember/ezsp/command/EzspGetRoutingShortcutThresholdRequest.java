@@ -49,6 +49,10 @@ public class EzspGetRoutingShortcutThresholdRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspGetRoutingShortcutThresholdRequest []";
+        final StringBuilder builder = new StringBuilder(66);
+        builder.append("EzspGetRoutingShortcutThresholdRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

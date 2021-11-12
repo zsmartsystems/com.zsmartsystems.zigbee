@@ -48,6 +48,10 @@ public class EzspGetSourceRouteTableFilledSizeRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspGetSourceRouteTableFilledSizeRequest []";
+        final StringBuilder builder = new StringBuilder(68);
+        builder.append("EzspGetSourceRouteTableFilledSizeRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }
