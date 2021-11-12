@@ -275,7 +275,35 @@ public enum EzspValueId {
      * When scanning, configure the maximum number of beacons to store in cache. Each beacon
      * consumes one packet buffer in RAM.
      */
-    EZSP_VALUE_MAX_BEACONS_TO_STORE(0x003D);
+    EZSP_VALUE_MAX_BEACONS_TO_STORE(0x003D),
+
+    /**
+     * Set the mask to filter out unacceptable child timeout options on a router.
+     */
+    EZSP_VALUE_END_DEVICE_TIMEOUT_OPTIONS_MASK(0x003E),
+
+    /**
+     * The end device keep-alive mode supported by the parent.
+     */
+    EZSP_VALUE_END_DEVICE_KEEP_ALIVE_SUPPORT_MODE(0x003F),
+
+    /**
+     * Sets the mask that controls which pins will have their GPIO configuration and output values
+     * set to their power-up and power-down values when the NCP powers the radio up and down.
+     */
+    EZSP_VALUE_GPIO_RADIO_POWER_MASK(0x0040),
+
+    /**
+     * Return the active radio config. Read only. Values are 0: Default, 1: Antenna Diversity, 2:
+     * Co-Existence, 3: Antenna diversity and Co-Existence.
+     */
+    EZSP_VALUE_ACTIVE_RADIO_CONFIG(0x0041),
+
+    /**
+     * Return the number of seconds the network will remain open. A return value of 0 indicates that
+     * the network is closed. Read only.
+     */
+    EZSP_VALUE_NWK_OPEN_DURATION(0x0042);
 
     /**
      * A mapping between the integer code and its corresponding type to

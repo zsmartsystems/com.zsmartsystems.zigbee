@@ -285,7 +285,13 @@ public enum EzspConfigId {
      * rejoins using the well-known key has been allowed. This command updates the
      * emAllowTcRejoinsUsingWellKnownKeyTimeoutSec value.
      */
-    EZSP_CONFIG_TC_REJOINS_USING_WELL_KNOWN_KEY_TIMEOUT_S(0x0038);
+    EZSP_CONFIG_TC_REJOINS_USING_WELL_KNOWN_KEY_TIMEOUT_S(0x0038),
+
+    /**
+     * Valid range of a CTUNE value is 0x0000-0x01FF. Higher order bits (0xFE00) of the 16-bit value
+     * are ignored.
+     */
+    EZSP_CONFIG_CTUNE_VALUE(0x0039);
 
     /**
      * A mapping between the integer code and its corresponding type to
