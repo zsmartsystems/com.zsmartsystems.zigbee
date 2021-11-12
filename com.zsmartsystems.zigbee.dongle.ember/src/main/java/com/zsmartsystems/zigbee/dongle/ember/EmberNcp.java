@@ -58,6 +58,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetLibraryStatusRe
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetLibraryStatusResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetMfgTokenRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetMfgTokenResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetMulticastTableEntryRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetMulticastTableEntryResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNodeIdRequest;
@@ -106,6 +108,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetManufacturerCod
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetManufacturerCodeResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetMfgTokenRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetMfgTokenResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetMulticastTableEntryRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetMulticastTableEntryResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPolicyRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPolicyResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPowerDescriptorRequest;
@@ -130,6 +134,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyStruct;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberLibraryId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberLibraryStatus;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberMulticastTableEntry;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberRouteTableEntry;
@@ -834,6 +839,10 @@ public class EmberNcp {
                 new EzspSingleResponseTransaction(request, EzspGetRouteTableEntryResponse.class));
         EzspGetRouteTableEntryResponse response = (EzspGetRouteTableEntryResponse) transaction
                 .getResponse();
+        if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
+            logger.debug("Error request route table entry: {}", response);
+            return null;
+        }
         return response.getValue();
     }
 
@@ -1268,6 +1277,44 @@ public class EmberNcp {
         EzspTransaction transaction = protocolHandler
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspSetRadioChannelResponse.class));
         EzspSetRadioChannelResponse response = (EzspSetRadioChannelResponse) transaction.getResponse();
+        return response.getStatus();
+    }
+
+    /**
+     * Gets an entry from the multicast table
+     *
+     * @return the {@link EmberMulticastTableEntry} or null on error
+     */
+    public EmberMulticastTableEntry getMulticastTableEntry(int index) {
+        EzspGetMulticastTableEntryRequest request = new EzspGetMulticastTableEntryRequest();
+        request.setIndex(index);
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(
+                        new EzspSingleResponseTransaction(request, EzspGetMulticastTableEntryResponse.class));
+
+        EzspGetMulticastTableEntryResponse response = (EzspGetMulticastTableEntryResponse) transaction.getResponse();
+
+        if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
+            logger.debug("Error request multicast table entry: {}", response);
+            return null;
+        }
+
+        return response.getValue();
+    }
+
+    /**
+     * Sets an entry in the multicast table.
+     *
+     * @return the {@link EmberStatus}
+     */
+    public EmberStatus setMulticastTableEntry(int index, EmberMulticastTableEntry value) {
+        EzspSetMulticastTableEntryRequest request = new EzspSetMulticastTableEntryRequest();
+        request.setIndex(index);
+        request.setValue(value);
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(
+                        new EzspSingleResponseTransaction(request, EzspSetMulticastTableEntryResponse.class));
+        EzspSetMulticastTableEntryResponse response = (EzspSetMulticastTableEntryResponse) transaction.getResponse();
         return response.getStatus();
     }
 }
