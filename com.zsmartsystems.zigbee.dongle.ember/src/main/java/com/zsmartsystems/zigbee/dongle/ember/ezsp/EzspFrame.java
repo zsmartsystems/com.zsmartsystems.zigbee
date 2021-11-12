@@ -124,6 +124,7 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_GET_KEY_TABLE_ENTRY = 0x71;
     protected static final int FRAME_ID_GET_LIBRARY_STATUS = 0x01;
     protected static final int FRAME_ID_GET_MFG_TOKEN = 0x0B;
+    protected static final int FRAME_ID_GET_MULTICAST_TABLE_ENTRY = 0x63;
     protected static final int FRAME_ID_GET_NEIGHBOR = 0x79;
     protected static final int FRAME_ID_GET_NETWORK_PARAMETERS = 0x28;
     protected static final int FRAME_ID_GET_NEXT_BEACON = 0x3D;
@@ -210,6 +211,7 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_SET_KEY_TABLE_ENTRY = 0x72;
     protected static final int FRAME_ID_SET_MANUFACTURER_CODE = 0x15;
     protected static final int FRAME_ID_SET_MFG_TOKEN = 0x0C;
+    protected static final int FRAME_ID_SET_MULTICAST_TABLE_ENTRY = 0x64;
     protected static final int FRAME_ID_SET_POLICY = 0x55;
     protected static final int FRAME_ID_SET_POWER_DESCRIPTOR = 0x16;
     protected static final int FRAME_ID_SET_PREINSTALLED_CBKE_DATA = 0xA2;
@@ -286,6 +288,7 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_GET_KEY_TABLE_ENTRY, EzspGetKeyTableEntryResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_LIBRARY_STATUS, EzspGetLibraryStatusResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_MFG_TOKEN, EzspGetMfgTokenResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GET_MULTICAST_TABLE_ENTRY, EzspGetMulticastTableEntryResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_NEIGHBOR, EzspGetNeighborResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_NETWORK_PARAMETERS, EzspGetNetworkParametersResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_NEXT_BEACON, EzspGetNextBeaconResponse.class);
@@ -372,6 +375,7 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_SET_KEY_TABLE_ENTRY, EzspSetKeyTableEntryResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_MANUFACTURER_CODE, EzspSetManufacturerCodeResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_MFG_TOKEN, EzspSetMfgTokenResponse.class);
+        ezspHandlerMap.put(FRAME_ID_SET_MULTICAST_TABLE_ENTRY, EzspSetMulticastTableEntryResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_POLICY, EzspSetPolicyResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_POWER_DESCRIPTOR, EzspSetPowerDescriptorResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_PREINSTALLED_CBKE_DATA, EzspSetPreinstalledCbkeDataResponse.class);

@@ -7,118 +7,12 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddEndpointRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddEndpointResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddOrUpdateKeyTableEntryRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddOrUpdateKeyTableEntryResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddTransientLinkKeyRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddTransientLinkKeyResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAesMmoHashRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAesMmoHashResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspClearKeyTableRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspClearKeyTableResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspCustomFrameRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspCustomFrameResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspEnergyScanResultHandler;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetCertificate283k1Request;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetCertificate283k1Response;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetCertificateRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetCertificateResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetChildDataRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetChildDataResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetConfigurationValueRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetConfigurationValueResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetCurrentSecurityStateRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetCurrentSecurityStateResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetEui64Request;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetEui64Response;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetKeyRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetKeyResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetKeyTableEntryRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetKeyTableEntryResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetLibraryStatusRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetLibraryStatusResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetMfgTokenRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetMfgTokenResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNodeIdRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNodeIdResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetParentChildParametersRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetParentChildParametersResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetPolicyRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetPolicyResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetRouteTableEntryRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetRouteTableEntryResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetSourceRouteTableEntryRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetSourceRouteTableEntryResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetSourceRouteTableFilledSizeRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetSourceRouteTableFilledSizeResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetSourceRouteTableTotalSizeRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetSourceRouteTableTotalSizeResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetStandaloneBootloaderVersionPlatMicroPhyRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetTransientKeyTableEntryRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetTransientKeyTableEntryResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetTransientLinkKeyRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetTransientLinkKeyResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetValueRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetValueResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetXncpInfoRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetXncpInfoResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLeaveNetworkRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspLeaveNetworkResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkFoundHandler;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkInitResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspReadCountersRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspReadCountersResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspResetToFactoryDefaultsRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspResetToFactoryDefaultsResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspScanCompleteHandler;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendManyToOneRouteRequestRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSendManyToOneRouteRequestResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetConfigurationValueRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetConfigurationValueResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetExtendedTimeoutRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetExtendedTimeoutResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetManufacturerCodeRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetManufacturerCodeResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetMfgTokenRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetMfgTokenResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPolicyRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPolicyResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPowerDescriptorRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPowerDescriptorResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetRadioChannelRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetRadioChannelResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetRadioPowerRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetRadioPowerResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetValueRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetValueResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStartScanRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStartScanResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionRequest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.*;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberAesMmoHashContext;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCertificate283k1Data;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberCertificateData;
@@ -129,6 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyStruct;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberLibraryId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberLibraryStatus;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberMulticastTableEntry;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberRouteTableEntry;
@@ -147,6 +42,17 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspSingleResp
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransaction;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.zcl.field.ByteArray;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * This class provides utility methods for accessing the Ember NCP.
@@ -791,7 +697,8 @@ public class EmberNcp {
                 new EzspSingleResponseTransaction(request, EzspGetRouteTableEntryResponse.class));
         EzspGetRouteTableEntryResponse response = (EzspGetRouteTableEntryResponse) transaction
                 .getResponse();
-        if(response.getStatus() != EmberStatus.EMBER_SUCCESS) {
+        if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
+            logger.debug("Error request route table entry: {}", response);
             return null;
         }
         return response.getValue();
@@ -1225,6 +1132,44 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspSetRadioChannelResponse.class));
         EzspSetRadioChannelResponse response = (EzspSetRadioChannelResponse) transaction.getResponse();
+        return response.getStatus();
+    }
+
+    /**
+     * Gets an entry from the multicast table
+     *
+     * @return the {@link EmberMulticastTableEntry} or null on error
+     */
+    public EmberMulticastTableEntry getMulticastTableEntry(int index) {
+        EzspGetMulticastTableEntryRequest request = new EzspGetMulticastTableEntryRequest();
+        request.setIndex(index);
+        EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
+                .sendEzspTransaction(
+                        new EzspSingleResponseTransaction(request, EzspGetMulticastTableEntryResponse.class));
+
+        EzspGetMulticastTableEntryResponse response = (EzspGetMulticastTableEntryResponse) transaction.getResponse();
+
+        if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
+            logger.debug("Error request multicast table entry: {}", response);
+            return null;
+        }
+
+        return response.getValue();
+    }
+
+    /**
+     * Sets an entry in the multicast table.
+     *
+     * @return the {@link EmberStatus}
+     */
+    public EmberStatus setMulticastTableEntry(int index, EmberMulticastTableEntry value) {
+        EzspSetMulticastTableEntryRequest request = new EzspSetMulticastTableEntryRequest();
+        request.setIndex(index);
+        request.setValue(value);
+        EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
+                .sendEzspTransaction(
+                        new EzspSingleResponseTransaction(request, EzspSetMulticastTableEntryResponse.class));
+        EzspSetMulticastTableEntryResponse response = (EzspSetMulticastTableEntryResponse) transaction.getResponse();
         return response.getStatus();
     }
 }
