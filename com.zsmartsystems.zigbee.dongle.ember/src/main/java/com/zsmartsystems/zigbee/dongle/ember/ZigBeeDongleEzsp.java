@@ -351,6 +351,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         stackPolicies.put(EzspPolicyId.EZSP_TC_KEY_REQUEST_POLICY,
                 EzspDecisionId.EZSP_ALLOW_TC_KEY_REQUESTS_AND_SEND_CURRENT_KEY);
         stackPolicies.put(EzspPolicyId.EZSP_TRUST_CENTER_POLICY, EzspDecisionId.EZSP_ALLOW_PRECONFIGURED_KEY_JOINS);
+        // this effectively sets the rejoin with a well-known key to 0 = OFF
+        stackPolicies.put(EzspPolicyId.EZSP_TC_REJOINS_USING_WELL_KNOWN_KEY_POLICY, EzspDecisionId.EZSP_ALLOW_JOINS);
         stackPolicies.put(EzspPolicyId.EZSP_MESSAGE_CONTENTS_IN_CALLBACK_POLICY,
                 EzspDecisionId.EZSP_MESSAGE_TAG_ONLY_IN_CALLBACK);
         stackPolicies.put(EzspPolicyId.EZSP_APP_KEY_REQUEST_POLICY, EzspDecisionId.EZSP_DENY_APP_KEY_REQUESTS);
