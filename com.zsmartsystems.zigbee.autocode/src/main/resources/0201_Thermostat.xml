@@ -128,7 +128,7 @@
         <name>Pi Heating Demand</name>
         <description>The PIHeatingDemand attribute is 8 bits in length and specifies the level of heating demanded by the PI (proportional  integral) control loop in use by the thermostat (if any), in percent.  This value is 0 when the thermostat is in &#8220;off&#8221; or &#8220;cooling&#8221; mode.</description>
     </attribute>
-    <attribute code="0x0009" type="BITMAP_8_BIT" side="server" optional="true" writable="false" reportable="false">
+    <attribute code="0x0009" type="BITMAP_8_BIT" side="server" optional="true" writable="true" reportable="false">
         <name>Hvac System Type Configuration</name>
     </attribute>
     <attribute code="0x0010" type="SIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false" minimum="0xE7" maximum="0x19" default="0x00">
@@ -161,7 +161,7 @@
     <attribute code="0x0019" type="SIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false" minimum="0x0A" maximum="0x19" default="0x19">
         <name>Min Setpoint Dead Band</name>
     </attribute>
-    <attribute code="0x001A" type="BITMAP_8_BIT" side="server" optional="true" writable="false" reportable="false" default="0x00">
+    <attribute code="0x001A" type="BITMAP_8_BIT" side="server" optional="true" writable="true" reportable="false" default="0x00">
         <name>Remote Sensing</name>
     </attribute>
     <attribute code="0x001B" type="ENUMERATION_8_BIT" side="server" optional="false" writable="true" reportable="false" default="0x04">
