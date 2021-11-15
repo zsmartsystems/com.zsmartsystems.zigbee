@@ -2426,7 +2426,7 @@
 				<description>This is the IEEE address of the partner that the device successfully established a key with. This value is all zeros on a failure.</description>
 			</parameter>
 			<parameter>
-				<data_type>EmberStatus</data_type>
+				<data_type>EmberKeyStatus</data_type>
 				<name>status</name>
 				<description>This is the status indicating what was established or why the key establishment failed.</description>
 			</parameter>
