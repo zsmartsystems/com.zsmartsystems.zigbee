@@ -76,19 +76,19 @@ public class ZigBeeDiscoveryExtensionTest {
         extension.setUpdateMeshTasks(
                 Arrays.asList(new NodeDiscoveryTask[] { NodeDiscoveryTask.ROUTES, NodeDiscoveryTask.NEIGHBORS }));
 
-        extension.setUpdatePeriod(0);
+        extension.setUpdateMeshPeriod(0);
 
         assertEquals(ZigBeeStatus.SUCCESS, extension.extensionInitialize(networkManager));
         assertEquals(ZigBeeStatus.SUCCESS, extension.extensionStartup());
         assertEquals(ZigBeeStatus.INVALID_STATE, extension.extensionStartup());
 
-        extension.setUpdatePeriod(0);
+        extension.setUpdateMeshPeriod(0);
         Mockito.verify(extension, Mockito.times(1)).stopScheduler();
-        assertEquals(0, extension.getUpdatePeriod());
+        assertEquals(0, extension.getUpdateMeshPeriod());
 
-        extension.setUpdatePeriod(1);
+        extension.setUpdateMeshPeriod(1);
         Mockito.verify(extension, Mockito.times(1)).startScheduler(1);
-        assertEquals(1, extension.getUpdatePeriod());
+        assertEquals(1, extension.getUpdateMeshPeriod());
 
         Mockito.verify(networkManager, Mockito.timeout(TIMEOUT).atLeast(1))
                 .addNetworkNodeListener(ArgumentMatchers.any(ZigBeeNetworkNodeListener.class));

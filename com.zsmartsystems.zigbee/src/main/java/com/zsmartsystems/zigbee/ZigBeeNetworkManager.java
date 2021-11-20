@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -959,7 +958,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         int sourceAddress = apsFrame.getSourceAddress();
         ZigBeeNode zigBeeNode = getNode(sourceAddress);
         if (zigBeeNode != null) {
-            ZigBeeNode updatedNode = new ZigBeeNode(this, zigBeeNode.getIeeeAddress(), sourceAddress);
+            ZigBeeNode updatedNode = new ZigBeeNode(this, zigBeeNode.getIeeeAddress());
             updatedNode.setNodeState(ZigBeeNodeState.ONLINE);
             refreshNode(updatedNode);
         }
@@ -1824,12 +1823,14 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
                     logger.trace("{}: Refresh Node notifyListener LATCH Complete", currentNode.getIeeeAddress());
                     return true;
                 } else {
-                    logger.trace("{}: Refresh Node notifyListener LATCH Timeout, remaining = {}", currentNode.getIeeeAddress(),
+                    logger.trace("{}: Refresh Node notifyListener LATCH Timeout, remaining = {}",
+                            currentNode.getIeeeAddress(),
                             latch.getCount());
                     return false;
                 }
             } catch (InterruptedException e) {
-                logger.trace("{}: Refresh Node notifyListener LATCH Interrupted, remaining = {}", currentNode.getIeeeAddress(),
+                logger.trace("{}: Refresh Node notifyListener LATCH Interrupted, remaining = {}",
+                        currentNode.getIeeeAddress(),
                         latch.getCount());
                 return false;
             }
