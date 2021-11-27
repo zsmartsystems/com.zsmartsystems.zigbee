@@ -519,7 +519,7 @@ public class ZstackProtocolHandler {
             futureResponse.get(TIMEOUT, TimeUnit.MILLISECONDS);
         } catch (InterruptedException | TimeoutException | ExecutionException e) {
             futureResponse.cancel(true);
-            logger.debug("ZSTACK interrupted in sendTransaction for {}", transaction);
+            logger.debug("ZSTACK interrupted in sendTransaction for {}", transaction, e);
         }
 
         return transaction;

@@ -7,24 +7,23 @@
  */
 package com.zsmartsystems.zigbee.dongle.zstack.internal;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.dongle.zstack.ZstackNcp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.ZstackFrameResponse;
 import com.zsmartsystems.zigbee.dongle.zstack.api.ZstackResponseCode;
-import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackResetType;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysResetIndAreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackZdoState;
 import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetDeviceInfoSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoStateChangeIndAreq;
 import com.zsmartsystems.zigbee.transport.DeviceType;
+import com.zsmartsystems.zigbee.transport.ZigBeePort;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * This class provides utility functions to establish a ZStack ZigBee network
@@ -91,20 +90,16 @@ public class ZstackNetworkInitialisation {
      * The dongle is not reset completely, thus allowing it to be placed back into the previous network.
      *
      * @param initialize set to true to reset the dongle and erase all current network settings
+     * @param serialPort
      */
-    public ZigBeeStatus initializeNcp(boolean initialize) {
+    public ZigBeeStatus initializeNcp(boolean initialize, ZigBeePort serialPort) {
         logger.debug("ZStack Initialisation: Initialise");
         ZstackNcp ncp = new ZstackNcp(protocolHandler);
 
-        ZstackSysResetIndAreq resetResponse = ncp.resetNcp(ZstackResetType.SERIAL_BOOTLOADER);
-        logger.debug("ZStack Initialisation: Reset response {}", resetResponse);
-
-        if (resetResponse == null) {
-            // The reset failed - assume we're in the bootloader and try and exit
-            if (exitBootloader() == false) {
-                logger.debug("ZStack Initialisation: Failed to exit bootloader");
-                return ZigBeeStatus.COMMUNICATION_ERROR;
-            }
+        // The reset failed - assume we're in the bootloader and try and exit
+        if (exitBootloader(serialPort) == false) {
+            logger.debug("ZStack Initialisation: Failed to exit bootloader");
+            return ZigBeeStatus.COMMUNICATION_ERROR;
         }
 
         if (initialize) {
@@ -194,20 +189,38 @@ public class ZstackNetworkInitialisation {
      * Attempts to exit the bootloader by sending the "magic number" and waiting for the {@link ZstackSysResetIndAreq}
      * to be received to confirm that the NCP application firmware has started.
      *
+     * https://www.ti.com/lit/an/swra466d/swra466d.pdf
+     * https://www.ti.com/lit/ug/swcu185d/swcu185d.pdf
+     *
      * @return true if the {@link ZstackSysResetIndAreq} was received, otherwise false
+     * @param serialPort Serial port
      */
-    private boolean exitBootloader() {
-        Future<ZstackFrameResponse> waiter = protocolHandler.waitForEvent(ZstackSysResetIndAreq.class);
+    private boolean exitBootloader(ZigBeePort serialPort) {
+        // FIXME this does not work in the OpenHAB binding, as it seems their write() implementation blocks
+        /*
         protocolHandler.sendRaw(magicNumber);
+        if (waitForBoot("Magicnumber")) {
+            return true;
+        }
+         */
 
+        serialPort.setDtr(false);
+
+        serialPort.setRts(false);
+        serialPort.setRts(true);
+        serialPort.setRts(false);
+
+        return waitForBoot("Hardware reset");
+    }
+
+    private boolean waitForBoot(String resetMode) {
+        Future<ZstackFrameResponse> waiter = protocolHandler.waitForEvent(ZstackSysResetIndAreq.class);
         try {
             ZstackFrameResponse response = waiter.get(BOOTLOAD_TIMEOUT, TimeUnit.MILLISECONDS);
-            logger.debug("ZStack Initialisation: Bootloader reset response {}", response);
-
+            logger.debug("ZStack Initialisation: Bootloader reset via {} response {}", resetMode, response);
             return true;
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
-            logger.debug("ZStack Initialisation: Bootloader reset failed");
-
+            logger.debug("ZStack Initialisation: Bootloader reset via {} failed", resetMode, e);
             return false;
         }
     }
