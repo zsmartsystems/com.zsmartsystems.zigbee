@@ -113,6 +113,13 @@ public class ZstackProtocolHandlerTest {
         }
 
         @Override
+        public void write(int[] bytes) {
+            for (int b: bytes) {
+                outputData.add(b);
+            }
+        }
+
+        @Override
         public int read(int timeout) {
             return read();
         }
