@@ -241,7 +241,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
         ZstackNetworkInitialisation netInitialiser = new ZstackNetworkInitialisation(frameHandler);
         netInitialiser.setMagicNumber(magicNumber);
 
-        netInitialiser.initializeNcp(false);
+        netInitialiser.initializeNcp(false, serialPort);
 
         ZstackNcp ncp = getZstackNcp();
 
@@ -296,7 +296,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit, ZstackFrameH
         netInitialiser.setMagicNumber(magicNumber);
         if (reinitialize) {
             logger.debug("Reinitialising ZStack NCP network.");
-            netInitialiser.initializeNcp(true);
+            netInitialiser.initializeNcp(true, serialPort);
 
             if (deviceType == DeviceType.COORDINATOR) {
                 netInitialiser.formNetwork();

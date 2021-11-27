@@ -150,6 +150,14 @@ public class ZstackProtocolHandlerTest {
         public void purgeRxBuffer() {
         }
 
+        @Override
+        public void setDtr(boolean state) {
+        }
+
+        @Override
+        public void setRts(boolean state) {
+        }
+
         public List<Integer> getOutputData() {
             return outputData;
         }

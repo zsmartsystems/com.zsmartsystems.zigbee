@@ -354,5 +354,13 @@ public class SpiFrameHandlerTest {
         @Override
         public void purgeRxBuffer() {
         }
+
+        @Override
+        public void setDtr(boolean state) {
+        }
+
+        @Override
+        public void setRts(boolean state) {
+        }
     }
 }

@@ -111,5 +111,13 @@ public class Cc2351TestPacket {
         @Override
         public void purgeRxBuffer() {
         }
+
+        @Override
+        public void setDtr(boolean state) {
+        }
+
+        @Override
+        public void setRts(boolean state) {
+        }
     }
 }
