@@ -159,7 +159,7 @@ public class ZigBeeConsoleMain {
         options.addOption(Option.builder("p").longOpt("port").argName("port name").hasArg().desc("Set the port")
                 .required().build());
         options.addOption(
-                Option.builder("b").longOpt("baud").hasArg().argName("baud").desc("Set the port baud rate").build());
+                Option.builder("b").longOpt("baud").hasArg().argName("baud").desc("Set the port baud rate").required().build());
         options.addOption(Option.builder("f").longOpt("flow").hasArg().argName("type")
                 .desc("Set the flow control (none | hardware | software)").build());
         options.addOption(Option.builder("c").longOpt("channel").hasArg().argName("channel id")
