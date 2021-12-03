@@ -115,11 +115,17 @@ public class EmberNetworkInitialisation {
         ensureNetworkLeft();
 
         // Perform an energy scan to find a clear channel
-        Integer quietestChannel = doEnergyScan(ncp, scanDuration);
-        if (quietestChannel == null) {
-            return ZigBeeStatus.FATAL_ERROR;
+        Integer quietestChannel;
+        if (networkParameters.getRadioChannel() == ZigBeeChannel.UNKNOWN.getChannel()) {
+            quietestChannel = doEnergyScan(ncp, scanDuration);
+            if (quietestChannel == null) {
+                return ZigBeeStatus.FATAL_ERROR;
+            }
+            logger.debug("Energy scan reports quietest channel is {}", quietestChannel);
+        } else {
+            quietestChannel = null;
+            logger.debug("Channel is set ({}), skipping energy scan", networkParameters.getRadioChannel());
         }
-        logger.debug("Energy scan reports quietest channel is {}", quietestChannel);
 
         // Check if any current networks were found and avoid those channels, PAN ID and especially Extended PAN ID
         ncp.doActiveScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, scanDuration);
