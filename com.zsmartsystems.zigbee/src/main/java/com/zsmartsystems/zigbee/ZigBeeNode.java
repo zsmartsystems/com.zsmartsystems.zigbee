@@ -890,6 +890,11 @@ public class ZigBeeNode {
         return dao;
     }
 
+    /**
+     * Sets the states of this node given the {@link ZigBeeNodeDao} used to serialise the node information
+     *
+     * @param dao the {@link ZigBeeNodeDao} used to serialise the node information
+     */
     public void setDao(ZigBeeNodeDao dao) {
         ieeeAddress = dao.getIeeeAddress();
         setNetworkAddress(dao.getNetworkAddress());

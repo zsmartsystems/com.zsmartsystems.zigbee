@@ -138,7 +138,6 @@ public class ZigBeeNetworkDiscovererTest {
             }
         }).when(networkManager).getNode(ArgumentMatchers.anyInt());
 
-        discoverer.setRetryPeriod(Integer.MAX_VALUE);
         discoverer.startup();
 
         // Check it registers listeners
@@ -154,7 +153,6 @@ public class ZigBeeNetworkDiscovererTest {
         assertEquals(new IeeeAddress("1234567890ABCDEF"), node.getIeeeAddress());
         assertEquals(0, node.getEndpoints().size());
 
-        discoverer.setRetryCount(0);
         discoverer.setRequeryPeriod(0);
         discoverer.shutdown();
     }
@@ -167,9 +165,7 @@ public class ZigBeeNetworkDiscovererTest {
         announce.setSourceAddress(new ZigBeeEndpointAddress(1));
 
         ZigBeeNetworkDiscoverer discoverer = new ZigBeeNetworkDiscoverer(networkManager);
-        discoverer.setRetryPeriod(0);
         discoverer.setRequeryPeriod(0);
-        discoverer.setRetryCount(0);
 
         discoverer.commandReceived(announce);
         Mockito.verify(networkManager, Mockito.times(1)).updateNode(ArgumentMatchers.any());
@@ -184,9 +180,7 @@ public class ZigBeeNetworkDiscovererTest {
     @Test
     public void deviceStatusUpdate() {
         ZigBeeNetworkDiscoverer discoverer = new ZigBeeNetworkDiscoverer(networkManager);
-        discoverer.setRetryPeriod(0);
         discoverer.setRequeryPeriod(0);
-        discoverer.setRetryCount(0);
 
         discoverer.deviceStatusUpdate(ZigBeeNodeStatus.UNSECURED_JOIN, 2222, new IeeeAddress("1111111111111111"));
 

@@ -57,7 +57,7 @@ public class ZigBeeConsoleDeviceFingerprintCommand extends ZigBeeConsoleAbstract
 
     @Override
     public String getSyntax() {
-        return "ADRESS";
+        return "ADDRESS";
     }
 
     @Override
