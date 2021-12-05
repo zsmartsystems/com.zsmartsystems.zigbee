@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -970,7 +969,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         int sourceAddress = apsFrame.getSourceAddress();
         ZigBeeNode zigBeeNode = getNode(sourceAddress);
         if (zigBeeNode != null) {
-            ZigBeeNode updatedNode = new ZigBeeNode(this, zigBeeNode.getIeeeAddress(), sourceAddress);
+            ZigBeeNode updatedNode = new ZigBeeNode(this, zigBeeNode.getIeeeAddress());
             updatedNode.setNodeState(ZigBeeNodeState.ONLINE);
             refreshNode(updatedNode);
         }
