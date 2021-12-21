@@ -76,7 +76,9 @@ public class EmberConsoleNcpRoutingCommand extends EmberConsoleAbstractCommand {
         Map<Integer, EmberRouteTableEntry> routeTableMap = new TreeMap<>();
         for (int cnt = 0; cnt < configRouteTableSize; cnt++) {
             EmberRouteTableEntry route = ncp.getRouteTableEntry(cnt);
-            routeTableMap.put(route.getDestination(), route);
+            if (route != null) {
+                routeTableMap.put(route.getDestination(), route);
+            }
         }
 
         List<EmberSourceRouteTableEntry> sourceRouteTable = new ArrayList<>();
@@ -97,11 +99,13 @@ public class EmberConsoleNcpRoutingCommand extends EmberConsoleAbstractCommand {
         out.println(String.format(ncpRouteTableFormat, "Destination", "Next", "Age", "Concentrator", "Status"));
         for (EmberRouteTableEntry route : routeTableMap.values()) {
             out.println(String.format(ncpRouteTableFormat,
-                String.format("%04X (%5d)", route.getDestination(), route.getDestination()),
-                String.format("%04X (%5d)", route.getNextHop(), route.getNextHop()),
-                String.format("%04X", route.getAge()),
-                concentratorType.get(route.getConcentratorType()),
-                route.getConcentratorType() == 2 ? (routeStatus.get(route.getStatus()) == null ? "" : routeStatus.get(route.getStatus())) : ""));
+                    String.format("%04X (%5d)", route.getDestination(), route.getDestination()),
+                    String.format("%04X (%5d)", route.getNextHop(), route.getNextHop()),
+                    String.format("%04X", route.getAge()),
+                    concentratorType.get(route.getConcentratorType()),
+                    route.getConcentratorType() == 2
+                            ? (routeStatus.get(route.getStatus()) == null ? "" : routeStatus.get(route.getStatus()))
+                            : ""));
         }
 
         final String ncpSourceRouteTableFormat = "%-6s  %-15s  %-10s  |  %s";
@@ -119,10 +123,10 @@ public class EmberConsoleNcpRoutingCommand extends EmberConsoleAbstractCommand {
             walkTheRoute(sourceRouteTable, route, i);
 
             out.println(String.format(ncpSourceRouteTableFormat,
-                "#" + i,
-                String.format("%04X (%5d)", entry.getDestination(), entry.getDestination()),
-                entry.getCloserIndex() != 255 ? "#" + entry.getCloserIndex() : "NCP",
-                printRoute(route)));
+                    "#" + i,
+                    String.format("%04X (%5d)", entry.getDestination(), entry.getDestination()),
+                    entry.getCloserIndex() != 255 ? "#" + entry.getCloserIndex() : "NCP",
+                    printRoute(route)));
         }
     }
 
