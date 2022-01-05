@@ -828,6 +828,11 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
     @Override
     public EzspTransaction sendEzspTransaction(EzspTransaction ezspTransaction) {
+        return sendEzspTransaction(ezspTransaction, EZSP_TRANSACTION_TIMEOUT_SECONDS);
+    }
+
+    @Override
+    public EzspTransaction sendEzspTransaction(EzspTransaction ezspTransaction, long timeout) {
         logger.debug("ASH TX EZSP: {}", ezspTransaction.getRequest());
 
         Future<EzspFrame> futureResponse = sendEzspRequestAsync(ezspTransaction);
@@ -837,13 +842,13 @@ public class AshFrameHandler implements EzspProtocolHandler {
         }
 
         try {
-            futureResponse.get(EZSP_TRANSACTION_TIMEOUT_SECONDS, TimeUnit.SECONDS);
+            futureResponse.get(timeout, TimeUnit.SECONDS);
         } catch (InterruptedException | ExecutionException e) {
             futureResponse.cancel(true);
             logger.debug("ASH interrupted in sendRequest while sending {}", ezspTransaction.getRequest());
         } catch (TimeoutException e) {
             futureResponse.cancel(true);
-            logger.debug("Sending EZSP transaction timed out after {} seconds", EZSP_TRANSACTION_TIMEOUT_SECONDS);
+            logger.debug("Sending EZSP transaction timed out after {} seconds", timeout);
         }
 
         return ezspTransaction;
