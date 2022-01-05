@@ -123,10 +123,10 @@ public class EmberConsoleNcpRoutingCommand extends EmberConsoleAbstractCommand {
             walkTheRoute(sourceRouteTable, route, i);
 
             out.println(String.format(ncpSourceRouteTableFormat,
-                "#" + i,
-                String.format("%04X (%5d)", entry.getDestination(), entry.getDestination()),
-                entry.getCloserIndex() != 255 ? "#" + entry.getCloserIndex() : "NCP",
-                printRoute(route)));
+                    "#" + i,
+                    String.format("%04X (%5d)", entry.getDestination(), entry.getDestination()),
+                    entry.getCloserIndex() != 255 ? "#" + entry.getCloserIndex() : "NCP",
+                    printRoute(route)));
         }
     }
 
