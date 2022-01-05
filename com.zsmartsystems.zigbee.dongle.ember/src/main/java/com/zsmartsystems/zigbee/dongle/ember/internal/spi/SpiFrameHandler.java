@@ -754,6 +754,11 @@ public class SpiFrameHandler implements EzspProtocolHandler {
 
     @Override
     public EzspTransaction sendEzspTransaction(EzspTransaction ezspTransaction) {
+        return sendEzspTransaction(ezspTransaction, EZSP_TRANSACTION_TIMEOUT_SECONDS);
+    }
+
+    @Override
+    public EzspTransaction sendEzspTransaction(EzspTransaction ezspTransaction, long timeout) {
         Future<EzspFrame> futureResponse = sendEzspRequestAsync(ezspTransaction);
         if (futureResponse == null) {
             logger.debug("Error sending EZSP transaction: Future is null");
@@ -761,14 +766,14 @@ public class SpiFrameHandler implements EzspProtocolHandler {
         }
 
         try {
-            futureResponse.get(EZSP_TRANSACTION_TIMEOUT_SECONDS, TimeUnit.SECONDS);
+            futureResponse.get(timeout, TimeUnit.SECONDS);
             return ezspTransaction;
         } catch (InterruptedException | ExecutionException e) {
             futureResponse.cancel(true);
             logger.debug("EZSP interrupted in sendRequest: ", e);
         } catch (TimeoutException e) {
             futureResponse.cancel(true);
-            logger.debug("Sending EZSP transaction timed out after {} seconds", EZSP_TRANSACTION_TIMEOUT_SECONDS);
+            logger.debug("Sending EZSP transaction timed out after {} seconds", timeout);
         }
 
         return null;

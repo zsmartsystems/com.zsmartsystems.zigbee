@@ -80,6 +80,12 @@ public class EmberNcpTest {
                 return transaction;
             }
         }).when(handler).sendEzspTransaction(ArgumentMatchers.any(EzspTransaction.class));
+        Mockito.doAnswer(new Answer<EzspTransaction>() {
+            @Override
+            public EzspTransaction answer(InvocationOnMock invocation) {
+                return transaction;
+            }
+        }).when(handler).sendEzspTransaction(ArgumentMatchers.any(EzspTransaction.class), ArgumentMatchers.anyLong());
 
         return ncp;
     }
@@ -205,7 +211,8 @@ public class EmberNcpTest {
         assertNotNull(response);
         assertEquals(0, response.size());
 
-        Mockito.verify(handler, Mockito.times(1)).sendEzspTransaction(ezspTransactionCapture.capture());
+        Mockito.verify(handler, Mockito.times(1)).sendEzspTransaction(ezspTransactionCapture.capture(),
+                ArgumentMatchers.anyLong());
 
         EzspFrameRequest request = ezspTransactionCapture.getValue().getRequest();
         assertTrue(request instanceof EzspStartScanRequest);
@@ -221,7 +228,8 @@ public class EmberNcpTest {
         Collection<EzspNetworkFoundHandler> response = ncp.doActiveScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, 123);
         assertNull(response);
 
-        Mockito.verify(handler, Mockito.times(1)).sendEzspTransaction(ezspTransactionCapture.capture());
+        Mockito.verify(handler, Mockito.times(1)).sendEzspTransaction(ezspTransactionCapture.capture(),
+                ArgumentMatchers.anyLong());
 
         EzspFrameRequest request = ezspTransactionCapture.getValue().getRequest();
         assertTrue(request instanceof EzspStartScanRequest);
@@ -236,7 +244,8 @@ public class EmberNcpTest {
         Collection<EzspNetworkFoundHandler> response = ncp.doActiveScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, 123);
         assertNull(response);
 
-        Mockito.verify(handler, Mockito.times(1)).sendEzspTransaction(ezspTransactionCapture.capture());
+        Mockito.verify(handler, Mockito.times(1)).sendEzspTransaction(ezspTransactionCapture.capture(),
+                ArgumentMatchers.anyLong());
 
         EzspFrameRequest request = ezspTransactionCapture.getValue().getRequest();
         assertTrue(request instanceof EzspStartScanRequest);
@@ -251,7 +260,8 @@ public class EmberNcpTest {
 
         ncp.doEnergyScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, 123);
 
-        Mockito.verify(handler, Mockito.times(1)).sendEzspTransaction(ezspTransactionCapture.capture());
+        Mockito.verify(handler, Mockito.times(1)).sendEzspTransaction(ezspTransactionCapture.capture(),
+                ArgumentMatchers.anyLong());
 
         EzspFrameRequest request = ezspTransactionCapture.getValue().getRequest();
         assertTrue(request instanceof EzspStartScanRequest);

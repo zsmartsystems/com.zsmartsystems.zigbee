@@ -81,6 +81,16 @@ public interface EzspProtocolHandler {
     public EzspTransaction sendEzspTransaction(EzspTransaction ezspTransaction);
 
     /**
+     * Sends an EZSP request to the NCP and waits for the response. The response is correlated with the request and the
+     * returned {@link EzspTransaction} contains the request and response data.
+     *
+     * @param ezspTransaction Request {@link EzspTransaction}
+     * @param timeout the timeout for the transaction in seconds
+     * @return response {@link EzspTransaction}
+     */
+    public EzspTransaction sendEzspTransaction(EzspTransaction ezspTransaction, long timeout);
+
+    /**
      * Wait for the requested {@link EzspFrameResponse} to be received
      *
      * @param eventClass Request {@link EzspFrameResponse} to wait for
