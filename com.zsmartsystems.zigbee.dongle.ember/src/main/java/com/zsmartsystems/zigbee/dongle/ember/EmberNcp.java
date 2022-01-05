@@ -1029,7 +1029,7 @@ public class EmberNcp {
         Set<Class<?>> relatedResponses = new HashSet<Class<?>>(
                 Arrays.asList(EzspStartScanResponse.class, EzspNetworkFoundHandler.class));
         EzspTransaction transaction = protocolHandler.sendEzspTransaction(
-                new EzspMultiResponseTransaction(activeScan, EzspScanCompleteHandler.class, relatedResponses));
+                new EzspMultiResponseTransaction(activeScan, EzspScanCompleteHandler.class, relatedResponses), 45);
         logger.debug("Active scan response: {}", transaction.getResponse());
         if (transaction.getResponse() instanceof EzspScanCompleteHandler) {
             EzspScanCompleteHandler activeScanCompleteResponse = (EzspScanCompleteHandler) transaction.getResponse();
@@ -1073,7 +1073,7 @@ public class EmberNcp {
         Set<Class<?>> relatedResponses = new HashSet<Class<?>>(
                 Arrays.asList(EzspStartScanResponse.class, EzspEnergyScanResultHandler.class));
         EzspTransaction transaction = protocolHandler.sendEzspTransaction(
-                new EzspMultiResponseTransaction(energyScan, EzspScanCompleteHandler.class, relatedResponses));
+                new EzspMultiResponseTransaction(energyScan, EzspScanCompleteHandler.class, relatedResponses), 45);
 
         EzspScanCompleteHandler scanCompleteResponse = (EzspScanCompleteHandler) transaction.getResponse();
         logger.debug(scanCompleteResponse.toString());
