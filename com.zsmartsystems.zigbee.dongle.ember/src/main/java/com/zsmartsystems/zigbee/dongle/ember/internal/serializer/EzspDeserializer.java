@@ -39,6 +39,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurity
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberJoinDecision;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberJoinMethod;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyStruct;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyStructBitmask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyType;
@@ -407,5 +408,9 @@ public class EzspDeserializer {
 
     public EmberBeaconData deserializeEmberBeaconData() {
         return new EmberBeaconData(this);
+    }
+
+    public EmberKeyStatus deserializeEmberKeyStatus() {
+        return EmberKeyStatus.getEmberKeyStatus(deserializeUInt8());
     }
 }
