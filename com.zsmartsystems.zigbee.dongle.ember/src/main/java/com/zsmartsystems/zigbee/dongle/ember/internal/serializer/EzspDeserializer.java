@@ -413,4 +413,8 @@ public class EzspDeserializer {
     public EmberBeaconData deserializeEmberBeaconData() {
         return new EmberBeaconData(this);
     }
+
+    public EmberKeyStatus deserializeEmberKeyStatus() {
+        return EmberKeyStatus.getEmberKeyStatus(deserializeUInt8());
+    }
 }

@@ -820,6 +820,7 @@ public class CommandGenerator extends ClassGenerator {
             case "EmberBeaconData":
             case "EmberBeaconIterator":
             case "EmberMulticastTableEntry":
+            case "EmberKeyStatus":
                 addImport(ezspStructurePackage + "." + dataTypeLocal);
                 return dataTypeLocal + modifier;
             default:
