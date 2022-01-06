@@ -4,7 +4,7 @@
 
 	<groupId>com.zsmartsystems</groupId>
 	<artifactId>zigbee</artifactId>
-	<version>1.2.8-PATCH</version>
+	<version>1.2.8.5-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>ZssBee</name>
@@ -49,19 +49,19 @@
 		<url>https://github.com/zsmartsystems/com.zsmartsystems.zigbee.git</url>
 		<connection>scm:git:https://github.com/zsmartsystems/com.zsmartsystems.zigbee.git</connection>
 		<developerConnection>scm:git:https://github.com/zsmartsystems/com.zsmartsystems.zigbee.git</developerConnection>
-		<tag>zigbee-1.2.8</tag>
+		<tag>zigbee-1.2.8.4</tag>
 	</scm>
 
 	<distributionManagement>
 		<repository>
-			<id>bintray-zsmartsystems-com.zsmartsystems</id>
-			<name>zsmartsystems-com.zsmartsystems</name>
-			<url>https://api.bintray.com/maven/zsmartsystems/com.zsmartsystems/zigbee/;publish=1</url>
+			<id>zsmartsystems-sonatype-release</id>
+			<name>Sonatype Release</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
 		</repository>
 		<snapshotRepository>
-			<id>snapshots-zsmartsystems-com.zsmartsystems</id>
-			<name>zsmartsystems-com.zsmartsystems</name>
-			<url>https://oss.jfrog.org/artifactory/oss-snapshot-local/</url>
+			<id>zsmartsystems-sonatype-snapshot</id>
+			<name>Sonatype Snapshot</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
 
@@ -82,23 +82,7 @@
 		<module>com.zsmartsystems.zigbee.console.telegesis</module>
 		<module>com.zsmartsystems.zigbee.serial</module>
 		<module>com.zsmartsystems.zigbee.test</module>
-		<module>releng/p2repo</module>
 	</modules>
-
-	<reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>findbugs-maven-plugin</artifactId>
-				<version>3.0.5</version>
-				<configuration>
-					<failOnError>false</failOnError>
-					<xmlOutput>true</xmlOutput>
-					<xmlOutputDirectory>${basedir}/target/site</xmlOutputDirectory>
-				</configuration>
-			</plugin>
-		</plugins>
-	</reporting>
 
 	<build>
 		<plugins>
@@ -116,7 +100,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.0.1</version>
+				<version>3.2.0</version>
 				<configuration>
 					<failOnError>false</failOnError>
 				</configuration>
@@ -133,7 +117,7 @@
 
 			<plugin>
 				<artifactId>maven-source-plugin</artifactId>
-				<version>3.0.1</version>
+				<version>3.2.0</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
@@ -147,7 +131,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
-				<version>2.5.3</version>
+				<version>3.0.0-M1</version>
 				<configuration>
 					<useReleaseProfile>false</useReleaseProfile>
 					<releaseProfiles>release,release-sign-artifacts</releaseProfiles>
@@ -159,20 +143,6 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>findbugs-maven-plugin</artifactId>
 				<version>3.0.5</version>
-			</plugin>
-
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.8</version>
-				<executions>
-					<execution>
-						<id>jacoco-prepare-agent</id>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 
 			<plugin>
@@ -207,7 +177,7 @@
 
 			<plugin>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.1.0</version>
+				<version>3.2.0</version>
 				<configuration>
 					<archive>
 						<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
@@ -334,6 +304,12 @@
 								<goals>
 									<goal>sign</goal>
 								</goals>
+								<configuration>
+									<gpgArguments>
+									<arg>--digest-algo=SHA512</arg>
+									</gpgArguments>
+									<keyname>Chris Jackson</keyname>
+								</configuration>
 							</execution>
 						</executions>
 					</plugin>
