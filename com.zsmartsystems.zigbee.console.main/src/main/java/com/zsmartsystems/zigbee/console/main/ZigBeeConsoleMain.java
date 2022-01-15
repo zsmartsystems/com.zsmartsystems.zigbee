@@ -35,6 +35,7 @@ import com.zsmartsystems.zigbee.app.iasclient.ZigBeeIasCieExtension;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaUpgradeExtension;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleMmoHashCommand;
+import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpAddressTableCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpChildrenCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpConfigurationCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpCountersCommand;
@@ -238,7 +239,8 @@ public class ZigBeeConsoleMain {
             ZigBeeDongleEzsp emberDongle = new ZigBeeDongleEzsp(serialPort);
             dongle = emberDongle;
 
-            emberDongle.updateDefaultConfiguration(EzspConfigId.EZSP_CONFIG_SOURCE_ROUTE_TABLE_SIZE, 32);
+            emberDongle.updateDefaultConfiguration(EzspConfigId.EZSP_CONFIG_ADDRESS_TABLE_SIZE, 16);
+            emberDongle.updateDefaultConfiguration(EzspConfigId.EZSP_CONFIG_SOURCE_ROUTE_TABLE_SIZE, 100);
             emberDongle.updateDefaultConfiguration(EzspConfigId.EZSP_CONFIG_APS_UNICAST_MESSAGE_COUNT, 16);
             emberDongle.updateDefaultConfiguration(EzspConfigId.EZSP_CONFIG_NEIGHBOR_TABLE_SIZE, 24);
 
@@ -255,6 +257,7 @@ public class ZigBeeConsoleMain {
             transportOptions.addOption(TransportConfigOption.CONCENTRATOR_CONFIG, concentratorConfig);
 
             // Add transport specific console commands
+            commands.add(EmberConsoleNcpAddressTableCommand.class);
             commands.add(EmberConsoleNcpChildrenCommand.class);
             commands.add(EmberConsoleNcpConfigurationCommand.class);
             commands.add(EmberConsoleNcpCountersCommand.class);

@@ -13,7 +13,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 /**
  * Class to implement the Ember EZSP command <b>setSourceRoute</b>.
  * <p>
- * Supply a source route for the next outgoing message.
+ * Supply a source route for the next outgoing message. [Deprecated]
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>

@@ -31,6 +31,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddOrUpdateKeyTabl
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddOrUpdateKeyTableEntryResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddTransientLinkKeyRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddTransientLinkKeyResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddressTableEntryIsActiveRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddressTableEntryIsActiveResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAesMmoHashRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAesMmoHashResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspClearKeyTableRequest;
@@ -38,6 +40,10 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspClearKeyTableRespo
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspCustomFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspCustomFrameResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspEnergyScanResultHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetAddressTableRemoteEui64Request;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetAddressTableRemoteEui64Response;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetAddressTableRemoteNodeIdRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetAddressTableRemoteNodeIdResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetCertificate283k1Request;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetCertificate283k1Response;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetCertificateRequest;
@@ -1316,5 +1322,66 @@ public class EmberNcp {
                         new EzspSingleResponseTransaction(request, EzspSetMulticastTableEntryResponse.class));
         EzspSetMulticastTableEntryResponse response = (EzspSetMulticastTableEntryResponse) transaction.getResponse();
         return response.getStatus();
+    }
+
+    /**
+     * Indicates whether any messages are currently being sent using this address table entry.
+     * Note that this function does not indicate whether the address table entry is unused. To
+     * determine whether an address table entry is unused, check the remote node ID. The remote node
+     * ID will have the value EMBER_TABLE_ENTRY_UNUSED_NODE_ID when the address table entry is
+     * not in use.
+     *
+     * @param index The index of an address table entry.
+     * @return True if the address table entry is active, false otherwise.
+     */
+    public Boolean addressTableEntryIsActive(int index) {
+        EzspAddressTableEntryIsActiveRequest request = new EzspAddressTableEntryIsActiveRequest();
+        request.setAddressTableIndex(index);
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(
+                        new EzspSingleResponseTransaction(request, EzspAddressTableEntryIsActiveResponse.class));
+        EzspAddressTableEntryIsActiveResponse response = (EzspAddressTableEntryIsActiveResponse) transaction
+                .getResponse();
+        return response.getActive();
+
+    }
+
+    /**
+     * Gets the EUI64 of an address table entry.
+     *
+     * @param index The index of an address table entry.
+     * @return The EUI64 of the address table entry is copied to this location.
+     */
+    public IeeeAddress getAddressTableRemoteEui64(int index) {
+        EzspGetAddressTableRemoteEui64Request request = new EzspGetAddressTableRemoteEui64Request();
+        request.setAddressTableIndex(index);
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(
+                        new EzspSingleResponseTransaction(request, EzspGetAddressTableRemoteEui64Response.class));
+        EzspGetAddressTableRemoteEui64Response response = (EzspGetAddressTableRemoteEui64Response) transaction
+                .getResponse();
+        return response.getEui64();
+    }
+
+    /**
+     * Gets the short ID of an address table entry.
+     *
+     * @param index The index of an address table entry.
+     * @return One of the following: The short ID corresponding to the remote node whose EUI64 is stored in the address
+     *         table at the given index. EMBER_UNKNOWN_NODE_ID - Indicates that the EUI64 stored in the address table at
+     *         the given index is valid but the short ID is currently unknown. EMBER_DISCOVERY_ACTIVE_NODE_ID -
+     *         Indicates that the EUI64 stored in the address table at the given location is valid and network address
+     *         discovery is underway. EMBER_TABLE_ENTRY_UNUSED_NODE_ID - Indicates that the entry stored in the address
+     *         table at the given index is not in use.
+     */
+    public int getAddressTableRemoteNodeId(int index) {
+        EzspGetAddressTableRemoteNodeIdRequest request = new EzspGetAddressTableRemoteNodeIdRequest();
+        request.setAddressTableIndex(index);
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(
+                        new EzspSingleResponseTransaction(request, EzspGetAddressTableRemoteNodeIdResponse.class));
+        EzspGetAddressTableRemoteNodeIdResponse response = (EzspGetAddressTableRemoteNodeIdResponse) transaction
+                .getResponse();
+        return response.getNodeId();
     }
 }
