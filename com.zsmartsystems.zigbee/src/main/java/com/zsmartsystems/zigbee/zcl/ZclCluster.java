@@ -475,9 +475,12 @@ public abstract class ZclCluster {
      * @return and object containing the value, or null
      */
     protected Object readAttributeValue(final int attributeId) {
-        CommandResult result;
+        CommandResult result = null;
         try {
-            result = readAttribute(attributeId).get();
+            Future<CommandResult> readAttributeFuture = readAttribute(attributeId);
+            if (readAttributeFuture != null) {
+                result = readAttributeFuture.get();
+            }
         } catch (InterruptedException e) {
             logger.debug("readAttributeValue interrupted");
             return null;
@@ -486,7 +489,7 @@ public abstract class ZclCluster {
             return null;
         }
 
-        if (!result.isSuccess()) {
+        if (result == null || !result.isSuccess()) {
             return null;
         }
 
