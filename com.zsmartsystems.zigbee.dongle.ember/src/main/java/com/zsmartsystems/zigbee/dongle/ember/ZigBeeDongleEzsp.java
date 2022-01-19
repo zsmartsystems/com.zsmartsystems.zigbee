@@ -253,6 +253,14 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
      */
     private int defaultDeviceId = ZigBeeDeviceType.HOME_GATEWAY.getKey();
 
+    /**
+     * Flag will be set to true when initialize() was successful will be set to false when shutdown() method has been
+     * called.
+     */
+    private boolean isConfigured = false;
+    private final Object isConfiguredSync = new Object();
+
+
     private ScheduledExecutorService executorService;
     private ScheduledFuture<?> pollingTimer = null;
 
@@ -424,7 +432,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
      * @return the {@link EmberMfglib} instance, or null on error
      */
     public EmberMfglib getEmberMfglib(EmberMfglibListener mfglibListener) {
-        if (frameHandler == null && !initialiseEzspProtocol()) {
+        if (!isConfigured && !initialiseEzspProtocol()) {
             return null;
         }
 
@@ -492,6 +500,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
         ncp.getNetworkParameters();
 
+        isConfigured = true;
         logger.debug("[{}]: EZSP Dongle: initialize done", handlerIdentifier);
 
         return ZigBeeStatus.SUCCESS;
@@ -501,8 +510,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     public ZigBeeStatus startup(boolean reinitialize) {
         logger.debug("[{}]: EZSP Dongle: Startup - reinitialize={}", handlerIdentifier, reinitialize);
 
-        // If frameHandler is null then the serial port didn't initialise or startup has not been called
-        if (frameHandler == null) {
+        // If isConfigured is false then the serial port didn't initialise or startup has not been called
+        if (!isConfigured) {
             logger.error("[{}]: EZSP Dongle: Startup found low level handler is not initialised.", handlerIdentifier);
             return ZigBeeStatus.INVALID_STATE;
         }
@@ -675,27 +684,33 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     @Override
     public void shutdown() {
         logger.debug("[{}]: EZSP Dongle: Shutdown", handlerIdentifier);
-        if (frameHandler == null) {
-            logger.debug("[{}]: EZSP Dongle: Shutdown frameHandler is null", handlerIdentifier);
-            return;
-        }
-        frameHandler.setClosing();
 
-        if (mfglibListener != null) {
-            mfglibListener = null;
-        }
+        synchronized (isConfiguredSync) {
+            if (!isConfigured) {
+                logger.debug("[{}]: EZSP Dongle: Shutdown. isConfigured is false. No shutdown necessary.", handlerIdentifier);
+                return;
+            }
 
-        if (pollingTimer != null) {
-            pollingTimer.cancel(true);
-        }
+            isConfigured = false;
 
-        if (executorService != null) {
-            executorService.shutdownNow();
-        }
+            frameHandler.setClosing();
 
-        frameHandler.close();
-        serialPort.close();
-        frameHandler = null;
+            if (mfglibListener != null) {
+                mfglibListener = null;
+            }
+
+            if (pollingTimer != null) {
+                pollingTimer.cancel(true);
+            }
+
+            if (executorService != null) {
+                executorService.shutdownNow();
+            }
+
+            frameHandler.close();
+            serialPort.close();
+            frameHandler = null;
+        }
     }
 
     /**
@@ -740,10 +755,10 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
     @Override
     public void sendCommand(final int msgTag, final ZigBeeApsFrame apsFrame) {
-        if (frameHandler == null) {
+        if (!isConfigured) {
+            logger.debug("[{}]: EZSP Dongle is not configured. Frame not sent: {}", handlerIdentifier, apsFrame);
             return;
         }
-        lastSendCommand = System.currentTimeMillis();
 
         EzspTransaction transaction;
 
@@ -817,29 +832,37 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         executorService.execute(new Runnable() {
             @Override
             public void run() {
-                frameHandler.sendEzspTransaction(transaction);
+                synchronized (isConfiguredSync) {
+                    if (!isConfigured) {
+                        logger.debug("[{}]: EZSP Dongle is not configured. Frame not sent: {}", handlerIdentifier, apsFrame);
+                        return;
+                    }
 
-                EmberStatus status = null;
-                if (transaction.getResponse() instanceof EzspSendUnicastResponse) {
-                    fragmentationApsCounters.put(msgTag,
-                            ((EzspSendUnicastResponse) transaction.getResponse()).getSequence());
-                    status = ((EzspSendUnicastResponse) transaction.getResponse()).getStatus();
-                } else if (transaction.getResponse() instanceof EzspSendBroadcastResponse) {
-                    status = ((EzspSendBroadcastResponse) transaction.getResponse()).getStatus();
-                } else if (transaction.getResponse() instanceof EzspSendMulticastResponse) {
-                    status = ((EzspSendMulticastResponse) transaction.getResponse()).getStatus();
-                } else {
-                    logger.debug("[{}]: Unable to get response from {} :: {}", handlerIdentifier, transaction.getRequest(),
-                            transaction.getResponse());
-                    return;
-                }
+                    lastSendCommand = System.currentTimeMillis();
+                    frameHandler.sendEzspTransaction(transaction);
 
-                // If this is EMBER_SUCCESS, then do nothing as the command is still not transmitted.
-                // If there was an error, then we let the system know we've failed already!
-                if (status == EmberStatus.EMBER_SUCCESS) {
-                    return;
+                    EmberStatus status = null;
+                    if (transaction.getResponse() instanceof EzspSendUnicastResponse) {
+                        fragmentationApsCounters.put(msgTag,
+                                ((EzspSendUnicastResponse) transaction.getResponse()).getSequence());
+                        status = ((EzspSendUnicastResponse) transaction.getResponse()).getStatus();
+                    } else if (transaction.getResponse() instanceof EzspSendBroadcastResponse) {
+                        status = ((EzspSendBroadcastResponse) transaction.getResponse()).getStatus();
+                    } else if (transaction.getResponse() instanceof EzspSendMulticastResponse) {
+                        status = ((EzspSendMulticastResponse) transaction.getResponse()).getStatus();
+                    } else {
+                        logger.debug("Unable to get response from {} :: {}", transaction.getRequest(),
+                                transaction.getResponse());
+                        return;
+                    }
+
+                    // If this is EMBER_SUCCESS, then do nothing as the command is still not transmitted.
+                    // If there was an error, then we let the system know we've failed already!
+                    if (status == EmberStatus.EMBER_SUCCESS) {
+                        return;
+                    }
+                    zigbeeTransportReceive.receiveCommandState(msgTag, ZigBeeTransportProgressState.TX_NAK);
                 }
-                zigbeeTransportReceive.receiveCommandState(msgTag, ZigBeeTransportProgressState.TX_NAK);
             }
         });
     }

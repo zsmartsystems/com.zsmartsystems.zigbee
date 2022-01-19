@@ -170,6 +170,13 @@ public class ZigBeeDongleTelegesis
      */
     private boolean startupComplete = false;
 
+    /**
+     * Flag will be set to true when initialize() was successful will be set to false when shutdown() method has been
+     * called.
+     */
+    private boolean isConfigured = false;
+    private final Object isConfiguredSync = new Object();
+
     private ScheduledExecutorService executorService;
 
     private ScheduledFuture<?> pollingTimer;
@@ -426,6 +433,8 @@ public class ZigBeeDongleTelegesis
             logger.info("Unable to read Telegesis dongle firmware version");
         }
 
+        isConfigured = true;
+
         return ZigBeeStatus.SUCCESS;
     }
 
@@ -441,7 +450,7 @@ public class ZigBeeDongleTelegesis
         logger.debug("Telegesis dongle startup.");
 
         // If frameHandler is null then the serial port didn't initialise
-        if (frameHandler == null) {
+        if (!isConfigured) {
             logger.error("Initialising Telegesis Dongle but low level handler is not initialised.");
             return ZigBeeStatus.INVALID_STATE;
         }
@@ -510,25 +519,31 @@ public class ZigBeeDongleTelegesis
 
     @Override
     public void shutdown() {
-        if (frameHandler == null) {
-            return;
+        synchronized (isConfiguredSync) {
+            if (!isConfigured) {
+                logger.debug("Telegesis dongle: Shutdown. isConfigured is false. No shutdown necessary.");
+                return;
+            }
+
+            isConfigured = false;
+
+            if (pollingTimer != null) {
+                pollingTimer.cancel(true);
+            }
+            if (executorService != null) {
+                executorService.shutdownNow();
+            }
+
+            commandScheduler.shutdownNow();
+
+            frameHandler.removeEventListener(this);
+            frameHandler.setClosing();
+            zigbeeTransportReceive.setTransportState(ZigBeeTransportState.OFFLINE);
+            serialPort.close();
+            frameHandler.close();
+            frameHandler = null;
         }
 
-        if (pollingTimer != null) {
-            pollingTimer.cancel(true);
-        }
-        if (executorService != null) {
-            executorService.shutdownNow();
-        }
-
-        commandScheduler.shutdownNow();
-
-        frameHandler.removeEventListener(this);
-        frameHandler.setClosing();
-        zigbeeTransportReceive.setTransportState(ZigBeeTransportState.OFFLINE);
-        serialPort.close();
-        frameHandler.close();
-        frameHandler = null;
         logger.debug("Telegesis dongle shutdown.");
     }
 
@@ -673,12 +688,10 @@ public class ZigBeeDongleTelegesis
 
     @Override
     public void sendCommand(final int msgTag, final ZigBeeApsFrame apsFrame) {
-        if (frameHandler == null) {
-            logger.debug("Telegesis frame handler not set for send.");
+        if (!isConfigured) {
+            logger.debug("Telegesis dongle is shutdown. Frame not sent: {}", apsFrame);
             return;
         }
-
-        lastSendCommand = System.currentTimeMillis();
 
         TelegesisCommand command;
         if (apsFrame.getAddressMode() == ZigBeeNwkAddressMode.DEVICE
@@ -720,20 +733,28 @@ public class ZigBeeDongleTelegesis
         commandScheduler.execute(new Runnable() {
             @Override
             public void run() {
-                frameHandler.sendRequest(command);
+                synchronized (isConfiguredSync) {
+                    if (!isConfigured) {
+                        logger.debug("Telegesis dongle is not configured. Frame not sent: {}", apsFrame);
+                        return;
+                    }
 
-                // Let the stack know the frame is sent
-                zigbeeTransportReceive.receiveCommandState(msgTag,
-                        command.getStatus() == TelegesisStatusCode.SUCCESS ? ZigBeeTransportProgressState.TX_ACK
-                                : ZigBeeTransportProgressState.TX_NAK);
+                    lastSendCommand = System.currentTimeMillis();
+                    frameHandler.sendRequest(command);
 
-                // Multicast doesn't have a sequence returned, so nothing more to do here
-                if (command instanceof TelegesisSendMulticastCommand) {
-                    return;
-                }
+                    // Let the stack know the frame is sent
+                    zigbeeTransportReceive.receiveCommandState(msgTag,
+                            command.getStatus() == TelegesisStatusCode.SUCCESS ? ZigBeeTransportProgressState.TX_ACK
+                                    : ZigBeeTransportProgressState.TX_NAK);
 
-                if (((TelegesisSendUnicastCommand) command).getMessageId() != null) {
-                    messageIdMap.put(((TelegesisSendUnicastCommand) command).getMessageId(), msgTag);
+                    // Multicast doesn't have a sequence returned, so nothing more to do here
+                    if (command instanceof TelegesisSendMulticastCommand) {
+                        return;
+                    }
+
+                    if (((TelegesisSendUnicastCommand) command).getMessageId() != null) {
+                        messageIdMap.put(((TelegesisSendUnicastCommand) command).getMessageId(), msgTag);
+                    }
                 }
             }
         });

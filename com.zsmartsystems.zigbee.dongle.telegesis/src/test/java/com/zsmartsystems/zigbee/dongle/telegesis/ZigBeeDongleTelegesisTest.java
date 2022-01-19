@@ -218,6 +218,7 @@ public class ZigBeeDongleTelegesisTest {
         TestUtilities.setField(ZigBeeDongleTelegesis.class, dongle, "frameHandler", handler);
         TestUtilities.setField(ZigBeeDongleTelegesis.class, dongle, "zigbeeTransportReceive",
                 Mockito.mock(ZigBeeTransportReceive.class));
+        TestUtilities.setField(ZigBeeDongleTelegesis.class, dongle, "isConfigured", true);
 
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
         apsFrame.setCluster(0);
@@ -253,6 +254,7 @@ public class ZigBeeDongleTelegesisTest {
         TestUtilities.setField(ZigBeeDongleTelegesis.class, dongle, "frameHandler", handler);
         TestUtilities.setField(ZigBeeDongleTelegesis.class, dongle, "zigbeeTransportReceive",
                 Mockito.mock(ZigBeeTransportReceive.class));
+        TestUtilities.setField(ZigBeeDongleTelegesis.class, dongle, "isConfigured", true);
 
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
         apsFrame.setCluster(0);
@@ -267,4 +269,21 @@ public class ZigBeeDongleTelegesisTest {
         Mockito.verify(handler, Mockito.timeout(TIMEOUT).times(1))
                 .sendRequest(ArgumentMatchers.any(TelegesisSendMulticastCommand.class));
     }
+
+    @Test
+    public void doNotSendCommandWhenNotConfigured() throws Exception {
+        ZigBeeDongleTelegesis dongle = new ZigBeeDongleTelegesis(null);
+        TelegesisFrameHandler handler = Mockito.mock(TelegesisFrameHandler.class);
+
+        TestUtilities.setField(ZigBeeDongleTelegesis.class, dongle, "frameHandler", handler);
+        TestUtilities.setField(ZigBeeDongleTelegesis.class, dongle, "zigbeeTransportReceive",
+                Mockito.mock(ZigBeeTransportReceive.class));
+        TestUtilities.setField(ZigBeeDongleTelegesis.class, dongle, "isConfigured", false);
+
+        ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
+
+        dongle.sendCommand(1, apsFrame);
+        Mockito.verify(handler, Mockito.never()).sendRequest(ArgumentMatchers.any(TelegesisSendMulticastCommand.class));
+    }
+
 }
