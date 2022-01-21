@@ -453,7 +453,7 @@ public class EmberBeaconData {
         builder.append(", extendedPanId=");
         builder.append(extendedPanId);
         builder.append(", sender=");
-        builder.append(sender);
+        builder.append(String.format("%04X", sender));
         builder.append(", enhanced=");
         builder.append(enhanced);
         builder.append(", permitJoin=");

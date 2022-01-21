@@ -558,7 +558,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         handleLinkStateChange(joinedNetwork);
 
         // If the network is up, and we're acting as a concentrator, send an MTORR to kick-start routing
-        // Note that this does not in itself reqbuild the routing tables - it also relies on commands being sent to
+        // Note that this does not in itself rebuild the routing tables - it also relies on commands being sent to
         // devices to prompt the device to send the routes.
         // For now we assume that this is handled by the application level sending status requests on startup.
         if (concentratorType != EmberConcentratorType.UNKNOWN) {
@@ -569,6 +569,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
             ncp.sendManyToOneRouteRequest(concentratorType, radius);
         }
 
+        ncp.getConfiguration(EzspConfigId.EZSP_CONFIG_PACKET_BUFFER_COUNT);
         return joinedNetwork ? ZigBeeStatus.SUCCESS : ZigBeeStatus.BAD_RESPONSE;
     }
 

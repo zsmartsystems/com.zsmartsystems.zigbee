@@ -129,7 +129,7 @@ public class EzspGetSourceRouteTableEntryResponse extends EzspFrameResponse {
         builder.append(", status=");
         builder.append(status);
         builder.append(", destination=");
-        builder.append(destination);
+        builder.append(String.format("%04X", destination));
         builder.append(", closerIndex=");
         builder.append(closerIndex);
         builder.append(']');

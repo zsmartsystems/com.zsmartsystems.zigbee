@@ -113,7 +113,7 @@ public class EmberSourceRouteTableEntry {
     public String toString() {
         final StringBuilder builder = new StringBuilder(79);
         builder.append("EmberSourceRouteTableEntry [destination=");
-        builder.append(destination);
+        builder.append(String.format("%04X", destination));
         builder.append(", closerIndex=");
         builder.append(closerIndex);
         builder.append(']');
