@@ -1991,7 +1991,7 @@
 	<command>
 		<name>setSourceRoute</name>
 		<id>0x5A</id>
-		<description>Supply a source route for the next outgoing message.</description>
+		<description>Supply a source route for the next outgoing message. [Deprecated]</description>
 		<command_parameters>
 			<parameter>
 				<data_type>EmberNodeId</data_type>
@@ -2017,6 +2017,67 @@
 				<data_type>EmberStatus</data_type>
 				<name>status</name>
 				<description>EMBER_SUCCESS if the source route was successfully stored, and EMBER_NO_BUFFERS otherwise.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>addressTableEntryIsActive</name>
+		<id>0x5B</id>
+		<description>Indicates whether any messages are currently being sent using this address table entry. Note that this function does not indicate whether the address table entry is unused. To determine whether an address table entry is unused, check the remote node ID. The remote node ID will have the value EMBER_TABLE_ENTRY_UNUSED_NODE_ID when the address table entry is not in use.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>addressTableIndex</name>
+				<description>The index of an address table entry.</description>
+			</parameter>
+        </command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>bool</data_type>
+				<name>active</name>
+				<description>True if the address table entry is active, false otherwise.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>getAddressTableRemoteEui64</name>
+		<id>0x5E</id>
+		<description>Gets the EUI64 of an address table entry.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>addressTableIndex</name>
+				<description>The index of an address table entry.</description>
+			</parameter>
+        </command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberEUI64</data_type>
+				<name>eui64</name>
+				<description>The EUI64 of the address table entry is copied to this location.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>getAddressTableRemoteNodeId</name>
+		<id>0x5F</id>
+		<description>Gets the short ID of an address table entry.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>addressTableIndex</name>
+				<description>The index of an address table entry.</description>
+			</parameter>
+        </command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>nodeId</name>
+				<description>One of the following: The short ID corresponding to the remote node whose EUI64 is stored in the address table at the given index. EMBER_UNKNOWN_NODE_ID - Indicates that the EUI64 stored in the address table at the given index is valid but the short ID is currently unknown. EMBER_DISCOVERY_ACTIVE_NODE_ID - Indicates that the EUI64 stored in the address table at the given location is valid and network address discovery is underway. EMBER_TABLE_ENTRY_UNUSED_NODE_ID - Indicates that the entry stored in the address table at the given index is not in use.</description>
+				<display>hex[4]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -2072,6 +2133,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>destination</name>
 				<description>The node ID of the destination in that entry.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint8_t</data_type>
@@ -2196,26 +2258,6 @@
 				<name>target</name>
 				<description>The short id of the remote node.</description>
 				<display>hex[4]</display>
-			</parameter>
-		</response_parameters>
-	</command>
-
-	<command>
-		<name>getAddressTableRemoteEui64</name>
-		<id>0x5E</id>
-		<description>Gets the EUI64 of an address table entry.</description>
-		<command_parameters>
-			<parameter>
-				<data_type>uint8_t</data_type>
-				<name>addressTableIndex</name>
-				<description>The index of an address table entry.</description>
-			</parameter>
-		</command_parameters>
-		<response_parameters>
-			<parameter>
-				<data_type>EmberEUI64</data_type>
-				<name>eui64</name>
-				<description>The EUI64 of the address table entry is copied to this location.</description>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -4308,6 +4350,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>sender</name>
 				<description>The sender of the received beacon.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>bool</data_type>
@@ -7654,6 +7697,32 @@
 			</value>
 		</values>
 	</enum>
+	<enum>
+		<name>EmberAddressConstants</name>
+		<description>Constants used in Ember API address and table management</description>
+		<values>
+			<value>
+				<name>EMBER_TABLE_ENTRY_UNUSED_NODE_ID</name>
+				<enum_value>0xFFFF</enum_value>
+				<description>A distinguished network ID that will never be assigned to any node.</description>
+			</value>
+			<value>
+				<name>EMBER_MULTICAST_NODE_ID</name>
+				<enum_value>0xFFFE</enum_value>
+				<description>A distinguished network ID that will never be assigned to any node. This value is returned when getting the remote node ID from the binding table and the given binding table index refers to a multicast binding entry.</description>
+			</value>
+			<value>
+				<name>EMBER_UNKNOWN_NODE_ID</name>
+				<enum_value>0xFFFD</enum_value>
+				<description>A distinguished network ID that will never be assigned to any node. This value is used when getting the remote node ID from the address or binding tables. It indicates that the address or binding table entry is currently in use but the node ID corresponding to the EUI64 in the table is currently unknown.</description>
+			</value>
+			<value>
+				<name>EMBER_DISCOVERY_ACTIVE_NODE_ID</name>
+				<enum_value>0xFFFC</enum_value>
+				<description>A distinguished network ID that will never be assigned to any node. This value is used when getting the remote node ID from the address or binding tables. It indicates that the address or binding table entry is currently in use and network address discovery is underway.</description>
+			</value>
+		</values>
+	</enum>
 
 
 <!-- Note that this definition is not defined by Silabs, but is added here for convenience -->
@@ -7665,6 +7734,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>destination</name>
 				<description>The node ID of the destination in that entry.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint8_t</data_type>

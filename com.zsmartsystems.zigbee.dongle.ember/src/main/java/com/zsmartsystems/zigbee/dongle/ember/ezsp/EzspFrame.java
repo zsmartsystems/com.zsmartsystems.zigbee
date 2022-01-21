@@ -78,6 +78,7 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_ADD_ENDPOINT = 0x02;
     protected static final int FRAME_ID_ADD_OR_UPDATE_KEY_TABLE_ENTRY = 0x66;
     protected static final int FRAME_ID_ADD_TRANSIENT_LINK_KEY = 0xAF;
+    protected static final int FRAME_ID_ADDRESS_TABLE_ENTRY_IS_ACTIVE = 0x5B;
     protected static final int FRAME_ID_AES_MMO_HASH = 0x6F;
     protected static final int FRAME_ID_BECOME_TRUST_CENTER = 0x77;
     protected static final int FRAME_ID_BINDING_IS_ACTIVE = 0x2E;
@@ -110,6 +111,7 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_GENERATE_CBKE_KEYS283K1_HANDLER = 0xE9;
     protected static final int FRAME_ID_GENERATE_CBKE_KEYS_HANDLER = 0x9E;
     protected static final int FRAME_ID_GET_ADDRESS_TABLE_REMOTE_EUI64 = 0x5E;
+    protected static final int FRAME_ID_GET_ADDRESS_TABLE_REMOTE_NODE_ID = 0x5F;
     protected static final int FRAME_ID_GET_BINDING = 0x2C;
     protected static final int FRAME_ID_GET_BINDING_REMOTE_NODE_ID = 0x2F;
     protected static final int FRAME_ID_GET_CERTIFICATE = 0xA5;
@@ -242,6 +244,7 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_ADD_ENDPOINT, EzspAddEndpointResponse.class);
         ezspHandlerMap.put(FRAME_ID_ADD_OR_UPDATE_KEY_TABLE_ENTRY, EzspAddOrUpdateKeyTableEntryResponse.class);
         ezspHandlerMap.put(FRAME_ID_ADD_TRANSIENT_LINK_KEY, EzspAddTransientLinkKeyResponse.class);
+        ezspHandlerMap.put(FRAME_ID_ADDRESS_TABLE_ENTRY_IS_ACTIVE, EzspAddressTableEntryIsActiveResponse.class);
         ezspHandlerMap.put(FRAME_ID_AES_MMO_HASH, EzspAesMmoHashResponse.class);
         ezspHandlerMap.put(FRAME_ID_BECOME_TRUST_CENTER, EzspBecomeTrustCenterResponse.class);
         ezspHandlerMap.put(FRAME_ID_BINDING_IS_ACTIVE, EzspBindingIsActiveResponse.class);
@@ -274,6 +277,7 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_GENERATE_CBKE_KEYS283K1_HANDLER, EzspGenerateCbkeKeys283k1Handler.class);
         ezspHandlerMap.put(FRAME_ID_GENERATE_CBKE_KEYS_HANDLER, EzspGenerateCbkeKeysHandler.class);
         ezspHandlerMap.put(FRAME_ID_GET_ADDRESS_TABLE_REMOTE_EUI64, EzspGetAddressTableRemoteEui64Response.class);
+        ezspHandlerMap.put(FRAME_ID_GET_ADDRESS_TABLE_REMOTE_NODE_ID, EzspGetAddressTableRemoteNodeIdResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_BINDING, EzspGetBindingResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_BINDING_REMOTE_NODE_ID, EzspGetBindingRemoteNodeIdResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_CERTIFICATE, EzspGetCertificateResponse.class);
