@@ -106,6 +106,7 @@ public class ZclDataType {
         dataTypeMapping.put("ENUMERATION_32_BIT", new DataTypeMap("Integer", 0x33, 4, false, 0xffffffff));
         dataTypeMapping.put("FLOAT_32_BIT", new DataTypeMap("Double", 0x39, 4, true));
         dataTypeMapping.put("DATA_8_BIT", new DataTypeMap("Integer", 0x08, 1, false));
+        dataTypeMapping.put("DATA_16_BIT", new DataTypeMap("Integer", 0x09, 2, false));
         dataTypeMapping.put("OCTET_STRING", new DataTypeMap("ByteArray", 0x41, -1, false));
         dataTypeMapping.put("CHARACTER_STRING", new DataTypeMap("String", 0x42, -1, false));
         dataTypeMapping.put("LONG_OCTET_STRING", new DataTypeMap("ByteArray", 0x43, -1, false));
