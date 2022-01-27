@@ -47,6 +47,7 @@ public class DefaultSerializer implements ZigBeeSerializer {
                 buffer[length++] = (Boolean) data ? 1 : 0;
                 break;
             case NWK_ADDRESS:
+            case DATA_16_BIT:
             case BITMAP_16_BIT:
             case SIGNED_16_BIT_INTEGER:
             case UNSIGNED_16_BIT_INTEGER:

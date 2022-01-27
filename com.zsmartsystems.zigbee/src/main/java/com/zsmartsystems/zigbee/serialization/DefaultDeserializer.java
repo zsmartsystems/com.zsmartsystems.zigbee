@@ -25,10 +25,10 @@ import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.field.BindingTable;
 import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.ParentAnnounceChildInfo;
 import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor;
 import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
 import com.zsmartsystems.zigbee.zdo.field.SimpleDescriptor;
-import com.zsmartsystems.zigbee.zdo.field.ParentAnnounceChildInfo;
 
 /**
  * The default implementation of the {@link ZigBeeDeserializer}
@@ -213,6 +213,7 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 break;
             case CLUSTERID:
             case NWK_ADDRESS:
+            case DATA_16_BIT:
             case BITMAP_16_BIT:
             case ENUMERATION_16_BIT:
             case SIGNED_16_BIT_INTEGER:
