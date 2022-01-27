@@ -632,7 +632,7 @@ public enum ZigBeeDeviceType {
 
     private ZigBeeDeviceType(final ZigBeeProfileType profile, final int key) {
         this.key = key;
-        this.profilekey = key & 0xffff + (profile.ordinal() << 16);
+        this.profilekey = (key & 0xffff) + (profile.getKey() << 16);
     }
 
     public int getKey() {
@@ -640,12 +640,12 @@ public enum ZigBeeDeviceType {
     }
 
     public static ZigBeeDeviceType getByValue(final int value) {
-        int id = value & 0xffff + (ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.ordinal() << 16);
+        int id = (value & 0xffff) + (ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getKey() << 16);
         return idMap.get(id);
     }
 
     public static ZigBeeDeviceType getByValue(final ZigBeeProfileType profile, final int value) {
-        int id = value & 0xffff + (profile.ordinal() << 16);
+        int id = (value & 0xffff) + (profile.getKey() << 16);
         return idMap.get(id);
     }
 }
