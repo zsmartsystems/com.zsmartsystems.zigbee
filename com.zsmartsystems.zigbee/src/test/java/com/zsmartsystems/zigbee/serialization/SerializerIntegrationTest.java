@@ -136,6 +136,12 @@ public class SerializerIntegrationTest {
     }
 
     @Test
+    public void testDeserialize_DATA_16_BIT() {
+        int valIn = 0x9119;
+        testSerializer(valIn, ZclDataType.DATA_16_BIT);
+    }
+
+    @Test
     public void testDeserialize_NWK_ADDRESS() {
         int valIn = 0x9119;
         testSerializer(valIn, ZclDataType.NWK_ADDRESS);

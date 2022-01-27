@@ -17,7 +17,7 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-07-28T08:05:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-01-26T00:11:26Z")
 public enum ZigBeeDeviceType {
 
     /**
@@ -632,7 +632,7 @@ public enum ZigBeeDeviceType {
 
     private ZigBeeDeviceType(final ZigBeeProfileType profile, final int key) {
         this.key = key;
-        this.profilekey = (key & 0xffff) + (profile.getKey() << 16);
+        this.profilekey = key & 0xffff + (profile.ordinal() << 16);
     }
 
     public int getKey() {
@@ -640,12 +640,12 @@ public enum ZigBeeDeviceType {
     }
 
     public static ZigBeeDeviceType getByValue(final int value) {
-        int id = (value & 0xffff) + (ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getKey() << 16);
+        int id = value & 0xffff + (ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.ordinal() << 16);
         return idMap.get(id);
     }
 
     public static ZigBeeDeviceType getByValue(final ZigBeeProfileType profile, final int value) {
-        int id = (value & 0xffff) + (profile.getKey() << 16);
+        int id = value & 0xffff + (profile.ordinal() << 16);
         return idMap.get(id);
     }
 }
