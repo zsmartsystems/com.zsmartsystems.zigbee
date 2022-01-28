@@ -361,6 +361,7 @@ public class ZclHeader {
     public String toString() {
         return "ZclHeader [frameType=" + frameType + ", manufacturerSpecific=" + manufacturerSpecific + ", direction="
                 + direction + ", disableDefaultResponse=" + disableDefaultResponse + ", manufacturerCode="
-                + manufacturerCode + ", sequenceNumber=" + sequenceNumber + ", commandId=" + commandId + "]";
+                + manufacturerCode + ", sequenceNumber=" + String.format("%02X", sequenceNumber) + ", commandId="
+                + commandId + "]";
     }
 }

@@ -26,42 +26,15 @@ public class CommandResult {
     private final ZigBeeStatus commandSentSuccessfully;
 
     /**
-     * Constructor which sets the received response command or null if timeout occurs.
-     *
-     * @param response the response command.
-     * @deprecated Use {@link #CommandResult(ZigBeeStatus, ZigBeeCommand)} instead
-     */
-    @Deprecated
-    public CommandResult(final ZigBeeCommand response) {
-        if (response != null) {
-            this.commandSentSuccessfully = ZigBeeStatus.SUCCESS;
-        } else {
-            this.commandSentSuccessfully = ZigBeeStatus.FAILURE;
-        }
-        this.response = response;
-    }
-
-    /**
      * Constructor which sets the received response command and if the command was sent successfully.
      *
      * @param commandSentSuccessfully if the command was sent successfully
-     * @param response                the response command
+     * @param response the response command
      */
 
     public CommandResult(final ZigBeeStatus commandSentSuccessfully, final ZigBeeCommand response) {
         this.commandSentSuccessfully = commandSentSuccessfully;
         this.response = response;
-    }
-
-    /**
-     * Constructor for timeout situations.
-     *
-     * @deprecated Use {@link #CommandResult(ZigBeeStatus, ZigBeeCommand)} instead
-     */
-    @Deprecated
-    public CommandResult() {
-        commandSentSuccessfully = ZigBeeStatus.FAILURE;
-        response = null;
     }
 
     /**
@@ -84,6 +57,10 @@ public class CommandResult {
 
     /**
      * Checks if command was successful, or resulted in an error.
+     * <p>
+     * Note that as the status code is not present in all ZCL frames or responses, this method will only check the
+     * status code on ZDO responses. The application should check the status code of ZCL responses as it knows the
+     * context.
      *
      * @return true if the command resulted in an error
      */

@@ -562,7 +562,7 @@ public class ZigBeeNodeTest {
 
                 ZigBeeTransactionFuture commandFuture = new ZigBeeTransactionFuture(
                         Mockito.mock(ZigBeeTransaction.class));
-                CommandResult result = new CommandResult(responses.get(command.getClusterId()));
+                CommandResult result = new CommandResult(ZigBeeStatus.SUCCESS, responses.get(command.getClusterId()));
                 commandFuture.set(result);
                 return commandFuture;
             }
