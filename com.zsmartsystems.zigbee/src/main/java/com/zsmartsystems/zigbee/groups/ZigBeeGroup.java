@@ -26,7 +26,9 @@ import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.ZclTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclGroupsCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.AddGroupCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.groups.AddGroupResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.RemoveGroupCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.groups.RemoveGroupResponse;
 
 /**
  * ZigBee group definition. This maintains the group ID and label, along with the group members.
@@ -237,11 +239,13 @@ public class ZigBeeGroup implements Comparable<Object> {
                 logger.debug("{}: Unable to add group {} - timeout", address.getAddress(), groupId);
                 return ZigBeeStatus.NO_RESPONSE;
             }
+            ZclStatus zclStatus;
             if (cmdResult.isError()) {
-                ZclStatus zclStatus = ZclStatus.getStatus(cmdResult.getStatusCode());
-                if (zclStatus == null) {
-                    zclStatus = ZclStatus.UNKNOWN;
-                }
+                zclStatus = ZclStatus.UNKNOWN;
+            } else {
+                zclStatus = ((AddGroupResponse) cmdResult.getResponse()).getStatus();
+            }
+            if (zclStatus != ZclStatus.SUCCESS) {
                 logger.debug("{}: Unable to add group {} - error {}", address.getAddress(), groupId, zclStatus);
                 switch (zclStatus) {
                     case INSUFFICIENT_SPACE:
@@ -250,6 +254,7 @@ public class ZigBeeGroup implements Comparable<Object> {
                         return ZigBeeStatus.FAILURE;
                 }
             }
+
             logger.debug("{}: Added group {} successfully", address.getAddress(), groupId);
             return ZigBeeStatus.SUCCESS;
         } catch (InterruptedException | ExecutionException e) {
@@ -271,17 +276,20 @@ public class ZigBeeGroup implements Comparable<Object> {
                 logger.debug("{}: Unable to remove group {} - timeout", address.getAddress(), groupId);
                 return ZigBeeStatus.NO_RESPONSE;
             }
+            ZclStatus zclStatus;
             if (cmdResult.isError()) {
-                ZclStatus zclStatus = ZclStatus.getStatus(cmdResult.getStatusCode());
-                if (zclStatus == null) {
-                    zclStatus = ZclStatus.UNKNOWN;
-                }
+                zclStatus = ZclStatus.UNKNOWN;
+            } else {
+                zclStatus = ((RemoveGroupResponse) cmdResult.getResponse()).getStatus();
+            }
+            if (zclStatus != ZclStatus.SUCCESS) {
                 logger.debug("{}: Unable to remove group {} - error {}", address.getAddress(), groupId, zclStatus);
                 switch (zclStatus) {
                     default:
                         return ZigBeeStatus.FAILURE;
                 }
             }
+
             logger.debug("{}: Removed group {} successfully", address.getAddress(), groupId);
             return ZigBeeStatus.SUCCESS;
         } catch (InterruptedException | ExecutionException e) {
