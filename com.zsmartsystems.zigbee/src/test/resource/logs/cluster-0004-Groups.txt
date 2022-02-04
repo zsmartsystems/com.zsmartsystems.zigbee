@@ -23,3 +23,6 @@ ViewGroupCommand [Groups: 0/0 -> 0/1, cluster=0004, TID=10, groupId=1]
 
 ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=0/1, profile=0104, cluster=0004, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=51, payload=19 10 01 00 01 00 00]
 ViewGroupResponse [Groups: 0/1 -> 0/1, cluster=0004, TID=10, status=SUCCESS, groupId=1, groupName=]
+
+ZigBeeApsFrame [sourceAddress=0/1, destinationAddress=0/1, profile=0104, cluster=0004, addressMode=DEVICE, radius=0, apsSecurity=false, ackRequest=false, apsCounter=9D, rssi=-67, lqi=84, payload=19 32 00 89 14 00]
+AddGroupResponse [Groups: 0/1 -> 0/1, cluster=0004, TID=32, status=INSUFFICIENT_SPACE, groupId=20]
