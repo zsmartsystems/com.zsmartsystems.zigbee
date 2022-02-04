@@ -20,11 +20,15 @@ import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.ZclTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclGroupsCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.AddGroupCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.groups.AddGroupResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.RemoveGroupCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.groups.RemoveGroupResponse;
 
 /**
  * ZigBee group definition. This maintains the group ID and label, along with the group members.
@@ -190,83 +194,127 @@ public class ZigBeeGroup implements Comparable<Object> {
 
     /**
      * Add a {@link ZigBeeEndpoint} as a member of the group. This will update the groups within the device.
+     * <p>
+     * Note that this is a blocking call and will not return until after the command response from the remote device.
      *
      * @param endpoint the {@link ZigBeeEndpoint} to add as he group member
-     * @return true if this set did not already contain the specified element
+     * @return {@link ZigBeeStatus} containing the status of the operation
      */
-    public boolean addMember(ZigBeeEndpoint endpoint) {
+    public ZigBeeStatus addMember(ZigBeeEndpoint endpoint) {
         ZigBeeGroupMember address = new ZigBeeGroupMember(endpoint.getIeeeAddress(), endpoint.getEndpointId());
-        addGroup(address);
-        return members.add(address);
+        ZigBeeStatus result = addGroup(address);
+        if (result == ZigBeeStatus.SUCCESS) {
+            members.add(address);
+        }
+        return result;
     }
 
     /**
      * Removes a {@link ZigBeeEndpoint} as a member of the group
+     * <p>
+     * Note that this is a blocking call and will not return until after the command response from the remote device.
      *
      * @param endpoint the {@link ZigBeeEndpoint} to remove from the group
-     * @return
+     * @return {@link ZigBeeStatus} containing the status of the operation
      */
-    public boolean removeMember(ZigBeeEndpoint endpoint) {
+    public ZigBeeStatus removeMember(ZigBeeEndpoint endpoint) {
         ZigBeeGroupMember address = new ZigBeeGroupMember(endpoint.getIeeeAddress(), endpoint.getEndpointId());
-        removeGroup(address);
-        return members.remove(address);
+        ZigBeeStatus result = removeGroup(address);
+        if (result == ZigBeeStatus.SUCCESS) {
+            members.remove(address);
+        }
+        return result;
     }
 
-    private void addGroup(ZigBeeGroupMember address) {
+    private ZigBeeStatus addGroup(ZigBeeGroupMember address) {
         ZclGroupsCluster cluster = getGroupsCluster(address);
         if (cluster == null) {
-            return;
+            return ZigBeeStatus.UNSUPPORTED;
         }
 
         CommandResult cmdResult;
         try {
             cmdResult = cluster.sendCommand(new AddGroupCommand(groupId, (label == null ? "" : label))).get();
-            if (cmdResult.isError()) {
-                logger.debug("{}: Unable to add group {}", address.getAddress(), groupId);
-                return;
+            if (cmdResult.isTimeout()) {
+                logger.debug("{}: Unable to add group {} - timeout", address.getAddress(), groupId);
+                return ZigBeeStatus.NO_RESPONSE;
             }
+            ZclStatus zclStatus;
+            if (cmdResult.isError()) {
+                zclStatus = ZclStatus.UNKNOWN;
+            } else {
+                zclStatus = ((AddGroupResponse) cmdResult.getResponse()).getStatus();
+            }
+            if (zclStatus != ZclStatus.SUCCESS) {
+                logger.debug("{}: Unable to add group {} - error {}", address.getAddress(), groupId, zclStatus);
+                switch (zclStatus) {
+                    case INSUFFICIENT_SPACE:
+                        return ZigBeeStatus.NO_RESOURCES;
+                    default:
+                        return ZigBeeStatus.FAILURE;
+                }
+            }
+
             logger.debug("{}: Added group {} successfully", address.getAddress(), groupId);
+            return ZigBeeStatus.SUCCESS;
         } catch (InterruptedException | ExecutionException e) {
             logger.debug("{}: Interrupted adding group {}", address.getAddress(), groupId);
+            return ZigBeeStatus.FAILURE;
         }
     }
 
-    private void removeGroup(ZigBeeGroupMember address) {
+    private ZigBeeStatus removeGroup(ZigBeeGroupMember address) {
         ZclGroupsCluster cluster = getGroupsCluster(address);
         if (cluster == null) {
-            return;
+            return ZigBeeStatus.UNSUPPORTED;
         }
 
         CommandResult cmdResult;
         try {
             cmdResult = cluster.sendCommand(new RemoveGroupCommand(groupId)).get();
-            if (cmdResult.isError()) {
-                logger.debug("{}: Unable to remove group {}", address.getAddress(), groupId);
-                return;
+            if (cmdResult.isTimeout()) {
+                logger.debug("{}: Unable to remove group {} - timeout", address.getAddress(), groupId);
+                return ZigBeeStatus.NO_RESPONSE;
             }
+            ZclStatus zclStatus;
+            if (cmdResult.isError()) {
+                zclStatus = ZclStatus.UNKNOWN;
+            } else {
+                zclStatus = ((RemoveGroupResponse) cmdResult.getResponse()).getStatus();
+            }
+            if (zclStatus != ZclStatus.SUCCESS) {
+                logger.debug("{}: Unable to remove group {} - error {}", address.getAddress(), groupId, zclStatus);
+                switch (zclStatus) {
+                    default:
+                        return ZigBeeStatus.FAILURE;
+                }
+            }
+
             logger.debug("{}: Removed group {} successfully", address.getAddress(), groupId);
+            return ZigBeeStatus.SUCCESS;
         } catch (InterruptedException | ExecutionException e) {
             logger.debug("{}: Interrupted removing group {}", address.getAddress(), groupId);
+            return ZigBeeStatus.FAILURE;
         }
     }
 
     private ZclGroupsCluster getGroupsCluster(ZigBeeGroupMember address) {
         ZigBeeNode node = networkManager.getNode(address.getAddress());
         if (node == null) {
-            logger.debug("{}: Unable to find node while removing group", address.getAddress());
+            logger.debug("{}: Unable to find node while maninging group", address.getAddress());
             return null;
         }
 
         ZigBeeEndpoint endpoint = node.getEndpoint(address.getEndpointId());
         if (endpoint == null) {
-            logger.debug("{}: Unable to find endpoint {} while removing group", address.getAddress(),
+            logger.debug("{}: Unable to find endpoint {} while maninging group", address.getAddress(),
                     address.getEndpointId());
             return null;
         }
 
         ZclGroupsCluster cluster = (ZclGroupsCluster) endpoint.getInputCluster(ZclGroupsCluster.CLUSTER_ID);
         if (cluster == null) {
-            logger.debug("{}: Unable to find Groups Cluster on endpoint {} while removing group", address.getAddress(),
+            logger.debug("{}: Unable to find Groups Cluster on endpoint {} while maninging group", address.getAddress(),
                     address.getEndpointId());
             return null;
         }
