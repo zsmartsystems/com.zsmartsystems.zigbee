@@ -234,7 +234,6 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     private boolean isConfigured = false;
     private final Object isConfiguredSync = new Object();
 
-
     private ScheduledExecutorService executorService;
     private ScheduledFuture<?> pollingTimer = null;
 
@@ -661,7 +660,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     @Override
     public void shutdown() {
         logger.debug("EZSP Dongle: Shutdown");
-        
+
         synchronized (isConfiguredSync) {
             if (!isConfigured) {
                 logger.debug("EZSP Dongle: Shutdown. isConfigured is false. No shutdown necessary.");
@@ -746,8 +745,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
         emberApsFrame.setDestinationEndpoint(apsFrame.getDestinationEndpoint());
         emberApsFrame.setSequence(apsFrame.getApsCounter());
         if (apsFrame.getAckRequest()) {
-            emberApsFrame.addOptions(EmberApsOption.EMBER_APS_OPTION_RETRY);
         }
+        emberApsFrame.addOptions(EmberApsOption.EMBER_APS_OPTION_RETRY);
         emberApsFrame.addOptions(EmberApsOption.EMBER_APS_OPTION_ENABLE_ROUTE_DISCOVERY);
         emberApsFrame.addOptions(EmberApsOption.EMBER_APS_OPTION_ENABLE_ADDRESS_DISCOVERY);
 
