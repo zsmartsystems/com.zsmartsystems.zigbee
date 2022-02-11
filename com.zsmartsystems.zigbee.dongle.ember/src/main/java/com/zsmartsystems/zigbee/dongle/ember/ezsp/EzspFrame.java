@@ -219,6 +219,8 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_SEND_REPLY = 0x39;
     protected static final int FRAME_ID_SEND_TRUST_CENTER_LINK_KEY = 0x67;
     protected static final int FRAME_ID_SEND_UNICAST = 0x34;
+    protected static final int FRAME_ID_SET_ADDRESS_TABLE_REMOTE_EUI64 = 0x5C;
+    protected static final int FRAME_ID_SET_ADDRESS_TABLE_REMOTE_NODE_ID = 0x5D;
     protected static final int FRAME_ID_SET_BINDING = 0x2B;
     protected static final int FRAME_ID_SET_BINDING_REMOTE_NODE_ID = 0x30;
     protected static final int FRAME_ID_SET_CONCENTRATOR = 0x10;
@@ -385,6 +387,8 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_SEND_REPLY, EzspSendReplyResponse.class);
         ezspHandlerMap.put(FRAME_ID_SEND_TRUST_CENTER_LINK_KEY, EzspSendTrustCenterLinkKeyResponse.class);
         ezspHandlerMap.put(FRAME_ID_SEND_UNICAST, EzspSendUnicastResponse.class);
+        ezspHandlerMap.put(FRAME_ID_SET_ADDRESS_TABLE_REMOTE_EUI64, EzspSetAddressTableRemoteEui64Response.class);
+        ezspHandlerMap.put(FRAME_ID_SET_ADDRESS_TABLE_REMOTE_NODE_ID, EzspSetAddressTableRemoteNodeIdResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_BINDING, EzspSetBindingResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_BINDING_REMOTE_NODE_ID, EzspSetBindingRemoteNodeIdResponse.class);
         ezspHandlerMap.put(FRAME_ID_SET_CONCENTRATOR, EzspSetConcentratorResponse.class);
