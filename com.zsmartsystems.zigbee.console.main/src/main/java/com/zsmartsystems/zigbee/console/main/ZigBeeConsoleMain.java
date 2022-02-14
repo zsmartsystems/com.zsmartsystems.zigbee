@@ -403,7 +403,7 @@ public class ZigBeeConsoleMain {
         networkManager.addExtension(new ZigBeeBasicServerExtension());
 
         ZigBeeDiscoveryExtension discoveryExtension = new ZigBeeDiscoveryExtension();
-        discoveryExtension.setUpdatePeriod(0);
+        discoveryExtension.setUpdateMeshPeriod(0);
         discoveryExtension.setUpdateOnChange(false);
         networkManager.addExtension(discoveryExtension);
 
