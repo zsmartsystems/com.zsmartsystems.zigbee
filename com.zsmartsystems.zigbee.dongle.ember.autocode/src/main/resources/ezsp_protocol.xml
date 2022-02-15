@@ -3279,9 +3279,9 @@
 				<description>Whether the incoming GPDF had the auto-commissioning bit set.</description>
 			</parameter>
 			<parameter>
-				<data_type>bool</data_type>
-				<name>rxAfterTx</name>
-				<description>Whether the incoming GPDF had the rxAfterTx bit set.</description>
+				<data_type>uint8_t</data_type>
+				<name>bidirectionalInfo</name>
+				<description>Bidirectional information represented in bitfields, where bit0 holds the rxAfterTx of incoming gpdf and bit1 holds if tx queue is available for outgoing gpdf.</description>
 			</parameter>
 			<parameter>
 				<data_type>uint32_t</data_type>
@@ -4418,15 +4418,11 @@
 		<description>A GP address structure.</description>
 		<parameters>
 			<parameter>
-				<data_type>EmberEUI64</data_type>
-				<name>gpdIeeeAddress</name>
-				<description>The GPD's EUI64.</description>
-			</parameter>
-			<parameter>
-				<data_type>uint32_t</data_type>
-				<name>sourceId</name>
-				<description>The GPD's source ID.</description>
-				<display>hex[8]</display>
+				<data_type>uint8_t[8]</data_type>
+				<name>gpdSource</name>
+				<description>The GPD's EUI64. The IEEE address is used when the application identifier is EMBER_GP_APPLICATION_IEEE_ADDRESS.</description>
+				<description>The GPD's source ID. The 32-bit source identifier is used when the application identifier is EMBER_GP_APPLICATION_SOURCE_ID.</description>
+				<display>hex[2]</display>
 			</parameter>
 			<parameter>
 				<data_type>EmberGpApplicationId</data_type>
