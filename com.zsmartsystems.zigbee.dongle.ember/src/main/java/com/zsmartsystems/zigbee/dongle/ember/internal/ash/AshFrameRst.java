@@ -35,7 +35,7 @@ public class AshFrameRst extends AshFrame {
         int[] rstFrame = super.getOutputBuffer();
 
         int[] outFrame = new int[rstFrame.length + 1];
-        outFrame[0] = 0x1A;
+        outFrame[0] = 0x1A; // Prepend reset frames with the ASH_CANCEL_BYTE to clear the RX buffer in the NCP
         for (int cnt = 0; cnt < rstFrame.length; cnt++) {
             outFrame[cnt + 1] = rstFrame[cnt];
         }
