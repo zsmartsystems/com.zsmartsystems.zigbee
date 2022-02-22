@@ -77,11 +77,12 @@ public class EzspGpepIncomingMessageHandler extends EzspFrameResponse {
     private boolean autoCommissioning;
 
     /**
-     * Whether the incoming GPDF had the rxAfterTx bit set.
+     * Bidirectional information represented in bitfields, where bit0 holds the rxAfterTx of
+     * incoming gpdf and bit1 holds if tx queue is available for outgoing gpdf.
      * <p>
-     * EZSP type is <i>bool</i> - Java type is {@link boolean}
+     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      */
-    private boolean rxAfterTx;
+    private int bidirectionalInfo;
 
     /**
      * The security frame counter of the incoming GDPF.
@@ -133,7 +134,7 @@ public class EzspGpepIncomingMessageHandler extends EzspFrameResponse {
         gpdfSecurityLevel = deserializer.deserializeEmberGpSecurityLevel();
         gpdfSecurityKeyType = deserializer.deserializeEmberGpKeyType();
         autoCommissioning = deserializer.deserializeBool();
-        rxAfterTx = deserializer.deserializeBool();
+        bidirectionalInfo = deserializer.deserializeUInt8();
         gpdSecurityFrameCounter = deserializer.deserializeUInt32();
         gpdCommandId = deserializer.deserializeUInt8();
         mic = deserializer.deserializeUInt32();
@@ -283,23 +284,25 @@ public class EzspGpepIncomingMessageHandler extends EzspFrameResponse {
     }
 
     /**
-     * Whether the incoming GPDF had the rxAfterTx bit set.
+     * Bidirectional information represented in bitfields, where bit0 holds the rxAfterTx of
+     * incoming gpdf and bit1 holds if tx queue is available for outgoing gpdf.
      * <p>
-     * EZSP type is <i>bool</i> - Java type is {@link boolean}
+     * EZSP type is <i>uint8_t</i> - Java type is {@link int}
      *
-     * @return the current rxAfterTx as {@link boolean}
+     * @return the current bidirectionalInfo as {@link int}
      */
-    public boolean getRxAfterTx() {
-        return rxAfterTx;
+    public int getBidirectionalInfo() {
+        return bidirectionalInfo;
     }
 
     /**
-     * Whether the incoming GPDF had the rxAfterTx bit set.
+     * Bidirectional information represented in bitfields, where bit0 holds the rxAfterTx of
+     * incoming gpdf and bit1 holds if tx queue is available for outgoing gpdf.
      *
-     * @param rxAfterTx the rxAfterTx to set as {@link boolean}
+     * @param bidirectionalInfo the bidirectionalInfo to set as {@link int}
      */
-    public void setRxAfterTx(boolean rxAfterTx) {
-        this.rxAfterTx = rxAfterTx;
+    public void setBidirectionalInfo(int bidirectionalInfo) {
+        this.bidirectionalInfo = bidirectionalInfo;
     }
 
     /**
@@ -421,8 +424,8 @@ public class EzspGpepIncomingMessageHandler extends EzspFrameResponse {
         builder.append(gpdfSecurityKeyType);
         builder.append(", autoCommissioning=");
         builder.append(autoCommissioning);
-        builder.append(", rxAfterTx=");
-        builder.append(rxAfterTx);
+        builder.append(", bidirectionalInfo=");
+        builder.append(bidirectionalInfo);
         builder.append(", gpdSecurityFrameCounter=");
         builder.append(gpdSecurityFrameCounter);
         builder.append(", gpdCommandId=");

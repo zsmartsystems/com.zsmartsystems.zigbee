@@ -7,7 +7,6 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.structure;
 
-import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspDeserializer;
 import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
 
@@ -23,18 +22,12 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
 public class EmberGpAddress {
 
     /**
-     * The GPD's EUI64.
+     * The GPD's source ID. The 32-bit source identifier is used when the application identifier is
+     * EMBER_GP_APPLICATION_SOURCE_ID.
      * <p>
-     * EZSP type is <i>EmberEUI64</i> - Java type is {@link IeeeAddress}
+     * EZSP type is <i>uint8_t[8]</i> - Java type is {@link int[]}
      */
-    private IeeeAddress gpdIeeeAddress;
-
-    /**
-     * The GPD's source ID.
-     * <p>
-     * EZSP type is <i>uint32_t</i> - Java type is {@link int}
-     */
-    private int sourceId;
+    private int[] gpdSource;
 
     /**
      * The GPD Application ID.
@@ -61,43 +54,25 @@ public class EmberGpAddress {
     }
 
     /**
-     * The GPD's EUI64.
+     * The GPD's source ID. The 32-bit source identifier is used when the application identifier is
+     * EMBER_GP_APPLICATION_SOURCE_ID.
      * <p>
-     * EZSP type is <i>EmberEUI64</i> - Java type is {@link IeeeAddress}
+     * EZSP type is <i>uint8_t[8]</i> - Java type is {@link int[]}
      *
-     * @return the current gpdIeeeAddress as {@link IeeeAddress}
+     * @return the current gpdSource as {@link int[]}
      */
-    public IeeeAddress getGpdIeeeAddress() {
-        return gpdIeeeAddress;
+    public int[] getGpdSource() {
+        return gpdSource;
     }
 
     /**
-     * The GPD's EUI64.
+     * The GPD's source ID. The 32-bit source identifier is used when the application identifier is
+     * EMBER_GP_APPLICATION_SOURCE_ID.
      *
-     * @param gpdIeeeAddress the gpdIeeeAddress to set as {@link IeeeAddress}
+     * @param gpdSource the gpdSource to set as {@link int[]}
      */
-    public void setGpdIeeeAddress(IeeeAddress gpdIeeeAddress) {
-        this.gpdIeeeAddress = gpdIeeeAddress;
-    }
-
-    /**
-     * The GPD's source ID.
-     * <p>
-     * EZSP type is <i>uint32_t</i> - Java type is {@link int}
-     *
-     * @return the current sourceId as {@link int}
-     */
-    public int getSourceId() {
-        return sourceId;
-    }
-
-    /**
-     * The GPD's source ID.
-     *
-     * @param sourceId the sourceId to set as {@link int}
-     */
-    public void setSourceId(int sourceId) {
-        this.sourceId = sourceId;
+    public void setGpdSource(int[] gpdSource) {
+        this.gpdSource = gpdSource;
     }
 
     /**
@@ -147,8 +122,7 @@ public class EmberGpAddress {
      */
     public int[] serialize(EzspSerializer serializer) {
         // Serialize the fields
-        serializer.serializeEmberEui64(gpdIeeeAddress);
-        serializer.serializeUInt32(sourceId);
+        serializer.serializeUInt8Array(gpdSource);
         serializer.serializeEmberGpApplicationId(applicationId);
         serializer.serializeUInt8(endpoint);
         return serializer.getPayload();
@@ -161,19 +135,27 @@ public class EmberGpAddress {
      */
     public void deserialize(EzspDeserializer deserializer) {
         // Deserialize the fields
-        gpdIeeeAddress = deserializer.deserializeEmberEui64();
-        sourceId = deserializer.deserializeUInt32();
+        gpdSource = deserializer.deserializeUInt8Array(8);
         applicationId = deserializer.deserializeEmberGpApplicationId();
         endpoint = deserializer.deserializeUInt8();
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(117);
-        builder.append("EmberGpAddress [gpdIeeeAddress=");
-        builder.append(gpdIeeeAddress);
-        builder.append(", sourceId=");
-        builder.append(String.format("%08X", sourceId));
+        final StringBuilder builder = new StringBuilder(92);
+        builder.append("EmberGpAddress [gpdSource=");
+        builder.append('{');
+        if (gpdSource == null) {
+            builder.append("null");
+        } else {
+            for (int cnt = 0; cnt < gpdSource.length; cnt++) {
+                if (cnt != 0) {
+                    builder.append(' ');
+                }
+                builder.append(String.format("%02X", gpdSource[cnt]));
+            }
+        }
+        builder.append('}');
         builder.append(", applicationId=");
         builder.append(applicationId);
         builder.append(", endpoint=");

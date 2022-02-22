@@ -532,7 +532,7 @@ public enum EmberStatus {
     EMBER_APS_ENCRYPTION_ERROR(0x00A6),
 
     /**
-     *  There was an attempt to form a network using commercial security without setting the Trust
+     * There was an attempt to form a network using commercial security without setting the Trust
      * Center master key first.
      */
     EMBER_TRUST_CENTER_MASTER_KEY_NOT_SET(0x00A7),
