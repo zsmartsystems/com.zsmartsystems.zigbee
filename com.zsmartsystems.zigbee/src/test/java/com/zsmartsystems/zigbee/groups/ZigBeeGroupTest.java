@@ -26,6 +26,8 @@ import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclGroupsCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.groups.AddGroupResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.groups.RemoveGroupResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.groups.ZclGroupsCommand;
 
 /**
@@ -101,16 +103,22 @@ public class ZigBeeGroupTest {
         Future future = Mockito.mock(Future.class);
         CommandResult response = Mockito.mock(CommandResult.class);
 
+        AddGroupResponse addGroupResponse = Mockito.mock(AddGroupResponse.class);
+        Mockito.when(addGroupResponse.getStatus()).thenReturn(ZclStatus.SUCCESS);
+        Mockito.when(response.getResponse()).thenReturn(addGroupResponse);
+
         Mockito.when(cluster.sendCommand(ArgumentMatchers.any(ZclGroupsCommand.class))).thenReturn(future);
         Mockito.when(future.get()).thenReturn(response);
 
-        assertEquals(ZigBeeStatus.SUCCESS, group.addMember(endpoint));
-
         Mockito.when(response.isError()).thenReturn(true);
-        Mockito.when(response.getStatusCode()).thenReturn(99);
+        Mockito.when(addGroupResponse.getStatus()).thenReturn(ZclStatus.ABORT);
         assertEquals(ZigBeeStatus.FAILURE, group.addMember(endpoint));
 
-        Mockito.when(response.getStatusCode()).thenReturn(ZclStatus.INSUFFICIENT_SPACE.getId());
+        Mockito.when(response.isError()).thenReturn(false);
+        Mockito.when(addGroupResponse.getStatus()).thenReturn(ZclStatus.ABORT);
+        assertEquals(ZigBeeStatus.FAILURE, group.addMember(endpoint));
+
+        Mockito.when(addGroupResponse.getStatus()).thenReturn(ZclStatus.INSUFFICIENT_SPACE);
         assertEquals(ZigBeeStatus.NO_RESOURCES, group.addMember(endpoint));
     }
 
@@ -135,6 +143,12 @@ public class ZigBeeGroupTest {
 
         Future future = Mockito.mock(Future.class);
         CommandResult response = Mockito.mock(CommandResult.class);
+
+        RemoveGroupResponse removeGroupResponse = Mockito.mock(RemoveGroupResponse.class);
+        Mockito.when(removeGroupResponse.getStatus()).thenReturn(ZclStatus.SUCCESS);
+        Mockito.when(response.getResponse()).thenReturn(removeGroupResponse);
+
+        Mockito.when(response.getStatusCode()).thenReturn(0);
 
         Mockito.when(cluster.sendCommand(ArgumentMatchers.any(ZclGroupsCommand.class))).thenReturn(future);
         Mockito.when(future.get()).thenReturn(response);

@@ -57,10 +57,11 @@ public class CommandResultTest {
         commandResult = new CommandResult(ZigBeeStatus.SUCCESS, new DefaultResponse(1, ZclStatus.FAILURE));
         assertTrue(commandResult.isError());
 
+        // Note that only ZDO status responses are reported here
         commandResult = new CommandResult(ZigBeeStatus.SUCCESS,
                 new AddGroupResponse(ZclStatus.INSUFFICIENT_SPACE, 20));
         assertFalse(commandResult.isError());
-        assertEquals(Integer.valueOf(0x89), commandResult.getStatusCode());
+        assertEquals(Integer.valueOf(0xFFFF), commandResult.getStatusCode());
     }
 
     @Test
