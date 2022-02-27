@@ -244,6 +244,15 @@ public class ZclAttribute {
     }
 
     /**
+     * Returns the {@link ZigBeeEndpointAddress} of the endpoint of this attribute
+     *
+     * @return the {@link ZigBeeEndpointAddress} of the cluster
+     */
+    public ZigBeeEndpointAddress getZigBeeAddress() {
+        return cluster.getZigBeeAddress();
+    }
+
+    /**
      * Gets the attribute ID
      *
      * @return the attribute ID
