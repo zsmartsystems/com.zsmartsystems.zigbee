@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.concurrent.Future;
 
 import com.zsmartsystems.zigbee.CommandResult;
+import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.database.ZclAttributeDao;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
@@ -226,8 +227,19 @@ public class ZclAttribute {
      * Gets the {@link ZclClusterType} to which this attribute belongs
      *
      * @return the {@link ZclClusterType} for this attribute
+     * @deprecated use {@link getClusterType}
      */
+    @Deprecated
     public ZclClusterType getCluster() {
+        return ZclClusterType.getValueById(cluster.getClusterId());
+    }
+
+    /**
+     * Gets the {@link ZclClusterType} to which this attribute belongs
+     *
+     * @return the {@link ZclClusterType} for this attribute
+     */
+    public ZclClusterType getClusterType() {
         return ZclClusterType.getValueById(cluster.getClusterId());
     }
 
@@ -543,9 +555,10 @@ public class ZclAttribute {
         reportingTimeout = dao.getReportingTimeout();
         manufacturerCode = dao.getManufacturerCode();
     }
-    
+
     /**
-     * Sets the dynamic state of the attribute from a {@link ZclAttributeDao} which has been restored from a persisted state.
+     * Sets the dynamic state of the attribute from a {@link ZclAttributeDao} which has been restored from a persisted
+     * state.
      *
      * @param dao the {@link ZclAttributeDao} from which to restore the dynamic state
      */
