@@ -693,7 +693,9 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
 
             isConfigured = false;
 
-            frameHandler.setClosing();
+            if (frameHandler != null) {
+                frameHandler.setClosing();
+            }
 
             if (mfglibListener != null) {
                 mfglibListener = null;
@@ -707,8 +709,14 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 executorService.shutdownNow();
             }
 
-            frameHandler.close();
-            serialPort.close();
+            if (frameHandler != null) {
+                frameHandler.close();
+            }
+
+            if (serialPort != null) {
+                serialPort.close();
+            }
+
             frameHandler = null;
         }
     }
