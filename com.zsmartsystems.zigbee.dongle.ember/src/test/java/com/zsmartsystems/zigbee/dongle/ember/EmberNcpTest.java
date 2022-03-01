@@ -13,6 +13,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -27,6 +28,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspClearKeyTableRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspClearKeyTableResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspEnergyScanResultHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetEui64Request;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetEui64Response;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetMulticastTableEntryRequest;
@@ -256,7 +258,8 @@ public class EmberNcpTest {
         Mockito.when(scanComplete.getStatus()).thenReturn(EmberStatus.EMBER_SUCCESS);
         EmberNcp ncp = getEmberNcp(scanComplete);
 
-        ncp.doEnergyScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, 123);
+        List<EzspEnergyScanResultHandler> scanResult = ncp.doEnergyScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, 123);
+        assertEquals(0, scanResult.size());
 
         Mockito.verify(handler, Mockito.times(1)).sendEzspTransaction(ezspTransactionCapture.capture(),
                 ArgumentMatchers.anyLong());
@@ -264,6 +267,15 @@ public class EmberNcpTest {
         EzspFrameRequest request = ezspTransactionCapture.getValue().getRequest();
         assertTrue(request instanceof EzspStartScanRequest);
         assertEquals(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, ((EzspStartScanRequest) request).getChannelMask());
+
+        Mockito.when(scanComplete.getStatus()).thenReturn(EmberStatus.EMBER_DELIVERY_FAILED);
+        scanResult = ncp.doEnergyScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, 123);
+        assertNull(scanResult);
+
+        EzspEnergyScanResultHandler scanChannelResponse = Mockito.mock(EzspEnergyScanResultHandler.class);
+        ncp = getEmberNcp(scanChannelResponse);
+        scanResult = ncp.doEnergyScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, 123);
+        assertNull(scanResult);
     }
 
     @Test
