@@ -520,27 +520,33 @@ public class ZigBeeDongleTelegesis
     @Override
     public void shutdown() {
         synchronized (isConfiguredSync) {
-            if (!isConfigured) {
-                logger.debug("Telegesis dongle: Shutdown. isConfigured is false. No shutdown necessary.");
-                return;
-            }
-
             isConfigured = false;
 
             if (pollingTimer != null) {
                 pollingTimer.cancel(true);
             }
+
             if (executorService != null) {
                 executorService.shutdownNow();
             }
 
             commandScheduler.shutdownNow();
 
-            frameHandler.removeEventListener(this);
-            frameHandler.setClosing();
+            if (frameHandler != null) {
+                frameHandler.removeEventListener(this);
+                frameHandler.setClosing();
+            }
+
             zigbeeTransportReceive.setTransportState(ZigBeeTransportState.OFFLINE);
-            serialPort.close();
-            frameHandler.close();
+
+            if (frameHandler != null) {
+                frameHandler.close();
+            }
+
+            if (serialPort != null) {
+                serialPort.close();
+            }
+
             frameHandler = null;
         }
 
