@@ -932,17 +932,27 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler().sendEzspTransaction(
                 new EzspMultiResponseTransaction(energyScan, EzspScanCompleteHandler.class, relatedResponses));
 
-        EzspScanCompleteHandler scanCompleteResponse = (EzspScanCompleteHandler) transaction.getResponse();
-        logger.debug(scanCompleteResponse.toString());
+        if (transaction.getResponse() instanceof EzspScanCompleteHandler) {
+            EzspScanCompleteHandler scanCompleteResponse = (EzspScanCompleteHandler) transaction.getResponse();
+            logger.debug(scanCompleteResponse.toString());
 
-        List<EzspEnergyScanResultHandler> channels = new ArrayList<>();
-        for (EzspFrameResponse network : transaction.getResponses()) {
-            if (network instanceof EzspEnergyScanResultHandler) {
-                channels.add((EzspEnergyScanResultHandler) network);
+            if (scanCompleteResponse.getStatus() != EmberStatus.EMBER_SUCCESS) {
+                logger.debug("Invalid response during energy scan: {}", transaction.getResponse());
+                return null;
             }
-        }
 
-        return channels;
+            List<EzspEnergyScanResultHandler> channels = new ArrayList<>();
+            for (EzspFrameResponse network : transaction.getResponses()) {
+                if (network instanceof EzspEnergyScanResultHandler) {
+                    channels.add((EzspEnergyScanResultHandler) network);
+                }
+            }
+
+            return channels;
+        } else {
+            logger.debug("Invalid response during energy scan: {}", transaction.getResponse());
+            return null;
+        }
     }
 
     /**
