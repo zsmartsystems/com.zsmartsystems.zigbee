@@ -61,7 +61,7 @@ public class ZigBeeConsoleReportingUnsubscribeCommand extends ZigBeeConsoleAbstr
         final int attributeId = parseAttribute(attributeIdParam);
         final ZclAttribute attribute = cluster.getAttribute(attributeId);
 
-        final CommandResult result = cluster.setReporting(attribute.getId(), 0, 0xFFFF, null).get();
+        final CommandResult result = cluster.setReporting(attribute.getId(), 0, 0xFFFF, 0).get();
         if (result.isSuccess()) {
             final ConfigureReportingResponse response = result.getResponse();
             final ZclStatus statusCode = response.getStatus();
