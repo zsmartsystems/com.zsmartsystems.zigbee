@@ -265,7 +265,7 @@ public class NeighborTable {
     @Override
     public String toString() {
         return "NeighborTable [extendedPanId=" + extendedPanId + ", extendedAddress=" + extendedAddress
-                + ", networkAddress=" + networkAddress + ", deviceType=" + deviceType + ", rxOnWhenIdle=" + rxOnWhenIdle
+                + ", networkAddress=" + String.format("%04X", networkAddress) + ", deviceType=" + deviceType + ", rxOnWhenIdle=" + rxOnWhenIdle
                 + ", relationship=" + relationship + ", permitJoining=" + permitJoining + ", depth=" + depth + ", lqi="
                 + lqi + "]";
     }
