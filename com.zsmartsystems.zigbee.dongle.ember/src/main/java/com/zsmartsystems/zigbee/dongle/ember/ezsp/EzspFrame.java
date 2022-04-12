@@ -484,7 +484,7 @@ public abstract class EzspFrame {
                 }
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            logger.debug("Error detecting the EZSP frame type", e);
+            logger.debug("EzspFrame error detecting the frame type: {}", frameToString(data));
             return null;
         }
 
@@ -500,7 +500,12 @@ public abstract class EzspFrame {
             return ezspFrame;
         } catch (SecurityException | NoSuchMethodException | IllegalArgumentException | InstantiationException
                 | IllegalAccessException | InvocationTargetException e) {
-            logger.debug("Error creating instance of EzspFrame", e);
+            Exception realE = e;
+            if (e instanceof InvocationTargetException) {
+                realE = (Exception) ((InvocationTargetException) e).getCause();
+            }
+            logger.debug("EzspFrame error {} creating instance of frame: {}", realE.getClass().getSimpleName(),
+                    frameToString(data));
         }
 
         return null;
@@ -528,5 +533,13 @@ public abstract class EzspFrame {
      */
     public static int getEzspVersion() {
         return EzspFrame.ezspVersion;
+    }
+
+    private static String frameToString(int[] inputBuffer) {
+        StringBuilder result = new StringBuilder();
+        for (int data : inputBuffer) {
+            result.append(String.format("%02X ", data));
+        }
+        return result.toString();
     }
 }
