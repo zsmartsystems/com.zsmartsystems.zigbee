@@ -6151,7 +6151,7 @@
 			<value>
 				<name>EMBER_TRUST_CENTER_MASTER_KEY_NOT_SET</name>
 				<enum_value>0x00A7</enum_value>
-				<description> There was an attempt to form a network using commercial security without setting the Trust Center master key first.</description>
+				<description>There was an attempt to form a network using commercial security without setting the Trust Center master key first.</description>
 			</value>
 			<value>
 				<name>EMBER_SECURITY_STATE_NOT_SET</name>

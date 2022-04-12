@@ -7,6 +7,10 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember.ezsp;
 
+import static org.junit.Assert.assertNull;
+
+import org.junit.Test;
+
 /**
  *
  * @author Chris Jackson
@@ -23,5 +27,12 @@ public class EzspFrameTest {
         }
 
         return response;
+    }
+
+    @Test
+    public void createHandler() {
+        assertNull(EzspFrame.createHandler(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 }));
+        assertNull(EzspFrame.createHandler(new int[] { 0 }));
+        assertNull(EzspFrame.createHandler(new int[] { 0, 67, 33 }));
     }
 }

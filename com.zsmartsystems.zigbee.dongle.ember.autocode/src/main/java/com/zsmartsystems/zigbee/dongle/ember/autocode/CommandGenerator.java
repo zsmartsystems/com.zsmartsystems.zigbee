@@ -1101,7 +1101,7 @@ public class CommandGenerator extends ClassGenerator {
         out.println("                }");
         out.println("            }");
         out.println("        } catch (ArrayIndexOutOfBoundsException e) {");
-        out.println("            logger.debug(\"Error detecting the EZSP frame type\", e);");
+        out.println("            logger.debug(\"EzspFrame error detecting the frame type: {}\", frameToString(data));");
         out.println("            return null;");
         out.println("        }");
         out.println();
@@ -1118,7 +1118,13 @@ public class CommandGenerator extends ClassGenerator {
         out.println(
                 "        } catch (SecurityException | NoSuchMethodException | IllegalArgumentException | InstantiationException");
         out.println("                | IllegalAccessException | InvocationTargetException e) {");
-        out.println("            logger.debug(\"Error creating instance of EzspFrame\", e);");
+        out.println("            Exception realE = e;");
+        out.println("            if (e instanceof InvocationTargetException) {");
+        out.println("                realE = (Exception) ((InvocationTargetException) e).getCause();");
+        out.println("            }");
+        out.println(
+                "            logger.debug(\"EzspFrame error {} creating instance of frame: {}\", realE.getClass().getSimpleName(),");
+        out.println("                    frameToString(data));");
         out.println("        }");
         out.println();
         out.println("        return null;");
@@ -1149,6 +1155,15 @@ public class CommandGenerator extends ClassGenerator {
         out.println("     */");
         out.println("    public static int getEzspVersion() {");
         out.println("        return EzspFrame.ezspVersion;");
+        out.println("    }");
+        out.println();
+
+        out.println("    private static String frameToString(int[] inputBuffer) {");
+        out.println("        StringBuilder result = new StringBuilder();");
+        out.println("        for (int data : inputBuffer) {");
+        out.println("            result.append(String.format(\"%02X \", data));");
+        out.println("        }");
+        out.println("        return result.toString();");
         out.println("    }");
 
         out.println("}");
