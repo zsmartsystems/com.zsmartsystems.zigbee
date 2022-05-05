@@ -287,6 +287,9 @@ public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleComma
             case DATA_8_BIT:
                 value = Integer.parseInt(stringValue);
                 break;
+            case DATA_16_BIT:
+                value = Integer.parseInt(stringValue);
+                break;
             case ENUMERATION_16_BIT:
                 value = Integer.parseInt(stringValue);
                 break;
