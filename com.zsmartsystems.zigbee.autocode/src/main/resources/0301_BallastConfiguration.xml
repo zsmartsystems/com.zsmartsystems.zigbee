@@ -1,0 +1,81 @@
+<cluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="zigbee-description.xsd" code="0x0301">
+    <name>Ballast Configuration</name>
+    <description></description>
+    <attribute code="0x0000" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x00" maximum="0xFE" default="0x01">
+        <name>Physical Min Level</name>
+        <description>The PhysicalMinLevel attribute is 8 bits in length and specifies the minimum light output95 the ballast can achieve. This attribute SHALL be specified in the range 0x01 to 0xfe, and specifies the light output of the ballast according to the dimming light curve</description>
+    </attribute>
+    <attribute code="0x0001" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x00" maximum="0xFE" default="0xFE">
+        <name>Physical Max Level</name>
+        <description>The PhysicalMaxLevel attribute is 8 bits in length and specifies the maximum light output96 the ballast can achieve according to the dimming light curve</description>
+    </attribute>
+    <attribute code="0x0002" type="BITMAP_8_BIT" side="server" optional="false" writable="false" reportable="false" minimum="0x00" maximum="0x03" default="0x00">
+        <name>Ballast Status</name>
+        <description>The BallastStatus attribute is 8 bits in length and specifies the activity status of the ballast functions. The usage of the bits is specified in Table 5-31. Where a function is active, the corresponding bit SHALL be set to 1. Where a function is not active, the corresponding bit SHALL be set to 0.</description>
+    </attribute>
+
+    <attribute code="0x0010" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false" minimum="0x00" maximum="0xFE" default="0x01">
+        <name>Min Level</name>
+        <description>The MinLevel attribute is 8 bits in length and specifies the light output of the ballast according to the dimming light curve when the Level Control Cluster’s CurrentLevel attribute equals to 0x01 (1) (and the On/Off Clusters’s OnOff attribute equals to 0x01)</description>
+        <description>The value of this attribute SHALL be both greater than or equal to PhysicalMinLevel and less than or equal to MaxLevel. If an attempt is made to set this attribute to a level where these conditions are not met, a default response command SHALL be returned with status code set to INVALID_VALUE, and the level SHALL not be set.</description>
+    </attribute>
+    <attribute code="0x0011" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false" minimum="0x00" maximum="0xFE" default="0xFE">
+        <name>Max Level</name>
+        <description>The MaxLevel attribute is 8 bits in length and specifies the light output of the ballast according to the dimming light curve when the Level Control Cluster’s CurrentLevel attribute equals to 0xfe (254) (and the On/Off Cluster’s OnOff attribute equals to 0x01)</description>
+        <description>The value of this attribute SHALL be both less than or equal to PhysicalMaxLevel and greater than or equal to MinLevel. If an attempt is made to set this attribute to a level where these conditions are not met, a default response command SHALL be returned with status code set to INVALID_VALUE, and the level SHALL not be set.</description>
+    </attribute>
+    <attribute code="0x0012" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false" minimum="0x00" maximum="0xFE" default="0xFE">
+        <name>Power On Level</name>
+        <description>Deprecated</description>
+    </attribute>
+    <attribute code="0x0013" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false" minimum="0x0000" maximum="0xFFFE" default="0x00">
+        <name>Power On Fade Time</name>
+        <description>Deprecated</description>
+    </attribute>
+    <attribute code="0x0014" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false" minimum="0x00" maximum="0xFE" default="0x00">
+        <name>Intrinsic Ballast Factor</name>
+        <description>The IntrinsicBallastFactor attribute is 8 bits in length and specifies as a percentage the ballast factor of the ballast/lamp combination, prior to any adjustment.</description>
+        <description>A value of 0xff indicates in invalid value.</description>
+    </attribute>
+    <attribute code="0x0015" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false" minimum="0x64" maximum="0xFF" default="0xFF">
+        <name>Ballast Factor Adjustment</name>
+        <description>The BallastFactorAdjustment attribute is 8 bits in length and specifies the multiplication factor, as a percentage, to be applied to the configured light output of the lamps. A typical usage of this mechanism is to compensate for reduction in efficiency over the lifetime of a lamp.</description>
+        <description>The range for this attribute is manufacturer dependent. If an attempt is made to set this attribute to a level that cannot be supported, a default response command SHALL be returned with status code set to INVALID_VALUE, and the level SHALL not be set. The value 0xff indicates that ballast factor scaling is not in use.</description>
+    </attribute>
+    <attribute code="0x0020" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false" minimum="0x00" maximum="0xFE" default="0x00">
+        <name>Lamp Quantity</name>
+        <description>The LampQuantity attribute is 8 bits in length and specifies the number of lamps connected to this ballast. (Note: this number does not take into account whether lamps are actually in their sockets or not).</description>
+   </attribute>
+    <attribute code="0x0030" type="CHARACTER_STRING" side="server" optional="true" writable="true" reportable="false">
+        <name>Lamp Type</name>
+        <description>The LampType attribute is a character string of up to 16 bytes in length. It specifies the type of lamps (including their wattage) connected to the ballast.</description>
+    </attribute>
+    <attribute code="0x0031" type="CHARACTER_STRING" side="server" optional="true" writable="true" reportable="false">
+        <name>Lamp Manufacturer</name>
+        <description>The LampManufacturer attribute is a character string of up to 16 bytes in length. It specifies the name of the manufacturer of the currently connected lamps.</description>
+    </attribute>
+    <attribute code="0x0032" type="SIGNED_24_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false" minimum="0x000000" maximum="0xFFFFFE" default="0xFFFFFF">
+        <name>Lamp Rated Hours</name>
+        <description>The LampRatedHours attribute is 24 bits in length and specifies the number of hours of use the lamps are rated for by the manufacturer.</description>
+        <description>A value of 0xffffff indicates an invalid or unknown time.</description>
+    </attribute>
+    <attribute code="0x0033" type="SIGNED_24_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false" minimum="0x000000" maximum="0xFFFFFE" default="0x000000">
+        <name>Lamp Burn Hours</name>
+        <description>The LampBurnHours attribute is 24 bits in length and specifies the length of time, in hours, the currently connected lamps have been operated, cumulative since the last re-lamping. Burn hours SHALL not be accumulated if the lamps are off.</description>
+        <description>This attribute SHOULD be reset to zero (e.g., remotely) when the lamp(s) are changed. If partially used lamps are connected, LampBurnHours SHOULD be updated to reflect the burn hours of the lamps.</description>
+        <description>A value of 0xffffff indicates an invalid or unknown time.</description>
+    </attribute>
+    <attribute code="0x0034" type="BITMAP_8_BIT" side="server" optional="true" writable="true" reportable="false" minimum="0x00" maximum="0x01" default="0x00">
+        <name>Lamp Alarm Mode</name>
+        <description>The LampsAlarmMode attribute is 8 bits in length and specifies which attributes MAY cause an alarm notification to be generated. A ‘1’ in each bit position causes its associated attribute to be able to generate an alarm. (Note: All alarms are also logged in the alarm table – see Alarms cluster).</description>
+    </attribute>
+    <attribute code="0x0033" type="SIGNED_24_BIT_INTEGER" side="server" optional="true" writable="true" reportable="false" minimum="0x000000" maximum="0xFFFFFE" default="0xFFFFFF">
+        <name>Lamp Burn Hours Trip Point</name>
+        <description>The LampBurnHoursTripPoint attribute is 24 bits in length and specifies the number of hours the LampBurnHours attribute MAY reach before an alarm is generated.</description>
+        <description>If the Alarms cluster is not present on the same device this attribute is not used and thus MAY be omitted</description>
+        <description>The Alarm Code field included in the generated alarm SHALL be 0x01.</description>
+        <description>If this attribute takes the value 0xffffff then this alarm SHALL not be generated.</description>
+    </attribute>
+
+</cluster>

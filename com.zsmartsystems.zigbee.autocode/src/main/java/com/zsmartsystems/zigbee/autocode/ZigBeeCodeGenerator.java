@@ -76,6 +76,7 @@ public class ZigBeeCodeGenerator {
         zclParser.addFile("src/main/resources/0204_ThermostatUserInterfaceConfiguration.xml");
 
         zclParser.addFile("src/main/resources/0300_ColorControl.xml");
+        zclParser.addFile("src/main/resources/0301_BallastConfiguration.xml");
 
         zclParser.addFile("src/main/resources/0400_IlluminanceMeasurement.xml");
         zclParser.addFile("src/main/resources/0401_IlluminanceLevelSensing.xml");

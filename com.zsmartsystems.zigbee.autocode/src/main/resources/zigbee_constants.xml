@@ -129,7 +129,11 @@
 	<constant class="ZigBeeProfileType">
 		<name>ZigBee Profile Type</name>
 		<description></description>
+		<value code="0x0000" name="ZigBee Device Profile" />
+		<value code="0x0101" name="Industrial Plant Monitoring" />
 		<value code="0x0104" name="ZigBee Home Automation" />
+		<value code="0x0105" name="ZigBee Commercial Building Automation" />
+		<value code="0x0106" name="ZigBee Wireless Sensor Networks" />
 		<value code="0x0109" name="ZigBee Smart Energy" />
 		<value code="0xA1E0" name="ZigBee Green Power" />
 		<value code="0xC05E" name="ZigBee Light Link" />
