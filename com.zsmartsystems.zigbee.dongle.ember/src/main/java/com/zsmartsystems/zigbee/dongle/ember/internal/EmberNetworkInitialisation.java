@@ -114,15 +114,19 @@ public class EmberNetworkInitialisation {
         // Leave the current network so we can initialise a new network
         ensureNetworkLeft();
 
-        // Perform an energy scan to find a clear channel
-        Integer quietestChannel = doEnergyScan(ncp, scanDuration);
-        if (quietestChannel == null) {
-            return ZigBeeStatus.FATAL_ERROR;
-        }
-        logger.debug("Energy scan reports quietest channel is {}", quietestChannel);
+        if (networkParameters.getRadioChannel() == ZigBeeChannel.UNKNOWN.getChannel()) {
+            // Perform an energy scan to find a clear channel
+            Integer quietestChannel = doEnergyScan(ncp, scanDuration);
+            if (quietestChannel == null) {
+                return ZigBeeStatus.FATAL_ERROR;
+            }
+            logger.debug("Energy scan reports quietest channel is {}", ZigBeeChannel.create(quietestChannel));
 
-        // Check if any current networks were found and avoid those channels, PAN ID and especially Extended PAN ID
-        ncp.doActiveScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, scanDuration);
+            // Check if any current networks were found and avoid those channels, PAN ID and especially Extended PAN ID
+            ncp.doActiveScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, scanDuration);
+
+            networkParameters.setRadioChannel(quietestChannel);
+        }
 
         // Read the current network parameters
         getNetworkParameters();
@@ -143,10 +147,6 @@ public class EmberNetworkInitialisation {
 
             networkParameters.setExtendedPanId(new ExtendedPanId(extendedPanId));
             logger.debug("Created random Extended PAN ID: {}", extendedPanIdBuilder.toString());
-        }
-
-        if (networkParameters.getRadioChannel() == ZigBeeChannel.UNKNOWN.getChannel()) {
-            networkParameters.setRadioChannel(quietestChannel);
         }
 
         // If the channel set is empty, use the single channel defined above
