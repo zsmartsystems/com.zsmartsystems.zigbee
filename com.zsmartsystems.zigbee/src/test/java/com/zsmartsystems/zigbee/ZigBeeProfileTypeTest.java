@@ -22,6 +22,6 @@ public class ZigBeeProfileTypeTest {
     public void testTypes() {
         assertEquals(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION, ZigBeeProfileType.getByValue(0x0104));
         assertEquals(ZigBeeProfileType.ZIGBEE_LIGHT_LINK, ZigBeeProfileType.getByValue(0xC05E));
-        assertNull(ZigBeeProfileType.getByValue(0));
+        assertNull(ZigBeeProfileType.getByValue(1));
     }
 }

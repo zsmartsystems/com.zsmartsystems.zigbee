@@ -91,7 +91,8 @@ public class EmberConsoleNcpScanCommand extends EmberConsoleAbstractCommand {
 
         if (energy) {
             out.println("Performing energy scan...");
-            Collection<EzspEnergyScanResultHandler> channels = ncp.doEnergyScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, 6);
+            Collection<EzspEnergyScanResultHandler> channels = ncp.doEnergyScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ,
+                    0);
             if (channels == null) {
                 out.println("Error performing energy scan");
             } else {
