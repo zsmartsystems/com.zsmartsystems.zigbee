@@ -17,13 +17,33 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-07-28T08:05:27Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-08T20:48:02Z")
 public enum ZigBeeProfileType {
+
+    /**
+     * ZigBee Device Profile, 0, 0x0000
+     */
+    ZIGBEE_DEVICE_PROFILE(0x0000),
+
+    /**
+     * Industrial Plant Monitoring, 257, 0x0101
+     */
+    INDUSTRIAL_PLANT_MONITORING(0x0101),
 
     /**
      * ZigBee Home Automation, 260, 0x0104
      */
     ZIGBEE_HOME_AUTOMATION(0x0104),
+
+    /**
+     * ZigBee Commercial Building Automation, 261, 0x0105
+     */
+    ZIGBEE_COMMERCIAL_BUILDING_AUTOMATION(0x0105),
+
+    /**
+     * ZigBee Wireless Sensor Networks, 262, 0x0106
+     */
+    ZIGBEE_WIRELESS_SENSOR_NETWORKS(0x0106),
 
     /**
      * ZigBee Smart Energy, 265, 0x0109
