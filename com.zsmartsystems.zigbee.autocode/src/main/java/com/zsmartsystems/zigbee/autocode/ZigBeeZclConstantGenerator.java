@@ -158,7 +158,7 @@ public class ZigBeeZclConstantGenerator extends ZigBeeBaseClassGenerator {
         if ("ZigBeeDeviceType".equals(className)) {
             out.println("    private " + className + "(final ZigBeeProfileType profile, final int key) {");
             out.println("        this.key = key;");
-            out.println("        this.profilekey = key & 0xffff + (profile.ordinal() << 16);");
+            out.println("        this.profilekey = (key & 0xffff) + (profile.getKey() << 16);");
             out.println("    }");
         } else {
             out.println("    private " + className + "(final int key) {");
@@ -175,7 +175,7 @@ public class ZigBeeZclConstantGenerator extends ZigBeeBaseClassGenerator {
         out.println("    public static " + className + " getByValue(final int value) {");
         if ("ZigBeeDeviceType".equals(className)) {
             out.println(
-                    "        int id = value & 0xffff + (ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.ordinal() << 16);");
+                    "        int id = (value & 0xffff) + (ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION.getKey() << 16);");
             out.println("        return idMap.get(id);");
         } else {
             out.println("        return idMap.get(value);");
@@ -186,7 +186,7 @@ public class ZigBeeZclConstantGenerator extends ZigBeeBaseClassGenerator {
             out.println();
             out.println("    public static " + className
                     + " getByValue(final ZigBeeProfileType profile, final int value) {");
-            out.println("        int id = value & 0xffff + (profile.ordinal() << 16);");
+            out.println("        int id = (value & 0xffff) + (profile.getKey() << 16);");
             out.println("        return idMap.get(id);");
             out.println("    }");
         }

@@ -15,6 +15,7 @@ import javax.annotation.Generated;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclAlarmsCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclAnalogInputBasicCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclBallastConfigurationCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBinaryInputBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclColorControlCluster;
@@ -70,7 +71,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclWindowCoveringCluster;
  *
  * @author Chris Jackson
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-07-25T03:42:36Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-08T20:56:36Z")
 public enum ZclClusterType {
     BASIC(0x0000, ZclBasicCluster.class, "Basic"),
     POWER_CONFIGURATION(0x0001, ZclPowerConfigurationCluster.class, "Power Configuration"),
@@ -99,6 +100,7 @@ public enum ZclClusterType {
     DEHUMIDIFICATION_CONTROL(0x0203, ZclDehumidificationControlCluster.class, "Dehumidification Control"),
     THERMOSTAT_USER_INTERFACE_CONFIGURATION(0x0204, ZclThermostatUserInterfaceConfigurationCluster.class, "Thermostat User Interface Configuration"),
     COLOR_CONTROL(0x0300, ZclColorControlCluster.class, "Color Control"),
+    BALLAST_CONFIGURATION(0x0301, ZclBallastConfigurationCluster.class, "Ballast Configuration"),
     ILLUMINANCE_MEASUREMENT(0x0400, ZclIlluminanceMeasurementCluster.class, "Illuminance Measurement"),
     ILLUMINANCE_LEVEL_SENSING(0x0401, ZclIlluminanceLevelSensingCluster.class, "Illuminance Level Sensing"),
     TEMPERATURE_MEASUREMENT(0x0402, ZclTemperatureMeasurementCluster.class, "Temperature Measurement"),
