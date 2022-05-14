@@ -1765,8 +1765,8 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
 
         // Return if there were no updates
         if (!currentNode.updateNode(node)) {
-            logger.debug("{}: Node {} is not updated", node.getIeeeAddress(),
-                    String.format("%04X", node.getNetworkAddress()));
+            logger.debug("{}: Node {} is not updated from {}", currentNode.getIeeeAddress(),
+                    String.format("%04X", currentNode.getNetworkAddress()), node);
             return null;
         }
 
