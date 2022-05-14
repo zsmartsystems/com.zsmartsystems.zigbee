@@ -74,11 +74,15 @@ import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBinaryInputBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclColorControlCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclDiagnosticsCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclElectricalMeasurementCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclGroupsCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclIasZoneCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclIdentifyCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclMeteringCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclPollControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclPowerConfigurationCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclPressureMeasurementCluster;
@@ -118,6 +122,8 @@ public class ZigBeeConsoleMain {
                         ZclPollControlCluster.CLUSTER_ID, ZclOnOffCluster.CLUSTER_ID, ZclLevelControlCluster.CLUSTER_ID,
                         ZclColorControlCluster.CLUSTER_ID, ZclPressureMeasurementCluster.CLUSTER_ID,
                         ZclThermostatCluster.CLUSTER_ID, ZclWindowCoveringCluster.CLUSTER_ID,
+                        ZclMeteringCluster.CLUSTER_ID, ZclElectricalMeasurementCluster.CLUSTER_ID,
+                        ZclDiagnosticsCluster.CLUSTER_ID,
                         ZclBinaryInputBasicCluster.CLUSTER_ID, 1000)
                 .collect(Collectors.toSet()));
 
@@ -127,6 +133,9 @@ public class ZigBeeConsoleMain {
                         ZclScenesCluster.CLUSTER_ID,
                         ZclPollControlCluster.CLUSTER_ID, ZclOnOffCluster.CLUSTER_ID, ZclLevelControlCluster.CLUSTER_ID,
                         ZclColorControlCluster.CLUSTER_ID, ZclPressureMeasurementCluster.CLUSTER_ID,
+                        ZclOtaUpgradeCluster.CLUSTER_ID, ZclMeteringCluster.CLUSTER_ID,
+                        ZclElectricalMeasurementCluster.CLUSTER_ID,
+                        ZclDiagnosticsCluster.CLUSTER_ID,
                         ZclWindowCoveringCluster.CLUSTER_ID, ZclBinaryInputBasicCluster.CLUSTER_ID, 1000)
                 .collect(Collectors.toSet()));
 
