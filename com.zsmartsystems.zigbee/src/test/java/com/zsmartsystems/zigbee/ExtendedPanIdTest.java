@@ -79,6 +79,12 @@ public class ExtendedPanIdTest {
     }
 
     @Test
+    public void testNotEquals() throws Exception {
+        ExtendedPanId address = new ExtendedPanId("17880100dc880b");
+        assertNotEquals(address, new Object());
+    }
+
+    @Test
     public void testToString() {
         ExtendedPanId address = new ExtendedPanId("17880100dc880b");
         assertEquals("0017880100DC880B", address.toString());
