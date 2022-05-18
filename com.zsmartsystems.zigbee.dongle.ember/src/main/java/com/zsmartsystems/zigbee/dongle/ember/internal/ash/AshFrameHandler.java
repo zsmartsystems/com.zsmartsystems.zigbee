@@ -101,7 +101,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
     private static final int ASH_MAX_LENGTH = 220;
 
-    private static final int RX_QUEUE_LEN = 10;
+    private static final int RX_QUEUE_LEN = 20;
 
     /**
      * Timeout after which sending an EZSP transaction is aborted.
