@@ -18,6 +18,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
@@ -84,6 +85,24 @@ public abstract class ZclCluster {
      * The logger
      */
     private Logger logger = LoggerFactory.getLogger(ZclCluster.class);
+
+    /**
+     * The ClusterRevision global attribute is mandatory for all cluster instances, client
+     * and server, conforming to ZCL revision 6 (ZCL6) and later ZCL revisions. This cluster
+     * attribute represents the revision of the cluster specification that has been
+     * implemented. An implementation of a cluster specification before ZCL6 shall have an
+     * assumed cluster revision of 0. The initial value for the ClusterRevision attribute
+     * shall be 1. The ClusterRevision attribute shall be incremented and associated with
+     * each approved revision and release of a cluster specification.
+     */
+    public static final int ATTR_CLUSTERREVISION = 0xFFFD;
+    /**
+     * When reporting requires sending multiple Report Attributes commands, this attribute
+     * should be included in the last attribute record, to indicate that all required
+     * attributes have been reported, or that there are still attributes pending to be
+     * reported
+     */
+    public static final int ATTR_ATTRIBUTEREPORTINGSTATUS = 0xFFFE;
 
     /**
      * The {@link ZigBeeEndpoint} to which this cluster belongs
@@ -237,7 +256,16 @@ public abstract class ZclCluster {
      *
      * @return a {@link Map} of all attributes this cluster is known to support
      */
-    protected abstract Map<Integer, ZclAttribute> initializeClientAttributes();
+    protected Map<Integer, ZclAttribute> initializeClientAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+
+        attributeMap.put(ATTR_CLUSTERREVISION, new ZclAttribute(this, ATTR_CLUSTERREVISION, "Cluster Revision",
+                ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_ATTRIBUTEREPORTINGSTATUS, new ZclAttribute(this, ATTR_ATTRIBUTEREPORTINGSTATUS,
+                "Attribute Reporting Status", ZclDataType.ENUMERATION_16_BIT, true, true, false, false));
+
+        return attributeMap;
+    }
 
     /**
      * Abstract method called when the cluster starts to initialise the list of server attributes defined in this
@@ -245,7 +273,16 @@ public abstract class ZclCluster {
      *
      * @return a {@link Map} of all attributes this cluster is known to support
      */
-    protected abstract Map<Integer, ZclAttribute> initializeServerAttributes();
+    protected Map<Integer, ZclAttribute> initializeServerAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+
+        attributeMap.put(ATTR_CLUSTERREVISION, new ZclAttribute(this, ATTR_CLUSTERREVISION, "Cluster Revision",
+                ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_ATTRIBUTEREPORTINGSTATUS, new ZclAttribute(this, ATTR_ATTRIBUTEREPORTINGSTATUS,
+                "Attribute Reporting Status", ZclDataType.ENUMERATION_16_BIT, true, true, false, false));
+
+        return attributeMap;
+    }
 
     /**
      * Abstract method called when the cluster starts to initialise the list of server side commands defined in this

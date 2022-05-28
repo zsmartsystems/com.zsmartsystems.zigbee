@@ -72,7 +72,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-04-23T10:36:53Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
 public class ZclPriceCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -3681,7 +3681,7 @@ public class ZclPriceCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeClientAttributes();
 
         attributeMap.put(ATTR_PRICEINCREASERANDOMIZEMINUTES, new ZclAttribute(this, ATTR_PRICEINCREASERANDOMIZEMINUTES, "Price Increase Randomize Minutes", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
         attributeMap.put(ATTR_PRICEDECREASERANDOMIZEMINUTES, new ZclAttribute(this, ATTR_PRICEDECREASERANDOMIZEMINUTES, "Price Decrease Randomize Minutes", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, false));
@@ -3692,7 +3692,7 @@ public class ZclPriceCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeServerAttributes();
 
         attributeMap.put(ATTR_TIER1PRICELABEL, new ZclAttribute(this, ATTR_TIER1PRICELABEL, "Tier 1 Price Label", ZclDataType.CHARACTER_STRING, false, true, true, false));
         attributeMap.put(ATTR_TIER2PRICELABEL, new ZclAttribute(this, ATTR_TIER2PRICELABEL, "Tier 2 Price Label", ZclDataType.CHARACTER_STRING, false, true, true, false));

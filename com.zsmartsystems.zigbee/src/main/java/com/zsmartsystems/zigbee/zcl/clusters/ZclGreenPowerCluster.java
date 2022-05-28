@@ -49,7 +49,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-04-23T10:36:53Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
 public class ZclGreenPowerCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -202,7 +202,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeClientAttributes();
 
         attributeMap.put(ATTR_GPPMAXPROXYTABLEENTRIES, new ZclAttribute(this, ATTR_GPPMAXPROXYTABLEENTRIES, "Gpp Max Proxy Table Entries", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
         attributeMap.put(ATTR_PROXYTABLE, new ZclAttribute(this, ATTR_PROXYTABLE, "Proxy Table", ZclDataType.LONG_OCTET_STRING, true, true, false, false));
@@ -221,7 +221,7 @@ public class ZclGreenPowerCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeServerAttributes();
 
         attributeMap.put(ATTR_GPSMAXSINKTABLEENTRIES, new ZclAttribute(this, ATTR_GPSMAXSINKTABLEENTRIES, "Gps Max Sink Table Entries", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
         attributeMap.put(ATTR_SINKTABLE, new ZclAttribute(this, ATTR_SINKTABLE, "Sink Table", ZclDataType.LONG_OCTET_STRING, true, true, false, false));
