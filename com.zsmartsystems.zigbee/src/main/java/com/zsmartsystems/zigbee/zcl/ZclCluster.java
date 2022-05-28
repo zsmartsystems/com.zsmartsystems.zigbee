@@ -177,6 +177,11 @@ public abstract class ZclCluster {
     private static Set<Class<? extends ZclCommand>> supportedGenericCommands = new HashSet<>();
 
     /**
+     * The manufacturer specific code, or null if this is not a manufacturer specific cluster
+     */
+    protected Integer manufacturerCode;
+
+    /**
      * The {@link ZclAttributeNormalizer} is used to normalize attribute data types to ensure that data types are
      * consistent with the ZCL definition. This ensures that the application can rely on consistent and deterministic
      * data type when listening to attribute updates.
@@ -1558,6 +1563,7 @@ public abstract class ZclCluster {
 
         dao.setClusterId(clusterId);
         dao.setClient(isClient);
+        dao.setManufacturerCode(manufacturerCode);
         if (supportedAttributesKnown) {
             dao.setSupportedAttributes(Collections.unmodifiableSet(new HashSet<>(supportedAttributes)));
         }
@@ -1586,6 +1592,7 @@ public abstract class ZclCluster {
     public void setDao(ZclClusterDao dao) {
         clusterId = dao.getClusterId();
         isClient = dao.getClient();
+        manufacturerCode = dao.getManufacturerCode();
         supportedAttributesKnown = dao.getSupportedAttributes() != null;
         if (supportedAttributesKnown) {
             supportedAttributes.addAll(dao.getSupportedAttributes());
@@ -1831,7 +1838,7 @@ public abstract class ZclCluster {
      * Returns the manufacturer code; must be non-null for manufacturer-specific clusters.
      */
     public Integer getManufacturerCode() {
-        return null;
+        return manufacturerCode;
     }
 
     /**
