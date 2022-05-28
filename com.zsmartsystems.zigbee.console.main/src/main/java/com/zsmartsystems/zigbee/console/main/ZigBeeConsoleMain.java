@@ -87,6 +87,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclPollControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclPowerConfigurationCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclPressureMeasurementCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclScenesCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclTemperatureMeasurementCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclThermostatCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclWindowCoveringCluster;
 
@@ -121,9 +122,10 @@ public class ZigBeeConsoleMain {
                         ZclPowerConfigurationCluster.CLUSTER_ID, ZclScenesCluster.CLUSTER_ID,
                         ZclPollControlCluster.CLUSTER_ID, ZclOnOffCluster.CLUSTER_ID, ZclLevelControlCluster.CLUSTER_ID,
                         ZclColorControlCluster.CLUSTER_ID, ZclPressureMeasurementCluster.CLUSTER_ID,
+                        ZclTemperatureMeasurementCluster.CLUSTER_ID, ZclIasZoneCluster.CLUSTER_ID,
                         ZclThermostatCluster.CLUSTER_ID, ZclWindowCoveringCluster.CLUSTER_ID,
                         ZclMeteringCluster.CLUSTER_ID, ZclElectricalMeasurementCluster.CLUSTER_ID,
-                        ZclDiagnosticsCluster.CLUSTER_ID,
+                        ZclDiagnosticsCluster.CLUSTER_ID, ZclPowerConfigurationCluster.CLUSTER_ID,
                         ZclBinaryInputBasicCluster.CLUSTER_ID, 1000)
                 .collect(Collectors.toSet()));
 
