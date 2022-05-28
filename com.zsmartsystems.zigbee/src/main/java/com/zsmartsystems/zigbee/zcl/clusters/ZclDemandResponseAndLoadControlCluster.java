@@ -46,7 +46,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-04-23T10:36:53Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
 public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -110,7 +110,7 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeClientAttributes();
 
         attributeMap.put(ATTR_UTILITYENROLLMENTGROUP, new ZclAttribute(this, ATTR_UTILITYENROLLMENTGROUP, "Utility Enrollment Group", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, true));
         attributeMap.put(ATTR_STARTRANDOMIZATIONMINUTES, new ZclAttribute(this, ATTR_STARTRANDOMIZATIONMINUTES, "Start Randomization Minutes", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, true));
@@ -122,7 +122,7 @@ public class ZclDemandResponseAndLoadControlCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeServerAttributes();
 
         return attributeMap;
     }

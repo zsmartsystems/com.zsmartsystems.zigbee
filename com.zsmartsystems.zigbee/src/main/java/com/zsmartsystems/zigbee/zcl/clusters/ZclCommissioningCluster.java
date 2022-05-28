@@ -36,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.commissioning.ZclCommissioningComma
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-04-23T10:36:53Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
 public class ZclCommissioningCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -50,14 +50,14 @@ public class ZclCommissioningCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeClientAttributes();
 
         return attributeMap;
     }
 
     @Override
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeServerAttributes();
 
         return attributeMap;
     }

@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-08T20:58:18Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
 public class ZclBallastConfigurationCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -162,14 +162,14 @@ public class ZclBallastConfigurationCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeClientAttributes();
 
         return attributeMap;
     }
 
     @Override
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeServerAttributes();
 
         attributeMap.put(ATTR_PHYSICALMINLEVEL, new ZclAttribute(this, ATTR_PHYSICALMINLEVEL, "Physical Min Level", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
         attributeMap.put(ATTR_PHYSICALMAXLEVEL, new ZclAttribute(this, ATTR_PHYSICALMAXLEVEL, "Physical Max Level", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));

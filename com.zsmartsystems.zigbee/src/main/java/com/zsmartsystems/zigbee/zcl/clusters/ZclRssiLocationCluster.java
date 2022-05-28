@@ -48,7 +48,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-04-23T10:36:53Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
 public class ZclRssiLocationCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -164,14 +164,14 @@ public class ZclRssiLocationCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeClientAttributes();
 
         return attributeMap;
     }
 
     @Override
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeServerAttributes();
 
         attributeMap.put(ATTR_LOCATIONTYPE, new ZclAttribute(this, ATTR_LOCATIONTYPE, "Location Type", ZclDataType.DATA_8_BIT, true, true, false, false));
         attributeMap.put(ATTR_LOCATIONMETHOD, new ZclAttribute(this, ATTR_LOCATIONMETHOD, "Location Method", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
