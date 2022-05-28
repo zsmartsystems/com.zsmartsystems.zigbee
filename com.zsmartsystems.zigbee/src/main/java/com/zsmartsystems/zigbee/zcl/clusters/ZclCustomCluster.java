@@ -53,5 +53,4 @@ public class ZclCustomCluster extends ZclCluster {
     public ZclCustomCluster(final ZigBeeEndpoint zigbeeEndpoint, int clusterId, String clusterName) {
         super(zigbeeEndpoint, clusterId, clusterName);
     }
-
 }

@@ -34,6 +34,8 @@ public class ZclClusterDao {
 
     private Set<Integer> supportedAttributes;
 
+    private Integer manufacturerCode;
+
     public String getLabel() {
         return label;
     }
@@ -94,6 +96,14 @@ public class ZclClusterDao {
 
     public Set<Integer> getSupportedCommandsReceived() {
         return supportedCommandsReceived;
+    }
+
+    public Integer getManufacturerCode() {
+        return manufacturerCode;
+    }
+
+    public void setManufacturerCode(Integer manufacturerCode) {
+        this.manufacturerCode = manufacturerCode;
     }
 
 }
