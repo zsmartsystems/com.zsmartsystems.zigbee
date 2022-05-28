@@ -194,11 +194,13 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
 
         out.println("    @Override");
         out.println("    protected Map<Integer, ZclAttribute> initializeClientAttributes() {");
+        out.println("        Map<Integer, ZclAttribute> attributeMap = super.initializeClientAttributes();");
         createInitializeAttributes(out, cluster.name, attributesClient);
         out.println();
 
         out.println("    @Override");
         out.println("    protected Map<Integer, ZclAttribute> initializeServerAttributes() {");
+        out.println("        Map<Integer, ZclAttribute> attributeMap = super.initializeServerAttributes();");
         createInitializeAttributes(out, cluster.name, attributesServer);
         out.println();
 
@@ -276,7 +278,8 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
             out.println("     * @param response the {@link " + commandClassName + "} to send");
             out.println("     */");
             out.println(
-                    "    public Future<CommandResult> sendResponse(" + commandClassName + " command, " + commandClassName
+                    "    public Future<CommandResult> sendResponse(" + commandClassName + " command, "
+                            + commandClassName
                             + " response) {");
             out.println("        return super.sendResponse(command, response);");
             out.println("    }");
@@ -483,8 +486,6 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
     }
 
     private void createInitializeAttributes(PrintStream out, String clusterName, List<ZigBeeXmlAttribute> attributes) {
-        out.println("        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();");
-
         if (attributes.size() != 0) {
             out.println();
             for (final ZigBeeXmlAttribute attribute : attributes) {
