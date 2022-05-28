@@ -57,6 +57,7 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleDeviceInformationCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleFactoryResetCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleFirmwareCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleGroupCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleIdentifyCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleInstallKeyCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleLinkKeyCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleNeighborsListCommand;
@@ -233,6 +234,7 @@ public final class ZigBeeConsole {
         newCommands.put("neighbors", new ZigBeeConsoleNeighborsListCommand());
 
         newCommands.put("firmware", new ZigBeeConsoleFirmwareCommand());
+        newCommands.put("identify", new ZigBeeConsoleIdentifyCommand());
 
         zigBeeApi = new ZigBeeApi(networkManager);
 
