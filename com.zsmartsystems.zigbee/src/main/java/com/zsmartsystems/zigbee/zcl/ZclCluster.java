@@ -1374,24 +1374,25 @@ public abstract class ZclCluster {
      * @param command the {@link DiscoverAttributesCommand} to respond to
      */
     private void handleDiscoverAttributes(DiscoverAttributesCommand command) {
+        boolean complete = true;
         List<AttributeInformation> attributeInformation = new ArrayList<>();
         for (ZclAttribute attribute : getLocalAttributes()) {
             if (!attribute.isImplemented() || attribute.getId() < command.getStartAttributeIdentifier()) {
                 continue;
             }
 
+            if (attributeInformation.size() >= command.getMaximumAttributeIdentifiers()) {
+                complete = false;
+                break;
+            }
+
             AttributeInformation attributeInfo = new AttributeInformation();
             attributeInfo.setIdentifier(attribute.getId());
             attributeInfo.setDataType(attribute.getDataType());
             attributeInformation.add(attributeInfo);
-
-            if (attributeInformation.size() >= command.getMaximumAttributeIdentifiers()) {
-                break;
-            }
         }
 
-        DiscoverAttributesResponse response = new DiscoverAttributesResponse(
-                attributeInformation.size() == getLocalAttributes().size(), attributeInformation);
+        DiscoverAttributesResponse response = new DiscoverAttributesResponse(complete, attributeInformation);
         sendResponse(command, response);
     }
 
