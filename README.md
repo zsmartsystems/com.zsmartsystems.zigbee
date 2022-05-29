@@ -298,6 +298,7 @@ Note that the console is currently being refactored and this readme only documen
 | node         | Provides detailed information about a node                                             |
 | endpoint     | Provides detailed information about an endpoint                                        |
 | info         | Get basic info about a device                                                          |
+| identify     | Sends the `identify` command to an endpoint                                            |
 | fingerprint  | Get detailed information about a device                                                |
 | read         | Read an attribute                                                                      |
 | write        | Write an attribute                                                                     |
