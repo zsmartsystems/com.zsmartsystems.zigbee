@@ -12,7 +12,6 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
-import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 import com.zsmartsystems.zigbee.CommandResult;
@@ -252,6 +251,14 @@ public class ZigBeeConsoleDeviceFingerprintCommand extends ZigBeeConsoleAbstract
             getAttributes(out, cluster, cluster.getSupportedAttributes());
         } else {
             out.println("| | | | | |> " + success);
+
+            out.println("| | | | |");
+            out.println("| | | | |>| Attribute Values");
+            if (success == ZigBeeStatus.SUCCESS) {
+                getAttributes(out, cluster.getAttributes());
+            } else {
+                out.println("| | | | | |> " + success);
+            }
         }
     }
 
@@ -271,17 +278,34 @@ public class ZigBeeConsoleDeviceFingerprintCommand extends ZigBeeConsoleAbstract
         return command.getClass().getSimpleName();
     }
 
-    private void getAttributes(PrintStream out, ZclCluster cluster, Set<Integer> attributeIds) {
+    private void getAttributes(PrintStream out, ZclCluster cluster, Collection<Integer> attributeIds) {
         for (int attributeId : attributeIds) {
             ZclAttribute attribute = cluster.getAttribute(attributeId);
-            out.println(String.format("| | | | | |> %04X", attributeId) + " " + (attribute == null ? "Unknown"
-                    : attribute.getName()));
-            if (attribute != null && !attribute.isWritable()) {
-                // Object object = attribute.readValue(0);
-                // if (object != null) {
-                // out.println("| | | | | | |> " + object.toString());
-                // }
+            Object value = null;
+            if (attribute != null && attribute.isReadable()) {
+                value = attribute.readValue(60L);
+            } else {
+                value = "";
             }
+
+            out.println(String.format("| | | | | |> %04X  %-40s  %s", attributeId, (attribute == null ? "Unknown"
+                    : attribute.getName()), (value == null ? "" : (">> " + value.toString()))));
+        }
+    }
+
+    private void getAttributes(PrintStream out, Collection<ZclAttribute> attributes) {
+        for (ZclAttribute attribute : attributes) {
+            Object value = null;
+            if (!attribute.isReadable()) {
+                continue;
+            }
+
+            value = attribute.readValue(60L);
+            if (value == null) {
+                continue;
+            }
+            out.println(String.format("| | | | | |> %04X  %-40s  >> %s", attribute.getId(), attribute.getName(),
+                    value.toString()));
         }
     }
 
