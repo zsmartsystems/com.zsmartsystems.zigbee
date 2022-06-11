@@ -137,6 +137,7 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_GET_CURRENT_SECURITY_STATE = 0x69;
     protected static final int FRAME_ID_GET_EUI64 = 0x26;
     protected static final int FRAME_ID_GET_EXTENDED_TIMEOUT = 0x7F;
+    protected static final int FRAME_ID_GET_EXTENDED_VALUE = 0x03;
     protected static final int FRAME_ID_GET_FIRST_BEACON = 0x3D;
     protected static final int FRAME_ID_GET_KEY = 0x6A;
     protected static final int FRAME_ID_GET_KEY_TABLE_ENTRY = 0x71;
@@ -305,6 +306,7 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_GET_CURRENT_SECURITY_STATE, EzspGetCurrentSecurityStateResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_EUI64, EzspGetEui64Response.class);
         ezspHandlerMap.put(FRAME_ID_GET_EXTENDED_TIMEOUT, EzspGetExtendedTimeoutResponse.class);
+        ezspHandlerMap.put(FRAME_ID_GET_EXTENDED_VALUE, EzspGetExtendedValueResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_FIRST_BEACON, EzspGetFirstBeaconResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_KEY, EzspGetKeyResponse.class);
         ezspHandlerMap.put(FRAME_ID_GET_KEY_TABLE_ENTRY, EzspGetKeyTableEntryResponse.class);

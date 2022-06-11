@@ -345,6 +345,43 @@
 	</command>
 
 	<command>
+		<name>getExtendedValue</name>
+		<id>0x0003</id>
+		<description>Reads a value from the NCP but passes an extra argument specific to the value being retrieved.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>EzspExtendedValueId</data_type>
+				<name>valueId</name>
+				<description>Identifies which extended value ID to read.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint32_t</data_type>
+				<name>characteristics</name>
+				<description>Identifies which characteristics of the extended value ID to read. These are specific to the value being read.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EzspStatus</data_type>
+				<name>status</name>
+				<description>EZSP_SUCCESS if the value was read successfully, EZSP_ERROR_INVALID_ID if the NCP does not recognize valueId.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>valueLength</name>
+				<description>Both a command and response parameter. On command, the maximum size in bytes of local storage allocated to receive the returned value. On response, the actual length in bytes of the returned value.</description>
+				<auto_size>value</auto_size>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t[]</data_type>
+				<name>value</name>
+				<description>The value.</description>
+				<display>hex[2]</display>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
 		<name>setValue</name>
 		<id>0xAB</id>
 		<description>Writes a value to the NCP.</description>
@@ -7519,9 +7556,36 @@
 				<enum_value>0x42</enum_value>
 				<description>Return the number of seconds the network will remain open. A return value of 0 indicates that the network is closed. Read only.</description>
 			</value>
+			<value>
+				<name>EZSP_VALUE_TRANSIENT_DEVICE_TIMEOUT</name>
+				<enum_value>0x43</enum_value>
+				<description>Timeout in milliseconds to store entries in the transient device table. If the devices are not authenticated before the timeout, the entry shall be purged</description>
+			</value>
 		</values>
 	</enum>
 
+	<enum>
+		<name>EzspExtendedValueId</name>
+		<description>GP proxy table entry status.</description>
+		<values>
+			<value>
+				<name>EZSP_EXTENDED_VALUE_ENDPOINT_FLAGS</name>
+				<enum_value>0x00</enum_value>
+				<description>The flags field associated with the specified endpoint.</description>
+			</value>
+			<value>
+				<name>EZSP_EXTENDED_VALUE_LAST_LEAVE_REASON</name>
+				<enum_value>0x01</enum_value>
+				<description>This is the reason for the node to leave the network as well as the device that told it to leave. The leave reason is the 1st byte of the value while the node ID is the 2nd and 3rd byte. If the leave was caused due to an API call rather than an over the air message, the node ID will be EMBER_UNKNOWN_NODE_ID (0xFFFD).</description>
+			</value>
+			<value>
+				<name>EZSP_EXTENDED_VALUE_GET_SOURCE_ROUTE_OVERHEAD</name>
+				<enum_value>0x02</enum_value>
+				<description>This number of bytes of overhead required in the network frame for source routing to a particular destination.</description>
+			</value>
+		</values>
+	</enum>
+	
 	<enum>
 		<name>EmberGpProxyTableEntryStatus</name>
 		<description>GP proxy table entry status.</description>

@@ -777,6 +777,9 @@ public class CommandGenerator extends ClassGenerator {
             case "EzspValueId":
                 addImport(ezspStructurePackage + ".EzspValueId");
                 return "EzspValueId";
+            case "EzspExtendedValue":
+                addImport(ezspStructurePackage + ".EzspExtendedValue");
+                return "EzspExtendedValue";
             case "EmberKeyStruct":
                 addImport(ezspStructurePackage + ".EmberKeyStruct");
                 return "EmberKeyStruct";
@@ -801,6 +804,7 @@ public class CommandGenerator extends ClassGenerator {
             case "EmberAesMmoHashContext":
                 addImport(ezspStructurePackage + ".EmberAesMmoHashContext");
                 return "EmberAesMmoHashContext";
+            case "EzspExtendedValueId":
             case "EzspMfgTokenId":
             case "EmberCertificateData":
             case "EmberCertificate283k1Data":
@@ -876,6 +880,7 @@ public class CommandGenerator extends ClassGenerator {
                 return "EmberGpProxyTableEntry";
             case "EmberGpSinkListEntry[":
                 return "EmberGpSinkListEntry";
+            case "EzspExtendedValueId":
             case "EzspMfgTokenId":
             case "EmberLibraryId":
             case "EmberLibraryStatus":
