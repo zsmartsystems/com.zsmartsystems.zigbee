@@ -11,7 +11,6 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mockitoSession;
 import static org.mockito.Mockito.timeout;
 
 import java.util.ArrayList;
@@ -23,7 +22,6 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import org.awaitility.Awaitility;
-import org.hamcrest.Matcher;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
@@ -190,22 +188,90 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
     }
 
     @Test
+    public void queryNextImageCommand() {
+        otaStatusCapture = new ArrayList<ZigBeeOtaServerStatus>();
+
+        ZclOtaUpgradeCluster cluster = Mockito.mock(ZclOtaUpgradeCluster.class);
+        Mockito.when(cluster.getNotificationService()).thenReturn(new NotificationService());
+        ZclOtaUpgradeServer server = new ZclOtaUpgradeServer();
+        assertEquals(ZigBeeStatus.SUCCESS, server.appStartup(cluster));
+
+        ZigBeeOtaStatusCallback callback1 = Mockito.mock(ZigBeeOtaStatusCallback.class);
+        Mockito.when(callback1.otaIncomingRequest(ArgumentMatchers.any())).thenReturn(null);
+        ZigBeeOtaStatusCallback callback2 = Mockito.mock(ZigBeeOtaStatusCallback.class);
+        ZigBeeOtaFile file2 = Mockito.mock(ZigBeeOtaFile.class);
+        Mockito.when(callback2.otaIncomingRequest(ArgumentMatchers.any()))
+                .thenReturn(file2);
+
+        ZigBeeOtaStatusCallback callback3 = Mockito.mock(ZigBeeOtaStatusCallback.class);
+        ZigBeeOtaFile file3 = Mockito.mock(ZigBeeOtaFile.class);
+        Mockito.when(callback3.otaIncomingRequest(ArgumentMatchers.any()))
+                .thenReturn(file3);
+
+        server.addListener(this);
+        server.addListener(callback1);
+        server.setDataSize(30);
+        server.setAutoUpgrade(false);
+        server.setAllowExistingFile(true);
+        server.setTransferTimeoutPeriod(Integer.MAX_VALUE);
+
+        QueryNextImageCommand query = new QueryNextImageCommand(0, 123, 987, 0, 0);
+        query.setApsSecurity(true);
+        server.commandReceived(query);
+        Mockito.verify(callback1, Mockito.times(1)).otaIncomingRequest(query);
+
+        server.addListener(callback2);
+
+        server.commandReceived(query);
+        Mockito.verify(callback1, Mockito.times(2)).otaIncomingRequest(query);
+        Mockito.verify(callback2, Mockito.times(1)).otaIncomingRequest(query);
+
+        await().atMost(1, SECONDS)
+                .until(() -> assertTrue(otaStatusCapture.contains(ZigBeeOtaServerStatus.OTA_WAITING)));
+
+        server.addListener(callback2);
+
+        server.commandReceived(query);
+        Mockito.verify(callback1, Mockito.times(2)).otaIncomingRequest(query);
+        Mockito.verify(callback2, Mockito.times(1)).otaIncomingRequest(query);
+
+        await().atMost(1, SECONDS)
+                .until(() -> assertTrue(otaStatusCapture.contains(ZigBeeOtaServerStatus.OTA_WAITING)));
+
+        // Transfer is now in progress so we shouldn't notify the listener this time
+        server.commandReceived(query);
+        Mockito.verify(callback1, Mockito.times(2)).otaIncomingRequest(query);
+        Mockito.verify(callback2, Mockito.times(1)).otaIncomingRequest(query);
+
+        server.cancelUpgrade();
+        server.addListener(callback3);
+
+        server.commandReceived(query);
+        Mockito.verify(callback1, Mockito.times(3)).otaIncomingRequest(query);
+        Mockito.verify(callback2, Mockito.times(2)).otaIncomingRequest(query);
+        Mockito.verify(callback3, Mockito.times(1)).otaIncomingRequest(query);
+
+        await().atMost(1, SECONDS)
+                .until(() -> assertTrue(otaStatusCapture.contains(ZigBeeOtaServerStatus.OTA_WAITING)));
+    }
+
+    @Test
     public void getClusterId() {
         ZclOtaUpgradeServer server = new ZclOtaUpgradeServer();
         // Use static number for independent check of cluster ID!
         assertEquals(25, server.getClusterId());
     }
-    
+
     @Test
-    public void completeUpgrade() throws Exception{
+    public void completeUpgrade() throws Exception {
         completeUpgrade(null);
     }
-    
+
     @Test
-    public void completeUpgradeWithCommand() throws Exception{
+    public void completeUpgradeWithCommand() throws Exception {
         completeUpgrade(Mockito.mock(UpgradeEndCommand.class));
     }
-    
+
     private void completeUpgrade(UpgradeEndCommand command) throws Exception {
         ZclOtaUpgradeCluster cluster = Mockito.mock(ZclOtaUpgradeCluster.class);
 
@@ -243,7 +309,7 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
                     ArgumentMatchers.any(UpgradeEndResponse.class));
         }
     }
-    
+
     private Future<CommandResult> mockUpgradeEndResponseCommandFuture() throws Exception {
         // Prepare response for the future returned by sendCommand
         CommandResult upgradeEndResponseCommandResult = Mockito.mock(CommandResult.class);
@@ -253,31 +319,31 @@ public class ZclOtaUpgradeServerTest implements ZigBeeOtaStatusCallback {
         @SuppressWarnings("unchecked")
         Future<CommandResult> upgradeEndResponseFuture = Mockito.mock(Future.class);
         Mockito.when(upgradeEndResponseFuture.get()).thenReturn(upgradeEndResponseCommandResult);
-        
+
         return upgradeEndResponseFuture;
     }
-    
+
     private Future<CommandResult> mockReadCurrentVersionCommandFuture() throws Exception {
         // Prepare response for the future returned by sendCommand
         CommandResult readCurrentVersionCommandResult = Mockito.mock(CommandResult.class);
         Mockito.when(readCurrentVersionCommandResult.isSuccess()).thenReturn(Boolean.TRUE);
-        
+
         // Prepare the records for the response
         ReadAttributeStatusRecord record = Mockito.mock(ReadAttributeStatusRecord.class);
         Mockito.when(record.getStatus()).thenReturn(ZclStatus.SUCCESS);
         Mockito.when(record.getAttributeValue()).thenReturn(42);
         List<ReadAttributeStatusRecord> records = new ArrayList<>();
         records.add(record);
-        
+
         ReadAttributesResponse currentVersionResponse = Mockito.mock(ReadAttributesResponse.class);
         Mockito.when(currentVersionResponse.getRecords()).thenReturn(records);
         Mockito.when(readCurrentVersionCommandResult.getResponse()).thenReturn(currentVersionResponse);
-        
+
         // Prepare the future returned by sendCommand
         @SuppressWarnings("unchecked")
         Future<CommandResult> readCurrentVersionCommandFuture = Mockito.mock(Future.class);
         Mockito.when(readCurrentVersionCommandFuture.get()).thenReturn(readCurrentVersionCommandResult);
-        
+
         return readCurrentVersionCommandFuture;
     }
 
