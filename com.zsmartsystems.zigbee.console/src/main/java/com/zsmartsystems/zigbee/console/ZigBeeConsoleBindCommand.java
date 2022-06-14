@@ -14,6 +14,7 @@ import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.groups.ZigBeeGroup;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 
 /**
@@ -60,9 +61,14 @@ public class ZigBeeConsoleBindCommand extends ZigBeeConsoleAbstractCommand {
         IeeeAddress destAddress;
         int destEndpoint;
         if (destEndpointParam != null) {
-            ZigBeeEndpoint destination = getEndpoint(networkManager, destEndpointParam);
-            destAddress = destination.getIeeeAddress();
-            destEndpoint = destination.getEndpointId();
+            ZigBeeGroup group = getGroup(networkManager, destEndpointParam);
+            if (group != null) {
+
+            } else {
+                ZigBeeEndpoint destination = getEndpoint(networkManager, destEndpointParam);
+                destAddress = destination.getIeeeAddress();
+                destEndpoint = destination.getEndpointId();
+            }
         } else {
             destAddress = networkManager.getNode(0).getIeeeAddress();
             destEndpoint = 1;
