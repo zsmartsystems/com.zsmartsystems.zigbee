@@ -25,6 +25,7 @@ import com.zsmartsystems.zigbee.zcl.field.ExtensionFieldSet;
 import com.zsmartsystems.zigbee.zcl.field.ZclArrayList;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
+import com.zsmartsystems.zigbee.zdo.field.BindingTable;
 
 /**
  * This performs a simple set of tests to make sure the serialiser/deserializer can read back what it writes.
@@ -73,6 +74,17 @@ public class SerializerIntegrationTest {
     public void testDeserialize_OCTET_STRING() {
         ByteArray valIn = new ByteArray(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 });
         testSerializer(valIn, ZclDataType.OCTET_STRING);
+    }
+
+    @Test
+    public void testDeserialize_BINDING_TABLE() {
+        BindingTable table = new BindingTable();
+        table.setClusterId(1234);
+        table.setDstAddrMode(3);
+        table.setSrcAddr(new IeeeAddress("FEDCBA0987654321"));
+        table.setDstAddr(new IeeeAddress("1234567890ABCDEF"));
+        table.setDstNodeEndpoint(21);
+        testSerializer(table, ZclDataType.BINDING_TABLE);
     }
 
     @Test

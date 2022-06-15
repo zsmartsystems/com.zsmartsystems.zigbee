@@ -19,6 +19,7 @@ import com.zsmartsystems.zigbee.zcl.field.ExtensionFieldSet;
 import com.zsmartsystems.zigbee.zcl.field.ZclArrayList;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
+import com.zsmartsystems.zigbee.zdo.field.BindingTable;
 
 /**
  * The implementation of the {@link ZigBeeSerializer}.
@@ -249,6 +250,10 @@ public class DefaultSerializer implements ZigBeeSerializer {
                 for (Object value : zclArray) {
                     appendZigBeeType(value, zclArray.getDataType());
                 }
+                break;
+            case BINDING_TABLE:
+                BindingTable bindingTable = (BindingTable) data;
+                bindingTable.serialize(this);
                 break;
 
             default:
