@@ -303,7 +303,13 @@ public enum EzspValueId {
      * Return the number of seconds the network will remain open. A return value of 0 indicates that
      * the network is closed. Read only.
      */
-    EZSP_VALUE_NWK_OPEN_DURATION(0x0042);
+    EZSP_VALUE_NWK_OPEN_DURATION(0x0042),
+
+    /**
+     * Timeout in milliseconds to store entries in the transient device table. If the devices are
+     * not authenticated before the timeout, the entry shall be purged
+     */
+    EZSP_VALUE_TRANSIENT_DEVICE_TIMEOUT(0x0043);
 
     /**
      * A mapping between the integer code and its corresponding type to

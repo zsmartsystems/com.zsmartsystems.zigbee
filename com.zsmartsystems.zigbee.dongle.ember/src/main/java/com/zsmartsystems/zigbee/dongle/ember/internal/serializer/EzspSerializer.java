@@ -46,6 +46,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberPrivateKeyData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberPublicKey283k1Data;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberPublicKeyData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspExtendedValueId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspMfgTokenId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspNetworkScanType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspPolicyId;
@@ -323,5 +324,9 @@ public class EzspSerializer {
 
     public void serializeEmberKeyStatus(EmberKeyStatus emberKeyStatus) {
         buffer[length++] = emberKeyStatus.getKey();
+    }
+
+    public void serializeEzspExtendedValueId(EzspExtendedValueId extendedValueId) {
+        buffer[length++] = extendedValueId.getKey();
     }
 }
