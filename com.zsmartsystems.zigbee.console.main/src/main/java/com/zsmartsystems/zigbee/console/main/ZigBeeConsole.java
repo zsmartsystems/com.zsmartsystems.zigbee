@@ -64,6 +64,7 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleNetworkJoinCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleNetworkLeaveCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleNetworkStartCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleNodeListCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleNodeResetCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleOtaUpgradeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingConfigCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingSubscribeCommand;
@@ -222,6 +223,7 @@ public final class ZigBeeConsole {
 
         newCommands.put("firmware", new ZigBeeConsoleFirmwareCommand());
         newCommands.put("identify", new ZigBeeConsoleIdentifyCommand());
+        newCommands.put("reset", new ZigBeeConsoleNodeResetCommand());
 
         zigBeeApi = new ZigBeeApi(networkManager);
 
