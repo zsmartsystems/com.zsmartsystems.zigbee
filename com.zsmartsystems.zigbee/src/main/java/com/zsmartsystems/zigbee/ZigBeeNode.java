@@ -507,7 +507,7 @@ public class ZigBeeNode {
     }
 
     /**
-     * Gets an endpoint given the {@link ZigBeeAddress} address.
+     * Gets an endpoint given the endpoint ID.
      *
      * @param endpointId the endpoint ID to get
      * @return the {@link ZigBeeEndpoint}

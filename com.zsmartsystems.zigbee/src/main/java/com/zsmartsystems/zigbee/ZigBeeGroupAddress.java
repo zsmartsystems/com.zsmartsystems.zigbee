@@ -12,7 +12,6 @@ import java.util.Objects;
 /**
  * ZigBee group address
  *
- * @author Tommi S.E. Laukkanen
  * @author Chris Jackson
  */
 public class ZigBeeGroupAddress extends ZigBeeAddress {
@@ -23,34 +22,18 @@ public class ZigBeeGroupAddress extends ZigBeeAddress {
     private int groupId;
 
     /**
-     * The group label.
-     */
-    private String label;
-
-    /**
      * Default constructor.
      */
     public ZigBeeGroupAddress() {
     }
 
     /**
-     * Constructor which sets group ID.
+     * Constructor which sets group ID and label.
      *
      * @param groupId the group ID
      */
     public ZigBeeGroupAddress(final int groupId) {
         this.groupId = groupId;
-    }
-
-    /**
-     * Constructor which sets group ID and label.
-     *
-     * @param groupId the group ID
-     * @param label the group label
-     */
-    public ZigBeeGroupAddress(final int groupId, final String label) {
-        this.groupId = groupId;
-        this.label = label;
     }
 
     @Override
@@ -81,29 +64,11 @@ public class ZigBeeGroupAddress extends ZigBeeAddress {
         this.groupId = groupId;
     }
 
-    /**
-     * Gets group label.
-     *
-     * @return the group label
-     */
-    public String getLabel() {
-        return label;
-    }
-
-    /**
-     * Sets group name.
-     *
-     * @param label the group label
-     */
-    public void setLabel(final String label) {
-        this.label = label;
-    }
 
     @Override
     public boolean isGroup() {
         return true;
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(groupId);
@@ -138,6 +103,6 @@ public class ZigBeeGroupAddress extends ZigBeeAddress {
 
     @Override
     public String toString() {
-        return "ZigBeeGroupAddress [groupId=" + groupId + ", label=" + label + "]";
+        return "ZigBeeGroupAddress [groupId=" + groupId + "]";
     }
 }

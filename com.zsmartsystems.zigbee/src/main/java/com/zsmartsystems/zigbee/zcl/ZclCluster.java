@@ -35,6 +35,7 @@ import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
+import com.zsmartsystems.zigbee.ZigBeeGroupAddress;
 import com.zsmartsystems.zigbee.database.ZclAttributeDao;
 import com.zsmartsystems.zigbee.database.ZclClusterDao;
 import com.zsmartsystems.zigbee.internal.NotificationService;
@@ -73,6 +74,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.command.BindRequest;
 import com.zsmartsystems.zigbee.zdo.command.UnbindRequest;
+import com.zsmartsystems.zigbee.zdo.field.BindingTable;
 
 /**
  * Base class for the ZCL Cluster
@@ -833,8 +835,33 @@ public abstract class ZclCluster {
      * @return Command future
      */
     public Future<CommandResult> bind(IeeeAddress address, int endpointId) {
-        final BindRequest command = new BindRequest(zigbeeEndpoint.getIeeeAddress(), zigbeeEndpoint.getEndpointId(),
-                clusterId, 3, address, endpointId);
+        BindingTable bindingTable = new BindingTable();
+        bindingTable.setSrcAddr(zigbeeEndpoint.getIeeeAddress());
+        bindingTable.setSrcEndpoint(zigbeeEndpoint.getEndpointId());
+        bindingTable.setClusterId(clusterId);
+        bindingTable.setDstAddrMode(3);
+        bindingTable.setDstAddr(address);
+        bindingTable.setDstNodeEndpoint(endpointId);
+        final BindRequest command = new BindRequest(bindingTable);
+        command.setDestinationAddress(new ZigBeeEndpointAddress(zigbeeEndpoint.getEndpointAddress().getAddress()));
+        // The transaction is not sent to the Endpoint of this cluster, but to the ZDO endpoint 0 directly.
+        return zigbeeEndpoint.getParentNode().sendTransaction(command, command);
+    }
+
+    /**
+     * Adds a binding from the cluster to the destination {@link ZigBeeGroupAddress}.
+     *
+     * @param group the destination {@link ZigBeeGroupAddress}
+     * @return Command future
+     */
+    public Future<CommandResult> bind(ZigBeeGroupAddress group) {
+        BindingTable bindingTable = new BindingTable();
+        bindingTable.setSrcAddr(zigbeeEndpoint.getIeeeAddress());
+        bindingTable.setSrcEndpoint(zigbeeEndpoint.getEndpointId());
+        bindingTable.setClusterId(clusterId);
+        bindingTable.setDstAddrMode(1);
+        bindingTable.setDstGroupAddr(group.getGroupId());
+        final BindRequest command = new BindRequest(bindingTable);
         command.setDestinationAddress(new ZigBeeEndpointAddress(zigbeeEndpoint.getEndpointAddress().getAddress()));
         // The transaction is not sent to the Endpoint of this cluster, but to the ZDO endpoint 0 directly.
         return zigbeeEndpoint.getParentNode().sendTransaction(command, command);
@@ -848,8 +875,33 @@ public abstract class ZclCluster {
      * @return Command future
      */
     public Future<CommandResult> unbind(IeeeAddress address, int endpointId) {
-        final UnbindRequest command = new UnbindRequest(zigbeeEndpoint.getIeeeAddress(), zigbeeEndpoint.getEndpointId(),
-                clusterId, 3, address, endpointId);
+        BindingTable bindingTable = new BindingTable();
+        bindingTable.setSrcAddr(zigbeeEndpoint.getIeeeAddress());
+        bindingTable.setSrcEndpoint(zigbeeEndpoint.getEndpointId());
+        bindingTable.setClusterId(clusterId);
+        bindingTable.setDstAddrMode(3);
+        bindingTable.setDstAddr(address);
+        bindingTable.setDstNodeEndpoint(endpointId);
+        final UnbindRequest command = new UnbindRequest(bindingTable);
+        command.setDestinationAddress(new ZigBeeEndpointAddress(zigbeeEndpoint.getEndpointAddress().getAddress()));
+        // The transaction is not sent to the Endpoint of this cluster, but to the ZDO endpoint 0 directly.
+        return zigbeeEndpoint.getParentNode().sendTransaction(command, command);
+    }
+
+    /**
+     * Removes a binding from the cluster to the destination {@link ZigBeeGroupAddress}.
+     *
+     * @param group the destination {@link ZigBeeGroupAddress}
+     * @return Command future
+     */
+    public Future<CommandResult> unbind(ZigBeeGroupAddress group) {
+        BindingTable bindingTable = new BindingTable();
+        bindingTable.setSrcAddr(zigbeeEndpoint.getIeeeAddress());
+        bindingTable.setSrcEndpoint(zigbeeEndpoint.getEndpointId());
+        bindingTable.setClusterId(clusterId);
+        bindingTable.setDstAddrMode(1);
+        bindingTable.setDstGroupAddr(group.getGroupId());
+        final UnbindRequest command = new UnbindRequest(bindingTable);
         command.setDestinationAddress(new ZigBeeEndpointAddress(zigbeeEndpoint.getEndpointAddress().getAddress()));
         // The transaction is not sent to the Endpoint of this cluster, but to the ZDO endpoint 0 directly.
         return zigbeeEndpoint.getParentNode().sendTransaction(command, command);

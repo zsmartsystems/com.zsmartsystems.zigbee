@@ -87,7 +87,7 @@ public class ZigBeeConsoleGroupCommand extends ZigBeeConsoleAbstractCommand {
     private void printGroups(PrintStream out, Collection<ZigBeeGroup> groups) {
         out.println("Group  ID    Label             | Members [hex]");
         for (ZigBeeGroup group : groups) {
-            out.print(String.format("%5d  %04X  %16s  |", group.getGroupId(), group.getGroupId(),
+            out.print(String.format("%5d  %04X  %-16s  |", group.getGroupId(), group.getGroupId(),
                     group.getLabel() == null ? "" : group.getLabel()));
             for (ZigBeeEndpoint member : group.getMembers()) {
                 out.print(" " + member.getEndpointAddress().toString());
