@@ -316,6 +316,8 @@ Note that the console is currently being refactored and this readme only documen
 | netstart     | Join or Form a network as a router or coordinator                                      |
 | netbackup    | Backup or restores the state of the dongle                                             |
 | discovery    | Gets information on the network discovery tasks                                        |
+| routingtable | Gets the routing table from a node                                                     |
+| neighbours   | Gets the neighbour table from a node                                                   |
 | on           | Turns a device on                                                                      |
 | off          | Turns a device off                                                                     |
 | level        | Sets the level on a level control device                                               |
@@ -323,6 +325,7 @@ Note that the console is currently being refactored and this readme only documen
 | covering     | Sets the level on a window covering device                                             |
 | group        | Configures multicast groups                                                            |
 | scene        | Configures scenes                                                                      |
+| factoryreset | Resets a node to factory defaults                                                      |
 
 ### Ember NCP Commands
 
@@ -331,6 +334,7 @@ The following commands are available if the transport layer is using the Silabs 
 | Command          | Description                                                                   |
 | ---------------- | ----------------------------------------------------------------------------- |
 | ncpchildren      | Gets the NCP child information                                                |
+| ncpaddrtable     | Manages the NCP address table                                                 |
 | ncpconfig        | Read or write an NCP configuration value                                      |
 | ncpscan          | Performs a scan, looking for other networks, or energy levels on each channel |
 | ncpcounters      | Gets the NCP debug counters                                                   |
