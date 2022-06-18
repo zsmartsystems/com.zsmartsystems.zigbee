@@ -29,7 +29,7 @@ public class ZdoResponseMatcherTest {
     public void testMatch() {
         ZdoTransactionMatcher matcher = new ZdoTransactionMatcher();
 
-        ZdoRequest zdoCommand = new BindRequest(null, null, null, null, null, null);
+        ZdoRequest zdoCommand = new BindRequest(null);
         BindResponse zdoResponse = new BindResponse(null);
 
         zdoCommand.setDestinationAddress(new ZigBeeEndpointAddress(1234));

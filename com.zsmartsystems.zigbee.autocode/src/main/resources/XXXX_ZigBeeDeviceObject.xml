@@ -240,29 +240,9 @@
     <command code="0x0021" source="client">
         <name>Bind Request</name>
         <description>The Bind_req is generated from a Local Device wishing to create a Binding Table entry for the source and destination addresses contained as parameters. The destination addressing on this command shall be unicast only, and the destination address shall be that of a Primary binding table cache or to the SrcAddress itself. The Binding Manager is optionally supported on the source device (unless that device is also the ZigBee Coordinator) so that device shall issue a NOT_SUPPORTED status to the Bind_req if not supported.</description>
-        <field type="IEEE_ADDRESS">
-            <name>Src Address</name>
-            <description>The IEEE address for the source.</description>
-        </field>
-        <field type="UNSIGNED_8_BIT_INTEGER">
-            <name>Src Endpoint</name>
-            <description>The source endpoint for the binding entry.</description>
-        </field>
-        <field type="UNSIGNED_16_BIT_INTEGER">
-            <name>Bind Cluster</name>
-            <description>The identifier of the cluster on the source device that is bound to the destination.</description>
-        </field>
-        <field type="UNSIGNED_8_BIT_INTEGER">
-            <name>DST Addr Mode</name>
-            <description>The addressing mode for the destination address used in this command. This field can take one of the non-reserved values from the following list: 0x00 = reserved 0x01 = 16-bit group address for DstAddress and DstEndp not present 0x02 = reserved 0x03 = 64-bit extended address for DstAddress and DstEndp present 0x04 &#8211; 0xff = reserved</description>
-        </field>
-        <field type="IEEE_ADDRESS">
-            <name>DST Address</name>
-            <description>The destination address for the binding entry.</description>
-        </field>
-        <field type="UNSIGNED_8_BIT_INTEGER">
-            <name>DST Endpoint</name>
-            <description>This field shall be present only if the DstAddrMode field has a value of 0x03 and, if present, shall be the destination endpoint for the binding entry.</description>
+        <field type="BINDING_TABLE">
+            <name>Binding Table Entry</name>
+            <description>The binding tsble entry.</description>
         </field>
         <response command="BindResponse">
         </response>
@@ -270,29 +250,9 @@
     <command code="0x0022" source="client">
         <name>Unbind Request</name>
         <description>The Unbind_req is generated from a Local Device wishing to remove a Binding Table entry for the source and destination addresses contained as parameters. The destination addressing on this command shall be unicast only and the destination address must be that of the a Primary binding table cache or the SrcAddress.</description>
-        <field type="IEEE_ADDRESS">
-            <name>Src Address</name>
-            <description>The IEEE address for the source.</description>
-        </field>
-        <field type="UNSIGNED_8_BIT_INTEGER">
-            <name>Src Endpoint</name>
-            <description>The source endpoint for the binding entry.</description>
-        </field>
-        <field type="UNSIGNED_16_BIT_INTEGER">
-            <name>Bind Cluster</name>
-            <description>The identifier of the cluster on the source device that is bound to the destination.</description>
-        </field>
-        <field type="UNSIGNED_8_BIT_INTEGER">
-            <name>DST Addr Mode</name>
-            <description>The addressing mode for the destination address used in this command. This field can take one of the non-reserved values from the following list: 0x00 = reserved 0x01 = 16-bit group address for DstAddress and DstEndp not present 0x02 = reserved 0x03 = 64-bit extended address for DstAddress and DstEndp present 0x04 &#8211; 0xff = reserved</description>
-        </field>
-        <field type="IEEE_ADDRESS">
-            <name>DST Address</name>
-            <description>The destination address for the binding entry.</description>
-        </field>
-        <field type="UNSIGNED_8_BIT_INTEGER">
-            <name>DST Endpoint</name>
-            <description>This field shall be present only if the DstAddrMode field has a value of 0x03 and, if present, shall be the destination endpoint for the binding entry.</description>
+        <field type="BINDING_TABLE">
+            <name>Binding Table Entry</name>
+            <description>The binding tsble entry.</description>
         </field>
         <response command="UnbindResponse">
         </response>

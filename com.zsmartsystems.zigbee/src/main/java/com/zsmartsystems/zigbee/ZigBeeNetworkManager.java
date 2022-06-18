@@ -39,7 +39,6 @@ import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDataStore;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDatabaseManager;
 import com.zsmartsystems.zigbee.groups.ZigBeeGroup;
-import com.zsmartsystems.zigbee.groups.ZigBeeGroupAddress;
 import com.zsmartsystems.zigbee.groups.ZigBeeNetworkGroupManager;
 import com.zsmartsystems.zigbee.groups.ZigBeeNetworkGroupManager.GroupSynchronizationMethod;
 import com.zsmartsystems.zigbee.internal.ClusterMatcher;

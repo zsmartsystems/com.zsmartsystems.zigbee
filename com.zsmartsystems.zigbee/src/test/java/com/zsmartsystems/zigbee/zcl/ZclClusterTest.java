@@ -35,6 +35,7 @@ import com.zsmartsystems.zigbee.TestUtilities;
 import com.zsmartsystems.zigbee.ZigBeeCommand;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
+import com.zsmartsystems.zigbee.ZigBeeGroupAddress;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.database.ZclAttributeDao;
 import com.zsmartsystems.zigbee.database.ZclClusterDao;
@@ -122,13 +123,13 @@ public class ZclClusterTest {
         System.out.println(command);
         assertTrue(command instanceof BindRequest);
         BindRequest bindCommand = (BindRequest) command;
-        assertEquals(new ZigBeeEndpointAddress(1234, 0), bindCommand.getDestinationAddress());
-        assertEquals(new IeeeAddress("1234567890ABCDEF"), bindCommand.getDstAddress());
-        assertEquals(Integer.valueOf(5), bindCommand.getSrcEndpoint());
-        assertEquals(Integer.valueOf(11), bindCommand.getDstEndpoint());
-        assertEquals(Integer.valueOf(3), bindCommand.getDstAddrMode());
         assertEquals(Integer.valueOf(0x0021), bindCommand.getClusterId());
-        assertEquals(Integer.valueOf(6), bindCommand.getBindCluster());
+        assertEquals(new ZigBeeEndpointAddress(1234, 0), bindCommand.getDestinationAddress());
+        assertEquals((int) Integer.valueOf(3), bindCommand.getBindingTableEntry().getDstAddrMode());
+        assertEquals((int) Integer.valueOf(5), bindCommand.getBindingTableEntry().getSrcEndpoint());
+        assertEquals(new IeeeAddress("1234567890ABCDEF"), bindCommand.getBindingTableEntry().getDstNodeAddr());
+        assertEquals((int) Integer.valueOf(11), bindCommand.getBindingTableEntry().getDstNodeEndpoint());
+        assertEquals((int) Integer.valueOf(6), bindCommand.getBindingTableEntry().getClusterId());
     }
 
     @Test
@@ -143,13 +144,55 @@ public class ZclClusterTest {
         System.out.println(command);
         assertTrue(command instanceof UnbindRequest);
         UnbindRequest unbindCommand = (UnbindRequest) command;
-        assertEquals(new ZigBeeEndpointAddress(1234, 0), unbindCommand.getDestinationAddress());
-        assertEquals(new IeeeAddress("1234567890ABCDEF"), unbindCommand.getDstAddress());
-        assertEquals(Integer.valueOf(5), unbindCommand.getSrcEndpoint());
-        assertEquals(Integer.valueOf(11), unbindCommand.getDstEndpoint());
-        assertEquals(Integer.valueOf(3), unbindCommand.getDstAddrMode());
         assertEquals(Integer.valueOf(0x0022), unbindCommand.getClusterId());
-        assertEquals(Integer.valueOf(6), unbindCommand.getBindCluster());
+        assertEquals(new ZigBeeEndpointAddress(1234, 0), unbindCommand.getDestinationAddress());
+        assertEquals((int) Integer.valueOf(3), unbindCommand.getBindingTableEntry().getDstAddrMode());
+        assertEquals((int) Integer.valueOf(5), unbindCommand.getBindingTableEntry().getSrcEndpoint());
+        assertEquals(new IeeeAddress("1234567890ABCDEF"), unbindCommand.getBindingTableEntry().getDstNodeAddr());
+        assertEquals((int) Integer.valueOf(11), unbindCommand.getBindingTableEntry().getDstNodeEndpoint());
+        assertEquals((int) Integer.valueOf(6), unbindCommand.getBindingTableEntry().getClusterId());
+    }
+
+    @Test
+    public void bindGroup() {
+        createEndpoint();
+
+        ZclCluster cluster = new ZclOnOffCluster(endpoint);
+        cluster.bind(new ZigBeeGroupAddress(1234));
+        assertEquals(1, commandCapture.getAllValues().size());
+        ZigBeeCommand command = commandCapture.getValue();
+        assertNotNull(command);
+        System.out.println(command);
+        assertTrue(command instanceof BindRequest);
+        BindRequest bindCommand = (BindRequest) command;
+        assertEquals(Integer.valueOf(0x0021), bindCommand.getClusterId());
+        assertEquals(new ZigBeeEndpointAddress(1234, 0), bindCommand.getDestinationAddress());
+        assertEquals((int) Integer.valueOf(1), bindCommand.getBindingTableEntry().getDstAddrMode());
+        assertEquals((int) Integer.valueOf(5), bindCommand.getBindingTableEntry().getSrcEndpoint());
+        assertNull(bindCommand.getBindingTableEntry().getDstNodeAddr());
+        assertEquals((int) Integer.valueOf(1234), bindCommand.getBindingTableEntry().getDstGroupAddr());
+        assertEquals((int) Integer.valueOf(6), bindCommand.getBindingTableEntry().getClusterId());
+    }
+
+    @Test
+    public void unbindGroup() {
+        createEndpoint();
+
+        ZclCluster cluster = new ZclOnOffCluster(endpoint);
+        cluster.unbind(new ZigBeeGroupAddress(1234));
+        assertEquals(1, commandCapture.getAllValues().size());
+        ZigBeeCommand command = commandCapture.getValue();
+        assertNotNull(command);
+        System.out.println(command);
+        assertTrue(command instanceof UnbindRequest);
+        UnbindRequest unbindCommand = (UnbindRequest) command;
+        assertEquals(Integer.valueOf(0x0022), unbindCommand.getClusterId());
+        assertEquals(new ZigBeeEndpointAddress(1234, 0), unbindCommand.getDestinationAddress());
+        assertEquals((int) Integer.valueOf(1), unbindCommand.getBindingTableEntry().getDstAddrMode());
+        assertEquals((int) Integer.valueOf(5), unbindCommand.getBindingTableEntry().getSrcEndpoint());
+        assertNull(unbindCommand.getBindingTableEntry().getDstNodeAddr());
+        assertEquals((int) Integer.valueOf(1234), unbindCommand.getBindingTableEntry().getDstGroupAddr());
+        assertEquals((int) Integer.valueOf(6), unbindCommand.getBindingTableEntry().getClusterId());
     }
 
     @Test
