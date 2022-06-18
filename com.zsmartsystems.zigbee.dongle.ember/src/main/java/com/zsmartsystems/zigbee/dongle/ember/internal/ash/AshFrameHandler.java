@@ -238,7 +238,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
         if (stateConnected && ezspFrame != null) {
             synchronized (recvQueue) {
                 recvQueue.add(ezspFrame);
-                logger.debug("ASH added EZSP frame to receive queue. Queue length {}", recvQueue.size());
+                logger.trace("ASH added EZSP frame to receive queue. Queue length {}", recvQueue.size());
                 recvQueue.notify();
             }
         } else {
@@ -394,7 +394,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
                 }
                 try {
                     ezspFrame = recvQueue.take();
-                    logger.debug("ASH took EZSP frame from receive queue. Queue length {}", recvQueue.size());
+                    logger.trace("ASH took EZSP frame from receive queue. Queue length {}", recvQueue.size());
                     notifyTransactionComplete(ezspFrame);
                     frameHandler.handlePacket(ezspFrame);
                 } catch (final Exception e) {
@@ -575,7 +575,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
         }
         sendQueue.add(request);
 
-        logger.debug("ASH: TX EZSP queue size: {}", sendQueue.size());
+        logger.trace("ASH: TX EZSP queue size: {}", sendQueue.size());
 
         sendNextFrame();
     }
@@ -632,7 +632,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
         while (sentQueue.peek() != null && sentQueue.peek().getFrmNum() != ackNum) {
             AshFrameData ackedFrame = sentQueue.poll();
-            logger.debug("ASH: Frame acked and removed {}", ackedFrame);
+            logger.trace("ASH: Frame acked and removed {}", ackedFrame);
         }
     }
 
