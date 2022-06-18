@@ -102,7 +102,6 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_CALCULATE_SMACS283K1_HANDLER = 0xEB;
     protected static final int FRAME_ID_CALCULATE_SMACS_HANDLER = 0xA0;
     protected static final int FRAME_ID_CALLBACK = 0x06;
-    protected static final int FRAME_ID_CHANGE_SOURCE_ROUTE_HANDLER = 0xC4;
     protected static final int FRAME_ID_CHILD_JOIN_HANDLER = 0x23;
     protected static final int FRAME_ID_CLEAR_BINDING_TABLE = 0x2A;
     protected static final int FRAME_ID_CLEAR_KEY_TABLE = 0xB1;
@@ -270,7 +269,6 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_CALCULATE_SMACS283K1_HANDLER, EzspCalculateSmacs283k1Handler.class);
         ezspHandlerMap.put(FRAME_ID_CALCULATE_SMACS_HANDLER, EzspCalculateSmacsHandler.class);
         ezspHandlerMap.put(FRAME_ID_CALLBACK, EzspCallbackResponse.class);
-        ezspHandlerMap.put(FRAME_ID_CHANGE_SOURCE_ROUTE_HANDLER, EzspChangeSourceRouteHandler.class);
         ezspHandlerMap.put(FRAME_ID_CHILD_JOIN_HANDLER, EzspChildJoinHandler.class);
         ezspHandlerMap.put(FRAME_ID_CLEAR_BINDING_TABLE, EzspClearBindingTableResponse.class);
         ezspHandlerMap.put(FRAME_ID_CLEAR_KEY_TABLE, EzspClearKeyTableResponse.class);
