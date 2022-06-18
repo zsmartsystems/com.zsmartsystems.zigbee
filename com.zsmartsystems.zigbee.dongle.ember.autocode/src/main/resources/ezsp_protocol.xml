@@ -583,33 +583,6 @@
 	</command>
 
 	<command>
-		<name>changeSourceRouteHandler</name>
-		<id>0xC4</id>
-		<description>Change the source route entry in a source route table.</description>
-		<command_parameters>
-		</command_parameters>
-		<response_parameters>
-			<parameter>
-				<data_type>EmberNodeId</data_type>
-				<name>newChildId</name>
-				<description>The source/neighbor for which the source route entry is changed.</description>
-				<display>hex[4]</display>
-			</parameter>
-			<parameter>
-				<data_type>EmberNodeId</data_type>
-				<name>newParentId</name>
-				<description>The parent of the source/neighbor for which the source route entry is changed.</description>
-				<display>hex[4]</display>
-			</parameter>
-			<parameter>
-				<data_type>bool</data_type>
-				<name>ourChild</name>
-				<description>Is the source our child?</description>
-			</parameter>
-		</response_parameters>
-	</command>
-
-	<command>
 		<name>incomingManyToOneRouteRequestHandler</name>
 		<id>0x7D</id>
 		<description>A callback indicating that a many-to-one route to the concentrator with the given short and long id is available for use.</description>
