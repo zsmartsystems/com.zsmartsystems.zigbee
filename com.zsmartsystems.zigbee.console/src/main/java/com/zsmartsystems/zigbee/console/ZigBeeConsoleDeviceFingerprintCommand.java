@@ -27,7 +27,11 @@ import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFrameType;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
+import com.zsmartsystems.zigbee.zcl.field.ReadAttributeStatusRecord;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.command.IeeeAddressRequest;
@@ -282,14 +286,31 @@ public class ZigBeeConsoleDeviceFingerprintCommand extends ZigBeeConsoleAbstract
         for (int attributeId : attributeIds) {
             ZclAttribute attribute = cluster.getAttribute(attributeId);
             Object value = null;
+            ZclDataType dataType = null;
             if (attribute != null && attribute.isReadable()) {
                 value = attribute.readValue(60L);
+                dataType = attribute.getDataType();
             } else {
-                value = "";
+                try {
+                    CommandResult result = cluster.readAttribute(attributeId).get();
+                    ReadAttributesResponse response = result.getResponse();
+                    ReadAttributeStatusRecord attributeRecord = response.getRecords().get(0);
+                    if (attributeRecord.getStatus() == ZclStatus.SUCCESS) {
+                        value = attributeRecord.getAttributeValue();
+                        dataType = attributeRecord.getAttributeDataType();
+                    }
+
+                } catch (InterruptedException | ExecutionException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
 
-            out.println(String.format("| | | | | |> %04X  %-40s  %s", attributeId, (attribute == null ? "Unknown"
-                    : attribute.getName()), (value == null ? "" : (">> " + value.toString()))));
+            out.println(String.format("| | | | | |> %04X  %-40s  >> %-30s  %s", attributeId,
+                    (attribute == null ? ""
+                            : attribute.getName()),
+                    (dataType == null ? "" : dataType),
+                    (value == null ? "" : value.toString())));
         }
     }
 
@@ -304,7 +325,8 @@ public class ZigBeeConsoleDeviceFingerprintCommand extends ZigBeeConsoleAbstract
             if (value == null) {
                 continue;
             }
-            out.println(String.format("| | | | | |> %04X  %-40s  >> %s", attribute.getId(), attribute.getName(),
+            out.println(String.format("| | | | | |> %04X  %-50s  >> %-30s  %s", attribute.getId(), attribute.getName(),
+                    attribute.getDataType(),
                     value.toString()));
         }
     }

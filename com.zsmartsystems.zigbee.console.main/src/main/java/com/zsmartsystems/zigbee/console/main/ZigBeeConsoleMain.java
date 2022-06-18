@@ -151,12 +151,13 @@ public class ZigBeeConsoleMain {
         final Set<Integer> supportedServerClusters = new TreeSet<>();
         supportedServerClusters.addAll(Stream
                 .of(ZclBasicCluster.CLUSTER_ID, ZclIdentifyCluster.CLUSTER_ID, ZclGroupsCluster.CLUSTER_ID,
-                        ZclScenesCluster.CLUSTER_ID,
+                        ZclScenesCluster.CLUSTER_ID, ZclPowerConfigurationCluster.CLUSTER_ID,
                         ZclPollControlCluster.CLUSTER_ID, ZclOnOffCluster.CLUSTER_ID, ZclLevelControlCluster.CLUSTER_ID,
                         ZclColorControlCluster.CLUSTER_ID, ZclPressureMeasurementCluster.CLUSTER_ID,
                         ZclOtaUpgradeCluster.CLUSTER_ID, ZclMeteringCluster.CLUSTER_ID,
                         ZclElectricalMeasurementCluster.CLUSTER_ID,
                         ZclDiagnosticsCluster.CLUSTER_ID, ZclBallastConfigurationCluster.CLUSTER_ID,
+                        ZclTemperatureMeasurementCluster.CLUSTER_ID, ZclIasZoneCluster.CLUSTER_ID,
                         ZclWindowCoveringCluster.CLUSTER_ID, ZclBinaryInputBasicCluster.CLUSTER_ID, 1000)
                 .collect(Collectors.toSet()));
 
