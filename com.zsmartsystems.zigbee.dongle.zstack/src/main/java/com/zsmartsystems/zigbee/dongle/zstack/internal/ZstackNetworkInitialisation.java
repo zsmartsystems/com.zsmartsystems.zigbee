@@ -58,28 +58,10 @@ public class ZstackNetworkInitialisation {
     private ZstackProtocolHandler protocolHandler;
 
     /**
-     * The magic number used to make the dongle exit the bootloader
-     */
-    private int magicNumber = MAGIC_NUMBER_DEFAULT;
-
-    /**
      * @param protocolHandler the {@link ZstackProtocolHandler} used to communicate with the NCP
      */
     public ZstackNetworkInitialisation(ZstackProtocolHandler protocolHandler) {
         this.protocolHandler = protocolHandler;
-    }
-
-    /**
-     * Different hardware may use a different "Magic Number" to skip waiting in the bootloader. Otherwise
-     * the dongle may wait in the bootloader for 60 seconds after it's powered on or reset.
-     * <p>
-     * This method allows the user to change the magic number which may be required when using different
-     * sticks.
-     *
-     * @param magicNumber
-     */
-    public void setMagicNumber(int magicNumber) {
-        this.magicNumber = magicNumber;
     }
 
     /**
@@ -155,7 +137,7 @@ public class ZstackNetworkInitialisation {
         logger.debug("ZStack starting network");
         ZstackNcp ncp = new ZstackNcp(protocolHandler);
 
-        ncp.setNetworkSecurity(true);
+        // ncp.setNetworkSecurity(true);
 
         ncp.zdoRegisterCallback(0x0006);// MatchDescriptorRequest
         ncp.zdoRegisterCallback(0x0013);// DeviceAnnounce
@@ -214,7 +196,7 @@ public class ZstackNetworkInitialisation {
     }
 
     private boolean waitForBoot(String resetMode) {
-        Future<ZstackFrameResponse> waiter = protocolHandler.waitForEvent(ZstackSysResetIndAreq.class);
+        Future<ZstackSysResetIndAreq> waiter = protocolHandler.waitForEvent(ZstackSysResetIndAreq.class);
         try {
             ZstackFrameResponse response = waiter.get(BOOTLOAD_TIMEOUT, TimeUnit.MILLISECONDS);
             logger.debug("ZStack Initialisation: Bootloader reset via {} response {}", resetMode, response);
@@ -252,11 +234,9 @@ public class ZstackNetworkInitialisation {
         long waitTime = System.currentTimeMillis() + ONLINE_TIMEOUT;
         while (waitTime > System.currentTimeMillis()) {
             logger.debug("ZStack dongle waiting for NCP to come online");
-            Future<ZstackFrameResponse> stateChangeFuture = protocolHandler
-                    .waitForEvent(ZstackZdoStateChangeIndAreq.class);
+            Future<ZstackZdoStateChangeIndAreq> stateChangeFuture = protocolHandler.waitForEvent(ZstackZdoStateChangeIndAreq.class);
             try {
-                ZstackZdoStateChangeIndAreq stateChange = (ZstackZdoStateChangeIndAreq) stateChangeFuture.get(500,
-                        TimeUnit.MILLISECONDS);
+                ZstackZdoStateChangeIndAreq stateChange = stateChangeFuture.get(500, TimeUnit.MILLISECONDS);
                 if (isStackOnline(stateChange.getState())) {
                     return true;
                 }

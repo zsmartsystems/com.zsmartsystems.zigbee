@@ -26,10 +26,11 @@ import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.dongle.zstack.api.ZstackFrameRequest;
 import com.zsmartsystems.zigbee.dongle.zstack.api.ZstackResponseCode;
 import com.zsmartsystems.zigbee.dongle.zstack.api.af.ZstackAfDataConfirmAreq;
+import com.zsmartsystems.zigbee.dongle.zstack.api.af.ZstackAfDataRequestSreq;
+import com.zsmartsystems.zigbee.dongle.zstack.api.af.ZstackAfDataRequestSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackZdoState;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoStateChangeIndAreq;
 import com.zsmartsystems.zigbee.dongle.zstack.internal.ZstackProtocolHandler;
-import com.zsmartsystems.zigbee.dongle.zstack.internal.transaction.ZstackTransaction;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportProgressState;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportReceive;
@@ -150,7 +151,7 @@ public class ZigBeeDongleZstackTest {
 
         dongle.sendCommand(1, apsFrame);
         Mockito.verify(handler, Mockito.timeout(TIMEOUT).times(1))
-                .sendTransaction(ArgumentMatchers.any(ZstackTransaction.class));
+                .<ZstackAfDataRequestSreq, ZstackAfDataRequestSrsp>sendTransaction(ArgumentMatchers.any(ZstackAfDataRequestSreq.class), ArgumentMatchers.eq(ZstackAfDataRequestSrsp.class));
     }
 
     @Test
@@ -174,7 +175,7 @@ public class ZigBeeDongleZstackTest {
 
         dongle.sendCommand(1, apsFrame);
         Mockito.verify(handler, Mockito.timeout(TIMEOUT).times(1))
-                .sendTransaction(ArgumentMatchers.any(ZstackTransaction.class));
+                .sendTransaction(ArgumentMatchers.any(ZstackAfDataRequestSreq.class), ArgumentMatchers.eq(ZstackAfDataRequestSrsp.class));
     }
 
     @Test

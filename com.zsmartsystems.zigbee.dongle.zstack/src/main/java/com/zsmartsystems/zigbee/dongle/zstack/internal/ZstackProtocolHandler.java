@@ -28,7 +28,7 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.ZstackCommand;
 import com.zsmartsystems.zigbee.dongle.zstack.api.ZstackFrameFactory;
 import com.zsmartsystems.zigbee.dongle.zstack.api.ZstackFrameRequest;
 import com.zsmartsystems.zigbee.dongle.zstack.api.ZstackFrameResponse;
-import com.zsmartsystems.zigbee.dongle.zstack.internal.transaction.ZstackTransaction;
+import com.zsmartsystems.zigbee.dongle.zstack.api.rpc.ZstackRpcSreqErrorSrsp;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 
 /**
@@ -38,7 +38,6 @@ import com.zsmartsystems.zigbee.transport.ZigBeePort;
  *
  */
 public class ZstackProtocolHandler {
-    private static int ZSTACK_MIN_LENGTH = 3;
     private static int ZSTACK_MAX_LENGTH = 100;
 
     /**
@@ -375,22 +374,23 @@ public class ZstackProtocolHandler {
      * @param transaction Request {@link ZstackTransaction}
      * @return response {@link Future} {@link ZstackFrameResponse}
      */
-    public Future<ZstackFrameResponse> sendZstackRequestAsync(final ZstackTransaction transaction) {
+    public <REQ extends ZstackFrameRequest, RES extends ZstackFrameResponse> Future<RES> sendZstackRequestAsync(final REQ request, final Class<RES> responseType) {
         if (closeHandler) {
             logger.debug("ZSTACK: Handler is closed");
             return null;
         }
 
-        class TransactionWaiter implements Callable<ZstackFrameResponse>, ZstackListener {
+        class TransactionWaiter implements Callable<RES>, ZstackListener {
             private boolean complete = false;
+            private RES response = null;
 
             @Override
-            public ZstackFrameResponse call() {
+            public RES call() {
                 // Register a listener
                 addTransactionListener(this);
 
                 // Send the transaction
-                queueFrame(transaction.getRequest());
+                queueFrame(request);
 
                 // Wait for the transaction to complete
                 synchronized (this) {
@@ -406,18 +406,20 @@ public class ZstackProtocolHandler {
                 // Remove the listener
                 removeTransactionListener(this);
 
-                return null;// response;
+                return response;
             }
 
             @Override
             public boolean transactionEvent(ZstackFrameResponse response) {
                 // Check if this response completes our transaction
-                if (!transaction.isMatch(response)) {
+                if (responseType.isInstance(response)) {
+                    this.response = responseType.cast(response);
+                } else if (ZstackRpcSreqErrorSrsp.class.isInstance(response) && request.matchSreqError((ZstackRpcSreqErrorSrsp) response)) {
+                } else {
                     return false;
                 }
 
                 transactionComplete();
-                // response = request;
 
                 return true;
             }
@@ -431,7 +433,7 @@ public class ZstackProtocolHandler {
             }
         }
 
-        Callable<ZstackFrameResponse> worker = new TransactionWaiter();
+        Callable<RES> worker = new TransactionWaiter();
         return executor.submit(worker);
     }
 
@@ -441,18 +443,18 @@ public class ZstackProtocolHandler {
      * @param transaction Request {@link ZstackTransaction}
      * @return response {@link Future} {@link ZstackFrameResponse}
      */
-    public Future<ZstackFrameResponse> waitForEvent(final Class<?> requiredResponse) {
+    public <RES extends ZstackFrameResponse> Future<RES> waitForEvent(final Class<RES> requiredResponse) {
         if (closeHandler) {
             logger.debug("ZSTACK: Handler is closed");
             return null;
         }
 
-        class TransactionWaiter implements Callable<ZstackFrameResponse>, ZstackListener {
+        class TransactionWaiter implements Callable<RES>, ZstackListener {
             private boolean complete = false;
-            private ZstackFrameResponse response;
+            private RES response;
 
             @Override
-            public ZstackFrameResponse call() {
+            public RES call() {
                 // Register a listener
                 addTransactionListener(this);
 
@@ -481,7 +483,7 @@ public class ZstackProtocolHandler {
                 }
 
                 transactionComplete();
-                this.response = response;
+                this.response = requiredResponse.cast(response);
 
                 return true;
             }
@@ -495,7 +497,7 @@ public class ZstackProtocolHandler {
             }
         }
 
-        Callable<ZstackFrameResponse> worker = new TransactionWaiter();
+        Callable<RES> worker = new TransactionWaiter();
         return executor.submit(worker);
     }
 
@@ -506,23 +508,23 @@ public class ZstackProtocolHandler {
      * @param transaction Request {@link ZstackTransaction}
      * @return response {@link ZstackCommand}
      */
-    public ZstackTransaction sendTransaction(ZstackTransaction transaction) {
-        logger.debug("QUEUE ZSTACK: {}", transaction.getRequest());
+    public <REQ extends ZstackFrameRequest, RES extends ZstackFrameResponse> RES sendTransaction(REQ request, Class<RES> responseType) {
+        logger.debug("QUEUE ZSTACK: {}", request);
 
-        Future<ZstackFrameResponse> futureResponse = sendZstackRequestAsync(transaction);
+        Future<RES> futureResponse = sendZstackRequestAsync(request, responseType);
         if (futureResponse == null) {
             logger.debug("ZSTACK: Error sending transaction: Future is null");
             return null;
         }
 
         try {
-            futureResponse.get(TIMEOUT, TimeUnit.MILLISECONDS);
+            return futureResponse.get(TIMEOUT, TimeUnit.MILLISECONDS);
         } catch (InterruptedException | TimeoutException | ExecutionException e) {
             futureResponse.cancel(true);
-            logger.debug("ZSTACK interrupted in sendTransaction for {}", transaction, e);
+            logger.debug("ZSTACK interrupted in sendTransaction for {}", request, e);
         }
 
-        return transaction;
+        return null;
     }
 
     private String frameToString(int[] inputBuffer) {

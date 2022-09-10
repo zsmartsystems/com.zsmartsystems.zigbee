@@ -109,7 +109,7 @@ public class ZstackSysOsalNvWriteSreq extends ZstackFrameRequest {
         serializeHeader(ZSTACK_SREQ, ZSTACK_SYS, 0x09);
 
         // Serialize the fields
-        serializer.serializeUInt8(id.getKey());
+        serializer.serializeUInt16(id.getKey());
         serializer.serializeUInt8(offset);
         serializer.serializeUInt8(value.length);
         serializer.serializeUInt8Array(value);

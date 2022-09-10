@@ -58,14 +58,14 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetNvInfoSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetNvInfoSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilSetChannelsSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilSetChannelsSrsp;
+import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoExtNwkInfoSreq;
+import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoExtNwkInfoSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoMsgCbRegisterSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoMsgCbRegisterSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoStartupFromAppSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoStartupFromAppSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.internal.ZstackFrameHandler;
 import com.zsmartsystems.zigbee.dongle.zstack.internal.ZstackProtocolHandler;
-import com.zsmartsystems.zigbee.dongle.zstack.internal.transaction.ZstackSingleResponseTransaction;
-import com.zsmartsystems.zigbee.dongle.zstack.internal.transaction.ZstackTransaction;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.transport.DeviceType;
 
@@ -85,7 +85,7 @@ public class ZstackNcp {
     /**
      * Flag to use the old (deprecated) config functions
      */
-    private boolean useOldCfgCalls = true;
+    private boolean useOldCfgCalls = false;
 
     /*
      * Startup options bitmap
@@ -116,9 +116,7 @@ public class ZstackNcp {
     public ZstackSysResetIndAreq resetNcp(ZstackResetType resetType) {
         ZstackSysResetReqAcmd request = new ZstackSysResetReqAcmd();
         request.setType(resetType);
-        ZstackTransaction transaction = protocolHandler
-                .sendTransaction(new ZstackSingleResponseTransaction(request, ZstackSysResetIndAreq.class));
-        ZstackSysResetIndAreq response = (ZstackSysResetIndAreq) transaction.getResponse();
+        ZstackSysResetIndAreq response = protocolHandler.sendTransaction(request, ZstackSysResetIndAreq.class);
         if (response == null) {
             logger.debug("No response from Reset command");
             return null;
@@ -136,9 +134,7 @@ public class ZstackNcp {
      */
     public Set<ZstackSystemCapabilities> pingNcp() {
         ZstackSysPingSreq request = new ZstackSysPingSreq();
-        ZstackTransaction transaction = protocolHandler
-                .sendTransaction(new ZstackSingleResponseTransaction(request, ZstackSysPingSrsp.class));
-        ZstackSysPingSrsp response = (ZstackSysPingSrsp) transaction.getResponse();
+        ZstackSysPingSrsp response = protocolHandler.sendTransaction(request, ZstackSysPingSrsp.class);
         if (response == null) {
             logger.debug("No response from Ping command");
             return Collections.emptySet();
@@ -164,10 +160,7 @@ public class ZstackNcp {
      * @return the {@link ZstackSysVersionSrsp}
      */
     public ZstackSysVersionSrsp getVersion() {
-        ZstackSysVersionSreq request = new ZstackSysVersionSreq();
-        ZstackTransaction transaction = protocolHandler
-                .sendTransaction(new ZstackSingleResponseTransaction(request, ZstackSysVersionSrsp.class));
-        ZstackSysVersionSrsp response = (ZstackSysVersionSrsp) transaction.getResponse();
+        ZstackSysVersionSrsp response = protocolHandler.sendTransaction(new ZstackSysVersionSreq(), ZstackSysVersionSrsp.class);
         if (response == null) {
             logger.debug("No response from Version command");
             return null;
@@ -177,16 +170,17 @@ public class ZstackNcp {
         return response;
     }
 
+    public ZstackZdoExtNwkInfoSrsp getNetworkInfo() {
+        return protocolHandler.sendTransaction(new ZstackZdoExtNwkInfoSreq(), ZstackZdoExtNwkInfoSrsp.class);
+    }
+
     /**
      * The command reads the device information from the NCP
      *
      * @return the {@link ZstackUtilGetDeviceInfoSrsp}
      */
     public ZstackUtilGetDeviceInfoSrsp getDeviceInfo() {
-        ZstackUtilGetDeviceInfoSreq request = new ZstackUtilGetDeviceInfoSreq();
-        ZstackTransaction transaction = protocolHandler
-                .sendTransaction(new ZstackSingleResponseTransaction(request, ZstackUtilGetDeviceInfoSrsp.class));
-        ZstackUtilGetDeviceInfoSrsp response = (ZstackUtilGetDeviceInfoSrsp) transaction.getResponse();
+        ZstackUtilGetDeviceInfoSrsp response = protocolHandler.sendTransaction(new ZstackUtilGetDeviceInfoSreq(), ZstackUtilGetDeviceInfoSrsp.class);
         if (response == null) {
             logger.debug("No response from DeviceInfo command");
             return null;
@@ -203,9 +197,7 @@ public class ZstackNcp {
      */
     public ZstackUtilGetNvInfoSrsp getNvDeviceInfo() {
         ZstackUtilGetNvInfoSreq request = new ZstackUtilGetNvInfoSreq();
-        ZstackTransaction transaction = protocolHandler
-                .sendTransaction(new ZstackSingleResponseTransaction(request, ZstackUtilGetNvInfoSrsp.class));
-        ZstackUtilGetNvInfoSrsp response = (ZstackUtilGetNvInfoSrsp) transaction.getResponse();
+        ZstackUtilGetNvInfoSrsp response = protocolHandler.sendTransaction(request, ZstackUtilGetNvInfoSrsp.class);
         if (response == null) {
             logger.debug("No response from NvInfo command");
             return null;
@@ -250,9 +242,7 @@ public class ZstackNcp {
     public Long getDiagnosticsAttribute(ZstackDiagnosticAttribute attributeId) {
         ZstackSysZdiagsGetStatsSreq request = new ZstackSysZdiagsGetStatsSreq();
         request.setAttributeID(attributeId);
-        ZstackTransaction transaction = protocolHandler
-                .sendTransaction(new ZstackSingleResponseTransaction(request, ZstackSysZdiagsGetStatsSrsp.class));
-        ZstackSysZdiagsGetStatsSrsp response = (ZstackSysZdiagsGetStatsSrsp) transaction.getResponse();
+        ZstackSysZdiagsGetStatsSrsp response = protocolHandler.sendTransaction(request, ZstackSysZdiagsGetStatsSrsp.class);
         if (response == null) {
             logger.debug("No response from GetDiagnostics command");
             return null;
@@ -306,9 +296,7 @@ public class ZstackNcp {
         if (useOldCfgCalls) {
             ZstackZbReadConfigurationSreq request = new ZstackZbReadConfigurationSreq();
             request.setConfigId(configId);
-            ZstackTransaction transaction = protocolHandler
-                    .sendTransaction(new ZstackSingleResponseTransaction(request, ZstackZbReadConfigurationSrsp.class));
-            ZstackZbReadConfigurationSrsp response = (ZstackZbReadConfigurationSrsp) transaction.getResponse();
+            ZstackZbReadConfigurationSrsp response = protocolHandler.sendTransaction(request, ZstackZbReadConfigurationSrsp.class);
             if (response == null) {
                 logger.debug("No response from ReadConfiguration command");
                 return null;
@@ -322,9 +310,7 @@ public class ZstackNcp {
         } else {
             ZstackSysOsalNvReadSreq request = new ZstackSysOsalNvReadSreq();
             request.setId(configId);
-            ZstackTransaction transaction = protocolHandler
-                    .sendTransaction(new ZstackSingleResponseTransaction(request, ZstackSysOsalNvReadSrsp.class));
-            ZstackSysOsalNvReadSrsp response = (ZstackSysOsalNvReadSrsp) transaction.getResponse();
+            ZstackSysOsalNvReadSrsp response = protocolHandler.sendTransaction(request, ZstackSysOsalNvReadSrsp.class);
             if (response == null) {
                 logger.debug("No response from ReadConfiguration command");
                 return null;
@@ -350,9 +336,7 @@ public class ZstackNcp {
             ZstackZbWriteConfigurationSreq request = new ZstackZbWriteConfigurationSreq();
             request.setConfigId(configId);
             request.setValue(value);
-            ZstackTransaction transaction = protocolHandler.sendTransaction(
-                    new ZstackSingleResponseTransaction(request, ZstackZbWriteConfigurationSrsp.class));
-            ZstackZbWriteConfigurationSrsp response = (ZstackZbWriteConfigurationSrsp) transaction.getResponse();
+            ZstackZbWriteConfigurationSrsp response = protocolHandler.sendTransaction(request, ZstackZbWriteConfigurationSrsp.class);
             if (response == null) {
                 logger.debug("No response from WriteConfiguration command");
                 return ZstackResponseCode.FAILURE;
@@ -363,9 +347,7 @@ public class ZstackNcp {
             ZstackSysOsalNvWriteSreq request = new ZstackSysOsalNvWriteSreq();
             request.setId(configId);
             request.setValue(value);
-            ZstackTransaction transaction = protocolHandler
-                    .sendTransaction(new ZstackSingleResponseTransaction(request, ZstackSysOsalNvWriteSrsp.class));
-            ZstackSysOsalNvWriteSrsp response = (ZstackSysOsalNvWriteSrsp) transaction.getResponse();
+            ZstackSysOsalNvWriteSrsp response = protocolHandler.sendTransaction(request, ZstackSysOsalNvWriteSrsp.class);
             if (response == null) {
                 logger.debug("No response from WriteConfiguration command");
                 return ZstackResponseCode.FAILURE;
@@ -465,9 +447,7 @@ public class ZstackNcp {
     public Integer setTxPower(int txPower) {
         ZstackSysSetTxPowerSreq request = new ZstackSysSetTxPowerSreq();
         request.setTxPower(txPower);
-        ZstackTransaction transaction = protocolHandler
-                .sendTransaction(new ZstackSingleResponseTransaction(request, ZstackSysSetTxPowerSrsp.class));
-        ZstackSysSetTxPowerSrsp response = (ZstackSysSetTxPowerSrsp) transaction.getResponse();
+        ZstackSysSetTxPowerSrsp response = protocolHandler.sendTransaction(request, ZstackSysSetTxPowerSrsp.class);
         if (response == null) {
             logger.debug("No response from SetTxPower command");
             return null;
@@ -486,9 +466,7 @@ public class ZstackNcp {
         // TODO: ZCD_NV_CHANLIST
         ZstackUtilSetChannelsSreq request = new ZstackUtilSetChannelsSreq();
         request.setChannels(channelMask.getChannelMask());
-        ZstackTransaction transaction = protocolHandler
-                .sendTransaction(new ZstackSingleResponseTransaction(request, ZstackUtilSetChannelsSrsp.class));
-        ZstackUtilSetChannelsSrsp response = (ZstackUtilSetChannelsSrsp) transaction.getResponse();
+        ZstackUtilSetChannelsSrsp response = protocolHandler.sendTransaction(request, ZstackUtilSetChannelsSrsp.class);
         if (response == null) {
             logger.debug("No response from SetChannels command");
             return ZstackResponseCode.FAILURE;
@@ -505,9 +483,7 @@ public class ZstackNcp {
     public ZstackResponseCode startupApplication() {
         ZstackZdoStartupFromAppSreq request = new ZstackZdoStartupFromAppSreq();
         request.setStartDelay(100);
-        ZstackTransaction transaction = protocolHandler
-                .sendTransaction(new ZstackSingleResponseTransaction(request, ZstackZdoStartupFromAppSrsp.class));
-        ZstackZdoStartupFromAppSrsp response = (ZstackZdoStartupFromAppSrsp) transaction.getResponse();
+        ZstackZdoStartupFromAppSrsp response = protocolHandler.sendTransaction(request, ZstackZdoStartupFromAppSrsp.class);
         if (response == null) {
             logger.debug("No response from startupApplication command");
             return ZstackResponseCode.FAILURE;
@@ -527,10 +503,7 @@ public class ZstackNcp {
     public ZstackResponseCode requireKeyExchange(boolean required) {
         ZstackAppCnfBdbSetTcRequireKeyExchangeSreq request = new ZstackAppCnfBdbSetTcRequireKeyExchangeSreq();
         request.setTrustCenterRequireKeyExchange(required);
-        ZstackTransaction transaction = protocolHandler.sendTransaction(
-                new ZstackSingleResponseTransaction(request, ZstackAppCnfBdbSetTcRequireKeyExchangeSrsp.class));
-        ZstackAppCnfBdbSetTcRequireKeyExchangeSrsp response = (ZstackAppCnfBdbSetTcRequireKeyExchangeSrsp) transaction
-                .getResponse();
+        ZstackAppCnfBdbSetTcRequireKeyExchangeSrsp response = protocolHandler.sendTransaction(request, ZstackAppCnfBdbSetTcRequireKeyExchangeSrsp.class);
         if (response == null) {
             logger.debug("No response from requireKeyExchange command");
             return ZstackResponseCode.FAILURE;
@@ -552,10 +525,7 @@ public class ZstackNcp {
         ZstackAppCnfBdbSetActiveDefaultCentralizedKeySreq request = new ZstackAppCnfBdbSetActiveDefaultCentralizedKeySreq();
         request.setCentralizedLinkKeyMode(mode);
         request.setInstallCode(installCode);
-        ZstackTransaction transaction = protocolHandler.sendTransaction(
-                new ZstackSingleResponseTransaction(request, ZstackAppCnfBdbSetActiveDefaultCentralizedKeySrsp.class));
-        ZstackAppCnfBdbSetActiveDefaultCentralizedKeySrsp response = (ZstackAppCnfBdbSetActiveDefaultCentralizedKeySrsp) transaction
-                .getResponse();
+        ZstackAppCnfBdbSetActiveDefaultCentralizedKeySrsp response = protocolHandler.sendTransaction(request, ZstackAppCnfBdbSetActiveDefaultCentralizedKeySrsp.class);
         if (response == null) {
             logger.debug("No response from setCentralisedKey command");
             return ZstackResponseCode.FAILURE;
@@ -575,10 +545,7 @@ public class ZstackNcp {
     public ZstackResponseCode allowRejoin(boolean allow) {
         ZstackAppCnfSetAllowrejoinTcPolicySreq request = new ZstackAppCnfSetAllowrejoinTcPolicySreq();
         request.setAllowRejoin(allow);
-        ZstackTransaction transaction = protocolHandler.sendTransaction(
-                new ZstackSingleResponseTransaction(request, ZstackAppCnfSetAllowrejoinTcPolicySrsp.class));
-        ZstackAppCnfSetAllowrejoinTcPolicySrsp response = (ZstackAppCnfSetAllowrejoinTcPolicySrsp) transaction
-                .getResponse();
+        ZstackAppCnfSetAllowrejoinTcPolicySrsp response = protocolHandler.sendTransaction(request, ZstackAppCnfSetAllowrejoinTcPolicySrsp.class);
         if (response == null) {
             logger.debug("No response from allowRejoin command");
             return ZstackResponseCode.FAILURE;
@@ -595,9 +562,7 @@ public class ZstackNcp {
     public ZstackResponseCode zdoRegisterCallback(int clusterId) {
         ZstackZdoMsgCbRegisterSreq request = new ZstackZdoMsgCbRegisterSreq();
         request.setClusterId(clusterId);
-        ZstackTransaction transaction = protocolHandler
-                .sendTransaction(new ZstackSingleResponseTransaction(request, ZstackZdoMsgCbRegisterSrsp.class));
-        ZstackZdoMsgCbRegisterSrsp response = (ZstackZdoMsgCbRegisterSrsp) transaction.getResponse();
+        ZstackZdoMsgCbRegisterSrsp response = protocolHandler.sendTransaction(request, ZstackZdoMsgCbRegisterSrsp.class);
         if (response == null) {
             logger.debug("No response from RegisterZdoCallback command");
             return ZstackResponseCode.FAILURE;
@@ -616,8 +581,7 @@ public class ZstackNcp {
      * @param outputClusters an array of output clusters supported by the endpoint
      * @return {@link ZstackResponseCode} returned from the NCP
      */
-    public ZstackResponseCode addEndpoint(int endpointId, int deviceId, int profileId, int[] inputClusters,
-            int[] outputClusters) {
+    public ZstackResponseCode addEndpoint(int endpointId, int deviceId, int profileId, int[] inputClusters, int[] outputClusters) {
         ZstackAfRegisterSreq request = new ZstackAfRegisterSreq();
         request.setEndPoint(endpointId);
         request.setAppDeviceId(deviceId);
@@ -627,9 +591,7 @@ public class ZstackNcp {
         request.setLatencyReq(0);
         request.setAppDevVer(0);
 
-        ZstackTransaction transaction = protocolHandler
-                .sendTransaction(new ZstackSingleResponseTransaction(request, ZstackAfRegisterSrsp.class));
-        ZstackAfRegisterSrsp response = (ZstackAfRegisterSrsp) transaction.getResponse();
+        ZstackAfRegisterSrsp response = protocolHandler.sendTransaction(request, ZstackAfRegisterSrsp.class);
         if (response == null) {
             logger.debug("No response from RegisterEndpoint command");
             return ZstackResponseCode.FAILURE;
@@ -651,9 +613,7 @@ public class ZstackNcp {
         request.setIeeeAddress(ieeeAddress);
         request.setInstallCode(key);
 
-        ZstackTransaction transaction = protocolHandler
-                .sendTransaction(new ZstackSingleResponseTransaction(request, ZstackAppCnfBdbAddInstallcodeSrsp.class));
-        ZstackAppCnfBdbAddInstallcodeSrsp response = (ZstackAppCnfBdbAddInstallcodeSrsp) transaction.getResponse();
+        ZstackAppCnfBdbAddInstallcodeSrsp response = protocolHandler.sendTransaction(request, ZstackAppCnfBdbAddInstallcodeSrsp.class);
         if (response == null) {
             logger.debug("No response from AddInstallCode command");
             return ZstackResponseCode.FAILURE;
@@ -673,5 +633,4 @@ public class ZstackNcp {
     private int[] valueFromUInt16(int value) {
         return new int[] { value & 0xFF, (value >> 8) & 0xFF };
     }
-
 }

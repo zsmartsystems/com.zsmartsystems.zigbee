@@ -46,6 +46,7 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilSetChannelsSrsp
 import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilSetPanidSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilSetPrecfgkeySrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilSetSeclevelSrsp;
+import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoExtNwkInfoSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoGetLinkKeySrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoLeaveIndAreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoMsgCbIncomingAreq;
@@ -197,6 +198,7 @@ public class ZstackFrameFactory {
         zstackFrameMap.put(ZSTACK_ZDO + ZDO_STARTUP_FROM_APP, ZstackZdoStartupFromAppSrsp.class);
         zstackFrameMap.put(ZSTACK_ZDO + ZDO_STATE_CHANGE_IND, ZstackZdoStateChangeIndAreq.class);
         zstackFrameMap.put(ZSTACK_ZDO + ZDO_TC_DEV_IND, ZstackZdoTcDevIndAreq.class);
+        zstackFrameMap.put(ZSTACK_ZDO + 0x50, ZstackZdoExtNwkInfoSrsp.class);
     }
 
     /**
