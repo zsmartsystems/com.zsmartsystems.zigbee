@@ -345,6 +345,43 @@
 	</command>
 
 	<command>
+		<name>getExtendedValue</name>
+		<id>0x0003</id>
+		<description>Reads a value from the NCP but passes an extra argument specific to the value being retrieved.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>EzspExtendedValueId</data_type>
+				<name>valueId</name>
+				<description>Identifies which extended value ID to read.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint32_t</data_type>
+				<name>characteristics</name>
+				<description>Identifies which characteristics of the extended value ID to read. These are specific to the value being read.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EzspStatus</data_type>
+				<name>status</name>
+				<description>EZSP_SUCCESS if the value was read successfully, EZSP_ERROR_INVALID_ID if the NCP does not recognize valueId.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>valueLength</name>
+				<description>Both a command and response parameter. On command, the maximum size in bytes of local storage allocated to receive the returned value. On response, the actual length in bytes of the returned value.</description>
+				<auto_size>value</auto_size>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t[]</data_type>
+				<name>value</name>
+				<description>The value.</description>
+				<display>hex[2]</display>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
 		<name>setValue</name>
 		<id>0xAB</id>
 		<description>Writes a value to the NCP.</description>
@@ -533,28 +570,51 @@
 	</command>
 
 	<command>
-		<name>changeSourceRouteHandler</name>
-		<id>0xC4</id>
-		<description>Change the source route entry in a source route table.</description>
+		<name>getMulticastTableEntry</name>
+		<id>0x63</id>
+		<description>Gets an entry from the multicast table.</description>
 		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>index</name>
+				<description>The index of a multicast table entry.</description>
+			</parameter>
 		</command_parameters>
 		<response_parameters>
 			<parameter>
-				<data_type>EmberNodeId</data_type>
-				<name>newChildId</name>
-				<description>The source/neighbor for which the source route entry is changed.</description>
-				<display>hex[4]</display>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>An EmberStatus value indicating success or the reason for failure.</description>
 			</parameter>
 			<parameter>
-				<data_type>EmberNodeId</data_type>
-				<name>newParentId</name>
-				<description>The parent of the source/neighbor for which the source route entry is changed.</description>
-				<display>hex[4]</display>
+				<data_type>EmberMulticastTableEntry</data_type>
+				<name>value</name>
+				<description>The contents of the multicast entry.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>setMulticastTableEntry</name>
+		<id>0x64</id>
+		<description>Sets an entry in the multicast table.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>index</name>
+				<description>The index of a multicast table entry</description>
 			</parameter>
 			<parameter>
-				<data_type>bool</data_type>
-				<name>ourChild</name>
-				<description>Is the source our child?</description>
+				<data_type>EmberMulticastTableEntry</data_type>
+				<name>value</name>
+				<description>The contents of the multicast entry.</description>
+			</parameter>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>An EmberStatus value indicating success or the reason for failure.</description>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -1947,7 +2007,7 @@
 	<command>
 		<name>setSourceRoute</name>
 		<id>0x5A</id>
-		<description>Supply a source route for the next outgoing message.</description>
+		<description>Supply a source route for the next outgoing message. [Deprecated]</description>
 		<command_parameters>
 			<parameter>
 				<data_type>EmberNodeId</data_type>
@@ -1973,6 +2033,112 @@
 				<data_type>EmberStatus</data_type>
 				<name>status</name>
 				<description>EMBER_SUCCESS if the source route was successfully stored, and EMBER_NO_BUFFERS otherwise.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>addressTableEntryIsActive</name>
+		<id>0x5B</id>
+		<description>Indicates whether any messages are currently being sent using this address table entry. Note that this function does not indicate whether the address table entry is unused. To determine whether an address table entry is unused, check the remote node ID. The remote node ID will have the value EMBER_TABLE_ENTRY_UNUSED_NODE_ID when the address table entry is not in use.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>addressTableIndex</name>
+				<description>The index of an address table entry.</description>
+			</parameter>
+        </command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>bool</data_type>
+				<name>active</name>
+				<description>True if the address table entry is active, false otherwise.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+
+	<command>
+		<name>setAddressTableRemoteEui64</name>
+		<id>0x5C</id>
+		<description>Sets the EUI64 of an address table entry. This function will also check other address table entries, the child table and the neighbor table to see if the node ID for the given EUI64 is already known. If known then this function will also set node ID. If not known it will set the node ID to EMBER_UNKNOWN_NODE_ID.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>addressTableIndex</name>
+				<description>The index of an address table entry.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberEUI64</data_type>
+				<name>eui64</name>
+				<description>The EUI64 to use for the address table entry.</description>
+			</parameter>
+        </command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberStatus</data_type>
+				<name>status</name>
+				<description>EMBER_SUCCESS if the EUI64 was successfully set, and EMBER_ADDRESS_TABLE_ENTRY_IS_ACTIVE otherwise.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>setAddressTableRemoteNodeId</name>
+		<id>0x5D</id>
+		<description>Sets the short ID of an address table entry. Usually the application will not need to set the short ID in the address table. Once the remote EUI64 is set the stack is capable of figuring out the short ID on its own. However, in cases where the application does set the short ID, the application must set the remote EUI64 prior to setting the short ID.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>addressTableIndex</name>
+				<description>The index of an address table entry.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>nodeId</name>
+				<description>The short ID corresponding to the remote node whose EUI64 is stored in the address table at the given index or EMBER_TABLE_ENTRY_UNUSED_NODE_ID which indicates that the entry stored in the address table at the given index is not in use.</description>
+				<display>hex[4]</display>
+			</parameter>
+		</command_parameters>
+	</command>
+
+	<command>
+		<name>getAddressTableRemoteEui64</name>
+		<id>0x5E</id>
+		<description>Gets the EUI64 of an address table entry.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>addressTableIndex</name>
+				<description>The index of an address table entry.</description>
+			</parameter>
+        </command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberEUI64</data_type>
+				<name>eui64</name>
+				<description>The EUI64 of the address table entry is copied to this location.</description>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
+		<name>getAddressTableRemoteNodeId</name>
+		<id>0x5F</id>
+		<description>Gets the short ID of an address table entry.</description>
+		<command_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>addressTableIndex</name>
+				<description>The index of an address table entry.</description>
+			</parameter>
+        </command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>nodeId</name>
+				<description>One of the following: The short ID corresponding to the remote node whose EUI64 is stored in the address table at the given index. EMBER_UNKNOWN_NODE_ID - Indicates that the EUI64 stored in the address table at the given index is valid but the short ID is currently unknown. EMBER_DISCOVERY_ACTIVE_NODE_ID - Indicates that the EUI64 stored in the address table at the given location is valid and network address discovery is underway. EMBER_TABLE_ENTRY_UNUSED_NODE_ID - Indicates that the entry stored in the address table at the given index is not in use.</description>
+				<display>hex[4]</display>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -2028,6 +2194,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>destination</name>
 				<description>The node ID of the destination in that entry.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint8_t</data_type>
@@ -2152,26 +2319,6 @@
 				<name>target</name>
 				<description>The short id of the remote node.</description>
 				<display>hex[4]</display>
-			</parameter>
-		</response_parameters>
-	</command>
-
-	<command>
-		<name>getAddressTableRemoteEui64</name>
-		<id>0x5E</id>
-		<description>Gets the EUI64 of an address table entry.</description>
-		<command_parameters>
-			<parameter>
-				<data_type>uint8_t</data_type>
-				<name>addressTableIndex</name>
-				<description>The index of an address table entry.</description>
-			</parameter>
-		</command_parameters>
-		<response_parameters>
-			<parameter>
-				<data_type>EmberEUI64</data_type>
-				<name>eui64</name>
-				<description>The EUI64 of the address table entry is copied to this location.</description>
 			</parameter>
 		</response_parameters>
 	</command>
@@ -2432,7 +2579,7 @@
 				<description>This is the IEEE address of the partner that the device successfully established a key with. This value is all zeros on a failure.</description>
 			</parameter>
 			<parameter>
-				<data_type>EmberStatus</data_type>
+				<data_type>EmberKeyStatus</data_type>
 				<name>status</name>
 				<description>This is the status indicating what was established or why the key establishment failed.</description>
 			</parameter>
@@ -3187,9 +3334,9 @@
 				<description>Whether the incoming GPDF had the auto-commissioning bit set.</description>
 			</parameter>
 			<parameter>
-				<data_type>bool</data_type>
-				<name>rxAfterTx</name>
-				<description>Whether the incoming GPDF had the rxAfterTx bit set.</description>
+				<data_type>uint8_t</data_type>
+				<name>bidirectionalInfo</name>
+				<description>Bidirectional information represented in bitfields, where bit0 holds the rxAfterTx of incoming gpdf and bit1 holds if tx queue is available for outgoing gpdf.</description>
 			</parameter>
 			<parameter>
 				<data_type>uint32_t</data_type>
@@ -4284,6 +4431,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>sender</name>
 				<description>The sender of the received beacon.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>bool</data_type>
@@ -4325,15 +4473,11 @@
 		<description>A GP address structure.</description>
 		<parameters>
 			<parameter>
-				<data_type>EmberEUI64</data_type>
-				<name>gpdIeeeAddress</name>
-				<description>The GPD's EUI64.</description>
-			</parameter>
-			<parameter>
-				<data_type>uint32_t</data_type>
-				<name>sourceId</name>
-				<description>The GPD's source ID.</description>
-				<display>hex[8]</display>
+				<data_type>uint8_t[8]</data_type>
+				<name>gpdSource</name>
+				<description>The GPD's EUI64. The IEEE address is used when the application identifier is EMBER_GP_APPLICATION_IEEE_ADDRESS.</description>
+				<description>The GPD's source ID. The 32-bit source identifier is used when the application identifier is EMBER_GP_APPLICATION_SOURCE_ID.</description>
+				<display>hex[2]</display>
 			</parameter>
 			<parameter>
 				<data_type>EmberGpApplicationId</data_type>
@@ -4491,6 +4635,29 @@
 				<data_type>EmberKeyData</data_type>
 				<name>gpdKey</name>
 				<description>The key to use for GPD.</description>
+			</parameter>
+		</parameters>
+	</structure>
+	
+	<structure>
+		<name>EmberMulticastTableEntry</name>
+		<description>A multicast table entry indicates that a particular endpoint is a member of a particular multicast group. Only devices with an endpoint in a multicast group will receive messages sent to that multicast group.</description>
+		<parameters>
+			<parameter>
+				<data_type>EmberMulticastId</data_type>
+				<name>multicastId</name>
+				<description>The multicast group ID.</description>
+				<display>hex[4]</display>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>endpoint</name>
+				<description>The endpoint that is a member, or 0 if this entry is not in use (the ZDO is not a member of any multicast groups.)</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>networkIndex</name>
+				<description>The network index of the network the entry is related to.</description>
 			</parameter>
 		</parameters>
 	</structure>
@@ -5519,6 +5686,11 @@
 				<enum_value>0x38</enum_value>
 				<description>The length of time, in seconds, that a trust center will allow a Trust Center (insecure) rejoin for a device that is using the well-known link key. This timeout takes effect once rejoins using the well-known key has been allowed. This command updates the emAllowTcRejoinsUsingWellKnownKeyTimeoutSec value.</description>
 			</value>
+			<value>
+				<name>EZSP_CONFIG_CTUNE_VALUE</name>
+				<enum_value>0x39</enum_value>
+				<description>Valid range of a CTUNE value is 0x0000-0x01FF. Higher order bits (0xFE00) of the 16-bit value are ignored.</description>
+			</value>
 		</values>
 	</enum>
 
@@ -5917,6 +6089,16 @@
 				<description>The local PAN ID has changed. The application can obtain the new PAN ID by calling emberGetPanId().</description>
 			</value>
 			<value>
+				<name>EMBER_NETWORK_OPENED</name>
+				<enum_value>0x009C</enum_value>
+				<description>The network has been opened for joining.</description>
+			</value>
+			<value>
+				<name>EMBER_NETWORK_CLOSED</name>
+				<enum_value>0x009D</enum_value>
+				<description>The network has been closed for joining.</description>
+			</value>
+			<value>
 				<name>EMBER_NO_BEACONS</name>
 				<enum_value>0x00AB</enum_value>
 				<description>An attempt to join or rejoin the network failed because no router beacons could be heard by the joining node.</description>
@@ -5979,7 +6161,7 @@
 			<value>
 				<name>EMBER_TRUST_CENTER_MASTER_KEY_NOT_SET</name>
 				<enum_value>0x00A7</enum_value>
-				<description> There was an attempt to form a network using commercial security without setting the Trust Center master key first.</description>
+				<description>There was an attempt to form a network using commercial security without setting the Trust Center master key first.</description>
 			</value>
 			<value>
 				<name>EMBER_SECURITY_STATE_NOT_SET</name>
@@ -7322,9 +7504,61 @@
 				<enum_value>0x3D</enum_value>
 				<description>When scanning, configure the maximum number of beacons to store in cache. Each beacon consumes one packet buffer in RAM.</description>
 			</value>
+			<value>
+				<name>EZSP_VALUE_END_DEVICE_TIMEOUT_OPTIONS_MASK</name>
+				<enum_value>0x3E</enum_value>
+				<description>Set the mask to filter out unacceptable child timeout options on a router.</description>
+			</value>
+			<value>
+				<name>EZSP_VALUE_END_DEVICE_KEEP_ALIVE_SUPPORT_MODE</name>
+				<enum_value>0x3F</enum_value>
+				<description>The end device keep-alive mode supported by the parent.</description>
+			</value>
+			<value>
+				<name>EZSP_VALUE_GPIO_RADIO_POWER_MASK</name>
+				<enum_value>0x40</enum_value>
+				<description>Sets the mask that controls which pins will have their GPIO configuration and output values set to their power-up and power-down values when the NCP powers the radio up and down.</description>
+			</value>
+			<value>
+				<name>EZSP_VALUE_ACTIVE_RADIO_CONFIG</name>
+				<enum_value>0x41</enum_value>
+				<description>Return the active radio config. Read only. Values are 0: Default, 1: Antenna Diversity, 2: Co-Existence, 3: Antenna diversity and Co-Existence.</description>
+			</value>
+			<value>
+				<name>EZSP_VALUE_NWK_OPEN_DURATION</name>
+				<enum_value>0x42</enum_value>
+				<description>Return the number of seconds the network will remain open. A return value of 0 indicates that the network is closed. Read only.</description>
+			</value>
+			<value>
+				<name>EZSP_VALUE_TRANSIENT_DEVICE_TIMEOUT</name>
+				<enum_value>0x43</enum_value>
+				<description>Timeout in milliseconds to store entries in the transient device table. If the devices are not authenticated before the timeout, the entry shall be purged</description>
+			</value>
 		</values>
 	</enum>
 
+	<enum>
+		<name>EzspExtendedValueId</name>
+		<description>GP proxy table entry status.</description>
+		<values>
+			<value>
+				<name>EZSP_EXTENDED_VALUE_ENDPOINT_FLAGS</name>
+				<enum_value>0x00</enum_value>
+				<description>The flags field associated with the specified endpoint.</description>
+			</value>
+			<value>
+				<name>EZSP_EXTENDED_VALUE_LAST_LEAVE_REASON</name>
+				<enum_value>0x01</enum_value>
+				<description>This is the reason for the node to leave the network as well as the device that told it to leave. The leave reason is the 1st byte of the value while the node ID is the 2nd and 3rd byte. If the leave was caused due to an API call rather than an over the air message, the node ID will be EMBER_UNKNOWN_NODE_ID (0xFFFD).</description>
+			</value>
+			<value>
+				<name>EZSP_EXTENDED_VALUE_GET_SOURCE_ROUTE_OVERHEAD</name>
+				<enum_value>0x02</enum_value>
+				<description>This number of bytes of overhead required in the network frame for source routing to a particular destination.</description>
+			</value>
+		</values>
+	</enum>
+	
 	<enum>
 		<name>EmberGpProxyTableEntryStatus</name>
 		<description>GP proxy table entry status.</description>
@@ -7567,6 +7801,32 @@
 			</value>
 		</values>
 	</enum>
+	<enum>
+		<name>EmberAddressConstants</name>
+		<description>Constants used in Ember API address and table management</description>
+		<values>
+			<value>
+				<name>EMBER_TABLE_ENTRY_UNUSED_NODE_ID</name>
+				<enum_value>0xFFFF</enum_value>
+				<description>A distinguished network ID that will never be assigned to any node.</description>
+			</value>
+			<value>
+				<name>EMBER_MULTICAST_NODE_ID</name>
+				<enum_value>0xFFFE</enum_value>
+				<description>A distinguished network ID that will never be assigned to any node. This value is returned when getting the remote node ID from the binding table and the given binding table index refers to a multicast binding entry.</description>
+			</value>
+			<value>
+				<name>EMBER_UNKNOWN_NODE_ID</name>
+				<enum_value>0xFFFD</enum_value>
+				<description>A distinguished network ID that will never be assigned to any node. This value is used when getting the remote node ID from the address or binding tables. It indicates that the address or binding table entry is currently in use but the node ID corresponding to the EUI64 in the table is currently unknown.</description>
+			</value>
+			<value>
+				<name>EMBER_DISCOVERY_ACTIVE_NODE_ID</name>
+				<enum_value>0xFFFC</enum_value>
+				<description>A distinguished network ID that will never be assigned to any node. This value is used when getting the remote node ID from the address or binding tables. It indicates that the address or binding table entry is currently in use and network address discovery is underway.</description>
+			</value>
+		</values>
+	</enum>
 
 
 <!-- Note that this definition is not defined by Silabs, but is added here for convenience -->
@@ -7578,6 +7838,7 @@
 				<data_type>EmberNodeId</data_type>
 				<name>destination</name>
 				<description>The node ID of the destination in that entry.</description>
+				<display>hex[4]</display>
 			</parameter>
 			<parameter>
 				<data_type>uint8_t</data_type>

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -36,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
 public class ZclWindowCoveringCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -177,14 +177,14 @@ public class ZclWindowCoveringCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeClientAttributes();
 
         return attributeMap;
     }
 
     @Override
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeServerAttributes();
 
         attributeMap.put(ATTR_WINDOWCOVERINGTYPE, new ZclAttribute(this, ATTR_WINDOWCOVERINGTYPE, "Window Covering Type", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
         attributeMap.put(ATTR_PHYSICALCLOSEDLIMITLIFT, new ZclAttribute(this, ATTR_PHYSICALCLOSEDLIMITLIFT, "Physical Closed Limit - Lift", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, false, false));
@@ -252,8 +252,8 @@ public class ZclWindowCoveringCluster extends ZclCluster {
      * @param command the {@link ZclWindowCoveringCommand} to which the response is being sent
      * @param response the {@link ZclWindowCoveringCommand} to send
      */
-    public void sendResponse(ZclWindowCoveringCommand command, ZclWindowCoveringCommand response) {
-        super.sendResponse(command, response);
+    public Future<CommandResult> sendResponse(ZclWindowCoveringCommand command, ZclWindowCoveringCommand response) {
+        return super.sendResponse(command, response);
     }
 
     /**

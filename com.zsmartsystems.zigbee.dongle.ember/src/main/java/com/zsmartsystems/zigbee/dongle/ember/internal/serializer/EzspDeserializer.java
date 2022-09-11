@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -39,11 +39,13 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurity
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberJoinDecision;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberJoinMethod;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyStruct;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyStructBitmask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberLibraryStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberMacPassthroughType;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberMulticastTableEntry;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNeighborTableEntry;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus;
@@ -212,6 +214,17 @@ public class EzspDeserializer {
 
     public EmberApsFrame deserializeEmberApsFrame() {
         return new EmberApsFrame(this);
+    }
+
+    public EmberMulticastTableEntry deserializeEmberMulticastTableEntry() {
+        // Some version of the protocol don't send the last uint8 field (networkIndex)
+        // So in order to avoid overflow we need to pad the array
+        if (buffer.length - position < 4) {
+            int[] fixedBuffer = new int[buffer.length + 1];
+            System.arraycopy(buffer, 0, fixedBuffer, 0, buffer.length);
+            buffer = fixedBuffer;
+        }
+        return new EmberMulticastTableEntry(this);
     }
 
     public Set<EmberApsOption> deserializeEmberApsOption() {
@@ -395,5 +408,9 @@ public class EzspDeserializer {
 
     public EmberBeaconData deserializeEmberBeaconData() {
         return new EmberBeaconData(this);
+    }
+
+    public EmberKeyStatus deserializeEmberKeyStatus() {
+        return EmberKeyStatus.getEmberKeyStatus(deserializeUInt8());
     }
 }

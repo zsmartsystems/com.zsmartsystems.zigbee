@@ -5,10 +5,7 @@
 # This file contains test definitions for the ZDO commands
 
 ZigBeeApsFrame [sourceAddress=0000/0, destinationAddress=0000/0, profile=0000, cluster=8031, addressMode=null, radius=0, apsSecurity=false, apsCounter=22, payload=00 00 16 12 03 8F 39 65 98 FE E6 CF 6D 0B 28 09 00 00 26 18 84 C7 6D 25 01 02 18 8F 39 65 98 FE E6 CF 6D 0A 09 0B 00 00 26 18 84 8F 9D 25 01 02 18 8F 39 65 98 FE E6 CF 6D EE CD 00 12 00 6F 0D 00 00 00 24 01 02 2A]
-ManagementLqiResponse [0000/0 -> 0000/0, cluster=8031, TID=22, status=SUCCESS, neighborTableEntries=22, startIndex=18, neighborTableList=[NeighborTable [extendedPanId=6DCFE6FE9865398F, extendedAddress=841826000009280B, networkAddress=28103, deviceType=ROUTER, rxOnWhenIdle=RX_ON, relationship=SIBLING, permitJoining=ENABLED, depth=2, lqi=24], NeighborTable [extendedPanId=6DCFE6FE9865398F, extendedAddress=84182600000B090A, networkAddress=40335, deviceType=ROUTER, rxOnWhenIdle=RX_ON, relationship=SIBLING, permitJoining=ENABLED, depth=2, lqi=24], NeighborTable [extendedPanId=6DCFE6FE9865398F, extendedAddress=000D6F001200CDEE, networkAddress=0, deviceType=COORDINATOR, rxOnWhenIdle=RX_ON, relationship=SIBLING, permitJoining=ENABLED, depth=2, lqi=42]]]
-
-ZigBeeApsFrame [sourceAddress=0000/0, destinationAddress=0000/0, profile=0000, cluster=0021, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=3E, payload=00 0A 09 0B 00 00 26 18 84 03 06 00 03 EE CD 00 12 00 6F 0D 00 01]
-BindRequest [0000/0 -> 0000/3, cluster=0021, TID=3E, srcAddress=84182600000B090A, srcEndpoint=3, bindCluster=6, dstAddrMode=3, dstAddress=000D6F001200CDEE, dstEndpoint=1]
+ManagementLqiResponse [0000/0 -> 0000/0, cluster=8031, TID=22, status=SUCCESS, neighborTableEntries=22, startIndex=18, neighborTableList=[NeighborTable [extendedPanId=6DCFE6FE9865398F, extendedAddress=841826000009280B, networkAddress=6DC7, deviceType=ROUTER, rxOnWhenIdle=RX_ON, relationship=SIBLING, permitJoining=ENABLED, depth=2, lqi=24], NeighborTable [extendedPanId=6DCFE6FE9865398F, extendedAddress=84182600000B090A, networkAddress=9D8F, deviceType=ROUTER, rxOnWhenIdle=RX_ON, relationship=SIBLING, permitJoining=ENABLED, depth=2, lqi=24], NeighborTable [extendedPanId=6DCFE6FE9865398F, extendedAddress=000D6F001200CDEE, networkAddress=0000, deviceType=COORDINATOR, rxOnWhenIdle=RX_ON, relationship=SIBLING, permitJoining=ENABLED, depth=2, lqi=42]]]
 
 ZigBeeApsFrame [sourceAddress=0000/0, destinationAddress=0000/0, profile=0000, cluster=0032, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=91, payload=00 00]
 ManagementRoutingRequest [0000/0 -> 0000/0, cluster=0032, TID=91, startIndex=0]
@@ -57,8 +54,11 @@ NetworkAddressRequest [0000/0 -> 0000/0, cluster=0000, TID=1F, ieeeAddr=7CB03EAA
 #ZigBeeApsFrame [sourceAddress=0000/0, destinationAddress=0000/0, profile=0000, cluster=8000, addressMode=DEVICE, radius=0, apsSecurity=false, apsCounter=00, payload=00 00 43 1D A5 00 AA 3E B0 7C 1B 7A]
 #NetworkAddressResponse [0000/0 -> 0000/0, cluster=8000, TID=NULL, status=SUCCESS, ieeeAddrRemoteDev=7CB03EAA00A51D43, nwkAddrRemoteDev=31259, startIndex=null, nwkAddrAssocDevList=[]]
 
-ZigBeeApsFrame [sourceAddress=0000/0, destinationAddress=0000/0, profile=0000, cluster=0021, addressMode=DEVICE, radius=31, sequence=44, payload=00 D1 A0 00 01 00 97 6D 28 01 04 0B 03 49 58 D2 0E 00 6F 0D 00 01]
-BindRequest [0000/0 -> 0000/0, cluster=0021, TID=2C, srcAddress=286D97000100A0D1, srcEndpoint=1, bindCluster=2820, dstAddrMode=3, dstAddress=000D6F000ED25849, dstEndpoint=1]
+#ZigBeeApsFrame [sourceAddress=0000/0, destinationAddress=0000/0, profile=0000, cluster=0021, addressMode=DEVICE, radius=31, apsSecurity=false, apsCounter=3E, payload=00 0A 09 0B 00 00 26 18 84 03 06 00 03 EE CD 00 12 00 6F 0D 00 01]
+#BindRequest [0000/0 -> 0000/0, cluster=0021, TID=00, bindingTableEntry=BindingTable [srcAddr=84182600000B090A/3, dstAddr=000D6F001200CDEE/1, clusterId=0006]]
+
+#ZigBeeApsFrame [sourceAddress=0000/0, destinationAddress=0000/0, profile=0000, cluster=0021, addressMode=DEVICE, radius=31, sequence=44, payload=00 D1 A0 00 01 00 97 6D 28 01 04 0B 03 49 58 D2 0E 00 6F 0D 00 01]
+#BindRequest [0000/0 -> 0000/0, cluster=0021, TID=00, bindingTableEntry=BindingTable [srcAddr=84182600000B090A/3, dstAddr=000D6F001200CDEE/1, clusterId=0006]]
 
 ZigBeeApsFrame [sourceAddress=0000/0, destinationAddress=0000/0, profile=0000, cluster=8021, addressMode=DEVICE, radius=0, sequence=0, payload=00 00]
 BindResponse [0000/0 -> 0000/0, cluster=8021, TID=NULL, status=SUCCESS]

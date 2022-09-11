@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -11,10 +11,24 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+
 import org.junit.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
+import com.zsmartsystems.zigbee.CommandResult;
+import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclGroupsCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.groups.AddGroupResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.groups.RemoveGroupResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.groups.ZclGroupsCommand;
 
 /**
  * Tests for {@link ZigBeeGroup}
@@ -67,4 +81,82 @@ public class ZigBeeGroupTest {
         group.setGroupId(0xfff8);
     }
 
+    @Test
+    public void addMember() throws InterruptedException, ExecutionException {
+        ZigBeeNetworkManager networkManager = Mockito.mock(ZigBeeNetworkManager.class);
+
+        ZigBeeGroup group = new ZigBeeGroup(networkManager, 1);
+        ZigBeeEndpoint endpoint = Mockito.mock(ZigBeeEndpoint.class);
+
+        IeeeAddress ieeeAddress = new IeeeAddress("1234567890ABCDEF");
+        Mockito.when(endpoint.getIeeeAddress()).thenReturn(ieeeAddress);
+        Mockito.when(endpoint.getEndpointId()).thenReturn(1);
+        assertEquals(ZigBeeStatus.UNSUPPORTED, group.addMember(endpoint));
+
+        ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
+        Mockito.when(node.getEndpoint(1)).thenReturn(endpoint);
+        Mockito.when(networkManager.getNode(ieeeAddress)).thenReturn(node);
+
+        ZclGroupsCluster cluster = Mockito.mock(ZclGroupsCluster.class);
+        Mockito.when(endpoint.getInputCluster(ZclGroupsCluster.CLUSTER_ID)).thenReturn(cluster);
+
+        Future future = Mockito.mock(Future.class);
+        CommandResult response = Mockito.mock(CommandResult.class);
+
+        AddGroupResponse addGroupResponse = Mockito.mock(AddGroupResponse.class);
+        Mockito.when(addGroupResponse.getStatus()).thenReturn(ZclStatus.SUCCESS);
+        Mockito.when(response.getResponse()).thenReturn(addGroupResponse);
+
+        Mockito.when(cluster.sendCommand(ArgumentMatchers.any(ZclGroupsCommand.class))).thenReturn(future);
+        Mockito.when(future.get()).thenReturn(response);
+
+        Mockito.when(response.isError()).thenReturn(true);
+        Mockito.when(addGroupResponse.getStatus()).thenReturn(ZclStatus.ABORT);
+        assertEquals(ZigBeeStatus.FAILURE, group.addMember(endpoint));
+
+        Mockito.when(response.isError()).thenReturn(false);
+        Mockito.when(addGroupResponse.getStatus()).thenReturn(ZclStatus.ABORT);
+        assertEquals(ZigBeeStatus.FAILURE, group.addMember(endpoint));
+
+        Mockito.when(addGroupResponse.getStatus()).thenReturn(ZclStatus.INSUFFICIENT_SPACE);
+        assertEquals(ZigBeeStatus.NO_RESOURCES, group.addMember(endpoint));
+    }
+
+    @Test
+    public void removeMember() throws InterruptedException, ExecutionException {
+        ZigBeeNetworkManager networkManager = Mockito.mock(ZigBeeNetworkManager.class);
+
+        ZigBeeGroup group = new ZigBeeGroup(networkManager, 1);
+        ZigBeeEndpoint endpoint = Mockito.mock(ZigBeeEndpoint.class);
+
+        IeeeAddress ieeeAddress = new IeeeAddress("1234567890ABCDEF");
+        Mockito.when(endpoint.getIeeeAddress()).thenReturn(ieeeAddress);
+        Mockito.when(endpoint.getEndpointId()).thenReturn(1);
+        assertEquals(ZigBeeStatus.UNSUPPORTED, group.removeMember(endpoint));
+
+        ZigBeeNode node = Mockito.mock(ZigBeeNode.class);
+        Mockito.when(node.getEndpoint(1)).thenReturn(endpoint);
+        Mockito.when(networkManager.getNode(ieeeAddress)).thenReturn(node);
+
+        ZclGroupsCluster cluster = Mockito.mock(ZclGroupsCluster.class);
+        Mockito.when(endpoint.getInputCluster(ZclGroupsCluster.CLUSTER_ID)).thenReturn(cluster);
+
+        Future future = Mockito.mock(Future.class);
+        CommandResult response = Mockito.mock(CommandResult.class);
+
+        RemoveGroupResponse removeGroupResponse = Mockito.mock(RemoveGroupResponse.class);
+        Mockito.when(removeGroupResponse.getStatus()).thenReturn(ZclStatus.SUCCESS);
+        Mockito.when(response.getResponse()).thenReturn(removeGroupResponse);
+
+        Mockito.when(response.getStatusCode()).thenReturn(0);
+
+        Mockito.when(cluster.sendCommand(ArgumentMatchers.any(ZclGroupsCommand.class))).thenReturn(future);
+        Mockito.when(future.get()).thenReturn(response);
+
+        assertEquals(ZigBeeStatus.SUCCESS, group.removeMember(endpoint));
+
+        Mockito.when(response.isError()).thenReturn(true);
+        Mockito.when(response.getStatusCode()).thenReturn(99);
+        assertEquals(ZigBeeStatus.FAILURE, group.removeMember(endpoint));
+    }
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -18,6 +18,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
@@ -34,6 +35,7 @@ import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
+import com.zsmartsystems.zigbee.ZigBeeGroupAddress;
 import com.zsmartsystems.zigbee.database.ZclAttributeDao;
 import com.zsmartsystems.zigbee.database.ZclClusterDao;
 import com.zsmartsystems.zigbee.internal.NotificationService;
@@ -72,6 +74,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.command.BindRequest;
 import com.zsmartsystems.zigbee.zdo.command.UnbindRequest;
+import com.zsmartsystems.zigbee.zdo.field.BindingTable;
 
 /**
  * Base class for the ZCL Cluster
@@ -84,6 +87,24 @@ public abstract class ZclCluster {
      * The logger
      */
     private Logger logger = LoggerFactory.getLogger(ZclCluster.class);
+
+    /**
+     * The ClusterRevision global attribute is mandatory for all cluster instances, client
+     * and server, conforming to ZCL revision 6 (ZCL6) and later ZCL revisions. This cluster
+     * attribute represents the revision of the cluster specification that has been
+     * implemented. An implementation of a cluster specification before ZCL6 shall have an
+     * assumed cluster revision of 0. The initial value for the ClusterRevision attribute
+     * shall be 1. The ClusterRevision attribute shall be incremented and associated with
+     * each approved revision and release of a cluster specification.
+     */
+    public static final int ATTR_CLUSTERREVISION = 0xFFFD;
+    /**
+     * When reporting requires sending multiple Report Attributes commands, this attribute
+     * should be included in the last attribute record, to indicate that all required
+     * attributes have been reported, or that there are still attributes pending to be
+     * reported
+     */
+    public static final int ATTR_ATTRIBUTEREPORTINGSTATUS = 0xFFFE;
 
     /**
      * The {@link ZigBeeEndpoint} to which this cluster belongs
@@ -177,6 +198,11 @@ public abstract class ZclCluster {
     private static Set<Class<? extends ZclCommand>> supportedGenericCommands = new HashSet<>();
 
     /**
+     * The manufacturer specific code, or null if this is not a manufacturer specific cluster
+     */
+    protected Integer manufacturerCode;
+
+    /**
      * The {@link ZclAttributeNormalizer} is used to normalize attribute data types to ensure that data types are
      * consistent with the ZCL definition. This ensures that the application can rely on consistent and deterministic
      * data type when listening to attribute updates.
@@ -232,7 +258,16 @@ public abstract class ZclCluster {
      *
      * @return a {@link Map} of all attributes this cluster is known to support
      */
-    protected abstract Map<Integer, ZclAttribute> initializeClientAttributes();
+    protected Map<Integer, ZclAttribute> initializeClientAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+
+        attributeMap.put(ATTR_CLUSTERREVISION, new ZclAttribute(this, ATTR_CLUSTERREVISION, "Cluster Revision",
+                ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_ATTRIBUTEREPORTINGSTATUS, new ZclAttribute(this, ATTR_ATTRIBUTEREPORTINGSTATUS,
+                "Attribute Reporting Status", ZclDataType.ENUMERATION_16_BIT, true, true, false, false));
+
+        return attributeMap;
+    }
 
     /**
      * Abstract method called when the cluster starts to initialise the list of server attributes defined in this
@@ -240,7 +275,16 @@ public abstract class ZclCluster {
      *
      * @return a {@link Map} of all attributes this cluster is known to support
      */
-    protected abstract Map<Integer, ZclAttribute> initializeServerAttributes();
+    protected Map<Integer, ZclAttribute> initializeServerAttributes() {
+        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+
+        attributeMap.put(ATTR_CLUSTERREVISION, new ZclAttribute(this, ATTR_CLUSTERREVISION, "Cluster Revision",
+                ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_ATTRIBUTEREPORTINGSTATUS, new ZclAttribute(this, ATTR_ATTRIBUTEREPORTINGSTATUS,
+                "Attribute Reporting Status", ZclDataType.ENUMERATION_16_BIT, true, true, false, false));
+
+        return attributeMap;
+    }
 
     /**
      * Abstract method called when the cluster starts to initialise the list of server side commands defined in this
@@ -311,8 +355,9 @@ public abstract class ZclCluster {
      *
      * @param command the {@link ZclCommand} to which the response is being sent
      * @param response the {@link ZclCommand} to send
+     * @return the response result future
      */
-    protected void sendResponse(ZclCommand command, ZclCommand response) {
+    protected Future<CommandResult> sendResponse(ZclCommand command, ZclCommand response) {
         response.setDestinationAddress(command.getSourceAddress());
         response.setCommandDirection(command.getCommandDirection().getResponseDirection());
         response.setTransactionId(command.getTransactionId());
@@ -324,7 +369,7 @@ public abstract class ZclCluster {
 
         response.setApsSecurity(apsSecurityRequired);
 
-        zigbeeEndpoint.sendTransaction(response);
+        return sendCommand(response);
     }
 
     /**
@@ -474,9 +519,12 @@ public abstract class ZclCluster {
      * @return and object containing the value, or null
      */
     protected Object readAttributeValue(final int attributeId) {
-        CommandResult result;
+        CommandResult result = null;
         try {
-            result = readAttribute(attributeId).get();
+            Future<CommandResult> readAttributeFuture = readAttribute(attributeId);
+            if (readAttributeFuture != null) {
+                result = readAttributeFuture.get();
+            }
         } catch (InterruptedException e) {
             logger.debug("readAttributeValue interrupted");
             return null;
@@ -485,7 +533,7 @@ public abstract class ZclCluster {
             return null;
         }
 
-        if (!result.isSuccess()) {
+        if (result == null || !result.isSuccess()) {
             return null;
         }
 
@@ -787,8 +835,33 @@ public abstract class ZclCluster {
      * @return Command future
      */
     public Future<CommandResult> bind(IeeeAddress address, int endpointId) {
-        final BindRequest command = new BindRequest(zigbeeEndpoint.getIeeeAddress(), zigbeeEndpoint.getEndpointId(),
-                clusterId, 3, address, endpointId);
+        BindingTable bindingTable = new BindingTable();
+        bindingTable.setSrcAddr(zigbeeEndpoint.getIeeeAddress());
+        bindingTable.setSrcEndpoint(zigbeeEndpoint.getEndpointId());
+        bindingTable.setClusterId(clusterId);
+        bindingTable.setDstAddrMode(3);
+        bindingTable.setDstAddr(address);
+        bindingTable.setDstNodeEndpoint(endpointId);
+        final BindRequest command = new BindRequest(bindingTable);
+        command.setDestinationAddress(new ZigBeeEndpointAddress(zigbeeEndpoint.getEndpointAddress().getAddress()));
+        // The transaction is not sent to the Endpoint of this cluster, but to the ZDO endpoint 0 directly.
+        return zigbeeEndpoint.getParentNode().sendTransaction(command, command);
+    }
+
+    /**
+     * Adds a binding from the cluster to the destination {@link ZigBeeGroupAddress}.
+     *
+     * @param group the destination {@link ZigBeeGroupAddress}
+     * @return Command future
+     */
+    public Future<CommandResult> bind(ZigBeeGroupAddress group) {
+        BindingTable bindingTable = new BindingTable();
+        bindingTable.setSrcAddr(zigbeeEndpoint.getIeeeAddress());
+        bindingTable.setSrcEndpoint(zigbeeEndpoint.getEndpointId());
+        bindingTable.setClusterId(clusterId);
+        bindingTable.setDstAddrMode(1);
+        bindingTable.setDstGroupAddr(group.getGroupId());
+        final BindRequest command = new BindRequest(bindingTable);
         command.setDestinationAddress(new ZigBeeEndpointAddress(zigbeeEndpoint.getEndpointAddress().getAddress()));
         // The transaction is not sent to the Endpoint of this cluster, but to the ZDO endpoint 0 directly.
         return zigbeeEndpoint.getParentNode().sendTransaction(command, command);
@@ -802,8 +875,33 @@ public abstract class ZclCluster {
      * @return Command future
      */
     public Future<CommandResult> unbind(IeeeAddress address, int endpointId) {
-        final UnbindRequest command = new UnbindRequest(zigbeeEndpoint.getIeeeAddress(), zigbeeEndpoint.getEndpointId(),
-                clusterId, 3, address, endpointId);
+        BindingTable bindingTable = new BindingTable();
+        bindingTable.setSrcAddr(zigbeeEndpoint.getIeeeAddress());
+        bindingTable.setSrcEndpoint(zigbeeEndpoint.getEndpointId());
+        bindingTable.setClusterId(clusterId);
+        bindingTable.setDstAddrMode(3);
+        bindingTable.setDstAddr(address);
+        bindingTable.setDstNodeEndpoint(endpointId);
+        final UnbindRequest command = new UnbindRequest(bindingTable);
+        command.setDestinationAddress(new ZigBeeEndpointAddress(zigbeeEndpoint.getEndpointAddress().getAddress()));
+        // The transaction is not sent to the Endpoint of this cluster, but to the ZDO endpoint 0 directly.
+        return zigbeeEndpoint.getParentNode().sendTransaction(command, command);
+    }
+
+    /**
+     * Removes a binding from the cluster to the destination {@link ZigBeeGroupAddress}.
+     *
+     * @param group the destination {@link ZigBeeGroupAddress}
+     * @return Command future
+     */
+    public Future<CommandResult> unbind(ZigBeeGroupAddress group) {
+        BindingTable bindingTable = new BindingTable();
+        bindingTable.setSrcAddr(zigbeeEndpoint.getIeeeAddress());
+        bindingTable.setSrcEndpoint(zigbeeEndpoint.getEndpointId());
+        bindingTable.setClusterId(clusterId);
+        bindingTable.setDstAddrMode(1);
+        bindingTable.setDstGroupAddr(group.getGroupId());
+        final UnbindRequest command = new UnbindRequest(bindingTable);
         command.setDestinationAddress(new ZigBeeEndpointAddress(zigbeeEndpoint.getEndpointAddress().getAddress()));
         // The transaction is not sent to the Endpoint of this cluster, but to the ZDO endpoint 0 directly.
         return zigbeeEndpoint.getParentNode().sendTransaction(command, command);
@@ -1328,24 +1426,25 @@ public abstract class ZclCluster {
      * @param command the {@link DiscoverAttributesCommand} to respond to
      */
     private void handleDiscoverAttributes(DiscoverAttributesCommand command) {
+        boolean complete = true;
         List<AttributeInformation> attributeInformation = new ArrayList<>();
         for (ZclAttribute attribute : getLocalAttributes()) {
             if (!attribute.isImplemented() || attribute.getId() < command.getStartAttributeIdentifier()) {
                 continue;
             }
 
+            if (attributeInformation.size() >= command.getMaximumAttributeIdentifiers()) {
+                complete = false;
+                break;
+            }
+
             AttributeInformation attributeInfo = new AttributeInformation();
             attributeInfo.setIdentifier(attribute.getId());
             attributeInfo.setDataType(attribute.getDataType());
             attributeInformation.add(attributeInfo);
-
-            if (attributeInformation.size() >= command.getMaximumAttributeIdentifiers()) {
-                break;
-            }
         }
 
-        DiscoverAttributesResponse response = new DiscoverAttributesResponse(
-                attributeInformation.size() == getLocalAttributes().size(), attributeInformation);
+        DiscoverAttributesResponse response = new DiscoverAttributesResponse(complete, attributeInformation);
         sendResponse(command, response);
     }
 
@@ -1554,6 +1653,7 @@ public abstract class ZclCluster {
 
         dao.setClusterId(clusterId);
         dao.setClient(isClient);
+        dao.setManufacturerCode(manufacturerCode);
         if (supportedAttributesKnown) {
             dao.setSupportedAttributes(Collections.unmodifiableSet(new HashSet<>(supportedAttributes)));
         }
@@ -1582,6 +1682,7 @@ public abstract class ZclCluster {
     public void setDao(ZclClusterDao dao) {
         clusterId = dao.getClusterId();
         isClient = dao.getClient();
+        manufacturerCode = dao.getManufacturerCode();
         supportedAttributesKnown = dao.getSupportedAttributes() != null;
         if (supportedAttributesKnown) {
             supportedAttributes.addAll(dao.getSupportedAttributes());
@@ -1827,7 +1928,7 @@ public abstract class ZclCluster {
      * Returns the manufacturer code; must be non-null for manufacturer-specific clusters.
      */
     public Integer getManufacturerCode() {
-        return null;
+        return manufacturerCode;
     }
 
     /**

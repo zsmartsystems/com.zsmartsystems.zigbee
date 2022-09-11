@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -94,9 +94,19 @@ public class ZigBeeNode {
     private final Set<Integer> associatedDevices = new HashSet<Integer>();
 
     /**
+     * Boolean used to allow change detection on the table
+     */
+    private boolean associatedDevicesSet = false;
+
+    /**
      * List of neighbors for the node, specified in a {@link NeighborTable}
      */
     private final Set<NeighborTable> neighbors = new HashSet<NeighborTable>();
+
+    /**
+     * Boolean used to allow change detection on the table
+     */
+    private boolean neighborsSet = false;
 
     /**
      * List of routes within the node, specified in a {@link RoutingTable}
@@ -104,9 +114,19 @@ public class ZigBeeNode {
     private final Set<RoutingTable> routes = new HashSet<RoutingTable>();
 
     /**
+     * Boolean used to allow change detection on the table
+     */
+    private boolean routesSet = false;
+
+    /**
      * List of binding records
      */
     private final Set<BindingTable> bindingTable = new HashSet<BindingTable>();
+
+    /**
+     * Boolean used to allow change detection on the table
+     */
+    private boolean bindingTableSet = false;
 
     /**
      * List of endpoints this node exposes
@@ -401,6 +421,7 @@ public class ZigBeeNode {
 
     private void setBindingTable(List<BindingTable> bindingTable) {
         synchronized (this.bindingTable) {
+            bindingTableSet = true;
             this.bindingTable.clear();
             this.bindingTable.addAll(bindingTable);
             logger.debug("{}: Binding table updated: {}", ieeeAddress, bindingTable);
@@ -486,7 +507,7 @@ public class ZigBeeNode {
     }
 
     /**
-     * Gets an endpoint given the {@link ZigBeeAddress} address.
+     * Gets an endpoint given the endpoint ID.
      *
      * @param endpointId the endpoint ID to get
      * @return the {@link ZigBeeEndpoint}
@@ -619,6 +640,7 @@ public class ZigBeeNode {
         }
 
         synchronized (this.neighbors) {
+            neighborsSet = true;
             this.neighbors.clear();
             if (neighbors != null) {
                 this.neighbors.addAll(neighbors);
@@ -656,6 +678,7 @@ public class ZigBeeNode {
         }
 
         synchronized (this.associatedDevices) {
+            associatedDevicesSet = true;
             this.associatedDevices.clear();
             this.associatedDevices.addAll(associatedDevices);
         }
@@ -693,6 +716,7 @@ public class ZigBeeNode {
         }
 
         synchronized (this.routes) {
+            routesSet = true;
             this.routes.clear();
             if (routes != null) {
                 this.routes.addAll(routes);
@@ -786,14 +810,14 @@ public class ZigBeeNode {
         boolean updated = false;
 
         if (node.getNodeState() != ZigBeeNodeState.UNKNOWN && nodeState != node.getNodeState()) {
-            logger.debug("{}: Node state updated from {} to {}", ieeeAddress, nodeState, node.getNodeState());
+            logger.debug("{}: Node state updated FROM {} TO {}", ieeeAddress, nodeState, node.getNodeState());
             nodeState = node.getNodeState();
             updated = true;
         }
 
         if (node.getNetworkAddress() != null
                 && (networkAddress == null || !networkAddress.equals(node.getNetworkAddress()))) {
-            logger.debug("{}: Network address updated from {} to {}", ieeeAddress, networkAddress,
+            logger.debug("{}: Network address updated FROM {} TO {}", ieeeAddress, networkAddress,
                     node.getNetworkAddress());
             updated = true;
             networkAddress = node.getNetworkAddress();
@@ -801,49 +825,57 @@ public class ZigBeeNode {
 
         if (node.getNodeDescriptor() != null
                 && (nodeDescriptor == null || !nodeDescriptor.equals(node.getNodeDescriptor()))) {
-            logger.debug("{}: Node descriptor updated", ieeeAddress);
+            logger.debug("{}: Node descriptor updated FROM {} TO {}", ieeeAddress, nodeDescriptor,
+                    node.getNodeDescriptor());
             updated = true;
             nodeDescriptor = node.getNodeDescriptor();
         }
 
         if (node.getPowerDescriptor() != null
                 && (powerDescriptor == null || !powerDescriptor.equals(node.getPowerDescriptor()))) {
-            logger.debug("{}: Power descriptor updated", ieeeAddress);
+            logger.debug("{}: Power descriptor updated FROM {} TO {}", ieeeAddress, powerDescriptor,
+                    node.getPowerDescriptor());
             updated = true;
             powerDescriptor = node.getPowerDescriptor();
         }
 
         synchronized (associatedDevices) {
-            if (!associatedDevices.equals(node.getAssociatedDevices())) {
-                logger.debug("{}: Associated devices updated", ieeeAddress);
+            if (node.associatedDevicesSet && !associatedDevices.equals(node.getAssociatedDevices())) {
+                logger.debug("{}: Associated devices updated FROM {} TO {}", ieeeAddress, associatedDevices,
+                        node.getAssociatedDevices());
                 updated = true;
+                associatedDevicesSet = true;
                 associatedDevices.clear();
                 associatedDevices.addAll(node.getAssociatedDevices());
             }
         }
 
         synchronized (bindingTable) {
-            if (!bindingTable.equals(node.getBindingTable())) {
-                logger.debug("{}: Binding table updated", ieeeAddress);
+            if (node.bindingTableSet && !bindingTable.equals(node.getBindingTable())) {
+                logger.debug("{}: Binding table updated FROM {} TO {}", ieeeAddress, bindingTable,
+                        node.getBindingTable());
                 updated = true;
+                bindingTableSet = true;
                 bindingTable.clear();
                 bindingTable.addAll(node.getBindingTable());
             }
         }
 
         synchronized (neighbors) {
-            if (!neighbors.equals(node.getNeighbors())) {
-                logger.debug("{}: Neighbors updated", ieeeAddress);
+            if (node.neighborsSet && !neighbors.equals(node.getNeighbors())) {
+                logger.debug("{}: Neighbors updated FROM {} TO {}", ieeeAddress, neighbors, node.getNeighbors());
                 updated = true;
+                neighborsSet = true;
                 neighbors.clear();
                 neighbors.addAll(node.getNeighbors());
             }
         }
 
         synchronized (routes) {
-            if (!routes.equals(node.getRoutes())) {
-                logger.debug("{}: Routes updated", ieeeAddress);
+            if (node.routesSet && !routes.equals(node.getRoutes())) {
+                logger.debug("{}: Routes updated FROM {} TO {}", ieeeAddress, routes, node.getRoutes());
                 updated = true;
+                routesSet = true;
                 routes.clear();
                 routes.addAll(node.getRoutes());
             }
@@ -890,6 +922,11 @@ public class ZigBeeNode {
         return dao;
     }
 
+    /**
+     * Sets the states of this node given the {@link ZigBeeNodeDao} used to serialise the node information
+     *
+     * @param dao the {@link ZigBeeNodeDao} used to serialise the node information
+     */
     public void setDao(ZigBeeNodeDao dao) {
         ieeeAddress = dao.getIeeeAddress();
         setNetworkAddress(dao.getNetworkAddress());

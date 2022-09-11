@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -83,12 +83,12 @@ public class ZigBeeConsoleAttributeReadCommand extends ZigBeeConsoleAbstractComm
                     attribute != null ? attribute.getName() : String.format("Attribute %d", attributeId));
         }
 
-        if(attributes.isEmpty()) {
-            if(!cluster.discoverAttributes(false, null).get()) {
+        if (attributes.isEmpty()) {
+            if (!cluster.discoverAttributes(false, null).get()) {
                 out.println("Failed to discover attributes");
             }
             cluster.getAttributes().forEach(zclAttribute -> {
-                if(zclAttribute.isImplemented()) {
+                if (zclAttribute.isImplemented()) {
                     attributes.put(zclAttribute.getId(), zclAttribute.getName());
                 }
             });
@@ -132,12 +132,19 @@ public class ZigBeeConsoleAttributeReadCommand extends ZigBeeConsoleAbstractComm
             }
 
             for (ReadAttributeStatusRecord statusRecord : response.getRecords()) {
+                ZclAttribute attribute = cluster.getAttribute(statusRecord.getAttributeIdentifier());
+                String name = "UNKNOWN";
+                if (attribute != null) {
+                    name = attribute.getName();
+                }
                 if (statusRecord.getStatus() == ZclStatus.SUCCESS) {
-                    out.println("Attribute " + statusRecord.getAttributeIdentifier() + ", type "
-                            + statusRecord.getAttributeDataType() + ", value: " + statusRecord.getAttributeValue());
+                    out.println(
+                            String.format("Attribute %4d  %-50s  %-30s  %s", statusRecord.getAttributeIdentifier(),
+                                    name,
+                                    statusRecord.getAttributeDataType(), statusRecord.getAttributeValue().toString()));
                 } else {
-                    out.println("Attribute " + statusRecord.getAttributeIdentifier() + " error: "
-                            + statusRecord.getStatus());
+                    out.println(String.format("Attribute %4d  Error %s", statusRecord.getAttributeIdentifier(),
+                            statusRecord.getStatus().toString()));
                 }
             }
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,15 +8,12 @@
 package com.zsmartsystems.zigbee.console.main;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.IntSummaryStatistics;
@@ -55,7 +52,9 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleDescribeNodeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleDeviceFingerprintCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleDeviceInformationCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleFactoryResetCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleFirmwareCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleGroupCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleIdentifyCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleInstallKeyCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleLinkKeyCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleNeighborsListCommand;
@@ -65,6 +64,7 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleNetworkJoinCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleNetworkLeaveCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleNetworkStartCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleNodeListCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleNodeResetCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleOtaUpgradeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingConfigCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingSubscribeCommand;
@@ -82,12 +82,12 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleWindowCoveringCommand;
 import com.zsmartsystems.zigbee.groups.ZigBeeGroup;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionManager;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionQueue;
-import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareCallback;
-import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareStatus;
-import com.zsmartsystems.zigbee.transport.ZigBeeTransportFirmwareUpdate;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
+import com.zsmartsystems.zigbee.zcl.ZclAttribute;
+import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneStatusChangeNotificationCommand;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.command.ManagementLqiRequest;
@@ -116,7 +116,7 @@ public final class ZigBeeConsole {
     /**
      * Whether to print attribute reports.
      */
-    private boolean printAttributeReports = false;
+    private boolean listeningModeEnabled = false;
 
     private long initialMemory;
 
@@ -161,8 +161,6 @@ public final class ZigBeeConsole {
 
         commands.put("lqi", new LqiCommand());
         commands.put("enroll", new EnrollCommand());
-
-        commands.put("firmware", new FirmwareCommand());
 
         commands.put("supportedcluster", new SupportedClusterCommand());
 
@@ -223,6 +221,10 @@ public final class ZigBeeConsole {
         newCommands.put("routingtable", new ZigBeeConsoleRoutingTableCommand());
         newCommands.put("neighbors", new ZigBeeConsoleNeighborsListCommand());
 
+        newCommands.put("firmware", new ZigBeeConsoleFirmwareCommand());
+        newCommands.put("identify", new ZigBeeConsoleIdentifyCommand());
+        newCommands.put("reset", new ZigBeeConsoleNodeResetCommand());
+
         zigBeeApi = new ZigBeeApi(networkManager);
 
         networkManager.addNetworkStateListener(new ZigBeeNetworkStateListener() {
@@ -252,8 +254,32 @@ public final class ZigBeeConsole {
         networkManager.addCommandListener(new ZigBeeCommandListener() {
             @Override
             public void commandReceived(ZigBeeCommand command) {
-                if (printAttributeReports && command instanceof ReportAttributesCommand) {
-                    print("Received: " + command.toString(), System.out);
+                if (listeningModeEnabled) {
+                    if (command instanceof ReportAttributesCommand) {
+                        final ZigBeeNode node = networkManager.getNode(command.getSourceAddress().getAddress());
+                        final ZclCluster cluster = node.getEndpoints().stream()
+                                .filter(endpoint -> endpoint.getInputCluster(command.getClusterId()) != null)
+                                .findFirst()
+                                .map(endpoint -> endpoint.getInputCluster(command.getClusterId())).get();
+                        ReportAttributesCommand reportAttributesCommand = (ReportAttributesCommand) command;
+                        reportAttributesCommand.getReports().stream().forEach(attributeReport -> {
+                            ZclAttribute attribute = null;
+                            if (cluster != null) {
+                                attribute = cluster.getAttribute(attributeReport.getAttributeIdentifier());
+                            }
+                            print("[" + LocalDateTime.now().toString() + "] - Received attribute report [Device="
+                                    + command.getSourceAddress() +
+                                    ", Cluster=" + command.getClusterId() +
+                                    ", Attribute="
+                                    + (attribute != null
+                                            ? attribute.getName() + "(" + attributeReport.getAttributeIdentifier() + ")"
+                                            : attributeReport.getAttributeIdentifier())
+                                    + ", AttributeValue = " + attributeReport.getAttributeValue() + "]", System.out);
+                        });
+                    }
+                    if (command instanceof ZoneStatusChangeNotificationCommand) {
+                        print(command.toString(), System.out);
+                    }
                 }
             }
         });
@@ -640,7 +666,7 @@ public final class ZigBeeConsole {
     }
 
     /**
-     * Starts listening to reports of given attribute.
+     * Enable console listening mode.
      */
     private class ListenCommand implements ConsoleCommand {
         /**
@@ -648,7 +674,7 @@ public final class ZigBeeConsole {
          */
         @Override
         public String getDescription() {
-            return "Listen to attribute reports.";
+            return "Enable console listening mode.";
         }
 
         /**
@@ -668,16 +694,16 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            printAttributeReports = true;
+            listeningModeEnabled = true;
 
-            out.println("Printing received attribute reports.");
+            out.println("Listening mode enabled. Attribute reports and IAS notifications will be printed.");
 
             return true;
         }
     }
 
     /**
-     * Unlisten from reports of given attribute.
+     * Disable console listening mode.
      */
     private class UnlistenCommand implements ConsoleCommand {
         /**
@@ -685,7 +711,7 @@ public final class ZigBeeConsole {
          */
         @Override
         public String getDescription() {
-            return "Unlisten from attribute reports.";
+            return "Disable console listening mode.";
         }
 
         /**
@@ -705,9 +731,9 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            printAttributeReports = false;
+            listeningModeEnabled = false;
 
-            out.println("Ignoring received attribute reports.");
+            out.println("Listening mode disabled. Attribute reports and IAS notifications will be ignored.");
 
             return true;
         }
@@ -843,75 +869,6 @@ public final class ZigBeeConsole {
 
             print("Added cluster " + String.format("0x%X", clusterId) + " to match descriptor list.", out);
 
-            return true;
-        }
-    }
-
-    /**
-     * Dongle firmware update command.
-     */
-    private class FirmwareCommand implements ConsoleCommand {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getDescription() {
-            return "Updates the dongle firmware";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public String getSyntax() {
-            return "firmware [VERSION | CANCEL | FILE]";
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, final PrintStream out) throws Exception {
-            if (args.length != 2) {
-                return false;
-            }
-
-            if (!(dongle instanceof ZigBeeTransportFirmwareUpdate)) {
-                print("Dongle does not implement firmware updates.", out);
-                return false;
-            }
-            ZigBeeTransportFirmwareUpdate firmwareUpdate = (ZigBeeTransportFirmwareUpdate) dongle;
-
-            if (args[1].toLowerCase().equals("version")) {
-                print("Dongle firmware version is currently " + firmwareUpdate.getFirmwareVersion(), out);
-                return true;
-            }
-
-            if (args[1].toLowerCase().equals("cancel")) {
-                print("Cancelling dongle firmware update!", out);
-                firmwareUpdate.cancelUpdateFirmware();
-                return true;
-            }
-
-            networkManager.shutdown();
-
-            File firmwareFile = new File(args[1]);
-            InputStream firmwareStream;
-            try {
-                firmwareStream = new FileInputStream(firmwareFile);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                return false;
-            }
-
-            firmwareUpdate.updateFirmware(firmwareStream, new ZigBeeTransportFirmwareCallback() {
-                @Override
-                public void firmwareUpdateCallback(ZigBeeTransportFirmwareStatus status) {
-                    print("Dongle firmware status: " + status + ".", out);
-                }
-            });
-
-            out.println("Starting dongle firmware update...");
             return true;
         }
     }

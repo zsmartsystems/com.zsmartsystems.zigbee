@@ -4,7 +4,7 @@
 
     <groupId>com.zsmartsystems.zigbee</groupId>
     <artifactId>com.zsmartsystems.zigbee.dongle.xbee.autocode</artifactId>
-    <version>1.4.0-SNAPSHOT</version>
+    <version>1.4.8-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -15,7 +15,7 @@
     <parent>
         <groupId>com.zsmartsystems</groupId>
         <artifactId>zigbee</artifactId>
-        <version>1.4.0-SNAPSHOT</version>
+        <version>1.4.8-SNAPSHOT</version>
     </parent>
 
     <build>
@@ -43,24 +43,6 @@
     </build>
 
     <dependencies>
-
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.4</version>
-        </dependency>
-
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>2.6</version>
-        </dependency>
-
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>1.8</version>
-        </dependency>
 
     </dependencies>
 

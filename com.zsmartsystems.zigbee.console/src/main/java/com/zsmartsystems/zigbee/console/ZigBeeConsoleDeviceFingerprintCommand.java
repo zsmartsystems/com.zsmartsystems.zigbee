@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -12,7 +12,6 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
-import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 import com.zsmartsystems.zigbee.CommandResult;
@@ -28,7 +27,11 @@ import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
 import com.zsmartsystems.zigbee.zcl.ZclFrameType;
+import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesResponse;
+import com.zsmartsystems.zigbee.zcl.field.ReadAttributeStatusRecord;
+import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoCommand;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.command.IeeeAddressRequest;
@@ -57,7 +60,7 @@ public class ZigBeeConsoleDeviceFingerprintCommand extends ZigBeeConsoleAbstract
 
     @Override
     public String getSyntax() {
-        return "ADRESS";
+        return "ADDRESS";
     }
 
     @Override
@@ -252,6 +255,14 @@ public class ZigBeeConsoleDeviceFingerprintCommand extends ZigBeeConsoleAbstract
             getAttributes(out, cluster, cluster.getSupportedAttributes());
         } else {
             out.println("| | | | | |> " + success);
+
+            out.println("| | | | |");
+            out.println("| | | | |>| Attribute Values");
+            if (success == ZigBeeStatus.SUCCESS) {
+                getAttributes(out, cluster.getAttributes());
+            } else {
+                out.println("| | | | | |> " + success);
+            }
         }
     }
 
@@ -271,17 +282,52 @@ public class ZigBeeConsoleDeviceFingerprintCommand extends ZigBeeConsoleAbstract
         return command.getClass().getSimpleName();
     }
 
-    private void getAttributes(PrintStream out, ZclCluster cluster, Set<Integer> attributeIds) {
+    private void getAttributes(PrintStream out, ZclCluster cluster, Collection<Integer> attributeIds) {
         for (int attributeId : attributeIds) {
             ZclAttribute attribute = cluster.getAttribute(attributeId);
-            out.println(String.format("| | | | | |> %04X", attributeId) + " " + (attribute == null ? "Unknown"
-                    : attribute.getName()));
-            if (attribute != null && !attribute.isWritable()) {
-                // Object object = attribute.readValue(0);
-                // if (object != null) {
-                // out.println("| | | | | | |> " + object.toString());
-                // }
+            Object value = null;
+            ZclDataType dataType = null;
+            if (attribute != null && attribute.isReadable()) {
+                value = attribute.readValue(60L);
+                dataType = attribute.getDataType();
+            } else {
+                try {
+                    CommandResult result = cluster.readAttribute(attributeId).get();
+                    ReadAttributesResponse response = result.getResponse();
+                    ReadAttributeStatusRecord attributeRecord = response.getRecords().get(0);
+                    if (attributeRecord.getStatus() == ZclStatus.SUCCESS) {
+                        value = attributeRecord.getAttributeValue();
+                        dataType = attributeRecord.getAttributeDataType();
+                    }
+
+                } catch (InterruptedException | ExecutionException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
+
+            out.println(String.format("| | | | | |> %04X  %-40s  >> %-30s  %s", attributeId,
+                    (attribute == null ? ""
+                            : attribute.getName()),
+                    (dataType == null ? "" : dataType),
+                    (value == null ? "" : value.toString())));
+        }
+    }
+
+    private void getAttributes(PrintStream out, Collection<ZclAttribute> attributes) {
+        for (ZclAttribute attribute : attributes) {
+            Object value = null;
+            if (!attribute.isReadable()) {
+                continue;
+            }
+
+            value = attribute.readValue(60L);
+            if (value == null) {
+                continue;
+            }
+            out.println(String.format("| | | | | |> %04X  %-50s  >> %-30s  %s", attribute.getId(), attribute.getName(),
+                    attribute.getDataType(),
+                    value.toString()));
         }
     }
 

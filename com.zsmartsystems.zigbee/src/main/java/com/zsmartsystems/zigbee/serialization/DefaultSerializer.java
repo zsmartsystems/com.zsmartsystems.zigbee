@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -19,6 +19,7 @@ import com.zsmartsystems.zigbee.zcl.field.ExtensionFieldSet;
 import com.zsmartsystems.zigbee.zcl.field.ZclArrayList;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
+import com.zsmartsystems.zigbee.zdo.field.BindingTable;
 
 /**
  * The implementation of the {@link ZigBeeSerializer}.
@@ -47,6 +48,7 @@ public class DefaultSerializer implements ZigBeeSerializer {
                 buffer[length++] = (Boolean) data ? 1 : 0;
                 break;
             case NWK_ADDRESS:
+            case DATA_16_BIT:
             case BITMAP_16_BIT:
             case SIGNED_16_BIT_INTEGER:
             case UNSIGNED_16_BIT_INTEGER:
@@ -248,6 +250,10 @@ public class DefaultSerializer implements ZigBeeSerializer {
                 for (Object value : zclArray) {
                     appendZigBeeType(value, zclArray.getDataType());
                 }
+                break;
+            case BINDING_TABLE:
+                BindingTable bindingTable = (BindingTable) data;
+                bindingTable.serialize(this);
                 break;
 
             default:

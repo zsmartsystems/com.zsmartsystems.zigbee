@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -61,7 +61,7 @@ public class ZigBeeConsoleReportingUnsubscribeCommand extends ZigBeeConsoleAbstr
         final int attributeId = parseAttribute(attributeIdParam);
         final ZclAttribute attribute = cluster.getAttribute(attributeId);
 
-        final CommandResult result = cluster.setReporting(attribute.getId(), 0, 0xFFFF, null).get();
+        final CommandResult result = cluster.setReporting(attribute.getId(), 0, 0xFFFF, 0).get();
         if (result.isSuccess()) {
             final ConfigureReportingResponse response = result.getResponse();
             final ZclStatus statusCode = response.getStatus();

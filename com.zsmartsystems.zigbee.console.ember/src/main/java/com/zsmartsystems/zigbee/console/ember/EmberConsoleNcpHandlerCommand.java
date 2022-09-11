@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.console.ember;
 
 import java.io.PrintStream;
+import java.util.Map.Entry;
 
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
@@ -29,7 +30,7 @@ public class EmberConsoleNcpHandlerCommand extends EmberConsoleAbstractCommand {
 
     @Override
     public String getDescription() {
-        return "Configure the NCP handler";
+        return "Configure or read the state of the NCP handler";
     }
 
     @Override
@@ -45,14 +46,22 @@ public class EmberConsoleNcpHandlerCommand extends EmberConsoleAbstractCommand {
     @Override
     public void process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out)
             throws IllegalArgumentException {
-        if (args.length < 1 || args.length > 3) {
-            throw new IllegalArgumentException("Incorrect number of arguments.");
-        }
-
         if (!(networkManager.getZigBeeTransport() instanceof ZigBeeDongleEzsp)) {
             throw new IllegalArgumentException("Dongle is not an Ember NCP.");
         }
         ZigBeeDongleEzsp dongle = (ZigBeeDongleEzsp) networkManager.getZigBeeTransport();
+
+        if (args.length == 1) {
+            for (Entry<String, Long> counter : dongle.getCounters().entrySet()) {
+                out.println(String.format("%20s %d", counter.getKey(), counter.getValue()));
+            }
+
+            return;
+        }
+
+        if (args.length < 1 || args.length > 3) {
+            throw new IllegalArgumentException("Incorrect number of arguments.");
+        }
 
         switch (args[1].toLowerCase()) {
             case OPTION_STATEPOLL:

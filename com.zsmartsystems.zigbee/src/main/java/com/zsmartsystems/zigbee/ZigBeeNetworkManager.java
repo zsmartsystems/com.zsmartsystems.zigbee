@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -40,7 +39,6 @@ import com.zsmartsystems.zigbee.aps.ZigBeeApsFrame;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDataStore;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDatabaseManager;
 import com.zsmartsystems.zigbee.groups.ZigBeeGroup;
-import com.zsmartsystems.zigbee.groups.ZigBeeGroupAddress;
 import com.zsmartsystems.zigbee.groups.ZigBeeNetworkGroupManager;
 import com.zsmartsystems.zigbee.groups.ZigBeeNetworkGroupManager.GroupSynchronizationMethod;
 import com.zsmartsystems.zigbee.internal.ClusterMatcher;
@@ -444,8 +442,13 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         }
 
         logger.debug("{}: Adding local node to network, NWK={}", ieeeAddress, String.format("%04X", nwkAddress));
-        ZigBeeNode node = new ZigBeeNode(this, ieeeAddress, nwkAddress);
-        updateNode(node);
+
+        if (networkNodes.containsKey(ieeeAddress)) {
+            return;
+        }
+
+        ZigBeeNode newNode = new ZigBeeNode(this, ieeeAddress, nwkAddress);
+        networkNodes.put(newNode.getIeeeAddress(), newNode);
     }
 
     /**
@@ -954,7 +957,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         int sourceAddress = apsFrame.getSourceAddress();
         ZigBeeNode zigBeeNode = getNode(sourceAddress);
         if (zigBeeNode != null) {
-            ZigBeeNode updatedNode = new ZigBeeNode(this, zigBeeNode.getIeeeAddress(), sourceAddress);
+            ZigBeeNode updatedNode = new ZigBeeNode(this, zigBeeNode.getIeeeAddress());
             updatedNode.setNodeState(ZigBeeNodeState.ONLINE);
             refreshNode(updatedNode);
         }
@@ -1750,8 +1753,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         logger.debug("{}: Node update. NWK Address={}", node.getIeeeAddress(),
                 String.format("%04X", node.getNetworkAddress()));
 
-        final ZigBeeNode currentNode;
-        currentNode = networkNodes.get(node.getIeeeAddress());
+        final ZigBeeNode currentNode = networkNodes.get(node.getIeeeAddress());
 
         // Return if we don't know this node
         if (currentNode == null) {
@@ -1762,17 +1764,16 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
 
         // Return if there were no updates
         if (!currentNode.updateNode(node)) {
-            logger.debug("{}: Node {} is not updated", node.getIeeeAddress(),
-                    String.format("%04X", node.getNetworkAddress()));
+            logger.debug("{}: Node {} is not updated from {}", currentNode.getIeeeAddress(),
+                    String.format("%04X", currentNode.getNetworkAddress()), node);
             return null;
         }
 
-        if (node.getNodeDescriptor() != null && networkNodes.get(node.getIeeeAddress()) != null && Objects
-                .equals(networkNodes.get(node.getIeeeAddress()).getNodeDescriptor(), node.getNodeDescriptor())) {
+        if (node.getNodeDescriptor() != null && currentNode.getNodeDescriptor() != null) {
             notificationService.execute(new Runnable() {
                 @Override
                 public void run() {
-                    transport.setNodeDescriptor(node.getIeeeAddress(), node.getNodeDescriptor());
+                    transport.setNodeDescriptor(currentNode.getIeeeAddress(), currentNode.getNodeDescriptor());
                 }
             });
         }
@@ -1780,11 +1781,11 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         final boolean sendNodeAdded;
         if (!nodeDiscoveryComplete.contains(currentNode.getIeeeAddress()) && currentNode.isDiscovered()
                 || currentNode.getIeeeAddress().equals(localIeeeAddress)) {
-            nodeDiscoveryComplete.add(node.getIeeeAddress());
+            nodeDiscoveryComplete.add(currentNode.getIeeeAddress());
             sendNodeAdded = true;
         } else if (!currentNode.isDiscovered() && !currentNode.getIeeeAddress().equals(localIeeeAddress)) {
             logger.debug("{}: Node {} discovery is not complete - sending nodeUpdated notification to inform listeners",
-                    node.getIeeeAddress(), String.format("%04X", node.getNetworkAddress()));
+                    currentNode.getIeeeAddress(), String.format("%04X", currentNode.getNetworkAddress()));
             sendNodeAdded = false;
         } else {
             sendNodeAdded = false;
@@ -1818,15 +1819,17 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             try {
                 // TODO: Set the timer properly
                 if (latch.await(2, TimeUnit.SECONDS)) {
-                    logger.trace("{}: Refresh Node notifyListener LATCH Complete", node.getIeeeAddress());
+                    logger.trace("{}: Refresh Node notifyListener LATCH Complete", currentNode.getIeeeAddress());
                     return true;
                 } else {
-                    logger.trace("{}: Refresh Node notifyListener LATCH Timeout, remaining = {}", node.getIeeeAddress(),
+                    logger.trace("{}: Refresh Node notifyListener LATCH Timeout, remaining = {}",
+                            currentNode.getIeeeAddress(),
                             latch.getCount());
                     return false;
                 }
             } catch (InterruptedException e) {
-                logger.trace("{}: Refresh Node notifyListener LATCH Interrupted, remaining = {}", node.getIeeeAddress(),
+                logger.trace("{}: Refresh Node notifyListener LATCH Interrupted, remaining = {}",
+                        currentNode.getIeeeAddress(),
                         latch.getCount());
                 return false;
             }

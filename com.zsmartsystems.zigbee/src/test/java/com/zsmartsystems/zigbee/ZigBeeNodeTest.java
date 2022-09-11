@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -129,6 +129,8 @@ public class ZigBeeNodeTest {
         System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
         ZigBeeNode node = new ZigBeeNode(getMocketNetworkManager(), new IeeeAddress());
         Set<NeighborTable> neighbors;
+
+        assertTrue(node.getNeighbors().isEmpty());
 
         NeighborTable neighbor1 = getNeighborTable(12345, "123456789", 0);
         NeighborTable neighbor2 = getNeighborTable(12345, "123456789", 0);
@@ -442,7 +444,15 @@ public class ZigBeeNodeTest {
         assertEquals(0, node.getBindingTable().size());
         newNode = new ZigBeeNode(getMocketNetworkManager(), new IeeeAddress("1234567890"));
         TestUtilities.setField(ZigBeeNode.class, newNode, "bindingTable", bindingTable);
+        assertFalse(node.updateNode(newNode));
+        assertEquals(0, node.getBindingTable().size());
+
+        TestUtilities.setField(ZigBeeNode.class, newNode, "bindingTableSet", true);
         assertTrue(node.updateNode(newNode));
+        assertEquals(1, node.getBindingTable().size());
+
+        newNode = new ZigBeeNode(getMocketNetworkManager(), new IeeeAddress("1234567890"));
+        assertFalse(node.updateNode(newNode));
         assertEquals(1, node.getBindingTable().size());
 
         Set<RoutingTable> routeTable = new HashSet<RoutingTable>();
@@ -591,7 +601,7 @@ public class ZigBeeNodeTest {
 
                 ZigBeeTransactionFuture commandFuture = new ZigBeeTransactionFuture(
                         Mockito.mock(ZigBeeTransaction.class));
-                CommandResult result = new CommandResult(responses.get(command.getClusterId()));
+                CommandResult result = new CommandResult(ZigBeeStatus.SUCCESS, responses.get(command.getClusterId()));
                 commandFuture.set(result);
                 return commandFuture;
             }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -45,7 +45,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-08T14:21:24Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
 public class ZclPollControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -134,14 +134,14 @@ public class ZclPollControlCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeClientAttributes();
 
         return attributeMap;
     }
 
     @Override
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeServerAttributes();
 
         attributeMap.put(ATTR_CHECKININTERVAL, new ZclAttribute(this, ATTR_CHECKININTERVAL, "Checkin Interval", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, true, true));
         attributeMap.put(ATTR_LONGPOLLINTERVAL, new ZclAttribute(this, ATTR_LONGPOLLINTERVAL, "Long Poll Interval", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, true));
@@ -202,8 +202,8 @@ public class ZclPollControlCluster extends ZclCluster {
      * @param command the {@link ZclPollControlCommand} to which the response is being sent
      * @param response the {@link ZclPollControlCommand} to send
      */
-    public void sendResponse(ZclPollControlCommand command, ZclPollControlCommand response) {
-        super.sendResponse(command, response);
+    public Future<CommandResult> sendResponse(ZclPollControlCommand command, ZclPollControlCommand response) {
+        return super.sendResponse(command, response);
     }
 
     /**

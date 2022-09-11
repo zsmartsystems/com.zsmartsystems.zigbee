@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -32,6 +32,7 @@ import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransaction;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionFuture;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
@@ -66,7 +67,7 @@ public class ZigBeeNetworkDiscovererTest {
 
                 ZigBeeTransactionFuture commandFuture = new ZigBeeTransactionFuture(
                         Mockito.mock(ZigBeeTransaction.class));
-                CommandResult result = new CommandResult(responses.get(command.getClusterId()));
+                CommandResult result = new CommandResult(ZigBeeStatus.SUCCESS, responses.get(command.getClusterId()));
                 commandFuture.set(result);
                 return commandFuture;
             }
@@ -79,7 +80,7 @@ public class ZigBeeNetworkDiscovererTest {
 
                 ZigBeeTransactionFuture commandFuture = new ZigBeeTransactionFuture(
                         Mockito.mock(ZigBeeTransaction.class));
-                CommandResult result = new CommandResult(responses.get(command.getClusterId()));
+                CommandResult result = new CommandResult(ZigBeeStatus.SUCCESS, responses.get(command.getClusterId()));
                 commandFuture.set(result);
                 return commandFuture;
             }
@@ -138,7 +139,6 @@ public class ZigBeeNetworkDiscovererTest {
             }
         }).when(networkManager).getNode(ArgumentMatchers.anyInt());
 
-        discoverer.setRetryPeriod(Integer.MAX_VALUE);
         discoverer.startup();
 
         // Check it registers listeners
@@ -154,7 +154,6 @@ public class ZigBeeNetworkDiscovererTest {
         assertEquals(new IeeeAddress("1234567890ABCDEF"), node.getIeeeAddress());
         assertEquals(0, node.getEndpoints().size());
 
-        discoverer.setRetryCount(0);
         discoverer.setRequeryPeriod(0);
         discoverer.shutdown();
     }
@@ -167,9 +166,7 @@ public class ZigBeeNetworkDiscovererTest {
         announce.setSourceAddress(new ZigBeeEndpointAddress(1));
 
         ZigBeeNetworkDiscoverer discoverer = new ZigBeeNetworkDiscoverer(networkManager);
-        discoverer.setRetryPeriod(0);
         discoverer.setRequeryPeriod(0);
-        discoverer.setRetryCount(0);
 
         discoverer.commandReceived(announce);
         Mockito.verify(networkManager, Mockito.times(1)).updateNode(ArgumentMatchers.any());
@@ -184,9 +181,7 @@ public class ZigBeeNetworkDiscovererTest {
     @Test
     public void deviceStatusUpdate() {
         ZigBeeNetworkDiscoverer discoverer = new ZigBeeNetworkDiscoverer(networkManager);
-        discoverer.setRetryPeriod(0);
         discoverer.setRequeryPeriod(0);
-        discoverer.setRetryCount(0);
 
         discoverer.deviceStatusUpdate(ZigBeeNodeStatus.UNSECURED_JOIN, 2222, new IeeeAddress("1111111111111111"));
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -36,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
 public class ZclIdentifyCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -65,14 +65,14 @@ public class ZclIdentifyCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeClientAttributes();
 
         return attributeMap;
     }
 
     @Override
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeServerAttributes();
 
         attributeMap.put(ATTR_IDENTIFYTIME, new ZclAttribute(this, ATTR_IDENTIFYTIME, "Identify Time", ZclDataType.UNSIGNED_16_BIT_INTEGER, true, true, true, false));
 
@@ -125,8 +125,8 @@ public class ZclIdentifyCluster extends ZclCluster {
      * @param command the {@link ZclIdentifyCommand} to which the response is being sent
      * @param response the {@link ZclIdentifyCommand} to send
      */
-    public void sendResponse(ZclIdentifyCommand command, ZclIdentifyCommand response) {
-        super.sendResponse(command, response);
+    public Future<CommandResult> sendResponse(ZclIdentifyCommand command, ZclIdentifyCommand response) {
+        return super.sendResponse(command, response);
     }
 
     /**

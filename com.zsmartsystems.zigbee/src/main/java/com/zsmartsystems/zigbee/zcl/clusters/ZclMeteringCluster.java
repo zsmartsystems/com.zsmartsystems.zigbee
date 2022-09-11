@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -67,7 +67,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-04-14T19:23:36Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
 public class ZclMeteringCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -2650,7 +2650,7 @@ public class ZclMeteringCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeClientAttributes();
 
         attributeMap.put(ATTR_FUNCTIONALNOTIFICATIONFLAGS, new ZclAttribute(this, ATTR_FUNCTIONALNOTIFICATIONFLAGS, "Functional Notification Flags", ZclDataType.BITMAP_32_BIT, true, true, false, false));
         attributeMap.put(ATTR_NOTIFICATIONFLAGS2, new ZclAttribute(this, ATTR_NOTIFICATIONFLAGS2, "Notification Flags 2", ZclDataType.BITMAP_32_BIT, true, true, false, false));
@@ -2666,7 +2666,7 @@ public class ZclMeteringCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeServerAttributes();
 
         attributeMap.put(ATTR_CURRENTSUMMATIONDELIVERED, new ZclAttribute(this, ATTR_CURRENTSUMMATIONDELIVERED, "Current Summation Delivered", ZclDataType.UNSIGNED_48_BIT_INTEGER, true, true, false, false));
         attributeMap.put(ATTR_CURRENTSUMMATIONRECEIVED, new ZclAttribute(this, ATTR_CURRENTSUMMATIONRECEIVED, "Current Summation Received", ZclDataType.UNSIGNED_48_BIT_INTEGER, false, true, false, false));
@@ -3604,8 +3604,8 @@ public class ZclMeteringCluster extends ZclCluster {
      * @param command the {@link ZclMeteringCommand} to which the response is being sent
      * @param response the {@link ZclMeteringCommand} to send
      */
-    public void sendResponse(ZclMeteringCommand command, ZclMeteringCommand response) {
-        super.sendResponse(command, response);
+    public Future<CommandResult> sendResponse(ZclMeteringCommand command, ZclMeteringCommand response) {
+        return super.sendResponse(command, response);
     }
 
     /**

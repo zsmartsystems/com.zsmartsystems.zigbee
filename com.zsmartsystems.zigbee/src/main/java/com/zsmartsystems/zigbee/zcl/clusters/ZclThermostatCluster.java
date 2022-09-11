@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -36,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-20T07:40:15Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
 public class ZclThermostatCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -139,14 +139,14 @@ public class ZclThermostatCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeClientAttributes();
 
         return attributeMap;
     }
 
     @Override
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeServerAttributes();
 
         attributeMap.put(ATTR_LOCALTEMPERATURE, new ZclAttribute(this, ATTR_LOCALTEMPERATURE, "Local Temperature", ZclDataType.SIGNED_16_BIT_INTEGER, true, true, false, true));
         attributeMap.put(ATTR_OUTDOORTEMPERATURE, new ZclAttribute(this, ATTR_OUTDOORTEMPERATURE, "Outdoor Temperature", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, false, false));
@@ -157,20 +157,20 @@ public class ZclThermostatCluster extends ZclCluster {
         attributeMap.put(ATTR_ABSMAXCOOLSETPOINTLIMIT, new ZclAttribute(this, ATTR_ABSMAXCOOLSETPOINTLIMIT, "Abs Max Cool Setpoint Limit", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, false, false));
         attributeMap.put(ATTR_PICOOLINGDEMAND, new ZclAttribute(this, ATTR_PICOOLINGDEMAND, "Pi Cooling Demand", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, true));
         attributeMap.put(ATTR_PIHEATINGDEMAND, new ZclAttribute(this, ATTR_PIHEATINGDEMAND, "Pi Heating Demand", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, true));
-        attributeMap.put(ATTR_HVACSYSTEMTYPECONFIGURATION, new ZclAttribute(this, ATTR_HVACSYSTEMTYPECONFIGURATION, "Hvac System Type Configuration", ZclDataType.BITMAP_8_BIT, false, true, false, false));
-        attributeMap.put(ATTR_LOCALTEMPERATURECALIBRATION, new ZclAttribute(this, ATTR_LOCALTEMPERATURECALIBRATION, "Local Temperature Calibration", ZclDataType.SIGNED_8_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_OCCUPIEDCOOLINGSETPOINT, new ZclAttribute(this, ATTR_OCCUPIEDCOOLINGSETPOINT, "Occupied Cooling Setpoint", ZclDataType.SIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_OCCUPIEDHEATINGSETPOINT, new ZclAttribute(this, ATTR_OCCUPIEDHEATINGSETPOINT, "Occupied Heating Setpoint", ZclDataType.SIGNED_16_BIT_INTEGER, true, true, false, false));
-        attributeMap.put(ATTR_UNOCCUPIEDCOOLINGSETPOINT, new ZclAttribute(this, ATTR_UNOCCUPIEDCOOLINGSETPOINT, "Unoccupied Cooling Setpoint", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_UNOCCUPIEDHEATINGSETPOINT, new ZclAttribute(this, ATTR_UNOCCUPIEDHEATINGSETPOINT, "Unoccupied Heating Setpoint", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_MINHEATSETPOINTLIMIT, new ZclAttribute(this, ATTR_MINHEATSETPOINTLIMIT, "Min Heat Setpoint Limit", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_MAXHEATSETPOINTLIMIT, new ZclAttribute(this, ATTR_MAXHEATSETPOINTLIMIT, "Max Heat Setpoint Limit", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_MINCOOLSETPOINTLIMIT, new ZclAttribute(this, ATTR_MINCOOLSETPOINTLIMIT, "Min Cool Setpoint Limit", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_MAXCOOLSETPOINTLIMIT, new ZclAttribute(this, ATTR_MAXCOOLSETPOINTLIMIT, "Max Cool Setpoint Limit", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_MINSETPOINTDEADBAND, new ZclAttribute(this, ATTR_MINSETPOINTDEADBAND, "Min Setpoint Dead Band", ZclDataType.SIGNED_8_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_REMOTESENSING, new ZclAttribute(this, ATTR_REMOTESENSING, "Remote Sensing", ZclDataType.BITMAP_8_BIT, false, true, false, false));
-        attributeMap.put(ATTR_CONTROLSEQUENCEOFOPERATION, new ZclAttribute(this, ATTR_CONTROLSEQUENCEOFOPERATION, "Control Sequence Of Operation", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
-        attributeMap.put(ATTR_SYSTEMMODE, new ZclAttribute(this, ATTR_SYSTEMMODE, "System Mode", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_HVACSYSTEMTYPECONFIGURATION, new ZclAttribute(this, ATTR_HVACSYSTEMTYPECONFIGURATION, "Hvac System Type Configuration", ZclDataType.BITMAP_8_BIT, false, true, true, false));
+        attributeMap.put(ATTR_LOCALTEMPERATURECALIBRATION, new ZclAttribute(this, ATTR_LOCALTEMPERATURECALIBRATION, "Local Temperature Calibration", ZclDataType.SIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_OCCUPIEDCOOLINGSETPOINT, new ZclAttribute(this, ATTR_OCCUPIEDCOOLINGSETPOINT, "Occupied Cooling Setpoint", ZclDataType.SIGNED_16_BIT_INTEGER, true, true, true, false));
+        attributeMap.put(ATTR_OCCUPIEDHEATINGSETPOINT, new ZclAttribute(this, ATTR_OCCUPIEDHEATINGSETPOINT, "Occupied Heating Setpoint", ZclDataType.SIGNED_16_BIT_INTEGER, true, true, true, false));
+        attributeMap.put(ATTR_UNOCCUPIEDCOOLINGSETPOINT, new ZclAttribute(this, ATTR_UNOCCUPIEDCOOLINGSETPOINT, "Unoccupied Cooling Setpoint", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_UNOCCUPIEDHEATINGSETPOINT, new ZclAttribute(this, ATTR_UNOCCUPIEDHEATINGSETPOINT, "Unoccupied Heating Setpoint", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_MINHEATSETPOINTLIMIT, new ZclAttribute(this, ATTR_MINHEATSETPOINTLIMIT, "Min Heat Setpoint Limit", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_MAXHEATSETPOINTLIMIT, new ZclAttribute(this, ATTR_MAXHEATSETPOINTLIMIT, "Max Heat Setpoint Limit", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_MINCOOLSETPOINTLIMIT, new ZclAttribute(this, ATTR_MINCOOLSETPOINTLIMIT, "Min Cool Setpoint Limit", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_MAXCOOLSETPOINTLIMIT, new ZclAttribute(this, ATTR_MAXCOOLSETPOINTLIMIT, "Max Cool Setpoint Limit", ZclDataType.SIGNED_16_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_MINSETPOINTDEADBAND, new ZclAttribute(this, ATTR_MINSETPOINTDEADBAND, "Min Setpoint Dead Band", ZclDataType.SIGNED_8_BIT_INTEGER, false, true, true, false));
+        attributeMap.put(ATTR_REMOTESENSING, new ZclAttribute(this, ATTR_REMOTESENSING, "Remote Sensing", ZclDataType.BITMAP_8_BIT, false, true, true, false));
+        attributeMap.put(ATTR_CONTROLSEQUENCEOFOPERATION, new ZclAttribute(this, ATTR_CONTROLSEQUENCEOFOPERATION, "Control Sequence Of Operation", ZclDataType.ENUMERATION_8_BIT, true, true, true, false));
+        attributeMap.put(ATTR_SYSTEMMODE, new ZclAttribute(this, ATTR_SYSTEMMODE, "System Mode", ZclDataType.ENUMERATION_8_BIT, true, true, true, false));
         attributeMap.put(ATTR_ALARMMASK, new ZclAttribute(this, ATTR_ALARMMASK, "Alarm Mask", ZclDataType.BITMAP_8_BIT, false, true, false, false));
         attributeMap.put(ATTR_THERMOSTATRUNNINGMODE, new ZclAttribute(this, ATTR_THERMOSTATRUNNINGMODE, "Thermostat Running Mode", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
         attributeMap.put(ATTR_STARTOFWEEK, new ZclAttribute(this, ATTR_STARTOFWEEK, "Start Of Week", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
@@ -252,8 +252,8 @@ public class ZclThermostatCluster extends ZclCluster {
      * @param command the {@link ZclThermostatCommand} to which the response is being sent
      * @param response the {@link ZclThermostatCommand} to send
      */
-    public void sendResponse(ZclThermostatCommand command, ZclThermostatCommand response) {
-        super.sendResponse(command, response);
+    public Future<CommandResult> sendResponse(ZclThermostatCommand command, ZclThermostatCommand response) {
+        return super.sendResponse(command, response);
     }
 
     /**
@@ -712,6 +712,22 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
+     * Set the <i>Hvac System Type Configuration</i> attribute [attribute ID <b>0x0009</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param hvacSystemTypeConfiguration the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setHvacSystemTypeConfiguration(final Integer value) {
+        return write(serverAttributes.get(ATTR_HVACSYSTEMTYPECONFIGURATION), value);
+    }
+
+    /**
      * Get the <i>Hvac System Type Configuration</i> attribute [attribute ID <b>0x0009</b>].
      * <p>
      * The attribute is of type {@link Integer}.
@@ -754,6 +770,22 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
+     * Set the <i>Local Temperature Calibration</i> attribute [attribute ID <b>0x0010</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param localTemperatureCalibration the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setLocalTemperatureCalibration(final Integer value) {
+        return write(serverAttributes.get(ATTR_LOCALTEMPERATURECALIBRATION), value);
+    }
+
+    /**
      * Get the <i>Local Temperature Calibration</i> attribute [attribute ID <b>0x0010</b>].
      * <p>
      * The attribute is of type {@link Integer}.
@@ -793,6 +825,22 @@ public class ZclThermostatCluster extends ZclCluster {
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_LOCALTEMPERATURECALIBRATION));
+    }
+
+    /**
+     * Set the <i>Occupied Cooling Setpoint</i> attribute [attribute ID <b>0x0011</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param occupiedCoolingSetpoint the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setOccupiedCoolingSetpoint(final Integer value) {
+        return write(serverAttributes.get(ATTR_OCCUPIEDCOOLINGSETPOINT), value);
     }
 
     /**
@@ -856,6 +904,22 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
+     * Set the <i>Occupied Heating Setpoint</i> attribute [attribute ID <b>0x0012</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param occupiedHeatingSetpoint the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setOccupiedHeatingSetpoint(final Integer value) {
+        return write(serverAttributes.get(ATTR_OCCUPIEDHEATINGSETPOINT), value);
+    }
+
+    /**
      * Get the <i>Occupied Heating Setpoint</i> attribute [attribute ID <b>0x0012</b>].
      * <p>
      * The attribute is of type {@link Integer}.
@@ -916,6 +980,22 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
+     * Set the <i>Unoccupied Cooling Setpoint</i> attribute [attribute ID <b>0x0013</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param unoccupiedCoolingSetpoint the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setUnoccupiedCoolingSetpoint(final Integer value) {
+        return write(serverAttributes.get(ATTR_UNOCCUPIEDCOOLINGSETPOINT), value);
+    }
+
+    /**
      * Get the <i>Unoccupied Cooling Setpoint</i> attribute [attribute ID <b>0x0013</b>].
      * <p>
      * The attribute is of type {@link Integer}.
@@ -955,6 +1035,22 @@ public class ZclThermostatCluster extends ZclCluster {
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_UNOCCUPIEDCOOLINGSETPOINT));
+    }
+
+    /**
+     * Set the <i>Unoccupied Heating Setpoint</i> attribute [attribute ID <b>0x0014</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param unoccupiedHeatingSetpoint the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setUnoccupiedHeatingSetpoint(final Integer value) {
+        return write(serverAttributes.get(ATTR_UNOCCUPIEDHEATINGSETPOINT), value);
     }
 
     /**
@@ -1000,6 +1096,22 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
+     * Set the <i>Min Heat Setpoint Limit</i> attribute [attribute ID <b>0x0015</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param minHeatSetpointLimit the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setMinHeatSetpointLimit(final Integer value) {
+        return write(serverAttributes.get(ATTR_MINHEATSETPOINTLIMIT), value);
+    }
+
+    /**
      * Get the <i>Min Heat Setpoint Limit</i> attribute [attribute ID <b>0x0015</b>].
      * <p>
      * The attribute is of type {@link Integer}.
@@ -1039,6 +1151,22 @@ public class ZclThermostatCluster extends ZclCluster {
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_MINHEATSETPOINTLIMIT));
+    }
+
+    /**
+     * Set the <i>Max Heat Setpoint Limit</i> attribute [attribute ID <b>0x0016</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param maxHeatSetpointLimit the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setMaxHeatSetpointLimit(final Integer value) {
+        return write(serverAttributes.get(ATTR_MAXHEATSETPOINTLIMIT), value);
     }
 
     /**
@@ -1084,6 +1212,22 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
+     * Set the <i>Min Cool Setpoint Limit</i> attribute [attribute ID <b>0x0017</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param minCoolSetpointLimit the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setMinCoolSetpointLimit(final Integer value) {
+        return write(serverAttributes.get(ATTR_MINCOOLSETPOINTLIMIT), value);
+    }
+
+    /**
      * Get the <i>Min Cool Setpoint Limit</i> attribute [attribute ID <b>0x0017</b>].
      * <p>
      * The attribute is of type {@link Integer}.
@@ -1123,6 +1267,22 @@ public class ZclThermostatCluster extends ZclCluster {
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_MINCOOLSETPOINTLIMIT));
+    }
+
+    /**
+     * Set the <i>Max Cool Setpoint Limit</i> attribute [attribute ID <b>0x0018</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param maxCoolSetpointLimit the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setMaxCoolSetpointLimit(final Integer value) {
+        return write(serverAttributes.get(ATTR_MAXCOOLSETPOINTLIMIT), value);
     }
 
     /**
@@ -1168,6 +1328,22 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
+     * Set the <i>Min Setpoint Dead Band</i> attribute [attribute ID <b>0x0019</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param minSetpointDeadBand the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setMinSetpointDeadBand(final Integer value) {
+        return write(serverAttributes.get(ATTR_MINSETPOINTDEADBAND), value);
+    }
+
+    /**
      * Get the <i>Min Setpoint Dead Band</i> attribute [attribute ID <b>0x0019</b>].
      * <p>
      * The attribute is of type {@link Integer}.
@@ -1210,6 +1386,22 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
+     * Set the <i>Remote Sensing</i> attribute [attribute ID <b>0x001A</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is OPTIONAL
+     *
+     * @param remoteSensing the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setRemoteSensing(final Integer value) {
+        return write(serverAttributes.get(ATTR_REMOTESENSING), value);
+    }
+
+    /**
      * Get the <i>Remote Sensing</i> attribute [attribute ID <b>0x001A</b>].
      * <p>
      * The attribute is of type {@link Integer}.
@@ -1249,6 +1441,22 @@ public class ZclThermostatCluster extends ZclCluster {
         }
 
         return (Integer) readSync(serverAttributes.get(ATTR_REMOTESENSING));
+    }
+
+    /**
+     * Set the <i>Control Sequence Of Operation</i> attribute [attribute ID <b>0x001B</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param controlSequenceOfOperation the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setControlSequenceOfOperation(final Integer value) {
+        return write(serverAttributes.get(ATTR_CONTROLSEQUENCEOFOPERATION), value);
     }
 
     /**
@@ -1308,6 +1516,22 @@ public class ZclThermostatCluster extends ZclCluster {
     @Deprecated
     public Future<CommandResult> setControlSequenceOfOperationReporting(final int minInterval, final int maxInterval) {
         return setReporting(serverAttributes.get(ATTR_CONTROLSEQUENCEOFOPERATION), minInterval, maxInterval);
+    }
+
+    /**
+     * Set the <i>System Mode</i> attribute [attribute ID <b>0x001C</b>].
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param systemMode the {@link Integer} attribute value to be set
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #writeAttribute(int attributeId, Object value)}
+     */
+    @Deprecated
+    public Future<CommandResult> setSystemMode(final Integer value) {
+        return write(serverAttributes.get(ATTR_SYSTEMMODE), value);
     }
 
     /**

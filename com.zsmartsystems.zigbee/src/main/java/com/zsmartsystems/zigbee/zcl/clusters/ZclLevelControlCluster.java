@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -52,7 +52,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-24T10:14:44Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
 public class ZclLevelControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -144,14 +144,14 @@ public class ZclLevelControlCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeClientAttributes();
 
         return attributeMap;
     }
 
     @Override
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeServerAttributes();
 
         attributeMap.put(ATTR_CURRENTLEVEL, new ZclAttribute(this, ATTR_CURRENTLEVEL, "Current Level", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, true));
         attributeMap.put(ATTR_REMAININGTIME, new ZclAttribute(this, ATTR_REMAININGTIME, "Remaining Time", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, false, false));
@@ -214,8 +214,8 @@ public class ZclLevelControlCluster extends ZclCluster {
      * @param command the {@link ZclLevelControlCommand} to which the response is being sent
      * @param response the {@link ZclLevelControlCommand} to send
      */
-    public void sendResponse(ZclLevelControlCommand command, ZclLevelControlCommand response) {
-        super.sendResponse(command, response);
+    public Future<CommandResult> sendResponse(ZclLevelControlCommand command, ZclLevelControlCommand response) {
+        return super.sendResponse(command, response);
     }
 
     /**

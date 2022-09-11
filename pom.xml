@@ -4,7 +4,7 @@
 
 	<groupId>com.zsmartsystems</groupId>
 	<artifactId>zigbee</artifactId>
-	<version>1.4.0-SNAPSHOT</version>
+	<version>1.4.8-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>ZssBee</name>
@@ -38,7 +38,7 @@
 	</developers>
 
 	<properties>
-		<license.year>2021</license.year>
+		<license.year>2022</license.year>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<slf4j.version>1.7.30</slf4j.version>
@@ -281,7 +281,7 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.7.2</version>
+			<version>${slf4j.version}</version>
 		</dependency>
 
 		<dependency>

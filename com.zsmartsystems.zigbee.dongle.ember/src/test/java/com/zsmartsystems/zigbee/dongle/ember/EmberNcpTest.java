@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -13,6 +13,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -27,8 +28,11 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspClearKeyTableRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspClearKeyTableResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspEnergyScanResultHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetEui64Request;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetEui64Response;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetMulticastTableEntryRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetMulticastTableEntryResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNodeIdRequest;
@@ -45,9 +49,12 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspNetworkStateRespon
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspReadCountersRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspReadCountersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspScanCompleteHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetMulticastTableEntryRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetMulticastTableEntryResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetRadioPowerRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetRadioPowerResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStartScanRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberMulticastTableEntry;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 import com.zsmartsystems.zigbee.dongle.ember.internal.EzspProtocolHandler;
 import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransaction;
@@ -73,6 +80,12 @@ public class EmberNcpTest {
                 return transaction;
             }
         }).when(handler).sendEzspTransaction(ArgumentMatchers.any(EzspTransaction.class));
+        Mockito.doAnswer(new Answer<EzspTransaction>() {
+            @Override
+            public EzspTransaction answer(InvocationOnMock invocation) {
+                return transaction;
+            }
+        }).when(handler).sendEzspTransaction(ArgumentMatchers.any(EzspTransaction.class), ArgumentMatchers.anyLong());
 
         return ncp;
     }
@@ -198,7 +211,8 @@ public class EmberNcpTest {
         assertNotNull(response);
         assertEquals(0, response.size());
 
-        Mockito.verify(handler, Mockito.times(1)).sendEzspTransaction(ezspTransactionCapture.capture());
+        Mockito.verify(handler, Mockito.times(1)).sendEzspTransaction(ezspTransactionCapture.capture(),
+                ArgumentMatchers.anyLong());
 
         EzspFrameRequest request = ezspTransactionCapture.getValue().getRequest();
         assertTrue(request instanceof EzspStartScanRequest);
@@ -214,7 +228,8 @@ public class EmberNcpTest {
         Collection<EzspNetworkFoundHandler> response = ncp.doActiveScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, 123);
         assertNull(response);
 
-        Mockito.verify(handler, Mockito.times(1)).sendEzspTransaction(ezspTransactionCapture.capture());
+        Mockito.verify(handler, Mockito.times(1)).sendEzspTransaction(ezspTransactionCapture.capture(),
+                ArgumentMatchers.anyLong());
 
         EzspFrameRequest request = ezspTransactionCapture.getValue().getRequest();
         assertTrue(request instanceof EzspStartScanRequest);
@@ -229,7 +244,8 @@ public class EmberNcpTest {
         Collection<EzspNetworkFoundHandler> response = ncp.doActiveScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, 123);
         assertNull(response);
 
-        Mockito.verify(handler, Mockito.times(1)).sendEzspTransaction(ezspTransactionCapture.capture());
+        Mockito.verify(handler, Mockito.times(1)).sendEzspTransaction(ezspTransactionCapture.capture(),
+                ArgumentMatchers.anyLong());
 
         EzspFrameRequest request = ezspTransactionCapture.getValue().getRequest();
         assertTrue(request instanceof EzspStartScanRequest);
@@ -242,13 +258,24 @@ public class EmberNcpTest {
         Mockito.when(scanComplete.getStatus()).thenReturn(EmberStatus.EMBER_SUCCESS);
         EmberNcp ncp = getEmberNcp(scanComplete);
 
-        ncp.doEnergyScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, 123);
+        List<EzspEnergyScanResultHandler> scanResult = ncp.doEnergyScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, 123);
+        assertEquals(0, scanResult.size());
 
-        Mockito.verify(handler, Mockito.times(1)).sendEzspTransaction(ezspTransactionCapture.capture());
+        Mockito.verify(handler, Mockito.times(1)).sendEzspTransaction(ezspTransactionCapture.capture(),
+                ArgumentMatchers.anyLong());
 
         EzspFrameRequest request = ezspTransactionCapture.getValue().getRequest();
         assertTrue(request instanceof EzspStartScanRequest);
         assertEquals(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, ((EzspStartScanRequest) request).getChannelMask());
+
+        Mockito.when(scanComplete.getStatus()).thenReturn(EmberStatus.EMBER_DELIVERY_FAILED);
+        scanResult = ncp.doEnergyScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, 123);
+        assertNull(scanResult);
+
+        EzspEnergyScanResultHandler scanChannelResponse = Mockito.mock(EzspEnergyScanResultHandler.class);
+        ncp = getEmberNcp(scanChannelResponse);
+        scanResult = ncp.doEnergyScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, 123);
+        assertNull(scanResult);
     }
 
     @Test
@@ -263,4 +290,37 @@ public class EmberNcpTest {
         assertTrue(request instanceof EzspClearKeyTableRequest);
     }
 
+    @Test
+    public void getMulticastTableEntry() {
+        EmberNcp ncp = getEmberNcp(Mockito.mock(EzspGetMulticastTableEntryResponse.class));
+
+        EmberMulticastTableEntry response = ncp.getMulticastTableEntry(0);
+        assertNull(response);
+
+        Mockito.verify(handler, Mockito.times(1)).sendEzspTransaction(ezspTransactionCapture.capture());
+
+        EzspFrameRequest request = ezspTransactionCapture.getValue().getRequest();
+        assertTrue(request instanceof EzspGetMulticastTableEntryRequest);
+        assertEquals(0, ((EzspGetMulticastTableEntryRequest) request).getIndex());
+    }
+
+    @Test
+    public void setMulticastTableEntry() {
+        EmberNcp ncp = getEmberNcp(Mockito.mock(EzspSetMulticastTableEntryResponse.class));
+
+        EmberMulticastTableEntry emberMulticastTableEntry = new EmberMulticastTableEntry();
+        emberMulticastTableEntry.setEndpoint(1);
+        emberMulticastTableEntry.setMulticastId(0);
+        emberMulticastTableEntry.setNetworkIndex(0);
+        ncp.setMulticastTableEntry(0, emberMulticastTableEntry);
+
+        Mockito.verify(handler, Mockito.times(1)).sendEzspTransaction(ezspTransactionCapture.capture());
+
+        EzspFrameRequest request = ezspTransactionCapture.getValue().getRequest();
+        assertTrue(request instanceof EzspSetMulticastTableEntryRequest);
+        assertEquals(0, ((EzspSetMulticastTableEntryRequest) request).getIndex());
+        assertEquals(1, ((EzspSetMulticastTableEntryRequest) request).getValue().getEndpoint());
+        assertEquals(0, ((EzspSetMulticastTableEntryRequest) request).getValue().getMulticastId());
+        assertEquals(0, ((EzspSetMulticastTableEntryRequest) request).getValue().getNetworkIndex());
+    }
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -43,7 +43,7 @@ public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleComma
     protected ZigBeeNode getNode(ZigBeeNetworkManager networkManager, final String nodeId)
             throws IllegalArgumentException {
         try {
-            Integer nwkAddress = Integer.parseInt(nodeId);
+            Integer nwkAddress = getInteger(nodeId);
             if (networkManager.getNode(nwkAddress) != null) {
                 return networkManager.getNode(nwkAddress);
             }
@@ -285,6 +285,9 @@ public abstract class ZigBeeConsoleAbstractCommand implements ZigBeeConsoleComma
                 value = stringValue;
                 break;
             case DATA_8_BIT:
+                value = Integer.parseInt(stringValue);
+                break;
+            case DATA_16_BIT:
                 value = Integer.parseInt(stringValue);
                 break;
             case ENUMERATION_16_BIT:

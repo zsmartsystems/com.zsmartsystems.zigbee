@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -88,7 +88,7 @@ import com.zsmartsystems.zigbee.zdo.command.ManagementDirectJoinResponse;
 import com.zsmartsystems.zigbee.zdo.command.ManagementPermitJoiningResponse;
 import com.zsmartsystems.zigbee.zdo.command.ManagementCacheResponse;
 import com.zsmartsystems.zigbee.zdo.command.ManagementNetworkUpdateNotify;
-
+import com.zsmartsystems.zigbee.zdo.command.ParentAnnounce;
 
 /**
  * Enumeration of ZDP commands
@@ -583,7 +583,13 @@ public enum ZdoCommandType {
      * <p>
      * See {@link UserDescriptorSetRequest}
      */
-    USER_DESCRIPTOR_SET_REQUEST(0x0014, UserDescriptorSetRequest.class);
+    USER_DESCRIPTOR_SET_REQUEST(0x0014, UserDescriptorSetRequest.class),
+    /**
+     * Parent Announce
+     * <p>
+     * See {@link ParentAnnounce}
+     */
+    PARENT_ANNOUNCE(0x001F, ParentAnnounce.class);
 
     private final int clusterId;
     private final Class<? extends ZdoCommand> commandClass;

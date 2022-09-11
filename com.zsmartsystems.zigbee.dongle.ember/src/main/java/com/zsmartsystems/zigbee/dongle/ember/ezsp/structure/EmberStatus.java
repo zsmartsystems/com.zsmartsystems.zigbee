@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -453,6 +453,16 @@ public enum EmberStatus {
     EMBER_PAN_ID_CHANGED(0x009A),
 
     /**
+     * The network has been opened for joining.
+     */
+    EMBER_NETWORK_OPENED(0x009C),
+
+    /**
+     * The network has been closed for joining.
+     */
+    EMBER_NETWORK_CLOSED(0x009D),
+
+    /**
      * An attempt to join or rejoin the network failed because no router beacons could be heard by the
      * joining node.
      */
@@ -522,7 +532,7 @@ public enum EmberStatus {
     EMBER_APS_ENCRYPTION_ERROR(0x00A6),
 
     /**
-     *  There was an attempt to form a network using commercial security without setting the Trust
+     * There was an attempt to form a network using commercial security without setting the Trust
      * Center master key first.
      */
     EMBER_TRUST_CENTER_MASTER_KEY_NOT_SET(0x00A7),

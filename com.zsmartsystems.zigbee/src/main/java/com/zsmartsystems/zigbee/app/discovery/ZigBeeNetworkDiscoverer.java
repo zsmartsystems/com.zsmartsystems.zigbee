@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -108,27 +108,6 @@ public class ZigBeeNetworkDiscoverer implements ZigBeeCommandListener, ZigBeeAnn
         networkManager.removeCommandListener(this);
         networkManager.removeAnnounceListener(this);
         initialized = false;
-    }
-
-    /**
-     * Sets the retry period in milliseconds. This is the amount of time the service will wait following a failed
-     * request before performing a retry.
-     *
-     * @param retryPeriod the period in milliseconds between retries
-     * @deprecated Retires are handled in the transaction manager
-     */
-    @Deprecated
-    protected void setRetryPeriod(int retryPeriod) {
-    }
-
-    /**
-     * Sets the maximum number of retries the service will perform at any stage before failing.
-     *
-     * @param retryCount the maximum number of retries.
-     * @deprecated Retires are handled in the transaction manager
-     */
-    @Deprecated
-    protected void setRetryCount(int retryCount) {
     }
 
     /**

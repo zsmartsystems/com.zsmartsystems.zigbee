@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -265,8 +265,9 @@ public class NeighborTable {
     @Override
     public String toString() {
         return "NeighborTable [extendedPanId=" + extendedPanId + ", extendedAddress=" + extendedAddress
-                + ", networkAddress=" + networkAddress + ", deviceType=" + deviceType + ", rxOnWhenIdle=" + rxOnWhenIdle
-                + ", relationship=" + relationship + ", permitJoining=" + permitJoining + ", depth=" + depth + ", lqi="
+                + ", networkAddress=" + String.format("%04X", networkAddress) + ", deviceType=" + deviceType
+                + ", rxOnWhenIdle=" + rxOnWhenIdle + ", relationship=" + relationship + ", permitJoining="
+                + permitJoining + ", depth=" + depth + ", lqi="
                 + lqi + "]";
     }
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -17,6 +17,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.TestUtilities;
+import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.database.ZclAttributeDao;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclClusterType;
@@ -33,7 +34,7 @@ public class ZclAttributeTest {
         ZclAttribute attribute = new ZclAttribute(new ZclOnOffCluster(null), 0, "Test Name",
                 ZclDataType.UNSIGNED_8_BIT_INTEGER, false, false, false, false);
 
-        assertEquals(ZclClusterType.ON_OFF, attribute.getCluster());
+        assertEquals(ZclClusterType.ON_OFF, attribute.getClusterType());
         assertEquals(0, attribute.getId());
         assertEquals("Test Name", attribute.getName());
         assertEquals(ZclDataType.UNSIGNED_8_BIT_INTEGER, attribute.getDataType());
@@ -125,6 +126,17 @@ public class ZclAttributeTest {
 
         attribute.setReporting(1, 2, 3);
         Mockito.verify(cluster, Mockito.times(1)).setReporting(123, 1, 2, 3);
+    }
+
+    @Test
+    public void getZigBeeAddress() {
+        ZclCluster cluster = Mockito.mock(ZclCluster.class);
+        ZclAttribute attribute = new ZclAttribute(cluster, 123, "Test Name", ZclDataType.UNSIGNED_8_BIT_INTEGER, false,
+                false, false, false);
+
+        Mockito.when(cluster.getZigBeeAddress()).thenReturn(new ZigBeeEndpointAddress("123/4"));
+
+        assertEquals(new ZigBeeEndpointAddress("123/4"), attribute.getZigBeeAddress());
     }
 
     @Test

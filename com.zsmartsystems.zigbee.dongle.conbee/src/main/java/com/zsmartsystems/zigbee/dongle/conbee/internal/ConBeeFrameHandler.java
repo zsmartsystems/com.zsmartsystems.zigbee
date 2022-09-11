@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -19,6 +19,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -274,31 +275,39 @@ public class ConBeeFrameHandler {
         StringBuilder result = new StringBuilder();
         // Send the data
         logger.debug("CONBEE TX: {}", frame);
-        serialPort.write(SLIP_END);
 
-        for (int val : frame.getOutputBuffer()) {
+        final int[] dataBuffer = frame.getOutputBuffer();
+        List<Integer> data = new ArrayList<>(dataBuffer.length * 2);
+
+        data.add(SLIP_END);
+
+        for (int val : dataBuffer) {
             result.append(String.format(" %02X", val));
             // logger.debug("CONBEE TX: {}", String.format("%02X", val));
             switch (val) {
                 case SLIP_END:
                     // logger.debug("CONBEE TX: [ESC]");
-                    serialPort.write(SLIP_ESC);
-                    serialPort.write(SLIP_ESC_END);
+                    data.add(SLIP_ESC);
+                    data.add(SLIP_ESC_END);
                     break;
                 case SLIP_ESC:
                     // logger.debug("CONBEE TX: [ESC]");
-                    serialPort.write(SLIP_ESC);
-                    serialPort.write(SLIP_ESC_ESC);
+                    data.add(SLIP_ESC);
+                    data.add(SLIP_ESC_ESC);
                     break;
                 default:
-                    serialPort.write(val);
+                    data.add(val);
                     break;
             }
         }
 
         logger.debug("CONBEE TX:{}", result.toString());
 
-        serialPort.write(SLIP_END);
+        data.add(SLIP_END);
+
+        int[] outputBuffer = new int[data.size()];
+        for(int i = 0; i < data.size(); ++i) outputBuffer[i] = data.get(i);
+        serialPort.write(outputBuffer);
 
         startRetryTimer();
     }

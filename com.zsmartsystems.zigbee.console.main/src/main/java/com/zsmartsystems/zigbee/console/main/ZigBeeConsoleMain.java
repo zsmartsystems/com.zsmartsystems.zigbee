@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -35,11 +35,13 @@ import com.zsmartsystems.zigbee.app.iasclient.ZigBeeIasCieExtension;
 import com.zsmartsystems.zigbee.app.otaserver.ZigBeeOtaUpgradeExtension;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleMmoHashCommand;
+import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpAddressTableCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpChildrenCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpConfigurationCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpCountersCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpHandlerCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpMfglibCommand;
+import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpMulticastCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpPolicyCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpRoutingCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpScanCommand;
@@ -69,17 +71,24 @@ import com.zsmartsystems.zigbee.transport.TrustCentreJoinMode;
 import com.zsmartsystems.zigbee.transport.ZigBeePort;
 import com.zsmartsystems.zigbee.transport.ZigBeePort.FlowControl;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclBallastConfigurationCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBinaryInputBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclColorControlCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclDiagnosticsCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclElectricalMeasurementCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclGroupsCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclIasZoneCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclIdentifyCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclMeteringCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclPollControlCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclPowerConfigurationCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclPressureMeasurementCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclScenesCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclTemperatureMeasurementCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclThermostatCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclWindowCoveringCluster;
 
@@ -111,19 +120,27 @@ public class ZigBeeConsoleMain {
         final Set<Integer> supportedClientClusters = new TreeSet<>();
         supportedClientClusters.addAll(Stream
                 .of(ZclBasicCluster.CLUSTER_ID, ZclIdentifyCluster.CLUSTER_ID, ZclGroupsCluster.CLUSTER_ID,
-                        ZclScenesCluster.CLUSTER_ID,
+                        ZclPowerConfigurationCluster.CLUSTER_ID, ZclScenesCluster.CLUSTER_ID,
                         ZclPollControlCluster.CLUSTER_ID, ZclOnOffCluster.CLUSTER_ID, ZclLevelControlCluster.CLUSTER_ID,
                         ZclColorControlCluster.CLUSTER_ID, ZclPressureMeasurementCluster.CLUSTER_ID,
+                        ZclTemperatureMeasurementCluster.CLUSTER_ID, ZclIasZoneCluster.CLUSTER_ID,
                         ZclThermostatCluster.CLUSTER_ID, ZclWindowCoveringCluster.CLUSTER_ID,
+                        ZclMeteringCluster.CLUSTER_ID, ZclElectricalMeasurementCluster.CLUSTER_ID,
+                        ZclDiagnosticsCluster.CLUSTER_ID, ZclPowerConfigurationCluster.CLUSTER_ID,
+                        ZclBallastConfigurationCluster.CLUSTER_ID, ZclOtaUpgradeCluster.CLUSTER_ID,
                         ZclBinaryInputBasicCluster.CLUSTER_ID, 1000)
                 .collect(Collectors.toSet()));
 
         final Set<Integer> supportedServerClusters = new TreeSet<>();
         supportedServerClusters.addAll(Stream
                 .of(ZclBasicCluster.CLUSTER_ID, ZclIdentifyCluster.CLUSTER_ID, ZclGroupsCluster.CLUSTER_ID,
-                        ZclScenesCluster.CLUSTER_ID,
+                        ZclScenesCluster.CLUSTER_ID, ZclPowerConfigurationCluster.CLUSTER_ID,
                         ZclPollControlCluster.CLUSTER_ID, ZclOnOffCluster.CLUSTER_ID, ZclLevelControlCluster.CLUSTER_ID,
                         ZclColorControlCluster.CLUSTER_ID, ZclPressureMeasurementCluster.CLUSTER_ID,
+                        ZclOtaUpgradeCluster.CLUSTER_ID, ZclMeteringCluster.CLUSTER_ID,
+                        ZclElectricalMeasurementCluster.CLUSTER_ID,
+                        ZclDiagnosticsCluster.CLUSTER_ID, ZclBallastConfigurationCluster.CLUSTER_ID,
+                        ZclTemperatureMeasurementCluster.CLUSTER_ID, ZclIasZoneCluster.CLUSTER_ID,
                         ZclWindowCoveringCluster.CLUSTER_ID, ZclBinaryInputBasicCluster.CLUSTER_ID, 1000)
                 .collect(Collectors.toSet()));
 
@@ -237,7 +254,8 @@ public class ZigBeeConsoleMain {
             ZigBeeDongleEzsp emberDongle = new ZigBeeDongleEzsp(serialPort);
             dongle = emberDongle;
 
-            emberDongle.updateDefaultConfiguration(EzspConfigId.EZSP_CONFIG_SOURCE_ROUTE_TABLE_SIZE, 32);
+            emberDongle.updateDefaultConfiguration(EzspConfigId.EZSP_CONFIG_ADDRESS_TABLE_SIZE, 16);
+            emberDongle.updateDefaultConfiguration(EzspConfigId.EZSP_CONFIG_SOURCE_ROUTE_TABLE_SIZE, 100);
             emberDongle.updateDefaultConfiguration(EzspConfigId.EZSP_CONFIG_APS_UNICAST_MESSAGE_COUNT, 16);
             emberDongle.updateDefaultConfiguration(EzspConfigId.EZSP_CONFIG_NEIGHBOR_TABLE_SIZE, 24);
 
@@ -254,6 +272,7 @@ public class ZigBeeConsoleMain {
             transportOptions.addOption(TransportConfigOption.CONCENTRATOR_CONFIG, concentratorConfig);
 
             // Add transport specific console commands
+            commands.add(EmberConsoleNcpAddressTableCommand.class);
             commands.add(EmberConsoleNcpChildrenCommand.class);
             commands.add(EmberConsoleNcpConfigurationCommand.class);
             commands.add(EmberConsoleNcpCountersCommand.class);
@@ -269,6 +288,7 @@ public class ZigBeeConsoleMain {
             commands.add(EmberConsoleNcpHandlerCommand.class);
             commands.add(EmberConsoleNcpTokenCommand.class);
             commands.add(EmberConsoleNcpRoutingCommand.class);
+            commands.add(EmberConsoleNcpMulticastCommand.class);
 
             emberDongle.setEmberNcpResetProvider(new EmberNcpHardwareReset());
         } else if (dongleName.toUpperCase().equals("XBEE")) {
@@ -398,7 +418,7 @@ public class ZigBeeConsoleMain {
         networkManager.addExtension(new ZigBeeBasicServerExtension());
 
         ZigBeeDiscoveryExtension discoveryExtension = new ZigBeeDiscoveryExtension();
-        discoveryExtension.setUpdatePeriod(0);
+        discoveryExtension.setUpdateMeshPeriod(0);
         discoveryExtension.setUpdateOnChange(false);
         networkManager.addExtension(discoveryExtension);
 

@@ -1,22 +1,16 @@
+sudo: false
 language: java
-script: mvn clean install
-dist: trusty
-notifications:
-  email:
-    secure: M2SYGSCzeUQWp4uvXw95tY27LaicqOENNuVQNFPaojw6pxoFYOgXwjsoMWgfkXHFa0URWippuqKZ2BzXndUtOWhG+k2+6v/VYKC9GBI9hs9DX/OQ6WaEXAtlN4zN+iOllFYK2aSGmD/XuT0u5o7BzQceqXHNXVMHwq2MD+Tb4PEfNHhtOcqLBjyQkJaXSl6R7BCuQA8W4viH/ubsWd+wOIDZHI/qhgwBQzuKXuvX7Yg2vMJWmd69HfnMKM+HL/CYkj+5JI+xumK2xQKovtUfNavQZeXWDKeHZWldxPu5w/F95GyTWDHyK9RLV/6Ztg1XV3HKWxFZNpqR/Ysj/ywMd90QJxbm1b8exCE3o2YOs+v+XQLkLk6aBuwHCHKx53kC0zmJmq1BrC0aiJ5e7FUFwYOwt+RWND5RMQo5XERqlJ9lM5i1+W48U4ujT14QCdh5yORFAtMGCU2XpLtsne2us4zQ2CAxFd19mMFB9cZKsSCtuHZhGmquZvBF9novvfHaN36/t/K0LTRti6XxoCl7zyeGaKB1NrHF3tK43zD3tFJ4+uwJhy3uNpldXnQpq0u3Ud7R5SKJApP24xe5xxfYHcWfWT7CbLeuvjXSJMxwZL6eSjHGM4FrQS35eFJVIiznla1hyK087yJ4/iRcnvsM6tDYywYJDjHbAzNUSkOH1S4=
-before_deploy: git checkout master
+cache:
+  directories:
+  - "$HOME/.cache"
+
+before_install:
+  - cp .travis.settings.xml $HOME/.m2/settings.xml
+
 deploy:
-  provider: bintray
-  file: travis-deploy-bintray.json
-  user: cdjackson
-  key:
-    secure: WR0JmkIZc2fwgMwZYVL1vY4iYM0JOjOjGsU+wVRtzGcW4LOZrpq/+mB1dOjTTLF+IvtTm/wYhbTU9Lh03nkWG7a17LV6PsBH0TPiBTgWVsgYO93qpGFqZeJmvWHmqd2B8kkwuUGw0IX6BUVZ5FlVHsELPEt5nMfrCO0CRHTEztAg/5fKXracjpBBcbYS/n7Rc2uO5+Jm6XEi2fMBt3wDnB7akyUPmsS/4vrJ4wbpckbxMKaE0boqbOUWZ3dDPKncUnU7qzcxO+f4DqADcccKeLBaOHhYqV39ARCojVDW3oj8rxSY2sYzqHn08fwzcW7/N16Y4QC1ifNJIKOyWtFmKhjiJ1EXy9hrq2dPvwHM4TPX1Vhtt2lWRY+OvN0ruE5IgSuoICsKGBuuHn5VS/YERARxhT2laidfTtOaMHghzuI5yVD0AdEN1t5DqeY3pbmWsH51QYhi4XWiTUgyag8JEP7MyrqLDp3+QZilqeo3ZBLr6S14pJG3ubrDFz6NjAiqFk5qyWmJQ7QQ8BLwGJhFJSNXPmsK8avIX1btyD1g9oVJjxd+tBx6iIAnpJQ257HFMYibIfnCYoIiAbmDdltVEI0HLJPeWzUepEMkWyrMwt5bg5olb6qeHgriCR3oSfe2tZ4c0wyP5q6hQDQUPCg/OlIrLtDic43x0A8ijpAwLQs=
-
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
-
-global:
-  - CODECOV_TOKEN=:uuid-repo-token
+  provider: script
+  script: "mvn -B -V deploy"
+  skip_cleanup: true
 
 branches:
   only:

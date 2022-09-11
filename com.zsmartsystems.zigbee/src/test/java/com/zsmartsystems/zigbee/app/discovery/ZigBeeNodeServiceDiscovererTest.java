@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -39,6 +39,7 @@ import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.app.discovery.ZigBeeNodeServiceDiscoverer.NodeDiscoveryTask;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransaction;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionFuture;
@@ -83,7 +84,7 @@ public class ZigBeeNodeServiceDiscovererTest {
 
                 ZigBeeTransactionFuture commandFuture = new ZigBeeTransactionFuture(
                         Mockito.mock(ZigBeeTransaction.class));
-                CommandResult result = new CommandResult(responses.get(command.getClusterId()));
+                CommandResult result = new CommandResult(ZigBeeStatus.SUCCESS, responses.get(command.getClusterId()));
                 commandFuture.set(result);
                 return commandFuture;
             }

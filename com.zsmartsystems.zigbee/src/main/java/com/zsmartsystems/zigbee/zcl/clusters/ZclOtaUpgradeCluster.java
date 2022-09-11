@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -64,7 +64,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
 public class ZclOtaUpgradeCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -162,7 +162,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeClientAttributes();
 
         attributeMap.put(ATTR_UPGRADESERVERID, new ZclAttribute(this, ATTR_UPGRADESERVERID, "Upgrade Server ID", ZclDataType.IEEE_ADDRESS, true, true, false, false));
         attributeMap.put(ATTR_FILEOFFSET, new ZclAttribute(this, ATTR_FILEOFFSET, "File Offset", ZclDataType.UNSIGNED_32_BIT_INTEGER, true, true, false, false));
@@ -181,7 +181,7 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeServerAttributes();
 
         return attributeMap;
     }
@@ -239,8 +239,8 @@ public class ZclOtaUpgradeCluster extends ZclCluster {
      * @param command the {@link ZclOtaUpgradeCommand} to which the response is being sent
      * @param response the {@link ZclOtaUpgradeCommand} to send
      */
-    public void sendResponse(ZclOtaUpgradeCommand command, ZclOtaUpgradeCommand response) {
-        super.sendResponse(command, response);
+    public Future<CommandResult> sendResponse(ZclOtaUpgradeCommand command, ZclOtaUpgradeCommand response) {
+        return super.sendResponse(command, response);
     }
 
     /**

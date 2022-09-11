@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -65,7 +65,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
 public class ZclPrepaymentCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -605,14 +605,14 @@ public class ZclPrepaymentCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeClientAttributes();
 
         return attributeMap;
     }
 
     @Override
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeServerAttributes();
 
         attributeMap.put(ATTR_PAYMENTCONTROLCONFIGURATION, new ZclAttribute(this, ATTR_PAYMENTCONTROLCONFIGURATION, "Payment Control Configuration", ZclDataType.BITMAP_16_BIT, true, true, false, false));
         attributeMap.put(ATTR_CREDITREMAINING, new ZclAttribute(this, ATTR_CREDITREMAINING, "Credit Remaining", ZclDataType.SIGNED_32_BIT_INTEGER, true, true, false, false));
@@ -809,8 +809,8 @@ public class ZclPrepaymentCluster extends ZclCluster {
      * @param command the {@link ZclPrepaymentCommand} to which the response is being sent
      * @param response the {@link ZclPrepaymentCommand} to send
      */
-    public void sendResponse(ZclPrepaymentCommand command, ZclPrepaymentCommand response) {
-        super.sendResponse(command, response);
+    public Future<CommandResult> sendResponse(ZclPrepaymentCommand command, ZclPrepaymentCommand response) {
+        return super.sendResponse(command, response);
     }
 
     /**

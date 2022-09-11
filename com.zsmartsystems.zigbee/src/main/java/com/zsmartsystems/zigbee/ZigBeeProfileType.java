@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -17,8 +17,18 @@ import javax.annotation.Generated;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-01-15T11:25:03Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-08T20:48:02Z")
 public enum ZigBeeProfileType {
+
+    /**
+     * ZigBee Device Profile, 0, 0x0000
+     */
+    ZIGBEE_DEVICE_PROFILE(0x0000),
+
+    /**
+     * Industrial Plant Monitoring, 257, 0x0101
+     */
+    INDUSTRIAL_PLANT_MONITORING(0x0101),
 
     /**
      * ZigBee Home Automation, 260, 0x0104
@@ -26,14 +36,24 @@ public enum ZigBeeProfileType {
     ZIGBEE_HOME_AUTOMATION(0x0104),
 
     /**
+     * ZigBee Commercial Building Automation, 261, 0x0105
+     */
+    ZIGBEE_COMMERCIAL_BUILDING_AUTOMATION(0x0105),
+
+    /**
+     * ZigBee Wireless Sensor Networks, 262, 0x0106
+     */
+    ZIGBEE_WIRELESS_SENSOR_NETWORKS(0x0106),
+
+    /**
      * ZigBee Smart Energy, 265, 0x0109
      */
     ZIGBEE_SMART_ENERGY(0x0109),
 
     /**
-     * ZigBee Green Power, 41230, 0xA10E
+     * ZigBee Green Power, 41440, 0xA1E0
      */
-    ZIGBEE_GREEN_POWER(0xA10E),
+    ZIGBEE_GREEN_POWER(0xA1E0),
 
     /**
      * ZigBee Light Link, 49246, 0xC05E

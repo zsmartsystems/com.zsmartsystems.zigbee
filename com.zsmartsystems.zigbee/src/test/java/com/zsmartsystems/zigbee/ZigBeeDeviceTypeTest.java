@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
@@ -28,6 +29,9 @@ public class ZigBeeDeviceTypeTest {
         assertEquals(ZigBeeDeviceType.DIMMABLE_LIGHT, ZigBeeDeviceType.getByValue(0x0101));
         assertEquals(ZigBeeDeviceType.COLOR_DIMMABLE_LIGHT, ZigBeeDeviceType.getByValue(0x0102));
 
+        assertEquals(ZigBeeDeviceType.ON_OFF_SWITCH,
+                ZigBeeDeviceType.getByValue(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION, 0x0000));
+
         assertEquals(ZigBeeDeviceType.LEVEL_CONTROL_SWITCH,
                 ZigBeeDeviceType.getByValue(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION, 0x0001));
 
@@ -38,5 +42,7 @@ public class ZigBeeDeviceTypeTest {
         assertEquals(0x0107, ZigBeeDeviceType.OCCUPANCY_SENSOR.getKey());
         assertEquals(0x0301, ZigBeeDeviceType.THERMOSTAT.getKey());
         assertEquals(0x0402, ZigBeeDeviceType.IAS_ZONE.getKey());
+
+        assertNull(ZigBeeDeviceType.getByValue(ZigBeeProfileType.ZIGBEE_GREEN_POWER, 0x1111));
     }
 }

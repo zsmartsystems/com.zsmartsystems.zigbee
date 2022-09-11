@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -21,7 +21,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclColorControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.MoveToColorCommand;
 
 /**
- * Uses the OnOff cluster to switch a device on
+ * Uses the ColorControl cluster to change the colour of a device
  *
  * @author Chris Jackson
  *
@@ -29,12 +29,12 @@ import com.zsmartsystems.zigbee.zcl.clusters.colorcontrol.MoveToColorCommand;
 public class ZigBeeConsoleColorCommand extends ZigBeeConsoleAbstractCommand {
     @Override
     public String getCommand() {
-        return "on";
+        return "color";
     }
 
     @Override
     public String getDescription() {
-        return "Switches a device ON";
+        return "Sets the color on a device";
     }
 
     @Override

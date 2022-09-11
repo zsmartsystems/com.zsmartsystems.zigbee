@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -79,6 +79,16 @@ public interface EzspProtocolHandler {
      * @return response {@link EzspTransaction}
      */
     public EzspTransaction sendEzspTransaction(EzspTransaction ezspTransaction);
+
+    /**
+     * Sends an EZSP request to the NCP and waits for the response. The response is correlated with the request and the
+     * returned {@link EzspTransaction} contains the request and response data.
+     *
+     * @param ezspTransaction Request {@link EzspTransaction}
+     * @param timeout the timeout for the transaction in seconds
+     * @return response {@link EzspTransaction}
+     */
+    public EzspTransaction sendEzspTransaction(EzspTransaction ezspTransaction, long timeout);
 
     /**
      * Wait for the requested {@link EzspFrameResponse} to be received

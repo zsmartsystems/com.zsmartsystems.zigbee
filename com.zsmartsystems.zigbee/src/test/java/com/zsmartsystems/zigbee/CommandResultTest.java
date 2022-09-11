@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,14 +7,16 @@
  */
 package com.zsmartsystems.zigbee;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneEnrollResponse;
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.groups.AddGroupResponse;
+import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneEnrollResponse;
 
 /**
  *
@@ -54,6 +56,12 @@ public class CommandResultTest {
 
         commandResult = new CommandResult(ZigBeeStatus.SUCCESS, new DefaultResponse(1, ZclStatus.FAILURE));
         assertTrue(commandResult.isError());
+
+        // Note that only ZDO status responses are reported here
+        commandResult = new CommandResult(ZigBeeStatus.SUCCESS,
+                new AddGroupResponse(ZclStatus.INSUFFICIENT_SPACE, 20));
+        assertFalse(commandResult.isError());
+        assertEquals(Integer.valueOf(0xFFFF), commandResult.getStatusCode());
     }
 
     @Test
@@ -76,5 +84,4 @@ public class CommandResultTest {
         CommandResult commandResult = new CommandResult(ZigBeeStatus.FAILURE, null);
         assertTrue(commandResult.isTimeout());
     }
-
 }

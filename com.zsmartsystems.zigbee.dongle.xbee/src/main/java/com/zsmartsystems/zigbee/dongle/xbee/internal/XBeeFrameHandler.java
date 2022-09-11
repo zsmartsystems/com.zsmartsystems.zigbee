@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -356,20 +356,27 @@ public class XBeeFrameHandler {
             // Remember the command we're processing
             sentCommand = nextFrame;
 
-            serialPort.write(XBEE_FLAG);
+            final int[] dataBuffer = nextFrame.serialize();
+            List<Integer> data = new ArrayList<>(dataBuffer.length * 2);
+
+            data.add(XBEE_FLAG);
 
             // Send the data
             StringBuilder builder = new StringBuilder();
-            for (int sendByte : nextFrame.serialize()) {
+            for (int sendByte : dataBuffer) {
                 builder.append(String.format(" %02X", sendByte));
                 if (escapeCodes.contains(sendByte)) {
-                    serialPort.write(XBEE_ESCAPE);
-                    serialPort.write(sendByte ^ XBEE_XOR);
+                    data.add(XBEE_ESCAPE);
+                    data.add(sendByte ^ XBEE_XOR);
                 } else {
-                    serialPort.write(sendByte);
+                    data.add(sendByte);
                 }
             }
             logger.debug("TX XBEE Data:{}", builder.toString());
+
+            int[] outputBuffer = new int[data.size()];
+            for(int i = 0; i < data.size(); ++i) outputBuffer[i] = data.get(i);
+            serialPort.write(outputBuffer);
 
             // Start the timeout
             startTimer();

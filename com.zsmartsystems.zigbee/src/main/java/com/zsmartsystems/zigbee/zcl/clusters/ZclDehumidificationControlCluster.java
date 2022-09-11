@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -26,7 +26,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-10T11:55:03Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
 public class ZclDehumidificationControlCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -85,14 +85,14 @@ public class ZclDehumidificationControlCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeClientAttributes();
 
         return attributeMap;
     }
 
     @Override
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeServerAttributes();
 
         attributeMap.put(ATTR_RELATIVEHUMIDITY, new ZclAttribute(this, ATTR_RELATIVEHUMIDITY, "Relative Humidity", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
         attributeMap.put(ATTR_DEHUMIDIFICATIONCOOLING, new ZclAttribute(this, ATTR_DEHUMIDIFICATIONCOOLING, "Dehumidification Cooling", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));

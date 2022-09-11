@@ -216,4 +216,31 @@
             <name>Attribute Information</name>
         </field>
     </command>
+    
+    <attribute code="0xFFFD" type="UNSIGNED_16_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFE" default="0x0001">
+        <name>Cluster Revision</name>
+        <description>The ClusterRevision global attribute is mandatory for all cluster instances, client and server, conforming to ZCL revision 6 (ZCL6) and later ZCL revisions. This cluster attribute represents the revision of the cluster specification that has been implemented. An implementation of a cluster specification before ZCL6 SHALL have an assumed cluster revision of 0. The initial value for the ClusterRevision attribute SHALL be 1. The ClusterRevision attribute SHALL be incremented and associated with each approved revision and release of a cluster specification.</description>
+    </attribute>
+    <attribute code="0xFFFE" type="ENUMERATION_16_BIT" side="server" optional="false" writable="false" reportable="false" class="AttributeReportingStatusEnum">
+        <name>Attribute Reporting Status</name>
+        <description>When reporting requires sending multiple Report Attributes commands, this attribute SHOULD be included in the last attribute record, to indicate that all required attributes have been reported, or that there are still attributes pending to be reported</description>
+    </attribute>
+    
+    <attribute code="0xFFFD" type="UNSIGNED_16_BIT_INTEGER" side="client" optional="true" writable="false" reportable="false" minimum="0x0000" maximum="0xFFFE" default="0x0001">
+        <name>Cluster Revision</name>
+        <description>The ClusterRevision global attribute is mandatory for all cluster instances, client and server, conforming to ZCL revision 6 (ZCL6) and later ZCL revisions. This cluster attribute represents the revision of the cluster specification that has been implemented. An implementation of a cluster specification before ZCL6 SHALL have an assumed cluster revision of 0. The initial value for the ClusterRevision attribute SHALL be 1. The ClusterRevision attribute SHALL be incremented and associated with each approved revision and release of a cluster specification.</description>
+    </attribute>
+    <attribute code="0xFFFE" type="ENUMERATION_16_BIT" side="client" optional="false" writable="false" reportable="false" class="AttributeReportingStatusEnum">
+        <name>Attribute Reporting Status</name>
+        <description>When reporting requires sending multiple Report Attributes commands, this attribute SHOULD be included in the last attribute record, to indicate that all required attributes have been reported, or that there are still attributes pending to be reported</description>
+    </attribute>
+    
+    <constant type="ENUMERATION_8_BIT" class="AttributeReportingStatusEnum">
+        <name>Attribute Reporting Status Enum</name>
+        <value code="0x00" name="Pending">
+        </value>
+        <value code="0x01" name="Attribute Reporting Complete">
+        </value>
+    </constant>
+    
 </cluster>

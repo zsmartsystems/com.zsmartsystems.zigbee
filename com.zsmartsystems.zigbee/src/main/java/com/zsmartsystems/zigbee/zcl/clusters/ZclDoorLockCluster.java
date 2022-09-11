@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -56,7 +56,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
 public class ZclDoorLockCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -314,14 +314,14 @@ public class ZclDoorLockCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeClientAttributes();
 
         return attributeMap;
     }
 
     @Override
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeServerAttributes();
 
         attributeMap.put(ATTR_LOCKSTATE, new ZclAttribute(this, ATTR_LOCKSTATE, "Lock State", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
         attributeMap.put(ATTR_LOCKTYPE, new ZclAttribute(this, ATTR_LOCKTYPE, "Lock Type", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
@@ -421,8 +421,8 @@ public class ZclDoorLockCluster extends ZclCluster {
      * @param command the {@link ZclDoorLockCommand} to which the response is being sent
      * @param response the {@link ZclDoorLockCommand} to send
      */
-    public void sendResponse(ZclDoorLockCommand command, ZclDoorLockCommand response) {
-        super.sendResponse(command, response);
+    public Future<CommandResult> sendResponse(ZclDoorLockCommand command, ZclDoorLockCommand response) {
+        return super.sendResponse(command, response);
     }
 
     /**

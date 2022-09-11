@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -32,9 +32,11 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurity
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberInitialSecurityState;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberJoinMethod;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyStructBitmask;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberLibraryId;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberMulticastTableEntry;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNodeType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberOutgoingMessageType;
@@ -44,6 +46,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberPrivateKeyData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberPublicKey283k1Data;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberPublicKeyData;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspExtendedValueId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspMfgTokenId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspNetworkScanType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspPolicyId;
@@ -313,5 +316,17 @@ public class EzspSerializer {
 
     public void serializeEmberBeaconData(EmberBeaconData beacon) {
         beacon.serialize(this);
+    }
+
+    public void serializeEmberMulticastTableEntry(EmberMulticastTableEntry emberMulticastTableEntry) {
+        emberMulticastTableEntry.serialize(this);
+    }
+
+    public void serializeEmberKeyStatus(EmberKeyStatus emberKeyStatus) {
+        buffer[length++] = emberKeyStatus.getKey();
+    }
+
+    public void serializeEzspExtendedValueId(EzspExtendedValueId extendedValueId) {
+        buffer[length++] = extendedValueId.getKey();
     }
 }

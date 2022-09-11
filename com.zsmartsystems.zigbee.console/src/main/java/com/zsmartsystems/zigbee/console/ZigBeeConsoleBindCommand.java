@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -11,9 +11,9 @@ import java.io.PrintStream;
 import java.util.concurrent.ExecutionException;
 
 import com.zsmartsystems.zigbee.CommandResult;
-import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.groups.ZigBeeGroup;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 
 /**
@@ -57,18 +57,19 @@ public class ZigBeeConsoleBindCommand extends ZigBeeConsoleAbstractCommand {
         final ZigBeeEndpoint sourceEndpoint = getEndpoint(networkManager, sourceEndpointParam);
         ZclCluster cluster = getCluster(sourceEndpoint, clusterSpecParam);
 
-        IeeeAddress destAddress;
-        int destEndpoint;
+        CommandResult response;
         if (destEndpointParam != null) {
-            ZigBeeEndpoint destination = getEndpoint(networkManager, destEndpointParam);
-            destAddress = destination.getIeeeAddress();
-            destEndpoint = destination.getEndpointId();
+            ZigBeeGroup group = getGroup(networkManager, destEndpointParam);
+            if (group != null) {
+                response = cluster.bind(group.getAddress()).get();
+            } else {
+                ZigBeeEndpoint destination = getEndpoint(networkManager, destEndpointParam);
+                response = cluster.bind(destination.getIeeeAddress(), destination.getEndpointId()).get();
+            }
         } else {
-            destAddress = networkManager.getNode(0).getIeeeAddress();
-            destEndpoint = 1;
+            response = cluster.bind(networkManager.getNode(0).getIeeeAddress(), 1).get();
         }
 
-        final CommandResult response = cluster.bind(destAddress, destEndpoint).get();
         processDefaultResponse(response, out);
     }
 }

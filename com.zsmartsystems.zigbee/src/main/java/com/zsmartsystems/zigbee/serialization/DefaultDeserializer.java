@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -25,6 +25,7 @@ import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.field.BindingTable;
 import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.ParentAnnounceChildInfo;
 import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor;
 import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
 import com.zsmartsystems.zigbee.zdo.field.SimpleDescriptor;
@@ -212,6 +213,7 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 break;
             case CLUSTERID:
             case NWK_ADDRESS:
+            case DATA_16_BIT:
             case BITMAP_16_BIT:
             case ENUMERATION_16_BIT:
             case SIGNED_16_BIT_INTEGER:
@@ -332,6 +334,11 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 Float float32 = Float.intBitsToFloat(payload[index++] + (payload[index++] << 8)
                         + (payload[index++] << 16) + (payload[index++] << 24));
                 value[0] = float32.doubleValue();
+                break;
+            case PARENT_ANNOUNCE_CHILD_INFO:
+                ParentAnnounceChildInfo parentAnnounceChildInfo = new ParentAnnounceChildInfo();
+                parentAnnounceChildInfo.deserialize(this);
+                value[0] = parentAnnounceChildInfo;
                 break;
             default:
                 throw new IllegalArgumentException("No reader defined in " + ZigBeeDeserializer.class.getSimpleName()

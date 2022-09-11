@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -113,7 +113,7 @@ public class EmberSourceRouteTableEntry {
     public String toString() {
         final StringBuilder builder = new StringBuilder(79);
         builder.append("EmberSourceRouteTableEntry [destination=");
-        builder.append(destination);
+        builder.append(String.format("%04X", destination));
         builder.append(", closerIndex=");
         builder.append(closerIndex);
         builder.append(']');

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -106,6 +106,7 @@ public class ZclDataType {
         dataTypeMapping.put("ENUMERATION_32_BIT", new DataTypeMap("Integer", 0x33, 4, false, 0xffffffff));
         dataTypeMapping.put("FLOAT_32_BIT", new DataTypeMap("Double", 0x39, 4, true));
         dataTypeMapping.put("DATA_8_BIT", new DataTypeMap("Integer", 0x08, 1, false));
+        dataTypeMapping.put("DATA_16_BIT", new DataTypeMap("Integer", 0x09, 2, false));
         dataTypeMapping.put("OCTET_STRING", new DataTypeMap("ByteArray", 0x41, -1, false));
         dataTypeMapping.put("CHARACTER_STRING", new DataTypeMap("String", 0x42, -1, false));
         dataTypeMapping.put("LONG_OCTET_STRING", new DataTypeMap("ByteArray", 0x43, -1, false));
@@ -120,6 +121,7 @@ public class ZclDataType {
         dataTypeMapping.put("BYTE_ARRAY", new DataTypeMap("ByteArray", 0, 0, false));
         dataTypeMapping.put("RAW_OCTET", new DataTypeMap("ByteArray", 0, 0, false));
         dataTypeMapping.put("IMAGE_UPGRADE_STATUS", new DataTypeMap("ImageUpgradeStatus", 0, 0, false));
+        dataTypeMapping.put("PARENT_ANNOUNCE_CHILD_INFO", new DataTypeMap("ParentAnnounceChildInfo", 0, 0, false));
     };
 
     public static Map<String, DataTypeMap> getDataTypeMapping() {

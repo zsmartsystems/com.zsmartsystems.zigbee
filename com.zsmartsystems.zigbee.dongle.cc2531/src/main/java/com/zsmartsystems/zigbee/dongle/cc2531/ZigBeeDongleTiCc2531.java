@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -88,9 +88,13 @@ public class ZigBeeDongleTiCc2531
     private final HashMap<Integer, Integer> endpoint2Profile = new HashMap<Integer, Integer>();
 
     /**
-     * Map used to correlate the APS sequence IDs with the Transaction IDs we use to correlate messages in the stack
+     * Map used to correlate the APS sequence IDs with the Transaction IDs
      */
-    private Map<Integer, Integer> messageIdMap = new ConcurrentHashMap<>();
+    private Map<Integer, Integer> msgAckIdMap = new ConcurrentHashMap<>();
+    /**
+     * Map used to keep track of transaction IDs
+     */
+    private Map<Integer, Integer> msgTagMap = new ConcurrentHashMap<>();
 
     private int[] supportedInputClusters = new int[] {};
     private int[] supportedOutputClusters = new int[] {};
@@ -311,7 +315,9 @@ public class ZigBeeDongleTiCc2531
                 // TODO: How to differentiate group and device addressing?????
                 boolean groupCommand = false;
                 if (!groupCommand) {
-                    messageIdMap.put(apsFrame.getApsCounter(), msgTag);
+                    msgAckIdMap.put(apsFrame.getApsCounter(), msgTag);
+                    msgTagMap.put(apsFrame.getDestinationAddress(), msgTag);
+
                     ZToolPacket response = networkManager.sendCommand(new AF_DATA_REQUEST(apsFrame.getDestinationAddress(),
                             (short) apsFrame.getDestinationEndpoint(), sender, apsFrame.getCluster(),
                             apsFrame.getApsCounter(), (byte) (0x20 | (apsFrame.getAckRequest() ? 0x10 : 0)), (byte) apsFrame.getRadius(), apsFrame.getPayload()));
@@ -358,8 +364,8 @@ public class ZigBeeDongleTiCc2531
 
         if (packet.getCMD().get16BitValue() == ZToolCMD.AF_DATA_CONFIRM) {
             AF_DATA_CONFIRM p = ((AF_DATA_CONFIRM) packet);
-            if (messageIdMap.containsKey(p.TransID)) {
-                zigbeeNetworkReceive.receiveCommandState(messageIdMap.remove(p.TransID),
+            if (msgAckIdMap.containsKey(p.TransID)) {
+                zigbeeNetworkReceive.receiveCommandState(msgAckIdMap.remove(p.TransID),
                         p.Status == 0 ? ZigBeeTransportProgressState.RX_ACK : ZigBeeTransportProgressState.RX_NAK);
             } else {
                 logger.debug("No sequence correlated for ACK messageId {}", p.TransID);
@@ -406,6 +412,18 @@ public class ZigBeeDongleTiCc2531
         }
 
         if (apsFrame != null) {
+            if (apsFrame.getPayload().length >= 1 && apsFrame.getPayload()[0] == 0) {
+                // Restore Transaction ID,
+                // In some cases the transaction ID is not returned properly so this
+                // workaround re-inserts the transaction ID into the received payload.
+                Integer msgTag = msgTagMap.remove(apsFrame.getSourceAddress());
+
+                if (msgTag != null) {
+                    logger.debug("Restoring TID({}) into payload from: {}.", msgTag, apsFrame.getSourceAddress());
+                    apsFrame.getPayload()[0] = msgTag;
+                }
+            }
+
             zigbeeNetworkReceive.receiveCommand(apsFrame);
             return;
         }
@@ -429,7 +447,7 @@ public class ZigBeeDongleTiCc2531
                 return;
             }
             if (response.getStatus() != 0) {
-                logger.error("Sychronours response error: " + response);
+                logger.error("Synchronous response error: " + response);
             }
         }
     }

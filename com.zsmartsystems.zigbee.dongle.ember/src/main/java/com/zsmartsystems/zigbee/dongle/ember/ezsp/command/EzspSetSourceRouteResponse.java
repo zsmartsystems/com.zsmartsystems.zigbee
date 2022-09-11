@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -13,7 +13,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 /**
  * Class to implement the Ember EZSP command <b>setSourceRoute</b>.
  * <p>
- * Supply a source route for the next outgoing message.
+ * Supply a source route for the next outgoing message. [Deprecated]
  * <p>
  * This class provides methods for processing EZSP commands.
  * <p>

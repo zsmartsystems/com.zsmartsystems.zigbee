@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -150,8 +150,20 @@ public class ZigBeeDiscoveryExtension
      * subsequent mesh updates. Setting the period to 0 will disable mesh updates.
      *
      * @param updatePeriod number of seconds between mesh updates. Setting to 0 will stop updates.
+     * @deprecated User {@link setUpdateMeshPeriod} instead
      */
+    @Deprecated
     public void setUpdatePeriod(final int updatePeriod) {
+        setUpdateMeshPeriod(updatePeriod);
+    }
+
+    /**
+     * Sets the update period for the mesh update service. This is the number of seconds between
+     * subsequent mesh updates. Setting the period to 0 will disable mesh updates.
+     *
+     * @param updatePeriod number of seconds between mesh updates. Setting to 0 will stop updates.
+     */
+    public void setUpdateMeshPeriod(final int updatePeriod) {
         this.updatePeriod = updatePeriod;
 
         if (!extensionStarted) {
@@ -202,8 +214,20 @@ public class ZigBeeDiscoveryExtension
      * @return number of seconds between mesh updates. 0 indicates no automatic updates.
      *
      */
-    public int getUpdatePeriod() {
+    public int getUpdateMeshPeriod() {
         return updatePeriod;
+    }
+
+    /**
+     * Gets the current period at which the mesh data is being updated (in seconds). A return value of 0 indicates that
+     * automatic updates are currently disabled.
+     *
+     * @return number of seconds between mesh updates. 0 indicates no automatic updates.
+     * @deprecated User {@link getUpdateMeshPeriod} instead
+     */
+    @Deprecated
+    public int getUpdatePeriod() {
+        return getUpdateMeshPeriod();
     }
 
     /**

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -33,6 +33,8 @@ public class ZclClusterDao {
     private Set<Integer> supportedCommandsGenerated;
 
     private Set<Integer> supportedAttributes;
+
+    private Integer manufacturerCode;
 
     public String getLabel() {
         return label;
@@ -94,6 +96,14 @@ public class ZclClusterDao {
 
     public Set<Integer> getSupportedCommandsReceived() {
         return supportedCommandsReceived;
+    }
+
+    public Integer getManufacturerCode() {
+        return manufacturerCode;
+    }
+
+    public void setManufacturerCode(Integer manufacturerCode) {
+        this.manufacturerCode = manufacturerCode;
     }
 
 }

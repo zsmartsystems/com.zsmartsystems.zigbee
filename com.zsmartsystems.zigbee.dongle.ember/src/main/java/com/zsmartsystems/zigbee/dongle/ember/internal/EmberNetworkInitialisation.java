@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -17,6 +17,7 @@ import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.dongle.ember.EmberNcp;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspEnergyScanResultHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspFindAndRejoinNetworkRequest;
@@ -99,8 +100,9 @@ public class EmberNetworkInitialisation {
      * @param networkParameters the required {@link EmberNetworkParameters}
      * @param linkKey the {@link ZigBeeKey} with the link key. This can not be set to all 00 or all FF.
      * @param networkKey the {@link ZigBeeKey} with the network key. This can not be set to all 00 or all FF.
+     * @return {@link ZigBeeStatus} with success or failure code
      */
-    public void formNetwork(EmberNetworkParameters networkParameters, ZigBeeKey linkKey, ZigBeeKey networkKey) {
+    public ZigBeeStatus formNetwork(EmberNetworkParameters networkParameters, ZigBeeKey linkKey, ZigBeeKey networkKey) {
         if (networkParameters.getExtendedPanId() == null) {
             networkParameters.setExtendedPanId(new ExtendedPanId());
         }
@@ -112,12 +114,19 @@ public class EmberNetworkInitialisation {
         // Leave the current network so we can initialise a new network
         ensureNetworkLeft();
 
-        // Perform an energy scan to find a clear channel
-        int quietestChannel = doEnergyScan(ncp, scanDuration);
-        logger.debug("Energy scan reports quietest channel is {}", quietestChannel);
+        if (networkParameters.getRadioChannel() == ZigBeeChannel.UNKNOWN.getChannel()) {
+            // Perform an energy scan to find a clear channel
+            Integer quietestChannel = doEnergyScan(ncp, scanDuration);
+            if (quietestChannel == null) {
+                return ZigBeeStatus.FATAL_ERROR;
+            }
+            logger.debug("Energy scan reports quietest channel is {}", ZigBeeChannel.create(quietestChannel));
 
-        // Check if any current networks were found and avoid those channels, PAN ID and especially Extended PAN ID
-        ncp.doActiveScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, scanDuration);
+            // Check if any current networks were found and avoid those channels, PAN ID and especially Extended PAN ID
+            ncp.doActiveScan(ZigBeeChannelMask.CHANNEL_MASK_2GHZ, scanDuration);
+
+            networkParameters.setRadioChannel(quietestChannel);
+        }
 
         // Read the current network parameters
         getNetworkParameters();
@@ -140,10 +149,6 @@ public class EmberNetworkInitialisation {
             logger.debug("Created random Extended PAN ID: {}", extendedPanIdBuilder.toString());
         }
 
-        if (networkParameters.getRadioChannel() == ZigBeeChannel.UNKNOWN.getChannel()) {
-            networkParameters.setRadioChannel(quietestChannel);
-        }
-
         // If the channel set is empty, use the single channel defined above
         if (networkParameters.getChannels() == 0) {
             networkParameters.setChannels(1 << networkParameters.getRadioChannel());
@@ -153,7 +158,11 @@ public class EmberNetworkInitialisation {
         setSecurityState(linkKey, networkKey);
 
         // And now form the network
-        doFormNetwork(networkParameters);
+        if (doFormNetwork(networkParameters) == false) {
+            return ZigBeeStatus.FATAL_ERROR;
+        }
+
+        return ZigBeeStatus.SUCCESS;
     }
 
     /**
@@ -243,13 +252,29 @@ public class EmberNetworkInitialisation {
             return null;
         }
 
+        int[] ccaThresholdArray = ncp.getValue(EzspValueId.EZSP_VALUE_CCA_THRESHOLD);
+        int ccaThreshold = (byte) ccaThresholdArray[0];
+
         int lowestRSSI = 999;
         int lowestChannel = 11;
+        int ccaThresholdViolation = 0;
         for (EzspEnergyScanResultHandler channel : channels) {
             if (channel.getMaxRssiValue() < lowestRSSI) {
                 lowestRSSI = channel.getMaxRssiValue();
                 lowestChannel = channel.getChannel();
             }
+
+            if (channel.getMaxRssiValue() > ccaThreshold) {
+                ccaThresholdViolation++;
+            }
+        }
+
+        logger.debug(
+                "Energy scan complete: Channel {} has lowest RSSI at {}dBm. {}/{} channels violate CCA threshold of {}dBm",
+                lowestChannel, lowestRSSI, ccaThresholdViolation, channels.size(), ccaThreshold);
+        if (lowestRSSI > ccaThreshold) {
+            logger.warn("Energy scan found all channels violate CCA threshold!");
+            return null;
         }
 
         return lowestChannel;

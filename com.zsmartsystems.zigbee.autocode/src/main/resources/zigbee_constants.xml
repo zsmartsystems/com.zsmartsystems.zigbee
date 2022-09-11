@@ -32,13 +32,6 @@
 		<value code="0x0051" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Smart Plug" />
 		<value code="0x0052" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="White Goods" />
 		<value code="0x0053" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Meter Interface" />
-		<value code="0x0060" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="ZGP Proxy" />
-		<value code="0x0061" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="ZGP Proxy Basic" />
-		<value code="0x0062" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="ZGP Target Plus" />
-		<value code="0x0063" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="ZGP Target" />
-		<value code="0x0064" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="ZGP Commissioning Tool" />
-		<value code="0x0065" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="ZGP Combo" />
-		<value code="0x0066" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="ZGP Combo Basic" />
 		<value code="0x0067" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Environmental Sensor" />
 		<value code="0x0100" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="On/Off Light" />
 		<value code="0x0101" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Dimmable Light" />
@@ -100,6 +93,14 @@
 		<value code="0x0850" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="On/off sensor" />
 		<value code="0x0F00" scope="ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION" name="Generic Multifunction Healthcare Device" />
 
+		<value code="0x0060" scope="ZigBeeProfileType.ZIGBEE_GREEN_POWER" name="ZGP Proxy" />
+		<value code="0x0061" scope="ZigBeeProfileType.ZIGBEE_GREEN_POWER" name="ZGP Proxy Basic" />
+		<value code="0x0062" scope="ZigBeeProfileType.ZIGBEE_GREEN_POWER" name="ZGP Target Plus" />
+		<value code="0x0063" scope="ZigBeeProfileType.ZIGBEE_GREEN_POWER" name="ZGP Target" />
+		<value code="0x0064" scope="ZigBeeProfileType.ZIGBEE_GREEN_POWER" name="ZGP Commissioning Tool" />
+		<value code="0x0065" scope="ZigBeeProfileType.ZIGBEE_GREEN_POWER" name="ZGP Combo" />
+		<value code="0x0066" scope="ZigBeeProfileType.ZIGBEE_GREEN_POWER" name="ZGP Combo Basic" />
+
 		<value code="0x0000" scope="ZigBeeProfileType.ZIGBEE_LIGHT_LINK" name="ZLL On/Off Light" />		
 		<value code="0x0010" scope="ZigBeeProfileType.ZIGBEE_LIGHT_LINK" name="ZLL On/Off Plug-in Unit" />		
 		<value code="0x0100" scope="ZigBeeProfileType.ZIGBEE_LIGHT_LINK" name="ZLL Dimmable Light" />		
@@ -128,9 +129,13 @@
 	<constant class="ZigBeeProfileType">
 		<name>ZigBee Profile Type</name>
 		<description></description>
+		<value code="0x0000" name="ZigBee Device Profile" />
+		<value code="0x0101" name="Industrial Plant Monitoring" />
 		<value code="0x0104" name="ZigBee Home Automation" />
+		<value code="0x0105" name="ZigBee Commercial Building Automation" />
+		<value code="0x0106" name="ZigBee Wireless Sensor Networks" />
 		<value code="0x0109" name="ZigBee Smart Energy" />
-		<value code="0xA10E" name="ZigBee Green Power" />
+		<value code="0xA1E0" name="ZigBee Green Power" />
 		<value code="0xC05E" name="ZigBee Light Link" />
 		<value code="0xC059" name="Manufacturer Telegesis" />
 		<value code="0xC105" name="Manufacturer Digi" />

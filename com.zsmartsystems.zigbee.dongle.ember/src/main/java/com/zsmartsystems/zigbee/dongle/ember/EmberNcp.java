@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
@@ -30,6 +31,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddOrUpdateKeyTabl
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddOrUpdateKeyTableEntryResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddTransientLinkKeyRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddTransientLinkKeyResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddressTableEntryIsActiveRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAddressTableEntryIsActiveResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAesMmoHashRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspAesMmoHashResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspClearKeyTableRequest;
@@ -37,6 +40,10 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspClearKeyTableRespo
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspCustomFrameRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspCustomFrameResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspEnergyScanResultHandler;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetAddressTableRemoteEui64Request;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetAddressTableRemoteEui64Response;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetAddressTableRemoteNodeIdRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetAddressTableRemoteNodeIdResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetCertificate283k1Request;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetCertificate283k1Response;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetCertificateRequest;
@@ -57,6 +64,8 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetLibraryStatusRe
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetLibraryStatusResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetMfgTokenRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetMfgTokenResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetMulticastTableEntryRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetMulticastTableEntryResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNetworkParametersResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspGetNodeIdRequest;
@@ -105,10 +114,14 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetManufacturerCod
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetManufacturerCodeResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetMfgTokenRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetMfgTokenResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetMulticastTableEntryRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetMulticastTableEntryResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPolicyRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPolicyResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPowerDescriptorRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetPowerDescriptorResponse;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetRadioChannelRequest;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetRadioChannelResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetRadioPowerRequest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetRadioPowerResponse;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspSetValueRequest;
@@ -127,6 +140,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyStruct;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyType;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberLibraryId;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberLibraryStatus;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberMulticastTableEntry;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkParameters;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberNetworkStatus;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberRouteTableEntry;
@@ -831,6 +845,10 @@ public class EmberNcp {
                 new EzspSingleResponseTransaction(request, EzspGetRouteTableEntryResponse.class));
         EzspGetRouteTableEntryResponse response = (EzspGetRouteTableEntryResponse) transaction
                 .getResponse();
+        if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
+            logger.debug("Error request route table entry: {}", response);
+            return null;
+        }
         return response.getValue();
     }
 
@@ -1017,7 +1035,7 @@ public class EmberNcp {
         Set<Class<?>> relatedResponses = new HashSet<Class<?>>(
                 Arrays.asList(EzspStartScanResponse.class, EzspNetworkFoundHandler.class));
         EzspTransaction transaction = protocolHandler.sendEzspTransaction(
-                new EzspMultiResponseTransaction(activeScan, EzspScanCompleteHandler.class, relatedResponses));
+                new EzspMultiResponseTransaction(activeScan, EzspScanCompleteHandler.class, relatedResponses), 45);
         logger.debug("Active scan response: {}", transaction.getResponse());
         if (transaction.getResponse() instanceof EzspScanCompleteHandler) {
             EzspScanCompleteHandler activeScanCompleteResponse = (EzspScanCompleteHandler) transaction.getResponse();
@@ -1061,21 +1079,30 @@ public class EmberNcp {
         Set<Class<?>> relatedResponses = new HashSet<Class<?>>(
                 Arrays.asList(EzspStartScanResponse.class, EzspEnergyScanResultHandler.class));
         EzspTransaction transaction = protocolHandler.sendEzspTransaction(
-                new EzspMultiResponseTransaction(energyScan, EzspScanCompleteHandler.class, relatedResponses));
+                new EzspMultiResponseTransaction(energyScan, EzspScanCompleteHandler.class, relatedResponses), 45);
 
-        EzspScanCompleteHandler scanCompleteResponse = (EzspScanCompleteHandler) transaction.getResponse();
-        logger.debug(scanCompleteResponse.toString());
+        if (transaction.getResponse() instanceof EzspScanCompleteHandler) {
+            EzspScanCompleteHandler scanCompleteResponse = (EzspScanCompleteHandler) transaction.getResponse();
+            logger.debug(scanCompleteResponse.toString());
 
-        List<EzspEnergyScanResultHandler> channels = new ArrayList<>();
-        for (EzspFrameResponse network : transaction.getResponses()) {
-            if (network instanceof EzspEnergyScanResultHandler) {
-                channels.add((EzspEnergyScanResultHandler) network);
+            if (scanCompleteResponse.getStatus() != EmberStatus.EMBER_SUCCESS) {
+                logger.debug("Invalid response during energy scan: {}", transaction.getResponse());
+                return null;
             }
+
+            List<EzspEnergyScanResultHandler> channels = new ArrayList<>();
+            for (EzspFrameResponse network : transaction.getResponses()) {
+                if (network instanceof EzspEnergyScanResultHandler) {
+                    channels.add((EzspEnergyScanResultHandler) network);
+                }
+            }
+
+            lastStatus = scanCompleteResponse.getStatus();
+            return channels;
+        } else {
+            logger.debug("Invalid response during energy scan: {}", transaction.getResponse());
+            return null;
         }
-
-        lastStatus = scanCompleteResponse.getStatus();
-
-        return channels;
     }
 
     /**
@@ -1246,5 +1273,124 @@ public class EmberNcp {
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspSetMfgTokenResponse.class));
         EzspSetMfgTokenResponse response = (EzspSetMfgTokenResponse) transaction.getResponse();
         return response.getStatus();
+    }
+
+    /**
+     * Sets the channel to use for sending and receiving messages. For a list of available radio
+     * channels, see the technical specification for the RF communication module in your
+     * Developer Kit.
+     * <p>
+     * <b>Note:</b> Care should be taken when using this API, as all devices on a network must use
+     * the same channel.
+     *
+     * @param channel the new {@link ZigBeeChannel}
+     * @return {@link EmberStatus} with the response code
+     */
+    public EmberStatus setRadioChannel(ZigBeeChannel channel) {
+        EzspSetRadioChannelRequest request = new EzspSetRadioChannelRequest();
+        request.setChannel(channel.getChannel());
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspSetRadioChannelResponse.class));
+        EzspSetRadioChannelResponse response = (EzspSetRadioChannelResponse) transaction.getResponse();
+        return response.getStatus();
+    }
+
+    /**
+     * Gets an entry from the multicast table
+     *
+     * @return the {@link EmberMulticastTableEntry} or null on error
+     */
+    public EmberMulticastTableEntry getMulticastTableEntry(int index) {
+        EzspGetMulticastTableEntryRequest request = new EzspGetMulticastTableEntryRequest();
+        request.setIndex(index);
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(
+                        new EzspSingleResponseTransaction(request, EzspGetMulticastTableEntryResponse.class));
+
+        EzspGetMulticastTableEntryResponse response = (EzspGetMulticastTableEntryResponse) transaction.getResponse();
+
+        if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
+            logger.debug("Error request multicast table entry: {}", response);
+            return null;
+        }
+
+        return response.getValue();
+    }
+
+    /**
+     * Sets an entry in the multicast table.
+     *
+     * @return the {@link EmberStatus}
+     */
+    public EmberStatus setMulticastTableEntry(int index, EmberMulticastTableEntry value) {
+        EzspSetMulticastTableEntryRequest request = new EzspSetMulticastTableEntryRequest();
+        request.setIndex(index);
+        request.setValue(value);
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(
+                        new EzspSingleResponseTransaction(request, EzspSetMulticastTableEntryResponse.class));
+        EzspSetMulticastTableEntryResponse response = (EzspSetMulticastTableEntryResponse) transaction.getResponse();
+        return response.getStatus();
+    }
+
+    /**
+     * Indicates whether any messages are currently being sent using this address table entry.
+     * Note that this function does not indicate whether the address table entry is unused. To
+     * determine whether an address table entry is unused, check the remote node ID. The remote node
+     * ID will have the value EMBER_TABLE_ENTRY_UNUSED_NODE_ID when the address table entry is
+     * not in use.
+     *
+     * @param index The index of an address table entry.
+     * @return True if the address table entry is active, false otherwise.
+     */
+    public Boolean addressTableEntryIsActive(int index) {
+        EzspAddressTableEntryIsActiveRequest request = new EzspAddressTableEntryIsActiveRequest();
+        request.setAddressTableIndex(index);
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(
+                        new EzspSingleResponseTransaction(request, EzspAddressTableEntryIsActiveResponse.class));
+        EzspAddressTableEntryIsActiveResponse response = (EzspAddressTableEntryIsActiveResponse) transaction
+                .getResponse();
+        return response.getActive();
+
+    }
+
+    /**
+     * Gets the EUI64 of an address table entry.
+     *
+     * @param index The index of an address table entry.
+     * @return The EUI64 of the address table entry is copied to this location.
+     */
+    public IeeeAddress getAddressTableRemoteEui64(int index) {
+        EzspGetAddressTableRemoteEui64Request request = new EzspGetAddressTableRemoteEui64Request();
+        request.setAddressTableIndex(index);
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(
+                        new EzspSingleResponseTransaction(request, EzspGetAddressTableRemoteEui64Response.class));
+        EzspGetAddressTableRemoteEui64Response response = (EzspGetAddressTableRemoteEui64Response) transaction
+                .getResponse();
+        return response.getEui64();
+    }
+
+    /**
+     * Gets the short ID of an address table entry.
+     *
+     * @param index The index of an address table entry.
+     * @return One of the following: The short ID corresponding to the remote node whose EUI64 is stored in the address
+     *         table at the given index. EMBER_UNKNOWN_NODE_ID - Indicates that the EUI64 stored in the address table at
+     *         the given index is valid but the short ID is currently unknown. EMBER_DISCOVERY_ACTIVE_NODE_ID -
+     *         Indicates that the EUI64 stored in the address table at the given location is valid and network address
+     *         discovery is underway. EMBER_TABLE_ENTRY_UNUSED_NODE_ID - Indicates that the entry stored in the address
+     *         table at the given index is not in use.
+     */
+    public int getAddressTableRemoteNodeId(int index) {
+        EzspGetAddressTableRemoteNodeIdRequest request = new EzspGetAddressTableRemoteNodeIdRequest();
+        request.setAddressTableIndex(index);
+        EzspTransaction transaction = protocolHandler
+                .sendEzspTransaction(
+                        new EzspSingleResponseTransaction(request, EzspGetAddressTableRemoteNodeIdResponse.class));
+        EzspGetAddressTableRemoteNodeIdResponse response = (EzspGetAddressTableRemoteNodeIdResponse) transaction
+                .getResponse();
+        return response.getNodeId();
     }
 }

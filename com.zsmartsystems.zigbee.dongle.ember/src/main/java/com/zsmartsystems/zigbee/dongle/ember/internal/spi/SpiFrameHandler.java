@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -569,9 +569,11 @@ public class SpiFrameHandler implements EzspProtocolHandler {
             // Send the data
             for (int outByte : outputData) {
                 logger.trace("SPI TX: {}", String.format("%02X", outByte));
-                port.write(outByte);
             }
-            port.write(SPI_FLAG_BYTE);
+            int[] frameData = new int[outputData.length + 1];
+            System.arraycopy(outputData, 0, frameData, 0, outputData.length);
+            frameData[frameData.length - 1] = SPI_FLAG_BYTE;
+            port.write(frameData);
 
             startRetryTimer();
         }
@@ -752,6 +754,11 @@ public class SpiFrameHandler implements EzspProtocolHandler {
 
     @Override
     public EzspTransaction sendEzspTransaction(EzspTransaction ezspTransaction) {
+        return sendEzspTransaction(ezspTransaction, EZSP_TRANSACTION_TIMEOUT_SECONDS);
+    }
+
+    @Override
+    public EzspTransaction sendEzspTransaction(EzspTransaction ezspTransaction, long timeout) {
         Future<EzspFrame> futureResponse = sendEzspRequestAsync(ezspTransaction);
         if (futureResponse == null) {
             logger.debug("Error sending EZSP transaction: Future is null");
@@ -759,14 +766,14 @@ public class SpiFrameHandler implements EzspProtocolHandler {
         }
 
         try {
-            futureResponse.get(EZSP_TRANSACTION_TIMEOUT_SECONDS, TimeUnit.SECONDS);
+            futureResponse.get(timeout, TimeUnit.SECONDS);
             return ezspTransaction;
         } catch (InterruptedException | ExecutionException e) {
             futureResponse.cancel(true);
             logger.debug("EZSP interrupted in sendRequest: ", e);
         } catch (TimeoutException e) {
             futureResponse.cancel(true);
-            logger.debug("Sending EZSP transaction timed out after {} seconds", EZSP_TRANSACTION_TIMEOUT_SECONDS);
+            logger.debug("Sending EZSP transaction timed out after {} seconds", timeout);
         }
 
         return null;

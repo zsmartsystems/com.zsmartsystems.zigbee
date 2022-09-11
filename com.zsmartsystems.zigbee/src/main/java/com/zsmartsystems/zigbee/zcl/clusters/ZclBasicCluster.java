@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2021 by the respective copyright holders.
+ * Copyright (c) 2016-2022 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -31,7 +31,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-01-12T10:15:41Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-05-28T21:15:34Z")
 public class ZclBasicCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -131,14 +131,14 @@ public class ZclBasicCluster extends ZclCluster {
 
     @Override
     protected Map<Integer, ZclAttribute> initializeClientAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeClientAttributes();
 
         return attributeMap;
     }
 
     @Override
     protected Map<Integer, ZclAttribute> initializeServerAttributes() {
-        Map<Integer, ZclAttribute> attributeMap = new ConcurrentSkipListMap<>();
+        Map<Integer, ZclAttribute> attributeMap = super.initializeServerAttributes();
 
         attributeMap.put(ATTR_ZCLVERSION, new ZclAttribute(this, ATTR_ZCLVERSION, "ZCL Version", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
         attributeMap.put(ATTR_APPLICATIONVERSION, new ZclAttribute(this, ATTR_APPLICATIONVERSION, "Application Version", ZclDataType.UNSIGNED_8_BIT_INTEGER, true, true, false, false));
@@ -198,8 +198,8 @@ public class ZclBasicCluster extends ZclCluster {
      * @param command the {@link ZclBasicCommand} to which the response is being sent
      * @param response the {@link ZclBasicCommand} to send
      */
-    public void sendResponse(ZclBasicCommand command, ZclBasicCommand response) {
-        super.sendResponse(command, response);
+    public Future<CommandResult> sendResponse(ZclBasicCommand command, ZclBasicCommand response) {
+        return super.sendResponse(command, response);
     }
 
     /**
