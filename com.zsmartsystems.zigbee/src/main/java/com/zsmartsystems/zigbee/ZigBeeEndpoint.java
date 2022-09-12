@@ -414,6 +414,21 @@ public class ZigBeeEndpoint {
     }
 
     /**
+     * Remove the application associated to the given cluster.
+     * This method will also trigger application shutdown.
+     *
+     * @param clusterId the {@link ZclCluster} id
+     */
+    public void removeApplication(int clusterId) {
+        ZigBeeApplication application = applications.get(clusterId);
+        if (application == null) {
+            return;
+        }
+        application.appShutdown();
+        applications.remove(application.getClusterId());
+    }
+
+    /**
      * Gets the application associated with the clusterId. Returns null if there is no server linked to the requested
      * cluster
      *
