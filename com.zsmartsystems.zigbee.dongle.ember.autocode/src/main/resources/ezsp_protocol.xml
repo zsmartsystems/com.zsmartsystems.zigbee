@@ -620,6 +620,27 @@
 	</command>
 
 	<command>
+		<name>incomingNetworkStatusHandler</name>
+		<id>0xC4</id>
+		<description>This is called by the stack to notify the application that a network status/route error message has been received.</description>
+		<command_parameters>
+		</command_parameters>
+		<response_parameters>
+			<parameter>
+				<data_type>uint8_t</data_type>
+				<name>errorCode</name>
+				<description>Over the air error code.</description>
+			</parameter>
+			<parameter>
+				<data_type>EmberNodeId</data_type>
+				<name>target</name>
+				<description>The node ID associated with the error.  Depending on the error code this may be either originator of the error message or the node ID of the destination that could not be reached.</description>
+				<display>hex[4]</display>
+			</parameter>
+		</response_parameters>
+	</command>
+
+	<command>
 		<name>incomingManyToOneRouteRequestHandler</name>
 		<id>0x7D</id>
 		<description>A callback indicating that a many-to-one route to the concentrator with the given short and long id is available for use.</description>
