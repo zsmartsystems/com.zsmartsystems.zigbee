@@ -2772,26 +2772,6 @@
 	</command>
 
 	<command>
-		<name>zigbeeKeyEstablishmentHandler</name>
-		<id>0x9B</id>
-		<description>This is a callback that indicates the success or failure of an attempt to establish a key with a partner device.</description>
-		<command_parameters>
-		</command_parameters>
-		<response_parameters>
-			<parameter>
-				<data_type>EmberEUI64</data_type>
-				<name>partner</name>
-				<description>This is the IEEE address of the partner that the device successfully established a key with. This value is all zeros on a failure.</description>
-			</parameter>
-			<parameter>
-				<data_type>EmberStatus</data_type>
-				<name>status</name>
-				<description>This is the status indicating what was established or why the key establishment failed.</description>
-			</parameter>
-		</response_parameters>
-	</command>
-
-	<command>
 		<name>idConflictHandler</name>
 		<id>0x7C</id>
 		<description>A callback invoked by the EmberZNet stack when an id conflict is discovered, that is, two different nodes in the network were found to be using the same short id. The stack automatically removes the conflicting short id from its internal tables (address, binding, route, neighbor, and child tables). The application should discontinue any other use of the id.</description>
