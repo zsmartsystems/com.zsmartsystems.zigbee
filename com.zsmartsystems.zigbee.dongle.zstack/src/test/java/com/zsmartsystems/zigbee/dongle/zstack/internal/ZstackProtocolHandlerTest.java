@@ -33,10 +33,8 @@ import com.zsmartsystems.zigbee.transport.ZigBeePort;
  *
  */
 public class ZstackProtocolHandlerTest {
-    private static int TIMEOUT = 5000;
-
     private int[] getPacket(int[] data) {
-        ZstackProtocolHandler handler = new ZstackProtocolHandler(null);
+        ZstackProtocolHandler handler = new ZstackProtocolHandler();
         byte[] bytedata = new byte[data.length];
         int cnt = 0;
         for (int value : data) {
@@ -78,7 +76,7 @@ public class ZstackProtocolHandlerTest {
     @Test
     public void isSynchronous() throws NoSuchMethodException, SecurityException, IllegalAccessException,
             IllegalArgumentException, InvocationTargetException {
-        ZstackProtocolHandler handler = new ZstackProtocolHandler(null);
+        ZstackProtocolHandler handler = new ZstackProtocolHandler();
 
         assertTrue((boolean) TestUtilities.invokeMethod(ZstackProtocolHandler.class, handler, "isSynchronous",
                 int.class, 0x61));

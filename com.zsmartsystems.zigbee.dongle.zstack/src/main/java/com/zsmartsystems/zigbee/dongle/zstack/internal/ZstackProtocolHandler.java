@@ -15,15 +15,16 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Consumer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zsmartsystems.zigbee.ZigBeeExecutors;
 import com.zsmartsystems.zigbee.dongle.zstack.api.ZstackCommand;
 import com.zsmartsystems.zigbee.dongle.zstack.api.ZstackFrameFactory;
 import com.zsmartsystems.zigbee.dongle.zstack.api.ZstackFrameRequest;
@@ -65,19 +66,9 @@ public class ZstackProtocolHandler {
     private final Logger logger = LoggerFactory.getLogger(ZstackProtocolHandler.class);
 
     /**
-     * The packet handler.
-     */
-    private final ZstackFrameHandler frameHandler;
-
-    /**
      * The port.
      */
     private ZigBeePort port;
-
-    /**
-     * The parser parserThread.
-     */
-    private Thread parserThread = null;
 
     /**
      * Flag reflecting that parser has been closed and parser parserThread should exit.
@@ -89,17 +80,9 @@ public class ZstackProtocolHandler {
      */
     private final Queue<ZstackFrameRequest> sendQueue = new ConcurrentLinkedQueue<>();
 
-    private ExecutorService executor = Executors.newCachedThreadPool();
-    private final List<ZstackListener> transactionListeners = new ArrayList<>();
+    private ExecutorService executor = ZigBeeExecutors.newCachedThreadPool("ZstackProtocolHandler");
 
-    /**
-     * Construct the handler and provides the {@link ZstackFrameHandler}
-     *
-     * @param frameHandler the {@link ZstackFrameHandler} to receive incoming frames
-     */
-    public ZstackProtocolHandler(final ZstackFrameHandler frameHandler) {
-        this.frameHandler = frameHandler;
-    }
+    private final List<ZstackListener> transactionListeners = new ArrayList<>();
 
     /**
      * Starts the handler. Sets input stream where the packet is read from the and
@@ -110,55 +93,50 @@ public class ZstackProtocolHandler {
     public void start(final ZigBeePort port) {
         this.port = port;
 
-        parserThread = new Thread("ZstackFrameHandler") {
-            @Override
-            public void run() {
-                logger.debug("ZstackFrameHandler thread started");
+        executor.execute(() -> {
+            logger.debug("ZstackFrameHandler thread started");
 
-                int exceptionCnt = 0;
+            int exceptionCnt = 0;
 
-                while (!closeHandler) {
-                    try {
-                        final int[] frameData = getPacket();
-                        logger.debug("ZSTACK RX: FrameData [ data={}]", frameToString(frameData));
+            while (!closeHandler) {
+                try {
+                    final int[] frameData = getPacket();
+                    logger.debug("ZSTACK RX: FrameData [ data={}]", frameToString(frameData));
 
-                        if (waitingSrsp.compareAndSet(isSynchronous(frameData[0]), false)) {
-                            logger.debug("ZSTACK synchronous frame received. waitingSrsp={}, isSynchronous={}",
-                                    waitingSrsp, isSynchronous(frameData[0]));
-                        }
-
-                        ZstackFrameResponse response = ZstackFrameFactory.createFrame(frameData);
-                        if (response == null) {
-                            logger.debug("RX ZSTACK: ZstackUnknownFrame [ data={}]", frameToString(frameData));
-                            continue;
-                        } else {
-                            logger.debug("RX ZSTACK: {}", response);
-                        }
-
-                        // Send this into the stack
-                        frameHandler.handlePacket(response);
-
-                        // Also handle any ZStack level transactions (SREQ transactions or waiting events)
-                        notifyResponseReceived(response);
-
-                        sendNextFrame();
-                    } catch (final IOException e) {
-                        logger.error("ZstackFrameHandler IOException: ", e);
-
-                        if (exceptionCnt++ > 10) {
-                            logger.error("ZstackFrameHandler exception count exceeded");
-                            closeHandler = true;
-                        }
-                    } catch (final Exception e) {
-                        logger.error("ZstackFrameHandler Exception: ", e);
+                    if (frameData == null) {
+                        continue;
                     }
-                }
-                logger.debug("ZstackFrameHandler exited.");
-            }
-        };
 
-        parserThread.setDaemon(true);
-        parserThread.start();
+                    if (waitingSrsp.compareAndSet(isSynchronous(frameData[0]), false)) {
+                        logger.debug("ZSTACK synchronous frame received. waitingSrsp={}, isSynchronous={}",
+                                waitingSrsp, isSynchronous(frameData[0]));
+                    }
+
+                    ZstackFrameResponse response = ZstackFrameFactory.createFrame(frameData);
+                    if (response == null) {
+                        logger.debug("RX ZSTACK: ZstackUnknownFrame [ data={}]", frameToString(frameData));
+                        continue;
+                    } else {
+                        logger.debug("RX ZSTACK: {}", response);
+                    }
+
+                    // Also handle any ZStack level transactions (SREQ transactions or waiting events)
+                    notifyResponseReceived(response);
+
+                    sendNextFrame();
+                } catch (final IOException e) {
+                    logger.error("ZstackFrameHandler IOException: ", e);
+
+                    if (exceptionCnt++ > 10) {
+                        logger.error("ZstackFrameHandler exception count exceeded");
+                        closeHandler = true;
+                    }
+                } catch (final Exception e) {
+                    logger.error("ZstackFrameHandler Exception: ", e);
+                }
+            }
+            logger.debug("ZstackFrameHandler exited.");
+        });
     }
 
     public int[] getPacket() throws IOException {
@@ -169,7 +147,7 @@ public class ZstackProtocolHandler {
         ZstackState state = ZstackState.SOF;
 
         while (!closeHandler) {
-            int val = port.read();
+            int val = port.read(1000);
             logger.trace("ZSTACK RX Byte: {} [{}/{}]", String.format("%02X", val), bytesRead, length);
             if (val == -1) {
                 continue;
@@ -235,8 +213,8 @@ public class ZstackProtocolHandler {
     }
 
     public void setClosing() {
-        executor.shutdown();
         closeHandler = true;
+        executor.shutdown();
     }
 
     public void close() {
@@ -247,21 +225,7 @@ public class ZstackProtocolHandler {
 
         sendQueue.clear();
 
-        frameHandler.handleLinkStateChange(false);
-
         executor.shutdownNow();
-
-        try {
-            parserThread.interrupt();
-            parserThread.join();
-            logger.debug("ZstackFrameHandler close complete.");
-        } catch (InterruptedException e) {
-            logger.debug("ZstackFrameHandler interrupted in packet parser thread shutdown join.");
-        }
-    }
-
-    public boolean isAlive() {
-        return parserThread != null && parserThread.isAlive();
     }
 
     /**
@@ -289,18 +253,12 @@ public class ZstackProtocolHandler {
      * @param response the response {@link ZstackFrameResponse} received
      * @return true if the response was processed
      */
-    private boolean notifyResponseReceived(final ZstackFrameResponse response) {
-        boolean processed = false;
-
+    private void notifyResponseReceived(final ZstackFrameResponse response) {
         synchronized (transactionListeners) {
             for (ZstackListener listener : transactionListeners) {
-                if (listener.transactionEvent(response)) {
-                    processed = true;
-                }
+                listener.transactionEvent(response);
             }
         }
-
-        return processed;
     }
 
     private void addTransactionListener(ZstackListener listener) {
@@ -410,18 +368,16 @@ public class ZstackProtocolHandler {
             }
 
             @Override
-            public boolean transactionEvent(ZstackFrameResponse response) {
+            public void transactionEvent(ZstackFrameResponse response) {
                 // Check if this response completes our transaction
                 if (responseType.isInstance(response)) {
                     this.response = responseType.cast(response);
                 } else if (ZstackRpcSreqErrorSrsp.class.isInstance(response) && request.matchSreqError((ZstackRpcSreqErrorSrsp) response)) {
                 } else {
-                    return false;
+                    return;
                 }
 
                 transactionComplete();
-
-                return true;
             }
 
             @Override
@@ -435,6 +391,26 @@ public class ZstackProtocolHandler {
 
         Callable<RES> worker = new TransactionWaiter();
         return executor.submit(worker);
+    }
+
+    public <RES extends ZstackFrameResponse> ZstackListener listener(final Class<RES> requiredResponse, final Consumer<RES> delivery) {
+        final ZstackListener listener = new ZstackListener() {
+            @Override
+            public void transactionEvent(ZstackFrameResponse response) {
+                if (requiredResponse.isInstance(response)) {
+                    executor.execute(() -> delivery.accept(requiredResponse.cast(response)));
+                }
+            }
+
+            @Override
+            public void transactionComplete() {
+                executor.execute(() -> removeTransactionListener(this));
+            }
+        };
+
+        addTransactionListener(listener);
+
+        return listener;
     }
 
     /**
@@ -476,16 +452,14 @@ public class ZstackProtocolHandler {
             }
 
             @Override
-            public boolean transactionEvent(ZstackFrameResponse response) {
+            public void transactionEvent(ZstackFrameResponse response) {
                 // Check if this response completes our transaction
                 if (response.getClass() != requiredResponse) {
-                    return true;
+                    return;
                 }
 
                 transactionComplete();
                 this.response = requiredResponse.cast(response);
-
-                return true;
             }
 
             @Override
@@ -539,7 +513,7 @@ public class ZstackProtocolHandler {
     }
 
     interface ZstackListener {
-        boolean transactionEvent(ZstackFrameResponse response);
+        void transactionEvent(ZstackFrameResponse response);
 
         void transactionComplete();
     }

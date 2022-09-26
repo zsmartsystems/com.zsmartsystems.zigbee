@@ -2871,6 +2871,11 @@
 				<enum_value>0x00FC</enum_value>
 				<description>The scan request failed because a scan is already in progress</description>
 			</value>
+			<value>
+				<name>MAC_TRANSACTION_EXPIRED</name>
+				<enum_value>0x00F0</enum_value>
+				<description>The outstanding transaction has expired</description>
+			</value>
 		</values>
 	</enum>
 

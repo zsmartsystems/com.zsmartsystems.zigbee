@@ -81,13 +81,11 @@ public class ZigBeeDongleZstackTest {
 
         response = Mockito.mock(ZstackZdoStateChangeIndAreq.class);
         Mockito.when(response.getState()).thenReturn(ZstackZdoState.DEV_ROUTER);
-        dongle.handlePacket(response);
         Mockito.verify(transport, Mockito.timeout(TIMEOUT)).setTransportState(ZigBeeTransportState.ONLINE);
         assertEquals(Integer.valueOf(1243), dongle.getNwkAddress());
 
         response = Mockito.mock(ZstackZdoStateChangeIndAreq.class);
         Mockito.when(response.getState()).thenReturn(ZstackZdoState.DEV_INIT);
-        dongle.handlePacket(response);
         Mockito.verify(transport, Mockito.timeout(TIMEOUT)).setTransportState(ZigBeeTransportState.OFFLINE);
     }
 
@@ -118,14 +116,12 @@ public class ZigBeeDongleZstackTest {
         ZstackAfDataConfirmAreq response = Mockito.mock(ZstackAfDataConfirmAreq.class);
         Mockito.when(response.getTransId()).thenReturn(231);
         Mockito.when(response.getStatus()).thenReturn(ZstackResponseCode.SUCCESS);
-        dongle.handlePacket(response);
         Mockito.verify(transport, Mockito.timeout(TIMEOUT)).receiveCommandState(231,
                 ZigBeeTransportProgressState.RX_ACK);
 
         response = Mockito.mock(ZstackAfDataConfirmAreq.class);
         Mockito.when(response.getTransId()).thenReturn(231);
         Mockito.when(response.getStatus()).thenReturn(ZstackResponseCode.FAILURE);
-        dongle.handlePacket(response);
         Mockito.verify(transport, Mockito.timeout(TIMEOUT)).receiveCommandState(231,
                 ZigBeeTransportProgressState.RX_NAK);
     }

@@ -78,7 +78,12 @@ public enum ZstackResponseCode {
     /**
      * The scan request failed because a scan is already in progress
      */
-    MAC_SCAN_IN_PROGRESS(0x00FC);
+    MAC_SCAN_IN_PROGRESS(0x00FC),
+
+    /**
+     * The transaction has expired
+     */
+    MAC_TRANSACTION_EXPIRED(0x00F0);
 
     /**
      * A mapping between the integer code and its corresponding type to

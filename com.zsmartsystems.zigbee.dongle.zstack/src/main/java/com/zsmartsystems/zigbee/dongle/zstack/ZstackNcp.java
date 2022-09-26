@@ -30,10 +30,6 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfSetAllowrej
 import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfSetAllowrejoinTcPolicySrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackCentralizedLinkKeyMode;
 import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackInstallCodeFormat;
-import com.zsmartsystems.zigbee.dongle.zstack.api.sapi.ZstackZbReadConfigurationSreq;
-import com.zsmartsystems.zigbee.dongle.zstack.api.sapi.ZstackZbReadConfigurationSrsp;
-import com.zsmartsystems.zigbee.dongle.zstack.api.sapi.ZstackZbWriteConfigurationSreq;
-import com.zsmartsystems.zigbee.dongle.zstack.api.sapi.ZstackZbWriteConfigurationSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackConfigId;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackDiagnosticAttribute;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackResetType;
@@ -64,7 +60,6 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoMsgCbRegisterSreq
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoMsgCbRegisterSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoStartupFromAppSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoStartupFromAppSrsp;
-import com.zsmartsystems.zigbee.dongle.zstack.internal.ZstackFrameHandler;
 import com.zsmartsystems.zigbee.dongle.zstack.internal.ZstackProtocolHandler;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.transport.DeviceType;
@@ -82,11 +77,6 @@ public class ZstackNcp {
      */
     private final Logger logger = LoggerFactory.getLogger(ZstackNcp.class);
 
-    /**
-     * Flag to use the old (deprecated) config functions
-     */
-    private boolean useOldCfgCalls = false;
-
     /*
      * Startup options bitmap
      */
@@ -101,7 +91,7 @@ public class ZstackNcp {
     /**
      * Create the NCP instance
      *
-     * @param protocolHandler the {@link ZstackFrameHandler} used for communicating with the NCP
+     * @param protocolHandler the {@link ZstackProtocolHandler} used for communicating with the NCP
      */
     public ZstackNcp(ZstackProtocolHandler protocolHandler) {
         this.protocolHandler = protocolHandler;
@@ -293,35 +283,19 @@ public class ZstackNcp {
      * @return a int[] with the value of the configuration data or null on error
      */
     public int[] readConfiguration(ZstackConfigId configId) {
-        if (useOldCfgCalls) {
-            ZstackZbReadConfigurationSreq request = new ZstackZbReadConfigurationSreq();
-            request.setConfigId(configId);
-            ZstackZbReadConfigurationSrsp response = protocolHandler.sendTransaction(request, ZstackZbReadConfigurationSrsp.class);
-            if (response == null) {
-                logger.debug("No response from ReadConfiguration command");
-                return null;
-            }
-            logger.debug(response.toString());
-            if (response.getStatus() != ZstackResponseCode.SUCCESS) {
-                logger.debug("No response from ReadConfiguration command: {}", response.getStatus());
-                return null;
-            }
-            return response.getValue();
-        } else {
-            ZstackSysOsalNvReadSreq request = new ZstackSysOsalNvReadSreq();
-            request.setId(configId);
-            ZstackSysOsalNvReadSrsp response = protocolHandler.sendTransaction(request, ZstackSysOsalNvReadSrsp.class);
-            if (response == null) {
-                logger.debug("No response from ReadConfiguration command");
-                return null;
-            }
-            if (response.getStatus() != ZstackResponseCode.SUCCESS) {
-                logger.debug("No response from ReadConfiguration command: {}", response.getStatus());
-                return null;
-            }
-            logger.debug(response.toString());
-            return response.getValue();
+        ZstackSysOsalNvReadSreq request = new ZstackSysOsalNvReadSreq();
+        request.setId(configId);
+        ZstackSysOsalNvReadSrsp response = protocolHandler.sendTransaction(request, ZstackSysOsalNvReadSrsp.class);
+        if (response == null) {
+            logger.debug("No response from ReadConfiguration command");
+            return null;
         }
+        if (response.getStatus() != ZstackResponseCode.SUCCESS) {
+            logger.debug("No response from ReadConfiguration command: {}", response.getStatus());
+            return null;
+        }
+        logger.debug(response.toString());
+        return response.getValue();
     }
 
     /**
@@ -332,29 +306,16 @@ public class ZstackNcp {
      * @return {@link ZstackResponseCode} returned from the NCP
      */
     public ZstackResponseCode writeConfiguration(ZstackConfigId configId, int[] value) {
-        if (useOldCfgCalls) {
-            ZstackZbWriteConfigurationSreq request = new ZstackZbWriteConfigurationSreq();
-            request.setConfigId(configId);
-            request.setValue(value);
-            ZstackZbWriteConfigurationSrsp response = protocolHandler.sendTransaction(request, ZstackZbWriteConfigurationSrsp.class);
-            if (response == null) {
-                logger.debug("No response from WriteConfiguration command");
-                return ZstackResponseCode.FAILURE;
-            }
-            logger.debug(response.toString());
-            return response.getStatus();
-        } else {
-            ZstackSysOsalNvWriteSreq request = new ZstackSysOsalNvWriteSreq();
-            request.setId(configId);
-            request.setValue(value);
-            ZstackSysOsalNvWriteSrsp response = protocolHandler.sendTransaction(request, ZstackSysOsalNvWriteSrsp.class);
-            if (response == null) {
-                logger.debug("No response from WriteConfiguration command");
-                return ZstackResponseCode.FAILURE;
-            }
-            logger.debug(response.toString());
-            return response.getStatus();
+        ZstackSysOsalNvWriteSreq request = new ZstackSysOsalNvWriteSreq();
+        request.setId(configId);
+        request.setValue(value);
+        ZstackSysOsalNvWriteSrsp response = protocolHandler.sendTransaction(request, ZstackSysOsalNvWriteSrsp.class);
+        if (response == null) {
+            logger.debug("No response from WriteConfiguration command");
+            return ZstackResponseCode.FAILURE;
         }
+        logger.debug(response.toString());
+        return response.getStatus();
     }
 
     /**
