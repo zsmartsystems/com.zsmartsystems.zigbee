@@ -424,7 +424,6 @@ public class ZstackNcp {
      * @return {@link ZstackResponseCode} returned from the NCP
      */
     public ZstackResponseCode setChannelMask(ZigBeeChannelMask channelMask) {
-        // TODO: ZCD_NV_CHANLIST
         ZstackUtilSetChannelsSreq request = new ZstackUtilSetChannelsSreq();
         request.setChannels(channelMask.getChannelMask());
         ZstackUtilSetChannelsSrsp response = protocolHandler.sendTransaction(request, ZstackUtilSetChannelsSrsp.class);

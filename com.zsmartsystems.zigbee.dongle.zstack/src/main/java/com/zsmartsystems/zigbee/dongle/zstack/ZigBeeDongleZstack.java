@@ -442,7 +442,6 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
         // Remember the time to reduce unnecessary polling
         lastSendCommandTime = System.currentTimeMillis();
 
-        // TODO: How to differentiate group and device addressing?????
         ZstackAfDataRequestSreq request = new ZstackAfDataRequestSreq();
         request.setClusterID(apsFrame.getCluster());
         request.setDstAddr(apsFrame.getDestinationAddress());
@@ -454,7 +453,6 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
 
         request.addOptions(AfDataOptions.AF_DISCV_ROUTE);
         if (apsFrame.getAckRequest()) {
-            // TODO: is this really necessary
             request.addOptions(AfDataOptions.AF_ACK_REQUEST);
         }
         if (apsFrame.getSecurityEnabled()) {

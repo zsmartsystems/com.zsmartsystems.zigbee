@@ -47,7 +47,7 @@ public class ZstackAutocoder {
             doc.getDocumentElement().normalize();
 
             NodeList nList = doc.getElementsByTagName("protocol");
-            protocol = (Protocol) processNode(nList.item(0));
+            protocol = processNode(nList.item(0));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,7 +63,8 @@ public class ZstackAutocoder {
         }
     }
 
-    private static Object processNode(Node node) {
+    @SuppressWarnings("unchecked")
+    private static <T> T processNode(Node node) {
         System.out.println("\nCurrent Element :" + node.getNodeName());
 
         NodeList nodes = node.getChildNodes();
@@ -77,16 +78,16 @@ public class ZstackAutocoder {
 
                 for (int temp = 0; temp < nodes.getLength(); temp++) {
                     if (nodes.item(temp).getNodeName().equals("command")) {
-                        protocol.commands.add((Command) processNode(nodes.item(temp)));
+                        protocol.commands.add(processNode(nodes.item(temp)));
                     }
                     if (nodes.item(temp).getNodeName().equals("structure")) {
-                        protocol.structures.add((Structure) processNode(nodes.item(temp)));
+                        protocol.structures.add(processNode(nodes.item(temp)));
                     }
                     if (nodes.item(temp).getNodeName().equals("enum")) {
-                        protocol.enumerations.add((Enumeration) processNode(nodes.item(temp)));
+                        protocol.enumerations.add(processNode(nodes.item(temp)));
                     }
                 }
-                return protocol;
+                return (T) protocol;
             case "command":
                 Command command = new Command();
 
@@ -116,17 +117,17 @@ public class ZstackAutocoder {
                         if (command.request_parameters == null) {
                             command.request_parameters = new ArrayList<>();
                         }
-                        command.request_parameters = (List<Parameter>) processNode(nodes.item(temp));
+                        command.request_parameters = processNode(nodes.item(temp));
                     }
                     if (nodes.item(temp).getNodeName().equals("response")) {
                         if (command.response_parameters == null) {
                             command.response_parameters = new ArrayList<>();
                         }
-                        command.response_parameters = (List<Parameter>) processNode(nodes.item(temp));
+                        command.response_parameters = processNode(nodes.item(temp));
                     }
                 }
                 System.out.println("Done: Command - " + command.name);
-                return command;
+                return (T) command;
             case "request":
             case "response":
             case "parameters":
@@ -134,10 +135,10 @@ public class ZstackAutocoder {
 
                 for (int temp = 0; temp < nodes.getLength(); temp++) {
                     if (nodes.item(temp).getNodeName().equals("parameter")) {
-                        parameters.add((Parameter) processNode(nodes.item(temp)));
+                        parameters.add(processNode(nodes.item(temp)));
                     }
                 }
-                return parameters;
+                return (T) parameters;
             case "parameter":
                 Parameter parameter = new Parameter();
                 for (int temp = 0; temp < nodes.getLength(); temp++) {
@@ -165,7 +166,7 @@ public class ZstackAutocoder {
                     }
                 }
                 System.out.println("Done: Parameter - " + parameter.name);
-                return parameter;
+                return (T) parameter;
             case "structure":
                 Structure structure = new Structure();
                 structure.parameters = new ArrayList<>();
@@ -182,11 +183,11 @@ public class ZstackAutocoder {
                     }
 
                     if (nodes.item(temp).getNodeName().equals("parameters")) {
-                        structure.parameters = (List<Parameter>) processNode(nodes.item(temp));
+                        structure.parameters = processNode(nodes.item(temp));
                     }
                 }
                 System.out.println("Done: Structure - " + structure.name);
-                return structure;
+                return (T) structure;
             case "enum":
                 Enumeration enumeration = new Enumeration();
                 enumeration.values = new ArrayList<Value>();
@@ -205,7 +206,7 @@ public class ZstackAutocoder {
                         Element dataTypeElement = (Element) nodes.item(temp);
                         enumeration.fullyDefined = "true"
                                 .equalsIgnoreCase(dataTypeElement.getAttribute("fully_defined"));
-                        enumeration.values = (List<Value>) processNode(nodes.item(temp));
+                        enumeration.values = processNode(nodes.item(temp));
                     }
                     if (nodes.item(temp).getNodeName().equals("format")) {
                         enumeration.format = nodes.item(temp).getTextContent().trim();
@@ -215,16 +216,16 @@ public class ZstackAutocoder {
                     }
                 }
                 System.out.println("Done: Enum - " + enumeration.name);
-                return enumeration;
+                return (T) enumeration;
             case "values":
                 List<Value> values = new ArrayList<>();
 
                 for (int temp = 0; temp < nodes.getLength(); temp++) {
                     if (nodes.item(temp).getNodeName().equals("value")) {
-                        values.add((Value) processNode(nodes.item(temp)));
+                        values.add(processNode(nodes.item(temp)));
                     }
                 }
-                return values;
+                return (T) values;
             case "value":
                 Value value = new Value();
                 for (int temp = 0; temp < nodes.getLength(); temp++) {
@@ -244,7 +245,7 @@ public class ZstackAutocoder {
                     }
                 }
                 System.out.println("Done: Value - " + value.name);
-                return value;
+                return (T) value;
             default:
                 System.out.println("Uknown node " + node.getNodeName());
                 break;

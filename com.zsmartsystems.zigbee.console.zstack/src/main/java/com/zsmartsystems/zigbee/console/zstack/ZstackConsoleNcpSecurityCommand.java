@@ -23,8 +23,6 @@ import com.zsmartsystems.zigbee.dongle.zstack.internal.serializer.ZstackDeserial
  *
  */
 public class ZstackConsoleNcpSecurityCommand extends ZstackConsoleAbstractCommand {
-    private static int INVALID_NODE_ADDR = 0xFFFE;
-
     @Override
     public String getCommand() {
         return "ncpsecurity";

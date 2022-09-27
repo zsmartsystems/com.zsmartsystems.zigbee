@@ -66,7 +66,6 @@ public class ZstackFrameRequestTest {
     class Request extends ZstackFrameRequest {
         @Override
         public int[] serialize() {
-            // TODO Auto-generated method stub
             return null;
         }
     }
