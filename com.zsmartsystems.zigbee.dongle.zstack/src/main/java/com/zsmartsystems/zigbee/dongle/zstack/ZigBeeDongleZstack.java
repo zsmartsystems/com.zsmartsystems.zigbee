@@ -14,6 +14,7 @@ import java.util.Set;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -178,13 +179,15 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
     /**
      * The rate at which we will do a status poll if we've not sent any other messages within this period
      */
-    private int pollRate = 1000;
+    private int pollRate = 100000;
 
     /**
      * The time the last command was sent from the {@link ZigBeeNetworkManager}. This is used by the dongle polling task
      * to not poll if commands are otherwise being sent so as to reduce unnecessary communications with the dongle.
      */
     private long lastSendCommandTime;
+
+    private ResetListener resetListener;
 
     /**
      * Create a {@link ZigBeeDongleZstack}
@@ -211,12 +214,22 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
             return ZigBeeStatus.COMMUNICATION_ERROR;
         }
 
+        resetListener = new ResetListener();
+
         protocolHandler = new ZstackProtocolHandler();
+        protocolHandler.listener(ZstackSysResetIndAreq.class, resetListener);
         protocolHandler.start(serialPort);
 
         ZstackNcp ncp = getZstackNcp();
 
         Set<ZstackSystemCapabilities> capabilities = ncp.pingNcp();
+        if (capabilities.isEmpty()) {
+            if (ncp.resetNcp(ZstackResetType.TARGET_DEVICE) == null) {
+                return ZigBeeStatus.COMMUNICATION_ERROR;
+            } else {
+                capabilities = ncp.pingNcp();
+            }
+        }
         logger.debug("ZStack subsystem capabilities: {}", capabilities);
 
         ZstackSysVersionSrsp version = ncp.getVersion();
@@ -650,16 +663,15 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
 
         networkStateUp = linkState;
 
-        executorService.execute(() -> {
-            if (linkState) {
-                // obtain network address after startup
+        if (linkState) {
+            executorService.execute(() -> {
                 ZstackNcp ncp = getZstackNcp();
                 nwkAddress = ncp.getNwkAddress();
-            }
-            // Handle link changes and notify framework
-            zigbeeTransportReceive
-                    .setTransportState(linkState ? ZigBeeTransportState.ONLINE : ZigBeeTransportState.OFFLINE);
-        });
+                zigbeeTransportReceive.setTransportState(ZigBeeTransportState.ONLINE);
+            });
+        } else {
+            zigbeeTransportReceive.setTransportState(ZigBeeTransportState.OFFLINE);
+        }
     }
 
     /**
@@ -752,5 +764,12 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
         }
 
         return ZigBeeStatus.SUCCESS;
+    }
+
+    private class ResetListener implements Consumer<ZstackSysResetIndAreq> {
+        @Override
+        public synchronized void accept(final ZstackSysResetIndAreq t) {
+            logger.warn("Unexpected reset occured");
+        }
     }
 }

@@ -16,8 +16,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
@@ -139,7 +137,7 @@ public class ZstackProtocolHandler {
         });
     }
 
-    public int[] getPacket() throws IOException {
+    private int[] getPacket() throws IOException {
         int length = 0;
         int bytesRead = 0;
         int[] frameData = null;
@@ -282,7 +280,7 @@ public class ZstackProtocolHandler {
      */
     private void clearTransactionQueue() {
         synchronized (transactionListeners) {
-            for (ZstackListener listener : transactionListeners) {
+            for (ZstackListener listener : new ArrayList<>(transactionListeners)) {
                 listener.transactionComplete();
             }
         }
@@ -326,20 +324,13 @@ public class ZstackProtocolHandler {
         port.write(rawByte);
     }
 
-    /**
-     * Sends a ZStack request to the NCP without waiting for the response.
-     *
-     * @param transaction Request {@link ZstackTransaction}
-     * @return response {@link Future} {@link ZstackFrameResponse}
-     */
-    public <REQ extends ZstackFrameRequest, RES extends ZstackFrameResponse> Future<RES> sendZstackRequestAsync(final REQ request, final Class<RES> responseType) {
+    private <REQ extends ZstackFrameRequest, RES extends ZstackFrameResponse> Future<RES> sendZstackRequestAsync(final REQ request, final Class<RES> responseType) {
         if (closeHandler) {
             logger.debug("ZSTACK: Handler is closed");
             return null;
         }
 
         class TransactionWaiter implements Callable<RES>, ZstackListener {
-            private boolean complete = false;
             private RES response = null;
 
             @Override
@@ -352,17 +343,13 @@ public class ZstackProtocolHandler {
 
                 // Wait for the transaction to complete
                 synchronized (this) {
-                    while (!complete) {
-                        try {
-                            wait();
-                        } catch (InterruptedException e) {
-                            complete = true;
-                        }
+                    try {
+                        wait(TIMEOUT);
+                    } catch (InterruptedException e) {
+                    } finally {
+                        removeTransactionListener(this);
                     }
                 }
-
-                // Remove the listener
-                removeTransactionListener(this);
 
                 return response;
             }
@@ -383,7 +370,6 @@ public class ZstackProtocolHandler {
             @Override
             public void transactionComplete() {
                 synchronized (this) {
-                    complete = true;
                     notify();
                 }
             }
@@ -394,6 +380,10 @@ public class ZstackProtocolHandler {
     }
 
     public <RES extends ZstackFrameResponse> ZstackListener listener(final Class<RES> requiredResponse, final Consumer<RES> delivery) {
+        if (closeHandler) {
+            return null;
+        }
+
         final ZstackListener listener = new ZstackListener() {
             @Override
             public void transactionEvent(ZstackFrameResponse response) {
@@ -404,75 +394,13 @@ public class ZstackProtocolHandler {
 
             @Override
             public void transactionComplete() {
-                executor.execute(() -> removeTransactionListener(this));
+                removeTransactionListener(this);
             }
         };
 
         addTransactionListener(listener);
 
         return listener;
-    }
-
-    /**
-     * Waiting for a specific response from the NCP.
-     *
-     * @param transaction Request {@link ZstackTransaction}
-     * @return response {@link Future} {@link ZstackFrameResponse}
-     */
-    public <RES extends ZstackFrameResponse> Future<RES> waitForEvent(final Class<RES> requiredResponse) {
-        if (closeHandler) {
-            logger.debug("ZSTACK: Handler is closed");
-            return null;
-        }
-
-        class TransactionWaiter implements Callable<RES>, ZstackListener {
-            private boolean complete = false;
-            private RES response;
-
-            @Override
-            public RES call() {
-                // Register a listener
-                addTransactionListener(this);
-
-                // Wait for the event to be received
-                synchronized (this) {
-                    while (!complete) {
-                        try {
-                            wait();
-                        } catch (InterruptedException e) {
-                            complete = true;
-                        }
-                    }
-                }
-
-                // Remove the listener
-                removeTransactionListener(this);
-
-                return response;
-            }
-
-            @Override
-            public void transactionEvent(ZstackFrameResponse response) {
-                // Check if this response completes our transaction
-                if (response.getClass() != requiredResponse) {
-                    return;
-                }
-
-                transactionComplete();
-                this.response = requiredResponse.cast(response);
-            }
-
-            @Override
-            public void transactionComplete() {
-                synchronized (this) {
-                    complete = true;
-                    notify();
-                }
-            }
-        }
-
-        Callable<RES> worker = new TransactionWaiter();
-        return executor.submit(worker);
     }
 
     /**
@@ -492,8 +420,8 @@ public class ZstackProtocolHandler {
         }
 
         try {
-            return futureResponse.get(TIMEOUT, TimeUnit.MILLISECONDS);
-        } catch (InterruptedException | TimeoutException | ExecutionException e) {
+            return futureResponse.get();
+        } catch (InterruptedException | ExecutionException e) {
             futureResponse.cancel(true);
             logger.debug("ZSTACK interrupted in sendTransaction for {}", request, e);
         }
