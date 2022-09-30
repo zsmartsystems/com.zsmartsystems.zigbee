@@ -174,6 +174,7 @@ public abstract class EzspFrame {
     protected static final int FRAME_ID_ID_CONFLICT_HANDLER = 0x7C;
     protected static final int FRAME_ID_INCOMING_MANY_TO_ONE_ROUTE_REQUEST_HANDLER = 0x7D;
     protected static final int FRAME_ID_INCOMING_MESSAGE_HANDLER = 0x45;
+    protected static final int FRAME_ID_INCOMING_NETWORK_STATUS_HANDLER = 0xC4;
     protected static final int FRAME_ID_INCOMING_ROUTE_ERROR_HANDLER = 0x80;
     protected static final int FRAME_ID_INCOMING_ROUTE_RECORD_HANDLER = 0x59;
     protected static final int FRAME_ID_INCOMING_SENDER_EUI64_HANDLER = 0x62;
@@ -342,6 +343,7 @@ public abstract class EzspFrame {
         ezspHandlerMap.put(FRAME_ID_ID_CONFLICT_HANDLER, EzspIdConflictHandler.class);
         ezspHandlerMap.put(FRAME_ID_INCOMING_MANY_TO_ONE_ROUTE_REQUEST_HANDLER, EzspIncomingManyToOneRouteRequestHandler.class);
         ezspHandlerMap.put(FRAME_ID_INCOMING_MESSAGE_HANDLER, EzspIncomingMessageHandler.class);
+        ezspHandlerMap.put(FRAME_ID_INCOMING_NETWORK_STATUS_HANDLER, EzspIncomingNetworkStatusHandler.class);
         ezspHandlerMap.put(FRAME_ID_INCOMING_ROUTE_ERROR_HANDLER, EzspIncomingRouteErrorHandler.class);
         ezspHandlerMap.put(FRAME_ID_INCOMING_ROUTE_RECORD_HANDLER, EzspIncomingRouteRecordHandler.class);
         ezspHandlerMap.put(FRAME_ID_INCOMING_SENDER_EUI64_HANDLER, EzspIncomingSenderEui64Handler.class);
