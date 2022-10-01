@@ -7,6 +7,7 @@
  */
 package com.zsmartsystems.zigbee.database;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -73,7 +74,7 @@ public class ZigBeeNodeDao {
     }
 
     public Set<NodeDescriptor.MacCapabilitiesType> getMacCapabilities() {
-        return macCapabilities;
+        return macCapabilities != null ? macCapabilities : Collections.emptySet();
     }
 
     public void setMacCapabilities(Set<NodeDescriptor.MacCapabilitiesType> macCapabilities) {
