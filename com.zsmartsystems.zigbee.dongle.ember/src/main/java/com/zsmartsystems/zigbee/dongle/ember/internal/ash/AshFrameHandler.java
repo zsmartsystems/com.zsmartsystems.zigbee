@@ -397,6 +397,9 @@ public class AshFrameHandler implements EzspProtocolHandler {
                     logger.trace("ASH took EZSP frame from receive queue. Queue length {}", recvQueue.size());
                     notifyTransactionComplete(ezspFrame);
                     frameHandler.handlePacket(ezspFrame);
+                } catch (final InterruptedException e) {
+                    logger.debug("AshFrameHandler InterruptedException processing EZSP frame");
+                    break;
                 } catch (final Exception e) {
                     logger.error("AshFrameHandler Exception processing EZSP frame: ", e);
                 }
@@ -565,7 +568,7 @@ public class AshFrameHandler implements EzspProtocolHandler {
 
         // Send the data
         int[] outputBuffer = ashFrame.getOutputBuffer();
-        if(logger.isTraceEnabled()) {
+        if (logger.isTraceEnabled()) {
             for (int val : outputBuffer) {
                 logger.trace("ASH TX: {}", String.format("%02X", val));
             }
