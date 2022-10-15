@@ -52,7 +52,6 @@ import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpVersionCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleSecurityStateCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleTransientKeyCommand;
 import com.zsmartsystems.zigbee.console.telegesis.TelegesisConsoleSecurityStateCommand;
-import com.zsmartsystems.zigbee.console.zstack.ZstackConsoleNcpDiagnosticsCommand;
 import com.zsmartsystems.zigbee.console.zstack.ZstackConsoleNcpSecurityCommand;
 import com.zsmartsystems.zigbee.console.zstack.ZstackConsoleNcpStateCommand;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDataStore;
@@ -261,7 +260,6 @@ public class ZigBeeConsoleMain {
 
             commands.add(ZstackConsoleNcpStateCommand.class);
             commands.add(ZstackConsoleNcpSecurityCommand.class);
-            commands.add(ZstackConsoleNcpDiagnosticsCommand.class);
         } else if (dongleName.toUpperCase().equals("EMBER")) {
             ZigBeeDongleEzsp emberDongle = new ZigBeeDongleEzsp(serialPort);
             dongle = emberDongle;
@@ -396,7 +394,7 @@ public class ZigBeeConsoleMain {
             System.out.println("  * PAN ID                 = " + pan);
             System.out.println("  * Extended PAN ID        = " + extendedPan);
             System.out.println("  * Link Key               = " + linkKey);
-            if (nwkKey.hasOutgoingFrameCounter()) {
+            if (linkKey.hasOutgoingFrameCounter()) {
                 System.out.println("  * Link Key Frame Cnt     = " + linkKey.getOutgoingFrameCounter());
             }
             System.out.println("  * Network Key            = " + nwkKey);
@@ -449,12 +447,6 @@ public class ZigBeeConsoleMain {
             ZigBeeDongleTiCc2531 tiDongle = (ZigBeeDongleTiCc2531) dongle;
             tiDongle.setLedMode(1, false);
             tiDongle.setLedMode(2, false);
-        }
-
-        if (dongleName.equalsIgnoreCase("ZSTACK")) {
-            // Required to allow HA1.2 devices to join the ZB3.0 compatible coordinator
-            ZigBeeDongleZstack zstackDongle = (ZigBeeDongleZstack) dongle;
-            zstackDongle.requireKeyExchange(false);
         }
 
         console.start();
