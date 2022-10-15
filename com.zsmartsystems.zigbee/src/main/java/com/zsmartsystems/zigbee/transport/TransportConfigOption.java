@@ -31,7 +31,7 @@ public enum TransportConfigOption {
     /**
      * Defines the concentrator type.
      * <p>
-     * Value must be one of {@link ConcentratorConfigs}.
+     * Value must be one of {@link ConcentratorConfig}.
      */
     CONCENTRATOR_CONFIG,
 

@@ -56,7 +56,7 @@ public class ZstackConsoleNcpStateCommand extends ZstackConsoleAbstractCommand {
 
         ZstackUtilGetNvInfoSrsp nvInfo = ncp.getNvDeviceInfo();
         ZstackUtilGetDeviceInfoSrsp deviceInfo = ncp.getDeviceInfo();
-        ZstackSysVersionSrsp ncpVersion = ncp.getVersion();
+        ZstackSysVersionSrsp ncpVersion = getDongle(networkManager).getZstackNcp().getVersion();
         Set<ZstackSystemCapabilities> ncpCapabilities = ncp.pingNcp();
 
         int[] userDesc = ncp.readConfiguration(ZstackConfigId.ZCD_NV_USERDESC);

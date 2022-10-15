@@ -23,16 +23,15 @@ import com.zsmartsystems.zigbee.dongle.zstack.ZstackNcp;
 public abstract class ZstackConsoleAbstractCommand implements ZigBeeConsoleCommand {
     private static String CFG_UNSUPPORTED = "Not Supported";
 
-    protected ZstackNcp getZstackNcp(ZigBeeNetworkManager networkManager)
-            throws IllegalArgumentException, IllegalStateException {
+    protected ZstackNcp getZstackNcp(ZigBeeNetworkManager networkManager) throws IllegalArgumentException, IllegalStateException {
+        return getDongle(networkManager).getZstackNcp();
+    }
+
+    protected ZigBeeDongleZstack getDongle(ZigBeeNetworkManager networkManager) {
         if (!(networkManager.getZigBeeTransport() instanceof ZigBeeDongleZstack)) {
             throw new IllegalArgumentException("Dongle is not an ZStack NCP.");
         }
-        ZigBeeDongleZstack dongle = (ZigBeeDongleZstack) networkManager.getZigBeeTransport();
-        if (dongle == null) {
-            throw new IllegalStateException("Dongle is not an ZStack NCP.");
-        }
-        return dongle.getZstackNcp();
+        return (ZigBeeDongleZstack) networkManager.getZigBeeTransport();
     }
 
     protected String hex2Boolean(int[] bytes) {

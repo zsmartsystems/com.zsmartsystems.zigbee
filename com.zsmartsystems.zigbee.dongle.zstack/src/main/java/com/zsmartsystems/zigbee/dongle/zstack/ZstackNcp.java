@@ -14,7 +14,6 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
 import com.zsmartsystems.zigbee.dongle.zstack.api.ZstackResponseCode;
@@ -31,8 +30,9 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfSetAllowrej
 import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackCentralizedLinkKeyMode;
 import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackInstallCodeFormat;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackConfigId;
-import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackDiagnosticAttribute;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackResetType;
+import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysNvReadSreq;
+import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysNvReadSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysOsalNvReadSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysOsalNvReadSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysOsalNvWriteSreq;
@@ -45,8 +45,6 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysSetTxPowerSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysSetTxPowerSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysVersionSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysVersionSrsp;
-import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysZdiagsGetStatsSreq;
-import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysZdiagsGetStatsSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSystemCapabilities;
 import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetDeviceInfoSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetDeviceInfoSrsp;
@@ -62,7 +60,6 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoStartupFromAppSre
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoStartupFromAppSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.internal.ZstackProtocolHandler;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
-import com.zsmartsystems.zigbee.transport.DeviceType;
 
 /**
  * This class provides utility methods for accessing the ZStack NCP and returning specific data for use in the
@@ -150,16 +147,13 @@ public class ZstackNcp {
      * @return the {@link ZstackSysVersionSrsp}
      */
     public ZstackSysVersionSrsp getVersion() {
-        ZstackSysVersionSrsp response = protocolHandler.sendTransaction(new ZstackSysVersionSreq(), ZstackSysVersionSrsp.class);
-        if (response == null) {
-            logger.debug("No response from Version command");
-            return null;
-        }
-        logger.debug(response.toString());
-
-        return response;
+        return protocolHandler.sendTransaction(new ZstackSysVersionSreq(), ZstackSysVersionSrsp.class);
     }
 
+    /**
+     * This command reads the network info from the device
+     * @return the {@link ZstackZdoExtNwkInfoSrsp}
+     */
     public ZstackZdoExtNwkInfoSrsp getNetworkInfo() {
         return protocolHandler.sendTransaction(new ZstackZdoExtNwkInfoSreq(), ZstackZdoExtNwkInfoSrsp.class);
     }
@@ -170,14 +164,7 @@ public class ZstackNcp {
      * @return the {@link ZstackUtilGetDeviceInfoSrsp}
      */
     public ZstackUtilGetDeviceInfoSrsp getDeviceInfo() {
-        ZstackUtilGetDeviceInfoSrsp response = protocolHandler.sendTransaction(new ZstackUtilGetDeviceInfoSreq(), ZstackUtilGetDeviceInfoSrsp.class);
-        if (response == null) {
-            logger.debug("No response from DeviceInfo command");
-            return null;
-        }
-        logger.debug(response.toString());
-
-        return response;
+        return protocolHandler.sendTransaction(new ZstackUtilGetDeviceInfoSreq(), ZstackUtilGetDeviceInfoSrsp.class);
     }
 
     /**
@@ -186,28 +173,7 @@ public class ZstackNcp {
      * @return the {@link ZstackUtilGetDeviceInfoSrsp}
      */
     public ZstackUtilGetNvInfoSrsp getNvDeviceInfo() {
-        ZstackUtilGetNvInfoSreq request = new ZstackUtilGetNvInfoSreq();
-        ZstackUtilGetNvInfoSrsp response = protocolHandler.sendTransaction(request, ZstackUtilGetNvInfoSrsp.class);
-        if (response == null) {
-            logger.debug("No response from NvInfo command");
-            return null;
-        }
-        logger.debug(response.toString());
-
-        return response;
-    }
-
-    /**
-     * Gets the {@link IeeeAddress} from the NCP
-     *
-     * @return the {@link IeeeAddress} local address of the NCP
-     */
-    public IeeeAddress getIeeeAddress() {
-        ZstackUtilGetDeviceInfoSrsp info = getDeviceInfo();
-        if (info == null) {
-            return null;
-        }
-        return info.getIeeeAddress();
+        return protocolHandler.sendTransaction(new ZstackUtilGetNvInfoSreq(), ZstackUtilGetNvInfoSrsp.class);
     }
 
     /**
@@ -217,29 +183,8 @@ public class ZstackNcp {
      */
     public int getNwkAddress() {
         ZstackUtilGetDeviceInfoSrsp info = getDeviceInfo();
-        if (info == null) {
-            return -1;
-        }
-        return info.getShortAddr();
-    }
 
-    /**
-     * Gets a diagnostics counter from the NCP
-     *
-     * @param attributeId {@ link ZstackDiagnosticAttribute} to request
-     * @return the 32 bit counter, or null on error
-     */
-    public Long getDiagnosticsAttribute(ZstackDiagnosticAttribute attributeId) {
-        ZstackSysZdiagsGetStatsSreq request = new ZstackSysZdiagsGetStatsSreq();
-        request.setAttributeID(attributeId);
-        ZstackSysZdiagsGetStatsSrsp response = protocolHandler.sendTransaction(request, ZstackSysZdiagsGetStatsSrsp.class);
-        if (response == null) {
-            logger.debug("No response from GetDiagnostics command");
-            return null;
-        }
-        logger.debug(response.toString());
-
-        return (long) response.getAttributeValue();
+        return info == null ? -1 : info.getShortAddr();
     }
 
     /**
@@ -318,61 +263,17 @@ public class ZstackNcp {
         return response.getStatus();
     }
 
-    /**
-     * Sets the ZStack device type
-     *
-     * @param deviceType the {@link DeviceType} to use
-     * @return {@link ZstackResponseCode} returned from the NCP
-     */
-    public ZstackResponseCode setDeviceType(DeviceType deviceType) {
-        int value;
-        switch (deviceType) {
-            case COORDINATOR:
-                value = 0;
-                break;
-            case ROUTER:
-                value = 1;
-                break;
-            default:
-                logger.debug("Unknown device type {}", deviceType);
-                return ZstackResponseCode.FAILURE;
+    public int readChannel() {
+        ZstackSysNvReadSreq request = new ZstackSysNvReadSreq();
+        request.setId(1, 0, 0x21);
+        request.setOffset(24);
+        request.setLength(1);
+        ZstackSysNvReadSrsp response = protocolHandler.sendTransaction(request, ZstackSysNvReadSrsp.class);
+        if (response == null || response.getValue() == null || response.getValue().length == 0) {
+            return -1;
+        } else {
+            return response.getValue()[0];
         }
-        return writeConfiguration(ZstackConfigId.ZCD_NV_LOGICAL_TYPE, valueFromUInt8(value));
-    }
-
-    /**
-     * Sets the PAN ID
-     *
-     * @param panId the 16 bit PAN ID
-     * @return {@link ZstackResponseCode} returned from the NCP
-     */
-    public ZstackResponseCode setPanId(int panId) {
-        return writeConfiguration(ZstackConfigId.ZCD_NV_PANID, valueFromUInt16(panId));
-    }
-
-    /**
-     * Sets the extended PAN ID
-     *
-     * @param panId the {@link ExtendedPanId} extended PAN ID
-     * @return {@link ZstackResponseCode} returned from the NCP
-     */
-    public ZstackResponseCode setExtendedPanId(ExtendedPanId epanId) {
-        return writeConfiguration(ZstackConfigId.ZCD_NV_EXTPANID, epanId.getValue());
-    }
-
-    /**
-     * Sets the network key, and enables its use.
-     *
-     * @param key the {@link ZigBeeKey} to use for the network key
-     * @return {@link ZstackResponseCode} returned from the NCP
-     */
-    public ZstackResponseCode setNetworkKey(ZigBeeKey key) {
-        ZstackResponseCode responseCode = writeConfiguration(ZstackConfigId.ZCD_NV_PRECFGKEY, key.getValue());
-        if (responseCode != ZstackResponseCode.SUCCESS) {
-            return responseCode;
-        }
-        // Enable the network key
-        return writeConfiguration(ZstackConfigId.ZCD_NV_PRECFGKEYS_ENABLE, valueFromUInt8(1));
     }
 
     /**
@@ -390,16 +291,6 @@ public class ZstackNcp {
     }
 
     /**
-     * Enables network security
-     *
-     * @param enableSecurity true to enable network security
-     * @return {@link ZstackResponseCode} returned from the NCP
-     */
-    public ZstackResponseCode setNetworkSecurity(boolean enableSecurity) {
-        return writeConfiguration(ZstackConfigId.ZCD_NV_SECURITY_MODE, valueFromBoolean(enableSecurity));
-    }
-
-    /**
      * Sets the transmit power to be used in the NCP
      *
      * @param txPower the TX power in dBm
@@ -409,12 +300,8 @@ public class ZstackNcp {
         ZstackSysSetTxPowerSreq request = new ZstackSysSetTxPowerSreq();
         request.setTxPower(txPower);
         ZstackSysSetTxPowerSrsp response = protocolHandler.sendTransaction(request, ZstackSysSetTxPowerSrsp.class);
-        if (response == null) {
-            logger.debug("No response from SetTxPower command");
-            return null;
-        }
-        logger.debug(response.toString());
-        return response.getTxPower();
+
+        return response == null ? null : response.getTxPower();
     }
 
     /**
@@ -444,12 +331,8 @@ public class ZstackNcp {
         ZstackZdoStartupFromAppSreq request = new ZstackZdoStartupFromAppSreq();
         request.setStartDelay(100);
         ZstackZdoStartupFromAppSrsp response = protocolHandler.sendTransaction(request, ZstackZdoStartupFromAppSrsp.class);
-        if (response == null) {
-            logger.debug("No response from startupApplication command");
-            return ZstackResponseCode.FAILURE;
-        }
-        logger.debug(response.toString());
-        return response.getStatus();
+
+        return response == null ? ZstackResponseCode.FAILURE : response.getStatus();
     }
 
     /**
@@ -464,12 +347,8 @@ public class ZstackNcp {
         ZstackAppCnfBdbSetTcRequireKeyExchangeSreq request = new ZstackAppCnfBdbSetTcRequireKeyExchangeSreq();
         request.setTrustCenterRequireKeyExchange(required);
         ZstackAppCnfBdbSetTcRequireKeyExchangeSrsp response = protocolHandler.sendTransaction(request, ZstackAppCnfBdbSetTcRequireKeyExchangeSrsp.class);
-        if (response == null) {
-            logger.debug("No response from requireKeyExchange command");
-            return ZstackResponseCode.FAILURE;
-        }
-        logger.debug(response.toString());
-        return response.getStatus();
+
+        return response == null ? ZstackResponseCode.FAILURE : response.getStatus();
     }
 
     /**
@@ -486,12 +365,8 @@ public class ZstackNcp {
         request.setCentralizedLinkKeyMode(mode);
         request.setInstallCode(installCode);
         ZstackAppCnfBdbSetActiveDefaultCentralizedKeySrsp response = protocolHandler.sendTransaction(request, ZstackAppCnfBdbSetActiveDefaultCentralizedKeySrsp.class);
-        if (response == null) {
-            logger.debug("No response from setCentralisedKey command");
-            return ZstackResponseCode.FAILURE;
-        }
-        logger.debug(response.toString());
-        return response.getStatus();
+
+        return response == null ? ZstackResponseCode.FAILURE : response.getStatus();
     }
 
     /**
@@ -506,12 +381,8 @@ public class ZstackNcp {
         ZstackAppCnfSetAllowrejoinTcPolicySreq request = new ZstackAppCnfSetAllowrejoinTcPolicySreq();
         request.setAllowRejoin(allow);
         ZstackAppCnfSetAllowrejoinTcPolicySrsp response = protocolHandler.sendTransaction(request, ZstackAppCnfSetAllowrejoinTcPolicySrsp.class);
-        if (response == null) {
-            logger.debug("No response from allowRejoin command");
-            return ZstackResponseCode.FAILURE;
-        }
-        logger.debug(response.toString());
-        return response.getStatus();
+
+        return response == null ? ZstackResponseCode.FAILURE : response.getStatus();
     }
 
     /**
@@ -523,12 +394,8 @@ public class ZstackNcp {
         ZstackZdoMsgCbRegisterSreq request = new ZstackZdoMsgCbRegisterSreq();
         request.setClusterId(clusterId);
         ZstackZdoMsgCbRegisterSrsp response = protocolHandler.sendTransaction(request, ZstackZdoMsgCbRegisterSrsp.class);
-        if (response == null) {
-            logger.debug("No response from RegisterZdoCallback command");
-            return ZstackResponseCode.FAILURE;
-        }
-        logger.debug(response.toString());
-        return response.getStatus();
+
+        return response == null ? ZstackResponseCode.FAILURE : response.getStatus();
     }
 
     /**
@@ -552,12 +419,8 @@ public class ZstackNcp {
         request.setAppDevVer(0);
 
         ZstackAfRegisterSrsp response = protocolHandler.sendTransaction(request, ZstackAfRegisterSrsp.class);
-        if (response == null) {
-            logger.debug("No response from RegisterEndpoint command");
-            return ZstackResponseCode.FAILURE;
-        }
-        logger.debug(response.toString());
-        return response.getStatus();
+
+        return response == null ? ZstackResponseCode.FAILURE : response.getStatus();
     }
 
     /**
@@ -574,23 +437,23 @@ public class ZstackNcp {
         request.setInstallCode(key);
 
         ZstackAppCnfBdbAddInstallcodeSrsp response = protocolHandler.sendTransaction(request, ZstackAppCnfBdbAddInstallcodeSrsp.class);
-        if (response == null) {
-            logger.debug("No response from AddInstallCode command");
-            return ZstackResponseCode.FAILURE;
-        }
-        logger.debug(response.toString());
-        return response.getStatus();
+
+        return response == null ? ZstackResponseCode.FAILURE : response.getStatus();
     }
 
-    private int[] valueFromBoolean(boolean value) {
+    public int[] valueFromBoolean(boolean value) {
         return new int[] { value ? 1 : 0 };
     }
 
-    private int[] valueFromUInt8(int value) {
+    public int[] valueFromUInt8(int value) {
         return new int[] { value };
     }
 
-    private int[] valueFromUInt16(int value) {
+    public int[] valueFromUInt16(int value) {
         return new int[] { value & 0xFF, (value >> 8) & 0xFF };
+    }
+
+    public int[] valueFromUInt32(int value) {
+        return new int[] { value & 0xFF, (value >> 8) & 0xFF, (value >> 16) & 0xFF, (value >> 24) & 0xFF };
     }
 }

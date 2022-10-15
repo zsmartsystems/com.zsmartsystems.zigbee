@@ -441,6 +441,61 @@
 		</response>
 	</command>
 
+	<command>
+		<name>SYS_NV_READ</name>
+		<subsystem>SYS</subsystem>
+		<id>0x33</id>
+		<description>This command is used to read a single memory item from the target non-volatile memory. The command returns
+		the item requested
+		</description>
+		<type>SYNC</type>
+		<request>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>sysId</name>
+				<description>The system id (1 for zstack)</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16</data_type>
+				<name>itemId</name>
+				<description>The sub id (0 for legacy)</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16</data_type>
+				<name>subId</name>
+				<description>The Id of the NV item.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint16</data_type>
+				<name>offset</name>
+				<description>Number of bytes offset from the beginning or the NV value.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>length</name>
+				<description>Number of bytes to read</description>
+			</parameter>
+		</request>
+		<response>
+			<parameter>
+				<data_type>ZstackResponseCode</data_type>
+				<name>status</name>
+				<description>Status is either Success (0) or Failure (1).</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>length</name>
+				<auto_size>value</auto_size>
+				<description>Length of the NV value.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8[]</data_type>
+				<name>value</name>
+				<description>value of the NV item.</description>
+			</parameter>
+		</response>
+	</command>
+
 	<!-- MAC INTERFACE COMMANDS -->
 
 	<!-- NWK INTERFACE COMMANDS -->
@@ -1842,6 +1897,11 @@
 				<name>ZCD_NV_START_DELAY</name>
 				<enum_value>0x0004</enum_value>
 				<description></description>
+			</value>
+			<value>
+				<name>ZCD_NV_NIB</name>
+				<enum_value>0x0021</enum_value>
+				<description>This item holds all kinds of network information.</description>
 			</value>
 			<value>
 				<name>ZCD_NV_POLL_RATE_OLD16</name>

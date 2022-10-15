@@ -116,7 +116,7 @@ public class ZStackNcpTest {
         assertTrue(request instanceof ZstackUtilGetDeviceInfoSreq);
 
         assertEquals(0x1234, ncp.getNwkAddress());
-        assertEquals(new IeeeAddress("1234567890ABCDEF"), ncp.getIeeeAddress());
+        assertEquals(new IeeeAddress("1234567890ABCDEF"), ncp.getDeviceInfo().getIeeeAddress());
     }
 
     @Test

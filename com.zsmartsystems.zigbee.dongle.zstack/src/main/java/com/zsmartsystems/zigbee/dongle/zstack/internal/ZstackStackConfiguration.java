@@ -68,7 +68,10 @@ public class ZstackStackConfiguration {
         Map<ZstackConfigId, int[]> response = new HashMap<>();
 
         for (ZstackConfigId configId : configuration) {
-            response.put(configId, ncp.readConfiguration(configId));
+            int[] value = ncp.readConfiguration(configId);
+            if (value != null) {
+                response.put(configId, value);
+            }
         }
 
         return response;

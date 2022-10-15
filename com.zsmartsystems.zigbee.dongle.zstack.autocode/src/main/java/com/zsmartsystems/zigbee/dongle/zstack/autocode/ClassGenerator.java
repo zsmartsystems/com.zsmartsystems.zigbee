@@ -193,9 +193,7 @@ public abstract class ClassGenerator {
             len += word.length();
         }
 
-        if (len != 0) {
-            out.println();
-        }
+        out.println();
     }
 
     protected String formatParameterString(Parameter parameter) {

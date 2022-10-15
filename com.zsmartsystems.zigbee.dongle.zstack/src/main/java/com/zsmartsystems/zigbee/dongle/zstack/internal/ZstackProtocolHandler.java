@@ -7,6 +7,8 @@
  */
 package com.zsmartsystems.zigbee.dongle.zstack.internal;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -137,79 +140,6 @@ public class ZstackProtocolHandler {
         });
     }
 
-    private int[] getPacket() throws IOException {
-        int length = 0;
-        int bytesRead = 0;
-        int[] frameData = null;
-
-        ZstackState state = ZstackState.SOF;
-
-        while (!closeHandler) {
-            int val = port.read(1000);
-            logger.trace("ZSTACK RX Byte: {} [{}/{}]", String.format("%02X", val), bytesRead, length);
-            if (val == -1) {
-                continue;
-            }
-
-            switch (state) {
-                case SOF:
-                    if (val == ZSTACK_SOF) {
-                        state = ZstackState.LENGTH;
-                    }
-                    break;
-                case LENGTH:
-                    if (val > ZSTACK_MAX_LENGTH) {
-                        logger.debug("ZSTACK Length greater than allowed: {}", val);
-                        state = ZstackState.SOF;
-                        continue;
-                    }
-                    length = val + 2;
-                    frameData = new int[length];
-                    state = ZstackState.DATA;
-                    bytesRead = 0;
-                    break;
-                case DATA:
-                    frameData[bytesRead++] = val;
-                    if (bytesRead >= length) {
-                        state = ZstackState.FCS;
-                    }
-                    break;
-                case FCS:
-                    int checksum = getChecksum(frameData);
-                    if (val != checksum) {
-                        logger.debug("ZSTACK Checksum error: {} <> {}", val, checksum);
-                        state = ZstackState.SOF;
-                        continue;
-                    }
-                    return frameData;
-                default:
-                    logger.debug("ZSTACK Unknown decoder state: {}", state);
-                    break;
-            }
-        }
-
-        return null;
-    }
-
-    private int getChecksum(int[] data) {
-        int checksum = (data.length - 2);
-        for (int value : data) {
-            checksum ^= value;
-        }
-        return checksum & 0xFF;
-    }
-
-    /**
-     * Checks the frame type to see if it is a synchronous request or response.
-     *
-     * @param cmd0 the first command byte of the request or response frame
-     * @return true if this is a synchronous frame
-     */
-    private boolean isSynchronous(int cmd0) {
-        int frameType = cmd0 & 0xE0;
-        return (frameType == 0x20 || frameType == 0x60);
-    }
-
     public void setClosing() {
         closeHandler = true;
         executor.shutdown();
@@ -246,11 +176,83 @@ public class ZstackProtocolHandler {
     }
 
     /**
-     * Notify any transaction listeners when we receive a response.
-     *
-     * @param response the response {@link ZstackFrameResponse} received
-     * @return true if the response was processed
+     * Wait for some specific event
+     * @param <RES> The type of response to wait for
+     * @param requiredResponse The class of response to wait for
+     * @param predicate The predicate to determine if the event was this
+     * @return A Future that is completed upon receiving the specific event requested
      */
+    public <RES extends ZstackFrameResponse> Future<RES> waitForEvent(final Class<RES> requiredResponse, final Predicate<RES> predicate) {
+        if (closeHandler) {
+            return null;
+        }
+
+        final TransactionWaiter<RES> transactionWaiter = new TransactionWaiter<>(null, 100000, requiredResponse, predicate);
+
+        // Register a listener
+        addTransactionListener(transactionWaiter);
+
+        return executor.submit(transactionWaiter);
+    }
+
+    /**
+     * Register a listener for certain classes.
+     * @param <RES> The type which this listener listens to
+     * @param requiredResponse The class of events the listener responds to
+     * @param delivery The callback method which is fed the events of type {@link ZstackFrameReponse}
+     * @return a registered listener. To unregister execute {@link ZstackListener#transactionComplete()}.
+     */
+    public <RES extends ZstackFrameResponse> ZstackListener listener(final Class<RES> requiredResponse, final Consumer<RES> delivery) {
+        if (closeHandler) {
+            return null;
+        }
+
+        final ZstackListener listener = new ZstackListener() {
+            @Override
+            public void transactionEvent(ZstackFrameResponse response) {
+                if (requiredResponse.isInstance(response)) {
+                    executor.execute(() -> delivery.accept(requiredResponse.cast(response)));
+                }
+            }
+
+            @Override
+            public void transactionComplete() {
+                removeTransactionListener(this);
+            }
+        };
+
+        addTransactionListener(listener);
+
+        return listener;
+    }
+
+    /**
+     * Sends a ZStack request to the NCP and waits for the response. The response is correlated with the request and the
+     * returned {@link ZstackTransaction} contains the request and response data.
+     *
+     * @param request The message to send {@link ZstackFrameRequest}
+     * @param responseType The expected returntype {@link ZstackFrameResponse}
+     * @return response {@link ZstackCommand}
+     */
+    public <REQ extends ZstackFrameRequest, RES extends ZstackFrameResponse> RES sendTransaction(REQ request, Class<RES> responseType) {
+        logger.debug("QUEUE ZSTACK: {}", request);
+
+        Future<RES> futureResponse = sendZstackRequestAsync(request, responseType);
+        if (futureResponse == null) {
+            logger.debug("ZSTACK: Error sending transaction: Future is null");
+            return null;
+        }
+
+        try {
+            return futureResponse.get();
+        } catch (InterruptedException | ExecutionException e) {
+            futureResponse.cancel(true);
+            logger.debug("ZSTACK interrupted in sendTransaction for {}", request, e);
+        }
+
+        return null;
+    }
+
     private void notifyResponseReceived(final ZstackFrameResponse response) {
         synchronized (transactionListeners) {
             for (ZstackListener listener : transactionListeners) {
@@ -260,6 +262,7 @@ public class ZstackProtocolHandler {
     }
 
     private void addTransactionListener(ZstackListener listener) {
+        logger.debug("Adding Zstack Transaction listener");
         synchronized (transactionListeners) {
             if (transactionListeners.contains(listener)) {
                 return;
@@ -319,114 +322,17 @@ public class ZstackProtocolHandler {
         logger.debug(builder.toString());
     }
 
-    public void sendRaw(int rawByte) {
-        logger.trace("ZSTACK TX Byte: {}", String.format("%02X", rawByte));
-        port.write(rawByte);
-    }
-
     private <REQ extends ZstackFrameRequest, RES extends ZstackFrameResponse> Future<RES> sendZstackRequestAsync(final REQ request, final Class<RES> responseType) {
         if (closeHandler) {
             logger.debug("ZSTACK: Handler is closed");
             return null;
         }
 
-        class TransactionWaiter implements Callable<RES>, ZstackListener {
-            private RES response = null;
+        final TransactionWaiter<RES> waiter = new TransactionWaiter<>(request, TIMEOUT, responseType, null);
 
-            @Override
-            public RES call() {
-                // Register a listener
-                addTransactionListener(this);
+        addTransactionListener(waiter);
 
-                // Send the transaction
-                queueFrame(request);
-
-                // Wait for the transaction to complete
-                synchronized (this) {
-                    try {
-                        wait(TIMEOUT);
-                    } catch (InterruptedException e) {
-                    } finally {
-                        removeTransactionListener(this);
-                    }
-                }
-
-                return response;
-            }
-
-            @Override
-            public void transactionEvent(ZstackFrameResponse response) {
-                // Check if this response completes our transaction
-                if (responseType.isInstance(response)) {
-                    this.response = responseType.cast(response);
-                } else if (ZstackRpcSreqErrorSrsp.class.isInstance(response) && request.matchSreqError((ZstackRpcSreqErrorSrsp) response)) {
-                } else {
-                    return;
-                }
-
-                transactionComplete();
-            }
-
-            @Override
-            public void transactionComplete() {
-                synchronized (this) {
-                    notify();
-                }
-            }
-        }
-
-        Callable<RES> worker = new TransactionWaiter();
-        return executor.submit(worker);
-    }
-
-    public <RES extends ZstackFrameResponse> ZstackListener listener(final Class<RES> requiredResponse, final Consumer<RES> delivery) {
-        if (closeHandler) {
-            return null;
-        }
-
-        final ZstackListener listener = new ZstackListener() {
-            @Override
-            public void transactionEvent(ZstackFrameResponse response) {
-                if (requiredResponse.isInstance(response)) {
-                    executor.execute(() -> delivery.accept(requiredResponse.cast(response)));
-                }
-            }
-
-            @Override
-            public void transactionComplete() {
-                removeTransactionListener(this);
-            }
-        };
-
-        addTransactionListener(listener);
-
-        return listener;
-    }
-
-    /**
-     * Sends a ZStack request to the NCP and waits for the response. The response is correlated with the request and the
-     * returned {@link ZstackTransaction} contains the request and response data.
-     *
-     * @param transaction Request {@link ZstackTransaction}
-     * @return response {@link ZstackCommand}
-     */
-    public <REQ extends ZstackFrameRequest, RES extends ZstackFrameResponse> RES sendTransaction(REQ request, Class<RES> responseType) {
-        logger.debug("QUEUE ZSTACK: {}", request);
-
-        Future<RES> futureResponse = sendZstackRequestAsync(request, responseType);
-        if (futureResponse == null) {
-            logger.debug("ZSTACK: Error sending transaction: Future is null");
-            return null;
-        }
-
-        try {
-            return futureResponse.get();
-        } catch (InterruptedException | ExecutionException e) {
-            futureResponse.cancel(true);
-            logger.debug("ZSTACK interrupted in sendTransaction for {}", request, e);
-        }
-
-        return null;
+        return executor.submit(waiter);
     }
 
     private String frameToString(int[] inputBuffer) {
@@ -440,9 +346,144 @@ public class ZstackProtocolHandler {
         return result.toString();
     }
 
-    interface ZstackListener {
+    /**
+     * Checks the frame type to see if it is a synchronous request or response.
+     *
+     * @param cmd0 the first command byte of the request or response frame
+     * @return true if this is a synchronous frame
+     */
+    private boolean isSynchronous(int cmd0) {
+        int frameType = cmd0 & 0xE0;
+        return (frameType == 0x20 || frameType == 0x60);
+    }
+
+    private int[] getPacket() throws IOException {
+        int length = 0;
+        int bytesRead = 0;
+        int[] frameData = null;
+
+        ZstackState state = ZstackState.SOF;
+
+        while (!closeHandler) {
+            int val = port.read(1000);
+            logger.trace("ZSTACK RX Byte: {} [{}/{}]", String.format("%02X", val), bytesRead, length);
+            if (val == -1) {
+                continue;
+            }
+
+            switch (state) {
+                case SOF:
+                    if (val == ZSTACK_SOF) {
+                        state = ZstackState.LENGTH;
+                    }
+                    break;
+                case LENGTH:
+                    if (val > ZSTACK_MAX_LENGTH) {
+                        logger.debug("ZSTACK Length greater than allowed: {}", val);
+                        state = ZstackState.SOF;
+                        continue;
+                    }
+                    length = val + 2;
+                    frameData = new int[length];
+                    state = ZstackState.DATA;
+                    bytesRead = 0;
+                    break;
+                case DATA:
+                    requireNonNull(frameData, "FrameData should have been set earlier on")[bytesRead++] = val;
+                    if (bytesRead >= length) {
+                        state = ZstackState.FCS;
+                    }
+                    break;
+                case FCS:
+                    int checksum = getChecksum(frameData);
+                    if (val != checksum) {
+                        logger.debug("ZSTACK Checksum error: {} <> {}", val, checksum);
+                        state = ZstackState.SOF;
+                        continue;
+                    }
+                    return frameData;
+                default:
+                    logger.debug("ZSTACK Unknown decoder state: {}", state);
+                    break;
+            }
+        }
+
+        return null;
+    }
+
+    private int getChecksum(int[] data) {
+        int checksum = (data.length - 2);
+        for (int value : data) {
+            checksum ^= value;
+        }
+        return checksum & 0xFF;
+    }
+
+    public interface ZstackListener {
         void transactionEvent(ZstackFrameResponse response);
 
         void transactionComplete();
+    }
+
+    private class TransactionWaiter<RES extends ZstackFrameResponse> implements Callable<RES>, ZstackListener {
+        private final ZstackFrameRequest request;
+        private final Class<RES> requiredResponse;
+        private final Predicate<RES> responsePredicate;
+        private final int timeout;
+        private RES response = null;
+
+        private TransactionWaiter(final ZstackFrameRequest request, final int timeout, final Class<RES> requiredResponse, final Predicate<RES> responsePredicate) {
+            this.request = request;
+            this.timeout = timeout;
+            this.requiredResponse = requiredResponse;
+            this.responsePredicate = responsePredicate;
+        }
+
+        @Override
+        public RES call() {
+            // Send the transaction
+            if (request != null) {
+                queueFrame(request);
+            }
+
+            // Wait for the transaction to complete
+            synchronized (this) {
+                try {
+                    wait(timeout);
+                } catch (InterruptedException e) {
+                } finally {
+                    removeTransactionListener(this);
+                }
+            }
+
+            return response;
+        }
+
+        @Override
+        public void transactionEvent(ZstackFrameResponse response) {
+            // Check if this response completes our transaction
+            if (requiredResponse.isInstance(response)) {
+                if (responsePredicate == null) {
+                    this.response = requiredResponse.cast(response);
+                } else if (responsePredicate.test(requiredResponse.cast(response))) {
+                    this.response = requiredResponse.cast(response);
+                } else {
+                    return;
+                }
+            } else if (response instanceof ZstackRpcSreqErrorSrsp && request != null && request.matchSreqError((ZstackRpcSreqErrorSrsp) response)) {
+                // no response. Error code ?
+            } else {
+                return;
+            }
+
+            transactionComplete();
+        }
+
+        @Override
+        public void transactionComplete() {
+            synchronized (this) {
+                notify();
+            }
+        }
     }
 }

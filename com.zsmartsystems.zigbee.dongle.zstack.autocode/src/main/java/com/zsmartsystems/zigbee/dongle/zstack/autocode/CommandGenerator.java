@@ -7,6 +7,8 @@
  */
 package com.zsmartsystems.zigbee.dongle.zstack.autocode;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -102,7 +104,7 @@ public class CommandGenerator extends ClassGenerator {
             out.println("public class " + className + " extends ZstackFrameRequest {");
         }
 
-        for (Parameter parameter : parameters) {
+        for (Parameter parameter : requireNonNull(parameters, "Parameters may not be null")) {
             if (parameter.auto_size != null) {
                 continue;
             }
@@ -436,7 +438,7 @@ public class CommandGenerator extends ClassGenerator {
         addImport(zstackInternalPackage + ".serializer.ZstackDeserializer");
         out.println("public class " + className + " {");
 
-        for (Parameter parameter : structure.parameters) {
+        for (Parameter parameter : requireNonNull(structure.parameters, "Parameters in structure may not be empty")) {
             if (parameter.auto_size != null) {
                 continue;
             }
