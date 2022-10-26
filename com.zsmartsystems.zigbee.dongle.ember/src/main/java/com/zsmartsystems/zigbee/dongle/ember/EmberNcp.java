@@ -110,6 +110,9 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspNetworkInitResponse.class));
         EzspNetworkInitResponse response = (EzspNetworkInitResponse) transaction.getResponse();
+        if (response == null) {
+            return EmberStatus.UNKNOWN;
+        }
         logger.debug(response.toString());
 
         return response.getStatus();
@@ -130,6 +133,9 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspLeaveNetworkResponse.class));
         EzspLeaveNetworkResponse response = (EzspLeaveNetworkResponse) transaction.getResponse();
+        if (response == null) {
+            return EmberStatus.UNKNOWN;
+        }
         logger.debug(response.toString());
 
         return response.getStatus();
@@ -145,6 +151,9 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler().sendEzspTransaction(
                 new EzspSingleResponseTransaction(request, EzspGetCurrentSecurityStateResponse.class));
         EzspGetCurrentSecurityStateResponse response = (EzspGetCurrentSecurityStateResponse) transaction.getResponse();
+        if (response == null) {
+            return null;
+        }
         logger.debug(response.toString());
         return response.getState();
     }
@@ -152,7 +161,7 @@ public class EmberNcp {
     /**
      * Gets the current network parameters, or an empty parameters class if there's an error
      *
-     * @return {@link EzspGetNetworkParametersResponse}
+     * @return {@link EzspGetNetworkParametersResponse} or null on error
      */
     public EzspGetNetworkParametersResponse getNetworkParameters() {
         EzspGetNetworkParametersRequest request = new EzspGetNetworkParametersRequest();
@@ -164,13 +173,16 @@ public class EmberNcp {
     /**
      * Returns a value indicating whether the node is joining, joined to, or leaving a network.
      *
-     * @return the {@link EmberNetworkStatus}
+     * @return the {@link EmberNetworkStatus} or null on error
      */
     public EmberNetworkStatus getNetworkState() {
         EzspNetworkStateRequest request = new EzspNetworkStateRequest();
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspNetworkStateResponse.class));
         EzspNetworkStateResponse response = (EzspNetworkStateResponse) transaction.getResponse();
+        if (response == null) {
+            return null;
+        }
 
         return response.getStatus();
     }
@@ -178,7 +190,7 @@ public class EmberNcp {
     /**
      * Returns information about the children of the local node and the parent of the local node.
      *
-     * @return the {@link EzspGetParentChildParametersResponse}
+     * @return the {@link EzspGetParentChildParametersResponse} or null on error
      */
     public EzspGetParentChildParametersResponse getChildParameters() {
         EzspGetParentChildParametersRequest request = new EzspGetParentChildParametersRequest();
@@ -186,6 +198,9 @@ public class EmberNcp {
                 new EzspSingleResponseTransaction(request, EzspGetParentChildParametersResponse.class));
         EzspGetParentChildParametersResponse response = (EzspGetParentChildParametersResponse) transaction
                 .getResponse();
+        if (response == null) {
+            return null;
+        }
 
         return response;
     }
@@ -202,6 +217,9 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetChildDataResponse.class));
         EzspGetChildDataResponse response = (EzspGetChildDataResponse) transaction.getResponse();
+        if (response == null) {
+            return null;
+        }
         logger.debug(response.toString());
         if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
             return null;
@@ -233,6 +251,9 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspAddEndpointResponse.class));
         EzspAddEndpointResponse response = (EzspAddEndpointResponse) transaction.getResponse();
+        if (response == null) {
+            return EzspStatus.UNKNOWN;
+        }
 
         logger.debug(response.toString());
 
@@ -249,6 +270,9 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspReadCountersResponse.class));
         EzspReadCountersResponse response = (EzspReadCountersResponse) transaction.getResponse();
+        if (response == null) {
+            return null;
+        }
         logger.debug(response.toString());
         return response.getValues();
     }
@@ -263,6 +287,9 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspClearKeyTableResponse.class));
         EzspClearKeyTableResponse response = (EzspClearKeyTableResponse) transaction.getResponse();
+        if (response == null) {
+            return null;
+        }
         logger.debug(response.toString());
         return response.getStatus();
     }
@@ -279,6 +306,9 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetKeyResponse.class));
         EzspGetKeyResponse response = (EzspGetKeyResponse) transaction.getResponse();
+        if (response == null) {
+            return null;
+        }
         logger.debug(response.toString());
         if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
             return null;
@@ -298,6 +328,9 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetKeyTableEntryResponse.class));
         EzspGetKeyTableEntryResponse response = (EzspGetKeyTableEntryResponse) transaction.getResponse();
+        if (response == null) {
+            return null;
+        }
         logger.debug(response.toString());
         if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
             return null;
@@ -318,11 +351,11 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler().sendEzspTransaction(
                 new EzspSingleResponseTransaction(request, EzspGetConfigurationValueResponse.class));
         EzspGetConfigurationValueResponse response = (EzspGetConfigurationValueResponse) transaction.getResponse();
-        logger.debug(response.toString());
 
-        if (response.getStatus() != EzspStatus.EZSP_SUCCESS) {
+        if (response == null || response.getStatus() != EzspStatus.EZSP_SUCCESS) {
             return null;
         }
+        logger.debug(response.toString());
 
         return response.getValue();
     }
@@ -367,6 +400,9 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
                 .sendEzspTransaction(new EzspSingleResponseTransaction(setPolicyRequest, EzspSetPolicyResponse.class));
         EzspSetPolicyResponse setPolicyResponse = (EzspSetPolicyResponse) transaction.getResponse();
+        if (setPolicyResponse == null) {
+            return EzspStatus.UNKNOWN;
+        }
         logger.debug(setPolicyResponse.toString());
         if (setPolicyResponse.getStatus() != EzspStatus.EZSP_SUCCESS) {
             logger.debug("Error during setting policy: {}", setPolicyResponse);
@@ -389,6 +425,9 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
                 .sendEzspTransaction(new EzspSingleResponseTransaction(setPolicyRequest, EzspSetPolicyResponse.class));
         EzspSetPolicyResponse setPolicyResponse = (EzspSetPolicyResponse) transaction.getResponse();
+        if (setPolicyResponse == null) {
+            return EzspStatus.UNKNOWN;
+        }
         logger.debug(setPolicyResponse.toString());
         if (setPolicyResponse.getStatus() != EzspStatus.EZSP_SUCCESS) {
             logger.debug("Error during setting policy: {}", setPolicyResponse);
@@ -410,6 +449,9 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
                 .sendEzspTransaction(new EzspSingleResponseTransaction(getPolicyRequest, EzspGetPolicyResponse.class));
         EzspGetPolicyResponse getPolicyResponse = (EzspGetPolicyResponse) transaction.getResponse();
+        if (getPolicyResponse == null) {
+            return null;
+        }
         logger.debug(getPolicyResponse.toString());
         if (getPolicyResponse.getStatus() != EzspStatus.EZSP_SUCCESS) {
             logger.debug("Error getting policy: {}", getPolicyResponse);
@@ -433,6 +475,9 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspSetValueResponse.class));
         EzspSetValueResponse response = (EzspSetValueResponse) transaction.getResponse();
+        if (response == null) {
+            return EzspStatus.UNKNOWN;
+        }
         logger.debug(response.toString());
         if (response.getStatus() != EzspStatus.EZSP_SUCCESS) {
             logger.debug("Error setting value: {}", response);
@@ -453,6 +498,9 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetValueResponse.class));
         EzspGetValueResponse response = (EzspGetValueResponse) transaction.getResponse();
+        if (response == null) {
+            return null;
+        }
         logger.debug(response.toString());
         if (response.getStatus() != EzspStatus.EZSP_SUCCESS) {
             logger.debug("Error getting value: {}", response);
@@ -478,6 +526,9 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspAddTransientLinkKeyResponse.class));
         EzspAddTransientLinkKeyResponse response = (EzspAddTransientLinkKeyResponse) transaction.getResponse();
+        if (response == null) {
+            return EmberStatus.UNKNOWN;
+        }
         logger.debug(response.toString());
         if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
             logger.debug("Error setting transient key: {}", response);
@@ -523,6 +574,9 @@ public class EmberNcp {
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetTransientLinkKeyResponse.class));
         EzspGetTransientLinkKeyResponse response = (EzspGetTransientLinkKeyResponse) transaction
                 .getResponse();
+        if (response == null) {
+            return null;
+        }
         logger.debug(response.toString());
         if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
             return null;
@@ -542,6 +596,9 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetCertificateResponse.class));
         EzspGetCertificateResponse response = (EzspGetCertificateResponse) transaction.getResponse();
+        if (response == null) {
+            return null;
+        }
         if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
             logger.debug("Error getting 163k1 certificate: {}", response);
             return null;
@@ -560,6 +617,9 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetCertificate283k1Response.class));
         EzspGetCertificate283k1Response response = (EzspGetCertificate283k1Response) transaction.getResponse();
+        if (response == null) {
+            return null;
+        }
         if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
             logger.debug("Error getting 283k1 certificate: {}", response);
             return null;
@@ -606,6 +666,9 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetEui64Response.class));
         EzspGetEui64Response response = (EzspGetEui64Response) transaction.getResponse();
+        if (response == null) {
+            return null;
+        }
         return response.getEui64();
     }
 
@@ -641,6 +704,9 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspSetRadioPowerResponse.class));
         EzspSetRadioPowerResponse response = (EzspSetRadioPowerResponse) transaction.getResponse();
+        if (response == null) {
+            return EmberStatus.UNKNOWN;
+        }
         return response.getStatus();
     }
 
@@ -655,6 +721,9 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetLibraryStatusResponse.class));
         EzspGetLibraryStatusResponse response = (EzspGetLibraryStatusResponse) transaction.getResponse();
+        if (response == null) {
+            return EmberLibraryStatus.UNKNOWN;
+        }
         return response.getStatus();
     }
 
@@ -681,6 +750,9 @@ public class EmberNcp {
                 new EzspSingleResponseTransaction(request, EzspAddOrUpdateKeyTableEntryResponse.class));
         EzspAddOrUpdateKeyTableEntryResponse response = (EzspAddOrUpdateKeyTableEntryResponse) transaction
                 .getResponse();
+        if (response == null) {
+            return EmberStatus.UNKNOWN;
+        }
         return response.getStatus();
     }
 
@@ -697,6 +769,9 @@ public class EmberNcp {
                 new EzspSingleResponseTransaction(request, EzspGetRouteTableEntryResponse.class));
         EzspGetRouteTableEntryResponse response = (EzspGetRouteTableEntryResponse) transaction
                 .getResponse();
+        if (response == null) {
+            return null;
+        }
         if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
             logger.debug("Error request route table entry: {}", response);
             return null;
@@ -717,7 +792,7 @@ public class EmberNcp {
                 new EzspSingleResponseTransaction(request, EzspGetSourceRouteTableEntryResponse.class));
         EzspGetSourceRouteTableEntryResponse response = (EzspGetSourceRouteTableEntryResponse) transaction
                 .getResponse();
-        if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
+        if (response == null || response.getStatus() != EmberStatus.EMBER_SUCCESS) {
             return null;
         }
         // response.get
@@ -1028,7 +1103,10 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspCustomFrameResponse.class));
         EzspCustomFrameResponse response = (EzspCustomFrameResponse) transaction.getResponse();
-
+        if (response == null || response.getStatus() != EmberStatus.EMBER_SUCCESS) {
+            logger.debug("Error sending custom frame: {}", response);
+            return null;
+        }
         return response;
     }
 
@@ -1065,6 +1143,9 @@ public class EmberNcp {
                         new EzspSingleResponseTransaction(request, EzspSendManyToOneRouteRequestResponse.class));
         EzspSendManyToOneRouteRequestResponse response = (EzspSendManyToOneRouteRequestResponse) transaction
                 .getResponse();
+        if (response == null) {
+            return EmberStatus.UNKNOWN;
+        }
         return response.getStatus();
     }
 
@@ -1080,6 +1161,9 @@ public class EmberNcp {
                         new EzspSingleResponseTransaction(request, EzspResetToFactoryDefaultsResponse.class));
         EzspResetToFactoryDefaultsResponse response = (EzspResetToFactoryDefaultsResponse) transaction
                 .getResponse();
+        if (response == null) {
+            return EzspStatus.UNKNOWN;
+        }
         return response.getStatus();
     }
 
@@ -1105,6 +1189,9 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspGetMfgTokenResponse.class));
         EzspGetMfgTokenResponse response = (EzspGetMfgTokenResponse) transaction.getResponse();
+        if (response == null) {
+            return null;
+        }
         return response.getTokenData();
     }
 
@@ -1122,6 +1209,9 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspSetMfgTokenResponse.class));
         EzspSetMfgTokenResponse response = (EzspSetMfgTokenResponse) transaction.getResponse();
+        if (response == null) {
+            return EmberStatus.UNKNOWN;
+        }
         return response.getStatus();
     }
 
@@ -1142,6 +1232,9 @@ public class EmberNcp {
         EzspTransaction transaction = zigBeeDongleEzsp.getProtocolHandler()
                 .sendEzspTransaction(new EzspSingleResponseTransaction(request, EzspSetRadioChannelResponse.class));
         EzspSetRadioChannelResponse response = (EzspSetRadioChannelResponse) transaction.getResponse();
+        if (response == null) {
+            return EmberStatus.UNKNOWN;
+        }
         return response.getStatus();
     }
 
@@ -1159,7 +1252,7 @@ public class EmberNcp {
 
         EzspGetMulticastTableEntryResponse response = (EzspGetMulticastTableEntryResponse) transaction.getResponse();
 
-        if (response.getStatus() != EmberStatus.EMBER_SUCCESS) {
+        if (response == null || response.getStatus() != EmberStatus.EMBER_SUCCESS) {
             logger.debug("Error request multicast table entry: {}", response);
             return null;
         }
@@ -1180,6 +1273,9 @@ public class EmberNcp {
                 .sendEzspTransaction(
                         new EzspSingleResponseTransaction(request, EzspSetMulticastTableEntryResponse.class));
         EzspSetMulticastTableEntryResponse response = (EzspSetMulticastTableEntryResponse) transaction.getResponse();
+        if (response == null) {
+            return EmberStatus.UNKNOWN;
+        }
         return response.getStatus();
     }
 
@@ -1201,6 +1297,9 @@ public class EmberNcp {
                         new EzspSingleResponseTransaction(request, EzspAddressTableEntryIsActiveResponse.class));
         EzspAddressTableEntryIsActiveResponse response = (EzspAddressTableEntryIsActiveResponse) transaction
                 .getResponse();
+        if (response == null) {
+            return false;
+        }
         return response.getActive();
 
     }
