@@ -14,6 +14,7 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.af.ZstackAfRegisterSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfBdbAddInstallcodeSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfBdbCommissioningNotificationAreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfBdbSetActiveDefaultCentralizedKeySrsp;
+import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfBdbSetChannelSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfBdbSetJoinusesinstallcodekeySrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfBdbSetTcRequireKeyExchangeSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfSetAllowrejoinTcPolicySrsp;
@@ -25,6 +26,7 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.sapi.ZstackZbWriteConfiguratio
 import com.zsmartsystems.zigbee.dongle.zstack.api.sbl.ZstackSbHandshakeCmdSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sbl.ZstackSbWriteCmdSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysGetExtAddrSrsp;
+import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysNvReadSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysOsalNvReadSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysOsalNvWriteSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysPingSrsp;
@@ -103,6 +105,7 @@ public class ZstackFrameFactory {
     private static final int APP_CNF_BDB_ADD_INSTALLCODE = 0x04;
     private static final int APP_CNF_BDB_COMMISSIONING_NOTIFICATION = 0x80;
     private static final int APP_CNF_BDB_SET_ACTIVE_DEFAULT_CENTRALIZED_KEY = 0x07;
+    private static final int APP_CNF_BDB_SET_CHANNEL = 0x08;
     private static final int APP_CNF_BDB_SET_JOINUSESINSTALLCODEKEY = 0x06;
     private static final int APP_CNF_BDB_SET_TC_REQUIRE_KEY_EXCHANGE = 0x09;
     private static final int APP_CNF_SET_ALLOWREJOIN_TC_POLICY = 0x03;
@@ -111,6 +114,7 @@ public class ZstackFrameFactory {
     private static final int SB_HANDSHAKE_CMD = 0x04;
     private static final int SB_WRITE_CMD = 0x00;
     private static final int SYS_GET_EXT_ADDR = 0x04;
+    private static final int SYS_NV_READ = 0x33;
     private static final int SYS_OSAL_NV_READ = 0x08;
     private static final int SYS_OSAL_NV_WRITE = 0x09;
     private static final int SYS_PING = 0x01;
@@ -135,6 +139,7 @@ public class ZstackFrameFactory {
     private static final int ZB_GET_DEVICE_INFO = 0x06;
     private static final int ZB_READ_CONFIGURATION = 0x04;
     private static final int ZB_WRITE_CONFIGURATION = 0x05;
+    private static final int ZDO_EXT_NWK_INFO = 0x50;
     private static final int ZDO_GET_LINK_KEY = 0x25;
     private static final int ZDO_LEAVE_IND = 0xC9;
     private static final int ZDO_MSG_CB_INCOMING = 0xFF;
@@ -156,6 +161,7 @@ public class ZstackFrameFactory {
         zstackFrameMap.put(ZSTACK_APP_CNF + APP_CNF_BDB_ADD_INSTALLCODE, ZstackAppCnfBdbAddInstallcodeSrsp.class);
         zstackFrameMap.put(ZSTACK_APP_CNF + APP_CNF_BDB_COMMISSIONING_NOTIFICATION, ZstackAppCnfBdbCommissioningNotificationAreq.class);
         zstackFrameMap.put(ZSTACK_APP_CNF + APP_CNF_BDB_SET_ACTIVE_DEFAULT_CENTRALIZED_KEY, ZstackAppCnfBdbSetActiveDefaultCentralizedKeySrsp.class);
+        zstackFrameMap.put(ZSTACK_APP_CNF + APP_CNF_BDB_SET_CHANNEL, ZstackAppCnfBdbSetChannelSrsp.class);
         zstackFrameMap.put(ZSTACK_APP_CNF + APP_CNF_BDB_SET_JOINUSESINSTALLCODEKEY, ZstackAppCnfBdbSetJoinusesinstallcodekeySrsp.class);
         zstackFrameMap.put(ZSTACK_APP_CNF + APP_CNF_BDB_SET_TC_REQUIRE_KEY_EXCHANGE, ZstackAppCnfBdbSetTcRequireKeyExchangeSrsp.class);
         zstackFrameMap.put(ZSTACK_APP_CNF + APP_CNF_SET_ALLOWREJOIN_TC_POLICY, ZstackAppCnfSetAllowrejoinTcPolicySrsp.class);
@@ -164,6 +170,7 @@ public class ZstackFrameFactory {
         zstackFrameMap.put(ZSTACK_SBL + SB_HANDSHAKE_CMD, ZstackSbHandshakeCmdSrsp.class);
         zstackFrameMap.put(ZSTACK_SBL + SB_WRITE_CMD, ZstackSbWriteCmdSrsp.class);
         zstackFrameMap.put(ZSTACK_SYS + SYS_GET_EXT_ADDR, ZstackSysGetExtAddrSrsp.class);
+        zstackFrameMap.put(ZSTACK_SYS + SYS_NV_READ, ZstackSysNvReadSrsp.class);
         zstackFrameMap.put(ZSTACK_SYS + SYS_OSAL_NV_READ, ZstackSysOsalNvReadSrsp.class);
         zstackFrameMap.put(ZSTACK_SYS + SYS_OSAL_NV_WRITE, ZstackSysOsalNvWriteSrsp.class);
         zstackFrameMap.put(ZSTACK_SYS + SYS_PING, ZstackSysPingSrsp.class);
@@ -188,6 +195,7 @@ public class ZstackFrameFactory {
         zstackFrameMap.put(ZSTACK_SAPI + ZB_GET_DEVICE_INFO, ZstackZbGetDeviceInfoSrsp.class);
         zstackFrameMap.put(ZSTACK_SAPI + ZB_READ_CONFIGURATION, ZstackZbReadConfigurationSrsp.class);
         zstackFrameMap.put(ZSTACK_SAPI + ZB_WRITE_CONFIGURATION, ZstackZbWriteConfigurationSrsp.class);
+        zstackFrameMap.put(ZSTACK_ZDO + ZDO_EXT_NWK_INFO, ZstackZdoExtNwkInfoSrsp.class);
         zstackFrameMap.put(ZSTACK_ZDO + ZDO_GET_LINK_KEY, ZstackZdoGetLinkKeySrsp.class);
         zstackFrameMap.put(ZSTACK_ZDO + ZDO_LEAVE_IND, ZstackZdoLeaveIndAreq.class);
         zstackFrameMap.put(ZSTACK_ZDO + ZDO_MSG_CB_INCOMING, ZstackZdoMsgCbIncomingAreq.class);
@@ -198,7 +206,6 @@ public class ZstackFrameFactory {
         zstackFrameMap.put(ZSTACK_ZDO + ZDO_STARTUP_FROM_APP, ZstackZdoStartupFromAppSrsp.class);
         zstackFrameMap.put(ZSTACK_ZDO + ZDO_STATE_CHANGE_IND, ZstackZdoStateChangeIndAreq.class);
         zstackFrameMap.put(ZSTACK_ZDO + ZDO_TC_DEV_IND, ZstackZdoTcDevIndAreq.class);
-        zstackFrameMap.put(ZSTACK_ZDO + 0x50, ZstackZdoExtNwkInfoSrsp.class);
     }
 
     /**

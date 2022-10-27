@@ -14,6 +14,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -27,7 +28,7 @@ import com.zsmartsystems.zigbee.dongle.zstack.autocode.xml.Parameter;
  */
 public abstract class ClassGenerator {
     protected int lineLen = 110;
-    protected String sourceRootPath = "../com.zsmartsystems.zigbee.dongle.zstack/src/main/java/";
+    protected String sourceRootPath = "com.zsmartsystems.zigbee.dongle.zstack/src/main/java/";
     protected List<String> importList = new ArrayList<String>();
 
     protected String stringToConstant(String value) {
@@ -134,7 +135,7 @@ public abstract class ClassGenerator {
 
         BufferedReader br;
         try {
-            br = new BufferedReader(new FileReader("../pom.xml"));
+            br = new BufferedReader(new FileReader("pom.xml"));
             String line = br.readLine();
             while (line != null) {
                 if (line.contains("<license.year>") && line.contains("</license.year>")) {
@@ -146,7 +147,7 @@ public abstract class ClassGenerator {
 
             br.close();
 
-            br = new BufferedReader(new FileReader("../src/etc/header.txt"));
+            br = new BufferedReader(new FileReader("src/etc/header.txt", Charset.forName("UTF-8")));
             line = br.readLine();
 
             out.println("/**");

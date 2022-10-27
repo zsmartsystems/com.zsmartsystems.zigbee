@@ -24,7 +24,7 @@ import com.zsmartsystems.zigbee.security.ZigBeeKey;
 public class ZstackZdoGetLinkKeySrsp extends ZstackFrameResponse {
 
     /**
-     * 0x00 â€“ Success. 0xC8 â€“ Unknown device.
+     * 0x00 – Success. 0xC8 – Unknown device.
      */
     private ZstackResponseCode status;
 
@@ -54,7 +54,7 @@ public class ZstackZdoGetLinkKeySrsp extends ZstackFrameResponse {
     }
 
     /**
-     * 0x00 â€“ Success. 0xC8 â€“ Unknown device.
+     * 0x00 – Success. 0xC8 – Unknown device.
      *
      * @return the current status as {@link ZstackResponseCode}
      */
@@ -63,7 +63,7 @@ public class ZstackZdoGetLinkKeySrsp extends ZstackFrameResponse {
     }
 
     /**
-     * 0x00 â€“ Success. 0xC8 â€“ Unknown device.
+     * 0x00 – Success. 0xC8 – Unknown device.
      *
      * @param status the Status to set as {@link ZstackResponseCode}
      */

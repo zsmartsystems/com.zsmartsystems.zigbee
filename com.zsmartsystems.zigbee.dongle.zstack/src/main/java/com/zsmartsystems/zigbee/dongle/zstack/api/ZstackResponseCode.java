@@ -81,7 +81,7 @@ public enum ZstackResponseCode {
     MAC_SCAN_IN_PROGRESS(0x00FC),
 
     /**
-     * The transaction has expired
+     * The outstanding transaction has expired
      */
     MAC_TRANSACTION_EXPIRED(0x00F0);
 

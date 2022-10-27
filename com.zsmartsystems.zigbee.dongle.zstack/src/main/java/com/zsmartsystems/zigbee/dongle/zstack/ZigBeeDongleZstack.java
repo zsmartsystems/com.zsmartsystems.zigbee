@@ -18,7 +18,6 @@ import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -54,6 +53,7 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoStateChangeIndAre
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoTcDevIndAreq;
 import com.zsmartsystems.zigbee.dongle.zstack.internal.ZstackProtocolHandler;
 import com.zsmartsystems.zigbee.dongle.zstack.internal.ZstackStackConfiguration;
+import com.zsmartsystems.zigbee.dongle.zstack.internal.serializer.ZstackDeserializer;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfigOption;
@@ -87,11 +87,16 @@ import com.zsmartsystems.zigbee.zdo.command.UserDescriptorResponse;
  * <p>
  * Usage notes...
  * <ul>
- * <li>To be compatible with older devices (ie pre-ZigBee 3.0), MT_APP_CNF_BDB_SET_TC_REQUIRE_KEY_EXCHANGE should be set
- * to FALSE. Failing to set this to FALSE will require the R21 join procedure to exchange keys following the initial
- * association, which older devices will not perform, and the coordinator will then remove them from the network. This
- * can be achieved with the {@link ZigBeeDongleZstack#requireKeyExchange(boolean)} method.
- * <li>There is a bug in the TI ZStack 3.0.2 which always return 00 as the SeqNum in the ZstackZdoMsgCbIncomingAreq
+ * <li>To be compatible with older devices (ie pre-ZigBee 3.0),
+ * MT_APP_CNF_BDB_SET_TC_REQUIRE_KEY_EXCHANGE should be set
+ * to FALSE. Failing to set this to FALSE will require the R21 join procedure to
+ * exchange keys following the initial
+ * association, which older devices will not perform, and the coordinator will
+ * then remove them from the network. This
+ * can be achieved with the
+ * {@link ZigBeeDongleZstack#requireKeyExchange(boolean)} method.
+ * <li>There is a bug in the TI ZStack 3.0.2 which always return 00 as the
+ * SeqNum in the ZstackZdoMsgCbIncomingAreq
  * </ul>
  *
  * @author Chris Jackson
@@ -106,7 +111,8 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
     /**
      * The default link key
      */
-    private static final ZigBeeKey DEFAULT_TCLK = new ZigBeeKey(new int[] { 0x5A, 0x69, 0x67, 0x42, 0x65, 0x65, 0x41, 0x6C, 0x6C, 0x69, 0x61, 0x6E, 0x63, 0x65, 0x30, 0x39 });
+    private static final ZigBeeKey DEFAULT_TCLK = new ZigBeeKey(new int[] { 0x5A, 0x69, 0x67, 0x42, 0x65, 0x65, 0x41,
+            0x6C, 0x6C, 0x69, 0x61, 0x6E, 0x63, 0x65, 0x30, 0x39 });
 
     /**
      * The serial port used to connect to the dongle
@@ -144,7 +150,13 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
     private ZigBeeKey linkKey;
 
     /**
-     * The ZStack version used in this system. Set during initialisation and save in case the client is interested.
+     * The logical channel in use by the NCP
+     */
+    private ZigBeeChannel logicalChannel = ZigBeeChannel.UNKNOWN;
+
+    /**
+     * The ZStack version used in this system. Set during initialisation and save in
+     * case the client is interested.
      */
     private String versionString = "Unknown";
 
@@ -174,7 +186,8 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
     boolean isOnANetwork = false;
 
     /**
-     * Boolean to hold initialisation state. Set to true after {@link #startup()} completes.
+     * Boolean to hold initialisation state. Set to true after {@link #startup()}
+     * completes.
      */
     private boolean initialised = false;
 
@@ -182,20 +195,18 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
     private ScheduledFuture<?> pollingTimer = null;
 
     /**
-     * The rate at which we will do a status poll if we've not sent any other messages within this period
+     * The rate at which we will do a status poll if we've not sent any other
+     * messages within this period
      */
     private int pollRate = 100000;
 
     /**
-     * The time the last command was sent from the {@link ZigBeeNetworkManager}. This is used by the dongle polling task
-     * to not poll if commands are otherwise being sent so as to reduce unnecessary communications with the dongle.
+     * The time the last command was sent from the {@link ZigBeeNetworkManager}.
+     * This is used by the dongle polling task
+     * to not poll if commands are otherwise being sent so as to reduce unnecessary
+     * communications with the dongle.
      */
     private long lastSendCommandTime;
-
-    /**
-     * The reset listener listenes for expected and unexpected resets. And handles the events.
-     */
-    private ResetListener resetListener;
 
     /**
      * Create a {@link ZigBeeDongleZstack}
@@ -210,6 +221,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
 
         stackConfiguration.put(ZstackConfigId.ZCD_NV_ZDO_DIRECT_CB, new int[] { 0x00 });
         stackConfiguration.put(ZstackConfigId.ZCD_NV_PRECFGKEYS_ENABLE, new int[] { 0x01 });
+        stackConfiguration.put(ZstackConfigId.ZCD_NV_USE_DEFAULT_TCLK, new int[] { 0x01 });
     }
 
     @Override
@@ -244,10 +256,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
             return ZigBeeStatus.COMMUNICATION_ERROR;
         }
 
-        resetListener = new ResetListener();
-
         protocolHandler = new ZstackProtocolHandler();
-        protocolHandler.listener(ZstackSysResetIndAreq.class, resetListener);
         protocolHandler.start(serialPort);
 
         ZstackNcp ncp = getZstackNcp();
@@ -288,11 +297,12 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
             logger.debug("ZStack device is currently on a network. Read parameters from the device");
             final ZstackStackConfiguration config = new ZstackStackConfiguration(ncp);
             Map<ZstackConfigId, int[]> readConfiguration = config.getConfiguration(EnumSet.of(
-                ZstackConfigId.ZCD_NV_APS_USE_EXT_PANID,
-                ZstackConfigId.ZCD_NV_PANID,
-                ZstackConfigId.ZCD_NV_PRECFGKEY,
-                ZstackConfigId.ZCD_NV_CHANLIST
-            ));
+                    ZstackConfigId.ZCD_NV_APS_USE_EXT_PANID,
+                    ZstackConfigId.ZCD_NV_PANID,
+                    ZstackConfigId.ZCD_NV_PRECFGKEY,
+                    ZstackConfigId.ZCD_NV_CHANLIST));
+            logicalChannel = ZigBeeChannel.create(ncp.readChannel());
+            logger.debug("Current selected channel is configured as {}", logicalChannel);
 
             stackConfiguration.putAll(readConfiguration);
         }
@@ -332,13 +342,15 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
 
             Map<ZstackConfigId, int[]> configuration = stackConfigurer.getConfiguration(stackConfiguration.keySet());
             for (Entry<ZstackConfigId, int[]> config : configuration.entrySet()) {
-                logger.debug("Configuration state {} = {}", config.getKey(), Arrays.stream(config.getValue()).mapToObj(Integer::toHexString).collect(Collectors.toList()));
+                logger.debug("Configuration state {} = {}", config.getKey(),
+                        Arrays.stream(config.getValue()).mapToObj(Integer::toHexString).collect(Collectors.toList()));
             }
 
             stackConfigurer.setConfiguration(stackConfiguration);
             configuration = stackConfigurer.getConfiguration(stackConfiguration.keySet());
             for (Entry<ZstackConfigId, int[]> config : configuration.entrySet()) {
-                logger.debug("Configuration state {} = {}", config.getKey(), Arrays.stream(config.getValue()).mapToObj(Integer::toHexString).collect(Collectors.toList()));
+                logger.debug("Configuration state {} = {}", config.getKey(),
+                        Arrays.stream(config.getValue()).mapToObj(Integer::toHexString).collect(Collectors.toList()));
             }
 
             // reset the device
@@ -381,9 +393,24 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
         ncp.zdoRegisterCallback(ManagementPermitJoiningResponse.CLUSTER_ID);
 
         // Add the endpoint
-        ncp.addEndpoint(defaultLocalEndpointId, defaultDeviceId, defaultProfileId, 
-            new int[] {}, new int[] {}
-        );
+        ncp.addEndpoint(defaultLocalEndpointId, defaultDeviceId, defaultProfileId,
+                new int[] {}, new int[] {});
+
+        if (!initialised) {
+            if (!configureListeners()) {
+                return ZigBeeStatus.FAILURE;
+            }
+        }
+
+        // Configure channel
+        int[] channelList = stackConfiguration.get(ZstackConfigId.ZCD_NV_CHANLIST);
+        if (channelList != null && channelList.length == 4) {
+            final ZstackDeserializer deserializer = new ZstackDeserializer(channelList);
+            int channelMask = deserializer.deserializeUInt32();
+            ncp.setChannelMask(new ZigBeeChannelMask(channelMask));
+        } else {
+            ncp.setChannelMask(new ZigBeeChannelMask(ZigBeeChannelMask.CHANNEL_MASK_2GHZ));
+        }
 
         final ZigBeeStatus responseCode = startNetwork();
         if (responseCode != ZigBeeStatus.SUCCESS) {
@@ -427,7 +454,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
     public ZstackNcp getZstackNcp() {
         return new ZstackNcp(protocolHandler);
     }
-    
+
     @Override
     public IeeeAddress getIeeeAddress() {
         return ieeeAddress;
@@ -440,8 +467,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
 
     @Override
     public ZigBeeChannel getZigBeeChannel() {
-        int chan = getZstackNcp().readChannel();
-        return ZigBeeChannel.create(chan);
+        return logicalChannel;
     }
 
     @Override
@@ -456,6 +482,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
 
         ZstackNcp ncp = getZstackNcp();
 
+        logicalChannel = channel;
         stackConfiguration.put(ZstackConfigId.ZCD_NV_CHANLIST, ncp.valueFromUInt32(channelMask));
 
         // setup zigbee channel
@@ -514,10 +541,11 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
 
         if (DEFAULT_TCLK.equals(key)) {
             // use default key
-            stackConfiguration.put(ZstackConfigId.ZCD_NV_USE_DEFAULT_TCLK, new int[] {1});
+            stackConfiguration.put(ZstackConfigId.ZCD_NV_USE_DEFAULT_TCLK, new int[] { 1 });
             return ZigBeeStatus.SUCCESS;
         } else {
-            ZstackResponseCode response = ncp.setCentralisedKey(ZstackCentralizedLinkKeyMode.PROVIDED_APS_KEY, key.getValue());
+            ZstackResponseCode response = ncp.setCentralisedKey(ZstackCentralizedLinkKeyMode.PROVIDED_APS_KEY,
+                    key.getValue());
             if (response == ZstackResponseCode.SUCCESS) {
                 linkKey = key;
                 return ZigBeeStatus.SUCCESS;
@@ -592,27 +620,30 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
                 switch (option) {
                     // TODO: Configure an online network
                     // case INSTALL_KEY:
-                    //     ZstackNcp ncp = getZstackNcp();
-                    //     ZigBeeKey nodeKey = (ZigBeeKey) configuration.getValue(option);
-                    //     if (!nodeKey.hasAddress()) {
-                    //         logger.debug("Attempt to set INSTALL_KEY without setting address");
-                    //         configuration.setResult(option, ZigBeeStatus.FAILURE);
-                    //         break;
-                    //     }
-                    //     ZstackResponseCode result = ncp.addInstallCode(nodeKey.getAddress(), nodeKey);
+                    // ZstackNcp ncp = getZstackNcp();
+                    // ZigBeeKey nodeKey = (ZigBeeKey) configuration.getValue(option);
+                    // if (!nodeKey.hasAddress()) {
+                    // logger.debug("Attempt to set INSTALL_KEY without setting address");
+                    // configuration.setResult(option, ZigBeeStatus.FAILURE);
+                    // break;
+                    // }
+                    // ZstackResponseCode result = ncp.addInstallCode(nodeKey.getAddress(),
+                    // nodeKey);
 
-                    //     configuration.setResult(option,
-                    //             result == ZstackResponseCode.SUCCESS ? ZigBeeStatus.SUCCESS : ZigBeeStatus.FAILURE);
-                    //     break;
+                    // configuration.setResult(option,
+                    // result == ZstackResponseCode.SUCCESS ? ZigBeeStatus.SUCCESS :
+                    // ZigBeeStatus.FAILURE);
+                    // break;
 
                     // case RADIO_TX_POWER:
-                    //     txPower = (int) configuration.getValue(option);
-                    //     configuration.setResult(option, setTxPower(txPower));
-                    //     break;
+                    // txPower = (int) configuration.getValue(option);
+                    // configuration.setResult(option, setTxPower(txPower));
+                    // break;
 
                     // case TRUST_CENTRE_LINK_KEY:
-                    //     configuration.setResult(option, setTcLinkKey((ZigBeeKey) configuration.getValue(option)));
-                    //     break;
+                    // configuration.setResult(option, setTcLinkKey((ZigBeeKey)
+                    // configuration.getValue(option)));
+                    // break;
 
                     default:
                         configuration.setResult(option, ZigBeeStatus.UNSUPPORTED);
@@ -626,9 +657,12 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
     }
 
     /**
-     * This method schedules sending a status request frame on the interval specified by pollRate. If the frameHandler
-     * does not receive a response after a certain amount of retries, the state will be set to OFFLINE.
-     * The poll will not be sent if other commands have been sent to the dongle within the pollRate period so as to
+     * This method schedules sending a status request frame on the interval
+     * specified by pollRate. If the frameHandler
+     * does not receive a response after a certain amount of retries, the state will
+     * be set to OFFLINE.
+     * The poll will not be sent if other commands have been sent to the dongle
+     * within the pollRate period so as to
      * eliminate any unnecessary traffic with the dongle.
      */
     private void scheduleNetworkStatePolling() {
@@ -666,22 +700,16 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
         if (linkState) {
             ZstackNcp ncp = getZstackNcp();
             nwkAddress = ncp.getNwkAddress();
+            logicalChannel = ZigBeeChannel.create(ncp.readChannel());
+            ieeeAddress = ncp.getDeviceInfo().getIeeeAddress();
+            // TODO: read back stuff nv?
             zigbeeTransportReceive.setTransportState(ZigBeeTransportState.ONLINE);
         } else {
             zigbeeTransportReceive.setTransportState(ZigBeeTransportState.OFFLINE);
         }
     }
 
-    /**
-     * Starts the NCP application, placing it on the network as previously
-     * configured.
-     *
-     * @return {@link ZigBeeStatus} defining the result
-     */
-    private ZigBeeStatus startNetwork() {
-        logger.debug("ZStack starting network");
-        ZstackNcp ncp = getZstackNcp();
-
+    private boolean configureListeners() {
         // setup listeners
         protocolHandler.listener(ZstackAfIncomingMsgAreq.class, response -> {
             logger.debug("Zstack incoming message");
@@ -742,16 +770,36 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
             zigbeeTransportReceive.receiveCommand(apsFrame);
         });
 
-        final Future<ZstackZdoStateChangeIndAreq> networkUpFuture = protocolHandler.waitForEvent(ZstackZdoStateChangeIndAreq.class, response -> {
-            switch (response.getState()) {
-                case DEV_ROUTER:
-                case DEV_END_DEVICE:
-                case DEV_ZB_COORD:
-                    return true;
-                default:
-                    return false;
-            }
+        protocolHandler.listener(ZstackSysResetIndAreq.class, reset -> {
+            logger.warn("Unexpected reset occured: Restarting network");
+            handleLinkStateChange(false);
+            startup(false);
         });
+
+        return true;
+    }
+
+    /**
+     * Starts the NCP application, placing it on the network as previously
+     * configured.
+     *
+     * @return {@link ZigBeeStatus} defining the result
+     */
+    private ZigBeeStatus startNetwork() {
+        logger.debug("ZStack starting network");
+        ZstackNcp ncp = getZstackNcp();
+
+        final Future<ZstackZdoStateChangeIndAreq> networkUpFuture = protocolHandler
+                .waitForEvent(ZstackZdoStateChangeIndAreq.class, response -> {
+                    switch (response.getState()) {
+                        case DEV_ROUTER:
+                        case DEV_END_DEVICE:
+                        case DEV_ZB_COORD:
+                            return true;
+                        default:
+                            return false;
+                    }
+                });
 
         // Now start the NCP
         if (ncp.startupApplication() != ZstackResponseCode.SUCCESS) {
@@ -764,28 +812,6 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
             return ZigBeeStatus.FAILURE;
         }
 
-        // setup dongle state listener
-        protocolHandler.listener(ZstackZdoStateChangeIndAreq.class, response -> {
-            logger.debug("Zstack dongle state changed");
-            switch (response.getState()) {
-                case DEV_ROUTER:
-                case DEV_ZB_COORD:
-                case DEV_END_DEVICE:
-                    handleLinkStateChange(true);
-                    break;
-                default:
-                    handleLinkStateChange(false);
-                    break;
-            }
-        });
-
         return ZigBeeStatus.SUCCESS;
-    }
-
-    private class ResetListener implements Consumer<ZstackSysResetIndAreq> {
-        @Override
-        public synchronized void accept(final ZstackSysResetIndAreq t) {
-            logger.warn("Unexpected reset occured");
-        }
     }
 }

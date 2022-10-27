@@ -27,7 +27,7 @@ public enum AfDataOptions {
     AF_ACK_REQUEST(0x0010),
 
     /**
-     * Set this bit to force route discovery if a routing table entry doesnâ€™t exist
+     * Set this bit to force route discovery if a routing table entry doesn’t exist
      */
     AF_DISCV_ROUTE(0x0020),
 

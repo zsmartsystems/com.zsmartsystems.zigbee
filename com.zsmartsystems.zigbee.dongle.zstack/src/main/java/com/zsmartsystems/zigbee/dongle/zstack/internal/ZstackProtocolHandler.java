@@ -12,13 +12,13 @@ import static java.util.Objects.requireNonNull;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -57,11 +57,6 @@ public class ZstackProtocolHandler {
     }
 
     /**
-     * Flag to note if we are waiting for a SRSP to ensure that only one synchronous request is outstanding at any time
-     */
-    private AtomicBoolean waitingSrsp = new AtomicBoolean();
-
-    /**
      * The logger.
      */
     private final Logger logger = LoggerFactory.getLogger(ZstackProtocolHandler.class);
@@ -79,7 +74,7 @@ public class ZstackProtocolHandler {
     /**
      * The queue of {@link ZstackFrameRequest} frames waiting to be sent
      */
-    private final Queue<ZstackFrameRequest> sendQueue = new ConcurrentLinkedQueue<>();
+    private final BlockingQueue<ZstackFrameRequest> sendQueue = new LinkedBlockingQueue<>();
 
     private ExecutorService executor = ZigBeeExecutors.newCachedThreadPool("ZstackProtocolHandler");
 
@@ -95,6 +90,20 @@ public class ZstackProtocolHandler {
         this.port = port;
 
         executor.execute(() -> {
+            logger.debug("ZstackFrameHandler sender started.");
+            while (!closeHandler) {
+                try {
+                    sendNextFrame();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                } catch (Exception e) {
+                    logger.error("ZstackFrameHandler sending Exception: ", e);
+                }
+            }
+            logger.debug("ZstackFrameHandler sender exited.");
+        });
+
+        executor.execute(() -> {
             logger.debug("ZstackFrameHandler thread started");
 
             int exceptionCnt = 0;
@@ -108,11 +117,6 @@ public class ZstackProtocolHandler {
                         continue;
                     }
 
-                    if (waitingSrsp.compareAndSet(isSynchronous(frameData[0]), false)) {
-                        logger.debug("ZSTACK synchronous frame received. waitingSrsp={}, isSynchronous={}",
-                                waitingSrsp, isSynchronous(frameData[0]));
-                    }
-
                     ZstackFrameResponse response = ZstackFrameFactory.createFrame(frameData);
                     if (response == null) {
                         logger.debug("RX ZSTACK: ZstackUnknownFrame [ data={}]", frameToString(frameData));
@@ -123,8 +127,6 @@ public class ZstackProtocolHandler {
 
                     // Also handle any ZStack level transactions (SREQ transactions or waiting events)
                     notifyResponseReceived(response);
-
-                    sendNextFrame();
                 } catch (final IOException e) {
                     logger.error("ZstackFrameHandler IOException: ", e);
 
@@ -170,9 +172,7 @@ public class ZstackProtocolHandler {
         }
         sendQueue.add(request);
 
-        logger.debug("ZSTACK TX Queue length={}, waitingSync={}", sendQueue.size(), waitingSrsp);
-
-        sendNextFrame();
+        logger.debug("ZSTACK TX Queue length={}", sendQueue.size());
     }
 
     /**
@@ -289,22 +289,14 @@ public class ZstackProtocolHandler {
         }
     }
 
-    private synchronized boolean sendNextFrame() {
-        if (sendQueue.isEmpty()) {
+    private synchronized boolean sendNextFrame() throws InterruptedException {
+        final ZstackFrameRequest request = sendQueue.poll(1000L, TimeUnit.MILLISECONDS);
+        if (request == null) {
             return false;
         }
 
-        if (waitingSrsp.get() && sendQueue.peek().isSynchronous()) {
-            // We are waiting for an SRSP and the next frame is an SREQ, so we need to wait
-            return false;
-        }
+        sendFrame(request);
 
-        ZstackFrameRequest nextFrame = sendQueue.poll();
-        if (waitingSrsp.compareAndSet(false, nextFrame.isSynchronous())) {
-            logger.debug("ZSTACK synchronous frame sent. waitingSrsp={}", waitingSrsp);
-        }
-
-        sendFrame(nextFrame);
         return true;
     }
 
@@ -344,17 +336,6 @@ public class ZstackProtocolHandler {
             result.append(String.format("%02X ", data));
         }
         return result.toString();
-    }
-
-    /**
-     * Checks the frame type to see if it is a synchronous request or response.
-     *
-     * @param cmd0 the first command byte of the request or response frame
-     * @return true if this is a synchronous frame
-     */
-    private boolean isSynchronous(int cmd0) {
-        int frameType = cmd0 & 0xE0;
-        return (frameType == 0x20 || frameType == 0x60);
     }
 
     private int[] getPacket() throws IOException {

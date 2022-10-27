@@ -36,7 +36,7 @@ public class ZstackZdoMsgCbIncomingAreq extends ZstackFrameResponse {
     private int clusterId;
 
     /**
-     * N/A â€“ not used.
+     * N/A – not used.
      */
     private boolean securityUse;
 
@@ -127,7 +127,7 @@ public class ZstackZdoMsgCbIncomingAreq extends ZstackFrameResponse {
     }
 
     /**
-     * N/A â€“ not used.
+     * N/A – not used.
      *
      * @return the current securityUse as {@link boolean}
      */
@@ -136,7 +136,7 @@ public class ZstackZdoMsgCbIncomingAreq extends ZstackFrameResponse {
     }
 
     /**
-     * N/A â€“ not used.
+     * N/A – not used.
      *
      * @param securityUse the SecurityUse to set as {@link boolean}
      */

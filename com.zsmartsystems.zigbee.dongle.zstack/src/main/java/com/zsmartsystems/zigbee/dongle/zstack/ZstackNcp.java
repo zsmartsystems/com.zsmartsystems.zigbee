@@ -10,6 +10,8 @@ package com.zsmartsystems.zigbee.dongle.zstack;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +25,8 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfBdbAddInsta
 import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfBdbAddInstallcodeSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfBdbSetActiveDefaultCentralizedKeySreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfBdbSetActiveDefaultCentralizedKeySrsp;
+import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfBdbSetChannelSreq;
+import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfBdbSetChannelSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfBdbSetTcRequireKeyExchangeSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfBdbSetTcRequireKeyExchangeSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfSetAllowrejoinTcPolicySreq;
@@ -50,8 +54,6 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetDeviceInfoSr
 import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetDeviceInfoSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetNvInfoSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetNvInfoSrsp;
-import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilSetChannelsSreq;
-import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilSetChannelsSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoExtNwkInfoSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoExtNwkInfoSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoMsgCbRegisterSreq;
@@ -101,16 +103,24 @@ public class ZstackNcp {
      * @return the {@link ZstackSysResetIndAreq} from the NCP or null if there was an error
      */
     public ZstackSysResetIndAreq resetNcp(ZstackResetType resetType) {
+        final Future<ZstackSysResetIndAreq> resetListener = protocolHandler.waitForEvent(ZstackSysResetIndAreq.class, response -> true);
+
         ZstackSysResetReqAcmd request = new ZstackSysResetReqAcmd();
         request.setType(resetType);
-        ZstackSysResetIndAreq response = protocolHandler.sendTransaction(request, ZstackSysResetIndAreq.class);
-        if (response == null) {
-            logger.debug("No response from Reset command");
+        protocolHandler.queueFrame(request);
+
+        try {
+            ZstackSysResetIndAreq response = resetListener.get();
+            if (response == null) {
+                logger.debug("No response from Reset command");
+                return null;
+            } else {
+                logger.debug(response.toString());
+                return response;
+            }
+        } catch (InterruptedException | ExecutionException e) {
             return null;
         }
-        logger.debug(response.toString());
-
-        return response;
     }
 
     /**
@@ -265,7 +275,9 @@ public class ZstackNcp {
 
     public int readChannel() {
         ZstackSysNvReadSreq request = new ZstackSysNvReadSreq();
-        request.setId(1, 0, 0x21);
+        request.setSysId(1);
+        request.setItemId(0);
+        request.setSubId(0x21);
         request.setOffset(24);
         request.setLength(1);
         ZstackSysNvReadSrsp response = protocolHandler.sendTransaction(request, ZstackSysNvReadSrsp.class);
@@ -296,12 +308,12 @@ public class ZstackNcp {
      * @param txPower the TX power in dBm
      * @return the power returned from the NCP on success or null on error
      */
-    public Integer setTxPower(int txPower) {
+    public ZstackResponseCode setTxPower(int txPower) {
         ZstackSysSetTxPowerSreq request = new ZstackSysSetTxPowerSreq();
         request.setTxPower(txPower);
         ZstackSysSetTxPowerSrsp response = protocolHandler.sendTransaction(request, ZstackSysSetTxPowerSrsp.class);
 
-        return response == null ? null : response.getTxPower();
+        return response == null ? null : response.getStatus();
     }
 
     /**
@@ -311,9 +323,10 @@ public class ZstackNcp {
      * @return {@link ZstackResponseCode} returned from the NCP
      */
     public ZstackResponseCode setChannelMask(ZigBeeChannelMask channelMask) {
-        ZstackUtilSetChannelsSreq request = new ZstackUtilSetChannelsSreq();
+        final ZstackAppCnfBdbSetChannelSreq request = new ZstackAppCnfBdbSetChannelSreq();
+        request.setIsPrimary(true);
         request.setChannels(channelMask.getChannelMask());
-        ZstackUtilSetChannelsSrsp response = protocolHandler.sendTransaction(request, ZstackUtilSetChannelsSrsp.class);
+        ZstackAppCnfBdbSetChannelSrsp response = protocolHandler.sendTransaction(request, ZstackAppCnfBdbSetChannelSrsp.class);
         if (response == null) {
             logger.debug("No response from SetChannels command");
             return ZstackResponseCode.FAILURE;

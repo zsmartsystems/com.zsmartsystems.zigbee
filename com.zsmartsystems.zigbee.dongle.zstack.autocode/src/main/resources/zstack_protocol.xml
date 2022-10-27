@@ -328,9 +328,9 @@
 		</request>
 		<response>
 			<parameter>
-				<data_type>int8</data_type>
-				<name>TxPower</name>
-				<description>Requested TX power setting, in dBm.</description>
+				<data_type>ZstackResponseCode</data_type>
+				<name>Status</name>
+				<description>Staus is either Success (0) or Failure (1).</description>
 			</parameter>
 		</response>
 	</command>
@@ -928,7 +928,7 @@
 				<description>Extended pan id</description>
 			</parameter>
 			<parameter>
-				<data_type>IeeeAddr</data_type>
+				<data_type>IeeeAddress</data_type>
 				<name>ExtendedParentAddress</name>
 				<description>Extended parent address</description>
 			</parameter>
@@ -1714,6 +1714,33 @@
 				<data_type>ZstackResponseCode</data_type>
 				<name>Status</name>
 				<description>0x00 Success 0x01 Failure (IC not supported) 0x02 Invalid Parameters (bad CRC).</description>
+			</parameter>
+		</response>
+	</command>
+
+		<command>
+		<name>APP_CNF_BDB_SET_CHANNEL</name>
+		<subsystem>APP_CNF</subsystem>
+		<id>0x08</id>
+		<description>This command is used to store a channel select bit-mask to be used in commissioning.</description>
+		<type>SYNC</type>
+		<request>
+			<parameter>
+				<data_type>boolean</data_type>
+				<name>IsPrimary</name>
+				<description>Mask is used for primary channel selection.</description>
+			</parameter>
+			<parameter>
+				<data_type>uint32</data_type>
+				<name>Channels</name>
+				<description>A bit-mask representing the channel(s) to scan the next time the target device resets.</description>
+			</parameter>
+		</request>
+		<response>
+			<parameter>
+				<data_type>ZstackResponseCode</data_type>
+				<name>Status</name>
+				<description>Status is either Success (0) or Failure (1).</description>
 			</parameter>
 		</response>
 	</command>

@@ -7,6 +7,7 @@
  */
 package com.zsmartsystems.zigbee.dongle.zstack.internal.serializer;
 
+import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 
@@ -74,5 +75,9 @@ public class ZstackDeserializer {
 
     public ZigBeeKey deserializeZigBeeKey() {
         return new ZigBeeKey(deserializeUInt8Array(16));
+    }
+
+    public ExtendedPanId deserializeExtendedPanId() {
+        return new ExtendedPanId(deserializeUInt8Array(8));
     }
 }

@@ -22,7 +22,7 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.ZstackResponseCode;
 public class ZstackZdoMsgCbRegisterSrsp extends ZstackFrameResponse {
 
     /**
-     * 0x00 â€“ Success.
+     * 0x00 – Success.
      */
     private ZstackResponseCode status;
 
@@ -40,7 +40,7 @@ public class ZstackZdoMsgCbRegisterSrsp extends ZstackFrameResponse {
     }
 
     /**
-     * 0x00 â€“ Success.
+     * 0x00 – Success.
      *
      * @return the current status as {@link ZstackResponseCode}
      */
@@ -49,7 +49,7 @@ public class ZstackZdoMsgCbRegisterSrsp extends ZstackFrameResponse {
     }
 
     /**
-     * 0x00 â€“ Success.
+     * 0x00 – Success.
      *
      * @param status the Status to set as {@link ZstackResponseCode}
      */

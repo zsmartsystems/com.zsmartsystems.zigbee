@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.console.zstack;
 import java.io.PrintStream;
 import java.util.Set;
 
+import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.dongle.zstack.ZstackNcp;
@@ -58,6 +59,7 @@ public class ZstackConsoleNcpStateCommand extends ZstackConsoleAbstractCommand {
         ZstackUtilGetDeviceInfoSrsp deviceInfo = ncp.getDeviceInfo();
         ZstackSysVersionSrsp ncpVersion = getDongle(networkManager).getZstackNcp().getVersion();
         Set<ZstackSystemCapabilities> ncpCapabilities = ncp.pingNcp();
+        int currentChannel = ncp.readChannel();
 
         int[] userDesc = ncp.readConfiguration(ZstackConfigId.ZCD_NV_USERDESC);
         int[] bdbDeviceOnNwk = ncp.readConfiguration(ZstackConfigId.ZCD_NV_BDBNODEISONANETWORK);
@@ -112,7 +114,8 @@ public class ZstackConsoleNcpStateCommand extends ZstackConsoleAbstractCommand {
         } else {
             out.println("NCP API Capabilities             : " + ncpCapabilities);
         }
+
+        out.println("Current logical channel          : " + ZigBeeChannel.create(currentChannel));
         out.println("User Description                 : " + hex2String(userDesc));
     }
-
 }

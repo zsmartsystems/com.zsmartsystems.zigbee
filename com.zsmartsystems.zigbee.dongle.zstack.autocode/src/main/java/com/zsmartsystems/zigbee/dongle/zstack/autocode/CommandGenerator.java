@@ -878,6 +878,9 @@ public class CommandGenerator extends ClassGenerator {
             case "IeeeAddress":
                 addImport(zssPackage + "." + dataTypeLocal);
                 return dataTypeLocal;
+            case "ExtendedPanId":
+                addImport(zssPackage + "." + dataTypeLocal);
+                return dataTypeLocal;
             case "ZigBeeKey":
                 addImport(zssPackage + ".security." + dataTypeLocal);
                 return dataTypeLocal;

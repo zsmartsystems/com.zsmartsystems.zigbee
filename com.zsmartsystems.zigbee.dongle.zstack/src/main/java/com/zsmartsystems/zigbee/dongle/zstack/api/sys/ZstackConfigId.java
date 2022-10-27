@@ -46,6 +46,11 @@ public enum ZstackConfigId {
     ZCD_NV_START_DELAY(0x0004),
 
     /**
+     * This item holds all kinds of network information.
+     */
+    ZCD_NV_NIB(0x0021),
+
+    /**
      * If this parameter is set to a non-zero value, a CC2530-ZNP device that is configured as an end- device will wake up periodically
      * with this duration to check for data with its parent device. This value is specified in milliseconds and can range from 1 to 65000.
      * If this parameter is set to zero, the device will not automatically wake up to poll for data. Instead, an external trigger or an
@@ -340,8 +345,8 @@ public enum ZstackConfigId {
      * If security functionality is enabled, there are two options to distribute the security key to all devices in the network. If this
      * parameter is true, the same security key is assumed to be pre-configured in all devices in the network.If it is set to false, then
      * the key only needs to be configured on the coordinator device. In this case, the key is distributed to each device upon joining by
-     * the coordinator. This key distribution will happen in the ‚Äúclear‚Äù on the last hop of the packet transmission and this
-     * constitutes a brief ‚Äúperiod of vulnerability‚Äù during which a malicious device can capture the key. Hence it is not recommended
+     * the coordinator. This key distribution will happen in the ìclearî on the last hop of the packet transmission and this
+     * constitutes a brief ìperiod of vulnerabilityî during which a malicious device can capture the key. Hence it is not recommended
      * unless it can be ensured that there are no malicious devices in the vicinity at the time of network formation.
      * <p>
      * <b>Note:</b> Use of this configuration item requires the ZNP code to be built with the SECURE=1 compile option. Size: 1 byte;
@@ -449,7 +454,7 @@ public enum ZstackConfigId {
     /**
      * An optional user-defined data (up to 16bytes) that can be configured in a CC2530-ZNP device so that it can easily identified or
      * described later. The first byte is the length of the user descriptor data and must not be greater than 16. Size: 17 bytes; Default
-     * value: ‚ÄúCC2530-ZNP x......‚Äù (dots represent the device IEEE address)
+     * value: ìCC2530-ZNP x......î (dots represent the device IEEE address)
      */
     ZCD_NV_USERDESC(0x0081),
 
@@ -460,7 +465,7 @@ public enum ZstackConfigId {
 
     /**
      * This parameter identifies the ZigBee network. This should be set to a value between 0 and 0x3FFF. Networks that exist in the same
-     * vicinity must have different values for this parameter. It can be set to a special value of 0xFFFF to indicate ‚Äúdon‚Äôt care‚Äù. Size:
+     * vicinity must have different values for this parameter. It can be set to a special value of 0xFFFF to indicate ìdonít careî. Size:
      * 2 bytes; Default value: 0xFFFF
      */
     ZCD_NV_PANID(0x0083),
@@ -504,7 +509,7 @@ public enum ZstackConfigId {
      * This configures the manner in which ZDO responses (hereby referred to as callbacks) are issued to the host processor. By
      * default, this item is set to FALSE, which means that the host processor must use the ZDO_MSG_CB_REGISTER command to subscribe to
      * a specific ZDO callback in order to receive it. The ZDO callback is then conveyed as part of the ZDO_MSG_CB_INCOMING command. If
-     * ZCD_NV_ZDO_DIRECT_CB is set TRUE, then the host processor will receive the ‚Äúverbose‚Äù response. For example, the host
+     * ZCD_NV_ZDO_DIRECT_CB is set TRUE, then the host processor will receive the ìverboseî response. For example, the host
      * processor would receive the ZDO_IEEE_ADDR_RSP command in response to ZDO_IEEE_ADDR_REQ. Size: 1 byte; Default value: FALSE
      */
     ZCD_NV_ZDO_DIRECT_CB(0x008F),

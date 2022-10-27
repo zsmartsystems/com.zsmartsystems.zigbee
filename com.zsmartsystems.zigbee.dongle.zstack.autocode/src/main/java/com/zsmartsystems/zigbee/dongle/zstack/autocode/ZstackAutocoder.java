@@ -36,11 +36,11 @@ import com.zsmartsystems.zigbee.dongle.zstack.autocode.xml.Value;
  */
 public class ZstackAutocoder {
     public static void main(final String[] args) {
-
+  
         Protocol protocol;
         try {
             // Load the class definitions
-            File fXmlFile = new File("src/main/resources/zstack_protocol.xml");
+            File fXmlFile = new File("com.zsmartsystems.zigbee.dongle.zstack.autocode/src/main/resources/zstack_protocol.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);

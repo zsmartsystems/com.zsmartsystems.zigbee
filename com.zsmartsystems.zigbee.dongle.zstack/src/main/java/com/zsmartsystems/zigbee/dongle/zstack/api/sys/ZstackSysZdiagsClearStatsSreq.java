@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.rpc.ZstackRpcSreqErrorSrsp;
 public class ZstackSysZdiagsClearStatsSreq extends ZstackFrameRequest {
 
     /**
-     * TRUE â€“ Clears statistics in NV memory including Boot Counter. FALSE â€“ Clears statistics in RAM only. Boot Counter is preserved.
+     * TRUE – Clears statistics in NV memory including Boot Counter. FALSE – Clears statistics in RAM only. Boot Counter is preserved.
      */
     private boolean clearNv;
 
@@ -35,7 +35,7 @@ public class ZstackSysZdiagsClearStatsSreq extends ZstackFrameRequest {
     }
 
     /**
-     * TRUE â€“ Clears statistics in NV memory including Boot Counter. FALSE â€“ Clears statistics in RAM only. Boot Counter is preserved.
+     * TRUE – Clears statistics in NV memory including Boot Counter. FALSE – Clears statistics in RAM only. Boot Counter is preserved.
      *
      * @return the current clearNv as {@link boolean}
      */
@@ -44,7 +44,7 @@ public class ZstackSysZdiagsClearStatsSreq extends ZstackFrameRequest {
     }
 
     /**
-     * TRUE â€“ Clears statistics in NV memory including Boot Counter. FALSE â€“ Clears statistics in RAM only. Boot Counter is preserved.
+     * TRUE – Clears statistics in NV memory including Boot Counter. FALSE – Clears statistics in RAM only. Boot Counter is preserved.
      *
      * @param clearNv the clearNV to set as {@link boolean}
      */

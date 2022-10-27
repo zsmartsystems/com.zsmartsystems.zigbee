@@ -48,7 +48,7 @@ public class ZstackZbReadConfigurationSrsp extends ZstackFrameResponse {
 
         // Deserialize the fields
         status = ZstackResponseCode.valueOf(deserializer.deserializeUInt8());
-        configId = ZstackConfigId.valueOf(deserializer.deserializeUInt8());
+        configId = ZstackConfigId.valueOf(deserializer.deserializeUInt16());
         int len = deserializer.deserializeUInt8();
         value = deserializer.deserializeUInt8Array(len);
     }
