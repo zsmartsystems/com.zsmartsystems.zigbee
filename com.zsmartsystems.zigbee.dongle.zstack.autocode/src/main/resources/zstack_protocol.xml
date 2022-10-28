@@ -899,7 +899,7 @@
 		<name>ZDO_EXT_NWK_INFO</name>
 		<subsystem>ZDO</subsystem>
 		<id>0x50</id>
-		<description></description>
+		<description>Get the network info from the device</description>
 		<type>SYNC</type>
 		<request>
 		</request>
@@ -909,6 +909,12 @@
 				<name>ShortAddress</name>
 				<display>hex[2]</display>
 				<description>Short address</description>
+			</parameter>
+			<parameter>
+				<data_type>uint8</data_type>
+				<name>Padding</name>
+				<display>hex[1]</display>
+				<description>Unknown field</description>
 			</parameter>
 			<parameter>
 				<data_type>uint16</data_type>

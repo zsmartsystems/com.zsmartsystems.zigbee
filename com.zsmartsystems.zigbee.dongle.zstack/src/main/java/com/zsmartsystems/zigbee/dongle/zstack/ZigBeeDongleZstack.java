@@ -297,7 +297,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
             logger.debug("ZStack device is currently on a network. Read parameters from the device");
             final ZstackStackConfiguration config = new ZstackStackConfiguration(ncp);
             Map<ZstackConfigId, int[]> readConfiguration = config.getConfiguration(EnumSet.of(
-                    ZstackConfigId.ZCD_NV_APS_USE_EXT_PANID,
+                    ZstackConfigId.ZCD_NV_EXTPANID,
                     ZstackConfigId.ZCD_NV_PANID,
                     ZstackConfigId.ZCD_NV_PRECFGKEY,
                     ZstackConfigId.ZCD_NV_CHANLIST));
@@ -508,7 +508,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
 
     @Override
     public ExtendedPanId getZigBeeExtendedPanId() {
-        return new ExtendedPanId(stackConfiguration.get(ZstackConfigId.ZCD_NV_APS_USE_EXT_PANID));
+        return new ExtendedPanId(stackConfiguration.get(ZstackConfigId.ZCD_NV_EXTPANID));
     }
 
     @Override
@@ -517,7 +517,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
         if (networkStateUp) {
             return ZigBeeStatus.INVALID_STATE;
         }
-        stackConfiguration.put(ZstackConfigId.ZCD_NV_APS_USE_EXT_PANID, extendedPanId.getValue());
+        stackConfiguration.put(ZstackConfigId.ZCD_NV_EXTPANID, extendedPanId.getValue());
         return ZigBeeStatus.SUCCESS;
     }
 
@@ -700,7 +700,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
         if (linkState) {
             ZstackNcp ncp = getZstackNcp();
             nwkAddress = ncp.getNwkAddress();
-            logicalChannel = ZigBeeChannel.create(ncp.readChannel());
+            logicalChannel = ZigBeeChannel.create(ncp.readChannelCmd());
             ieeeAddress = ncp.getDeviceInfo().getIeeeAddress();
             // TODO: read back stuff nv?
             zigbeeTransportReceive.setTransportState(ZigBeeTransportState.ONLINE);
@@ -802,13 +802,15 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
                 });
 
         // Now start the NCP
-        if (ncp.startupApplication() != ZstackResponseCode.SUCCESS) {
-            return ZigBeeStatus.COMMUNICATION_ERROR;
-        }
-
         try {
+            if (ncp.startupApplication() != ZstackResponseCode.SUCCESS) {
+                networkUpFuture.cancel(true);
+                return ZigBeeStatus.COMMUNICATION_ERROR;
+            }
+
             networkUpFuture.get();
         } catch (InterruptedException | ExecutionException e) {
+            networkUpFuture.cancel(true);
             return ZigBeeStatus.FAILURE;
         }
 

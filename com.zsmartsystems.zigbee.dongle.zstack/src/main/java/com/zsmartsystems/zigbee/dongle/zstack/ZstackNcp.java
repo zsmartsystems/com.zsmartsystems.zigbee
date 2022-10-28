@@ -288,6 +288,12 @@ public class ZstackNcp {
         }
     }
 
+    public int readChannelCmd() {
+        ZstackZdoExtNwkInfoSrsp networkInfo = getNetworkInfo();
+
+        return networkInfo == null ? -1 : networkInfo.getChannel();
+    }
+
     /**
      * Gets the network key.
      *
