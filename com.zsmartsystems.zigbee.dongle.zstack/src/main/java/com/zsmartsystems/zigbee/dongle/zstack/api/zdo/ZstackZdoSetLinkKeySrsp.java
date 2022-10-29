@@ -22,7 +22,7 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.ZstackResponseCode;
 public class ZstackZdoSetLinkKeySrsp extends ZstackFrameResponse {
 
     /**
-     * 0x00 – Success. 0x01 – Fail to add to address manager. 0x11 – Security manager key table full
+     * 0x00 â€“ Success. 0x01 â€“ Fail to add to address manager. 0x11 â€“ Security manager key table full
      */
     private ZstackResponseCode status;
 
@@ -40,7 +40,7 @@ public class ZstackZdoSetLinkKeySrsp extends ZstackFrameResponse {
     }
 
     /**
-     * 0x00 – Success. 0x01 – Fail to add to address manager. 0x11 – Security manager key table full
+     * 0x00 â€“ Success. 0x01 â€“ Fail to add to address manager. 0x11 â€“ Security manager key table full
      *
      * @return the current status as {@link ZstackResponseCode}
      */
@@ -49,7 +49,7 @@ public class ZstackZdoSetLinkKeySrsp extends ZstackFrameResponse {
     }
 
     /**
-     * 0x00 – Success. 0x01 – Fail to add to address manager. 0x11 – Security manager key table full
+     * 0x00 â€“ Success. 0x01 â€“ Fail to add to address manager. 0x11 â€“ Security manager key table full
      *
      * @param status the Status to set as {@link ZstackResponseCode}
      */

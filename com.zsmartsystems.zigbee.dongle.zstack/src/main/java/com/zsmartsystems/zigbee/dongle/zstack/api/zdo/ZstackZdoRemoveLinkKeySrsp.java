@@ -22,7 +22,7 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.ZstackResponseCode;
 public class ZstackZdoRemoveLinkKeySrsp extends ZstackFrameResponse {
 
     /**
-     * 0x00 – Success. 0xC8 – Unknown device.
+     * 0x00 â€“ Success. 0xC8 â€“ Unknown device.
      */
     private ZstackResponseCode status;
 
@@ -40,7 +40,7 @@ public class ZstackZdoRemoveLinkKeySrsp extends ZstackFrameResponse {
     }
 
     /**
-     * 0x00 – Success. 0xC8 – Unknown device.
+     * 0x00 â€“ Success. 0xC8 â€“ Unknown device.
      *
      * @return the current status as {@link ZstackResponseCode}
      */
@@ -49,7 +49,7 @@ public class ZstackZdoRemoveLinkKeySrsp extends ZstackFrameResponse {
     }
 
     /**
-     * 0x00 – Success. 0xC8 – Unknown device.
+     * 0x00 â€“ Success. 0xC8 â€“ Unknown device.
      *
      * @param status the Status to set as {@link ZstackResponseCode}
      */

@@ -13,7 +13,7 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.rpc.ZstackRpcSreqErrorSrsp;
 /**
  * Class to implement the Z-Stack command <b>AF_REGISTER</b>.
  * <p>
- * This command enables the host processor to register an application’s endpoint description (and its simple descriptor).
+ * This command enables the host processor to register an applicationâ€™s endpoint description (and its simple descriptor).
  * Multiple endpoints may be registered with the AF by making multiple calls to AF_REGISTER. This could be useful in the case where
  * the device needs to support multiple application profiles, where each AF_REGISTER call would register a unique endpoint
  * description per application profile.

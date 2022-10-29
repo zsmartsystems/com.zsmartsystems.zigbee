@@ -45,9 +45,13 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackCentralizedLinkKe
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackConfigId;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackResetType;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysResetIndAreq;
+import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysVersionSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysVersionSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSystemCapabilities;
 import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetDeviceInfoSreq;
+import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetDeviceInfoSrsp;
+import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoExtNwkInfoSreq;
+import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoExtNwkInfoSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoMsgCbIncomingAreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoStateChangeIndAreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoTcDevIndAreq;
@@ -271,7 +275,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
         }
         logger.debug("ZStack subsystem capabilities: {}", capabilities);
 
-        ZstackSysVersionSrsp version = ncp.getVersion();
+        ZstackSysVersionSrsp version = protocolHandler.sendTransaction(new ZstackSysVersionSreq(), ZstackSysVersionSrsp.class);
         if (version == null) {
             return ZigBeeStatus.COMMUNICATION_ERROR;
         }
@@ -288,7 +292,12 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
         builder.append(version.getTransportRev());
         versionString = builder.toString();
 
-        ieeeAddress = ncp.getDeviceInfo().getIeeeAddress();
+        final ZstackUtilGetDeviceInfoSrsp deviceInfo = protocolHandler.sendTransaction(new ZstackUtilGetDeviceInfoSreq(), ZstackUtilGetDeviceInfoSrsp.class);
+        if (deviceInfo == null) {
+            return ZigBeeStatus.COMMUNICATION_ERROR;
+        }
+
+        ieeeAddress = deviceInfo.getIeeeAddress();
         logger.debug("ZStack local IeeeAddress: {}", ieeeAddress);
 
         final int[] configurationIsOnANetwork = ncp.readConfiguration(ZstackConfigId.ZCD_NV_BDBNODEISONANETWORK);
@@ -301,7 +310,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
                     ZstackConfigId.ZCD_NV_PANID,
                     ZstackConfigId.ZCD_NV_PRECFGKEY,
                     ZstackConfigId.ZCD_NV_CHANLIST));
-            logicalChannel = ZigBeeChannel.create(ncp.readChannel());
+            logicalChannel = ncp.readChannelFromNV();
             logger.debug("Current selected channel is configured as {}", logicalChannel);
 
             stackConfiguration.putAll(readConfiguration);
@@ -327,7 +336,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
         // If we want to reinitialize the network, then go...
         if (reinitialize) {
             logger.debug("Reinitialising ZStack NCP network.");
-            if (ncp.setStartupOptions(true, true) != ZstackResponseCode.SUCCESS) {
+            if (ncp.writeConfiguration(ZstackConfigId.ZCD_NV_STARTUP_OPTION, new int[] {0x03}) != ZstackResponseCode.SUCCESS) {
                 logger.debug("ZStack Initialisation: Failed to set startup options");
                 return ZigBeeStatus.COMMUNICATION_ERROR;
             }
@@ -455,6 +464,10 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
         return new ZstackNcp(protocolHandler);
     }
 
+    public ZstackProtocolHandler getProtocolHandler() {
+        return protocolHandler;
+    }
+
     @Override
     public IeeeAddress getIeeeAddress() {
         return ieeeAddress;
@@ -480,10 +493,8 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
             channelMask = channel.getMask();
         }
 
-        ZstackNcp ncp = getZstackNcp();
-
         logicalChannel = channel;
-        stackConfiguration.put(ZstackConfigId.ZCD_NV_CHANLIST, ncp.valueFromUInt32(channelMask));
+        stackConfiguration.put(ZstackConfigId.ZCD_NV_CHANLIST, valueFromUInt32(channelMask));
 
         // setup zigbee channel
         return ZigBeeStatus.SUCCESS;
@@ -502,7 +513,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
         if (networkStateUp) {
             return ZigBeeStatus.INVALID_STATE;
         }
-        stackConfiguration.put(ZstackConfigId.ZCD_NV_PANID, getZstackNcp().valueFromUInt16(panId));
+        stackConfiguration.put(ZstackConfigId.ZCD_NV_PANID, valueFromUInt16(panId));
         return ZigBeeStatus.SUCCESS;
     }
 
@@ -544,8 +555,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
             stackConfiguration.put(ZstackConfigId.ZCD_NV_USE_DEFAULT_TCLK, new int[] { 1 });
             return ZigBeeStatus.SUCCESS;
         } else {
-            ZstackResponseCode response = ncp.setCentralisedKey(ZstackCentralizedLinkKeyMode.PROVIDED_APS_KEY,
-                    key.getValue());
+            ZstackResponseCode response = ncp.setCentralisedKey(ZstackCentralizedLinkKeyMode.PROVIDED_APS_KEY, key.getValue());
             if (response == ZstackResponseCode.SUCCESS) {
                 linkKey = key;
                 return ZigBeeStatus.SUCCESS;
@@ -698,11 +708,11 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
         networkStateUp = linkState;
 
         if (linkState) {
-            ZstackNcp ncp = getZstackNcp();
-            nwkAddress = ncp.getNwkAddress();
-            logicalChannel = ZigBeeChannel.create(ncp.readChannelCmd());
-            ieeeAddress = ncp.getDeviceInfo().getIeeeAddress();
-            // TODO: read back stuff nv?
+            final ZstackZdoExtNwkInfoSrsp response = protocolHandler.sendTransaction(new ZstackZdoExtNwkInfoSreq(), ZstackZdoExtNwkInfoSrsp.class);
+
+            nwkAddress = response.getShortAddress();
+            logicalChannel = ZigBeeChannel.create(response.getChannel());
+
             zigbeeTransportReceive.setTransportState(ZigBeeTransportState.ONLINE);
         } else {
             zigbeeTransportReceive.setTransportState(ZigBeeTransportState.OFFLINE);
@@ -815,5 +825,13 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
         }
 
         return ZigBeeStatus.SUCCESS;
+    }
+
+    private int[] valueFromUInt16(int value) {
+        return new int[] { value & 0xFF, (value >> 8) & 0xFF };
+    }
+
+    private int[] valueFromUInt32(int value) {
+        return new int[] { value & 0xFF, (value >> 8) & 0xFF, (value >> 16) & 0xFF, (value >> 24) & 0xFF };
     }
 }

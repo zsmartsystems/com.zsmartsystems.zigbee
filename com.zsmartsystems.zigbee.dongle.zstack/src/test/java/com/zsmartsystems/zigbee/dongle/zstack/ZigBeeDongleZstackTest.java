@@ -64,7 +64,7 @@ public class ZigBeeDongleZstackTest {
         ZigBeeTransportReceive transport = Mockito.mock(ZigBeeTransportReceive.class);
 
         final ZstackNcp ncp = Mockito.mock(ZstackNcp.class);
-        Mockito.when(ncp.getNwkAddress()).thenReturn(1243);
+        // Mockito.when(ncp.getNwkAddress()).thenReturn(1243);
         ZigBeeDongleZstack dongle = new ZigBeeDongleZstack(null) {
             @Override
             public ZstackNcp getZstackNcp() {
@@ -104,8 +104,8 @@ public class ZigBeeDongleZstackTest {
     public void testEzspMessageSentHandler() throws Exception {
         ZigBeeTransportReceive transport = Mockito.mock(ZigBeeTransportReceive.class);
 
-        final ZstackNcp ncp = Mockito.mock(ZstackNcp.class);
-        Mockito.when(ncp.getNwkAddress()).thenReturn(1243);
+        // final ZstackNcp ncp = Mockito.mock(ZstackNcp.class);
+        // Mockito.when(ncp.getNwkAddress()).thenReturn(1243);
         ZigBeeDongleZstack dongle = new ZigBeeDongleZstack(null);
         dongle.setZigBeeTransportReceive(transport);
 

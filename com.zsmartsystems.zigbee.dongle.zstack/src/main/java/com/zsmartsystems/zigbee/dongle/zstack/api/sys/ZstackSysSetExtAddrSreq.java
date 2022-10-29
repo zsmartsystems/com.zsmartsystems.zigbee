@@ -23,7 +23,7 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.rpc.ZstackRpcSreqErrorSrsp;
 public class ZstackSysSetExtAddrSreq extends ZstackFrameRequest {
 
     /**
-     * The device’s extended address.
+     * The deviceâ€™s extended address.
      */
     private IeeeAddress extAddress;
 
@@ -35,7 +35,7 @@ public class ZstackSysSetExtAddrSreq extends ZstackFrameRequest {
     }
 
     /**
-     * The device’s extended address.
+     * The deviceâ€™s extended address.
      *
      * @return the current extAddress as {@link IeeeAddress}
      */
@@ -44,7 +44,7 @@ public class ZstackSysSetExtAddrSreq extends ZstackFrameRequest {
     }
 
     /**
-     * The device’s extended address.
+     * The deviceâ€™s extended address.
      *
      * @param extAddress the ExtAddress to set as {@link IeeeAddress}
      */

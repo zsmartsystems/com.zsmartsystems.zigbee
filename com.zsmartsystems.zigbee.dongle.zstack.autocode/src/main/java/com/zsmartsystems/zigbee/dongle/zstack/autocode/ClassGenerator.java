@@ -109,7 +109,7 @@ public abstract class ClassGenerator {
         final File classFile = new File(packageFile + File.separator + className + ".java");
         System.out.println("Generating: " + classFile.getAbsolutePath());
         final FileOutputStream fileOutputStream = new FileOutputStream(classFile, false);
-        return new PrintWriter(fileOutputStream);
+        return new PrintWriter(fileOutputStream, false, Charset.forName("UTF-8"));
     }
 
     protected void clearImports() {
@@ -135,7 +135,7 @@ public abstract class ClassGenerator {
 
         BufferedReader br;
         try {
-            br = new BufferedReader(new FileReader("pom.xml"));
+            br = new BufferedReader(new FileReader("pom.xml", Charset.forName("UTF-8")));
             String line = br.readLine();
             while (line != null) {
                 if (line.contains("<license.year>") && line.contains("</license.year>")) {

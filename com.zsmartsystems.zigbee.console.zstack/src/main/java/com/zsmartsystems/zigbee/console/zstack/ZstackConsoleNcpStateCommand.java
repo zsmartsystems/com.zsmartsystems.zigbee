@@ -8,17 +8,22 @@
 package com.zsmartsystems.zigbee.console.zstack;
 
 import java.io.PrintStream;
-import java.util.Set;
 
-import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.dongle.zstack.ZstackNcp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackConfigId;
+import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysPingSreq;
+import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysPingSrsp;
+import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysVersionSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysVersionSrsp;
-import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSystemCapabilities;
+import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetDeviceInfoSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetDeviceInfoSrsp;
+import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetNvInfoSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetNvInfoSrsp;
+import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoExtNwkInfoSreq;
+import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoExtNwkInfoSrsp;
+import com.zsmartsystems.zigbee.dongle.zstack.internal.ZstackProtocolHandler;
 
 /**
  *
@@ -53,13 +58,15 @@ public class ZstackConsoleNcpStateCommand extends ZstackConsoleAbstractCommand {
     }
 
     private void ncpState(ZigBeeNetworkManager networkManager, PrintStream out) {
-        ZstackNcp ncp = getZstackNcp(networkManager);
+        final ZstackProtocolHandler handler = getProtocolHandler(networkManager);
 
-        ZstackUtilGetNvInfoSrsp nvInfo = ncp.getNvDeviceInfo();
-        ZstackUtilGetDeviceInfoSrsp deviceInfo = ncp.getDeviceInfo();
-        ZstackSysVersionSrsp ncpVersion = getDongle(networkManager).getZstackNcp().getVersion();
-        Set<ZstackSystemCapabilities> ncpCapabilities = ncp.pingNcp();
-        int currentChannel = ncp.readChannel();
+        ZstackUtilGetNvInfoSrsp nvInfo = handler.sendTransaction(new ZstackUtilGetNvInfoSreq(), ZstackUtilGetNvInfoSrsp.class);
+        ZstackUtilGetDeviceInfoSrsp deviceInfo = handler.sendTransaction(new ZstackUtilGetDeviceInfoSreq(), ZstackUtilGetDeviceInfoSrsp.class);
+        ZstackSysVersionSrsp ncpVersion = handler.sendTransaction(new ZstackSysVersionSreq(), ZstackSysVersionSrsp.class);
+        ZstackSysPingSrsp pingResponse = handler.sendTransaction(new ZstackSysPingSreq(), ZstackSysPingSrsp.class);
+        ZstackZdoExtNwkInfoSrsp networkInfo = handler.sendTransaction(new ZstackZdoExtNwkInfoSreq(), ZstackZdoExtNwkInfoSrsp.class);
+
+        final ZstackNcp ncp = new ZstackNcp(handler);
 
         int[] userDesc = ncp.readConfiguration(ZstackConfigId.ZCD_NV_USERDESC);
         int[] bdbDeviceOnNwk = ncp.readConfiguration(ZstackConfigId.ZCD_NV_BDBNODEISONANETWORK);
@@ -109,13 +116,21 @@ public class ZstackConsoleNcpStateCommand extends ZstackConsoleAbstractCommand {
             out.println("Transport version                : " + ncpVersion.getTransportRev());
         }
 
-        if (ncpCapabilities == null) {
+        if (pingResponse == null) {
             out.println("NCP API Capabilities             : ERROR");
         } else {
-            out.println("NCP API Capabilities             : " + ncpCapabilities);
+            out.println("NCP API Capabilities             : " + pingResponse.getCapabilities());
         }
 
-        out.println("Current logical channel          : " + ZigBeeChannel.create(currentChannel));
+        if (networkInfo == null) {
+            out.println("NCP NWK Info                   : ERROR");
+        } else {
+            out.println("NWK Info PanId                   : " + networkInfo.getPanId());
+            out.println("NWK Info Extended PanId          : " + networkInfo.getExtendedPanId());
+            out.println("NWK Info Current Channel         : " + networkInfo.getChannel());
+            out.println("NWK Info NwkAddress              : " + networkInfo.getShortAddress());
+        }
+
         out.println("User Description                 : " + hex2String(userDesc));
     }
 }

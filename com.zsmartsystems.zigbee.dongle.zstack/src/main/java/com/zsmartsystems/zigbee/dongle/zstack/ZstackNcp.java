@@ -16,23 +16,16 @@ import java.util.concurrent.Future;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.ZigBeeChannel;
 import com.zsmartsystems.zigbee.ZigBeeChannelMask;
 import com.zsmartsystems.zigbee.dongle.zstack.api.ZstackResponseCode;
 import com.zsmartsystems.zigbee.dongle.zstack.api.af.ZstackAfRegisterSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.af.ZstackAfRegisterSrsp;
-import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfBdbAddInstallcodeSreq;
-import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfBdbAddInstallcodeSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfBdbSetActiveDefaultCentralizedKeySreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfBdbSetActiveDefaultCentralizedKeySrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfBdbSetChannelSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfBdbSetChannelSrsp;
-import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfBdbSetTcRequireKeyExchangeSreq;
-import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfBdbSetTcRequireKeyExchangeSrsp;
-import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfSetAllowrejoinTcPolicySreq;
-import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackAppCnfSetAllowrejoinTcPolicySrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackCentralizedLinkKeyMode;
-import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackInstallCodeFormat;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackConfigId;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackResetType;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysNvReadSreq;
@@ -45,23 +38,12 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysPingSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysPingSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysResetIndAreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysResetReqAcmd;
-import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysSetTxPowerSreq;
-import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysSetTxPowerSrsp;
-import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysVersionSreq;
-import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysVersionSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSystemCapabilities;
-import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetDeviceInfoSreq;
-import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetDeviceInfoSrsp;
-import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetNvInfoSreq;
-import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetNvInfoSrsp;
-import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoExtNwkInfoSreq;
-import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoExtNwkInfoSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoMsgCbRegisterSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoMsgCbRegisterSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoStartupFromAppSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoStartupFromAppSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.internal.ZstackProtocolHandler;
-import com.zsmartsystems.zigbee.security.ZigBeeKey;
 
 /**
  * This class provides utility methods for accessing the ZStack NCP and returning specific data for use in the
@@ -75,12 +57,6 @@ public class ZstackNcp {
      * The {@link Logger}.
      */
     private final Logger logger = LoggerFactory.getLogger(ZstackNcp.class);
-
-    /*
-     * Startup options bitmap
-     */
-    private final int STARTOPT_CLEAR_CONFIG = 0x0001;
-    private final int STARTOPT_CLEAR_STATE = 0x0002;
 
     /**
      * The protocol handler used to send and receive ZStack packets
@@ -152,86 +128,6 @@ public class ZstackNcp {
     }
 
     /**
-     * The command reads the version information from the stack
-     *
-     * @return the {@link ZstackSysVersionSrsp}
-     */
-    public ZstackSysVersionSrsp getVersion() {
-        return protocolHandler.sendTransaction(new ZstackSysVersionSreq(), ZstackSysVersionSrsp.class);
-    }
-
-    /**
-     * This command reads the network info from the device
-     * @return the {@link ZstackZdoExtNwkInfoSrsp}
-     */
-    public ZstackZdoExtNwkInfoSrsp getNetworkInfo() {
-        return protocolHandler.sendTransaction(new ZstackZdoExtNwkInfoSreq(), ZstackZdoExtNwkInfoSrsp.class);
-    }
-
-    /**
-     * The command reads the device information from the NCP
-     *
-     * @return the {@link ZstackUtilGetDeviceInfoSrsp}
-     */
-    public ZstackUtilGetDeviceInfoSrsp getDeviceInfo() {
-        return protocolHandler.sendTransaction(new ZstackUtilGetDeviceInfoSreq(), ZstackUtilGetDeviceInfoSrsp.class);
-    }
-
-    /**
-     * The command reads the non-volatile device information from the NCP
-     *
-     * @return the {@link ZstackUtilGetDeviceInfoSrsp}
-     */
-    public ZstackUtilGetNvInfoSrsp getNvDeviceInfo() {
-        return protocolHandler.sendTransaction(new ZstackUtilGetNvInfoSreq(), ZstackUtilGetNvInfoSrsp.class);
-    }
-
-    /**
-     * Gets the current network address of the NCP
-     *
-     * @return the 16 bit local network address of the NCP or -1 if there was an error
-     */
-    public int getNwkAddress() {
-        ZstackUtilGetDeviceInfoSrsp info = getDeviceInfo();
-
-        return info == null ? -1 : info.getShortAddr();
-    }
-
-    /**
-     * Sets the startup options when the NCP starts.
-     * <p>
-     * The CC2530-ZNP device has two kinds of information stored in non-volatile memory. The configuration parameters
-     * and network state information.
-     * <p>
-     * The configuration parameters are configured by the user before start of ZigBee operation. The
-     * STARTOPT_CLEAR_CONFIG bit is read by the CC2530-ZNP device immediately when it powers up after a reset.
-     * When the configuration parameters are restored to defaults, the ZCD_NV_STARTUP_OPTION itself is not restored
-     * except for clearing the STARTOPT_CLEAR_CONFIG bit.
-     * <p>
-     * The network state information is collected by the device after it joins a network and creates bindings etc. (at
-     * runtime). This is not set by the application processor. This information is stored so that if the device were to
-     * reset accidentally, it can restore itself without going through all the network joining and binding process
-     * again.
-     * <p>
-     * If the application processor does not wish to continue operating in the previous ZigBee network, it needs to
-     * instruct the CC2530-ZNP device to clear the network state information and start again based on the configuration
-     * parameters. This is done by setting the STARTOPT_CLEAR_STATE bit in the startup option.
-     *
-     * @param clearConfig STARTOPT_CLEAR_CONFIG – If this option is set, the device will overwrite all the configuration
-     *            parameters (except this one) with the “default” values that it is programmed with. This is used to
-     *            erase the existing configuration and bring the device into a known state.
-     * @param clearState STARTOPT_CLEAR_STATE – If this option is set, the device will clear its previous network state
-     *            (which would exist if the device had been operating on a network prior to the reset). This is
-     *            typically used during application development. During regular device operation, this flag is typically
-     *            not set, so that an accidental device reset will not cause loss of network state.
-     * @return {@link ZstackResponseCode} returned from the NCP
-     */
-    public ZstackResponseCode setStartupOptions(boolean clearConfig, boolean clearState) {
-        int optionVal = (clearConfig ? STARTOPT_CLEAR_CONFIG : 0) + (clearState ? STARTOPT_CLEAR_STATE : 0);
-        return writeConfiguration(ZstackConfigId.ZCD_NV_STARTUP_OPTION, valueFromUInt8(optionVal));
-    }
-
-    /**
      * Reads a configuration parameter from the NCP
      *
      * @param configId the {@link ZstackConfigId} to read
@@ -273,7 +169,10 @@ public class ZstackNcp {
         return response.getStatus();
     }
 
-    public int readChannel() {
+    /**
+     * Reads the current logical channel from non volatile memory. It is in the configuration ID for the NIB.
+     */
+    public ZigBeeChannel readChannelFromNV() {
         ZstackSysNvReadSreq request = new ZstackSysNvReadSreq();
         request.setSysId(1);
         request.setItemId(0);
@@ -282,44 +181,10 @@ public class ZstackNcp {
         request.setLength(1);
         ZstackSysNvReadSrsp response = protocolHandler.sendTransaction(request, ZstackSysNvReadSrsp.class);
         if (response == null || response.getValue() == null || response.getValue().length == 0) {
-            return -1;
+            return ZigBeeChannel.UNKNOWN;
         } else {
-            return response.getValue()[0];
+            return ZigBeeChannel.create(response.getValue()[0]);
         }
-    }
-
-    public int readChannelCmd() {
-        ZstackZdoExtNwkInfoSrsp networkInfo = getNetworkInfo();
-
-        return networkInfo == null ? -1 : networkInfo.getChannel();
-    }
-
-    /**
-     * Gets the network key.
-     *
-     * @return the {@link ZigBeeKey} returned from the NCP or null on error
-     */
-    public ZigBeeKey getNetworkKey() {
-        int[] response = readConfiguration(ZstackConfigId.ZCD_NV_PRECFGKEY);
-        if (response == null) {
-            return null;
-        }
-
-        return new ZigBeeKey(response);
-    }
-
-    /**
-     * Sets the transmit power to be used in the NCP
-     *
-     * @param txPower the TX power in dBm
-     * @return the power returned from the NCP on success or null on error
-     */
-    public ZstackResponseCode setTxPower(int txPower) {
-        ZstackSysSetTxPowerSreq request = new ZstackSysSetTxPowerSreq();
-        request.setTxPower(txPower);
-        ZstackSysSetTxPowerSrsp response = protocolHandler.sendTransaction(request, ZstackSysSetTxPowerSrsp.class);
-
-        return response == null ? null : response.getStatus();
     }
 
     /**
@@ -355,22 +220,6 @@ public class ZstackNcp {
     }
 
     /**
-     * Sets the policy flag on Trust Center device to mandate or not the TCLK exchange procedure.
-     * <p>
-     * APP_CNF_BDB_SET_TC_REQUIRE_KEY_EXCHANGE
-     *
-     * @param required true if the TCLK exchange procedure is required.
-     * @return {@link ZstackResponseCode} returned from the NCP
-     */
-    public ZstackResponseCode requireKeyExchange(boolean required) {
-        ZstackAppCnfBdbSetTcRequireKeyExchangeSreq request = new ZstackAppCnfBdbSetTcRequireKeyExchangeSreq();
-        request.setTrustCenterRequireKeyExchange(required);
-        ZstackAppCnfBdbSetTcRequireKeyExchangeSrsp response = protocolHandler.sendTransaction(request, ZstackAppCnfBdbSetTcRequireKeyExchangeSrsp.class);
-
-        return response == null ? ZstackResponseCode.FAILURE : response.getStatus();
-    }
-
-    /**
      * Sets the policy to mandate or not the usage of an Install Code upon joining.
      * <p>
      * APP_CNF_BDB_SET_ACTIVE_DEFAULT_CENTRALIZED_KEY
@@ -384,22 +233,6 @@ public class ZstackNcp {
         request.setCentralizedLinkKeyMode(mode);
         request.setInstallCode(installCode);
         ZstackAppCnfBdbSetActiveDefaultCentralizedKeySrsp response = protocolHandler.sendTransaction(request, ZstackAppCnfBdbSetActiveDefaultCentralizedKeySrsp.class);
-
-        return response == null ? ZstackResponseCode.FAILURE : response.getStatus();
-    }
-
-    /**
-     * Sets the AllowRejoin TC policy.
-     * <p>
-     * APP_CNF_SET_ALLOWREJOIN_TC_POLICY
-     *
-     * @param allow true to allow rejoins
-     * @return {@link ZstackResponseCode} returned from the NCP
-     */
-    public ZstackResponseCode allowRejoin(boolean allow) {
-        ZstackAppCnfSetAllowrejoinTcPolicySreq request = new ZstackAppCnfSetAllowrejoinTcPolicySreq();
-        request.setAllowRejoin(allow);
-        ZstackAppCnfSetAllowrejoinTcPolicySrsp response = protocolHandler.sendTransaction(request, ZstackAppCnfSetAllowrejoinTcPolicySrsp.class);
 
         return response == null ? ZstackResponseCode.FAILURE : response.getStatus();
     }
@@ -440,39 +273,5 @@ public class ZstackNcp {
         ZstackAfRegisterSrsp response = protocolHandler.sendTransaction(request, ZstackAfRegisterSrsp.class);
 
         return response == null ? ZstackResponseCode.FAILURE : response.getStatus();
-    }
-
-    /**
-     * Adds an install code to the NCP. The code must be a ZigBee key - ie not the install code itself.
-     *
-     * @param ieeeAddress the {@link IeeeAddress} associated with the key
-     * @param key the {@link ZigBeeKey} to set
-     * @return {@link ZstackResponseCode} returned from the NCP
-     */
-    public ZstackResponseCode addInstallCode(IeeeAddress ieeeAddress, ZigBeeKey key) {
-        ZstackAppCnfBdbAddInstallcodeSreq request = new ZstackAppCnfBdbAddInstallcodeSreq();
-        request.setInstallCodeFormat(ZstackInstallCodeFormat.DERIVED_KEY);
-        request.setIeeeAddress(ieeeAddress);
-        request.setInstallCode(key);
-
-        ZstackAppCnfBdbAddInstallcodeSrsp response = protocolHandler.sendTransaction(request, ZstackAppCnfBdbAddInstallcodeSrsp.class);
-
-        return response == null ? ZstackResponseCode.FAILURE : response.getStatus();
-    }
-
-    public int[] valueFromBoolean(boolean value) {
-        return new int[] { value ? 1 : 0 };
-    }
-
-    public int[] valueFromUInt8(int value) {
-        return new int[] { value };
-    }
-
-    public int[] valueFromUInt16(int value) {
-        return new int[] { value & 0xFF, (value >> 8) & 0xFF };
-    }
-
-    public int[] valueFromUInt32(int value) {
-        return new int[] { value & 0xFF, (value >> 8) & 0xFF, (value >> 16) & 0xFF, (value >> 24) & 0xFF };
     }
 }

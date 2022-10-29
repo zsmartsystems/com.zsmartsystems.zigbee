@@ -38,7 +38,7 @@ public class ZstackSbHandshakeCmdSrsp extends ZstackFrameResponse {
     private int bufferLength;
 
     /**
-     * 0x800 – CC2538 flash page size
+     * 0x800 â€“ CC2538 flash page size
      */
     private int pageSize;
 
@@ -132,7 +132,7 @@ public class ZstackSbHandshakeCmdSrsp extends ZstackFrameResponse {
     }
 
     /**
-     * 0x800 – CC2538 flash page size
+     * 0x800 â€“ CC2538 flash page size
      *
      * @return the current pageSize as {@link int}
      */
@@ -141,7 +141,7 @@ public class ZstackSbHandshakeCmdSrsp extends ZstackFrameResponse {
     }
 
     /**
-     * 0x800 – CC2538 flash page size
+     * 0x800 â€“ CC2538 flash page size
      *
      * @param pageSize the PageSize to set as {@link int}
      */

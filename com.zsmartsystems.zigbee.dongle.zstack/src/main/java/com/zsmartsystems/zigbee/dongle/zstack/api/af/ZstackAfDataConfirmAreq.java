@@ -15,8 +15,8 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.ZstackResponseCode;
  * <p>
  * This command is sent by the device to the user after it receives an AF_DATA_REQUEST. For each AF_DATA_REQUEST, a
  * AF_DATA_CONFIRM is always returned. If APS acknowledgement was used for the AF_DATA_REQUEST, the confirm carries the status
- * of whether the APS acknowledgement was received or not (ZApsNoAck ñ 0xb7). If APS acknowledgement was not used, then the confirm
- * carries the status of whether the MAC acknowledgement (ìnext hopî acknowledgment) was received or not (ZMacNoACK ñ 0xe9). This
+ * of whether the APS acknowledgement was received or not (ZApsNoAck ‚Äì 0xb7). If APS acknowledgement was not used, then the confirm
+ * carries the status of whether the MAC acknowledgement (‚Äúnext hop‚Äù acknowledgment) was received or not (ZMacNoACK ‚Äì 0xe9). This
  * also applies to packets that are sent using AF_DATA_REQUEST_EXT and AF_DATA_STORE. For APS fragmented packets, the value of
  * the configuration item ZCD_NV_APSF_WINDOW_SIZE determines when an AF_DATA_CONFIRM that carries the status of the APS
  * acknowledgement is received.
