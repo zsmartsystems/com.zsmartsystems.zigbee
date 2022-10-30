@@ -38,7 +38,13 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysPingSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysPingSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysResetIndAreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysResetReqAcmd;
+import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysVersionSreq;
+import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysVersionSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSystemCapabilities;
+import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetDeviceInfoSreq;
+import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetDeviceInfoSrsp;
+import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoExtNwkInfoSreq;
+import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoExtNwkInfoSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoMsgCbRegisterSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoMsgCbRegisterSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoStartupFromAppSreq;
@@ -273,5 +279,17 @@ public class ZstackNcp {
         ZstackAfRegisterSrsp response = protocolHandler.sendTransaction(request, ZstackAfRegisterSrsp.class);
 
         return response == null ? ZstackResponseCode.FAILURE : response.getStatus();
+    }
+
+    public ZstackSysVersionSrsp getVersion() {
+        return protocolHandler.sendTransaction(new ZstackSysVersionSreq(), ZstackSysVersionSrsp.class);
+    }
+
+    public ZstackUtilGetDeviceInfoSrsp getDeviceInfo() {
+        return protocolHandler.sendTransaction(new ZstackUtilGetDeviceInfoSreq(), ZstackUtilGetDeviceInfoSrsp.class);
+    }
+
+    public ZstackZdoExtNwkInfoSrsp getNetworkInfo() {
+        return protocolHandler.sendTransaction(new ZstackZdoExtNwkInfoSreq(), ZstackZdoExtNwkInfoSrsp.class);
     }
 }

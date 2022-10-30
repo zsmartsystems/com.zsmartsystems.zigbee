@@ -9,6 +9,7 @@ package com.zsmartsystems.zigbee;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A class to hold a set of channels and methods to construct channel masks
@@ -121,6 +122,21 @@ public class ZigBeeChannelMask {
      */
     public boolean containsChannel(ZigBeeChannel channel) {
         return ((channelMask & channel.getMask()) != 0);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.channelMask);
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        if (other instanceof ZigBeeChannelMask) {
+            final ZigBeeChannelMask that = (ZigBeeChannelMask) other;
+            return Objects.equals(this.channelMask, that.channelMask);
+        } else {
+            return false;
+        }
     }
 
     @Override

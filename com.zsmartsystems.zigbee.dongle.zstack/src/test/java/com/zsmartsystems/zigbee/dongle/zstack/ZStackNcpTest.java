@@ -7,30 +7,29 @@
  */
 package com.zsmartsystems.zigbee.dongle.zstack;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
-import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.zstack.api.ZstackFrameRequest;
-import com.zsmartsystems.zigbee.dongle.zstack.api.ZstackFrameResponse;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackResetType;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysPingSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysPingSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysResetIndAreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysResetReqAcmd;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSystemCapabilities;
-import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackZdoState;
-import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetDeviceInfoSreq;
-import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetDeviceInfoSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.internal.ZstackProtocolHandler;
 
 /**
@@ -39,102 +38,49 @@ import com.zsmartsystems.zigbee.dongle.zstack.internal.ZstackProtocolHandler;
  *
  */
 public class ZStackNcpTest {
-    private ArgumentCaptor<ZstackFrameRequest> transactionCapture = ArgumentCaptor.forClass(ZstackFrameRequest.class);
-    private ZstackProtocolHandler handler;
+    private final ArgumentCaptor<ZstackFrameRequest> transactionCapture = ArgumentCaptor.forClass(ZstackFrameRequest.class);
+    private final ZstackProtocolHandler handler = Mockito.mock(ZstackProtocolHandler.class);
 
-    private ZstackNcp getZstackNcp(ZstackFrameResponse response) {
-        handler = Mockito.mock(ZstackProtocolHandler.class);
-        ZstackNcp ncp = new ZstackNcp(handler);
-
-        Mockito.doAnswer(new Answer<ZstackFrameResponse>() {
-            @Override
-            public ZstackFrameResponse answer(InvocationOnMock invocation) {
-                return response;
-            }
-        }).when(handler).sendTransaction(ArgumentMatchers.any(ZstackFrameRequest.class), ArgumentMatchers.eq(response.getClass()));
-
-        return ncp;
-    }
+    private final ZstackNcp ncp = new ZstackNcp(handler);
 
     @Test
-    public void resetNcp() {
-        ZstackNcp ncp = getZstackNcp(Mockito.mock(ZstackSysResetIndAreq.class));
+    public void resetNcp() throws InterruptedException, ExecutionException {
+        final Future<ZstackSysResetIndAreq> future = Mockito.mock(Future.class);
 
-        ncp.resetNcp(ZstackResetType.SERIAL_BOOTLOADER);
-        Mockito.verify(handler, Mockito.times(1)).sendTransaction(transactionCapture.capture(), ZstackSysResetIndAreq.class);
+        final ZstackSysResetIndAreq resetEvent = new ZstackSysResetIndAreq(new int[] {0, 0, 1, 0, 0, 0, 0, 0});
+        when(future.get())
+            .thenReturn(resetEvent);
+        when(handler.waitForEvent(Mockito.eq(ZstackSysResetIndAreq.class), Mockito.any()))
+            .thenReturn(future);
+
+        ZstackSysResetIndAreq result = ncp.resetNcp(ZstackResetType.SERIAL_BOOTLOADER);
+
+        Mockito.verify(handler).waitForEvent(Mockito.eq(ZstackSysResetIndAreq.class), Mockito.any());
+        Mockito.verify(handler).queueFrame(transactionCapture.capture());
+        Mockito.verify(future).get();
+        Mockito.verifyNoMoreInteractions(handler, future);
 
         ZstackFrameRequest request = transactionCapture.getValue();
-        System.out.println(request);
-        assertTrue(request instanceof ZstackSysResetReqAcmd);
-        assertEquals(ZstackResetType.SERIAL_BOOTLOADER, ((ZstackSysResetReqAcmd) request).getType());
-
-        ncp.resetNcp(ZstackResetType.TARGET_DEVICE);
-        Mockito.verify(handler, Mockito.times(2)).sendTransaction(transactionCapture.capture(), ZstackSysResetIndAreq.class);
-
-        request = transactionCapture.getValue();
-        System.out.println(request);
-        assertTrue(request instanceof ZstackSysResetReqAcmd);
-        assertEquals(ZstackResetType.TARGET_DEVICE, ((ZstackSysResetReqAcmd) request).getType());
+        assertThat(request, is(instanceOf(ZstackSysResetReqAcmd.class)));
+        assertThat(((ZstackSysResetReqAcmd) request).getType(), is(ZstackResetType.SERIAL_BOOTLOADER));
+        assertThat(result, is(sameInstance(resetEvent)));
     }
 
     @Test
     public void pingNcp() {
         ZstackSysPingSrsp response = Mockito.mock(ZstackSysPingSrsp.class);
-        Mockito.when(response.getCapabilities()).thenReturn(0x17D);
-        ZstackNcp ncp = getZstackNcp(response);
+        Mockito.when(response.getCapabilities())
+            .thenReturn(0x17D);
+        Mockito.when(handler.sendTransaction(transactionCapture.capture(), Mockito.eq(ZstackSysPingSrsp.class)))
+            .thenReturn(response);
 
         Set<ZstackSystemCapabilities> capabilities = ncp.pingNcp();
-        System.out.println("Capabilities returned " + capabilities);
 
-        Mockito.verify(handler, Mockito.times(1)).sendTransaction(transactionCapture.capture(), ZstackSysPingSrsp.class);
+        Mockito.verify(handler).sendTransaction(transactionCapture.capture(), Mockito.eq(ZstackSysPingSrsp.class));
 
         ZstackFrameRequest request = transactionCapture.getValue();
         System.out.println(request);
         assertTrue(request instanceof ZstackSysPingSreq);
         assertEquals(7, capabilities.size());
     }
-
-    @Test
-    public void getDeviceInfo() {
-        ZstackUtilGetDeviceInfoSrsp response = Mockito.mock(ZstackUtilGetDeviceInfoSrsp.class);
-        Mockito.when(response.getDeviceState()).thenReturn(ZstackZdoState.DEV_INIT);
-        Mockito.when(response.getIeeeAddress()).thenReturn(new IeeeAddress("1234567890ABCDEF"));
-        Mockito.when(response.getShortAddr()).thenReturn(0x1234);
-        // ZstackNcp ncp = getZstackNcp(response);
-
-        // ZstackUtilGetDeviceInfoSrsp deviceInfo = ncp.getDeviceInfo();
-        // System.out.println("Device info returned " + deviceInfo);
-
-        // Mockito.verify(handler, Mockito.times(1)).sendTransaction(transactionCapture.capture(), ZstackUtilGetDeviceInfoSrsp.class);
-        // assertEquals(0x1234, deviceInfo.getShortAddr());
-        // assertEquals(new IeeeAddress("1234567890ABCDEF"), deviceInfo.getIeeeAddress());
-
-        ZstackFrameRequest request = transactionCapture.getValue();
-        System.out.println(request);
-        assertTrue(request instanceof ZstackUtilGetDeviceInfoSreq);
-
-        // assertEquals(0x1234, ncp.getNwkAddress());
-        // assertEquals(new IeeeAddress("1234567890ABCDEF"), ncp.getDeviceInfo().getIeeeAddress());
-    }
-
-    // @Test
-    // public void setStartupOptions() {
-    //     ZstackNcp ncp = getZstackNcp(Mockito.mock(ZstackZbWriteConfigurationSrsp.class));
-
-    //     ncp.setStartupOptions(false, false);
-    //     Mockito.verify(handler, Mockito.times(1)).sendTransaction(transactionCapture.capture(), ZstackZbWriteConfigurationSrsp.class);
-    //     assertEquals(0, ((ZstackZbWriteConfigurationSreq) transactionCapture.getValue()).getValue()[0]);
-
-    //     ncp.setStartupOptions(true, false);
-    //     Mockito.verify(handler, Mockito.times(2)).sendTransaction(transactionCapture.capture(), ZstackZbWriteConfigurationSrsp.class);
-    //     assertEquals(1, ((ZstackZbWriteConfigurationSreq) transactionCapture.getValue()).getValue()[0]);
-
-    //     ncp.setStartupOptions(false, true);
-    //     Mockito.verify(handler, Mockito.times(3)).sendTransaction(transactionCapture.capture(), ZstackZbWriteConfigurationSrsp.class);
-    //     assertEquals(2, ((ZstackZbWriteConfigurationSreq) transactionCapture.getValue()).getValue()[0]);
-
-    //     ncp.setStartupOptions(true, true);
-    //     Mockito.verify(handler, Mockito.times(4)).sendTransaction(transactionCapture.capture(), ZstackZbWriteConfigurationSrsp.class);
-    //     assertEquals(3, ((ZstackZbWriteConfigurationSreq) transactionCapture.getValue()).getValue()[0]);
-    // }
 }

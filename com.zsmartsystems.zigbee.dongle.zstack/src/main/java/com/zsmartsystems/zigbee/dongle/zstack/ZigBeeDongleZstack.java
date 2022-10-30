@@ -45,19 +45,16 @@ import com.zsmartsystems.zigbee.dongle.zstack.api.appcnf.ZstackCentralizedLinkKe
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackConfigId;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackResetType;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysResetIndAreq;
-import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysVersionSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSysVersionSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackSystemCapabilities;
-import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetDeviceInfoSreq;
+import com.zsmartsystems.zigbee.dongle.zstack.api.sys.ZstackZdoState;
 import com.zsmartsystems.zigbee.dongle.zstack.api.util.ZstackUtilGetDeviceInfoSrsp;
-import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoExtNwkInfoSreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoExtNwkInfoSrsp;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoMsgCbIncomingAreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoStateChangeIndAreq;
 import com.zsmartsystems.zigbee.dongle.zstack.api.zdo.ZstackZdoTcDevIndAreq;
 import com.zsmartsystems.zigbee.dongle.zstack.internal.ZstackProtocolHandler;
 import com.zsmartsystems.zigbee.dongle.zstack.internal.ZstackStackConfiguration;
-import com.zsmartsystems.zigbee.dongle.zstack.internal.serializer.ZstackDeserializer;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.transport.TransportConfig;
 import com.zsmartsystems.zigbee.transport.TransportConfigOption;
@@ -121,12 +118,17 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
     /**
      * The serial port used to connect to the dongle
      */
-    private ZigBeePort serialPort;
+    private final ZigBeePort serialPort;
 
     /**
      * The protocol handler used to send and receive ZStack packets
      */
-    private ZstackProtocolHandler protocolHandler;
+    private final ZstackProtocolHandler protocolHandler;
+
+    /**
+     * The NCP is used for convenient access to the protocol handler
+     */
+    private final ZstackNcp ncp;
 
     /**
      * The stack configuration we need for the NCP
@@ -202,7 +204,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
      * The rate at which we will do a status poll if we've not sent any other
      * messages within this period
      */
-    private int pollRate = 100000;
+    private int pollRate = 10000;
 
     /**
      * The time the last command was sent from the {@link ZigBeeNetworkManager}.
@@ -220,12 +222,14 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
     public ZigBeeDongleZstack(final ZigBeePort serialPort) {
         this.serialPort = serialPort;
 
+        this.protocolHandler = new ZstackProtocolHandler();
+        this.ncp = new ZstackNcp(protocolHandler);
+
         // Define the default configuration
         stackConfiguration = new LinkedHashMap<>();
 
         stackConfiguration.put(ZstackConfigId.ZCD_NV_ZDO_DIRECT_CB, new int[] { 0x00 });
         stackConfiguration.put(ZstackConfigId.ZCD_NV_PRECFGKEYS_ENABLE, new int[] { 0x01 });
-        stackConfiguration.put(ZstackConfigId.ZCD_NV_USE_DEFAULT_TCLK, new int[] { 0x01 });
     }
 
     @Override
@@ -260,10 +264,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
             return ZigBeeStatus.COMMUNICATION_ERROR;
         }
 
-        protocolHandler = new ZstackProtocolHandler();
         protocolHandler.start(serialPort);
-
-        ZstackNcp ncp = getZstackNcp();
 
         Set<ZstackSystemCapabilities> capabilities = ncp.pingNcp();
         if (capabilities.isEmpty()) {
@@ -275,10 +276,11 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
         }
         logger.debug("ZStack subsystem capabilities: {}", capabilities);
 
-        ZstackSysVersionSrsp version = protocolHandler.sendTransaction(new ZstackSysVersionSreq(), ZstackSysVersionSrsp.class);
+        ZstackSysVersionSrsp version = ncp.getVersion();
         if (version == null) {
             return ZigBeeStatus.COMMUNICATION_ERROR;
         }
+
         StringBuilder builder = new StringBuilder();
         builder.append("Software=");
         builder.append(version.getMajorRel());
@@ -292,7 +294,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
         builder.append(version.getTransportRev());
         versionString = builder.toString();
 
-        final ZstackUtilGetDeviceInfoSrsp deviceInfo = protocolHandler.sendTransaction(new ZstackUtilGetDeviceInfoSreq(), ZstackUtilGetDeviceInfoSrsp.class);
+        final ZstackUtilGetDeviceInfoSrsp deviceInfo = ncp.getDeviceInfo();
         if (deviceInfo == null) {
             return ZigBeeStatus.COMMUNICATION_ERROR;
         }
@@ -309,7 +311,8 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
                     ZstackConfigId.ZCD_NV_EXTPANID,
                     ZstackConfigId.ZCD_NV_PANID,
                     ZstackConfigId.ZCD_NV_PRECFGKEY,
-                    ZstackConfigId.ZCD_NV_CHANLIST));
+                    ZstackConfigId.ZCD_NV_CHANLIST,
+                    ZstackConfigId.ZCD_NV_USE_DEFAULT_TCLK));
             logicalChannel = ncp.readChannelFromNV();
             logger.debug("Current selected channel is configured as {}", logicalChannel);
 
@@ -330,8 +333,6 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
             logger.error("Initialising ZStack Dongle but low level handler is not initialised.");
             return ZigBeeStatus.INVALID_STATE;
         }
-
-        ZstackNcp ncp = getZstackNcp();
 
         // If we want to reinitialize the network, then go...
         if (reinitialize) {
@@ -406,17 +407,13 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
                 new int[] {}, new int[] {});
 
         if (!initialised) {
-            if (!configureListeners()) {
-                return ZigBeeStatus.FAILURE;
-            }
+            configureListeners();
         }
 
         // Configure channel
-        int[] channelList = stackConfiguration.get(ZstackConfigId.ZCD_NV_CHANLIST);
+        final int[] channelList = stackConfiguration.get(ZstackConfigId.ZCD_NV_CHANLIST);
         if (channelList != null && channelList.length == 4) {
-            final ZstackDeserializer deserializer = new ZstackDeserializer(channelList);
-            int channelMask = deserializer.deserializeUInt32();
-            ncp.setChannelMask(new ZigBeeChannelMask(channelMask));
+            ncp.setChannelMask(new ZigBeeChannelMask(valueToUint32(channelList)));
         } else {
             ncp.setChannelMask(new ZigBeeChannelMask(ZigBeeChannelMask.CHANNEL_MASK_2GHZ));
         }
@@ -452,7 +449,6 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
         serialPort.close();
         protocolHandler.close();
         handleLinkStateChange(false);
-        protocolHandler = null;
     }
 
     /**
@@ -461,9 +457,14 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
      * @return an instance of the {@link ZstackNcp}
      */
     public ZstackNcp getZstackNcp() {
-        return new ZstackNcp(protocolHandler);
+        return ncp;
     }
 
+    /**
+     * Returns the protocolHandler in use for the dongle
+     * 
+     * @return an in stance of the {@link ZstackProtocolHandler}
+     */
     public ZstackProtocolHandler getProtocolHandler() {
         return protocolHandler;
     }
@@ -489,8 +490,10 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
         if (ZigBeeChannel.UNKNOWN == channel) {
             // use scan over all masks
             channelMask = ZigBeeChannelMask.CHANNEL_MASK_2GHZ;
-        } else {
+        } else if ((ZigBeeChannelMask.CHANNEL_MASK_2GHZ & channel.getMask()) > 0) {
             channelMask = channel.getMask();
+        } else {
+            return ZigBeeStatus.INVALID_ARGUMENTS;
         }
 
         logicalChannel = channel;
@@ -519,7 +522,12 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
 
     @Override
     public ExtendedPanId getZigBeeExtendedPanId() {
-        return new ExtendedPanId(stackConfiguration.get(ZstackConfigId.ZCD_NV_EXTPANID));
+        final int[] extPanIdValue = stackConfiguration.get(ZstackConfigId.ZCD_NV_EXTPANID);
+        if (extPanIdValue == null || extPanIdValue.length != 8) {
+            return null;
+        } else {
+            return new ExtendedPanId(extPanIdValue);
+        }
     }
 
     @Override
@@ -543,13 +551,16 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
 
     @Override
     public ZigBeeKey getZigBeeNetworkKey() {
-        return new ZigBeeKey(stackConfiguration.get(ZstackConfigId.ZCD_NV_PRECFGKEY));
+        final int[] key = stackConfiguration.get(ZstackConfigId.ZCD_NV_PRECFGKEY);
+        if (key == null || key.length != 16) {
+            return null;
+        } else {
+            return new ZigBeeKey(stackConfiguration.get(ZstackConfigId.ZCD_NV_PRECFGKEY));
+        }
     }
 
     @Override
     public ZigBeeStatus setTcLinkKey(ZigBeeKey key) {
-        ZstackNcp ncp = getZstackNcp();
-
         if (DEFAULT_TCLK.equals(key)) {
             // use default key
             stackConfiguration.put(ZstackConfigId.ZCD_NV_USE_DEFAULT_TCLK, new int[] { 1 });
@@ -568,7 +579,9 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
     @Override
     public ZigBeeKey getTcLinkKey() {
         final int[] useDefault = stackConfiguration.get(ZstackConfigId.ZCD_NV_USE_DEFAULT_TCLK);
-        if (useDefault != null && useDefault[0] != 0) {
+        if (useDefault == null) {
+            return null;
+        } else if (useDefault[0] != 0) {
             return DEFAULT_TCLK;
         } else if (linkKey != null) {
             return linkKey;
@@ -689,7 +702,10 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
                     return;
                 }
                 // Don't wait for the response. This is running in a single thread scheduler
-                protocolHandler.queueFrame(new ZstackUtilGetDeviceInfoSreq());
+                final ZstackUtilGetDeviceInfoSrsp response = ncp.getDeviceInfo();
+                if (response == null || response.getStatus() != ZstackResponseCode.SUCCESS || ZstackZdoState.DEV_ZB_COORD != response.getDeviceState()) {
+                    handleLinkStateChange(false);
+                }
             }
         }, pollRate, pollRate, TimeUnit.MILLISECONDS);
     }
@@ -708,7 +724,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
         networkStateUp = linkState;
 
         if (linkState) {
-            final ZstackZdoExtNwkInfoSrsp response = protocolHandler.sendTransaction(new ZstackZdoExtNwkInfoSreq(), ZstackZdoExtNwkInfoSrsp.class);
+            final ZstackZdoExtNwkInfoSrsp response = ncp.getNetworkInfo();
 
             nwkAddress = response.getShortAddress();
             logicalChannel = ZigBeeChannel.create(response.getChannel());
@@ -719,7 +735,7 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
         }
     }
 
-    private boolean configureListeners() {
+    private void configureListeners() {
         // setup listeners
         protocolHandler.listener(ZstackAfIncomingMsgAreq.class, response -> {
             logger.debug("Zstack incoming message");
@@ -785,8 +801,6 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
             handleLinkStateChange(false);
             startup(false);
         });
-
-        return true;
     }
 
     /**
@@ -797,8 +811,6 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
      */
     private ZigBeeStatus startNetwork() {
         logger.debug("ZStack starting network");
-        ZstackNcp ncp = getZstackNcp();
-
         final Future<ZstackZdoStateChangeIndAreq> networkUpFuture = protocolHandler
                 .waitForEvent(ZstackZdoStateChangeIndAreq.class, response -> {
                     switch (response.getState()) {
@@ -833,5 +845,9 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
 
     private int[] valueFromUInt32(int value) {
         return new int[] { value & 0xFF, (value >> 8) & 0xFF, (value >> 16) & 0xFF, (value >> 24) & 0xFF };
+    }
+
+    private int valueToUint32(int[] buffer) {
+        return buffer[0] + (buffer[1] << 8) + (buffer[2] << 16) + (buffer[3] << 24);
     }
 }

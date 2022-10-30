@@ -7,16 +7,12 @@
  */
 package com.zsmartsystems.zigbee.dongle.zstack.internal;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,7 +29,19 @@ import com.zsmartsystems.zigbee.transport.ZigBeePort;
  *
  */
 public class ZstackProtocolHandlerTest {
-    private int[] getPacket(int[] data) {
+    @Test
+    public void testReceivePacket() throws Exception {
+        int[] response = getPacket(new int[] { 0xFE, 0x02, 0x61, 0x01, 0x12, 0x34, 0x44 });
+        assertTrue(Arrays.equals(response, new int[] { 0x61, 0x01, 0x12, 0x34 }));
+    }
+
+    @Test
+    public void testReceivePacketLeadingRubbish() throws Exception {
+        int[] response = getPacket(new int[] { 0x00, 0x12, 0xFE, 0x02, 0x61, 0x01, 0x12, 0x34, 0x44 });
+        assertTrue(Arrays.equals(response, new int[] { 0x61, 0x01, 0x12, 0x34 }));
+    }
+
+    private int[] getPacket(int[] data) throws Exception {
         ZstackProtocolHandler handler = new ZstackProtocolHandler();
         byte[] bytedata = new byte[data.length];
         int cnt = 0;
@@ -43,52 +51,11 @@ public class ZstackProtocolHandlerTest {
         ByteArrayInputStream stream = new ByteArrayInputStream(bytedata);
         ZigBeePort port = new TestPort(stream, null);
 
-        Method privateMethod;
-        try {
-            Field field = handler.getClass().getDeclaredField("port");
-            field.setAccessible(true);
-            field.set(handler, port);
-
-            privateMethod = ZstackProtocolHandler.class.getDeclaredMethod("getPacket");
-            privateMethod.setAccessible(true);
-
-            return (int[]) privateMethod.invoke(handler);
-        } catch (NoSuchMethodException | SecurityException | IllegalArgumentException | IllegalAccessException
-                | InvocationTargetException | NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        TestUtilities.setField(ZstackProtocolHandler.class, handler, "port", port);
+        return (int[]) TestUtilities.invokeMethod(ZstackProtocolHandler.class, handler, "getPacket");
     }
 
-    @Test
-    public void testReceivePacket() {
-        int[] response = getPacket(new int[] { 0xFE, 0x02, 0x61, 0x01, 0x12, 0x34, 0x44 });
-        assertTrue(Arrays.equals(response, new int[] { 0x61, 0x01, 0x12, 0x34 }));
-    }
-
-    @Test
-    public void testReceivePacketLeadingRubbish() {
-        int[] response = getPacket(new int[] { 0x00, 0x12, 0xFE, 0x02, 0x61, 0x01, 0x12, 0x34, 0x44 });
-        assertTrue(Arrays.equals(response, new int[] { 0x61, 0x01, 0x12, 0x34 }));
-    }
-
-    @Test
-    public void isSynchronous() throws NoSuchMethodException, SecurityException, IllegalAccessException,
-            IllegalArgumentException, InvocationTargetException {
-        ZstackProtocolHandler handler = new ZstackProtocolHandler();
-
-        assertTrue((boolean) TestUtilities.invokeMethod(ZstackProtocolHandler.class, handler, "isSynchronous",
-                int.class, 0x61));
-        assertTrue((boolean) TestUtilities.invokeMethod(ZstackProtocolHandler.class, handler, "isSynchronous",
-                int.class, 0x22));
-        assertFalse((boolean) TestUtilities.invokeMethod(ZstackProtocolHandler.class, handler, "isSynchronous",
-                int.class, 0x01));
-        assertFalse((boolean) TestUtilities.invokeMethod(ZstackProtocolHandler.class, handler, "isSynchronous",
-                int.class, 0x42));
-    }
-
-    class TestPort implements ZigBeePort {
+    private class TestPort implements ZigBeePort {
         InputStream input;
         List<Integer> outputData = new ArrayList<>();
 
@@ -155,10 +122,5 @@ public class ZstackProtocolHandlerTest {
         @Override
         public void setRts(boolean state) {
         }
-
-        public List<Integer> getOutputData() {
-            return outputData;
-        }
     }
-
 }
