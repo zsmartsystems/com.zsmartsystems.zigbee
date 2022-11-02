@@ -7,9 +7,11 @@
  */
 package com.zsmartsystems.zigbee.dongle.zstack;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -18,7 +20,6 @@ import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -352,15 +353,23 @@ public class ZigBeeDongleZstack implements ZigBeeTransportTransmit {
 
             Map<ZstackConfigId, int[]> configuration = stackConfigurer.getConfiguration(stackConfiguration.keySet());
             for (Entry<ZstackConfigId, int[]> config : configuration.entrySet()) {
-                logger.debug("Configuration state {} = {}", config.getKey(),
-                        Arrays.stream(config.getValue()).mapToObj(Integer::toHexString).collect(Collectors.toList()));
+                final List<String> hexvalue = new ArrayList<>();
+                for (final int val : config.getValue()) {
+                    hexvalue.add(Integer.toHexString(val));
+                }
+                
+                logger.debug("Configuration state {} = {}", config.getKey(), hexvalue);
             }
 
             stackConfigurer.setConfiguration(stackConfiguration);
             configuration = stackConfigurer.getConfiguration(stackConfiguration.keySet());
             for (Entry<ZstackConfigId, int[]> config : configuration.entrySet()) {
-                logger.debug("Configuration state {} = {}", config.getKey(),
-                        Arrays.stream(config.getValue()).mapToObj(Integer::toHexString).collect(Collectors.toList()));
+                final List<String> hexvalue = new ArrayList<>();
+                for (final int val : config.getValue()) {
+                    hexvalue.add(Integer.toHexString(val));
+                }
+
+                logger.debug("Configuration state {} = {}", config.getKey(), hexvalue);
             }
 
             // reset the device

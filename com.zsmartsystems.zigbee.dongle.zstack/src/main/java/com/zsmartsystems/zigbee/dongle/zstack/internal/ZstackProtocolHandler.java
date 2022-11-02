@@ -19,8 +19,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -466,5 +464,13 @@ public class ZstackProtocolHandler {
                 notify();
             }
         }
+    }
+
+    public static interface Consumer<T> {
+        public void accept(final T object);
+    }
+
+    public static interface Predicate<T> {
+        public boolean test(final T object);
     }
 }

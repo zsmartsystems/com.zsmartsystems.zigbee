@@ -10,11 +10,10 @@ package com.zsmartsystems.zigbee.dongle.zstack.autocode;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.charset.Charset;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -104,12 +103,11 @@ public abstract class ClassGenerator {
         return val.substring(0, 1).toUpperCase() + val.substring(1);
     }
 
-    protected PrintWriter getClassOut(File packageFile, String className) throws FileNotFoundException {
+    protected PrintWriter getClassOut(File packageFile, String className) throws FileNotFoundException, UnsupportedEncodingException {
         packageFile.mkdirs();
         final File classFile = new File(packageFile + File.separator + className + ".java");
         System.out.println("Generating: " + classFile.getAbsolutePath());
-        final FileOutputStream fileOutputStream = new FileOutputStream(classFile, false);
-        return new PrintWriter(fileOutputStream, false, Charset.forName("UTF-8"));
+        return new PrintWriter(classFile, "UTF-8");
     }
 
     protected void clearImports() {
@@ -135,7 +133,7 @@ public abstract class ClassGenerator {
 
         BufferedReader br;
         try {
-            br = new BufferedReader(new FileReader("pom.xml", Charset.forName("UTF-8")));
+            br = new BufferedReader(new FileReader("pom.xml"));
             String line = br.readLine();
             while (line != null) {
                 if (line.contains("<license.year>") && line.contains("</license.year>")) {
@@ -147,7 +145,7 @@ public abstract class ClassGenerator {
 
             br.close();
 
-            br = new BufferedReader(new FileReader("src/etc/header.txt", Charset.forName("UTF-8")));
+            br = new BufferedReader(new FileReader("src/etc/header.txt"));
             line = br.readLine();
 
             out.println("/**");

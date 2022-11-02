@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +39,7 @@ public class CommandGenerator extends ClassGenerator {
 
     private List<Enumeration> enumerations;
 
-    public void go(Protocol protocol) throws FileNotFoundException {
+    public void go(Protocol protocol) throws FileNotFoundException, UnsupportedEncodingException {
         enumerations = protocol.enumerations;
 
         String className;
@@ -75,7 +76,7 @@ public class CommandGenerator extends ClassGenerator {
     }
 
     private void createCommandClass(String className, Command command, List<Parameter> parameters)
-            throws FileNotFoundException {
+            throws FileNotFoundException, UnsupportedEncodingException {
 
         System.out.println("Processing command class " + command.name + "  [" + className + "()]");
 
@@ -412,7 +413,7 @@ public class CommandGenerator extends ClassGenerator {
         out.close();
     }
 
-    private void createStructureClass(Structure structure) throws FileNotFoundException {
+    private void createStructureClass(Structure structure) throws FileNotFoundException, UnsupportedEncodingException {
         String className = upperCaseFirstCharacter(structure.name);
 
         System.out.println("Processing structure class " + structure.name + "  [" + className + "()]");
@@ -705,7 +706,7 @@ public class CommandGenerator extends ClassGenerator {
         out.close();
     }
 
-    private void createEnumClass(Enumeration enumeration) throws FileNotFoundException {
+    private void createEnumClass(Enumeration enumeration) throws FileNotFoundException, UnsupportedEncodingException {
         String className = upperCaseFirstCharacter(enumeration.name);
         System.out.println("Processing enum class " + enumeration.name + "  [" + className + "()]");
 
@@ -929,7 +930,7 @@ public class CommandGenerator extends ClassGenerator {
         }
     }
 
-    private void createZstackFrameFactory(Protocol protocol) throws FileNotFoundException {
+    private void createZstackFrameFactory(Protocol protocol) throws FileNotFoundException, UnsupportedEncodingException {
         StringWriter stringWriter = new StringWriter();
         PrintWriter out = new PrintWriter(stringWriter);
 
