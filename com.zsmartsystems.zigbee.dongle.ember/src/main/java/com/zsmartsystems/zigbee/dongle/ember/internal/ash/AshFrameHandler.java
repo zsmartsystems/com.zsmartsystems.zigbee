@@ -397,6 +397,9 @@ public class AshFrameHandler implements EzspProtocolHandler {
                     logger.trace("ASH took EZSP frame from receive queue. Queue length {}", recvQueue.size());
                     notifyTransactionComplete(ezspFrame);
                     frameHandler.handlePacket(ezspFrame);
+                } catch (final InterruptedException e) {
+                    logger.debug("AshFrameHandler InterruptedException processing EZSP frame");
+                    break;
                 } catch (final Exception e) {
                     logger.error("AshFrameHandler Exception processing EZSP frame: ", e);
                 }
@@ -468,10 +471,20 @@ public class AshFrameHandler implements EzspProtocolHandler {
         try {
             parserThread.interrupt();
             parserThread.join();
-            logger.debug("AshFrameHandler close complete.");
+            logger.debug("AshFrameHandler parsed thread terminated.");
         } catch (InterruptedException e) {
             logger.debug("AshFrameHandler interrupted in packet parser thread shutdown join.");
         }
+
+        try {
+            processorThread.interrupt();
+            processorThread.join();
+            logger.debug("AshFrameHandler processor thread terminated.");
+        } catch (InterruptedException e) {
+            logger.debug("AshFrameHandler interrupted in processor thread shutdown join.");
+        }
+
+        logger.debug("AshFrameHandler close complete.");
     }
 
     @Override
@@ -554,7 +567,13 @@ public class AshFrameHandler implements EzspProtocolHandler {
         logger.debug("--> TX ASH frame: {}", ashFrame);
 
         // Send the data
-        port.write(ashFrame.getOutputBuffer());
+        int[] outputBuffer = ashFrame.getOutputBuffer();
+        if (logger.isTraceEnabled()) {
+            for (int val : outputBuffer) {
+                logger.trace("ASH TX: {}", String.format("%02X", val));
+            }
+        }
+        port.write(outputBuffer);
 
         // Only start the timer for data and reset frames
         if (ashFrame instanceof AshFrameData || ashFrame instanceof AshFrameRst) {
