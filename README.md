@@ -79,23 +79,26 @@ The following clusters are currently supported -:
 
 The framework implements a package structure that allows efficient use of re-usable components in a number of different applications.
 
-| Package                                            | Description                                            |
-| -------------------------------------------------- | ------------------------------------------------------ |
-| com.zsmartsystems.zigbee                           | The main framework and cluster library implementation  |
-| com.zsmartsystems.zigbee.autocode                  | Code generator for the ZigBee cluster library classes  |
-| com.zsmartsystems.zigbee.dongle.cc2531             | Dongle driver for the Texas Instruments ZNP CC2531     |
-| com.zsmartsystems.zigbee.dongle.conbee             | Dongle driver for the Dresden Electronics Conbee       |
-| com.zsmartsystems.zigbee.dongle.ember              | Dongle driver for the Silabs EZSP Network Co-Processor |
-| com.zsmartsystems.zigbee.dongle.ember.autocode     | Code generator for the Ember NCP dongle commands       |
-| com.zsmartsystems.zigbee.dongle.telegesis          | Dongle driver for the Telegesis dongle                 |
-| com.zsmartsystems.zigbee.dongle.telegesis.autocode | Code generator for the Telegesis dongle commands       |
-| com.zsmartsystems.zigbee.dongle.xbee               | Dongle driver for the Digi XBee dongle                 |
-| com.zsmartsystems.zigbee.dongle.xbee.autocode      | Code generator for the XBee dongle commands            |
-| com.zsmartsystems.zigbee.console                   | Console commands for the general framework             |
-| com.zsmartsystems.zigbee.console.ember             | Console commands for the Silabs Ember NCP              |
-| com.zsmartsystems.zigbee.console.main              | Main CLI console application                           |
-| com.zsmartsystems.zigbee.serial                    | Serial driver implementation                           |
-| com.zsmartsystems.zigbee.test                      | Overall tests and code coverage                        |
+| Package                                            | Description                                             |
+| -------------------------------------------------- | ------------------------------------------------------- |
+| com.zsmartsystems.zigbee                           | The main framework and cluster library implementation   |
+| com.zsmartsystems.zigbee.autocode                  | Code generator for the ZigBee cluster library classes   |
+| com.zsmartsystems.zigbee.dongle.cc2531             | Dongle driver for the Texas Instruments ZNP CC2531      |
+| com.zsmartsystems.zigbee.dongle.conbee             | Dongle driver for the Dresden Electronics Conbee        |
+| com.zsmartsystems.zigbee.dongle.ember              | Dongle driver for the Silabs EZSP Network Co-Processor  |
+| com.zsmartsystems.zigbee.dongle.ember.autocode     | Code generator for the Ember NCP dongle commands        |
+| com.zsmartsystems.zigbee.dongle.telegesis          | Dongle driver for the Telegesis dongle                  |
+| com.zsmartsystems.zigbee.dongle.telegesis.autocode | Code generator for the Telegesis dongle commands        |
+| com.zsmartsystems.zigbee.dongle.xbee               | Dongle driver for the Digi XBee dongle                  |
+| com.zsmartsystems.zigbee.dongle.xbee.autocode      | Code generator for the XBee dongle commands             |
+| com.zsmartsystems.zigbee.dongle.zstack             | Dongle driver for Texas Instruments Z-Stack 3 dongles   |
+| com.zsmartsystems.zigbee.dongle.zstack.autocode    | Code generator for the TI Z-Stack 3 dongle commands     |
+| com.zsmartsystems.zigbee.console                   | Console commands for the general framework              |
+| com.zsmartsystems.zigbee.console.ember             | Console commands for the Silabs Ember NCP               |
+| com.zsmartsystems.zigbee.console.main              | Main CLI console application                            |
+| com.zsmartsystems.zigbee.console.zstack            | Console commands for Texas Instruments ZNP of Z-Stack 3 |
+| com.zsmartsystems.zigbee.serial                    | Serial driver implementation                            |
+| com.zsmartsystems.zigbee.test                      | Overall tests and code coverage                         |
 
 ## Testing
 
@@ -145,7 +148,11 @@ The [com.zsmartsystems.zigbee.sniffer](https://github.com/zsmartsystems/com.zsma
 
 ### Texas Instruments CC2531
 
-The library supports the Texas Instruments ZNP protocol over a serial interface.
+The library supports the Texas Instruments Z-Stack Home 1.2 ZNP protocol over a serial interface as used by Zigbee Coordinator NCP firmware on TI CC2530 and CC2531 series based dongles.
+
+### Texas Instruments Z-Stack
+
+The library supports the Texas Instruments Z-Stack 3.x ZNP protocol over a serial interface as used by Zigbee Coordinator NCP firmware on TI CC2652 and CC1352 series based dongles.
 
 ### Telegesis ETRX3
 
@@ -180,12 +187,17 @@ The following table provides a summary of some of the dongles / chipsets that ar
 | EFR32             | Yes (EZSP)      |             |              |          |
 | **EM358LR**       | Yes (EZSP)      | -103dBm     | **+20.0dBm** | Internal |
 | MGM111            | Yes (EZSP)      | -99dBm      | +10.0dBm     | Internal |
-| RaspBee           | Yes (CONBEE)    | **-105dBm** | +8.7dBm      | Internal |
-| ConBee            | Yes (CONBEE)    | **-105dBm** | +8.7dBm      | Internal |
+| RaspBee           | Yes (CONBEE)    | -105dBm     | +8.7dBm      | Internal |
+| ConBee            | Yes (CONBEE)    | -105dBm     | +8.7dBm      | Internal |
 | CC2530            | Yes (ZNP)       | -97dBm      | +4.5dBm      |          |
 | CC2531            | Yes (ZNP)       | -97dBm      | +4.5dBm      |          |
 | CC2538            | Yes (ZNP)       | -97dBm      | +7.0dBm      |          |
 | CC2650            | Yes (ZNP)       | -100dBm     | +5.0dBm      |          |
+| CC2652P           | Yes (Z-Stack)   | -105dBm     | **+20.0dBm** |          |
+| CC2652R           | Yes (Z-Stack)   | -105dBm     | +5.0dBm      |          |
+| CC2652RB          | Yes (Z-Stack)   | -102dBm     | +5.0dBm      |          |
+| CC1352P           | Yes (Z-Stack)   | **-121dBm** | **+20.0dBm** |          |
+| CC1352R           | Yes (Z-Stack)   | **-121dBm** | +5.0dBm      |          |
 | ATSAMR21          | No              | -99dBm      | +4.0dBm      |          |
 | JN5169            | No              | -96dBm      | +10.0dBm     |          |
 | HUSBZB-1          | Yes (EZSP)      |             |              | Internal |
