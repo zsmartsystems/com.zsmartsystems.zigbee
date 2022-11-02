@@ -64,7 +64,7 @@ public class ZstackConsoleNcpSecurityCommand extends ZstackConsoleAbstractComman
         if (preConfigKey == null) {
             out.println("NV Device info            : ERROR");
         } else {
-            out.println("Preconfigured Network Key : " + preConfigKey);
+            out.println("Preconfigured Network Key : " + hexDump(preConfigKey));
         }
 
         if (nwkKeyConfig == null) {
