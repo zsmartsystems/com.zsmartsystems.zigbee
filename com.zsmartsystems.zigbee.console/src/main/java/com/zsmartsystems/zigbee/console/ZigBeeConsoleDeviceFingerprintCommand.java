@@ -241,7 +241,7 @@ public class ZigBeeConsoleDeviceFingerprintCommand extends ZigBeeConsoleAbstract
                         "| | | | | |> " + String.format("%04X", commandId) + " " + getCommandName(cluster, commandId));
             }
         } else {
-            out.println("| | | | |> " + success);
+            out.println("| | | | | |> " + success);
         }
 
         try {
@@ -255,7 +255,6 @@ public class ZigBeeConsoleDeviceFingerprintCommand extends ZigBeeConsoleAbstract
             getAttributes(out, cluster, cluster.getSupportedAttributes());
         } else {
             out.println("| | | | | |> " + success);
-
             out.println("| | | | |");
             out.println("| | | | |>| Attribute Values");
             if (success == ZigBeeStatus.SUCCESS) {

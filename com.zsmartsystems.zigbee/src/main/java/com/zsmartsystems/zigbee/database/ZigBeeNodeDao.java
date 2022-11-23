@@ -7,6 +7,7 @@
  */
 package com.zsmartsystems.zigbee.database;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -32,6 +33,12 @@ public class ZigBeeNodeDao {
      * The 16 bit network address for the node
      */
     private Integer networkAddress;
+
+    /**
+     * The MAC capability flags field is eight bits in length and specifies the node capabilities, as required by the
+     * IEEE 802.15.4-2003 MAC sub-layer.
+     */
+    private Set<NodeDescriptor.MacCapabilitiesType> macCapabilities;
 
     /**
      * The {@link NodeDescriptor} for the node
@@ -64,6 +71,14 @@ public class ZigBeeNodeDao {
 
     public void setNetworkAddress(Integer networkAddress) {
         this.networkAddress = networkAddress;
+    }
+
+    public Set<NodeDescriptor.MacCapabilitiesType> getMacCapabilities() {
+        return macCapabilities != null ? macCapabilities : Collections.emptySet();
+    }
+
+    public void setMacCapabilities(Set<NodeDescriptor.MacCapabilitiesType> macCapabilities) {
+        this.macCapabilities = macCapabilities;
     }
 
     public NodeDescriptor getNodeDescriptor() {
