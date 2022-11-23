@@ -42,9 +42,9 @@ public class EzspGetCertificate283k1Response extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspGetCertificate283k1Response(int[] inputBuffer) {
+    public EzspGetCertificate283k1Response(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         status = deserializer.deserializeEmberStatus();

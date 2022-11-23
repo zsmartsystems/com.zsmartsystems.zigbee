@@ -47,9 +47,9 @@ public class EzspMfglibRxHandler extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspMfglibRxHandler(int[] inputBuffer) {
+    public EzspMfglibRxHandler(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         linkQuality = deserializer.deserializeUInt8();

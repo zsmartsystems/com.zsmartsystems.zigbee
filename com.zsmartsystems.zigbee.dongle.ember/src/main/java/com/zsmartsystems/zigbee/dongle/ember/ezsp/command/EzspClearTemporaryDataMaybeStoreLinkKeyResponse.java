@@ -36,9 +36,9 @@ public class EzspClearTemporaryDataMaybeStoreLinkKeyResponse extends EzspFrameRe
     /**
      * Response and Handler constructor
      */
-    public EzspClearTemporaryDataMaybeStoreLinkKeyResponse(int[] inputBuffer) {
+    public EzspClearTemporaryDataMaybeStoreLinkKeyResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         status = deserializer.deserializeEmberStatus();

@@ -13,7 +13,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
 
 /**
@@ -24,9 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
 public class EzspNetworkFoundHandlerTest extends EzspFrameTest {
     @Test
     public void testReceive() {
-        EzspFrame.setEzspVersion(4);
-
-        EzspNetworkFoundHandler handler = new EzspNetworkFoundHandler(
+        EzspNetworkFoundHandler handler = new EzspNetworkFoundHandler(4,
                 getPacketData("56 90 FF 00 1B 11 8B D9 63 08 1D DC 2D C4 F2 46 00 02 01 FF C3"));
         System.out.println(handler);
 

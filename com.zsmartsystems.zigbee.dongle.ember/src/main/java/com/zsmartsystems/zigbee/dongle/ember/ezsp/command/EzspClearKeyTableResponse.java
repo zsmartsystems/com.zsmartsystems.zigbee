@@ -34,9 +34,9 @@ public class EzspClearKeyTableResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspClearKeyTableResponse(int[] inputBuffer) {
+    public EzspClearKeyTableResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         status = deserializer.deserializeEmberStatus();

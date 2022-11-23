@@ -44,9 +44,9 @@ public class EzspZigbeeKeyEstablishmentHandler extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspZigbeeKeyEstablishmentHandler(int[] inputBuffer) {
+    public EzspZigbeeKeyEstablishmentHandler(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         partner = deserializer.deserializeEmberEui64();

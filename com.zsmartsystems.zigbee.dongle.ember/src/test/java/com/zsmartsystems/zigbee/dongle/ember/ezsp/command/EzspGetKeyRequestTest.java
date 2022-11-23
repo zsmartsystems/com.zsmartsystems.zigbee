@@ -26,12 +26,11 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyType;
 public class EzspGetKeyRequestTest extends EzspFrameTest {
     @Test
     public void testAddEndpointRequest() throws Exception {
-        EzspFrame.setEzspVersion(4);
         EzspGetKeyRequest request = new EzspGetKeyRequest();
         request.setKeyType(EmberKeyType.EMBER_APPLICATION_LINK_KEY);
         TestUtilities.setField(EzspFrame.class, request, "sequenceNumber", 2);
         System.out.println(request);
 
-        assertTrue(Arrays.equals(getPacketData("02 00 6A 05"), request.serialize()));
+        assertTrue(Arrays.equals(getPacketData("02 00 6A 05"), request.serialize(4)));
     }
 }

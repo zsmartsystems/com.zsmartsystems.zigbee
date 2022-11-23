@@ -33,9 +33,9 @@ public class EzspNeighborCountResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspNeighborCountResponse(int[] inputBuffer) {
+    public EzspNeighborCountResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         value = deserializer.deserializeUInt8();

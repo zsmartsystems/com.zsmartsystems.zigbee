@@ -33,9 +33,9 @@ public class EzspGpSinkTableFindOrAllocateEntryResponse extends EzspFrameRespons
     /**
      * Response and Handler constructor
      */
-    public EzspGpSinkTableFindOrAllocateEntryResponse(int[] inputBuffer) {
+    public EzspGpSinkTableFindOrAllocateEntryResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         index = deserializer.deserializeUInt8();

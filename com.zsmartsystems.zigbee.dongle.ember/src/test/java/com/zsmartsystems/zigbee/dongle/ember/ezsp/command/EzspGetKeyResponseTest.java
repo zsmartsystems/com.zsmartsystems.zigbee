@@ -28,8 +28,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 public class EzspGetKeyResponseTest extends EzspFrameTest {
     @Test
     public void testVersion() {
-        EzspFrame.setEzspVersion(4);
-        EzspGetKeyResponse response = new EzspGetKeyResponse(getPacketData(
+        EzspGetKeyResponse response = new EzspGetKeyResponse(4, getPacketData(
                 "60 80 FF 00 6A 00 03 00 03 AA AA AA AA AA AA AA AA AA AA AA AA AA AA AA AA 24 10 04 00 00 00 00 00 00 00 00 00 00 00 00 00 00"));
         System.out.println(response);
 

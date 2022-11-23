@@ -150,9 +150,9 @@ public class EzspAesMmoHashRequest extends EzspFrameRequest {
     }
 
     @Override
-    public int[] serialize() {
+    public int[] serialize(int ezspVersion) {
         // Serialize the header
-        serializeHeader(serializer);
+        serializeHeader(ezspVersion, serializer);
 
         // Serialize the fields
         serializer.serializeEmberAesMmoHashContext(context);

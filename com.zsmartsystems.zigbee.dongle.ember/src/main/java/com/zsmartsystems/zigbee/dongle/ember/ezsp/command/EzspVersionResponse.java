@@ -49,9 +49,9 @@ public class EzspVersionResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspVersionResponse(int[] inputBuffer) {
+    public EzspVersionResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         protocolVersion = deserializer.deserializeUInt8();

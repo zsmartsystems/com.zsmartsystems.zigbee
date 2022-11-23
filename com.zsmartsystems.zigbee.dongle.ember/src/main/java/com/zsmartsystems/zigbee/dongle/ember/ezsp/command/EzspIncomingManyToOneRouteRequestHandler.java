@@ -50,9 +50,9 @@ public class EzspIncomingManyToOneRouteRequestHandler extends EzspFrameResponse 
     /**
      * Response and Handler constructor
      */
-    public EzspIncomingManyToOneRouteRequestHandler(int[] inputBuffer) {
+    public EzspIncomingManyToOneRouteRequestHandler(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         source = deserializer.deserializeUInt16();

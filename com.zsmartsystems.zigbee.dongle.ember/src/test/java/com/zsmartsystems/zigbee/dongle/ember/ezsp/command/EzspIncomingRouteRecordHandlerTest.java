@@ -12,7 +12,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspIncomingRouteRecordHandler;
 
@@ -23,8 +22,7 @@ public class EzspIncomingRouteRecordHandlerTest extends EzspFrameTest {
 
     @Test
     public void testReceive1() {
-        EzspFrame.setEzspVersion(4);
-        EzspIncomingRouteRecordHandler incomingMessageHandler = new EzspIncomingRouteRecordHandler(
+        EzspIncomingRouteRecordHandler incomingMessageHandler = new EzspIncomingRouteRecordHandler(4,
                 getPacketData("90 90 59 82 A2 53 C1 01 02 01 88 17 00 FF B0 02 0F 47 6B 82"));
         System.out.println(incomingMessageHandler);
 

@@ -63,9 +63,9 @@ public class EzspMacFilterMatchMessageHandler extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspMacFilterMatchMessageHandler(int[] inputBuffer) {
+    public EzspMacFilterMatchMessageHandler(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         filterIndexMatch = deserializer.deserializeUInt8();

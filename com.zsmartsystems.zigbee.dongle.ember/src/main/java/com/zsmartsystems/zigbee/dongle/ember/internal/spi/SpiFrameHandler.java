@@ -427,7 +427,7 @@ public class SpiFrameHandler implements EzspProtocolHandler {
 
     private void processSpiEzsp(int[] packetData) {
         // Get the EZSP frame
-        EzspFrameResponse response = EzspFrame.createHandler(packetData);
+        EzspFrameResponse response = EzspFrame.createHandler(frameHandler.getEzspVersion(), packetData);
         if (response == null) {
             logger.debug("No frame handler created for {}", frameToString(packetData));
             return;
@@ -537,7 +537,7 @@ public class SpiFrameHandler implements EzspProtocolHandler {
         }
 
         // Encapsulate the EZSP frame into the SPI packet
-        int[] serializedData = nextFrame.serialize();
+        int[] serializedData = nextFrame.serialize(frameHandler.getEzspVersion());
         int[] outputData = new int[serializedData.length + 2];
         outputData[0] = SPI_CMD_EZSP;
         outputData[1] = serializedData.length;

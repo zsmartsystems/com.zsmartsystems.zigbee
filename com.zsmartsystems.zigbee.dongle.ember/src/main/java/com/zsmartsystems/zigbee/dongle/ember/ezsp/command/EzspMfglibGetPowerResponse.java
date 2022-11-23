@@ -33,9 +33,9 @@ public class EzspMfglibGetPowerResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspMfglibGetPowerResponse(int[] inputBuffer) {
+    public EzspMfglibGetPowerResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         power = deserializer.deserializeInt8S();

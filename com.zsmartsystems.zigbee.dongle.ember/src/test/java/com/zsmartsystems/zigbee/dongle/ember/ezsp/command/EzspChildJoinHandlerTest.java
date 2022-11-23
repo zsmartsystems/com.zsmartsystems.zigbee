@@ -25,8 +25,7 @@ public class EzspChildJoinHandlerTest extends EzspFrameTest {
 
     @Test
     public void testReceive1() {
-        EzspFrame.setEzspVersion(4);
-        EzspChildJoinHandler handler = new EzspChildJoinHandler(
+        EzspChildJoinHandler handler = new EzspChildJoinHandler(4,
                 getPacketData("0B 90 23 00 00 95 87 F9 41 F6 02 00 4B 12 00 04"));
         System.out.println(handler);
 

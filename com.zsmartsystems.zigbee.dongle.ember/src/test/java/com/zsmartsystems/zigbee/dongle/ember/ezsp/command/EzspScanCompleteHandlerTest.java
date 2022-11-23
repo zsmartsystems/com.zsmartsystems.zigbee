@@ -12,7 +12,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 
@@ -24,9 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 public class EzspScanCompleteHandlerTest extends EzspFrameTest {
     @Test
     public void testReceive() {
-        EzspFrame.setEzspVersion(4);
-
-        EzspScanCompleteHandler handler = new EzspScanCompleteHandler(getPacketData("4E 90 FF 00 1C FF 00"));
+        EzspScanCompleteHandler handler = new EzspScanCompleteHandler(4, getPacketData("4E 90 FF 00 1C FF 00"));
         System.out.println(handler);
 
         assertEquals(0x1C, handler.getFrameId());

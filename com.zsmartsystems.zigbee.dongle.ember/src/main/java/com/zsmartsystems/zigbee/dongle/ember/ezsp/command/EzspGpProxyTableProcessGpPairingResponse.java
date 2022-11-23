@@ -33,9 +33,9 @@ public class EzspGpProxyTableProcessGpPairingResponse extends EzspFrameResponse 
     /**
      * Response and Handler constructor
      */
-    public EzspGpProxyTableProcessGpPairingResponse(int[] inputBuffer) {
+    public EzspGpProxyTableProcessGpPairingResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         gpPairingAdded = deserializer.deserializeBool();

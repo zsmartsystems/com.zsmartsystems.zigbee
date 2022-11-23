@@ -49,9 +49,9 @@ public class EzspNetworkFoundHandler extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspNetworkFoundHandler(int[] inputBuffer) {
+    public EzspNetworkFoundHandler(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         networkFound = deserializer.deserializeEmberZigbeeNetwork();

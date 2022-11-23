@@ -66,11 +66,13 @@ import com.zsmartsystems.zigbee.dongle.ember.internal.transaction.EzspTransactio
  */
 public class EmberNcpTest {
     private ArgumentCaptor<EzspTransaction> ezspTransactionCapture = ArgumentCaptor.forClass(EzspTransaction.class);
+    private ZigBeeDongleEzsp zigBeeDongleEzsp;
     private EzspProtocolHandler handler;
 
     private EmberNcp getEmberNcp(EzspFrameResponse response) {
+        zigBeeDongleEzsp = Mockito.mock(ZigBeeDongleEzsp.class);
         handler = Mockito.mock(EzspProtocolHandler.class);
-        EmberNcp ncp = new EmberNcp(handler);
+        EmberNcp ncp = new EmberNcp(zigBeeDongleEzsp);
 
         EzspTransaction transaction = Mockito.mock(EzspTransaction.class);
         Mockito.when(transaction.getResponse()).thenReturn(response);

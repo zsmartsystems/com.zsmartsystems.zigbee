@@ -42,9 +42,9 @@ public class EzspIncomingNetworkStatusHandler extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspIncomingNetworkStatusHandler(int[] inputBuffer) {
+    public EzspIncomingNetworkStatusHandler(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         errorCode = deserializer.deserializeUInt8();

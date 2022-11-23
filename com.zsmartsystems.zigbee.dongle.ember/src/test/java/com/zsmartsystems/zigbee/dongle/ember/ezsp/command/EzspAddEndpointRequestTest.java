@@ -25,7 +25,6 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
 public class EzspAddEndpointRequestTest extends EzspFrameTest {
     @Test
     public void testAddEndpointRequest() throws Exception {
-        EzspFrame.setEzspVersion(4);
         int[] clusters = new int[] { 0, 1, 6 };
         EzspAddEndpointRequest request = new EzspAddEndpointRequest();
         request.setAppFlags(0);
@@ -38,12 +37,11 @@ public class EzspAddEndpointRequestTest extends EzspFrameTest {
         System.out.println(request);
 
         assertTrue(Arrays.equals(getPacketData("02 00 02 01 04 01 00 00 00 03 03 00 00 01 00 06 00 00 00 01 00 06 00"),
-                request.serialize()));
+                request.serialize(4)));
     }
 
     @Test
     public void testAddEndpointRequestNoClusters() throws Exception {
-        EzspFrame.setEzspVersion(4);
         int[] clusters = new int[] {};
         EzspAddEndpointRequest request = new EzspAddEndpointRequest();
         request.setDeviceId(0);
@@ -54,6 +52,6 @@ public class EzspAddEndpointRequestTest extends EzspFrameTest {
         TestUtilities.setField(EzspFrame.class, request, "sequenceNumber", 170);
         System.out.println(request);
 
-        assertTrue(Arrays.equals(getPacketData("AA 00 02 01 04 01 00 00 00 00 00"), request.serialize()));
+        assertTrue(Arrays.equals(getPacketData("AA 00 02 01 04 01 00 00 00 00 00"), request.serialize(4)));
     }
 }

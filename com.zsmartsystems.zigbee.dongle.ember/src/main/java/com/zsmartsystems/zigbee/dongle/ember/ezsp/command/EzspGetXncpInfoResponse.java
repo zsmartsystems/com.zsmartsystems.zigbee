@@ -50,9 +50,9 @@ public class EzspGetXncpInfoResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspGetXncpInfoResponse(int[] inputBuffer) {
+    public EzspGetXncpInfoResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         status = deserializer.deserializeEzspStatus();

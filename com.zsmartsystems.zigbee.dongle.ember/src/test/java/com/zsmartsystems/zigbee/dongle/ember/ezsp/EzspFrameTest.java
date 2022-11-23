@@ -31,8 +31,8 @@ public class EzspFrameTest {
 
     @Test
     public void createHandler() {
-        assertNull(EzspFrame.createHandler(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 }));
-        assertNull(EzspFrame.createHandler(new int[] { 0 }));
-        assertNull(EzspFrame.createHandler(new int[] { 0, 67, 33 }));
+        assertNull(EzspFrame.createHandler(4, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 }));
+        assertNull(EzspFrame.createHandler(4, new int[] { 0 }));
+        assertNull(EzspFrame.createHandler(4, new int[] { 0, 67, 33 }));
     }
 }

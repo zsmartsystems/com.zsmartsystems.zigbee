@@ -70,9 +70,9 @@ public class EzspClearTemporaryDataMaybeStoreLinkKey283k1Request extends EzspFra
     }
 
     @Override
-    public int[] serialize() {
+    public int[] serialize(int ezspVersion) {
         // Serialize the header
-        serializeHeader(serializer);
+        serializeHeader(ezspVersion, serializer);
 
         // Serialize the fields
         serializer.serializeBool(storeLinkKey);

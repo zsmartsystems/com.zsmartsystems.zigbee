@@ -35,9 +35,9 @@ public class EzspRemoveDeviceResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspRemoveDeviceResponse(int[] inputBuffer) {
+    public EzspRemoveDeviceResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         status = deserializer.deserializeEmberStatus();

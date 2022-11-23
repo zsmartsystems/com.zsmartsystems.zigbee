@@ -26,9 +26,9 @@ public class EzspClearTransientLinkKeysResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspClearTransientLinkKeysResponse(int[] inputBuffer) {
+    public EzspClearTransientLinkKeysResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
     }

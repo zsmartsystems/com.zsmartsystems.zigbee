@@ -33,9 +33,9 @@ public class EzspGpSinkTableLookupResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspGpSinkTableLookupResponse(int[] inputBuffer) {
+    public EzspGpSinkTableLookupResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         index = deserializer.deserializeUInt8();

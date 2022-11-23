@@ -34,9 +34,9 @@ public class EzspStopScanResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspStopScanResponse(int[] inputBuffer) {
+    public EzspStopScanResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         status = deserializer.deserializeEmberStatus();

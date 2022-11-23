@@ -42,9 +42,9 @@ public class EzspGetCurrentSecurityStateResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspGetCurrentSecurityStateResponse(int[] inputBuffer) {
+    public EzspGetCurrentSecurityStateResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         status = deserializer.deserializeEmberStatus();

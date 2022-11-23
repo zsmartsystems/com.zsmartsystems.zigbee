@@ -50,9 +50,9 @@ public class EzspGetNetworkParametersResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspGetNetworkParametersResponse(int[] inputBuffer) {
+    public EzspGetNetworkParametersResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         status = deserializer.deserializeEmberStatus();
