@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ScheduledExecutorService;
@@ -154,7 +155,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     /**
      * A List of queues with outstanding commands. This is used for random access when sending transactions.
      */
-    private final List<ZigBeeTransactionQueue> outstandingQueues = new ArrayList<>();
+    private final List<ZigBeeTransactionQueue> outstandingQueues = new CopyOnWriteArrayList<>();
 
     private final ZigBeeTransactionQueue defaultQueue;
     private final ZigBeeTransactionQueue broadcastQueue;
