@@ -38,9 +38,9 @@ public class EzspGetSourceRouteTableFilledSizeRequest extends EzspFrameRequest {
     }
 
     @Override
-    public int[] serialize() {
+    public int[] serialize(int ezspVersion) {
         // Serialize the header
-        serializeHeader(serializer);
+        serializeHeader(ezspVersion, serializer);
 
         // Serialize the fields
         return serializer.getPayload();
@@ -48,6 +48,10 @@ public class EzspGetSourceRouteTableFilledSizeRequest extends EzspFrameRequest {
 
     @Override
     public String toString() {
-        return "EzspGetSourceRouteTableFilledSizeRequest []";
+        final StringBuilder builder = new StringBuilder(68);
+        builder.append("EzspGetSourceRouteTableFilledSizeRequest [networkId=");
+        builder.append(networkId);
+        builder.append(']');
+        return builder.toString();
     }
 }

@@ -53,7 +53,7 @@ public abstract class EzspFrameResponse extends EzspFrame {
      *
      * @param inputBuffer the input array to deserialize
      */
-    protected EzspFrameResponse(int[] inputBuffer) {
+    protected EzspFrameResponse(int ezspVersion, int[] inputBuffer) {
         super();
         deserializer = new EzspDeserializer(inputBuffer);
         sequenceNumber = deserializer.deserializeUInt8();

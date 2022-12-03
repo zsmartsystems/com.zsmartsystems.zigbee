@@ -59,7 +59,7 @@ public class EzspSendBroadcastTest extends EzspFrameTest {
         emberBroadcast.setMessageContents(payload);
         emberBroadcast.setRadius(31);
 
-        int[] messageToSend = emberBroadcast.serialize();
+        int[] messageToSend = emberBroadcast.serialize(4);
 
         String out = "";
         for (int c : messageToSend) {

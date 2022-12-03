@@ -33,9 +33,9 @@ public class EzspGetNodeIdResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspGetNodeIdResponse(int[] inputBuffer) {
+    public EzspGetNodeIdResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         nodeId = deserializer.deserializeUInt16();

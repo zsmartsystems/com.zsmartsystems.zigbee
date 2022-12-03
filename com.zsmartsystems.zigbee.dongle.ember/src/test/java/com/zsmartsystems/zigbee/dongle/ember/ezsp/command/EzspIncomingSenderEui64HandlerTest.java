@@ -23,8 +23,7 @@ public class EzspIncomingSenderEui64HandlerTest extends EzspFrameTest {
 
     @Test
     public void testReceive1() {
-        EzspFrame.setEzspVersion(4);
-        EzspIncomingSenderEui64Handler incomingMessageHandler = new EzspIncomingSenderEui64Handler(
+        EzspIncomingSenderEui64Handler incomingMessageHandler = new EzspIncomingSenderEui64Handler(4,
                 getPacketData("1B 94 FF 00 62 E0 45 BE 0B 00 6F 0D 00"));
         System.out.println(incomingMessageHandler);
 

@@ -66,9 +66,9 @@ public class EzspTrustCenterJoinHandler extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspTrustCenterJoinHandler(int[] inputBuffer) {
+    public EzspTrustCenterJoinHandler(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         newNodeId = deserializer.deserializeUInt16();

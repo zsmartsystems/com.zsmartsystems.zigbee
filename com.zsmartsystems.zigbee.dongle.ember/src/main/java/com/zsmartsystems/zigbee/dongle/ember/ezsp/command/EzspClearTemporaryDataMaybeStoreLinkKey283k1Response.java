@@ -36,9 +36,9 @@ public class EzspClearTemporaryDataMaybeStoreLinkKey283k1Response extends EzspFr
     /**
      * Response and Handler constructor
      */
-    public EzspClearTemporaryDataMaybeStoreLinkKey283k1Response(int[] inputBuffer) {
+    public EzspClearTemporaryDataMaybeStoreLinkKey283k1Response(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         status = deserializer.deserializeEmberStatus();

@@ -26,9 +26,9 @@ public class EzspGpSinkTableInitResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspGpSinkTableInitResponse(int[] inputBuffer) {
+    public EzspGpSinkTableInitResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
     }

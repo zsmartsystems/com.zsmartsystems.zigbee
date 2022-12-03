@@ -35,9 +35,9 @@ public class EzspGetExtendedTimeoutResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspGetExtendedTimeoutResponse(int[] inputBuffer) {
+    public EzspGetExtendedTimeoutResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         extendedTimeout = deserializer.deserializeBool();

@@ -42,9 +42,9 @@ public class EzspIncomingRouteErrorHandler extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspIncomingRouteErrorHandler(int[] inputBuffer) {
+    public EzspIncomingRouteErrorHandler(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         status = deserializer.deserializeEmberStatus();

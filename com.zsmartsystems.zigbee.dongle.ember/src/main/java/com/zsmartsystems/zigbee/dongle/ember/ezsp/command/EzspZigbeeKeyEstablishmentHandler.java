@@ -9,7 +9,7 @@ package com.zsmartsystems.zigbee.dongle.ember.ezsp.command;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameResponse;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyStatus;
+import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 
 /**
  * Class to implement the Ember EZSP command <b>zigbeeKeyEstablishmentHandler</b>.
@@ -37,20 +37,20 @@ public class EzspZigbeeKeyEstablishmentHandler extends EzspFrameResponse {
     /**
      * This is the status indicating what was established or why the key establishment failed.
      * <p>
-     * EZSP type is <i>EmberKeyStatus</i> - Java type is {@link EmberKeyStatus}
+     * EZSP type is <i>EmberStatus</i> - Java type is {@link EmberStatus}
      */
-    private EmberKeyStatus status;
+    private EmberStatus status;
 
     /**
      * Response and Handler constructor
      */
-    public EzspZigbeeKeyEstablishmentHandler(int[] inputBuffer) {
+    public EzspZigbeeKeyEstablishmentHandler(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         partner = deserializer.deserializeEmberEui64();
-        status = deserializer.deserializeEmberKeyStatus();
+        status = deserializer.deserializeEmberStatus();
     }
 
     /**
@@ -78,20 +78,20 @@ public class EzspZigbeeKeyEstablishmentHandler extends EzspFrameResponse {
     /**
      * This is the status indicating what was established or why the key establishment failed.
      * <p>
-     * EZSP type is <i>EmberKeyStatus</i> - Java type is {@link EmberKeyStatus}
+     * EZSP type is <i>EmberStatus</i> - Java type is {@link EmberStatus}
      *
-     * @return the current status as {@link EmberKeyStatus}
+     * @return the current status as {@link EmberStatus}
      */
-    public EmberKeyStatus getStatus() {
+    public EmberStatus getStatus() {
         return status;
     }
 
     /**
      * This is the status indicating what was established or why the key establishment failed.
      *
-     * @param status the status to set as {@link EmberKeyStatus}
+     * @param status the status to set as {@link EmberStatus}
      */
-    public void setStatus(EmberKeyStatus status) {
+    public void setStatus(EmberStatus status) {
         this.status = status;
     }
 

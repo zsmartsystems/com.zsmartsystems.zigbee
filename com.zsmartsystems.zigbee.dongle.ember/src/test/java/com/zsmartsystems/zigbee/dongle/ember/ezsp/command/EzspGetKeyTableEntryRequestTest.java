@@ -25,12 +25,11 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
 public class EzspGetKeyTableEntryRequestTest extends EzspFrameTest {
     @Test
     public void testAddEndpointRequest() throws Exception {
-        EzspFrame.setEzspVersion(4);
         EzspGetKeyTableEntryRequest request = new EzspGetKeyTableEntryRequest();
         request.setIndex(0);
         TestUtilities.setField(EzspFrame.class, request, "sequenceNumber", 2);
         System.out.println(request);
 
-        assertTrue(Arrays.equals(getPacketData("02 00 71 00"), request.serialize()));
+        assertTrue(Arrays.equals(getPacketData("02 00 71 00"), request.serialize(4)));
     }
 }

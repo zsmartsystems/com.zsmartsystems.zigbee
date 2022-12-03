@@ -51,16 +51,6 @@ public abstract class EzspFrame {
     private final static Logger logger = LoggerFactory.getLogger(EzspFrame.class);
 
     /**
-     * The minimum supported version of EZSP
-     */
-    private static final int EZSP_MIN_VERSION = 4;
-
-    /**
-     * The maximum supported version of EZSP
-     */
-    private static final int EZSP_MAX_VERSION = 8;
-
-    /**
      * The network ID bit shift
      */
     protected static final int EZSP_NETWORK_ID_SHIFT = 5;
@@ -69,11 +59,6 @@ public abstract class EzspFrame {
      * The network ID bit mask
      */
     protected static final int EZSP_NETWORK_ID_MASK = 0x60;
-
-    /**
-     * The current version of EZSP being used
-     */
-    protected static int ezspVersion = EZSP_MIN_VERSION;
 
     /**
      * Legacy frame ID for EZSP 5+
@@ -458,7 +443,7 @@ public abstract class EzspFrame {
      * @param data the int[] containing the EZSP data from which to generate the frame
      * @return the {@link EzspFrameResponse} or null if the response can't be created.
      */
-    public static EzspFrameResponse createHandler(int[] data) {
+    public static EzspFrameResponse createHandler(int ezspVersion, int[] data) {
         int frameId;
 
         try {
@@ -483,8 +468,8 @@ public abstract class EzspFrame {
 
         Constructor<?> ctor;
         try {
-            ctor = ezspClass.getConstructor(int[].class);
-            EzspFrameResponse ezspFrame = (EzspFrameResponse) ctor.newInstance(data);
+            ctor = ezspClass.getConstructor(int.class, int[].class);
+            EzspFrameResponse ezspFrame = (EzspFrameResponse) ctor.newInstance(ezspVersion, data);
             return ezspFrame;
         } catch (SecurityException | NoSuchMethodException | IllegalArgumentException | InstantiationException
                 | IllegalAccessException | InvocationTargetException e) {
@@ -494,27 +479,4 @@ public abstract class EzspFrame {
         return null;
     }
 
-    /**
-     * Set the EZSP version to use
-     *
-     * @param ezspVersion the EZSP protocol version
-     * @return true if the version is supported
-     */
-    public static boolean setEzspVersion(int ezspVersion) {
-        if (ezspVersion <= EZSP_MAX_VERSION && ezspVersion >= EZSP_MIN_VERSION) {
-            EzspFrame.ezspVersion = ezspVersion;
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Gets the current version of EZSP that is in use. This will default to the minimum supported version on startup
-     *
-     * @return the current version of EZSP
-     */
-    public static int getEzspVersion() {
-        return EzspFrame.ezspVersion;
-    }
 }

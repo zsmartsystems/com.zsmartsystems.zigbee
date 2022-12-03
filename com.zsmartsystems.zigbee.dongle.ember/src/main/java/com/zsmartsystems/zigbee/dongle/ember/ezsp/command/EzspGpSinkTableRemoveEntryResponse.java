@@ -26,9 +26,9 @@ public class EzspGpSinkTableRemoveEntryResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspGpSinkTableRemoveEntryResponse(int[] inputBuffer) {
+    public EzspGpSinkTableRemoveEntryResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
     }

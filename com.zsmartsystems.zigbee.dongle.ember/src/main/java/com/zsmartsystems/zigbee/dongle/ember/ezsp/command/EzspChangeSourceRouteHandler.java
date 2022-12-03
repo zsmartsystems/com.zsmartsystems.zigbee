@@ -47,9 +47,9 @@ public class EzspChangeSourceRouteHandler extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspChangeSourceRouteHandler(int[] inputBuffer) {
+    public EzspChangeSourceRouteHandler(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         newChildId = deserializer.deserializeUInt16();

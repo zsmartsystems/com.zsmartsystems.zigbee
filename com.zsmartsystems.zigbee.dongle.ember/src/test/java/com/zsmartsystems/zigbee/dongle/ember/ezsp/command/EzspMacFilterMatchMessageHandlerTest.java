@@ -26,9 +26,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMacFilterMatchMess
 public class EzspMacFilterMatchMessageHandlerTest extends EzspFrameTest {
     @Test
     public void testReceive() {
-        EzspFrame.setEzspVersion(4);
-
-        EzspMacFilterMatchMessageHandler response = new EzspMacFilterMatchMessageHandler(getPacketData(
+        EzspMacFilterMatchMessageHandler response = new EzspMacFilterMatchMessageHandler(4, getPacketData(
                 "0F 90 46 01 80 C1 B8 21 01 C8 4A FF FF FF FF 9C 05 23 3F FF E7 0F 00 FF FF 0B 00 0B 00 10 5E C0 11 00 00 20 02 5C 37 02 12"));
         System.out.println(response);
 

@@ -49,7 +49,7 @@ public abstract class EzspFrameRequest extends EzspFrame {
         sequenceNumber = (int) sequence.getAndIncrement() & 0xFF;
     }
 
-    protected void serializeHeader(final EzspSerializer serializer) {
+    protected void serializeHeader(final int ezspVersion, final EzspSerializer serializer) {
         // Output sequence number
         serializer.serializeUInt8(sequenceNumber);
 
@@ -73,9 +73,9 @@ public abstract class EzspFrameRequest extends EzspFrame {
         }
     }
 
-    public int[] serialize() {
+    public int[] serialize(int ezspVersion) {
         EzspSerializer serializer = new EzspSerializer();
-        serializeHeader(serializer);
+        serializeHeader(ezspVersion, serializer);
         return serializer.getPayload();
     }
 }

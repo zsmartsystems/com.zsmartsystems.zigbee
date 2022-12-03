@@ -106,25 +106,25 @@ public class ZigBeeDongleEzspTest {
         assertEquals(0x1234, dongle.getZigBeePanId());
     }
 
-    @Test
-    public void testEzspVersions() {
-        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
-        EzspFrame.setEzspVersion(4);
-        assertEquals(4, EzspFrame.getEzspVersion());
-        assertFalse(EzspFrame.setEzspVersion(3));
-        assertEquals(4, EzspFrame.getEzspVersion());
-        assertTrue(EzspFrame.setEzspVersion(4));
-        assertEquals(4, EzspFrame.getEzspVersion());
-        assertTrue(EzspFrame.setEzspVersion(5));
-        assertEquals(5, EzspFrame.getEzspVersion());
-        assertTrue(EzspFrame.setEzspVersion(7));
-        assertEquals(7, EzspFrame.getEzspVersion());
-        assertTrue(EzspFrame.setEzspVersion(8));
-        assertEquals(8, EzspFrame.getEzspVersion());
-        assertFalse(EzspFrame.setEzspVersion(9));
-        assertEquals(8, EzspFrame.getEzspVersion());
-        EzspFrame.setEzspVersion(4);
-    }
+//    @Test
+//    public void testEzspVersions() {
+//        System.out.println("--- " + Thread.currentThread().getStackTrace()[1].getMethodName());
+//        EzspFrame.setEzspVersion(4);
+//        assertEquals(4, EzspFrame.getEzspVersion());
+//        assertFalse(EzspFrame.setEzspVersion(3));
+//        assertEquals(4, EzspFrame.getEzspVersion());
+//        assertTrue(EzspFrame.setEzspVersion(4));
+//        assertEquals(4, EzspFrame.getEzspVersion());
+//        assertTrue(EzspFrame.setEzspVersion(5));
+//        assertEquals(5, EzspFrame.getEzspVersion());
+//        assertTrue(EzspFrame.setEzspVersion(7));
+//        assertEquals(7, EzspFrame.getEzspVersion());
+//        assertTrue(EzspFrame.setEzspVersion(8));
+//        assertEquals(8, EzspFrame.getEzspVersion());
+//        assertFalse(EzspFrame.setEzspVersion(9));
+//        assertEquals(8, EzspFrame.getEzspVersion());
+//        EzspFrame.setEzspVersion(4);
+//    }
 
     @Test
     public void setTcJoinModeV4() throws Exception {

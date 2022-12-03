@@ -28,8 +28,7 @@ public class EzspMessageSentHandlerTest extends EzspFrameTest {
 
     @Test
     public void testReceive1() {
-        EzspFrame.setEzspVersion(4);
-        EzspMessageSentHandler messageSentHandler = new EzspMessageSentHandler(
+        EzspMessageSentHandler messageSentHandler = new EzspMessageSentHandler(4,
                 getPacketData("01 90 3F 00 00 00 00 01 00 00 00 00 00 01 00 00 45 00 00 00"));
         System.out.println(messageSentHandler);
 
@@ -40,8 +39,7 @@ public class EzspMessageSentHandlerTest extends EzspFrameTest {
 
     @Test
     public void testReceive2() {
-        EzspFrame.setEzspVersion(4);
-        EzspMessageSentHandler messageSentHandler = new EzspMessageSentHandler(
+        EzspMessageSentHandler messageSentHandler = new EzspMessageSentHandler(4,
                 getPacketData("04 90 3F 00 00 00 00 00 04 00 00 00 40 11 00 00 78 04 00 00"));
         System.out.println(messageSentHandler);
 

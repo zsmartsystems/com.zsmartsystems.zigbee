@@ -26,9 +26,9 @@ public class EzspCallbackResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspCallbackResponse(int[] inputBuffer) {
+    public EzspCallbackResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
     }

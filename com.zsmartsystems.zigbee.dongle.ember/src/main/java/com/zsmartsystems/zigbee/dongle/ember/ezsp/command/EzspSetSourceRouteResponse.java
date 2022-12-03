@@ -35,9 +35,9 @@ public class EzspSetSourceRouteResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspSetSourceRouteResponse(int[] inputBuffer) {
+    public EzspSetSourceRouteResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         status = deserializer.deserializeEmberStatus();

@@ -29,8 +29,6 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
 public class EzspSetInitialSecurityStateRequestTest extends EzspFrameTest {
     @Test
     public void testSecurityStateRequest() throws Exception {
-        EzspFrame.setEzspVersion(4);
-
         EmberKeyData keyData;
         EzspSetInitialSecurityStateRequest request = new EzspSetInitialSecurityStateRequest();
         EmberInitialSecurityState state = new EmberInitialSecurityState();
@@ -49,6 +47,6 @@ public class EzspSetInitialSecurityStateRequestTest extends EzspFrameTest {
 
         assertTrue(Arrays.equals(getPacketData(
                 "07 00 68 00 00 BB 00 00 00 00 00 00 00 00 00 00 00 00 00 00 BB AA 00 00 00 00 00 00 00 00 00 00 00 00 00 00 AA 00 EF CD AB 90 78 56 34 12"),
-                request.serialize()));
+                request.serialize(4)));
     }
 }

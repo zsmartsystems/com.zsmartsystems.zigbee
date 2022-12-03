@@ -33,8 +33,7 @@ public class EzspSendUnicastTest extends EzspFrameTest {
 
     @Test
     public void testReceive1() {
-        EzspFrame.setEzspVersion(4);
-        EzspSendUnicastResponse response = new EzspSendUnicastResponse(getPacketData("02 80 34 00 9E"));
+        EzspSendUnicastResponse response = new EzspSendUnicastResponse(4, getPacketData("02 80 34 00 9E"));
         System.out.println(response);
 
         assertEquals(0x34, response.getFrameId());
@@ -44,7 +43,6 @@ public class EzspSendUnicastTest extends EzspFrameTest {
 
     @Test
     public void testSendPermitJoining() throws Exception {
-        EzspFrame.setEzspVersion(4);
         ManagementPermitJoiningRequest permitJoining = new ManagementPermitJoiningRequest(60, false);
 
         permitJoining.setDestinationAddress(new ZigBeeEndpointAddress(0x401C));
@@ -74,7 +72,7 @@ public class EzspSendUnicastTest extends EzspFrameTest {
         emberUnicast.setIndexOrDestination(permitJoining.getDestinationAddress().getAddress());
         emberUnicast.setMessageContents(payload);
 
-        int[] messageToSend = emberUnicast.serialize();
+        int[] messageToSend = emberUnicast.serialize(4);
 
         System.out.println(emberUnicast.toString());
         System.out.println(Arrays.toString(messageToSend));

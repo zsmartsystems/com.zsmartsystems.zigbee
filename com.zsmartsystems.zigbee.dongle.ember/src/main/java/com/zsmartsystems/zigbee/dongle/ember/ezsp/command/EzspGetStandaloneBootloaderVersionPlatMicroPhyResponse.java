@@ -57,9 +57,9 @@ public class EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse extends Ezsp
     /**
      * Response and Handler constructor
      */
-    public EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse(int[] inputBuffer) {
+    public EzspGetStandaloneBootloaderVersionPlatMicroPhyResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         bootloaderVersion = deserializer.deserializeUInt16();

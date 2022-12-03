@@ -34,9 +34,9 @@ public class EzspSetConcentratorResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspSetConcentratorResponse(int[] inputBuffer) {
+    public EzspSetConcentratorResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         status = deserializer.deserializeEzspStatus();

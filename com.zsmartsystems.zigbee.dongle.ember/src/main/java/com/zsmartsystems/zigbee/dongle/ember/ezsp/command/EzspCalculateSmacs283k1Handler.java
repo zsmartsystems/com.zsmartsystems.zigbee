@@ -52,9 +52,9 @@ public class EzspCalculateSmacs283k1Handler extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspCalculateSmacs283k1Handler(int[] inputBuffer) {
+    public EzspCalculateSmacs283k1Handler(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         status = deserializer.deserializeEmberStatus();

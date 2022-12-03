@@ -25,57 +25,44 @@ public class EzspFrameRequestTest {
 
     @Test
     public void testRequestV4() {
-        EzspFrame.setEzspVersion(4);
-
         EzspFrameRequest request = Mockito.mock(EzspFrameRequest.class, Mockito.CALLS_REAL_METHODS);
 
         EzspSerializer serializer = new EzspSerializer();
-        request.serializeHeader(serializer);
+        request.serializeHeader(4, serializer);
         assertTrue(Arrays.equals(new int[] { 0x00, 0x00, 0x00 }, serializer.getPayload()));
-        EzspFrame.setEzspVersion(4);
     }
 
     @Test
     public void testRequestV5() {
-        EzspFrame.setEzspVersion(5);
-
         EzspFrameRequest request = Mockito.mock(EzspFrameRequest.class, Mockito.CALLS_REAL_METHODS);
 
         EzspSerializer serializer = new EzspSerializer();
-        request.serializeHeader(serializer);
+        request.serializeHeader(5, serializer);
         assertTrue(Arrays.equals(new int[] { 0x00, 0x00, 0xFF, 0x00, 0x00 }, serializer.getPayload()));
-        EzspFrame.setEzspVersion(4);
     }
 
     @Test
     public void testRequestV8() {
-        EzspFrame.setEzspVersion(8);
-
         EzspFrameRequest request = Mockito.mock(EzspFrameRequest.class, Mockito.CALLS_REAL_METHODS);
 
         EzspSerializer serializer = new EzspSerializer();
-        request.serializeHeader(serializer);
+        request.serializeHeader(8, serializer);
         assertTrue(Arrays.equals(new int[] { 0x00, 0x00, 0x01, 0x00, 0x00 }, serializer.getPayload()));
-        EzspFrame.setEzspVersion(4);
     }
 
     @Test
     public void testRequestV8NetworkId() {
-        EzspFrame.setEzspVersion(8);
-
         EzspFrameRequest request = Mockito.mock(EzspFrameRequest.class, Mockito.CALLS_REAL_METHODS);
 
         request.setNetworkId(1);
         EzspSerializer serializer = new EzspSerializer();
-        request.serializeHeader(serializer);
+        request.serializeHeader(8, serializer);
         assertTrue(Arrays.equals(new int[] { 0x00, 0x20, 0x01, 0x00, 0x00 }, serializer.getPayload()));
 
         request.setNetworkId(3);
         serializer = new EzspSerializer();
-        request.serializeHeader(serializer);
+        request.serializeHeader(8, serializer);
         assertTrue(Arrays.equals(new int[] { 0x00, 0x60, 0x01, 0x00, 0x00 }, serializer.getPayload()));
-
-        EzspFrame.setEzspVersion(4);
     }
 
 }

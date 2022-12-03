@@ -33,9 +33,9 @@ public class EzspGpProxyTableLookupResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspGpProxyTableLookupResponse(int[] inputBuffer) {
+    public EzspGpProxyTableLookupResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         index = deserializer.deserializeUInt8();

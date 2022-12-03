@@ -88,9 +88,9 @@ public class EzspIncomingMessageHandler extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspIncomingMessageHandler(int[] inputBuffer) {
+    public EzspIncomingMessageHandler(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         type = deserializer.deserializeEmberIncomingMessageType();

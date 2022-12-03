@@ -36,9 +36,9 @@ public class EzspBindingIsActiveResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspBindingIsActiveResponse(int[] inputBuffer) {
+    public EzspBindingIsActiveResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         active = deserializer.deserializeBool();

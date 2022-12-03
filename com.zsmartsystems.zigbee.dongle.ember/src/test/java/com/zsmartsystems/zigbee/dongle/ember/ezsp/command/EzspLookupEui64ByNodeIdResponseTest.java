@@ -25,8 +25,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 public class EzspLookupEui64ByNodeIdResponseTest extends EzspFrameTest {
     @Test
     public void testVersionError() {
-        EzspFrame.setEzspVersion(4);
-        EzspLookupEui64ByNodeIdResponse response = new EzspLookupEui64ByNodeIdResponse(
+        EzspLookupEui64ByNodeIdResponse response = new EzspLookupEui64ByNodeIdResponse(4,
                 getPacketData("05 80 61 00 BF 32 17 00 00 A3 22 00"));
         System.out.println(response);
 

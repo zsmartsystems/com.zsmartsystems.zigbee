@@ -23,8 +23,7 @@ public class EzspChangeSourceRouteHandlerTest extends EzspFrameTest {
 
     @Test
     public void testReceive1() {
-        EzspFrame.setEzspVersion(4);
-        EzspChangeSourceRouteHandler incomingMessageHandler = new EzspChangeSourceRouteHandler(
+        EzspChangeSourceRouteHandler incomingMessageHandler = new EzspChangeSourceRouteHandler(4,
                 getPacketData("1A 90 FF 00 C4 CA 09 00 00 01"));
         System.out.println(incomingMessageHandler);
 

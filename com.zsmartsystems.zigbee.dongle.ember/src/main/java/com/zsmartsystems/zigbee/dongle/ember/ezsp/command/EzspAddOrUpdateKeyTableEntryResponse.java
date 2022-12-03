@@ -38,9 +38,9 @@ public class EzspAddOrUpdateKeyTableEntryResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspAddOrUpdateKeyTableEntryResponse(int[] inputBuffer) {
+    public EzspAddOrUpdateKeyTableEntryResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         status = deserializer.deserializeEmberStatus();

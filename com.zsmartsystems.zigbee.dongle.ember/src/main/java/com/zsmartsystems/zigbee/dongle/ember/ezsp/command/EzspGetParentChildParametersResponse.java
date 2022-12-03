@@ -50,9 +50,9 @@ public class EzspGetParentChildParametersResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspGetParentChildParametersResponse(int[] inputBuffer) {
+    public EzspGetParentChildParametersResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         childCount = deserializer.deserializeUInt8();

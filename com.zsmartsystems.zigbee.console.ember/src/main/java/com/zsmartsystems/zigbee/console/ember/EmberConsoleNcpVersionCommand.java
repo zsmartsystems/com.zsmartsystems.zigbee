@@ -47,7 +47,7 @@ public class EmberConsoleNcpVersionCommand extends EmberConsoleAbstractCommand {
 
         EzspVersionResponse version = ncp.getVersion();
         out.println("Ember NCP version " + getVersionString(version.getStackVersion()) + ", EZSP version "
-                + EzspFrame.getEzspVersion());
+                + version.getProtocolVersion());
     }
 
     private String getVersionString(int value) {

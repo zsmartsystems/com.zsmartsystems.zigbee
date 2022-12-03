@@ -44,9 +44,9 @@ public class EzspGenerateCbkeKeysHandler extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspGenerateCbkeKeysHandler(int[] inputBuffer) {
+    public EzspGenerateCbkeKeysHandler(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         status = deserializer.deserializeEmberStatus();

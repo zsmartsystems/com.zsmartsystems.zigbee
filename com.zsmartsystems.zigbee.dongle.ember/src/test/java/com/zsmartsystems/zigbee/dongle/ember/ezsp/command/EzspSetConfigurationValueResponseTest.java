@@ -24,9 +24,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspStatus;
 public class EzspSetConfigurationValueResponseTest extends EzspFrameTest {
     @Test
     public void testVersion() {
-        EzspFrame.setEzspVersion(4);
-
-        EzspSetConfigurationValueResponse response = new EzspSetConfigurationValueResponse(
+        EzspSetConfigurationValueResponse response = new EzspSetConfigurationValueResponse(4,
                 getPacketData("02 80 53 00"));
         System.out.println(response);
 

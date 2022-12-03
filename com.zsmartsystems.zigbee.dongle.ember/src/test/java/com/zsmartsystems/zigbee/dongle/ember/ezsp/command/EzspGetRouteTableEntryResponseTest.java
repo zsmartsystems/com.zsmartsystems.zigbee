@@ -26,8 +26,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 public class EzspGetRouteTableEntryResponseTest extends EzspFrameTest {
     @Test
     public void testVersion() {
-        EzspFrame.setEzspVersion(4);
-        EzspGetRouteTableEntryResponse response = new EzspGetRouteTableEntryResponse(
+        EzspGetRouteTableEntryResponse response = new EzspGetRouteTableEntryResponse(4,
                 getPacketData("28 80 7B 00 FF FF 00 00 03 00 00 00"));
         System.out.println(response);
 

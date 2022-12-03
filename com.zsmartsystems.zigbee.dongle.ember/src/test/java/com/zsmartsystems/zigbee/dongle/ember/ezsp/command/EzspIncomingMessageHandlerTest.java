@@ -45,8 +45,7 @@ public class EzspIncomingMessageHandlerTest extends EzspFrameTest {
 
     @Test
     public void testReceive1() {
-        EzspFrame.setEzspVersion(4);
-        EzspIncomingMessageHandler incomingMessageHandler = new EzspIncomingMessageHandler(
+        EzspIncomingMessageHandler incomingMessageHandler = new EzspIncomingMessageHandler(4,
                 getPacketData("00 94 45 00 00 01 00 00 00 00 00 00 00 00 58 FF 00 00 00 FF FF 01 00"));
         System.out.println(incomingMessageHandler);
 
@@ -57,10 +56,9 @@ public class EzspIncomingMessageHandlerTest extends EzspFrameTest {
 
     @Test
     public void testReceive2() {
-        EzspFrame.setEzspVersion(4);
         // This tests a number of stages - not just this class
         // We process the received frame, make sure the dongle sends it to the networkManager
-        EzspIncomingMessageHandler incomingMessageHandler = new EzspIncomingMessageHandler(getPacketData(
+        EzspIncomingMessageHandler incomingMessageHandler = new EzspIncomingMessageHandler(4, getPacketData(
                 "01 90 45 00 00 00 01 80 00 00 40 00 00 00 EE FF 00 00 00 FF FF 0C 00 81 F0 F0 00 20 00 00 00 00 00 01"));
         System.out.println(incomingMessageHandler);
 
@@ -94,9 +92,7 @@ public class EzspIncomingMessageHandlerTest extends EzspFrameTest {
 
     @Test
     public void testReceive3() {
-        EzspFrame.setEzspVersion(4);
-
-        EzspIncomingMessageHandler incomingMessageHandler = new EzspIncomingMessageHandler(getPacketData(
+        EzspIncomingMessageHandler incomingMessageHandler = new EzspIncomingMessageHandler(4, getPacketData(
                 "01 90 45 00 00 00 02 80 00 00 40 00 00 00 44 FF 00 00 00 FF FF 11 00 00 00 00 00 40 8F CD AB 52 80 00 41 2A 80 00 00"));
         System.out.println(incomingMessageHandler);
 

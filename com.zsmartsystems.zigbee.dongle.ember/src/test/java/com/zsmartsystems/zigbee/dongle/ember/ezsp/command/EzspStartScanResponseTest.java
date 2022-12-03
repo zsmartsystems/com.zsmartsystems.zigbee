@@ -25,8 +25,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 public class EzspStartScanResponseTest extends EzspFrameTest {
     @Test
     public void testVersion() {
-        EzspFrame.setEzspVersion(4);
-        EzspVersionResponse version = new EzspVersionResponse(getPacketData("03 80 00 04 02 00 58"));
+        EzspVersionResponse version = new EzspVersionResponse(4, getPacketData("03 80 00 04 02 00 58"));
         System.out.println(version);
 
         assertEquals(3, version.getSequenceNumber());
@@ -39,7 +38,7 @@ public class EzspStartScanResponseTest extends EzspFrameTest {
 
     @Test
     public void testVersionError() {
-        EzspStartScanResponse response = new EzspStartScanResponse(getPacketData("03 80 1A 35"));
+        EzspStartScanResponse response = new EzspStartScanResponse(4, getPacketData("03 80 1A 35"));
 
         assertEquals(3, response.getSequenceNumber());
         assertEquals(true, response.isResponse());

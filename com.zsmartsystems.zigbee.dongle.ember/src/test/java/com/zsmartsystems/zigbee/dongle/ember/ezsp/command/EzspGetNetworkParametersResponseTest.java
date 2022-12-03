@@ -27,8 +27,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 public class EzspGetNetworkParametersResponseTest extends EzspFrameTest {
     @Test
     public void testVersionError() {
-        EzspFrame.setEzspVersion(4);
-        EzspGetNetworkParametersResponse response = new EzspGetNetworkParametersResponse(
+        EzspGetNetworkParametersResponse response = new EzspGetNetworkParametersResponse(4,
                 getPacketData("05 80 28 00 01 EF CB B1 57 A8 CC C6 D7 05 C8 00 0B 00 00 00 00 00 F8 FF 07"));
         System.out.println(response);
 

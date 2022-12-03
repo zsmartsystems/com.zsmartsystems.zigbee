@@ -35,9 +35,9 @@ public class EzspSetRoutingShortcutThresholdResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspSetRoutingShortcutThresholdResponse(int[] inputBuffer) {
+    public EzspSetRoutingShortcutThresholdResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         status = deserializer.deserializeEmberStatus();

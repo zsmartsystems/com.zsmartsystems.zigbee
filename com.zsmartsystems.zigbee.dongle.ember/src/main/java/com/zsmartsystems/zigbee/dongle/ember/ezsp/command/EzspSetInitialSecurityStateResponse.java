@@ -37,9 +37,9 @@ public class EzspSetInitialSecurityStateResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspSetInitialSecurityStateResponse(int[] inputBuffer) {
+    public EzspSetInitialSecurityStateResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         status = deserializer.deserializeEmberStatus();

@@ -43,9 +43,9 @@ public class EzspRemoteDeleteBindingHandler extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspRemoteDeleteBindingHandler(int[] inputBuffer) {
+    public EzspRemoteDeleteBindingHandler(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         index = deserializer.deserializeUInt8();
