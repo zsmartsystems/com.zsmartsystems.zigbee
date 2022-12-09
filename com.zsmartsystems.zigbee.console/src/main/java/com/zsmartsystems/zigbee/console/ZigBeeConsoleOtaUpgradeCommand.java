@@ -179,7 +179,8 @@ public class ZigBeeConsoleOtaUpgradeCommand extends ZigBeeConsoleAbstractCommand
         }
         ZigBeeOtaFile otaFile = new ZigBeeOtaFile(fileData);
         otaServer.setFirmware(otaFile);
-        out.println("OTA File \"" + filename + "\" set.");
+        out.println("OTA File \"" + filename + "\" set for node " + endpoint.getEndpointAddress());
+        out.println("OTA File: " + otaFile);
     }
 
     private void cmdOtaComplete(ZigBeeNetworkManager networkManager, String endpointString, PrintStream out) {

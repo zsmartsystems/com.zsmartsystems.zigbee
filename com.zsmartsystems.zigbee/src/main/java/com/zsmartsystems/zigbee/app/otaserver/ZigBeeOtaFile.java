@@ -435,6 +435,8 @@ public class ZigBeeOtaFile {
         StringBuilder builder = new StringBuilder(170);
         builder.append("ZigBeeOtaFile [headerVersion=");
         builder.append(headerVersion);
+        builder.append(", headerLength=");
+        builder.append(headerLength);
         builder.append(", manufacturerCode=");
         builder.append(manufacturerCode);
         builder.append(", imageType=");
