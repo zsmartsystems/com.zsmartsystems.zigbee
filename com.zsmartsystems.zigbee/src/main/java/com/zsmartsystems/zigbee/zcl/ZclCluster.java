@@ -8,6 +8,7 @@
 package com.zsmartsystems.zigbee.zcl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -1456,8 +1457,9 @@ public abstract class ZclCluster {
     private void handleAttributeReport(ReportAttributesCommand command) {
         logger.trace("{}: ZclCluster.handleAttributeReport({})", zigbeeEndpoint.getEndpointAddress(),
                 command.getReports());
+        Calendar reportTime = Calendar.getInstance();
         for (AttributeReport report : command.getReports()) {
-            updateAttribute(report.getAttributeIdentifier(), report.getAttributeValue());
+            updateAttribute(report.getAttributeIdentifier(), report.getAttributeValue(), reportTime);
         }
         sendDefaultResponse(command, ZclStatus.SUCCESS);
     }
@@ -1470,6 +1472,7 @@ public abstract class ZclCluster {
     private void handleAttributeStatus(ReadAttributesResponse command) {
         logger.trace("{}: ZclCluster.handleAttributeStatus({})", zigbeeEndpoint.getEndpointAddress(),
                 command.getRecords());
+        Calendar reportTime = Calendar.getInstance();
         for (ReadAttributeStatusRecord record : command.getRecords()) {
             if (record.getStatus() != ZclStatus.SUCCESS) {
                 logger.debug("{}: Error reading {} attribute {} in cluster {} - {}",
@@ -1478,7 +1481,7 @@ public abstract class ZclCluster {
                 continue;
             }
 
-            updateAttribute(record.getAttributeIdentifier(), record.getAttributeValue());
+            updateAttribute(record.getAttributeIdentifier(), record.getAttributeValue(), reportTime);
         }
         sendDefaultResponse(command, ZclStatus.SUCCESS);
     }
@@ -1526,7 +1529,7 @@ public abstract class ZclCluster {
         sendResponse(command, response);
     }
 
-    private void updateAttribute(int attributeId, Object attributeValue) {
+    private void updateAttribute(int attributeId, Object attributeValue, Calendar reportTime) {
         logger.trace("{}: Attribute {} in {} cluster {} updated to {}", zigbeeEndpoint.getEndpointAddress(),
                 attributeId, (isClient ? "Client" : "Server"), clusterId, attributeValue);
         ZclAttribute attribute = getAttribute(attributeId);
@@ -1535,7 +1538,7 @@ public abstract class ZclCluster {
                     (isClient ? "Client" : "Server"), attributeId, clusterId);
         } else {
             Object value = normalizer.normalizeZclData(attribute.getDataType(), attributeValue);
-            attribute.updateValue(value);
+            attribute.updateValue(value, reportTime);
             notifyAttributeListener(attribute, value);
         }
     }
