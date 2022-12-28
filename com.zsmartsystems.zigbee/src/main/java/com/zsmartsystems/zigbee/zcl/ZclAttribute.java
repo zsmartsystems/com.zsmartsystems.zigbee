@@ -512,8 +512,18 @@ public class ZclAttribute {
      * @param attributeValue the attribute value to be updated {@link Object}
      */
     public void updateValue(Object attributeValue) {
+        updateValue(attributeValue, Calendar.getInstance());
+    }
+
+    /**
+     * Updates the attribute value This will also record the time of the last update
+     *
+     * @param attributeValue the attribute value to be updated {@link Object}
+     * @param reportTime the time the report was received
+     */
+    public void updateValue(Object attributeValue, Calendar reportTime) {
         lastValue = attributeValue;
-        lastReportTime = Calendar.getInstance();
+        lastReportTime = reportTime;
     }
 
     @Override
