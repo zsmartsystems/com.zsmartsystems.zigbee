@@ -240,7 +240,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>animal-sniffer-maven-plugin</artifactId>
-				<version>1.16</version>
+				<version>1.22</version>
 				<configuration>
 					<signature>
 						<groupId>org.codehaus.mojo.signature</groupId>
@@ -249,8 +249,8 @@
 					</signature>
 					<signature>
 						<groupId>net.sf.androidscents.signature</groupId>
-						<artifactId>android-api-level-19</artifactId>
-						<version>4.4_r1</version>
+						<artifactId>android-api-level-21</artifactId>
+						<version>5.0.1_r2</version>
 					</signature>
 				</configuration>
 				<executions>
@@ -262,7 +262,7 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
+	</plugin>
 		</plugins>
 
 		<pluginManagement>
