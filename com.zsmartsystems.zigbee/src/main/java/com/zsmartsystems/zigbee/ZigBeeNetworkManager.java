@@ -709,7 +709,8 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
      * Shuts down ZigBee manager components.
      */
     public void shutdown() {
-        logger.debug("[{}]: ZigBeeNetworkManager shutdown: networkState={}", networkManagerId, networkState);
+        logger.debug("ZigBeeNetworkManager shutdown: networkState={}", networkState);
+        setNetworkState(ZigBeeNetworkState.OFFLINE);
 
         // To avoid deferred writes while we shut down, set the deferred write time to 0.
         databaseManager.setDeferredWriteTime(0);
