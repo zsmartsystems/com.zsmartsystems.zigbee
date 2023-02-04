@@ -65,9 +65,6 @@ public class ZclTimeServer implements ZigBeeCommandListener {
     protected ZclTimeServer(ZigBeeNetworkManager networkManager) {
         this.networkManager = networkManager;
         networkManager.addCommandListener(this);
-
-        // Report that we support this cluster
-        networkManager.addSupportedClientCluster(ZclTimeCluster.CLUSTER_ID);
     }
 
     /**
