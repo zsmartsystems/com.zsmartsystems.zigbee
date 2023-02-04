@@ -156,6 +156,8 @@ public class ZclTimeServer implements ZigBeeCommandListener {
             for (Integer attributeId : readRequest.getIdentifiers()) {
                 ReadAttributeStatusRecord record = new ReadAttributeStatusRecord();
                 record.setAttributeIdentifier(attributeId);
+                record.setStatus(ZclStatus.SUCCESS); // Assume SUCCESS - failure will be set below if needed
+
                 switch (attributeId) {
                     case ZclTimeCluster.ATTR_TIMESTATUS:
                         int status = TimeStatusBitmap.SYNCHRONIZED.getKey();
@@ -205,6 +207,7 @@ public class ZclTimeServer implements ZigBeeCommandListener {
                         logger.debug("TIME Server unknown request {} from {}", attributeId, command.getSourceAddress());
                         break;
                 }
+
                 records.add(record);
             }
 
