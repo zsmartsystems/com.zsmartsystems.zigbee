@@ -66,7 +66,7 @@ public class ZigBeeTimeExtension implements ZigBeeNetworkExtension, ZigBeeNetwor
     /**
      * Our time server that handles any requests from remote clients
      */
-    private ZclTimeServer timeServer;
+    private ZclTimeServer localTimeServer;
 
     private ZigBeeUtcTime dstStart;
     private ZigBeeUtcTime dstEnd;
@@ -90,7 +90,6 @@ public class ZigBeeTimeExtension implements ZigBeeNetworkExtension, ZigBeeNetwor
      * The worker thread that is scheduled periodically to check the synchronisation of remote devices
      */
     private ScheduledFuture<?> workerJob;
-
     /**
      * A map of all the time clients on the network
      */
@@ -100,6 +99,7 @@ public class ZigBeeTimeExtension implements ZigBeeNetworkExtension, ZigBeeNetwor
     public ZigBeeStatus extensionInitialize(ZigBeeNetworkManager networkManager) {
         this.networkManager = networkManager;
         networkManager.addSupportedClientCluster(ZclTimeCluster.CLUSTER_ID);
+        networkManager.addSupportedServerCluster(ZclTimeCluster.CLUSTER_ID);
         networkManager.addNetworkNodeListener(this);
 
         return ZigBeeStatus.SUCCESS;
@@ -109,9 +109,9 @@ public class ZigBeeTimeExtension implements ZigBeeNetworkExtension, ZigBeeNetwor
     public ZigBeeStatus extensionStartup() {
         logger.debug("Time extension: startup");
 
-        timeServer = new ZclTimeServer(networkManager);
-        timeServer.setMaster(master);
-        timeServer.setSuperceding(superceding);
+        localTimeServer = new ZclTimeServer(networkManager);
+        localTimeServer.setMaster(master);
+        localTimeServer.setSuperceding(superceding);
 
         startWorker();
         return ZigBeeStatus.SUCCESS;
@@ -121,8 +121,8 @@ public class ZigBeeTimeExtension implements ZigBeeNetworkExtension, ZigBeeNetwor
     public void extensionShutdown() {
         networkManager.removeNetworkNodeListener(this);
 
-        if (timeServer != null) {
-            timeServer.shutdown();
+        if (localTimeServer != null) {
+            localTimeServer.shutdown();
         }
 
         logger.debug("Time extension: shutdown");
@@ -135,8 +135,8 @@ public class ZigBeeTimeExtension implements ZigBeeNetworkExtension, ZigBeeNetwor
      */
     public void setMaster(boolean master) {
         this.master = master;
-        if (timeServer != null) {
-            timeServer.setMaster(master);
+        if (localTimeServer != null) {
+            localTimeServer.setMaster(master);
         }
     }
 
@@ -147,8 +147,8 @@ public class ZigBeeTimeExtension implements ZigBeeNetworkExtension, ZigBeeNetwor
      */
     public void setSuperceding(boolean superceding) {
         this.superceding = superceding;
-        if (timeServer != null) {
-            timeServer.setSuperceding(superceding);
+        if (localTimeServer != null) {
+            localTimeServer.setSuperceding(superceding);
         }
     }
 
@@ -158,7 +158,7 @@ public class ZigBeeTimeExtension implements ZigBeeNetworkExtension, ZigBeeNetwor
      * @return true if the server is a master clock source.
      */
     public boolean isMaster() {
-        return timeServer.isMaster();
+        return localTimeServer.isMaster();
     }
 
     /**
@@ -167,7 +167,7 @@ public class ZigBeeTimeExtension implements ZigBeeNetworkExtension, ZigBeeNetwor
      * @return true of the server is marked as a superceding server.
      */
     public boolean isSuperceding() {
-        return timeServer.isSuperceding();
+        return localTimeServer.isSuperceding();
     }
 
     /**
@@ -185,7 +185,7 @@ public class ZigBeeTimeExtension implements ZigBeeNetworkExtension, ZigBeeNetwor
 
         logger.debug("Time extension: set DST start={}, end={}, offset={}", dstStart, dstEnd, dstOffset);
 
-        timeServer.setDst(dstStart, dstEnd, dstOffset);
+        localTimeServer.setDst(dstStart, dstEnd, dstOffset);
 
         // Update all the clients
         synchronized (timeClients) {
@@ -208,7 +208,7 @@ public class ZigBeeTimeExtension implements ZigBeeNetworkExtension, ZigBeeNetwor
             case CLIENT:
                 return timeClients.get(address).getLastUpdate();
             case SERVER:
-                return timeServer.getLastUpdateTime(address.getAddress());
+                return localTimeServer.getLastUpdateTime(address.getAddress());
             case NONE:
             default:
                 return null;
@@ -224,7 +224,7 @@ public class ZigBeeTimeExtension implements ZigBeeNetworkExtension, ZigBeeNetwor
      */
     public ZigBeeTimeSetMethod getLastUpdateMethod(ZigBeeEndpointAddress address) {
         ZigBeeUtcTime clientTime = null;
-        ZigBeeUtcTime serverTime = timeServer.getLastUpdateTime(address.getAddress());
+        ZigBeeUtcTime serverTime = localTimeServer.getLastUpdateTime(address.getAddress());
 
         ZclTimeClient client = timeClients.get(address);
         if (client != null) {
@@ -252,6 +252,10 @@ public class ZigBeeTimeExtension implements ZigBeeNetworkExtension, ZigBeeNetwor
                             timeServer.getZigBeeAddress());
                     timeClients.put(timeServer.getZigBeeAddress(), timeClient);
                 }
+            }
+            ZclTimeCluster timeClient = (ZclTimeCluster) endpoint.getOutputCluster(ZclTimeCluster.CLUSTER_ID);
+            if (timeClient != null) {
+                localTimeServer.addRemote(timeClient);
             }
         }
 

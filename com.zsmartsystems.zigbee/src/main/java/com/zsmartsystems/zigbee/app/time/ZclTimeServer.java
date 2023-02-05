@@ -15,9 +15,9 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.zsmartsystems.zigbee.ZigBeeCommand;
-import com.zsmartsystems.zigbee.ZigBeeCommandListener;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.ZclCommandListener;
 import com.zsmartsystems.zigbee.zcl.ZclStatus;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclTimeCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReadAttributesCommand;
@@ -34,7 +34,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * @author Chris Jackson
  *
  */
-public class ZclTimeServer implements ZigBeeCommandListener {
+public class ZclTimeServer implements ZclCommandListener {
     /**
      * The {@link Logger}.
      */
@@ -64,14 +64,12 @@ public class ZclTimeServer implements ZigBeeCommandListener {
 
     protected ZclTimeServer(ZigBeeNetworkManager networkManager) {
         this.networkManager = networkManager;
-        networkManager.addCommandListener(this);
     }
 
     /**
      * Shuts down the time server and frees any resources
      */
     protected void shutdown() {
-        networkManager.removeCommandListener(this);
     }
 
     /**
@@ -137,16 +135,16 @@ public class ZclTimeServer implements ZigBeeCommandListener {
     }
 
     @Override
-    public void commandReceived(ZigBeeCommand command) {
+    public boolean commandReceived(ZclCommand command) {
         if (command.getClusterId() != ZclTimeCluster.CLUSTER_ID) {
             // TODO: This should check the message is addressed to the local NWK address
-            return;
+            return false;
         }
 
         if (command instanceof ReadAttributesCommand) {
             ReadAttributesCommand readRequest = (ReadAttributesCommand) command;
             if (readRequest.getCommandDirection() != ZclCommandDirection.CLIENT_TO_SERVER) {
-                return;
+                return false;
             }
 
             List<ReadAttributeStatusRecord> records = new ArrayList<>();
@@ -216,6 +214,19 @@ public class ZclTimeServer implements ZigBeeCommandListener {
             readResponse.setTransactionId(command.getTransactionId());
 
             networkManager.sendCommand(readResponse);
+
+            return true;
         }
+
+        return false;
+    }
+
+    /**
+     * Adds a remote client to be managed by the local server
+     *
+     * @param timeClient the remote client
+     */
+    public void addRemote(ZclTimeCluster timeClient) {
+        timeClient.addCommandListener(this);
     }
 }
