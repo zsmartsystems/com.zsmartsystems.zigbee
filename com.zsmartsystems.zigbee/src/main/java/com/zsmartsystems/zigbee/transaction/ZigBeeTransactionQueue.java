@@ -132,7 +132,11 @@ public class ZigBeeTransactionQueue {
         isShutdown = true;
 
         // Cancel any queued transactions
-        for (ZigBeeTransaction transaction : queue) {
+        while (!queue.isEmpty()) {
+            ZigBeeTransaction transaction = queue.poll();
+            if (transaction == null) {
+                break;
+            }
             transaction.cancel();
         }
 
