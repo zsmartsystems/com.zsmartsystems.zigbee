@@ -63,7 +63,7 @@ public class ZigBeeOtaUpgradeExtension implements ZigBeeNetworkExtension, ZigBee
 
         /*
          * We've confirmed there is no current application registered, so register the ZclOtaUpgradeServer to the first
-         * endpoint supplorting OTA upgrades
+         * endpoint supporting OTA upgrades
          */
         for (ZigBeeEndpoint endpoint : node.getEndpoints()) {
             if (endpoint.getOutputCluster(ZclOtaUpgradeCluster.CLUSTER_ID) != null) {
