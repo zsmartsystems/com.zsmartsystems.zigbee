@@ -11,7 +11,6 @@ import java.io.PrintStream;
 
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.dongle.ember.EmberNcp;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
 
 /**
@@ -47,7 +46,7 @@ public class EmberConsoleNcpVersionCommand extends EmberConsoleAbstractCommand {
 
         EzspVersionResponse version = ncp.getVersion();
         out.println("Ember NCP version " + getVersionString(version.getStackVersion()) + ", EZSP version "
-                + EzspFrame.getEzspVersion());
+                + version.getProtocolVersion());
     }
 
     private String getVersionString(int value) {

@@ -42,9 +42,9 @@ public class EzspGetMulticastTableEntryResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspGetMulticastTableEntryResponse(int[] inputBuffer) {
+    public EzspGetMulticastTableEntryResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         status = deserializer.deserializeEmberStatus();

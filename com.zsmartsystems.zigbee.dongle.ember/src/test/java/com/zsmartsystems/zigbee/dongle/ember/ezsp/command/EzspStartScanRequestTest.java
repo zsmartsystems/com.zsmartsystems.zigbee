@@ -27,7 +27,6 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspNetworkScanType;
 public class EzspStartScanRequestTest extends EzspFrameTest {
     @Test
     public void testVersion() throws Exception {
-        EzspFrame.setEzspVersion(4);
         EzspStartScanRequest request = new EzspStartScanRequest();
         TestUtilities.setField(EzspFrame.class, request, "sequenceNumber", 3);
         request.setScanType(EzspNetworkScanType.EZSP_ENERGY_SCAN);
@@ -35,6 +34,6 @@ public class EzspStartScanRequestTest extends EzspFrameTest {
         request.setDuration(1);
         System.out.println(request);
 
-        assertTrue(Arrays.equals(getPacketData("03 00 1A 00 00 F8 FF 07 01"), request.serialize()));
+        assertTrue(Arrays.equals(getPacketData("03 00 1A 00 00 F8 FF 07 01"), request.serialize(4)));
     }
 }

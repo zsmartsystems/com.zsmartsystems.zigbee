@@ -43,9 +43,9 @@ public class EzspSendReplyResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspSendReplyResponse(int[] inputBuffer) {
+    public EzspSendReplyResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         policyDecision = deserializer.deserializeEmberStatus();

@@ -42,9 +42,9 @@ public class EzspGetKeyResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspGetKeyResponse(int[] inputBuffer) {
+    public EzspGetKeyResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         status = deserializer.deserializeEmberStatus();

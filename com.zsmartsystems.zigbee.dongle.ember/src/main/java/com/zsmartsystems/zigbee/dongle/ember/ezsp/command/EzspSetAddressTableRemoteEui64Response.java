@@ -38,9 +38,9 @@ public class EzspSetAddressTableRemoteEui64Response extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspSetAddressTableRemoteEui64Response(int[] inputBuffer) {
+    public EzspSetAddressTableRemoteEui64Response(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         status = deserializer.deserializeEmberStatus();

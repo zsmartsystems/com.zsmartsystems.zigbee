@@ -33,9 +33,9 @@ public class EzspGetNumStoredBeaconsResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspGetNumStoredBeaconsResponse(int[] inputBuffer) {
+    public EzspGetNumStoredBeaconsResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         numBeacons = deserializer.deserializeUInt8();

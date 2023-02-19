@@ -41,9 +41,9 @@ public class EzspSendBroadcastResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspSendBroadcastResponse(int[] inputBuffer) {
+    public EzspSendBroadcastResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         status = deserializer.deserializeEmberStatus();

@@ -41,9 +41,9 @@ public class EzspEnergyScanResultHandler extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspEnergyScanResultHandler(int[] inputBuffer) {
+    public EzspEnergyScanResultHandler(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         channel = deserializer.deserializeUInt8();

@@ -40,9 +40,9 @@ public class EzspAddEndpointResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspAddEndpointResponse(int[] inputBuffer) {
+    public EzspAddEndpointResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         status = deserializer.deserializeEzspStatus();

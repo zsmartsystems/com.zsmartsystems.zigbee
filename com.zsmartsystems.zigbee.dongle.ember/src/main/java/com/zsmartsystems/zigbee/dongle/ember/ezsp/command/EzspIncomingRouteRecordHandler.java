@@ -62,9 +62,9 @@ public class EzspIncomingRouteRecordHandler extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspIncomingRouteRecordHandler(int[] inputBuffer) {
+    public EzspIncomingRouteRecordHandler(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         source = deserializer.deserializeUInt16();

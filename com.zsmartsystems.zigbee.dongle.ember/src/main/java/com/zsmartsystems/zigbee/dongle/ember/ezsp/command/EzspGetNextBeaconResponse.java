@@ -45,9 +45,9 @@ public class EzspGetNextBeaconResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspGetNextBeaconResponse(int[] inputBuffer) {
+    public EzspGetNextBeaconResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         status = deserializer.deserializeEmberStatus();

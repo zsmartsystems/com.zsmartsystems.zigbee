@@ -12,7 +12,6 @@ import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 
@@ -23,8 +22,7 @@ public class EzspGpepIncomingMessageHandlerTest extends EzspFrameTest {
 
     @Test
     public void testReceive1() {
-        EzspFrame.setEzspVersion(4);
-        EzspGpepIncomingMessageHandler incomingMessageHandler = new EzspGpepIncomingMessageHandler(
+        EzspGpepIncomingMessageHandler incomingMessageHandler = new EzspGpepIncomingMessageHandler(4,
                 getPacketData(
                         "90 01 C5 7F D7 54 00 14 8A 70 01 14 8A 70 01 54 02 01 00 00 54 07 00 00 65 2C 15 E8 75 FF 00"));
 

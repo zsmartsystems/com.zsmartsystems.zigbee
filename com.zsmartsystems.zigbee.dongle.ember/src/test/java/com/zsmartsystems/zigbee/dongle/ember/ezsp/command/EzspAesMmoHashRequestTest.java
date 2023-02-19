@@ -27,7 +27,6 @@ public class EzspAesMmoHashRequestTest extends EzspFrameTest {
 
     @Test
     public void test() throws Exception {
-        EzspFrame.setEzspVersion(4);
         EmberAesMmoHashContext context = new EmberAesMmoHashContext();
         context.setResult(new int[16]);
         EzspAesMmoHashRequest request = new EzspAesMmoHashRequest();
@@ -39,6 +38,6 @@ public class EzspAesMmoHashRequestTest extends EzspFrameTest {
 
         assertTrue(Arrays.equals(getPacketData(
                 "AA 00 6F 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01 00 00 11 22 33 44 55 66 77"),
-                request.serialize()));
+                request.serialize(4)));
     }
 }

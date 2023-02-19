@@ -34,9 +34,9 @@ public class EzspInvalidCommandResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspInvalidCommandResponse(int[] inputBuffer) {
+    public EzspInvalidCommandResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         reason = deserializer.deserializeEzspStatus();

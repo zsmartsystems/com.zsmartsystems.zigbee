@@ -26,13 +26,12 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspValueId;
 public class EzspSetValueRequestTest extends EzspFrameTest {
     @Test
     public void testSetValue() throws Exception {
-        EzspFrame.setEzspVersion(4);
         EzspSetValueRequest request = new EzspSetValueRequest();
         TestUtilities.setField(EzspFrame.class, request, "sequenceNumber", 2);
         request.setValueId(EzspValueId.EZSP_VALUE_APS_FRAME_COUNTER);
         request.setValue(new int[] { 1, 2, 3, 4 });
         System.out.println(request);
 
-        assertTrue(Arrays.equals(getPacketData("02 00 AB 24 04 01 02 03 04"), request.serialize()));
+        assertTrue(Arrays.equals(getPacketData("02 00 AB 24 04 01 02 03 04"), request.serialize(4)));
     }
 }

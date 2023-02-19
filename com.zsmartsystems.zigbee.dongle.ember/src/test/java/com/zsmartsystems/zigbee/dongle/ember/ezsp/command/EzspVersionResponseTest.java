@@ -11,7 +11,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
 
@@ -23,8 +22,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspVersionResponse;
 public class EzspVersionResponseTest extends EzspFrameTest {
     @Test
     public void testVersion58() {
-        EzspFrame.setEzspVersion(4);
-        EzspVersionResponse version = new EzspVersionResponse(getPacketData("03 80 00 04 02 00 58"));
+        EzspVersionResponse version = new EzspVersionResponse(4, getPacketData("03 80 00 04 02 00 58"));
         System.out.println(version);
 
         // Version 5.8.0 - EZSP 4
@@ -38,8 +36,7 @@ public class EzspVersionResponseTest extends EzspFrameTest {
 
     @Test
     public void testVersion581() {
-        EzspFrame.setEzspVersion(4);
-        EzspVersionResponse version = new EzspVersionResponse(getPacketData("01 80 00 04 02 10 58"));
+        EzspVersionResponse version = new EzspVersionResponse(4, getPacketData("01 80 00 04 02 10 58"));
         System.out.println(version);
 
         // Version 5.8.1 - EZSP 4
@@ -53,8 +50,7 @@ public class EzspVersionResponseTest extends EzspFrameTest {
 
     @Test
     public void testVersion5A1() {
-        EzspFrame.setEzspVersion(4);
-        EzspVersionResponse version = new EzspVersionResponse(getPacketData("01 80 FF 00 00 05 02 10 5A"));
+        EzspVersionResponse version = new EzspVersionResponse(4, getPacketData("01 80 FF 00 00 05 02 10 5A"));
         System.out.println(version);
 
         // Version 5.10.1 - EZSP 5
@@ -68,8 +64,7 @@ public class EzspVersionResponseTest extends EzspFrameTest {
 
     @Test
     public void testVersion600() {
-        EzspFrame.setEzspVersion(4);
-        EzspVersionResponse version = new EzspVersionResponse(getPacketData("01 80 FF 00 00 06 02 00 60"));
+        EzspVersionResponse version = new EzspVersionResponse(4, getPacketData("01 80 FF 00 00 06 02 00 60"));
         System.out.println(version);
 
         // Version 6.0.0 - EZSP 6

@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.dongle.ember.internal;
 import java.util.List;
 import java.util.Random;
 
+import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,6 +62,8 @@ public class EmberNetworkInitialisation {
      */
     private static final int WAIT_FOR_LEAVE = 5000;
 
+    private ZigBeeDongleEzsp zigBeeDongleEzsp;
+
     /**
      * The frame handler used to send the EZSP frames to the NCP
      */
@@ -74,7 +77,8 @@ public class EmberNetworkInitialisation {
     /**
      * @param protocolHandler the {@link EzspProtocolHandler} used to communicate with the NCP
      */
-    public EmberNetworkInitialisation(EzspProtocolHandler protocolHandler) {
+    public EmberNetworkInitialisation(ZigBeeDongleEzsp zigBeeDongleEzsp, EzspProtocolHandler protocolHandler) {
+        this.zigBeeDongleEzsp = zigBeeDongleEzsp;
         this.protocolHandler = protocolHandler;
     }
 
@@ -109,10 +113,10 @@ public class EmberNetworkInitialisation {
 
         logger.debug("Initialising Ember network with configuration {}", networkParameters);
 
-        EmberNcp ncp = new EmberNcp(protocolHandler);
-
         // Leave the current network so we can initialise a new network
         ensureNetworkLeft();
+
+        EmberNcp ncp = zigBeeDongleEzsp.getEmberNcp();
 
         if (networkParameters.getRadioChannel() == ZigBeeChannel.UNKNOWN.getChannel()) {
             // Perform an energy scan to find a clear channel
@@ -198,7 +202,7 @@ public class EmberNetworkInitialisation {
      * @return true if the NCP is not on a network. false if the network leave was unsuccessful.
      */
     private boolean ensureNetworkLeft() {
-        EmberNcp ncp = new EmberNcp(protocolHandler);
+        EmberNcp ncp = zigBeeDongleEzsp.getEmberNcp();
 
         // If the current network state isn't NO NETWORK, or LEAVING NETWORK, then we leave the current network
         EmberNetworkStatus currentNetworkState = ncp.getNetworkState();
@@ -248,7 +252,7 @@ public class EmberNetworkInitialisation {
                 scanDuration);
 
         if (channels == null) {
-            logger.debug("Error during energy scan: {}", ncp.getLastStatus());
+            logger.debug("Error during energy scan");
             return null;
         }
 
@@ -344,7 +348,7 @@ public class EmberNetworkInitialisation {
             return false;
         }
 
-        EmberNcp ncp = new EmberNcp(protocolHandler);
+        EmberNcp ncp = zigBeeDongleEzsp.getEmberNcp();
         if (networkKey != null && networkKey.hasOutgoingFrameCounter()) {
             EzspSerializer serializer = new EzspSerializer();
             serializer.serializeUInt32(networkKey.getOutgoingFrameCounter());

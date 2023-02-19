@@ -34,9 +34,9 @@ public class EzspSetSourceRouteDiscoveryModeResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspSetSourceRouteDiscoveryModeResponse(int[] inputBuffer) {
+    public EzspSetSourceRouteDiscoveryModeResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         remainingTime = deserializer.deserializeUInt32();

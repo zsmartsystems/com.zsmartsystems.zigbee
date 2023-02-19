@@ -24,8 +24,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspStatus;
 public class EzspAddEndpointResponseTest extends EzspFrameTest {
     @Test
     public void testVersionError() {
-        EzspFrame.setEzspVersion(4);
-        EzspAddEndpointResponse response = new EzspAddEndpointResponse(getPacketData("02 80 02 36"));
+        EzspAddEndpointResponse response = new EzspAddEndpointResponse(4, getPacketData("02 80 02 36"));
         System.out.println(response);
 
         assertEquals(2, response.getSequenceNumber());

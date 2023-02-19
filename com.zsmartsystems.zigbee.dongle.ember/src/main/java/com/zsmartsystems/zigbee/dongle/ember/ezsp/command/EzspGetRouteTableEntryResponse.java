@@ -44,9 +44,9 @@ public class EzspGetRouteTableEntryResponse extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspGetRouteTableEntryResponse(int[] inputBuffer) {
+    public EzspGetRouteTableEntryResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         status = deserializer.deserializeEmberStatus();

@@ -32,14 +32,14 @@ public class AshFrameDataTest {
         EzspVersionRequest request = new EzspVersionRequest();
         TestUtilities.setField(EzspFrame.class, request, "sequenceNumber", 1);
         request.setDesiredProtocolVersion(4);
-        frame = new AshFrameData(request);
+        frame = new AshFrameData(4, request);
         System.out.println(frame);
         assertTrue(Arrays.equals(new int[] { 0, 67, 33, 168, 80, 155, 152, 126 }, frame.getOutputBuffer()));
 
         request = new EzspVersionRequest();
         TestUtilities.setField(EzspFrame.class, request, "sequenceNumber", 2);
         request.setDesiredProtocolVersion(4);
-        frame = new AshFrameData(request);
+        frame = new AshFrameData(4, request);
         frame.setAckNum(3);
         frame.setFrmNum(4);
         System.out.println(frame);
@@ -48,7 +48,7 @@ public class AshFrameDataTest {
         request = new EzspVersionRequest();
         TestUtilities.setField(EzspFrame.class, request, "sequenceNumber", 3);
         request.setDesiredProtocolVersion(4);
-        frame = new AshFrameData(request);
+        frame = new AshFrameData(4, request);
         frame.setAckNum(6);
         frame.setFrmNum(2);
         frame.setReTx();

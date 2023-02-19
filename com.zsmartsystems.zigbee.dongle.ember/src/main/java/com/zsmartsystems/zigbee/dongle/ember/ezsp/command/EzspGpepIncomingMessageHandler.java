@@ -122,9 +122,9 @@ public class EzspGpepIncomingMessageHandler extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspGpepIncomingMessageHandler(int[] inputBuffer) {
+    public EzspGpepIncomingMessageHandler(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         status = deserializer.deserializeEmberStatus();

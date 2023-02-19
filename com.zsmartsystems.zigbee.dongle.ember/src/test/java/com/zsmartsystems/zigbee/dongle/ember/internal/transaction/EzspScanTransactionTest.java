@@ -38,7 +38,6 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspNetworkScanType;
 public class EzspScanTransactionTest extends EzspFrameTest {
     @Test
     public void testScanTransaction() throws Exception {
-        EzspFrame.setEzspVersion(4);
         EzspStartScanRequest energyScan = new EzspStartScanRequest();
         energyScan.setChannelMask(ZigBeeChannelMask.CHANNEL_MASK_2GHZ);
         energyScan.setDuration(1);
@@ -53,26 +52,26 @@ public class EzspScanTransactionTest extends EzspFrameTest {
         EzspFrameResponse response;
 
         // Start Scan Response
-        response = new EzspStartScanResponse(getPacketData("03 80 1A 00"));
+        response = new EzspStartScanResponse(4, getPacketData("03 80 1A 00"));
         assertFalse(scanTransaction.isMatch(response));
 
-        response = new EzspEnergyScanResultHandler(getPacketData("03 90 48 0B 9D"));
+        response = new EzspEnergyScanResultHandler(4, getPacketData("03 90 48 0B 9D"));
         assertEquals(11, ((EzspEnergyScanResultHandler) response).getChannel());
         assertEquals(-99, ((EzspEnergyScanResultHandler) response).getMaxRssiValue());
         assertFalse(scanTransaction.isMatch(response));
 
-        response = new EzspEnergyScanResultHandler(getPacketData("03 90 48 0C 9D"));
+        response = new EzspEnergyScanResultHandler(4, getPacketData("03 90 48 0C 9D"));
         assertFalse(scanTransaction.isMatch(response));
 
-        response = new EzspEnergyScanResultHandler(getPacketData("03 90 48 0D AB"));
+        response = new EzspEnergyScanResultHandler(4, getPacketData("03 90 48 0D AB"));
         assertEquals(13, ((EzspEnergyScanResultHandler) response).getChannel());
         assertEquals(-85, ((EzspEnergyScanResultHandler) response).getMaxRssiValue());
         assertFalse(scanTransaction.isMatch(response));
 
-        response = new EzspEnergyScanResultHandler(getPacketData("03 90 48 0E 9D"));
+        response = new EzspEnergyScanResultHandler(4, getPacketData("03 90 48 0E 9D"));
         assertFalse(scanTransaction.isMatch(response));
 
-        response = new EzspScanCompleteHandler(getPacketData("03 90 1C 0B 00"));
+        response = new EzspScanCompleteHandler(4, getPacketData("03 90 1C 0B 00"));
         assertEquals(EmberStatus.EMBER_SUCCESS, ((EzspScanCompleteHandler) response).getStatus());
         assertTrue(scanTransaction.isMatch(response));
 

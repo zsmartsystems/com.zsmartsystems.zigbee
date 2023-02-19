@@ -35,7 +35,7 @@ public class EzspSingleResponseTransactionTest extends EzspFrameTest {
 
         EzspTransaction versionTransaction = new EzspSingleResponseTransaction(version, EzspVersionResponse.class);
 
-        EzspVersionResponse versionResponse = new EzspVersionResponse(getPacketData("03 80 00 04 02 00 58"));
+        EzspVersionResponse versionResponse = new EzspVersionResponse(4, getPacketData("03 80 00 04 02 00 58"));
 
         assertTrue(versionTransaction.isMatch(versionResponse));
 
@@ -53,7 +53,7 @@ public class EzspSingleResponseTransactionTest extends EzspFrameTest {
 
         EzspTransaction versionTransaction = new EzspSingleResponseTransaction(version, EzspVersionResponse.class);
 
-        EzspVersionResponse versionResponse = new EzspVersionResponse(getPacketData("03 80 00 04 02 00 58"));
+        EzspVersionResponse versionResponse = new EzspVersionResponse(4, getPacketData("03 80 00 04 02 00 58"));
 
         assertFalse(versionTransaction.isMatch(versionResponse));
         assertNull(versionTransaction.getResponse());

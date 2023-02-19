@@ -33,9 +33,9 @@ public class EzspGetSourceRouteTableFilledSizeResponse extends EzspFrameResponse
     /**
      * Response and Handler constructor
      */
-    public EzspGetSourceRouteTableFilledSizeResponse(int[] inputBuffer) {
+    public EzspGetSourceRouteTableFilledSizeResponse(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         sourceRouteTableFilledSize = deserializer.deserializeUInt8();

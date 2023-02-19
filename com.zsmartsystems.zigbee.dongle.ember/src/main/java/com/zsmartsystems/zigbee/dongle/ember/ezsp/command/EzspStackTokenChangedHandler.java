@@ -33,9 +33,9 @@ public class EzspStackTokenChangedHandler extends EzspFrameResponse {
     /**
      * Response and Handler constructor
      */
-    public EzspStackTokenChangedHandler(int[] inputBuffer) {
+    public EzspStackTokenChangedHandler(int ezspVersion, int[] inputBuffer) {
         // Super creates deserializer and reads header fields
-        super(inputBuffer);
+        super(ezspVersion, inputBuffer);
 
         // Deserialize the fields
         tokenAddress = deserializer.deserializeUInt16();

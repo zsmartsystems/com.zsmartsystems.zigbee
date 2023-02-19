@@ -11,7 +11,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspStackStatusHandler;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
@@ -24,9 +23,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberStatus;
 public class EzspStackStatusHandlerResponseTest extends EzspFrameTest {
     @Test
     public void testStackHandler() {
-        EzspFrame.setEzspVersion(4);
-
-        EzspStackStatusHandler response = new EzspStackStatusHandler(getPacketData("03 90 19 90"));
+        EzspStackStatusHandler response = new EzspStackStatusHandler(4, getPacketData("03 90 19 90"));
         System.out.println(response);
 
         assertEquals(EzspStackStatusHandler.FRAME_ID, response.getFrameId());

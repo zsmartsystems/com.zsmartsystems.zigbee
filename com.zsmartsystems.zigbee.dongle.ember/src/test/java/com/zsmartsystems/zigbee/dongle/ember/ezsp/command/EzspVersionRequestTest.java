@@ -25,34 +25,31 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
 public class EzspVersionRequestTest extends EzspFrameTest {
     @Test
     public void testVersion4() throws Exception {
-        EzspFrame.setEzspVersion(4);
         EzspVersionRequest version = new EzspVersionRequest();
         version.setDesiredProtocolVersion(4);
         TestUtilities.setField(EzspFrame.class, version, "sequenceNumber", 0);
         System.out.println(version);
 
-        assertTrue(Arrays.equals(getPacketData("00 00 00 04"), version.serialize()));
+        assertTrue(Arrays.equals(getPacketData("00 00 00 04"), version.serialize(4)));
     }
 
     @Test
     public void testVersion5() throws Exception {
-        EzspFrame.setEzspVersion(5);
         EzspVersionRequest version = new EzspVersionRequest();
         version.setDesiredProtocolVersion(5);
         TestUtilities.setField(EzspFrame.class, version, "sequenceNumber", 0);
         System.out.println(version);
 
-        assertTrue(Arrays.equals(getPacketData("00 00 FF 00 00 05"), version.serialize()));
+        assertTrue(Arrays.equals(getPacketData("00 00 FF 00 00 05"), version.serialize(5)));
     }
 
     @Test
     public void testVersion6() throws Exception {
-        EzspFrame.setEzspVersion(6);
         EzspVersionRequest version = new EzspVersionRequest();
         version.setDesiredProtocolVersion(6);
         TestUtilities.setField(EzspFrame.class, version, "sequenceNumber", 0);
         System.out.println(version);
 
-        assertTrue(Arrays.equals(getPacketData("00 00 FF 00 00 06"), version.serialize()));
+        assertTrue(Arrays.equals(getPacketData("00 00 FF 00 00 06"), version.serialize(6)));
     }
 }

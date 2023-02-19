@@ -21,11 +21,12 @@ public class AshFrameData extends AshFrame {
     /**
      * Constructor to create an ASH Data frame for sending.
      *
+     * @param ezspVersion the EZSP version used
      * @param ezspRequestFrame the {@link EzspFrameRequest} to send
      */
-    public AshFrameData(EzspFrameRequest ezspRequestFrame) {
+    public AshFrameData(int ezspVersion, EzspFrameRequest ezspRequestFrame) {
         frameType = FrameType.DATA;
-        dataBuffer = ezspRequestFrame.serialize();
+        dataBuffer = ezspRequestFrame.serialize(ezspVersion);
     }
 
     /**

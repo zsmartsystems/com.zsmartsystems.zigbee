@@ -27,13 +27,12 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
 public class EzspSetConfigurationValueRequestTest extends EzspFrameTest {
     @Test
     public void testVersion() throws Exception {
-        EzspFrame.setEzspVersion(4);
         EzspSetConfigurationValueRequest request = new EzspSetConfigurationValueRequest();
         TestUtilities.setField(EzspFrame.class, request, "sequenceNumber", 2);
         request.setConfigId(EzspConfigId.EZSP_CONFIG_APPLICATION_ZDO_FLAGS);
         request.setValue(EmberZdoConfigurationFlags.EMBER_APP_RECEIVES_SUPPORTED_ZDO_REQUESTS.getKey());
         System.out.println(request);
 
-        assertTrue(Arrays.equals(getPacketData("02 00 53 2A 01 00"), request.serialize()));
+        assertTrue(Arrays.equals(getPacketData("02 00 53 2A 01 00"), request.serialize(4)));
     }
 }

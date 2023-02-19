@@ -17,6 +17,13 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
  *
  */
 public interface EzspFrameHandler {
+
+    /**
+     * Return the EZSP version currently used by this frame handler
+     * @return
+     */
+    int getEzspVersion();
+
     /**
      * Passes received asynchronous frames from the ASH handler to the EZSP layer
      *

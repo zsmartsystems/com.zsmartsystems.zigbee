@@ -25,12 +25,11 @@ import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
 public class EzspLookupEui64ByNodeIdRequestTest extends EzspFrameTest {
     @Test
     public void testLookupAddress() throws Exception {
-        EzspFrame.setEzspVersion(4);
         EzspLookupEui64ByNodeIdRequest request = new EzspLookupEui64ByNodeIdRequest();
         request.setNodeId(0);
         TestUtilities.setField(EzspFrame.class, request, "sequenceNumber", 5);
         System.out.println(request);
 
-        assertTrue(Arrays.equals(getPacketData("05 00 61 00 00"), request.serialize()));
+        assertTrue(Arrays.equals(getPacketData("05 00 61 00 00"), request.serialize(4)));
     }
 }
