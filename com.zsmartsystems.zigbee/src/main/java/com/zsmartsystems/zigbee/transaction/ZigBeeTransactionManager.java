@@ -208,12 +208,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
         synchronized (outstandingTransactions) {
             // Notify the listeners
             for (final ZigBeeTransaction transaction : outstandingTransactions) {
-                networkManager.getNotificationService().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        transaction.cancel();
-                    }
-                });
+                networkManager.getNotificationService().execute(transaction::cancel);
             }
         }
         executorService.shutdownNow();
@@ -552,11 +547,8 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
             // Notify the listeners
             for (final ZigBeeTransaction transaction : outstandingTransactions) {
                 logger.trace("notifyTransactionCommand: {} {}", command, transaction);
-                networkManager.getNotificationService().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        transaction.commandReceived(command);
-                    }
+                networkManager.getNotificationService().execute(() -> {
+                    transaction.commandReceived(command);
                 });
             }
         }
@@ -574,11 +566,8 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
         synchronized (outstandingTransactions) {
             // Notify the listeners
             for (final ZigBeeTransaction transaction : outstandingTransactions) {
-                networkManager.getNotificationService().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        transaction.transactionStatusReceived(state, transactionId);
-                    }
+                networkManager.getNotificationService().execute(() -> {
+                    transaction.transactionStatusReceived(state, transactionId);
                 });
             }
         }
@@ -716,12 +705,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     private void startRequeueTimer(final long timeout) {
         // Schedule a task to kick off the next transaction
         try {
-            timeoutTask = scheduleTask(new Runnable() {
-                @Override
-                public void run() {
-                    sendNextTransaction();
-                }
-            }, timeout);
+            timeoutTask = scheduleTask(this::sendNextTransaction, timeout);
         } catch (RejectedExecutionException e) {
             logger.debug("Unable to start requeue timer.");
         }

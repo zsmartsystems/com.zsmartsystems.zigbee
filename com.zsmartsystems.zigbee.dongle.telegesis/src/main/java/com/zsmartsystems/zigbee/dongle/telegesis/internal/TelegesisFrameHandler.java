@@ -639,25 +639,22 @@ public class TelegesisFrameHandler {
     private void startTimer() {
         stopTimer();
         logger.trace("TELEGESIS Timer: Start");
-        timeoutTimer = timeoutScheduler.schedule(new Runnable() {
-            @Override
-            public void run() {
-                timeoutTimer = null;
-                logger.debug("TELEGESIS Timer: Timeout {}", retries);
-                synchronized (commandLock) {
-                    if (retries++ >= ACK_TIMEOUTS) {
-                        // Too many retries.
-                        // We should alert the upper layer so they can reset the link?
-                        zigBeeDongleTelegesis.notifyStateUpdate(false);
+        timeoutTimer = timeoutScheduler.schedule(() -> {
+            timeoutTimer = null;
+            logger.debug("TELEGESIS Timer: Timeout {}", retries);
+            synchronized (commandLock) {
+                if (retries++ >= ACK_TIMEOUTS) {
+                    // Too many retries.
+                    // We should alert the upper layer so they can reset the link?
+                    zigBeeDongleTelegesis.notifyStateUpdate(false);
 
-                        logger.debug("Error: number of retries exceeded [{}].", retries);
-                        return;
-                    }
+                    logger.debug("Error: number of retries exceeded [{}].", retries);
+                    return;
+                }
 
-                    if (sentCommand != null) {
-                        sentCommand = null;
-                        sendNextFrame();
-                    }
+                if (sentCommand != null) {
+                    sentCommand = null;
+                    sendNextFrame();
                 }
             }
         }, commandTimeout, TimeUnit.MILLISECONDS);

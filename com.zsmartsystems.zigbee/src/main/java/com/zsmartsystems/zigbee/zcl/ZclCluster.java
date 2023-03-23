@@ -1286,18 +1286,15 @@ public abstract class ZclCluster {
      */
     private void notifyAttributeListener(final ZclAttribute attribute, final Object value) {
         for (final ZclAttributeListener listener : attributeListeners) {
-            getNotificationService().execute(new Runnable() {
-                @Override
-                public void run() {
-                    logger.trace("{}: ZclCluster.notifyAttributeListener {} of {} with value {}",
-                            zigbeeEndpoint.getEndpointAddress(), listener, attribute, value);
+            getNotificationService().execute(() -> {
+                logger.trace("{}: ZclCluster.notifyAttributeListener {} of {} with value {}",
+                        zigbeeEndpoint.getEndpointAddress(), listener, attribute, value);
 
-                    try {
-                        listener.attributeUpdated(attribute, value);
-                    } catch (Exception e) {
-                        logger.warn("{}: Exception when notifying attribute listener {} of {} with value {}",
-                                zigbeeEndpoint.getEndpointAddress(), listener, attribute, value, e);
-                    }
+                try {
+                    listener.attributeUpdated(attribute, value);
+                } catch (Exception e) {
+                    logger.warn("{}: Exception when notifying attribute listener {} of {} with value {}",
+                            zigbeeEndpoint.getEndpointAddress(), listener, attribute, value, e);
                 }
             });
         }
@@ -1344,20 +1341,17 @@ public abstract class ZclCluster {
         synchronized (commandListeners) {
             latch = new CountDownLatch(commandListeners.size());
             for (final ZclCommandListener listener : commandListeners) {
-                getNotificationService().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        logger.trace("{}: ZclCluster.notifyCommandListener {} of {}",
-                                zigbeeEndpoint.getEndpointAddress(), listener, command);
+                getNotificationService().execute(() -> {
+                    logger.trace("{}: ZclCluster.notifyCommandListener {} of {}",
+                            zigbeeEndpoint.getEndpointAddress(), listener, command);
 
-                        if (listener.commandReceived(command)) {
-                            response.set(true);
-                            while (latch.getCount() > 0) {
-                                latch.countDown();
-                            }
-                        } else {
+                    if (listener.commandReceived(command)) {
+                        response.set(true);
+                        while (latch.getCount() > 0) {
                             latch.countDown();
                         }
+                    } else {
+                        latch.countDown();
                     }
                 });
             }
