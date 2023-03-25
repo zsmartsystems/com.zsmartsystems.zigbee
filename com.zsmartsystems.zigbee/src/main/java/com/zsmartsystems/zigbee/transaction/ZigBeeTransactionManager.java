@@ -692,7 +692,9 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
                         send(transaction);
                         sendDone = false;
                     } else {
-                        sleepyOrDelayedQueues.add(queue);
+                        if (!queue.isEmpty()) {
+                            sleepyOrDelayedQueues.add(queue);
+                        }
                     }
                 }
 
@@ -701,17 +703,20 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
 
             } while (!sendDone);
 
-            // Loop through all outstanding queues and find the next release time
-            long timeout = Long.MAX_VALUE;
-            for (ZigBeeTransactionQueue queue : outstandingQueues) {
-                long nextTime = queue.getNextReleaseTime();
-                if (nextTime < timeout) {
-                    timeout = nextTime;
+            // only start a request timer if there is actual outstanding work
+            if (!outstandingQueues.isEmpty()) {
+                // Loop through all outstanding queues and find the next release time
+                long timeout = Long.MAX_VALUE;
+                for (ZigBeeTransactionQueue queue : sleepyOrDelayedQueues) {
+                    long nextTime = queue.getNextReleaseTime();
+                    if (nextTime < timeout) {
+                        timeout = nextTime;
+                    }
                 }
-            }
 
-            if (timeout > 0) {
-                startRequeueTimer(timeout);
+                if (timeout != Long.MAX_VALUE && timeout > 0) {
+                    startRequeueTimer(timeout);
+                }
             }
         }
     }
