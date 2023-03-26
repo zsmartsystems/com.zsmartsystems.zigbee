@@ -86,16 +86,6 @@ public interface ZigBeePort {
     void purgeRxBuffer();
 
     /**
-     * Set DTR on Port
-     */
-    void setDtr(boolean state);
-
-    /**
-     * Set DTS on Port
-     */
-    void setRts(boolean state);
-
-    /**
      * Enumeration of flow control options
      */
     public enum FlowControl {
