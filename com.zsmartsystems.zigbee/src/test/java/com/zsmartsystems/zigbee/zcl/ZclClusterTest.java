@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -267,13 +267,19 @@ public class ZclClusterTest {
         cluster.addAttributeListener(listenerMock);
         assertEquals(1, attributeListeners.size());
         List<AttributeReport> attributeList = new ArrayList<AttributeReport>();
-        AttributeReport report1;
-        report1 = new AttributeReport();
-        report1.setAttributeDataType(ZclDataType.SIGNED_8_BIT_INTEGER);
-        report1.setAttributeIdentifier(0);
-        report1.setAttributeValue(Integer.valueOf(1));
-        System.out.println(report1);
-        attributeList.add(report1);
+        AttributeReport report;
+        report = new AttributeReport();
+        report.setAttributeDataType(ZclDataType.SIGNED_8_BIT_INTEGER);
+        report.setAttributeIdentifier(ZclOnOffCluster.ATTR_ONOFF);
+        report.setAttributeValue(Integer.valueOf(1));
+        System.out.println(report);
+        attributeList.add(report);
+        report = new AttributeReport();
+        report.setAttributeDataType(ZclDataType.SIGNED_8_BIT_INTEGER);
+        report.setAttributeIdentifier(ZclOnOffCluster.ATTR_ONTIME);
+        report.setAttributeValue(Integer.valueOf(1));
+        System.out.println(report);
+        attributeList.add(report);
 
         ReportAttributesCommand attributeReport = new ReportAttributesCommand(attributeList);
         attributeReport.setTransactionId(123);
@@ -292,17 +298,24 @@ public class ZclClusterTest {
         ZclAttribute attribute = cluster.getAttribute(0);
         assertTrue(attribute.getLastValue() instanceof Boolean);
 
-        Mockito.verify(listenerMock, Mockito.timeout(TIMEOUT).times(1)).attributeUpdated(attributeCapture.capture(),
+        Mockito.verify(listenerMock, Mockito.timeout(TIMEOUT).times(2)).attributeUpdated(attributeCapture.capture(),
                 valueCaptor.capture());
 
         List<ZclAttribute> updatedAttributes = attributeCapture.getAllValues();
-        assertEquals(1, updatedAttributes.size());
+        assertEquals(2, updatedAttributes.size());
 
-        attribute = updatedAttributes.get(0);
-        assertTrue(attribute.getLastValue() instanceof Boolean);
-        assertEquals(ZclDataType.BOOLEAN, attribute.getDataType());
-        assertEquals(0, attribute.getId());
-        assertEquals(true, attribute.getLastValue());
+        ZclAttribute attribute1 = updatedAttributes.get(0);
+        ZclAttribute attribute2 = updatedAttributes.get(1);
+        assertTrue(attribute1.getLastValue() instanceof Boolean);
+        assertEquals(ZclDataType.BOOLEAN, attribute1.getDataType());
+        assertEquals(ZclOnOffCluster.ATTR_ONOFF, attribute1.getId());
+        assertEquals(true, attribute1.getLastValue());
+        assertTrue(attribute2.getLastValue() instanceof Integer);
+        assertEquals(ZclDataType.UNSIGNED_16_BIT_INTEGER, attribute2.getDataType());
+        assertEquals(ZclOnOffCluster.ATTR_ONTIME, attribute2.getId());
+        assertEquals(1, attribute2.getLastValue());
+
+        assertEquals(attribute1.getLastReportTime(), attribute2.getLastReportTime());
 
         cluster.removeAttributeListener(listenerMock);
         assertEquals(0, attributeListeners.size());

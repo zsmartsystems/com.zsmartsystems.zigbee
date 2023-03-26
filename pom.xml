@@ -4,7 +4,7 @@
 
 	<groupId>com.zsmartsystems</groupId>
 	<artifactId>zigbee</artifactId>
-	<version>1.4.10-SNAPSHOT</version>
+	<version>1.4.11-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>ZssBee</name>
@@ -38,7 +38,7 @@
 	</developers>
 
 	<properties>
-		<license.year>2022</license.year>
+		<license.year>2023</license.year>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<slf4j.version>1.7.30</slf4j.version>
@@ -243,7 +243,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>animal-sniffer-maven-plugin</artifactId>
-				<version>1.16</version>
+				<version>1.22</version>
 				<configuration>
 					<signature>
 						<groupId>org.codehaus.mojo.signature</groupId>
@@ -252,8 +252,8 @@
 					</signature>
 					<signature>
 						<groupId>net.sf.androidscents.signature</groupId>
-						<artifactId>android-api-level-19</artifactId>
-						<version>4.4_r1</version>
+						<artifactId>android-api-level-21</artifactId>
+						<version>5.0.1_r2</version>
 					</signature>
 				</configuration>
 				<executions>
@@ -265,7 +265,7 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
+	</plugin>
 		</plugins>
 
 		<pluginManagement>

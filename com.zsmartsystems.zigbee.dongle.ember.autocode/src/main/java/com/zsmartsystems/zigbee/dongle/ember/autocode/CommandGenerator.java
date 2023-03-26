@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -976,7 +976,7 @@ public class CommandGenerator extends ClassGenerator {
         out.println("    /**");
         out.println("     * The maximum supported version of EZSP");
         out.println("     */");
-        out.println("    private static final int EZSP_MAX_VERSION = 8;");
+        out.println("    private static final int EZSP_MAX_VERSION = 10;");
         out.println();
         out.println("    /**");
         out.println("     * The network ID bit shift");

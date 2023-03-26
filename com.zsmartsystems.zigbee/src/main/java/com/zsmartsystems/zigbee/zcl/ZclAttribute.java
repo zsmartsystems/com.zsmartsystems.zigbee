@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -512,8 +512,18 @@ public class ZclAttribute {
      * @param attributeValue the attribute value to be updated {@link Object}
      */
     public void updateValue(Object attributeValue) {
+        updateValue(attributeValue, Calendar.getInstance());
+    }
+
+    /**
+     * Updates the attribute value This will also record the time of the last update
+     *
+     * @param attributeValue the attribute value to be updated {@link Object}
+     * @param reportTime the time the report was received
+     */
+    public void updateValue(Object attributeValue, Calendar reportTime) {
         lastValue = attributeValue;
-        lastReportTime = Calendar.getInstance();
+        lastReportTime = reportTime;
     }
 
     @Override

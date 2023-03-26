@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -435,6 +435,8 @@ public class ZigBeeOtaFile {
         StringBuilder builder = new StringBuilder(170);
         builder.append("ZigBeeOtaFile [headerVersion=");
         builder.append(headerVersion);
+        builder.append(", headerLength=");
+        builder.append(headerLength);
         builder.append(", manufacturerCode=");
         builder.append(manufacturerCode);
         builder.append(", imageType=");

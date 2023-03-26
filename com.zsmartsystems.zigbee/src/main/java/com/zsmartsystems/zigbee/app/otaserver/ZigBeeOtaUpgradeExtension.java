@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -63,7 +63,7 @@ public class ZigBeeOtaUpgradeExtension implements ZigBeeNetworkExtension, ZigBee
 
         /*
          * We've confirmed there is no current application registered, so register the ZclOtaUpgradeServer to the first
-         * endpoint supplorting OTA upgrades
+         * endpoint supporting OTA upgrades
          */
         for (ZigBeeEndpoint endpoint : node.getEndpoints()) {
             if (endpoint.getOutputCluster(ZclOtaUpgradeCluster.CLUSTER_ID) != null) {
