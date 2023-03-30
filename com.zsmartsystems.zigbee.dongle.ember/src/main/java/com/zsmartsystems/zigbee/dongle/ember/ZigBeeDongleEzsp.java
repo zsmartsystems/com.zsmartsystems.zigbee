@@ -116,7 +116,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     /**
      * The maximum supported version of EZSP
      */
-    private static final int EZSP_MAX_VERSION = 8;
+    private static final int EZSP_MAX_VERSION = 10;
 
     private static final int POLL_FRAME_ID = EzspNetworkStateRequest.FRAME_ID;
     private static final int WAIT_FOR_ONLINE = 5000;
