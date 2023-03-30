@@ -8,6 +8,10 @@
 package com.zsmartsystems.zigbee.console;
 
 import java.io.PrintStream;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNode;
@@ -18,6 +22,11 @@ import com.zsmartsystems.zigbee.ZigBeeNode;
  *
  */
 public class ZigBeeConsoleNetworkJoinCommand extends ZigBeeConsoleAbstractCommand {
+
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
+    private ScheduledFuture<?> scheduledFuture;
+
     @Override
     public String getCommand() {
         return "join";
@@ -30,7 +39,7 @@ public class ZigBeeConsoleNetworkJoinCommand extends ZigBeeConsoleAbstractComman
 
     @Override
     public String getSyntax() {
-        return "[ENABLE|DISABLE|PERIOD] [NODE]";
+        return "[ENABLE|PERIOD|PERMANENT|DISABLE] [NODE]";
     }
 
     @Override
@@ -45,31 +54,64 @@ public class ZigBeeConsoleNetworkJoinCommand extends ZigBeeConsoleAbstractComman
             throw new IllegalArgumentException("Invalid number of arguments");
         }
 
-        final int join;
-        if ("enable".equalsIgnoreCase(args[1])) {
-            join = 254;
-        } else if ("disable".equalsIgnoreCase(args[1])) {
-            join = 0;
+        ZigBeeNode node;
+        if (args.length == 3) {
+            node = getNode(networkManager, args[2]);
         } else {
-            join = Integer.parseInt(args[1]);
+            node = null;
         }
 
-        if (args.length == 3) {
-            // Node defined
-            ZigBeeNode node = getNode(networkManager, args[2]);
-            node.permitJoin(join);
-            if (join != 0) {
-                out.println("Permit join enable node " + node.getNetworkAddress() + " success.");
+        if ("enable".equalsIgnoreCase(args[1])) {
+            if(scheduledFuture == null) {
+                enableJoin(networkManager, node, 254, out);
             } else {
-                out.println("Permit join disable " + node.getNetworkAddress() + " success.");
+                out.println("Permit join already enabled permanently. Ignoring.");
             }
+        } else if ("permanent".equalsIgnoreCase(args[1])) {
+            if(scheduledFuture == null) {
+                scheduledFuture = scheduler.scheduleAtFixedRate(() -> enableJoin(networkManager, node, 254, out), 0, 240, TimeUnit.SECONDS);
+            } else {
+                out.println("Permit join already enabled permanently. Ignoring.");
+            }
+        } else if ("disable".equalsIgnoreCase(args[1])) {
+            if(scheduledFuture != null) {
+                scheduledFuture.cancel(true);
+                scheduledFuture = null;
+            }
+            disableJoin(networkManager, node, out);
         } else {
-            networkManager.permitJoin(join);
-            if (join != 0) {
-                out.println("Permit join enable broadcast success.");
+            if(scheduledFuture == null) {
+                Integer duration = Integer.parseInt(args[1]);
+                if(duration <= 0) {
+                    throw new IllegalArgumentException("Duration must be greater than 0 (exclusive)");
+                }
+                if(duration > 254) {
+                    throw new IllegalArgumentException("Duration must be less than 254 (inclusive)");
+                }
+                enableJoin(networkManager, node, duration, out);
             } else {
-                out.println("Permit join disable broadcast success.");
+                out.println("Permit join already enabled permanently. Ignoring.");
             }
+        }
+    }
+
+    private void enableJoin(ZigBeeNetworkManager networkManager, ZigBeeNode node, Integer duration, PrintStream out) {
+        if (node != null) {
+            node.permitJoin(duration);
+            out.println("Permit join enable node " + node.getNetworkAddress() + " success.");
+        } else {
+            networkManager.permitJoin(duration);
+            out.println("Permit join enable broadcast success.");
+        }
+    }
+
+    private void disableJoin(ZigBeeNetworkManager networkManager, ZigBeeNode node, PrintStream out) {
+        if (node != null) {
+            node.permitJoin(0);
+            out.println("Permit join disable " + node.getNetworkAddress() + " success.");
+        } else {
+            networkManager.permitJoin(0);
+            out.println("Permit join disable broadcast success.");
         }
     }
 }
