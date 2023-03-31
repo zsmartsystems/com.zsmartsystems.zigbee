@@ -56,7 +56,7 @@ public class EmberConsoleWhitelistCommand extends EmberConsoleAbstractCommand {
         }
         ZigBeeDongleEzsp dongle = (ZigBeeDongleEzsp) networkManager.getZigBeeTransport();
 
-        if (args.length != 2) {
+        if (args.length != 3) {
             throw new IllegalArgumentException("Invalid number of arguments");
         }
 
