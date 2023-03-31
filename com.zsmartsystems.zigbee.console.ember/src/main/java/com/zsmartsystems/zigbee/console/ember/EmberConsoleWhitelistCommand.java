@@ -7,8 +7,8 @@
  */
 package com.zsmartsystems.zigbee.console.ember;
 
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
-import com.zsmartsystems.zigbee.console.ZigBeeConsoleAbstractCommand;
 import com.zsmartsystems.zigbee.dongle.ember.EmberNcp;
 import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspCustomFrameResponse;
@@ -23,7 +23,7 @@ import java.util.List;
  * @author Chris Jackson
  *
  */
-public class ZigBeeConsoleWhitelistCommand extends ZigBeeConsoleAbstractCommand {
+public class EmberConsoleWhitelistCommand extends EmberConsoleAbstractCommand {
 
     private static final int CUSTOM_FRAME_ADD_ALLOWED_DEVICES_ID = 0;
     private static final int CUSTOM_FRAME_REMOVE_ALLOWED_DEVICES_ID = 1;
@@ -40,7 +40,7 @@ public class ZigBeeConsoleWhitelistCommand extends ZigBeeConsoleAbstractCommand 
 
     @Override
     public String getSyntax() {
-        return "[ADD|DEL] [IEEE]";
+        return "[ADD|DEL] [IEEE_ADDRESS]";
     }
 
     @Override
@@ -60,18 +60,20 @@ public class ZigBeeConsoleWhitelistCommand extends ZigBeeConsoleAbstractCommand 
             throw new IllegalArgumentException("Invalid number of arguments");
         }
 
+        IeeeAddress ieeeAddress = new IeeeAddress(args[2]);
+
         if ("add".equalsIgnoreCase(args[1])) {
-            addAllowedDevices(dongle.getEmberNcp(), Collections.singletonList(args[2]));
+            addAllowedDevices(dongle.getEmberNcp(), Collections.singletonList(ieeeAddress));
             out.println("Whitelist add " + args[2] + " success.");
         } else if ("del".equalsIgnoreCase(args[1])) {
-            removeAllowedDevices(dongle.getEmberNcp(), Collections.singletonList(args[2]));
+            removeAllowedDevices(dongle.getEmberNcp(), Collections.singletonList(ieeeAddress));
             out.println("Whitelist del " + args[2] + " success.");
         } else {
             throw new IllegalArgumentException("Invalid argument " + args[1]);
         }
     }
 
-    public void addAllowedDevices(EmberNcp ncp, List<String> devices) {
+    public void addAllowedDevices(EmberNcp ncp, List<IeeeAddress> devices) {
         if(devices.isEmpty()) {
             return;
         }
@@ -80,13 +82,13 @@ public class ZigBeeConsoleWhitelistCommand extends ZigBeeConsoleAbstractCommand 
         int next = 0;
         while(next < devices.size()) {
             final int remaining = devices.size() - next;
-            final List<String> batch = devices.subList(next, remaining >= batchSize ? next + batchSize : next + remaining);
+            final List<IeeeAddress> batch = devices.subList(next, remaining >= batchSize ? next + batchSize : next + remaining);
             next += batch.size();
 
             final int[] frame = new int[1 + (batch.size() * 8)];
             frame[0] = CUSTOM_FRAME_ADD_ALLOWED_DEVICES_ID;
             for (int idx = 0; idx < batch.size(); ++idx) {
-                int[] deviceEuidBytes = hexToBytes(batch.get(idx));
+                int[] deviceEuidBytes = batch.get(idx).getValue();
                 for (int i = 0; i < deviceEuidBytes.length; ++i) {
                     frame[1 + i + (idx * 8)] = deviceEuidBytes[i];
                 }
@@ -98,7 +100,7 @@ public class ZigBeeConsoleWhitelistCommand extends ZigBeeConsoleAbstractCommand 
         }
     }
 
-    public void removeAllowedDevices(EmberNcp ncp, List<String> devices) {
+    public void removeAllowedDevices(EmberNcp ncp, List<IeeeAddress> devices) {
         if(devices.isEmpty()) {
             return;
         }
@@ -107,13 +109,13 @@ public class ZigBeeConsoleWhitelistCommand extends ZigBeeConsoleAbstractCommand 
         int next = 0;
         while(next < devices.size()) {
             final int remaining = devices.size() - next;
-            final List<String> batch = devices.subList(next, remaining >= batchSize ? next + batchSize : next + remaining);
+            final List<IeeeAddress> batch = devices.subList(next, remaining >= batchSize ? next + batchSize : next + remaining);
             next += batch.size();
 
             final int[] frame = new int[1 + (batch.size() * 8)];
             frame[0] = CUSTOM_FRAME_REMOVE_ALLOWED_DEVICES_ID;
             for (int idx = 0; idx < batch.size(); ++idx) {
-                int[] deviceEuidBytes = hexToBytes(batch.get(idx));
+                int[] deviceEuidBytes = batch.get(idx).getValue();
                 for (int i = 0; i < deviceEuidBytes.length; ++i) {
                     frame[1 + i + (idx * 8)] = deviceEuidBytes[i];
                 }
@@ -123,14 +125,5 @@ public class ZigBeeConsoleWhitelistCommand extends ZigBeeConsoleAbstractCommand 
                 throw new RuntimeException("fail to remove allowed devices");
             }
         }
-    }
-
-    public static int[] hexToBytes(String s) {
-        int len = s.length();
-        int[] data = new int[len / 2];
-        for (int i = 0; i < len; i += 2) {
-            data[i / 2] = ((Character.digit(s.charAt(i), 16) << 4) + Character.digit(s.charAt(i+1), 16));
-        }
-        return data;
     }
 }
