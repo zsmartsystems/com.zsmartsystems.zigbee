@@ -41,7 +41,7 @@ public class ZigBeeConsoleOtaUpgradeCommand extends ZigBeeConsoleAbstractCommand
 
     @Override
     public String getSyntax() {
-        return "[STATE | FILE | START | COMPLETE] [ENDPOINT] [FILENAME]";
+        return "[STATE | FILE | START | COMPLETE | CANCEL] [ENDPOINT] [FILENAME]";
     }
 
     @Override
@@ -81,6 +81,12 @@ public class ZigBeeConsoleOtaUpgradeCommand extends ZigBeeConsoleAbstractCommand
                     throw new IllegalArgumentException("Invalid number of arguments: Endpoint required.");
                 }
                 cmdOtaComplete(networkManager, args[2], out);
+                break;
+            case "CANCEL":
+                if (args.length < 3) {
+                    throw new IllegalArgumentException("Invalid number of arguments: Endpoint required.");
+                }
+                cmdOtaCancel(networkManager, args[2], out);
                 break;
             default:
                 throw new IllegalArgumentException("Invalid command argument " + args[1]);
@@ -130,7 +136,7 @@ public class ZigBeeConsoleOtaUpgradeCommand extends ZigBeeConsoleAbstractCommand
 
         out.println("OTA Upgrade configuration for " + endpoint.getEndpointAddress());
         out.println("Current state    : " + otaServer.getServerStatus());
-        out.println("Firmware Version : " + (fileVersion == null ? "Unknown" : String.format("%s%08X", fileVersion)));
+        out.println("Firmware Version : " + (fileVersion == null ? "Unknown" : String.format("%08X", fileVersion)));
     }
 
     private Map<Integer, ZigBeeEndpoint> getApplications(ZigBeeNetworkManager networkManager, int clusterId) {
@@ -193,5 +199,17 @@ public class ZigBeeConsoleOtaUpgradeCommand extends ZigBeeConsoleAbstractCommand
 
         boolean success = otaServer.completeUpgrade();
         out.println("OTA Upgrade completion on endpoint " + endpoint.getEndpointAddress() + " returned " + success);
+    }
+
+    private void cmdOtaCancel(ZigBeeNetworkManager networkManager, String endpointString, PrintStream out) {
+        final ZigBeeEndpoint endpoint = getEndpoint(networkManager, endpointString);
+
+        ZclOtaUpgradeServer otaServer = (ZclOtaUpgradeServer) endpoint.getApplication(ZclOtaUpgradeCluster.CLUSTER_ID);
+        if (otaServer == null) {
+            throw new IllegalArgumentException("OTA Server not supported by " + endpoint.getEndpointAddress() + "");
+        }
+
+        otaServer.cancelUpgrade();
+        out.println("OTA Upgrade cancelled on endpoint " + endpoint.getEndpointAddress());
     }
 }
