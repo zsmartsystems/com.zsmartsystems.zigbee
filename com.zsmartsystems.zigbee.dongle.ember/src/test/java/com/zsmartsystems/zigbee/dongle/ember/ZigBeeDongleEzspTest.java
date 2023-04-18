@@ -125,8 +125,10 @@ public class ZigBeeDongleEzspTest {
         assertEquals(9, EzspFrame.getEzspVersion());
         assertTrue(EzspFrame.setEzspVersion(10));
         assertEquals(10, EzspFrame.getEzspVersion());
-        assertFalse(EzspFrame.setEzspVersion(11));
-        assertEquals(10, EzspFrame.getEzspVersion());
+        assertTrue(EzspFrame.setEzspVersion(11));
+        assertEquals(11, EzspFrame.getEzspVersion());
+        assertFalse(EzspFrame.setEzspVersion(12));
+        assertEquals(11, EzspFrame.getEzspVersion());
         EzspFrame.setEzspVersion(4);
     }
 
