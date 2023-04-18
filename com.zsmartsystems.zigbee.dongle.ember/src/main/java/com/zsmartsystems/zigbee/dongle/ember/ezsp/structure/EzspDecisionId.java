@@ -24,52 +24,52 @@ public enum EzspDecisionId {
     UNKNOWN(-1),
 
     /**
-     * Send the network key in the clear to all joining and rejoining devices.
+     * [Deprecated] Send the network key in the clear to all joining and rejoining devices.
      */
     EZSP_ALLOW_JOINS(0x0000),
 
     /**
-     * Send the network key encrypted with the joining or rejoining device's trust center link key.
-     * The trust center and any joining or rejoining device are assumed to share a link key, either
-     * preconfigured or obtained under a previous policy. This is the default value for the
-     * EZSP_TRUST_CENTER_POLICY.
+     * [Deprecated] Send the network key encrypted with the joining or rejoining device's trust
+     * center link key. The trust center and any joining or rejoining device are assumed to share a
+     * link key, either preconfigured or obtained under a previous policy. This is the default
+     * value for the EZSP_TRUST_CENTER_POLICY.
      */
     EZSP_ALLOW_PRECONFIGURED_KEY_JOINS(0x0001),
 
     /**
-     * Send the network key encrypted with the rejoining device's trust center link key. The trust
-     * center and any rejoining device are assumed to share a link key, either preconfigured or
-     * obtained under a previous policy. No new devices are allowed to join.
+     * [Deprecated] Send the network key encrypted with the rejoining device's trust center link
+     * key. The trust center and any rejoining device are assumed to share a link key, either
+     * preconfigured or obtained under a previous policy. No new devices are allowed to join.
      */
     EZSP_ALLOW_REJOINS_ONLY(0x0002),
 
     /**
-     * Reject all unsecured join and rejoin attempts.
+     * [Deprecated] Reject all unsecured join and rejoin attempts.
      */
     EZSP_DISALLOW_ALL_JOINS_AND_REJOINS(0x0003),
 
     /**
-     * Send the network key in the clear to all joining devices. Rejoining devices are sent the
-     * network key encrypted with their trust center link key. The trust center and any rejoining
-     * device are assumed to share a link key, either preconfigured or obtained under a previous
-     * policy.
+     * [Deprecated] Send the network key in the clear to all joining devices. Rejoining devices are
+     * sent the network key encrypted with their trust center link key. The trust center and any
+     * rejoining device are assumed to share a link key, either preconfigured or obtained under a
+     * previous policy.
      */
     EZSP_ALLOW_JOINS_REJOINS_HAVE_LINK_KEY(0x0004),
 
     /**
-     * Take no action on trust center rejoin attempts.
+     * [Deprecated] Take no action on trust center rejoin attempts.
      */
     EZSP_IGNORE_TRUST_CENTER_REJOINS(0x0005),
 
     /**
-     * Admit joins only if there is an entry in the transient key table. This corresponds to the Base
-     * Device Behavior specification where a Trust Center enforces all devices to join with an
-     * install code-derived link key.
+     * [Deprecated] Admit joins only if there is an entry in the transient key table. This
+     * corresponds to the Base Device Behavior specification where a Trust Center enforces all
+     * devices to join with an install code-derived link key.
      */
     EZSP_BDB_JOIN_USES_INSTALL_CODE_KEY(0x0006),
 
     /**
-     * Delay sending the network key to a new joining device.
+     * [Deprecated] Delay sending the network key to a new joining device.
      */
     EZSP_DEFER_JOINS_REJOINS_HAVE_LINK_KEY(0x0007),
 
