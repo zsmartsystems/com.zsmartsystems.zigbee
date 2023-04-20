@@ -493,6 +493,11 @@ public class ZigBeeDongleTelegesis
         if (frameHandler.sendRequest(networkInfo) == null || networkInfo.getStatus() != TelegesisStatusCode.SUCCESS) {
             return ZigBeeStatus.BAD_RESPONSE;
         }
+        if (networkInfo.getDevice() == TelegesisDeviceType.NOPAN) {
+            logger.debug("Telegesis network information is {}. Returning status {}.", TelegesisDeviceType.NOPAN,
+                    ZigBeeStatus.NO_NETWORK);
+            return ZigBeeStatus.NO_NETWORK;
+        }
         if (networkInfo.getDevice() != TelegesisDeviceType.COO) {
             return ZigBeeStatus.INVALID_STATE;
         }
