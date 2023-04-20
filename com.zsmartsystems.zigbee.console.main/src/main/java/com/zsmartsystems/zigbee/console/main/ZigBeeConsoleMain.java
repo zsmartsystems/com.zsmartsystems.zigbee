@@ -52,6 +52,8 @@ import com.zsmartsystems.zigbee.console.ember.EmberConsoleNcpVersionCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleSecurityStateCommand;
 import com.zsmartsystems.zigbee.console.ember.EmberConsoleTransientKeyCommand;
 import com.zsmartsystems.zigbee.console.telegesis.TelegesisConsoleSecurityStateCommand;
+import com.zsmartsystems.zigbee.console.zstack.ZstackConsoleNcpSecurityCommand;
+import com.zsmartsystems.zigbee.console.zstack.ZstackConsoleNcpStateCommand;
 import com.zsmartsystems.zigbee.database.ZigBeeNetworkDataStore;
 import com.zsmartsystems.zigbee.dongle.cc2531.ZigBeeDongleTiCc2531;
 import com.zsmartsystems.zigbee.dongle.conbee.ZigBeeDongleConBee;
@@ -59,6 +61,7 @@ import com.zsmartsystems.zigbee.dongle.ember.ZigBeeDongleEzsp;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EzspConfigId;
 import com.zsmartsystems.zigbee.dongle.telegesis.ZigBeeDongleTelegesis;
 import com.zsmartsystems.zigbee.dongle.xbee.ZigBeeDongleXBee;
+import com.zsmartsystems.zigbee.dongle.zstack.ZigBeeDongleZstack;
 import com.zsmartsystems.zigbee.security.ZigBeeKey;
 import com.zsmartsystems.zigbee.serial.ZigBeeSerialPort;
 import com.zsmartsystems.zigbee.serialization.DefaultDeserializer;
@@ -150,11 +153,12 @@ public class ZigBeeConsoleMain {
 
         Options options = new Options();
         options.addOption(Option.builder("d").longOpt("dongle").hasArg().argName("dongle type")
-                .desc("Set the dongle type to use (EMBER | CC2531 | TELEGESIS | CONBEE | XBEE)").required().build());
+                .desc("Set the dongle type to use (EMBER | CC2531 | ZSTACK | TELEGESIS | CONBEE | XBEE)").required()
+                .build());
         options.addOption(Option.builder("p").longOpt("port").argName("port name").hasArg().desc("Set the port")
                 .required().build());
         options.addOption(
-                Option.builder("b").longOpt("baud").hasArg().argName("baud").desc("Set the port baud rate").build());
+                Option.builder("b").longOpt("baud").hasArg().argName("baud").desc("Set the port baud rate").required().build());
         options.addOption(Option.builder("f").longOpt("flow").hasArg().argName("type")
                 .desc("Set the flow control (none | hardware | software)").build());
         options.addOption(Option.builder("c").longOpt("channel").hasArg().argName("channel id")
@@ -250,6 +254,12 @@ public class ZigBeeConsoleMain {
         if (dongleName.toUpperCase().equals("CC2531")) {
             dongle = new ZigBeeDongleTiCc2531(serialPort);
             transportOptions.addOption(TransportConfigOption.RADIO_TX_POWER, 3);
+        } else if (dongleName.toUpperCase().equals("ZSTACK")) {
+            dongle = new ZigBeeDongleZstack(serialPort);
+            transportOptions.addOption(TransportConfigOption.RADIO_TX_POWER, 3);
+
+            commands.add(ZstackConsoleNcpStateCommand.class);
+            commands.add(ZstackConsoleNcpSecurityCommand.class);
         } else if (dongleName.toUpperCase().equals("EMBER")) {
             ZigBeeDongleEzsp emberDongle = new ZigBeeDongleEzsp(serialPort);
             dongle = emberDongle;
@@ -384,7 +394,7 @@ public class ZigBeeConsoleMain {
             System.out.println("  * PAN ID                 = " + pan);
             System.out.println("  * Extended PAN ID        = " + extendedPan);
             System.out.println("  * Link Key               = " + linkKey);
-            if (nwkKey.hasOutgoingFrameCounter()) {
+            if (linkKey.hasOutgoingFrameCounter()) {
                 System.out.println("  * Link Key Frame Cnt     = " + linkKey.getOutgoingFrameCounter());
             }
             System.out.println("  * Network Key            = " + nwkKey);
@@ -431,7 +441,9 @@ public class ZigBeeConsoleMain {
             System.out.println("ZigBee console starting up ... [OK]");
         }
 
-        if (dongleName.toUpperCase().equals("CC2531")) {
+        networkManager.addSupportedCluster(ZclIasZoneCluster.CLUSTER_ID);
+
+        if (dongleName.equalsIgnoreCase("CC2531")) {
             ZigBeeDongleTiCc2531 tiDongle = (ZigBeeDongleTiCc2531) dongle;
             tiDongle.setLedMode(1, false);
             tiDongle.setLedMode(2, false);
