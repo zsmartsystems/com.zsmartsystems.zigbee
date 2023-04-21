@@ -8,14 +8,14 @@
 package com.zsmartsystems.zigbee.transaction;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ScheduledExecutorService;
@@ -65,7 +65,12 @@ import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor.MacCapabilitiesType;
  * attempt to send the next transaction in order to keep the transport layer full, while also fulfilling the various
  * constraints in the queues.
  * <p>
- * When sending, queues are polled in random order to ensure that all queues get a fair chance at sending data.
+ * When sending, queues are polled in order. Order is kept by a queue of queues. This outer queue can have multiple
+ * entries of the same transaction queue. Every time the transaction manager is called to send a transaction, the
+ * transaction will be a added to a respective transaction queue which will be added to the outer queue.
+ * Every time a transaction queue is polled from the outer queue only one single transaction is attempted to be sent.
+ * If no transaction is retrieved from the transaction queue (e.g. due to inter-transaction delays) the transaction is
+ * added back to the outer queue.
  *
  * @author Chris Jackson
  *
@@ -153,9 +158,9 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
     private final AtomicInteger transactionIdCounter = new AtomicInteger();
 
     /**
-     * A List of queues with outstanding commands. This is used for random access when sending transactions.
+     * A Queue of queues with outstanding commands. This is used for ordered access when sending transactions.
      */
-    private final List<ZigBeeTransactionQueue> outstandingQueues = new CopyOnWriteArrayList<>();
+    private final Queue<ZigBeeTransactionQueue> outstandingQueues = new ConcurrentLinkedQueue<>();
 
     private final ZigBeeTransactionQueue defaultQueue;
     private final ZigBeeTransactionQueue broadcastQueue;
@@ -366,7 +371,8 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
         }
 
         queue.addToQueue(transaction);
-        if (!queue.isEmpty() && !outstandingQueues.contains(queue)) {
+        if (!queue.isEmpty()) {
+            // always add since only one transaction is processed from one add
             outstandingQueues.add(queue);
         }
 
@@ -393,15 +399,17 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
                 return defaultQueue;
             }
             // Add the transaction to the device queue - if it doesn't currently exist, create it
-            ZigBeeTransactionQueue queue = nodeQueue.get(node.getIeeeAddress());
-            if (queue == null && createIfNotExist) {
-                logger.debug("[{}]: {}: Creating new Transaction Queue", networkManager.getNetworkManagerId(), node.getIeeeAddress());
-                queue = new ZigBeeTransactionQueue(networkManager.getNetworkManagerId() + " - " + node.getIeeeAddress().toString(), node.getIeeeAddress());
-                setQueueType(node, queue);
+            return nodeQueue.compute(node.getIeeeAddress(), (nodeAddress, queue) -> {
+                if (queue == null && createIfNotExist) {
+                    logger.debug("[{}]: {}: Creating new Transaction Queue", networkManager.getNetworkManagerId(), node.getIeeeAddress());
+                    ZigBeeTransactionQueue createdQueue = new ZigBeeTransactionQueue(node.getIeeeAddress().toString(),
+                            node.getIeeeAddress());
+                    setQueueType(node, createdQueue);
 
-                nodeQueue.put(node.getIeeeAddress(), queue);
-            }
-            return queue;
+                    return createdQueue;
+                }
+                return queue;
+            });
         } else if (address instanceof ZigBeeEndpointAddress
                 && ZigBeeBroadcastDestination.isBroadcast(address.getAddress())) {
             return broadcastQueue;
@@ -617,14 +625,14 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
             }
         }
         nodeQueue.remove(address);
-        outstandingQueues.remove(queue);
     }
 
     /**
      * Polls the queues to send outstanding transactions. This will send as many transactions as necessary, or available
      * within the constraints that have been set (e.g. the maxOutstandingTransactions).
      * <p>
-     * The order of transmission from each queue is randomised to ensure a fair ordering of transactions to each device.
+     * The transaction queues are processed in order so that overall order is kept expect when transmission is delayed
+     * (e.g. due to inter-transaction delays).
      * If a queue returns null, then it does not have transactions to send at that time and we let the timer take care
      * of rescheduling the transmission.
      */
@@ -638,7 +646,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
 
             ZigBeeTransaction transaction;
 
-            // Randomly loop through all queues, taking a transaction from each one in turn
+            // Loop through all queues, taking a transaction from each one in turn
             // If we have more transactions outstanding than we're allowed, then exit
             // If we get through an iteration of all queues without sending anything, then exit
             //
@@ -646,19 +654,22 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
             // * Queues may have more than one transaction to send
             // * Queues may have transactions to send, but be unable to send them at this time
 
-            List<ZigBeeTransactionQueue> emptyQueues = new ArrayList<>();
+            List<ZigBeeTransactionQueue> sleepyOrDelayedQueues = new ArrayList<>();
+
             boolean sendDone;
             do {
                 // Exit unless we send at least one transaction
                 sendDone = true;
 
-                // Randomise the lists
-                Collections.shuffle(outstandingQueues);
+                // ensure we start with a clean list for this iteration
+                sleepyOrDelayedQueues.clear();
 
-                // Clear the list of queues that have been emptied
-                emptyQueues.clear();
+                while (!outstandingQueues.isEmpty()) {
+                    ZigBeeTransactionQueue queue = outstandingQueues.poll();
+                    if (queue == null) {
+                        continue;
+                    }
 
-                for (ZigBeeTransactionQueue queue : outstandingQueues) {
                     // Check if we've reached the maximum number of commands we can send
                     if (outstandingTransactions.size() >= maxOutstandingTransactions) {
                         logger.debug("[{}]: Transaction Manager: Max outstanding transactions reached {}/{}", networkManager.getNetworkManagerId(), outstandingTransactions.size(),
@@ -671,6 +682,7 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
                     if (queue.isSleepy() && sleepyTransactions >= maxSleepyTransactions) {
                         logger.debug("[{}]: Transaction Manager: Max sleepy transactions reached {}/{} for queue {}", networkManager.getNetworkManagerId(), sleepyTransactions,
                                 maxSleepyTransactions, queue.getQueueName());
+                        sleepyOrDelayedQueues.add(queue);
                         continue;
                     }
 
@@ -684,29 +696,32 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
                         // Send the transaction.
                         send(transaction);
                         sendDone = false;
-                    }
-
-                    // If the queue has no more transactions,
-                    // remove it from the list of queues with outstanding transactions.
-                    if (queue.isEmpty()) {
-                        emptyQueues.add(queue);
+                    } else {
+                        if (!queue.isEmpty()) {
+                            sleepyOrDelayedQueues.add(queue);
+                        }
                     }
                 }
 
-                outstandingQueues.removeAll(emptyQueues);
+                // re-add sleepy or delayed queues (in order)
+                outstandingQueues.addAll(sleepyOrDelayedQueues);
+
             } while (!sendDone);
 
-            // Loop through all outstanding queues and find the next release time
-            long timeout = Long.MAX_VALUE;
-            for (ZigBeeTransactionQueue queue : outstandingQueues) {
-                long nextTime = queue.getNextReleaseTime();
-                if (nextTime < timeout) {
-                    timeout = nextTime;
+            // only start a request timer if there is actual outstanding work
+            if (!outstandingQueues.isEmpty()) {
+                // Loop through all outstanding queues and find the next release time
+                long timeout = Long.MAX_VALUE;
+                for (ZigBeeTransactionQueue queue : sleepyOrDelayedQueues) {
+                    long nextTime = queue.getNextReleaseTime();
+                    if (nextTime < timeout) {
+                        timeout = nextTime;
+                    }
                 }
-            }
 
-            if (timeout > 0) {
-                startRequeueTimer(timeout);
+                if (timeout != Long.MAX_VALUE && timeout > 0) {
+                    startRequeueTimer(timeout);
+                }
             }
         }
     }
