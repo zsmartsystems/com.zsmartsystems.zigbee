@@ -399,17 +399,17 @@ public class ZigBeeTransactionManager implements ZigBeeNetworkNodeListener {
                 return defaultQueue;
             }
             // Add the transaction to the device queue - if it doesn't currently exist, create it
-            return nodeQueue.compute(node.getIeeeAddress(), (nodeAddress, queue) -> {
-                if (queue == null && createIfNotExist) {
-                    logger.debug("[{}]: {}: Creating new Transaction Queue", networkManager.getNetworkManagerId(), node.getIeeeAddress());
-                    ZigBeeTransactionQueue createdQueue = new ZigBeeTransactionQueue(node.getIeeeAddress().toString(),
-                            node.getIeeeAddress());
-                    setQueueType(node, createdQueue);
+            ZigBeeTransactionQueue queue = nodeQueue.get(node.getIeeeAddress());
+            if (queue == null && createIfNotExist) {
+                logger.debug("[{}]: {}: Creating new Transaction Queue", networkManager.getNetworkManagerId(), node.getIeeeAddress());
+                ZigBeeTransactionQueue createdQueue = new ZigBeeTransactionQueue(node.getIeeeAddress().toString(),
+                        node.getIeeeAddress());
+                setQueueType(node, createdQueue);
+                nodeQueue.put(node.getIeeeAddress(), createdQueue);
 
-                    return createdQueue;
-                }
-                return queue;
-            });
+                return createdQueue;
+            }
+            return queue;
         } else if (address instanceof ZigBeeEndpointAddress
                 && ZigBeeBroadcastDestination.isBroadcast(address.getAddress())) {
             return broadcastQueue;
