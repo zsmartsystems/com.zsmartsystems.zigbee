@@ -43,6 +43,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<slf4j.version>1.7.30</slf4j.version>
 		<log4j.version>1.2.17</log4j.version>
+		<animal.sniffer.version>1.23</animal.sniffer.version>
 	</properties>
 
 	<scm>
@@ -101,6 +102,33 @@
 	</reporting>
 
 	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>3.7.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>animal-sniffer-maven-plugin</artifactId>
+					<version>${animal.sniffer.version}</version>
+					<configuration>
+						<signature>
+							<groupId>org.codehaus.mojo.signature</groupId>
+							<artifactId>java18</artifactId>
+							<version>1.0</version>
+						</signature>
+						<signature>
+							<groupId>net.sf.androidscents.signature</groupId>
+							<artifactId>android-api-level-21</artifactId>
+							<version>5.0.1_r2</version>
+						</signature>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -240,19 +268,6 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>animal-sniffer-maven-plugin</artifactId>
-				<version>1.22</version>
-				<configuration>
-					<signature>
-						<groupId>org.codehaus.mojo.signature</groupId>
-						<artifactId>java18</artifactId>
-						<version>1.0</version>
-					</signature>
-					<signature>
-						<groupId>net.sf.androidscents.signature</groupId>
-						<artifactId>android-api-level-21</artifactId>
-						<version>5.0.1_r2</version>
-					</signature>
-				</configuration>
 				<executions>
 					<execution>
 						<id>animal-sniffer</id>
@@ -262,18 +277,8 @@
 						</goals>
 					</execution>
 				</executions>
-	</plugin>
+			</plugin>
 		</plugins>
-
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-site-plugin</artifactId>
-					<version>3.7.1</version>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 
 	<dependencies>
