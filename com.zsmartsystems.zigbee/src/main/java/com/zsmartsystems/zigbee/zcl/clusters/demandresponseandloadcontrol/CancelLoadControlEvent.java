@@ -7,12 +7,11 @@
  */
 package com.zsmartsystems.zigbee.zcl.clusters.demandresponseandloadcontrol;
 
-import java.util.Calendar;
-
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclFieldDeserializer;
 import com.zsmartsystems.zigbee.zcl.ZclFieldSerializer;
+import com.zsmartsystems.zigbee.zcl.field.ZigBeeUtcTime;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclCommandDirection;
 import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
 
@@ -24,7 +23,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-25T10:11:19Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2022-12-09T01:34:23Z")
 public class CancelLoadControlEvent extends ZclDemandResponseAndLoadControlCommand {
     /**
      * The cluster ID to which this command belongs.
@@ -92,7 +91,7 @@ public class CancelLoadControlEvent extends ZclDemandResponseAndLoadControlComma
      * an event with an Effective Time of now, adjust the Duration In Minutes field to
      * correspond to the remainder of the event.
      */
-    private Calendar effectiveTime;
+    private ZigBeeUtcTime effectiveTime;
 
     /**
      * Default constructor.
@@ -114,14 +113,14 @@ public class CancelLoadControlEvent extends ZclDemandResponseAndLoadControlComma
      * @param deviceClass {@link Integer} Device Class
      * @param utilityEnrollmentGroup {@link Integer} Utility Enrollment Group
      * @param cancelControl {@link Integer} Cancel Control
-     * @param effectiveTime {@link Calendar} Effective Time
+     * @param effectiveTime {@link ZigBeeUtcTime} Effective Time
      */
     public CancelLoadControlEvent(
             Integer issuerEventId,
             Integer deviceClass,
             Integer utilityEnrollmentGroup,
             Integer cancelControl,
-            Calendar effectiveTime) {
+            ZigBeeUtcTime effectiveTime) {
 
         clusterId = CLUSTER_ID;
         commandId = COMMAND_ID;
@@ -276,7 +275,7 @@ public class CancelLoadControlEvent extends ZclDemandResponseAndLoadControlComma
      *
      * @return the Effective Time
      */
-    public Calendar getEffectiveTime() {
+    public ZigBeeUtcTime getEffectiveTime() {
         return effectiveTime;
     }
 
@@ -297,7 +296,7 @@ public class CancelLoadControlEvent extends ZclDemandResponseAndLoadControlComma
      * @deprecated as of 1.3.0. Use the parameterised constructor instead to ensure that all mandatory fields are provided.
      */
     @Deprecated
-    public void setEffectiveTime(final Calendar effectiveTime) {
+    public void setEffectiveTime(final ZigBeeUtcTime effectiveTime) {
         this.effectiveTime = effectiveTime;
     }
 
@@ -316,7 +315,7 @@ public class CancelLoadControlEvent extends ZclDemandResponseAndLoadControlComma
         deviceClass = (Integer) deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
         utilityEnrollmentGroup = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         cancelControl = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        effectiveTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
+        effectiveTime = (ZigBeeUtcTime) deserializer.deserialize(ZclDataType.UTCTIME);
     }
 
     @Override

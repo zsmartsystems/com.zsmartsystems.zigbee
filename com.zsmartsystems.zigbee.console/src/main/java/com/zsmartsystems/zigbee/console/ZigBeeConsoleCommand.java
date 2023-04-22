@@ -54,11 +54,11 @@ public interface ZigBeeConsoleCommand {
      * @param args the command arguments. arg[0] is the command
      * @param out the output PrintStream
      * @return true if the command executed successfully
-     * @throws IllegalArgumentException if any commands are incorrectly formatted, or the incorrect number of commands
-     *             are provided
-     * @throws IllegalStateException if the network is not in a state that allows the command to be executed
-     * @throws InterruptedException if the command was interrupted
-     * @throws ExecutionException if the command failed
+     * @throws {@link IllegalArgumentException} if any commands are incorrectly formatted, or the incorrect number of
+     *             commands are provided
+     * @throws {@link IllegalStateException} if the network is not in a state that allows the command to be executed
+     * @throws {@link InterruptedException} if the command was interrupted
+     * @throws {@link ExecutionException} if the command failed
      */
     public void process(final ZigBeeNetworkManager networkManager, final String[] args, PrintStream out)
             throws IllegalArgumentException, IllegalStateException, ExecutionException, InterruptedException;
