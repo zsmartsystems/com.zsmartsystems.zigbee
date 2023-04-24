@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -41,12 +42,25 @@ public class ZigBeeExecutors {
     /**
      * Creates a thread pool that can schedule commands to run after a given delay, or to execute periodically.
      *
+     * <p>
+     * Note:<br>
+     * As we cancel scheduled tasks regularly, we want to get rid of cancelled tasks even with the penalty of the clean
+     * up overhead, so the configure the created {@link ScheduledThreadPoolExecutor} with
+     * {@link ScheduledThreadPoolExecutor#setRemoveOnCancelPolicy(boolean)}.
+     * </p>
+     *
      * @param corePoolSize the number of threads to keep in the pool, even if they are idle
      * @param name the thread pool name
      * @return a newly created scheduled thread pool
      */
     public static ScheduledExecutorService newScheduledThreadPool(int corePoolSize, String name) {
-        return Executors.newScheduledThreadPool(corePoolSize, new ThreadFactoryWithNamePrefix(name));
+        ScheduledThreadPoolExecutor scheduledThreadPool = new ScheduledThreadPoolExecutor(corePoolSize, new ThreadFactoryWithNamePrefix(name));
+
+        // as we cancel a lot we want to get rid of cancelled tasks
+        // even with the penalty of the clean up overhead
+        scheduledThreadPool.setRemoveOnCancelPolicy(true);
+
+        return scheduledThreadPool;
     }
 
     /**
@@ -61,7 +75,10 @@ public class ZigBeeExecutors {
      * @return a newly created scheduled executor
      */
     public static ScheduledExecutorService newSingleThreadScheduledExecutor(String name) {
-        return Executors.newSingleThreadScheduledExecutor(new ThreadFactoryWithNamePrefix(name));
+        // reuse our custom method which configures removal of cancelled tasks
+        ScheduledExecutorService singleThreadScheduledExecutor = newScheduledThreadPool(1, name);
+
+        return singleThreadScheduledExecutor;
     }
 
     /**
