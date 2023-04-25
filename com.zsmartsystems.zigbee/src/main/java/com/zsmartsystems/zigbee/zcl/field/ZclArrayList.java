@@ -144,12 +144,12 @@ public class ZclArrayList implements List<Object> {
 
     @Override
     public Object remove(int index) {
-        return remove(index);
+        return list.remove(index);
     }
 
     @Override
     public int indexOf(Object o) {
-        return indexOf(o);
+        return list.indexOf(o);
     }
 
     @Override
