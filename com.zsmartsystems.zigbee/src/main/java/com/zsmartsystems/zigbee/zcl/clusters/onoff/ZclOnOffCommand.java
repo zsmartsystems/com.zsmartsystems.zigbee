@@ -10,6 +10,8 @@ package com.zsmartsystems.zigbee.zcl.clusters.onoff;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
+
 /**
  * Abstract base command class for all commands in the <b>On/Off</b> cluster (<i>Cluster ID 0x0006</i>).
  * All commands sent through the {@link ZclOnOffCluster} must extend this class.

@@ -10,6 +10,8 @@ package com.zsmartsystems.zigbee.zcl.clusters.alarms;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclAlarmsCluster;
+
 /**
  * Abstract base command class for all commands in the <b>Alarms</b> cluster (<i>Cluster ID 0x0009</i>).
  * All commands sent through the {@link ZclAlarmsCluster} must extend this class.

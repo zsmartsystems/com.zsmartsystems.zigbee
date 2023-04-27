@@ -10,6 +10,8 @@ package com.zsmartsystems.zigbee.zcl.clusters.windowcovering;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclWindowCoveringCluster;
+
 /**
  * Abstract base command class for all commands in the <b>Window Covering</b> cluster (<i>Cluster ID 0x0102</i>).
  * All commands sent through the {@link ZclWindowCoveringCluster} must extend this class.

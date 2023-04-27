@@ -7,9 +7,10 @@
  */
 package com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol;
 
-import com.zsmartsystems.zigbee.ExtendedPanId;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.zsmartsystems.zigbee.ExtendedPanId;
 
 /**
  * Class to implement the Telegesis command <b>Active Scan</b>.

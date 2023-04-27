@@ -10,6 +10,8 @@ package com.zsmartsystems.zigbee.zcl.clusters.demandresponseandloadcontrol;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclDemandResponseAndLoadControlCluster;
+
 /**
  * Abstract base command class for all commands in the <b>Demand Response And Load Control</b> cluster (<i>Cluster ID 0x0701</i>).
  * All commands sent through the {@link ZclDemandResponseAndLoadControlCluster} must extend this class.

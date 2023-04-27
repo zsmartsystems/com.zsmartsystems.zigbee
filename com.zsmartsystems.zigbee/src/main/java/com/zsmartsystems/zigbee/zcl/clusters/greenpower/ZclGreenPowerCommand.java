@@ -10,6 +10,8 @@ package com.zsmartsystems.zigbee.zcl.clusters.greenpower;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclGreenPowerCluster;
+
 /**
  * Abstract base command class for all commands in the <b>Green Power</b> cluster (<i>Cluster ID 0x0021</i>).
  * All commands sent through the {@link ZclGreenPowerCluster} must extend this class.

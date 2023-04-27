@@ -10,6 +10,8 @@ package com.zsmartsystems.zigbee.zcl.clusters.keyestablishment;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclKeyEstablishmentCluster;
+
 /**
  * Abstract base command class for all commands in the <b>Key Establishment</b> cluster (<i>Cluster ID 0x0800</i>).
  * All commands sent through the {@link ZclKeyEstablishmentCluster} must extend this class.

@@ -7,6 +7,8 @@
  */
 package com.zsmartsystems.zigbee.console;
 
+import java.io.PrintStream;
+
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
@@ -14,8 +16,6 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclPollControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.pollcontrol.SetLongPollIntervalCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.pollcontrol.SetShortPollIntervalCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.pollcontrol.ZclPollControlCommand;
-
-import java.io.PrintStream;
 
 /**
  * Uses the PollControl cluster to set the poll interval

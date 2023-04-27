@@ -10,6 +10,8 @@ package com.zsmartsystems.zigbee.zcl.clusters.pollcontrol;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclPollControlCluster;
+
 /**
  * Abstract base command class for all commands in the <b>Poll Control</b> cluster (<i>Cluster ID 0x0020</i>).
  * All commands sent through the {@link ZclPollControlCluster} must extend this class.

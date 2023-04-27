@@ -10,6 +10,8 @@ package com.zsmartsystems.zigbee.zcl.clusters.scenes;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclScenesCluster;
+
 /**
  * Abstract base command class for all commands in the <b>Scenes</b> cluster (<i>Cluster ID 0x0005</i>).
  * All commands sent through the {@link ZclScenesCluster} must extend this class.

@@ -13,8 +13,6 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeVersionRequest;
-
 /**
  *
  * @author Chris Jackson

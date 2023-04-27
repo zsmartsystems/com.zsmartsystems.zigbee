@@ -7,9 +7,10 @@
  */
 package com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol;
 
-import com.zsmartsystems.zigbee.IeeeAddress;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
  * Class to implement the Telegesis command <b>Route Record Message</b>.

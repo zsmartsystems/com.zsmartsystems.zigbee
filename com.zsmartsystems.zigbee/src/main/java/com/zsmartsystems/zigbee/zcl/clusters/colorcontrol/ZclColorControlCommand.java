@@ -10,6 +10,8 @@ package com.zsmartsystems.zigbee.zcl.clusters.colorcontrol;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclColorControlCluster;
+
 /**
  * Abstract base command class for all commands in the <b>Color Control</b> cluster (<i>Cluster ID 0x0300</i>).
  * All commands sent through the {@link ZclColorControlCluster} must extend this class.

@@ -7,8 +7,6 @@
  */
 package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
 
-import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.ModemStatus;
-
 /**
  * Class to implement the XBee command <b>Modem Status</b>.
  * <p>

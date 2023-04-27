@@ -7,13 +7,13 @@
  */
 package com.zsmartsystems.zigbee.console;
 
+import java.io.PrintStream;
+
 import com.zsmartsystems.zigbee.CommandResult;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.basic.ResetToFactoryDefaultsCommand;
-
-import java.io.PrintStream;
 
 /**
  * Uses the Basic cluster to reset to factory defaults

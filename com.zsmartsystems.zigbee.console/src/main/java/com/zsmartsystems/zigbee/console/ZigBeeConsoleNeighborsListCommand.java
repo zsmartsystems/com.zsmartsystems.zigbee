@@ -7,15 +7,19 @@
  */
 package com.zsmartsystems.zigbee.console;
 
-import com.zsmartsystems.zigbee.*;
+import java.io.PrintStream;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.ExecutionException;
+
+import com.zsmartsystems.zigbee.CommandResult;
+import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
+import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
+import com.zsmartsystems.zigbee.ZigBeeNode;
 import com.zsmartsystems.zigbee.zdo.ZdoStatus;
 import com.zsmartsystems.zigbee.zdo.command.ManagementLqiRequest;
 import com.zsmartsystems.zigbee.zdo.command.ManagementLqiResponse;
 import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
-
-import java.io.PrintStream;
-import java.util.*;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Lists the neighbors of a node

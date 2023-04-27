@@ -7,7 +7,6 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.structure;
 
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberBeaconData;
 import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspDeserializer;
 import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
 

@@ -7,13 +7,12 @@
  */
 package com.zsmartsystems.zigbee.dongle.ember.ezsp.structure;
 
-import com.zsmartsystems.zigbee.IeeeAddress;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyData;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.structure.EmberKeyType;
-import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspDeserializer;
-import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
 import java.util.HashSet;
 import java.util.Set;
+
+import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspDeserializer;
+import com.zsmartsystems.zigbee.dongle.ember.internal.serializer.EzspSerializer;
 
 /**
  * Class to implement the Ember Structure <b>EmberKeyStruct</b>.

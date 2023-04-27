@@ -10,6 +10,8 @@ package com.zsmartsystems.zigbee.zcl.clusters.electricalmeasurement;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclElectricalMeasurementCluster;
+
 /**
  * Abstract base command class for all commands in the <b>Electrical Measurement</b> cluster (<i>Cluster ID 0x0B04</i>).
  * All commands sent through the {@link ZclElectricalMeasurementCluster} must extend this class.

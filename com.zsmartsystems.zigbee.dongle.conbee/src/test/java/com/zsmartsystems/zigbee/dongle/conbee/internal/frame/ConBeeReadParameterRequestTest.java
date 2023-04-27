@@ -13,9 +13,6 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeNetworkParameter;
-import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeReadParameterRequest;
-
 /**
  *
  * @author Chris Jackson

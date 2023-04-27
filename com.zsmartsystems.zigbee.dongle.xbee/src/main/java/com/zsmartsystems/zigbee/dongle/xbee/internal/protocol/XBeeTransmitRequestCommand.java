@@ -7,11 +7,11 @@
  */
 package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
 
-import com.zsmartsystems.zigbee.IeeeAddress;
-import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.TransmitOptions;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import com.zsmartsystems.zigbee.IeeeAddress;
 
 /**
  * Class to implement the XBee command <b>Transmit Request</b>.

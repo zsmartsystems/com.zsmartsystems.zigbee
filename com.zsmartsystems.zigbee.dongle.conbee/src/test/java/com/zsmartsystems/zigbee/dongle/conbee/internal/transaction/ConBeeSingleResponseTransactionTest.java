@@ -18,8 +18,6 @@ import org.junit.Test;
 import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeDeviceStateRequest;
 import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeDeviceStateResponse;
 import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeEnqueueSendDataResponse;
-import com.zsmartsystems.zigbee.dongle.conbee.internal.transaction.ConBeeSingleResponseTransaction;
-import com.zsmartsystems.zigbee.dongle.conbee.internal.transaction.ConBeeTransaction;
 
 /**
  *

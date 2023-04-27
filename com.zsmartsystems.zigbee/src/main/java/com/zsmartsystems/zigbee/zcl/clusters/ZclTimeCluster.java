@@ -9,7 +9,6 @@ package com.zsmartsystems.zigbee.zcl.clusters;
 
 import java.util.Calendar;
 import java.util.Map;
-import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.Future;
 
 import javax.annotation.Generated;

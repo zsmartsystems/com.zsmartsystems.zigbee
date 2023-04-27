@@ -7,8 +7,6 @@
  */
 package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
 
-import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.CommandStatus;
-
 /**
  * Class to implement the XBee command <b>Join Notification</b>.
  * <p>

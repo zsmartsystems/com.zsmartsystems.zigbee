@@ -10,6 +10,8 @@ package com.zsmartsystems.zigbee.zcl.clusters.thermostat;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclThermostatCluster;
+
 /**
  * Abstract base command class for all commands in the <b>Thermostat</b> cluster (<i>Cluster ID 0x0201</i>).
  * All commands sent through the {@link ZclThermostatCluster} must extend this class.

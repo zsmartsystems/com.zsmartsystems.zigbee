@@ -8,7 +8,6 @@
 package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
-import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.CommandStatus;
 
 /**
  * Class to implement the XBee command <b>Extended PAN ID Config</b>.

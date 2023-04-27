@@ -7,9 +7,6 @@
  */
 package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
 
-import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.DeliveryStatus;
-import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.DiscoveryStatus;
-
 /**
  * Class to implement the XBee command <b>Transmit Status</b>.
  * <p>

@@ -8,7 +8,6 @@
 package com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
-import com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol.TelegesisDeviceType;
 
 /**
  * Class to implement the Telegesis command <b>Display Network Information</b>.

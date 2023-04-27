@@ -10,6 +10,8 @@ package com.zsmartsystems.zigbee.zcl.clusters.groups;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclGroupsCluster;
+
 /**
  * Abstract base command class for all commands in the <b>Groups</b> cluster (<i>Cluster ID 0x0004</i>).
  * All commands sent through the {@link ZclGroupsCluster} must extend this class.

@@ -13,9 +13,6 @@ import org.junit.Test;
 
 import com.zsmartsystems.zigbee.ExtendedPanId;
 import com.zsmartsystems.zigbee.IeeeAddress;
-import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeNetworkParameter;
-import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeReadParameterResponse;
-import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeStatus;
 
 /**
  *

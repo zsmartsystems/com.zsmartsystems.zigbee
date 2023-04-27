@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.dongle.telegesis.internal.protocol;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Class to implement the Telegesis command <b>Set Output Clusters</b>.

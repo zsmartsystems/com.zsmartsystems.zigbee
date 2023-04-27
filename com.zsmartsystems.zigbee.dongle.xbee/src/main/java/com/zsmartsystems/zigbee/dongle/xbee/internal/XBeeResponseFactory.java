@@ -7,6 +7,13 @@
  */
 package com.zsmartsystems.zigbee.dongle.xbee.internal;
 
+import java.lang.reflect.Constructor;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeActiveScanResponse;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeApiEnableResponse;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeApiModeResponse;
@@ -36,12 +43,6 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeScanChannelsRe
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeSoftwareResetResponse;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeTransmitStatusResponse;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeZigbeeStackProfileResponse;
-import java.lang.reflect.Constructor;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 /**
  * Helper factory class to create {@link XBeeResponse} classes.

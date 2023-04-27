@@ -14,8 +14,6 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
-import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeAddressMode;
-import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeEnqueueSendDataRequest;
 
 /**
  *

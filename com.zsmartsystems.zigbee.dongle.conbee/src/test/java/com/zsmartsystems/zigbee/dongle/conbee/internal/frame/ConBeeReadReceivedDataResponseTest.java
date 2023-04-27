@@ -12,8 +12,6 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import com.zsmartsystems.zigbee.IeeeAddress;
-import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeReadReceivedDataResponse;
-import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeStatus;
 
 /**
  *

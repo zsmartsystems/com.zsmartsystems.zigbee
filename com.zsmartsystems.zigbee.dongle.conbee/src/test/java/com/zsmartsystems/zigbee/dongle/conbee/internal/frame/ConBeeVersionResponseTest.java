@@ -11,8 +11,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeVersionResponse;
-
 /**
  *
  * @author Chris Jackson

@@ -7,6 +7,13 @@
  */
 package com.zsmartsystems.zigbee.dongle.xbee.internal;
 
+import java.lang.reflect.Constructor;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeEvent;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeManyToOneRouteRequestEvent;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeModemStatusEvent;
@@ -14,12 +21,6 @@ import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeOtaFirmwareUpd
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeReceivePacketEvent;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeReceivePacketExplicitEvent;
 import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.XBeeRouteRecordEvent;
-import java.lang.reflect.Constructor;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 /**
  * Helper factory class to create {@link XBeeEvent} classes.

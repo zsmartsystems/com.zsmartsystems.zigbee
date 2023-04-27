@@ -10,6 +10,8 @@ package com.zsmartsystems.zigbee.zcl.clusters.doorlock;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclDoorLockCluster;
+
 /**
  * Abstract base command class for all commands in the <b>Door Lock</b> cluster (<i>Cluster ID 0x0101</i>).
  * All commands sent through the {@link ZclDoorLockCluster} must extend this class.

@@ -10,6 +10,8 @@ package com.zsmartsystems.zigbee.zcl.clusters.commissioning;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclCommissioningCluster;
+
 /**
  * Abstract base command class for all commands in the <b>Commissioning</b> cluster (<i>Cluster ID 0x0015</i>).
  * All commands sent through the {@link ZclCommissioningCluster} must extend this class.

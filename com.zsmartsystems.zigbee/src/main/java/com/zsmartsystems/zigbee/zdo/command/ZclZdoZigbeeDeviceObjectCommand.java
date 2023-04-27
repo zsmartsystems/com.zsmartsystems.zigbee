@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.zdo.command;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+
 /**
  * Abstract base command class for all commands in the <b>ZDO ZigBee Device Object</b> cluster (<i>Cluster ID 0x0000</i>).
  * All commands sent through the {@link ZclZdoZigbeeDeviceObjectCluster} must extend this class.

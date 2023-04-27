@@ -10,6 +10,8 @@ package com.zsmartsystems.zigbee.zcl.clusters.messaging;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclMessagingCluster;
+
 /**
  * Abstract base command class for all commands in the <b>Messaging</b> cluster (<i>Cluster ID 0x0703</i>).
  * All commands sent through the {@link ZclMessagingCluster} must extend this class.

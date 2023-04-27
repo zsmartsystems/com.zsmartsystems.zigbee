@@ -13,12 +13,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeDeviceStateResponse;
-import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeEnqueueSendDataResponse;
-import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeFrame;
-import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeNetworkState;
-import com.zsmartsystems.zigbee.dongle.conbee.internal.frame.ConBeeQuerySendDataResponse;
-
 /**
  *
  * @author Chris Jackson

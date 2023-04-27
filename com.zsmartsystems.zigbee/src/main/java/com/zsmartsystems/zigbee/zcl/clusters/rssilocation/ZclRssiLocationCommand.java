@@ -10,6 +10,8 @@ package com.zsmartsystems.zigbee.zcl.clusters.rssilocation;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclRssiLocationCluster;
+
 /**
  * Abstract base command class for all commands in the <b>RSSI Location</b> cluster (<i>Cluster ID 0x000B</i>).
  * All commands sent through the {@link ZclRssiLocationCluster} must extend this class.

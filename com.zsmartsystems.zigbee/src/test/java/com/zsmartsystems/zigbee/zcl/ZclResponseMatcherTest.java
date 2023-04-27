@@ -10,10 +10,10 @@ package com.zsmartsystems.zigbee.zcl;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.zsmartsystems.zigbee.IeeeAddress;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.zsmartsystems.zigbee.IeeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeAddress;
 import com.zsmartsystems.zigbee.ZigBeeEndpointAddress;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;

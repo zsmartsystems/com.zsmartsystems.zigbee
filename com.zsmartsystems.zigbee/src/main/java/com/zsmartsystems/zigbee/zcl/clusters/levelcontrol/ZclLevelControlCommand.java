@@ -10,6 +10,8 @@ package com.zsmartsystems.zigbee.zcl.clusters.levelcontrol;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
+
 /**
  * Abstract base command class for all commands in the <b>Level Control</b> cluster (<i>Cluster ID 0x0008</i>).
  * All commands sent through the {@link ZclLevelControlCluster} must extend this class.

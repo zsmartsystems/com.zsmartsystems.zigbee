@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee.zcl.clusters.general;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+
 /**
  * Abstract base command class for all commands in the <b>General</b> cluster (<i>Cluster ID 0xFFFF</i>).
  * All commands sent through the {@link ZclGeneralCluster} must extend this class.

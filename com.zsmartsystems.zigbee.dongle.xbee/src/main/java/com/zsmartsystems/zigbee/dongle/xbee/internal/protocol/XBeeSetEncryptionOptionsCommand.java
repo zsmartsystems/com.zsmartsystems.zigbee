@@ -7,7 +7,6 @@
  */
 package com.zsmartsystems.zigbee.dongle.xbee.internal.protocol;
 
-import com.zsmartsystems.zigbee.dongle.xbee.internal.protocol.EncryptionOptions;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

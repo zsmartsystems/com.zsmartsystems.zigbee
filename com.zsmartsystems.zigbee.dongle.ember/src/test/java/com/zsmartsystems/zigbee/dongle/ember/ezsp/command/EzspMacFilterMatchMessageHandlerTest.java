@@ -16,7 +16,6 @@ import org.junit.Test;
 
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrame;
 import com.zsmartsystems.zigbee.dongle.ember.ezsp.EzspFrameTest;
-import com.zsmartsystems.zigbee.dongle.ember.ezsp.command.EzspMacFilterMatchMessageHandler;
 
 /**
  *

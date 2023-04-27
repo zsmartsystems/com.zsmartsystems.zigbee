@@ -10,6 +10,8 @@ package com.zsmartsystems.zigbee.zcl.clusters.smartenergytunneling;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclSmartEnergyTunnelingCluster;
+
 /**
  * Abstract base command class for all commands in the <b>Smart Energy Tunneling</b> cluster (<i>Cluster ID 0x0704</i>).
  * All commands sent through the {@link ZclSmartEnergyTunnelingCluster} must extend this class.

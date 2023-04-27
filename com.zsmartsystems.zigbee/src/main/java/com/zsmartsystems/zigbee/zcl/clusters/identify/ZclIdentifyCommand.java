@@ -10,6 +10,8 @@ package com.zsmartsystems.zigbee.zcl.clusters.identify;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclIdentifyCluster;
+
 /**
  * Abstract base command class for all commands in the <b>Identify</b> cluster (<i>Cluster ID 0x0003</i>).
  * All commands sent through the {@link ZclIdentifyCluster} must extend this class.

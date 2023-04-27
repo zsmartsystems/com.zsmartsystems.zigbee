@@ -10,6 +10,8 @@ package com.zsmartsystems.zigbee.zcl.clusters.iasace;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclIasAceCluster;
+
 /**
  * Abstract base command class for all commands in the <b>IAS ACE</b> cluster (<i>Cluster ID 0x0501</i>).
  * All commands sent through the {@link ZclIasAceCluster} must extend this class.

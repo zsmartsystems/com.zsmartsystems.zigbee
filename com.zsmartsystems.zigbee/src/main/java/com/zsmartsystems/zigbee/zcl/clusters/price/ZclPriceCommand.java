@@ -10,6 +10,8 @@ package com.zsmartsystems.zigbee.zcl.clusters.price;
 import javax.annotation.Generated;
 
 import com.zsmartsystems.zigbee.zcl.ZclCommand;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclPriceCluster;
+
 /**
  * Abstract base command class for all commands in the <b>Price</b> cluster (<i>Cluster ID 0x0700</i>).
  * All commands sent through the {@link ZclPriceCluster} must extend this class.
