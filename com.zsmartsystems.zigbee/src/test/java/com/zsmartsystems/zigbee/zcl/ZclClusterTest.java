@@ -74,6 +74,7 @@ import com.zsmartsystems.zigbee.zdo.command.UnbindRequest;
  */
 public class ZclClusterTest {
     private static final int TIMEOUT = 5000;
+    @SuppressWarnings("unused")
     private static final MockSettings MOCK_SETTINGS_VERBOSE = Mockito.withSettings().verboseLogging();
     private ZigBeeNode node;
     private ZigBeeEndpoint endpoint;
@@ -379,6 +380,7 @@ public class ZclClusterTest {
         cluster.removeAttributeListener(listenerMock);
     }
 
+    @SuppressWarnings("unused")
     private void assertNotEqual(Object object, Object object2) {
         // TODO Auto-generated method stub
 

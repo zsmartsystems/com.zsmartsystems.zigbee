@@ -232,6 +232,7 @@ public class ZclOtaUpgradeServer implements ZigBeeApplication, ZclCommandListene
     /**
      * Specifies that the minimum block period field is present
      */
+    @SuppressWarnings("unused")
     private static final int IMAGE_BLOCK_FIELD_MINIMUM_BLOCK_PERIOD = 0x02;
 
     /**
