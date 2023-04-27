@@ -111,8 +111,11 @@ public class CommandResult {
      *
      * @return the received response {@link ZigBeeCommand}
      */
-    public <ZigBeeCommand> ZigBeeCommand getResponse() {
-        return (ZigBeeCommand) response;
+    public <ZC extends ZigBeeCommand> ZC getResponse() {
+        @SuppressWarnings("unchecked")
+        ZC typedReponse = (ZC) response;
+
+        return typedReponse;
     }
 
     @Override

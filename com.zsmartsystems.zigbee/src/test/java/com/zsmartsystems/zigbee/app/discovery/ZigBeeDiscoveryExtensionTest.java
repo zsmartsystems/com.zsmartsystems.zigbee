@@ -58,6 +58,7 @@ public class ZigBeeDiscoveryExtensionTest {
             }
         }).when(networkManager).executeTask(ArgumentMatchers.any(Runnable.class));
 
+        @SuppressWarnings("unchecked")
         Future<CommandResult> future = Mockito.mock(Future.class);
         CommandResult cmdResult = Mockito.mock(CommandResult.class);
         Mockito.when(cmdResult.isError()).thenReturn(true);
