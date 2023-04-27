@@ -33,6 +33,7 @@ public class ZclFieldSerializer {
      */
     public void serialize(final Object value, final ZclDataType dataType) {
         if (ZclListItemField.class.isAssignableFrom(dataType.getDataClass())) {
+            @SuppressWarnings("unchecked")
             final List<ZclListItemField> list = (List<ZclListItemField>) value;
             for (final ZclListItemField item : list) {
                 item.serialize(serializer);
