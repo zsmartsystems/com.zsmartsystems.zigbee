@@ -145,16 +145,20 @@ public class ZigBeeNetworkDatabaseManagerTest {
         ZigBeeNetworkDatabaseManager databaseManager = new ZigBeeNetworkDatabaseManager(networkManager);
 
         databaseManager.setDeferredWriteTime(10);
-        assertEquals(10,
+        asserEqualsWithType(10,
                 TestUtilities.getField(ZigBeeNetworkDatabaseManager.class, databaseManager, "deferredWriteTime"));
         databaseManager.setMaxDeferredWriteTime(5);
-        assertEquals(5,
+        asserEqualsWithType(5,
                 TestUtilities.getField(ZigBeeNetworkDatabaseManager.class, databaseManager, "deferredWriteTime"));
-        assertEquals(TimeUnit.MILLISECONDS.toNanos(5),
+        asserEqualsWithType(TimeUnit.MILLISECONDS.toNanos(5),
                 TestUtilities.getField(ZigBeeNetworkDatabaseManager.class, databaseManager, "deferredWriteTimeout"));
         databaseManager.setDeferredWriteTime(3);
-        assertEquals(3,
+        asserEqualsWithType(3,
                 TestUtilities.getField(ZigBeeNetworkDatabaseManager.class, databaseManager, "deferredWriteTime"));
+    }
+
+    private <T> void asserEqualsWithType(T expected, T actual) {
+        assertEquals(expected, actual);
     }
 
     @Test

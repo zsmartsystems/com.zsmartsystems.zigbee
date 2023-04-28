@@ -1236,11 +1236,12 @@ public class ZigBeeNetworkManagerTest
 
         ZigBeeAnnounceListener announceListener = Mockito.mock(ZigBeeAnnounceListener.class);
         manager.addAnnounceListener(announceListener);
-        assertEquals(1, ((Collection<ZigBeeAnnounceListener>) TestUtilities.getField(ZigBeeNetworkManager.class,
-                manager, "announceListeners")).size());
+
+        Collection<ZigBeeAnnounceListener> announceListenersField = TestUtilities.getField(ZigBeeNetworkManager.class,
+                manager, "announceListeners");
+        assertEquals(1, announceListenersField.size());
         manager.addAnnounceListener(announceListener);
-        assertEquals(1, ((Collection<ZigBeeAnnounceListener>) TestUtilities.getField(ZigBeeNetworkManager.class,
-                manager, "announceListeners")).size());
+        assertEquals(1, announceListenersField.size());
 
         manager.nodeStatusUpdate(ZigBeeNodeStatus.DEVICE_LEFT, 1234, new IeeeAddress("123456789ABCDEF0"));
         Mockito.verify(node, Mockito.times(0)).setNodeState(ArgumentMatchers.any(ZigBeeNodeState.class));
