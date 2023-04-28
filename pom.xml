@@ -267,7 +267,7 @@
 					<instructions>
 						<Bundle-Name>${project.artifactId}</Bundle-Name>
 						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-						<Bundle-Description>${pom.name}</Bundle-Description>
+						<Bundle-Description>${project.name}</Bundle-Description>
 					</instructions>
 				</configuration>
 			</plugin>
