@@ -163,8 +163,8 @@ public class TransferDataErrorClientToServer extends ZclSmartEnergyTunnelingComm
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        tunnelId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        transferDataStatus = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        tunnelId = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        transferDataStatus = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
     }
 
     @Override

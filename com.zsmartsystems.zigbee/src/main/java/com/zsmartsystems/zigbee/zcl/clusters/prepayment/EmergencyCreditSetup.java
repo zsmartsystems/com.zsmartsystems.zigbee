@@ -186,10 +186,10 @@ public class EmergencyCreditSetup extends ZclPrepaymentCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        issuerEventId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        startTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        emergencyCreditLimit = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        emergencyCreditThreshold = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        issuerEventId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        startTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        emergencyCreditLimit = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        emergencyCreditThreshold = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
     }
 
     @Override

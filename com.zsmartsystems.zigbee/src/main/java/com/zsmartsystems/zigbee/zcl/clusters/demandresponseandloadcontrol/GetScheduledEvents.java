@@ -161,8 +161,8 @@ public class GetScheduledEvents extends ZclDemandResponseAndLoadControlCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        startTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        numberOfEvents = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        startTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        numberOfEvents = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

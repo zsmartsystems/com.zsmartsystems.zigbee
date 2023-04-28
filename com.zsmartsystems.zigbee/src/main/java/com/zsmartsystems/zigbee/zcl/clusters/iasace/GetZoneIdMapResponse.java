@@ -534,22 +534,22 @@ public class GetZoneIdMapResponse extends ZclIasAceCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        zoneIdMapSection0 = (Integer) deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
-        zoneIdMapSection1 = (Integer) deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
-        zoneIdMapSection2 = (Integer) deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
-        zoneIdMapSection3 = (Integer) deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
-        zoneIdMapSection4 = (Integer) deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
-        zoneIdMapSection5 = (Integer) deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
-        zoneIdMapSection6 = (Integer) deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
-        zoneIdMapSection7 = (Integer) deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
-        zoneIdMapSection8 = (Integer) deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
-        zoneIdMapSection9 = (Integer) deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
-        zoneIdMapSection10 = (Integer) deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
-        zoneIdMapSection11 = (Integer) deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
-        zoneIdMapSection12 = (Integer) deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
-        zoneIdMapSection13 = (Integer) deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
-        zoneIdMapSection14 = (Integer) deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
-        zoneIdMapSection15 = (Integer) deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
+        zoneIdMapSection0 = deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
+        zoneIdMapSection1 = deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
+        zoneIdMapSection2 = deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
+        zoneIdMapSection3 = deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
+        zoneIdMapSection4 = deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
+        zoneIdMapSection5 = deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
+        zoneIdMapSection6 = deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
+        zoneIdMapSection7 = deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
+        zoneIdMapSection8 = deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
+        zoneIdMapSection9 = deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
+        zoneIdMapSection10 = deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
+        zoneIdMapSection11 = deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
+        zoneIdMapSection12 = deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
+        zoneIdMapSection13 = deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
+        zoneIdMapSection14 = deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
+        zoneIdMapSection15 = deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
     }
 
     @Override

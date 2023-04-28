@@ -95,7 +95,7 @@ public class ArmResponse extends ZclIasAceCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        armNotification = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        armNotification = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
     }
 
     @Override

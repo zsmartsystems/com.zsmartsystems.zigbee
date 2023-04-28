@@ -110,7 +110,7 @@ public class GetMessageCancellation extends ZclMessagingCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        earliestImplementationTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
+        earliestImplementationTime = deserializer.deserialize(ZclDataType.UTCTIME);
     }
 
     @Override

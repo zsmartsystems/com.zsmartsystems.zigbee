@@ -385,14 +385,14 @@ public class PublishCreditPaymentCommand extends ZclPriceCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        providerId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        issuerEventId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        creditPaymentDueDate = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        creditPaymentOverdueAmount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        creditPaymentStatus = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        creditPayment = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        creditPaymentDate = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        creditPaymentRef = (ByteArray) deserializer.deserialize(ZclDataType.OCTET_STRING);
+        providerId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        issuerEventId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        creditPaymentDueDate = deserializer.deserialize(ZclDataType.UTCTIME);
+        creditPaymentOverdueAmount = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        creditPaymentStatus = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        creditPayment = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        creditPaymentDate = deserializer.deserialize(ZclDataType.UTCTIME);
+        creditPaymentRef = deserializer.deserialize(ZclDataType.OCTET_STRING);
     }
 
     @Override

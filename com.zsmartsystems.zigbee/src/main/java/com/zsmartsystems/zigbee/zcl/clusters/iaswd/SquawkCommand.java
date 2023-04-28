@@ -65,7 +65,7 @@ public class SquawkCommand extends ZclCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        header = (Integer) deserializer.deserialize(ZclDataType.DATA_8_BIT);
+        header = deserializer.deserialize(ZclDataType.DATA_8_BIT);
     }
 
     @Override

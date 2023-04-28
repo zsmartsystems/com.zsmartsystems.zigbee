@@ -203,9 +203,9 @@ public class ArmCommand extends ZclIasAceCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        armMode = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        armDisarmCode = (String) deserializer.deserialize(ZclDataType.CHARACTER_STRING);
-        zoneId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        armMode = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        armDisarmCode = deserializer.deserialize(ZclDataType.CHARACTER_STRING);
+        zoneId = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

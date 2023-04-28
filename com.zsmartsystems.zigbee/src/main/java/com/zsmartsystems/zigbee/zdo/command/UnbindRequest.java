@@ -105,7 +105,7 @@ public class UnbindRequest extends ZdoRequest implements ZigBeeTransactionMatche
     public void deserialize(final ZclFieldDeserializer deserializer) {
         super.deserialize(deserializer);
 
-        bindingTableEntry = (BindingTable) deserializer.deserialize(ZclDataType.BINDING_TABLE);
+        bindingTableEntry = deserializer.deserialize(ZclDataType.BINDING_TABLE);
     }
 
     @Override

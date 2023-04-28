@@ -248,13 +248,13 @@ public class GpTranslationTableUpdateTranslation implements ZigBeeSerializable {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        index = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        gpdCommandId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        endpoint = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        profile = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        cluster = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        zigbeeCommandId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        zigbeeCommandPayload = (ByteArray) deserializer.deserialize(ZclDataType.OCTET_STRING);
+        index = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        gpdCommandId = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        endpoint = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        profile = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        cluster = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        zigbeeCommandId = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        zigbeeCommandPayload = deserializer.deserialize(ZclDataType.OCTET_STRING);
     }
 
     @Override

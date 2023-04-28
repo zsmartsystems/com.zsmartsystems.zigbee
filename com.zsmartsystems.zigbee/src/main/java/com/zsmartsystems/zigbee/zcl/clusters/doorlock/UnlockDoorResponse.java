@@ -102,7 +102,7 @@ public class UnlockDoorResponse extends ZclDoorLockCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        status = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        status = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
     }
 
     @Override

@@ -100,7 +100,7 @@ public class CancelAllMessagesCommand extends ZclMessagingCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        implementationTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
+        implementationTime = deserializer.deserialize(ZclDataType.UTCTIME);
     }
 
     @Override

@@ -239,10 +239,10 @@ public class InitiateKeyEstablishmentRequestCommand extends ZclKeyEstablishmentC
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        keyEstablishmentSuite = (Integer) deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
-        ephemeralDataGenerateTime = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        confirmKeyGenerateTime = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        identity = (ByteArray) deserializer.deserialize(ZclDataType.RAW_OCTET);
+        keyEstablishmentSuite = deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
+        ephemeralDataGenerateTime = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        confirmKeyGenerateTime = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        identity = deserializer.deserialize(ZclDataType.RAW_OCTET);
     }
 
     @Override

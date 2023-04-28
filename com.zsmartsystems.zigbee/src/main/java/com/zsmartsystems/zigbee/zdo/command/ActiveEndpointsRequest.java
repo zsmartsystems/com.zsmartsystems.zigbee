@@ -98,7 +98,7 @@ public class ActiveEndpointsRequest extends ZdoRequest implements ZigBeeTransact
     public void deserialize(final ZclFieldDeserializer deserializer) {
         super.deserialize(deserializer);
 
-        nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
+        nwkAddrOfInterest = deserializer.deserialize(ZclDataType.NWK_ADDRESS);
     }
 
     @Override

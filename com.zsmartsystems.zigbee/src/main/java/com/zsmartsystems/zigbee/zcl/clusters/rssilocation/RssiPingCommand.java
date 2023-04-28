@@ -95,7 +95,7 @@ public class RssiPingCommand extends ZclRssiLocationCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        locationType = (Integer) deserializer.deserialize(ZclDataType.DATA_8_BIT);
+        locationType = deserializer.deserialize(ZclDataType.DATA_8_BIT);
     }
 
     @Override

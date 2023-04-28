@@ -327,15 +327,15 @@ public class LocationDataNotificationCommand extends ZclRssiLocationCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        locationType = (Integer) deserializer.deserialize(ZclDataType.DATA_8_BIT);
-        coordinate1 = (Integer) deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
-        coordinate2 = (Integer) deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
-        coordinate3 = (Integer) deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
-        power = (Integer) deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
-        pathLossExponent = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        locationMethod = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        qualityMeasure = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        locationAge = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        locationType = deserializer.deserialize(ZclDataType.DATA_8_BIT);
+        coordinate1 = deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
+        coordinate2 = deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
+        coordinate3 = deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
+        power = deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
+        pathLossExponent = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        locationMethod = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        qualityMeasure = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        locationAge = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

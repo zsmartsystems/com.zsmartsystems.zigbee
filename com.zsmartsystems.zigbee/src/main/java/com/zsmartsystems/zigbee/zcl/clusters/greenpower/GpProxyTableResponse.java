@@ -218,11 +218,11 @@ public class GpProxyTableResponse extends ZclGreenPowerCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        status = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        totalNumberOfNonEmptyProxyTableEntries = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        startIndex = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        entriesCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        proxyTableEntries = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        status = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        totalNumberOfNonEmptyProxyTableEntries = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        startIndex = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        entriesCount = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        proxyTableEntries = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

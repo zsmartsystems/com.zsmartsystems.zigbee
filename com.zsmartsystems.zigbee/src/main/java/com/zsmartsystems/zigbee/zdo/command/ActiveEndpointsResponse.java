@@ -133,16 +133,16 @@ public class ActiveEndpointsResponse extends ZdoResponse {
         // Create lists
         activeEpList = new ArrayList<Integer>();
 
-        status = (ZdoStatus) deserializer.deserialize(ZclDataType.ZDO_STATUS);
+        status = deserializer.deserialize(ZclDataType.ZDO_STATUS);
         if (status != ZdoStatus.SUCCESS) {
             // Don't read the full response if we have an error
             return;
         }
-        nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
-        Integer activeEpCnt = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        nwkAddrOfInterest = deserializer.deserialize(ZclDataType.NWK_ADDRESS);
+        Integer activeEpCnt = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         if (activeEpCnt != null) {
             for (int cnt = 0; cnt < activeEpCnt; cnt++) {
-                activeEpList.add((Integer) deserializer.deserialize(ZclDataType.ENDPOINT));
+                activeEpList.add(deserializer.deserialize(ZclDataType.ENDPOINT));
             }
         }
     }

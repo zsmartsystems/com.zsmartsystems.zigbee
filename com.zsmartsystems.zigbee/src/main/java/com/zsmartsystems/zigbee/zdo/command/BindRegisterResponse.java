@@ -134,16 +134,16 @@ public class BindRegisterResponse extends ZdoResponse {
         // Create lists
         bindingTableList = new ArrayList<BindingTable>();
 
-        status = (ZdoStatus) deserializer.deserialize(ZclDataType.ZDO_STATUS);
+        status = deserializer.deserialize(ZclDataType.ZDO_STATUS);
         if (status != ZdoStatus.SUCCESS) {
             // Don't read the full response if we have an error
             return;
         }
-        bindingTableEntries = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        Integer bindingTableListCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        bindingTableEntries = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        Integer bindingTableListCount = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         if (bindingTableListCount != null) {
             for (int cnt = 0; cnt < bindingTableListCount; cnt++) {
-                bindingTableList.add((BindingTable) deserializer.deserialize(ZclDataType.BINDING_TABLE));
+                bindingTableList.add(deserializer.deserialize(ZclDataType.BINDING_TABLE));
             }
         }
     }

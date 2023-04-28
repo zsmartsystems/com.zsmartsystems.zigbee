@@ -207,11 +207,11 @@ public class NetworkUpdateRequest extends ZdoRequest {
     public void deserialize(final ZclFieldDeserializer deserializer) {
         super.deserialize(deserializer);
 
-        scanChannels = (Integer) deserializer.deserialize(ZclDataType.BITMAP_32_BIT);
-        scanDuration = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        scanCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        nwkUpdateId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        nwkManagerAddr = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
+        scanChannels = deserializer.deserialize(ZclDataType.BITMAP_32_BIT);
+        scanDuration = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        scanCount = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        nwkUpdateId = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        nwkManagerAddr = deserializer.deserialize(ZclDataType.NWK_ADDRESS);
     }
 
     @Override

@@ -162,10 +162,10 @@ public class DebtPayload implements ZigBeeSerializable {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        collectionTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        amountCollected = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        debtType = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        outstandingDebt = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        collectionTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        amountCollected = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        debtType = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        outstandingDebt = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
     }
 
     @Override

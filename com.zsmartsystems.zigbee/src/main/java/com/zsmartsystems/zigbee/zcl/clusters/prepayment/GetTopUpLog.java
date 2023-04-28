@@ -129,8 +129,8 @@ public class GetTopUpLog extends ZclPrepaymentCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        latestEndTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        numberOfRecords = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        latestEndTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        numberOfRecords = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

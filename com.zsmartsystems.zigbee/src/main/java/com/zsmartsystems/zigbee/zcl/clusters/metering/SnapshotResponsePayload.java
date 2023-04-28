@@ -102,8 +102,8 @@ public class SnapshotResponsePayload implements ZigBeeSerializable {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        snapshotScheduleId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        snapshotScheduleConfirmation = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        snapshotScheduleId = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        snapshotScheduleConfirmation = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
     }
 
     @Override

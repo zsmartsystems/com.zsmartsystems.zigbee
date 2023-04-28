@@ -223,10 +223,10 @@ public class MessageConfirmation extends ZclMessagingCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        messageId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        confirmationTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        messageConfirmationControl = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        messageConfirmationResponse = (ByteArray) deserializer.deserialize(ZclDataType.OCTET_STRING);
+        messageId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        confirmationTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        messageConfirmationControl = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        messageConfirmationResponse = deserializer.deserialize(ZclDataType.OCTET_STRING);
     }
 
     @Override

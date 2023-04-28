@@ -169,8 +169,8 @@ public class InitiateTestModeCommand extends ZclIasZoneCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        testModeDuration = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        currentZoneSensitivityLevel = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        testModeDuration = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        currentZoneSensitivityLevel = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

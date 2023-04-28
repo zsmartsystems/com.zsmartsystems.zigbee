@@ -131,8 +131,8 @@ public class UnlockWithTimeout extends ZclDoorLockCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        timeoutInSeconds = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        pin = (String) deserializer.deserialize(ZclDataType.CHARACTER_STRING);
+        timeoutInSeconds = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        pin = deserializer.deserialize(ZclDataType.CHARACTER_STRING);
     }
 
     @Override

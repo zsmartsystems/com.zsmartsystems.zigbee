@@ -134,8 +134,8 @@ public class MoveToLevelCommand extends ZclLevelControlCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        level = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        transitionTime = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        level = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        transitionTime = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

@@ -216,11 +216,11 @@ public class ChangePaymentMode extends ZclPrepaymentCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        providerId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        issuerEventId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        implementationDateTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        proposedPaymentControlConfiguration = (Integer) deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
-        cutOffValue = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        providerId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        issuerEventId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        implementationDateTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        proposedPaymentControlConfiguration = deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
+        cutOffValue = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
     }
 
     @Override

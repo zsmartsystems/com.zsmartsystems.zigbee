@@ -224,10 +224,10 @@ public class ZoneStatusChangeNotificationCommand extends ZclIasZoneCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        zoneStatus = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_16_BIT);
-        extendedStatus = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        zoneId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        delay = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        zoneStatus = deserializer.deserialize(ZclDataType.ENUMERATION_16_BIT);
+        extendedStatus = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        zoneId = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        delay = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

@@ -102,8 +102,8 @@ public class GpPairingConfigurationGroupList implements ZigBeeSerializable {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        sinkGroup = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        alias = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        sinkGroup = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        alias = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

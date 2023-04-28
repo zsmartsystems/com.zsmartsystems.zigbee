@@ -109,7 +109,7 @@ public class ConfigureReportingCommand extends ZclGeneralCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        records = (List<AttributeReportingConfigurationRecord>) deserializer.deserialize(ZclDataType.N_X_ATTRIBUTE_REPORTING_CONFIGURATION_RECORD);
+        records = deserializer.deserialize(ZclDataType.N_X_ATTRIBUTE_REPORTING_CONFIGURATION_RECORD);
     }
 
     @Override

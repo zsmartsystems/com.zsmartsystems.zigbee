@@ -194,9 +194,9 @@ public class RequestTunnelResponse extends ZclSmartEnergyTunnelingCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        tunnelId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        tunnelStatus = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        maximumIncomingTransferSize = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        tunnelId = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        tunnelStatus = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        maximumIncomingTransferSize = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

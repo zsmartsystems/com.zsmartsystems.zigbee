@@ -96,7 +96,7 @@ public class AttributeReport implements ZclListItemField {
 
     @Override
     public void deserialize(final ZigBeeDeserializer deserializer) {
-        attributeIdentifier = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        attributeIdentifier = deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         attributeDataType = ZclDataType.getType((int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER));
         attributeValue = deserializer.readZigBeeType(attributeDataType);
     }

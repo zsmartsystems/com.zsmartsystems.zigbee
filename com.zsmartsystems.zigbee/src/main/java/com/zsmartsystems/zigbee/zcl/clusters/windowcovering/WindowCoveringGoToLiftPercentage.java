@@ -97,7 +97,7 @@ public class WindowCoveringGoToLiftPercentage extends ZclWindowCoveringCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        percentageLiftValue = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        percentageLiftValue = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

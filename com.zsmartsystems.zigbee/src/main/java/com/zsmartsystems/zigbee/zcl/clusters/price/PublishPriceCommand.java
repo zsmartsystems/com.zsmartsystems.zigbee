@@ -1047,30 +1047,30 @@ public class PublishPriceCommand extends ZclPriceCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        providerId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        rateLabel = (ByteArray) deserializer.deserialize(ZclDataType.OCTET_STRING);
-        issuerEventId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        currentTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        unitOfMeasure = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        currency = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        priceTrailingDigitAndTier = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        numberOfPriceTiers = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        startTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        duration = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        price = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        priceRatio = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        generationPrice = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        generationPriceRatio = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        alternateCostDelivered = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        alternateCostUnit = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        alternateCostTrailingDigit = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        numberOfBlockThresholds = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        priceControl = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        numberOfGenerationTiers = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        generationTier = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        extendedNumberOfPriceTiers = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        extendedPriceTier = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        extendedRegisterTier = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        providerId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        rateLabel = deserializer.deserialize(ZclDataType.OCTET_STRING);
+        issuerEventId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        currentTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        unitOfMeasure = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        currency = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        priceTrailingDigitAndTier = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        numberOfPriceTiers = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        startTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        duration = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        price = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        priceRatio = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        generationPrice = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        generationPriceRatio = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        alternateCostDelivered = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        alternateCostUnit = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        alternateCostTrailingDigit = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        numberOfBlockThresholds = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        priceControl = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        numberOfGenerationTiers = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        generationTier = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        extendedNumberOfPriceTiers = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        extendedPriceTier = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        extendedRegisterTier = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
     }
 
     @Override

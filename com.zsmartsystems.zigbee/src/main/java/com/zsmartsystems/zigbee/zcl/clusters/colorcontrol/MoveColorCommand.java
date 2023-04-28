@@ -124,8 +124,8 @@ public class MoveColorCommand extends ZclColorControlCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        rateX = (Integer) deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
-        rateY = (Integer) deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
+        rateX = deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
+        rateY = deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
     }
 
     @Override

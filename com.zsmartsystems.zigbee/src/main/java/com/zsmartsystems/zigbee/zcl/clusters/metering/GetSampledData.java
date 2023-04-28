@@ -233,10 +233,10 @@ public class GetSampledData extends ZclMeteringCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        sampleId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        earliestSampleTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        sampleType = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        numberOfSamples = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        sampleId = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        earliestSampleTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        sampleType = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        numberOfSamples = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

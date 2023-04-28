@@ -240,12 +240,12 @@ public class GetRelayStatusLogResponse extends ZclThermostatCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        timeOfDay = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        relayStatus = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        localTemperature = (Integer) deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
-        humidity = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        setpoint = (Integer) deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
-        unreadEntries = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        timeOfDay = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        relayStatus = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        localTemperature = deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
+        humidity = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        setpoint = deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
+        unreadEntries = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

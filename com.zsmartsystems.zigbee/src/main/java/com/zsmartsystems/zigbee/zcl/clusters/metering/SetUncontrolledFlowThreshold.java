@@ -400,14 +400,14 @@ public class SetUncontrolledFlowThreshold extends ZclMeteringCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        providerId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        issuerEventId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        uncontrolledFlowThreshold = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        unitOfMeasure = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        multiplier = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        divisor = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        stabilisationPeriod = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        measurementPeriod = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        providerId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        issuerEventId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        uncontrolledFlowThreshold = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        unitOfMeasure = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        multiplier = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        divisor = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        stabilisationPeriod = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        measurementPeriod = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

@@ -145,8 +145,8 @@ public class TakeSnapshotResponse extends ZclMeteringCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        snapshotId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        snapshotConfirmation = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        snapshotId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        snapshotConfirmation = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
     }
 
     @Override
