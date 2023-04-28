@@ -37,7 +37,7 @@ public class ZigBeeCommandNotifierTest {
         ZigBeeCommandListener commandListener = Mockito.mock(ZigBeeCommandListener.class);
         notifier.addCommandListener(commandListener);
 
-        Set<ZigBeeCommandListener> commandListeners = (Set<ZigBeeCommandListener>) TestUtilities
+        Set<ZigBeeCommandListener> commandListeners = TestUtilities
                 .getField(ZigBeeCommandNotifier.class, notifier, "commandListeners");
         assertEquals(1, commandListeners.size());
         assertEquals(commandListener, commandListeners.iterator().next());

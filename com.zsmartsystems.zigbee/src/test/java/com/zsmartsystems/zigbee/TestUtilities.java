@@ -41,6 +41,7 @@ public class TestUtilities {
     /**
      * Invokes a private method
      *
+     * @type <R> type of result
      * @param clazz the class where the method resides
      * @param object the object where the method resides
      * @param methodName the method name
@@ -52,7 +53,7 @@ public class TestUtilities {
      * @throws IllegalArgumentException
      * @throws InvocationTargetException
      */
-    public static Object invokeMethod(Class<?> clazz, Object object, String methodName, Object... params)
+    public static <T, R> R invokeMethod(Class<T> clazz, T object, String methodName, Object... params)
             throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
             InvocationTargetException {
         int paramCount = params.length;
@@ -65,25 +66,32 @@ public class TestUtilities {
         }
         method = clazz.getDeclaredMethod(methodName, classArray);
         method.setAccessible(true);
-        return method.invoke(object, paramArray);
+
+        @SuppressWarnings("unchecked")
+        R result = (R) method.invoke(object, paramArray);
+        return result;
     }
 
     /**
      * Gets the value of the private field
      *
+     * @type <R> type of field
      * @param clazz the class where the field resides
      * @param object the object where the field resides
      * @param fieldName the field name
      * @return the {@link Object} containing the field value
      * @throws Exception
      */
-    public static Object getField(Class<?> clazz, Object object, String fieldName) throws Exception {
+    public static  <T, R> R getField(Class<T> clazz, T object, String fieldName) throws Exception {
         Field field = clazz.getDeclaredField(fieldName);
         field.setAccessible(true);
         Field modifiersField = Field.class.getDeclaredField("modifiers");
         modifiersField.setAccessible(true);
         modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-        return field.get(object);
+
+        @SuppressWarnings("unchecked")
+        R result = (R) field.get(object);
+        return result;
     }
 
     /**
