@@ -244,12 +244,12 @@ public class GetMeasurementProfileResponseCommand extends ZclElectricalMeasureme
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        startTime = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        status = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        profileIntervalPeriod = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        numberOfIntervalsDelivered = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        attributeId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        intervals = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        startTime = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        status = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        profileIntervalPeriod = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        numberOfIntervalsDelivered = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        attributeId = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        intervals = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

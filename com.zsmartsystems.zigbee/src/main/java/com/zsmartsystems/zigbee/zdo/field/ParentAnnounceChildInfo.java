@@ -31,7 +31,7 @@ public class ParentAnnounceChildInfo {
     }
 
     public void deserialize(final ZigBeeDeserializer deserializer) {
-        ieeeAddress = (IeeeAddress) deserializer.readZigBeeType(ZclDataType.IEEE_ADDRESS);
+        ieeeAddress = deserializer.readZigBeeType(ZclDataType.IEEE_ADDRESS);
     }
 
     @Override

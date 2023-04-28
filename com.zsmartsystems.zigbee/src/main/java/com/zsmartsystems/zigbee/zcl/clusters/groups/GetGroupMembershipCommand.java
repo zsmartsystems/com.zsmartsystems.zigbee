@@ -107,10 +107,10 @@ public class GetGroupMembershipCommand extends ZclGroupsCommand {
         // Create lists
         groupList = new ArrayList<Integer>();
 
-        Integer groupCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        Integer groupCount = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         if (groupCount != null) {
             for (int cnt = 0; cnt < groupCount; cnt++) {
-                groupList.add((Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER));
+                groupList.add(deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER));
             }
         }
     }

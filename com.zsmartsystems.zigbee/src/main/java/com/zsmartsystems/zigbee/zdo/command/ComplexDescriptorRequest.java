@@ -98,7 +98,7 @@ public class ComplexDescriptorRequest extends ZdoRequest implements ZigBeeTransa
     public void deserialize(final ZclFieldDeserializer deserializer) {
         super.deserialize(deserializer);
 
-        nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
+        nwkAddrOfInterest = deserializer.deserialize(ZclDataType.NWK_ADDRESS);
     }
 
     @Override

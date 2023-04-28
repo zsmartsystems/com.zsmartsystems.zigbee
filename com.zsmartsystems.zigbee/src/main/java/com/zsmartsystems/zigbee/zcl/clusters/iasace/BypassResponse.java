@@ -112,7 +112,7 @@ public class BypassResponse extends ZclIasAceCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        bypassResult = (List<Integer>) deserializer.deserialize(ZclDataType.N_X_UNSIGNED_8_BIT_INTEGER);
+        bypassResult = deserializer.deserialize(ZclDataType.N_X_UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

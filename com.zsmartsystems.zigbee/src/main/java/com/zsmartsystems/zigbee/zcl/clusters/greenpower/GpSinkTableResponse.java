@@ -213,11 +213,11 @@ public class GpSinkTableResponse extends ZclGreenPowerCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        status = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        totalNumberofNonEmptySinkTableEntries = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        startIndex = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        sinkTableEntriesCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        sinkTableEntries = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        status = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        totalNumberofNonEmptySinkTableEntries = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        startIndex = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        sinkTableEntriesCount = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        sinkTableEntries = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

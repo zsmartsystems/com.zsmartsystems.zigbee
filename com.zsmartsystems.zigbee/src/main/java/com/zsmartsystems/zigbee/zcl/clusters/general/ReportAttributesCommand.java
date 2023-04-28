@@ -108,7 +108,7 @@ public class ReportAttributesCommand extends ZclGeneralCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        reports = (List<AttributeReport>) deserializer.deserialize(ZclDataType.N_X_ATTRIBUTE_REPORT);
+        reports = deserializer.deserialize(ZclDataType.N_X_ATTRIBUTE_REPORT);
     }
 
     @Override

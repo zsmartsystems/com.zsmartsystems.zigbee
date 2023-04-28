@@ -687,21 +687,21 @@ public class PublishTariffInformationCommand extends ZclPriceCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        providerId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        issuerEventId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        issuerTariffId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        startTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        tariffType = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        tariffLabel = (ByteArray) deserializer.deserialize(ZclDataType.OCTET_STRING);
-        numberOfPriceTiers = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        numberOfBlockThresholds = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        unitOfMeasure = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        currency = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        priceTrailingDigit = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        standingCharge = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        tierBlockMode = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        blockThresholdMultiplier = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_24_BIT_INTEGER);
-        blockThresholdDivisor = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_24_BIT_INTEGER);
+        providerId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        issuerEventId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        issuerTariffId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        startTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        tariffType = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        tariffLabel = deserializer.deserialize(ZclDataType.OCTET_STRING);
+        numberOfPriceTiers = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        numberOfBlockThresholds = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        unitOfMeasure = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        currency = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        priceTrailingDigit = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        standingCharge = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        tierBlockMode = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        blockThresholdMultiplier = deserializer.deserialize(ZclDataType.UNSIGNED_24_BIT_INTEGER);
+        blockThresholdDivisor = deserializer.deserialize(ZclDataType.UNSIGNED_24_BIT_INTEGER);
     }
 
     @Override

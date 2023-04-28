@@ -128,8 +128,8 @@ public class ZoneEnrollRequestCommand extends ZclIasZoneCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        zoneType = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_16_BIT);
-        manufacturerCode = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        zoneType = deserializer.deserialize(ZclDataType.ENUMERATION_16_BIT);
+        manufacturerCode = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

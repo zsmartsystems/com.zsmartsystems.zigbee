@@ -102,8 +102,8 @@ public class PriceMatrixSubPayload implements ZigBeeSerializable {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        tierBlockId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        price = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        tierBlockId = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        price = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
     }
 
     @Override

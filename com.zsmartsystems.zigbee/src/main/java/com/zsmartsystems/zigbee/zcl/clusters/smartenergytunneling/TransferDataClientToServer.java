@@ -166,8 +166,8 @@ public class TransferDataClientToServer extends ZclSmartEnergyTunnelingCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        tunnelId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        data = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        tunnelId = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        data = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

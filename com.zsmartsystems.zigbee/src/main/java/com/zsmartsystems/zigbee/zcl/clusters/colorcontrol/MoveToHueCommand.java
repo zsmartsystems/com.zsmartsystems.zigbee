@@ -153,9 +153,9 @@ public class MoveToHueCommand extends ZclColorControlCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        hue = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        direction = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        transitionTime = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        hue = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        direction = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        transitionTime = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

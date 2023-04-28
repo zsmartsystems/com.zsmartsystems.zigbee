@@ -18,7 +18,7 @@ public interface ZigBeeDeserializer {
 
     public boolean isEndOfStream();
 
-    public Object readZigBeeType(ZclDataType type);
+    public <R> R readZigBeeType(ZclDataType type);
 
     public int getPosition();
 

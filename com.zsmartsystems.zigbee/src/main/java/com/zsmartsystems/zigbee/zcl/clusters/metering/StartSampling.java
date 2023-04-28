@@ -278,11 +278,11 @@ public class StartSampling extends ZclMeteringCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        issuerEventId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        startSamplingTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        sampleType = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        sampleRequestInterval = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        maxNumberOfSamples = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        issuerEventId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        startSamplingTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        sampleType = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        sampleRequestInterval = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        maxNumberOfSamples = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

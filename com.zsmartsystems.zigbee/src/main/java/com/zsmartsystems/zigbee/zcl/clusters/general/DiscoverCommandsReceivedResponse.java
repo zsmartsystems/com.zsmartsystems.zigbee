@@ -135,8 +135,8 @@ public class DiscoverCommandsReceivedResponse extends ZclGeneralCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        discoveryComplete = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
-        commandIdentifiers = (List<Integer>) deserializer.deserialize(ZclDataType.X_UNSIGNED_8_BIT_INTEGER);
+        discoveryComplete = deserializer.deserialize(ZclDataType.BOOLEAN);
+        commandIdentifiers = deserializer.deserialize(ZclDataType.X_UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

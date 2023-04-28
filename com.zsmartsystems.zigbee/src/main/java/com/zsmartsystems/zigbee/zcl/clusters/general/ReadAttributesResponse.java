@@ -111,7 +111,7 @@ public class ReadAttributesResponse extends ZclGeneralCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        records = (List<ReadAttributeStatusRecord>) deserializer.deserialize(ZclDataType.N_X_READ_ATTRIBUTE_STATUS_RECORD);
+        records = deserializer.deserialize(ZclDataType.N_X_READ_ATTRIBUTE_STATUS_RECORD);
     }
 
     @Override

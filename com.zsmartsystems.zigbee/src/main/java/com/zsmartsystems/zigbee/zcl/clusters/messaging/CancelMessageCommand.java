@@ -150,8 +150,8 @@ public class CancelMessageCommand extends ZclMessagingCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        messageId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        messageControl = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        messageId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        messageControl = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
     }
 
     @Override

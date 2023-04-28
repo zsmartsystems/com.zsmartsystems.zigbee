@@ -68,7 +68,7 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
     /**
      * {@inheritDoc}
      */
-    public Object readZigBeeType(ZclDataType type) {
+    public <R> R readZigBeeType(ZclDataType type) {
         if (index == payload.length) {
             return null;
         }
@@ -351,6 +351,10 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 throw new IllegalArgumentException("No reader defined in " + ZigBeeDeserializer.class.getSimpleName()
                         + " for " + type.toString() + String.format(" (0x%02X)", type.getId()));
         }
-        return value[0];
+
+        @SuppressWarnings("unchecked")
+        R typedValue = (R) value[0];
+
+        return typedValue;
     }
 }

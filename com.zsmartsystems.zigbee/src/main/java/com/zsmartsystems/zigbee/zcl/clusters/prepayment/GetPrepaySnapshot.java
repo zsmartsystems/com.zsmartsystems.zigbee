@@ -186,10 +186,10 @@ public class GetPrepaySnapshot extends ZclPrepaymentCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        earliestStartTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        latestEndTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        snapshotOffset = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        snapshotCause = (Integer) deserializer.deserialize(ZclDataType.BITMAP_32_BIT);
+        earliestStartTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        latestEndTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        snapshotOffset = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        snapshotCause = deserializer.deserialize(ZclDataType.BITMAP_32_BIT);
     }
 
     @Override

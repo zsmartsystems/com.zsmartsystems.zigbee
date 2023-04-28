@@ -153,9 +153,9 @@ public class DeviceAnnounce extends ZdoRequest {
     public void deserialize(final ZclFieldDeserializer deserializer) {
         super.deserialize(deserializer);
 
-        nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
-        ieeeAddr = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
-        capability = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        nwkAddrOfInterest = deserializer.deserialize(ZclDataType.NWK_ADDRESS);
+        ieeeAddr = deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        capability = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
     }
 
     @Override

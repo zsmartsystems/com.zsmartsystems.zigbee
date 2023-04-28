@@ -98,7 +98,7 @@ public class GetCurrentPriceCommand extends ZclPriceCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        commandOptions = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        commandOptions = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
     }
 
     @Override

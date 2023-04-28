@@ -214,11 +214,11 @@ public class StepColorTemperatureCommand extends ZclColorControlCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        stepMode = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        stepSize = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        transitionTime = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        colorTemperatureMinimum = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        colorTemperatureMaximum = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        stepMode = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        stepSize = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        transitionTime = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        colorTemperatureMinimum = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        colorTemperatureMaximum = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

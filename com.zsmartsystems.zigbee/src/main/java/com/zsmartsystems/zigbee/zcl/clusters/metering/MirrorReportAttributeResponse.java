@@ -136,8 +136,8 @@ public class MirrorReportAttributeResponse extends ZclMeteringCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        notificationScheme = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        notificationFlags = (Integer) deserializer.deserialize(ZclDataType.BITMAP_32_BIT);
+        notificationScheme = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        notificationFlags = deserializer.deserialize(ZclDataType.BITMAP_32_BIT);
     }
 
     @Override

@@ -72,8 +72,8 @@ public class AttributeInformation implements ZclListItemField, Comparable<Attrib
 
     @Override
     public void deserialize(final ZigBeeDeserializer deserializer) {
-        identifier = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        dataType = (ZclDataType) deserializer.readZigBeeType(ZclDataType.ZIGBEE_DATA_TYPE);
+        identifier = deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        dataType = deserializer.readZigBeeType(ZclDataType.ZIGBEE_DATA_TYPE);
     }
 
     @Override

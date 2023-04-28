@@ -29,7 +29,7 @@ public abstract class ZdoCommand extends ZigBeeCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        Integer sequenceNumber = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        Integer sequenceNumber = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         setTransactionId(sequenceNumber);
     }
 }

@@ -317,12 +317,12 @@ public class ChangeSupply extends ZclMeteringCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        providerId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        issuerEventId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        requestDateTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        implementationDateTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        proposedSupplyStatus = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        supplyControlBits = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        providerId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        issuerEventId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        requestDateTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        implementationDateTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        proposedSupplyStatus = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        supplyControlBits = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
     }
 
     @Override

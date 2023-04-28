@@ -157,9 +157,9 @@ public class GetDebtRepaymentLog extends ZclPrepaymentCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        latestEndTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        numberOfDebts = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        debtType = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        latestEndTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        numberOfDebts = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        debtType = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
     }
 
     @Override

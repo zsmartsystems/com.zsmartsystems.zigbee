@@ -312,11 +312,11 @@ public class CancelLoadControlEvent extends ZclDemandResponseAndLoadControlComma
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        issuerEventId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        deviceClass = (Integer) deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
-        utilityEnrollmentGroup = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        cancelControl = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        effectiveTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
+        issuerEventId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        deviceClass = deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
+        utilityEnrollmentGroup = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        cancelControl = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        effectiveTime = deserializer.deserialize(ZclDataType.UTCTIME);
     }
 
     @Override

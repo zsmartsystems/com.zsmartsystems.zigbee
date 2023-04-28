@@ -157,9 +157,9 @@ public class ViewGroupResponse extends ZclGroupsCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        status = (ZclStatus) deserializer.deserialize(ZclDataType.ZCL_STATUS);
-        groupId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        groupName = (String) deserializer.deserialize(ZclDataType.CHARACTER_STRING);
+        status = deserializer.deserialize(ZclDataType.ZCL_STATUS);
+        groupId = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        groupName = deserializer.deserialize(ZclDataType.CHARACTER_STRING);
     }
 
     @Override

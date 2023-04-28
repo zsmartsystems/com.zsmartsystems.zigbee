@@ -212,10 +212,10 @@ public class PriceAcknowledgementCommand extends ZclPriceCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        providerId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        issuerEventId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        priceAckTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        control = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        providerId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        issuerEventId = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        priceAckTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        control = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
     }
 
     @Override

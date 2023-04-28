@@ -154,9 +154,9 @@ public class GetLocationDataCommand extends ZclRssiLocationCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        header = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        numberResponses = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        targetAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        header = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        numberResponses = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        targetAddress = deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
     }
 
     @Override

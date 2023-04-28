@@ -148,9 +148,9 @@ public class ManagementNetworkDiscovery extends ZdoRequest {
     public void deserialize(final ZclFieldDeserializer deserializer) {
         super.deserialize(deserializer);
 
-        scanChannels = (Integer) deserializer.deserialize(ZclDataType.BITMAP_32_BIT);
-        scanDuration = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        startIndex = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        scanChannels = deserializer.deserialize(ZclDataType.BITMAP_32_BIT);
+        scanDuration = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        startIndex = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

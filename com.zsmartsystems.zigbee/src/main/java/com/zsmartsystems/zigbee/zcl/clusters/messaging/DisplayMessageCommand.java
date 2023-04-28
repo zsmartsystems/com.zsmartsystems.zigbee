@@ -326,12 +326,12 @@ public class DisplayMessageCommand extends ZclMessagingCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        messageId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        messageControl = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        startTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        durationInMinutes = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        message = (String) deserializer.deserialize(ZclDataType.CHARACTER_STRING);
-        extendedMessageControl = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        messageId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        messageControl = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        startTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        durationInMinutes = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        message = deserializer.deserialize(ZclDataType.CHARACTER_STRING);
+        extendedMessageControl = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
     }
 
     @Override

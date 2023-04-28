@@ -176,8 +176,8 @@ public class SupportedTunnelProtocolsResponse extends ZclSmartEnergyTunnelingCom
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        protocolListComplete = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
-        protocolCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        protocolListComplete = deserializer.deserialize(ZclDataType.BOOLEAN);
+        protocolCount = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         protocolList = new Protocol();
         protocolList.deserialize(deserializer);
     }

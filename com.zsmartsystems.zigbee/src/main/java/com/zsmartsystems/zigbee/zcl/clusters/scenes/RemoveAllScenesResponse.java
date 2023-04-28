@@ -125,8 +125,8 @@ public class RemoveAllScenesResponse extends ZclScenesCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        status = (ZclStatus) deserializer.deserialize(ZclDataType.ZCL_STATUS);
-        groupId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        status = deserializer.deserialize(ZclDataType.ZCL_STATUS);
+        groupId = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

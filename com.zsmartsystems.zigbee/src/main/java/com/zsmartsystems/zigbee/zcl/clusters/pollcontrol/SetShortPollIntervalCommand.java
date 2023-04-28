@@ -103,7 +103,7 @@ public class SetShortPollIntervalCommand extends ZclPollControlCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        newShortPollInterval = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        newShortPollInterval = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

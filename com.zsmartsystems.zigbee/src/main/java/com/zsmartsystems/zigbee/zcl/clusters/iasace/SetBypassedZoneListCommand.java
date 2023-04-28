@@ -116,7 +116,7 @@ public class SetBypassedZoneListCommand extends ZclIasAceCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        zoneId = (List<Integer>) deserializer.deserialize(ZclDataType.N_X_UNSIGNED_8_BIT_INTEGER);
+        zoneId = deserializer.deserialize(ZclDataType.N_X_UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

@@ -124,8 +124,8 @@ public class ZoneEnrollResponse extends ZclIasZoneCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        enrollResponseCode = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        zoneId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        enrollResponseCode = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        zoneId = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

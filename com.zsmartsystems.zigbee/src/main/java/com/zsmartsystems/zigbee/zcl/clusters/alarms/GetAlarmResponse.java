@@ -188,10 +188,10 @@ public class GetAlarmResponse extends ZclAlarmsCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        status = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        alarmCode = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        clusterIdentifier = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        timestamp = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        status = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        alarmCode = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        clusterIdentifier = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        timestamp = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
     }
 
     @Override

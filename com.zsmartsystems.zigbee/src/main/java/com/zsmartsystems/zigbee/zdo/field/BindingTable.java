@@ -170,15 +170,15 @@ public class BindingTable {
     }
 
     public void deserialize(final ZigBeeDeserializer deserializer) {
-        srcAddr = (IeeeAddress) deserializer.readZigBeeType(ZclDataType.IEEE_ADDRESS);
-        srcEndpoint = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        clusterId = (int) deserializer.readZigBeeType(ZclDataType.CLUSTERID);
-        dstAddrMode = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        srcAddr = deserializer.readZigBeeType(ZclDataType.IEEE_ADDRESS);
+        srcEndpoint = deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        clusterId = deserializer.readZigBeeType(ZclDataType.CLUSTERID);
+        dstAddrMode = deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         if (dstAddrMode == 1) {
-            dstGroupAddr = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+            dstGroupAddr = deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         } else if (dstAddrMode == 3) {
-            dstAddr = (IeeeAddress) deserializer.readZigBeeType(ZclDataType.IEEE_ADDRESS);
-            dstNodeEndpoint = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+            dstAddr = deserializer.readZigBeeType(ZclDataType.IEEE_ADDRESS);
+            dstNodeEndpoint = deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         }
     }
 

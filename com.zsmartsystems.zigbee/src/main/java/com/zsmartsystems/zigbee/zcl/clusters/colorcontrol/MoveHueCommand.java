@@ -124,8 +124,8 @@ public class MoveHueCommand extends ZclColorControlCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        moveMode = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        rate = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        moveMode = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        rate = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

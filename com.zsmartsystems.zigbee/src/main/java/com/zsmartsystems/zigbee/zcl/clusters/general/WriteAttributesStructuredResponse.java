@@ -171,10 +171,10 @@ public class WriteAttributesStructuredResponse extends ZclGeneralCommand {
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
         if (deserializer.getRemainingLength() == 1) {
-            status = (ZclStatus) deserializer.deserialize(ZclDataType.ZCL_STATUS);
+            status = deserializer.deserialize(ZclDataType.ZCL_STATUS);
             return;
         }
-        records = (List<WriteAttributeStatusRecord>) deserializer.deserialize(ZclDataType.N_X_WRITE_ATTRIBUTE_STATUS_RECORD);
+        records = deserializer.deserialize(ZclDataType.N_X_WRITE_ATTRIBUTE_STATUS_RECORD);
     }
 
     @Override
