@@ -29,7 +29,7 @@ public class TestUtilities {
      * @param newValue the Object to be set
      * @throws Exception
      */
-    public static void setField(Class clazz, Object object, String fieldName, Object newValue) throws Exception {
+    public static void setField(Class<?> clazz, Object object, String fieldName, Object newValue) throws Exception {
         Field field = clazz.getDeclaredField(fieldName);
         field.setAccessible(true);
         Field modifiersField = Field.class.getDeclaredField("modifiers");
@@ -52,7 +52,7 @@ public class TestUtilities {
      * @throws IllegalArgumentException
      * @throws InvocationTargetException
      */
-    public static Object invokeMethod(Class clazz, Object object, String methodName, Object... params)
+    public static Object invokeMethod(Class<?> clazz, Object object, String methodName, Object... params)
             throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
             InvocationTargetException {
         int paramCount = params.length;
@@ -60,7 +60,7 @@ public class TestUtilities {
         Class<?>[] classArray = new Class<?>[paramCount / 2];
         Object[] paramArray = new Object[paramCount / 2];
         for (int i = 0; i < paramCount; i += 2) {
-            classArray[i] = (Class) params[i];
+            classArray[i] = (Class<?>) params[i];
             paramArray[i] = params[i + 1];
         }
         method = clazz.getDeclaredMethod(methodName, classArray);
@@ -77,7 +77,7 @@ public class TestUtilities {
      * @return the {@link Object} containing the field value
      * @throws Exception
      */
-    public static Object getField(Class clazz, Object object, String fieldName) throws Exception {
+    public static Object getField(Class<?> clazz, Object object, String fieldName) throws Exception {
         Field field = clazz.getDeclaredField(fieldName);
         field.setAccessible(true);
         Field modifiersField = Field.class.getDeclaredField("modifiers");
