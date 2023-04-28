@@ -164,8 +164,8 @@ public class ZigBeeBaseFieldGenerator extends ZigBeeBaseClassGenerator {
                 }
                 if (getAutoSized(fields, stringToLowerCamelCase(field.name)) != null) {
                     out.println(
-                            "        Integer " + stringToLowerCamelCase(field.name) + " = (" + getDataTypeClass(field)
-                                    + ") deserializer.deserialize(" + "ZclDataType." + field.type + ");");
+                            "        Integer " + stringToLowerCamelCase(field.name) + " = deserializer.deserialize(" +
+                            "ZclDataType." + field.type + ");");
                     continue;
                 }
 
@@ -175,8 +175,8 @@ public class ZigBeeBaseFieldGenerator extends ZigBeeBaseClassGenerator {
 
                     out.println("        if (" + field.sizer + " != null) {");
                     out.println("            for (int cnt = 0; cnt < " + field.sizer + "; cnt++) {");
-                    out.println("                " + stringToLowerCamelCase(field.name) + ".add((" + dataType
-                            + ") deserializer.deserialize(" + "ZclDataType." + field.type + "));");
+                    out.println("                " + stringToLowerCamelCase(field.name) +
+                            ".add(deserializer.deserialize(" + "ZclDataType." + field.type + "));");
                     out.println("            }");
                     out.println("        }");
                 } else if (field.condition != null) {
@@ -185,7 +185,7 @@ public class ZigBeeBaseFieldGenerator extends ZigBeeBaseClassGenerator {
                         // This checks for a single response
                         out.println("        if (deserializer.getRemainingLength() == 1) {");
                         out.println(
-                                "            status = (ZclStatus) deserializer.deserialize(ZclDataType.ZCL_STATUS);");
+                                "            status = deserializer.deserialize(ZclDataType.ZCL_STATUS);");
                         out.println("            return;");
                         out.println("        }");
                         continue;
@@ -196,13 +196,13 @@ public class ZigBeeBaseFieldGenerator extends ZigBeeBaseClassGenerator {
                         out.println("        if (" + field.condition.field + " " + getOperator(field.condition.operator)
                                 + " " + field.condition.value + ") {");
                     }
-                    out.println("            " + stringToLowerCamelCase(field.name) + " = (" + getDataTypeClass(field)
-                            + ") deserializer.deserialize(" + "ZclDataType." + field.type + ");");
+                    out.println("            " + stringToLowerCamelCase(field.name) + " = deserializer.deserialize(" + 
+                                "ZclDataType." + field.type + ");");
                     out.println("        }");
                 } else {
                     if (!field.type.isEmpty()) {
-                        out.println("        " + stringToLowerCamelCase(field.name) + " = (" + getDataTypeClass(field)
-                                + ") deserializer.deserialize(" + "ZclDataType." + field.type + ");");
+                        out.println("        " + stringToLowerCamelCase(field.name) + " = deserializer.deserialize(" +
+                                "ZclDataType." + field.type + ");");
                     } else {
                         out.println("        " + stringToLowerCamelCase(field.name) + " = new "
                                 + getDataTypeClass(field) + "();");
