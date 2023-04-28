@@ -536,7 +536,7 @@ public class ZigBeeDongleXBee implements ZigBeeTransportTransmit, XBeeEventListe
             try {
                 switch (option) {
                     case TRUST_CENTRE_LINK_KEY:
-                        configuration.setResult(option, setTcLinkKey((ZigBeeKey) configuration.getValue(option)));
+                        configuration.setResult(option, setTcLinkKey(configuration.getValue(option)));
                         break;
 
                     default:

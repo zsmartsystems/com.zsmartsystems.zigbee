@@ -75,11 +75,14 @@ public class TransportConfig {
     /**
      * Gets a value for the specified {@link TransportConfigOption}
      *
+     * @type <R> type of returned value
      * @param option the {@link TransportConfigOption} to retrieve
      * @return the {@link Object}
      */
-    public Object getValue(TransportConfigOption option) {
-        return request.get(option);
+    public <R> R getValue(TransportConfigOption option) {
+        @SuppressWarnings("unchecked")
+        R value = (R) request.get(option);
+        return value;
     }
 
     /**
