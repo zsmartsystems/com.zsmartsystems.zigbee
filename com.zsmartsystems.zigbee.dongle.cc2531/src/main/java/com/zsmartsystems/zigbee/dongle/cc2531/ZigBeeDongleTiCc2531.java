@@ -9,7 +9,6 @@ package com.zsmartsystems.zigbee.dongle.cc2531;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -212,7 +211,6 @@ public class ZigBeeDongleTiCc2531
         return new ZigBeeKey();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void updateTransportConfig(TransportConfig configuration) {
         for (TransportConfigOption option : configuration.getOptions()) {
@@ -220,17 +218,17 @@ public class ZigBeeDongleTiCc2531
                 switch (option) {
                     case SUPPORTED_INPUT_CLUSTERS:
                         configuration.setResult(option, setSupportedInputClusters(
-                                new ArrayList<Integer>((Collection<Integer>) configuration.getValue(option))));
+                                new ArrayList<Integer>(configuration.getValue(option))));
                         break;
 
                     case SUPPORTED_OUTPUT_CLUSTERS:
                         configuration.setResult(option, setSupportedOutputClusters(
-                                new ArrayList<Integer>((Collection<Integer>) configuration.getValue(option))));
+                                new ArrayList<Integer>(configuration.getValue(option))));
                         break;
 
                     case RADIO_TX_POWER:
                         configuration.setResult(option,
-                                networkManager.setTxPower((int) configuration.getValue(option)));
+                                networkManager.setTxPower(configuration.getValue(option)));
                         break;
 
                     default:
