@@ -46,7 +46,7 @@ public class TelegesisAutocoder {
             doc.getDocumentElement().normalize();
 
             NodeList nList = doc.getElementsByTagName("protocol");
-            protocol = (Protocol) processNode(nList.item(0));
+            protocol = processNode(nList.item(0));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,7 +63,7 @@ public class TelegesisAutocoder {
         }
     }
 
-    static Object processNode(Node node) {
+    static <R> R processNode(Node node) {
         System.out.println("\nCurrent Element :" + node.getNodeName());
 
         NodeList nodes = node.getChildNodes();
@@ -77,16 +77,19 @@ public class TelegesisAutocoder {
 
                 for (int temp = 0; temp < nodes.getLength(); temp++) {
                     if (nodes.item(temp).getNodeName().equals("command")) {
-                        protocol.commands.add((Command) processNode(nodes.item(temp)));
+                        protocol.commands.add(processNode(nodes.item(temp)));
                     }
                     if (nodes.item(temp).getNodeName().equals("structure")) {
-                        protocol.structures.add((Structure) processNode(nodes.item(temp)));
+                        protocol.structures.add(processNode(nodes.item(temp)));
                     }
                     if (nodes.item(temp).getNodeName().equals("enum")) {
-                        protocol.enumerations.add((Enumeration) processNode(nodes.item(temp)));
+                        protocol.enumerations.add(processNode(nodes.item(temp)));
                     }
                 }
-                return protocol;
+
+                @SuppressWarnings("unchecked")
+                R protocolResult = (R) protocol;
+                return protocolResult;
             case "command":
                 Command command = new Command();
                 command.command_parameters = new ArrayList<ParameterGroup>();
@@ -117,14 +120,16 @@ public class TelegesisAutocoder {
                     }
 
                     if (nodes.item(temp).getNodeName().equals("command_parameters")) {
-                        command.command_parameters.add((ParameterGroup) processNode(nodes.item(temp)));
+                        command.command_parameters.add(processNode(nodes.item(temp)));
                     }
                     if (nodes.item(temp).getNodeName().equals("response_parameters")) {
-                        command.response_parameters.add((ParameterGroup) processNode(nodes.item(temp)));
+                        command.response_parameters.add(processNode(nodes.item(temp)));
                     }
                 }
                 System.out.println("Done: Command - " + command.name);
-                return command;
+                @SuppressWarnings("unchecked")
+                R commandResult = (R) command;
+                return commandResult;
             case "command_parameters":
             case "response_parameters":
                 ParameterGroup parameterGroup = new ParameterGroup();
@@ -150,10 +155,12 @@ public class TelegesisAutocoder {
                         parameterGroup.prompt = nodes.item(temp).getTextContent();
                     }
                     if (nodes.item(temp).getNodeName().equals("parameter")) {
-                        parameterGroup.parameters.add((Parameter) processNode(nodes.item(temp)));
+                        parameterGroup.parameters.add(processNode(nodes.item(temp)));
                     }
                 }
-                return parameterGroup;
+                @SuppressWarnings("unchecked")
+                R parameterGroupResult = (R) parameterGroup;
+                return parameterGroupResult;
             case "parameter":
                 Parameter parameter = new Parameter();
                 for (int temp = 0; temp < nodes.getLength(); temp++) {
@@ -201,7 +208,9 @@ public class TelegesisAutocoder {
                     }
                 }
                 System.out.println("Done: Parameter - " + parameter.name);
-                return parameter;
+                @SuppressWarnings("unchecked")
+                R parameterResult = (R) parameter;
+                return parameterResult;
             case "structure":
                 Structure structure = new Structure();
                 structure.parameters = new ArrayList<Parameter>();
@@ -215,11 +224,13 @@ public class TelegesisAutocoder {
                     }
 
                     if (nodes.item(temp).getNodeName().equals("parameters")) {
-                        structure.parameters = (List<Parameter>) processNode(nodes.item(temp));
+                        structure.parameters = processNode(nodes.item(temp));
                     }
                 }
                 System.out.println("Done: Structure - " + structure.name);
-                return structure;
+                @SuppressWarnings("unchecked")
+                R structureResult = (R) structure;
+                return structureResult;
             case "enum":
                 Enumeration enumeration = new Enumeration();
                 enumeration.values = new ArrayList<Value>();
@@ -232,23 +243,27 @@ public class TelegesisAutocoder {
                         enumeration.description = nodes.item(temp).getTextContent();
                     }
                     if (nodes.item(temp).getNodeName().equals("values")) {
-                        enumeration.values = (List<Value>) processNode(nodes.item(temp));
+                        enumeration.values = processNode(nodes.item(temp));
                     }
                     if (nodes.item(temp).getNodeName().equals("format")) {
                         enumeration.format = nodes.item(temp).getTextContent();
                     }
                 }
                 System.out.println("Done: Enum - " + enumeration.name);
-                return enumeration;
+                @SuppressWarnings("unchecked")
+                R enumerationResult = (R) enumeration;
+                return enumerationResult;
             case "values":
                 List<Value> values = new ArrayList<Value>();
 
                 for (int temp = 0; temp < nodes.getLength(); temp++) {
                     if (nodes.item(temp).getNodeName().equals("value")) {
-                        values.add((Value) processNode(nodes.item(temp)));
+                        values.add(processNode(nodes.item(temp)));
                     }
                 }
-                return values;
+                @SuppressWarnings("unchecked")
+                R valuesResult = (R) values;
+                return valuesResult;
             case "value":
                 Value value = new Value();
                 for (int temp = 0; temp < nodes.getLength(); temp++) {
@@ -264,7 +279,9 @@ public class TelegesisAutocoder {
                     }
                 }
                 System.out.println("Done: Value - " + value.name);
-                return value;
+                @SuppressWarnings("unchecked")
+                R valueResult = (R) value;
+                return valueResult;
         }
 
         return null;
