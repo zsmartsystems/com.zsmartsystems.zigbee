@@ -133,10 +133,16 @@ public class ZigBeeConsoleOtaUpgradeCommand extends ZigBeeConsoleAbstractCommand
 
     private void cmdDisplayNode(ZigBeeEndpoint endpoint, ZclOtaUpgradeServer otaServer, PrintStream out) {
         Object fileVersion = otaServer.getCurrentFileVersion();
+        String fileVersionAsStr;
+        if (fileVersion instanceof Integer) {
+            fileVersionAsStr = String.format("%08X", ((Integer) fileVersion).intValue());
+        } else {
+            fileVersionAsStr = "Unknown";
+        }
 
         out.println("OTA Upgrade configuration for " + endpoint.getEndpointAddress());
         out.println("Current state    : " + otaServer.getServerStatus());
-        out.println("Firmware Version : " + (fileVersion == null ? "Unknown" : String.format("%08X", fileVersion)));
+        out.println("Firmware Version : " + fileVersionAsStr);
     }
 
     private Map<Integer, ZigBeeEndpoint> getApplications(ZigBeeNetworkManager networkManager, int clusterId) {

@@ -33,7 +33,6 @@
 package com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 /**
  * Big Endian container for 64-bit XBee Address
@@ -78,7 +77,7 @@ public class ZToolAddress64 extends ZToolAddress {
 
     @Override
     public int hashCode() {
-        return Objects.hash(address);
+        return Arrays.hashCode(address);
     }
 
     @Override

@@ -242,7 +242,7 @@ public class CommandInterfaceImpl implements ZToolPacketHandler, CommandInterfac
         if (supportMultipleSynchrounsCommand) {
             synchronized (synchronousCommandListeners) {
                 final short id = (short) (cmdId.get16BitValue() & 0x1FFF);
-                while (synchronousCommandListeners.get(cmdId) != null) {
+                while (synchronousCommandListeners.get(id) != null) {
                     try {
                         logger.trace("Waiting for other request {} to complete", id);
                         synchronousCommandListeners.wait(500);
