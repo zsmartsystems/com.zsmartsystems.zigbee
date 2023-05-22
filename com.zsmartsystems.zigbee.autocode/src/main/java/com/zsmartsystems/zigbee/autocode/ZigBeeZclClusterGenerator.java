@@ -128,7 +128,10 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
         // imports.add(packageRoot + ".ZigBeeEndpoint");
         importsAdd(packageRoot + packageZcl + ".ZclAttribute");
         importsAdd("java.util.Map");
-        importsAdd("java.util.concurrent.ConcurrentSkipListMap");
+
+        if (commandsServer != 0 || commandsClient != 0) {
+            importsAdd("java.util.concurrent.ConcurrentSkipListMap");
+        }
 
         outputImports(out);
 
