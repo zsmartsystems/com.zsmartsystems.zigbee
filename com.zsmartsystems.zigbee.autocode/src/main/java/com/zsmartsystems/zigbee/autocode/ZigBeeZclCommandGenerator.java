@@ -115,8 +115,8 @@ public class ZigBeeZclCommandGenerator extends ZigBeeBaseFieldGenerator {
                 importsAddClass(field);
             }
             outputImports(out);
-
             out.println();
+
             out.println("/**");
             out.println(" * " + command.name + " value object class.");
 
@@ -345,7 +345,9 @@ public class ZigBeeZclCommandGenerator extends ZigBeeBaseFieldGenerator {
 
         out.println("package " + packageRoot + ";");
         out.println();
+
         outputImports(out);
+        out.println();
 
         out.println("/**");
         out.println(" * Abstract base command class for all commands in the <b>" + cluster.name

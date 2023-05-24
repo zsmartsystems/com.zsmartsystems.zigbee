@@ -79,6 +79,7 @@ public class CommandGenerator extends ClassGenerator {
         // addImport("java.util.Map");
         // addImport("java.util.HashMap");
 
+        out.println();
         out.println("/**");
         out.println(" * Class to implement the Ember EZSP command <b>" + command.name + "</b>.");
         out.println(" * <p>");
@@ -272,12 +273,10 @@ public class CommandGenerator extends ClassGenerator {
 
         outputCopywrite(outFile);
         outFile.println("package " + ezspCommandPackage + ";");
-
         outFile.println();
 
         outputImports(outFile);
 
-        outFile.println();
         outFile.print(stringWriter.toString());
 
         outFile.flush();
@@ -303,6 +302,7 @@ public class CommandGenerator extends ClassGenerator {
         addImport(serializerPackage + ".EzspSerializer");
         addImport(serializerPackage + ".EzspDeserializer");
 
+        out.println();
         out.println("/**");
         out.println(" * Class to implement the Ember Structure <b>" + structure.name + "</b>.");
         out.println(" * <p>");
@@ -542,7 +542,6 @@ public class CommandGenerator extends ClassGenerator {
 
         outputImports(outFile);
 
-        outFile.println();
         outFile.print(stringWriter.toString());
 
         outFile.flush();
@@ -563,6 +562,7 @@ public class CommandGenerator extends ClassGenerator {
         addImport("java.util.Map");
         addImport("java.util.HashMap");
 
+        out.println();
         out.println("/**");
         out.println(" * Class to implement the Ember Enumeration <b>" + enumeration.name + "</b>.");
         if (enumeration.description != null && enumeration.description.trim().length() > 0) {
@@ -662,7 +662,6 @@ public class CommandGenerator extends ClassGenerator {
 
         outputImports(outFile);
 
-        outFile.println();
         outFile.print(stringWriter.toString());
 
         outFile.flush();
@@ -913,15 +912,16 @@ public class CommandGenerator extends ClassGenerator {
 
         out.println("package " + ezspPackage + ";");
         out.println();
-        out.println("import java.lang.reflect.Constructor;");
-        out.println("import java.lang.reflect.InvocationTargetException;");
-        out.println("import java.util.HashMap;");
-        out.println("import java.util.Map;");
-        out.println();
-        out.println("import org.slf4j.Logger;");
-        out.println("import org.slf4j.LoggerFactory;");
-        // out.println();
-        // out.println("import " + ashPackage + ".AshFrameData;");
+
+        addImport("java.lang.reflect.Constructor");
+        addImport("java.lang.reflect.InvocationTargetException");
+        addImport("java.util.HashMap");
+        addImport("java.util.Map");
+
+        addImport("org.slf4j.Logger");
+        addImport("org.slf4j.LoggerFactory");
+
+        // addImport(ashPackage + ".AshFrameData");
 
         Map<String, Command> commandMap = new TreeMap<>();
         for (Command command : protocol.commands) {
@@ -931,8 +931,8 @@ public class CommandGenerator extends ClassGenerator {
         addImport(ezspCommandPackage + ".*");
 
         outputImports(out);
-        out.println();
 
+        out.println();
         out.println("/**");
         out.println(
                 " * The EmberZNet Serial Protocol (EZSP) is the protocol used by a host application processor to interact with the");

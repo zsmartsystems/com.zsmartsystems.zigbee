@@ -17,6 +17,14 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
+	<dependencies>
+		<dependency>
+			<groupId>com.zsmartsystems.zigbee</groupId>
+			<artifactId>com.zsmartsystems.zigbee.autocode</artifactId>
+			<version>1.4.12-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+
     <build>
         <plugins>
             <plugin>

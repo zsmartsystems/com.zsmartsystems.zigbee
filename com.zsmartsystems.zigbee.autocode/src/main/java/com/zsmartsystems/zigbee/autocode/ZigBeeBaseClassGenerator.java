@@ -16,12 +16,13 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.zsmartsystems.zigbee.autocode.ZclDataType.DataTypeMap;
+import com.zsmartsystems.zigbee.autocode.util.ImportPrinter;
+import com.zsmartsystems.zigbee.autocode.util.ImportSet;
 import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlAttribute;
 import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlCluster;
 import com.zsmartsystems.zigbee.autocode.xml.ZigBeeXmlDescription;
@@ -40,7 +41,7 @@ public abstract class ZigBeeBaseClassGenerator {
 
     int lineLen = 80;
     String sourceRootPath = "target/src/main/java/";
-    List<String> importList = new ArrayList<String>();
+    ImportSet importSet = new ImportSet();
 
     static String packageRoot = "com.zsmartsystems.zigbee";
     static String packageZcl = ".zcl";
@@ -198,47 +199,15 @@ public abstract class ZigBeeBaseClassGenerator {
     }
 
     protected void importsClear() {
-        importList.clear();
+        importSet.clear();
     }
 
     protected void importsAdd(String importClass) {
-        if (importList.contains(importClass)) {
-            return;
-        }
-        importList.add(importClass);
+        importSet.add(importClass);
     }
 
     protected void outputImports(final PrintStream out) {
-        Collections.sort(importList);
-        boolean found = false;
-        for (final String importClass : importList) {
-            if (!importClass.startsWith("java.")) {
-                continue;
-            }
-            found = true;
-            out.println("import " + importClass + ";");
-        }
-        if (found) {
-            out.println();
-            found = false;
-        }
-        for (final String importClass : importList) {
-            if (!importClass.startsWith("javax.")) {
-                continue;
-            }
-            found = true;
-            out.println("import " + importClass + ";");
-        }
-        if (found) {
-            out.println();
-            found = false;
-        }
-        for (final String importClass : importList) {
-            if (importClass.startsWith("java.") || importClass.startsWith("javax.")) {
-                continue;
-            }
-            out.println("import " + importClass + ";");
-        }
+        ImportPrinter.outputImports(importSet, out);
     }
 
     protected void outputWithLinebreak(PrintStream out, String indent, List<ZigBeeXmlDescription> descriptions) {

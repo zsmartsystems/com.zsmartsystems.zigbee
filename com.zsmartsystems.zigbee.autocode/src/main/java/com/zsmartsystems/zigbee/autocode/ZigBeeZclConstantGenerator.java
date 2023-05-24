@@ -84,8 +84,8 @@ public class ZigBeeZclConstantGenerator extends ZigBeeBaseClassGenerator {
         importsAdd("javax.annotation.Generated");
         importsAdd("java.util.HashMap");
         importsAdd("java.util.Map");
-
         outputImports(out);
+        out.println();
 
         out.println("/**");
         out.println(" * " + constant.name + " value enumeration.");

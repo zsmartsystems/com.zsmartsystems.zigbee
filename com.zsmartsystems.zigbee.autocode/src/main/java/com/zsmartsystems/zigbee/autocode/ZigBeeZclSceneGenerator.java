@@ -71,8 +71,8 @@ public class ZigBeeZclSceneGenerator extends ZigBeeBaseClassGenerator {
         importsAdd(packageRootPrefix + ".zcl.field.ExtensionFieldSet");
 
         outputImports(out);
-
         out.println();
+
         out.println("/**");
         out.println(
                 " * <b>" + cluster.name + "</b> cluster {@link ExtensionFieldSet} implementation for use with scenes.");

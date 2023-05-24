@@ -17,6 +17,14 @@
         <maven.main.skip>true</maven.main.skip>
     </properties>
 
+	<dependencies>
+		<dependency>
+			<groupId>com.zsmartsystems.zigbee</groupId>
+			<artifactId>com.zsmartsystems.zigbee.autocode</artifactId>
+			<version>1.4.12-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -40,9 +48,5 @@
 
         </plugins>
     </build>
-
-    <dependencies>
-
-    </dependencies>
 
 </project>

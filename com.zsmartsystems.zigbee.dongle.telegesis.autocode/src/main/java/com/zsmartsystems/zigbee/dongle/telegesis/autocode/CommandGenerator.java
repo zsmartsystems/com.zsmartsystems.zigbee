@@ -83,6 +83,7 @@ public class CommandGenerator extends ClassGenerator {
         // addImport("java.util.Map");
         // addImport("java.util.HashMap");
 
+        out.println();
         out.println("/**");
         out.println(" * Class to implement the Telegesis command <b>" + command.name + "</b>.");
         out.println(" * <p>");
@@ -511,12 +512,10 @@ public class CommandGenerator extends ClassGenerator {
 
         outputCopywrite(outFile);
         outFile.println("package " + packageName + ";");
-
         outFile.println();
 
         outputImports(outFile);
 
-        outFile.println();
         outFile.print(stringWriter.toString());
 
         outFile.flush();
@@ -588,6 +587,7 @@ public class CommandGenerator extends ClassGenerator {
             out.println(indent + " *");
             if (parameter.multiple) {
                 addImport("java.util.Collection");
+                addImport("java.util.Set");
                 out.println(indent + " * @param " + parameter.name + " the " + stringToLowerCamelCase(parameter.name)
                         + " to add to the {@link Set} as {@link " + getTypeClass(parameter.data_type) + "}");
                 out.println(indent + " */");
@@ -825,6 +825,7 @@ public class CommandGenerator extends ClassGenerator {
             addImport("java.util.HashMap");
         }
 
+        out.println();
         out.println("/**");
         out.println(" * Class to implement the Telegesis Enumeration <b>" + enumeration.name + "</b>.");
         if (enumeration.description != null && enumeration.description.trim().length() > 0) {
@@ -937,12 +938,10 @@ public class CommandGenerator extends ClassGenerator {
 
         outputCopywrite(outFile);
         outFile.println("package " + enumPackage + ";");
-
         outFile.println();
 
         outputImports(outFile);
 
-        outFile.println();
         outFile.print(stringWriter.toString());
 
         outFile.flush();
@@ -988,8 +987,8 @@ public class CommandGenerator extends ClassGenerator {
         for (String event : events.values()) {
             addImport(commandPackage + "." + event);
         }
-        out.println();
 
+        out.println();
         out.println("/**");
         out.println(" * Helper factory class to create Telegesis event classes.");
         out.println(" * <p>");
@@ -1067,12 +1066,10 @@ public class CommandGenerator extends ClassGenerator {
 
         outputCopywrite(outFile);
         outFile.println("package " + internalPackage + ";");
-
         outFile.println();
 
         outputImports(outFile);
 
-        outFile.println();
         outFile.print(stringWriter.toString());
 
         outFile.flush();

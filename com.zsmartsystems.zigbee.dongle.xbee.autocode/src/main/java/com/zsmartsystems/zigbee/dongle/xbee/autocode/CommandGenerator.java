@@ -167,6 +167,7 @@ public class CommandGenerator extends ClassGenerator {
 
         clearImports();
 
+        out.println();
         out.println("/**");
         out.println(" * Class to implement the XBee command <b>" + command.name + "</b>.");
         out.println(" * <p>");
@@ -480,12 +481,10 @@ public class CommandGenerator extends ClassGenerator {
 
         outputCopywrite(outFile);
         outFile.println("package " + packageName + ";");
-
         outFile.println();
 
         outputImports(outFile);
 
-        outFile.println();
         outFile.print(stringWriter.toString());
 
         outFile.flush();
@@ -834,6 +833,7 @@ public class CommandGenerator extends ClassGenerator {
             addImport("java.util.HashMap");
         }
 
+        out.println();
         out.println("/**");
         out.println(" * Class to implement the XBee Enumeration <b>" + enumeration.name + "</b>.");
         if (enumeration.description != null && enumeration.description.trim().length() > 0) {
@@ -946,12 +946,10 @@ public class CommandGenerator extends ClassGenerator {
 
         outputCopywrite(outFile);
         outFile.println("package " + enumPackage + ";");
-
         outFile.println();
 
         outputImports(outFile);
 
-        outFile.println();
         outFile.print(stringWriter.toString());
 
         outFile.flush();
@@ -973,7 +971,6 @@ public class CommandGenerator extends ClassGenerator {
         addImport("java.util.concurrent.ConcurrentHashMap");
 
         out.println();
-
         out.println("/**");
         out.println(" * Helper factory class to create {@link XBee" + className + "} classes.");
         out.println(" * <p>");
@@ -1091,12 +1088,10 @@ public class CommandGenerator extends ClassGenerator {
 
         outputCopywrite(outFile);
         outFile.println("package " + internalPackage + ";");
-
         outFile.println();
 
         outputImports(outFile);
 
-        outFile.println();
         outFile.print(stringWriter.toString());
 
         outFile.flush();

@@ -62,12 +62,14 @@ public class ZigBeeZclClusterTypeGenerator extends ZigBeeBaseClassGenerator {
 
         out.println("package " + packageRoot + ";");
         out.println();
+
         importsAdd(packageRootPrefix + packageZcl + ".ZclCluster");
         importsAdd("java.util.Map");
         importsAdd("java.util.concurrent.ConcurrentHashMap");
         importsAdd("javax.annotation.Generated");
         outputImports(out);
         out.println();
+
         out.println("/**");
         out.println(" * Enumeration of ZigBee Clusters\n" + " * <p>\n"
                 + " * Code is auto-generated. Modifications may be overwritten!\n" + " *\n"

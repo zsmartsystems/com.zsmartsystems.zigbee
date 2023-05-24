@@ -134,8 +134,8 @@ public class ZigBeeZclClusterGenerator extends ZigBeeBaseClassGenerator {
         }
 
         outputImports(out);
-
         out.println();
+
         out.println("/**");
         out.println(" * <b>" + cluster.name + "</b> cluster implementation (<i>Cluster ID "
                 + String.format("0x%04X", cluster.code) + "</i>).");

@@ -81,8 +81,8 @@ public class ZigBeeZclStructureGenerator extends ZigBeeBaseFieldGenerator {
             }
 
             outputImports(out);
+            out.println("");
 
-            out.println();
             out.println("/**");
             out.println(" * " + structure.name + " structure implementation.");
 

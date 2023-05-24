@@ -15,10 +15,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
+import com.zsmartsystems.zigbee.autocode.util.ImportPrinter;
+import com.zsmartsystems.zigbee.autocode.util.ImportSet;
 import com.zsmartsystems.zigbee.dongle.xbee.autocode.xml.Parameter;
 
 /**
@@ -29,7 +28,7 @@ import com.zsmartsystems.zigbee.dongle.xbee.autocode.xml.Parameter;
 public abstract class ClassGenerator {
     int lineLen = 80;
     String sourceRootPath = "../com.zsmartsystems.zigbee.dongle.xbee/src/main/java/";
-    List<String> importList = new ArrayList<String>();
+    ImportSet importSet = new ImportSet();
 
     protected String stringToConstant(String value) {
         value = value.replaceAll("\\(.*?\\) ?", "");
@@ -90,21 +89,15 @@ public abstract class ClassGenerator {
     }
 
     protected void clearImports() {
-        importList.clear();
+        importSet.clear();
     }
 
     protected void addImport(String importClass) {
-        if (importList.contains(importClass)) {
-            return;
-        }
-        importList.add(importClass);
+        importSet.add(importClass);
     }
 
     protected void outputImports(final PrintStream out) {
-        Collections.sort(importList);
-        for (final String importClass : importList) {
-            out.println("import " + importClass + ";");
-        }
+        ImportPrinter.outputImports(importSet, out);
     }
 
     protected void outputCopywrite(PrintStream out) {
