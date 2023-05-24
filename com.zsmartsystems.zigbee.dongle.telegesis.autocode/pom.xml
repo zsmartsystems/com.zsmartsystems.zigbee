@@ -4,19 +4,18 @@
 
     <groupId>com.zsmartsystems.zigbee</groupId>
     <artifactId>com.zsmartsystems.zigbee.dongle.telegesis.autocode</artifactId>
-    <version>1.4.12-SNAPSHOT</version>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.main.skip>true</maven.main.skip>
-    </properties>
 
     <parent>
         <groupId>com.zsmartsystems</groupId>
         <artifactId>zigbee</artifactId>
         <version>1.4.12-SNAPSHOT</version>
     </parent>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.main.skip>true</maven.main.skip>
+    </properties>
 
     <build>
         <plugins>
