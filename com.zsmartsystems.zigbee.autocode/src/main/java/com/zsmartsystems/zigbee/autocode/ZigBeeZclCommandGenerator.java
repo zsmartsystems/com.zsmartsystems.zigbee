@@ -339,6 +339,9 @@ public class ZigBeeZclCommandGenerator extends ZigBeeBaseFieldGenerator {
 
         importsClear();
         importsAdd(packageRootPrefix + packageZcl + ".ZclCommand");
+        if (!"ZclGeneralCluster".equals(clusterClassName) && !"ZclZdoZigbeeDeviceObjectCluster".equals(clusterClassName)) {
+            importsAdd(packageRootPrefix + packageZcl + ".clusters." + clusterClassName);
+        }
         importsAdd("javax.annotation.Generated");
 
         outputLicense(out);
