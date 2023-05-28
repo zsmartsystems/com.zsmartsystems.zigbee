@@ -102,6 +102,7 @@ public class DefaultSerializer implements ZigBeeSerializer {
             case N_X_ATTRIBUTE_STATUS_RECORD:
                 break;
             case N_X_EXTENSION_FIELD_SET:
+                @SuppressWarnings("unchecked")
                 List<ExtensionFieldSet> extensionFieldSets = (List<ExtensionFieldSet>) data;
                 for (ExtensionFieldSet extensionFieldSet : extensionFieldSets) {
                     extensionFieldSet.serialize(this);
@@ -112,6 +113,7 @@ public class DefaultSerializer implements ZigBeeSerializer {
             case N_X_READ_ATTRIBUTE_STATUS_RECORD:
                 break;
             case N_X_UNSIGNED_16_BIT_INTEGER:
+                @SuppressWarnings("unchecked")
                 List<Integer> intArray16 = (List<Integer>) data;
                 buffer[length++] = intArray16.size();
                 for (int value : intArray16) {
@@ -120,6 +122,7 @@ public class DefaultSerializer implements ZigBeeSerializer {
                 }
                 break;
             case N_X_UNSIGNED_8_BIT_INTEGER:
+                @SuppressWarnings("unchecked")
                 List<Integer> intArrayNX8 = (List<Integer>) data;
                 buffer[length++] = intArrayNX8.size();
                 for (int value : intArrayNX8) {
@@ -133,12 +136,14 @@ public class DefaultSerializer implements ZigBeeSerializer {
                 }
                 break;
             case X_UNSIGNED_8_BIT_INTEGER:
+                @SuppressWarnings("unchecked")
                 List<Integer> intArrayX8 = (List<Integer>) data;
                 for (int value : intArrayX8) {
                     buffer[length++] = value & 0xFF;
                 }
                 break;
             case N_X_ATTRIBUTE_IDENTIFIER:
+                @SuppressWarnings("unchecked")
                 List<Integer> intArrayX16 = (List<Integer>) data;
                 for (int value : intArrayX16) {
                     buffer[length++] = value & 0xFF;

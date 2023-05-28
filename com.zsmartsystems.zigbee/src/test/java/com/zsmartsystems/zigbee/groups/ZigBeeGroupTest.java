@@ -100,7 +100,8 @@ public class ZigBeeGroupTest {
         ZclGroupsCluster cluster = Mockito.mock(ZclGroupsCluster.class);
         Mockito.when(endpoint.getInputCluster(ZclGroupsCluster.CLUSTER_ID)).thenReturn(cluster);
 
-        Future future = Mockito.mock(Future.class);
+        @SuppressWarnings("unchecked")
+        Future<CommandResult> future = Mockito.mock(Future.class);
         CommandResult response = Mockito.mock(CommandResult.class);
 
         AddGroupResponse addGroupResponse = Mockito.mock(AddGroupResponse.class);
@@ -141,7 +142,8 @@ public class ZigBeeGroupTest {
         ZclGroupsCluster cluster = Mockito.mock(ZclGroupsCluster.class);
         Mockito.when(endpoint.getInputCluster(ZclGroupsCluster.CLUSTER_ID)).thenReturn(cluster);
 
-        Future future = Mockito.mock(Future.class);
+        @SuppressWarnings("unchecked")
+        Future<CommandResult> future = Mockito.mock(Future.class);
         CommandResult response = Mockito.mock(CommandResult.class);
 
         RemoveGroupResponse removeGroupResponse = Mockito.mock(RemoveGroupResponse.class);
