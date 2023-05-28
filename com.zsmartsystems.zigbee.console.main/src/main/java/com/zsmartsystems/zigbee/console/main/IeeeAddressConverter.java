@@ -22,7 +22,7 @@ import com.zsmartsystems.zigbee.IeeeAddress;
  */
 public class IeeeAddressConverter implements Converter {
     @Override
-    public boolean canConvert(Class clazz) {
+    public boolean canConvert(@SuppressWarnings("rawtypes") Class clazz) {
         return clazz.equals(IeeeAddress.class);
     }
 
