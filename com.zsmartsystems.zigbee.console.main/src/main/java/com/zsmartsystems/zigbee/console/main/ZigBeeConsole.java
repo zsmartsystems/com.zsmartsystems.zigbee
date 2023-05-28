@@ -1442,7 +1442,7 @@ public final class ZigBeeConsole {
      * @return the {@link Object} containing the field value
      * @throws Exception
      */
-    private Object getField(Class clazz, Object object, String fieldName) throws Exception {
+    private Object getField(Class<?> clazz, Object object, String fieldName) throws Exception {
         Field field = clazz.getDeclaredField(fieldName);
         field.setAccessible(true);
         Field modifiersField = Field.class.getDeclaredField("modifiers");

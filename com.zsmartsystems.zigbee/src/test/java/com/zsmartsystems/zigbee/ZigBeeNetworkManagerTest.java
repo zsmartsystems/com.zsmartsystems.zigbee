@@ -1375,7 +1375,7 @@ public class ZigBeeNetworkManagerTest
         }
     }
 
-    private Object convertData(String data, Class clazz) {
+    private Object convertData(String data, Class<?> clazz) {
         return null;
     }
 
