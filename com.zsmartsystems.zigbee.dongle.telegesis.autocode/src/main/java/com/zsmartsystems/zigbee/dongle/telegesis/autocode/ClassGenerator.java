@@ -174,9 +174,8 @@ public abstract class ClassGenerator {
             len += word.length();
         }
 
-        if (len != 2) {
-            out.println();
-        }
+        // loop or skipping loop doesn't end line so we do
+        out.println();
     }
 
     protected String formatParameterString(Parameter parameter) {

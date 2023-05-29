@@ -286,9 +286,8 @@ public abstract class ZigBeeBaseClassGenerator {
                 len += word.length();
             }
 
-            if (len != 2 + indent.length()) {
-                out.println();
-            }
+            // loop or skipping loop doesn't end line so we do
+            out.println();
         }
     }
 
