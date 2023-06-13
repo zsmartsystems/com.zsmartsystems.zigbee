@@ -15,14 +15,14 @@ package com.zsmartsystems.zigbee;
  */
 public interface ZigBeeLinkQualityStatistics {
     /**
-     * Returns the LQI value from the last recieved packet
+     * Returns the LQI value from the last received packet
      *
      * @return the last received LQI value
      */
     public Integer getLastReceivedLqi();
 
     /**
-     * Returns the RSSI value from the last recieved packet
+     * Returns the RSSI value from the last received packet
      *
      * @return the last received RSSI value in dBm
      */
