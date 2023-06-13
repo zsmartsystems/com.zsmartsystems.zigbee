@@ -97,7 +97,7 @@ public class WindowCoveringGoToTiltValue extends ZclWindowCoveringCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        tiltValue = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        tiltValue = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

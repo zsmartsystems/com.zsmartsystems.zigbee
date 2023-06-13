@@ -240,12 +240,12 @@ public class DeviceConfigurationResponse extends ZclRssiLocationCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        status = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        power = (Integer) deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
-        pathLossExponent = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        calculationPeriod = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        numberRssiMeasurements = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        reportingPeriod = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        status = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        power = deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
+        pathLossExponent = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        calculationPeriod = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        numberRssiMeasurements = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        reportingPeriod = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

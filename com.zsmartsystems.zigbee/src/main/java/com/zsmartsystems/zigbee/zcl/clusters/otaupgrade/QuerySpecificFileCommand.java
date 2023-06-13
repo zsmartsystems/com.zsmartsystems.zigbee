@@ -220,11 +220,11 @@ public class QuerySpecificFileCommand extends ZclOtaUpgradeCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        requestNodeAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
-        manufacturerCode = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        imageType = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        fileVersion = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        zigbeeStackVersion = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        requestNodeAddress = deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        manufacturerCode = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        imageType = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        fileVersion = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        zigbeeStackVersion = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

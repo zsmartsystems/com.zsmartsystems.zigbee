@@ -200,10 +200,10 @@ public class UpgradeEndCommand extends ZclOtaUpgradeCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        status = (ZclStatus) deserializer.deserialize(ZclDataType.ZCL_STATUS);
-        manufacturerCode = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        imageType = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        fileVersion = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        status = deserializer.deserialize(ZclDataType.ZCL_STATUS);
+        manufacturerCode = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        imageType = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        fileVersion = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
     }
 
     @Override

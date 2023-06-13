@@ -96,7 +96,7 @@ public class RequestOwnLocationCommand extends ZclRssiLocationCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        requestingAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        requestingAddress = deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
     }
 
     @Override

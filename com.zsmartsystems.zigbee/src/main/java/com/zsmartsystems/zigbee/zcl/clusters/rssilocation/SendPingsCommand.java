@@ -154,9 +154,9 @@ public class SendPingsCommand extends ZclRssiLocationCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        targetAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
-        numberRssiMeasurements = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        calculationPeriod = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        targetAddress = deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        numberRssiMeasurements = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        calculationPeriod = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

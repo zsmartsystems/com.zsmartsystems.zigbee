@@ -212,10 +212,10 @@ public class PanelStatusChangedCommand extends ZclIasAceCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        panelStatus = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        secondsRemaining = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        audibleNotification = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        alarmStatus = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        panelStatus = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        secondsRemaining = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        audibleNotification = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        alarmStatus = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
     }
 
     @Override

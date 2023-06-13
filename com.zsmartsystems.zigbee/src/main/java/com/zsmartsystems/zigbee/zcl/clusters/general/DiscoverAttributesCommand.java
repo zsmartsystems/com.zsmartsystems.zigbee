@@ -155,8 +155,8 @@ public class DiscoverAttributesCommand extends ZclGeneralCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        startAttributeIdentifier = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        maximumAttributeIdentifiers = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        startAttributeIdentifier = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        maximumAttributeIdentifiers = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

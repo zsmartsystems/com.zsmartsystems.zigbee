@@ -174,9 +174,9 @@ public class TerminateKeyEstablishment extends ZclKeyEstablishmentCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        statusCode = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        waitTime = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        keyEstablishmentSuite = (Integer) deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
+        statusCode = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        waitTime = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        keyEstablishmentSuite = deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
     }
 
     @Override

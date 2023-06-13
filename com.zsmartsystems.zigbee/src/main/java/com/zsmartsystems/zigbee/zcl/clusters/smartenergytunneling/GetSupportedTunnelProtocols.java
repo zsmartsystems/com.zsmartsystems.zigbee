@@ -125,7 +125,7 @@ public class GetSupportedTunnelProtocols extends ZclSmartEnergyTunnelingCommand 
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        protocolOffset = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        protocolOffset = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

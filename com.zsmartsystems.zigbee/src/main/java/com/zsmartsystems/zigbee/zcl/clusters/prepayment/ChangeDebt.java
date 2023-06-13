@@ -362,16 +362,16 @@ public class ChangeDebt extends ZclPrepaymentCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        issuerEventId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        debtLabel = (ByteArray) deserializer.deserialize(ZclDataType.OCTET_STRING);
-        debtAmount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        debtRecoveryMethod = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        debtAmountType = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        debtRecoveryStartTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        debtRecoveryCollectionTime = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        debtRecoveryFrequency = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        debtRecoveryAmount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        debtRecoveryBalancePercentage = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        issuerEventId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        debtLabel = deserializer.deserialize(ZclDataType.OCTET_STRING);
+        debtAmount = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        debtRecoveryMethod = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        debtAmountType = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        debtRecoveryStartTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        debtRecoveryCollectionTime = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        debtRecoveryFrequency = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        debtRecoveryAmount = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        debtRecoveryBalancePercentage = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

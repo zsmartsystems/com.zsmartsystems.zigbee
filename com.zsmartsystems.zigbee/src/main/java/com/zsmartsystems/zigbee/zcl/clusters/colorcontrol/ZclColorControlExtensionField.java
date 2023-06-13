@@ -268,31 +268,31 @@ public class ZclColorControlExtensionField extends ExtensionFieldSet {
 
     @Override
     public void deserialize(final ZigBeeDeserializer deserializer) {
-        clusterId = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        int size = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        clusterId = deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        int size = deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         if (size >= 2) {
-            currentX = (Integer) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+            currentX = deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         }
         if (size >= 4) {
-            currentY = (Integer) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+            currentY = deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         }
         if (size >= 6) {
-            enhancedCurrentHue = (Integer) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+            enhancedCurrentHue = deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         }
         if (size >= 7) {
-            currentSaturation = (Integer) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+            currentSaturation = deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         }
         if (size >= 8) {
-            colorLoopActive = (Integer) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+            colorLoopActive = deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         }
         if (size >= 9) {
-            colorLoopDirection = (Integer) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+            colorLoopDirection = deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         }
         if (size >= 11) {
-            colorLoopTime = (Integer) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+            colorLoopTime = deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         }
         if (size >= 13) {
-            colorTemperature = (Integer) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+            colorTemperature = deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         }
     }
 

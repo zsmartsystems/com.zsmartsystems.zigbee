@@ -495,14 +495,14 @@ public class PublishBlockPeriodCommand extends ZclPriceCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        providerId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        issuerEventId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        blockPeriodStartTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        blockPeriodDuration = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_24_BIT_INTEGER);
-        blockPeriodControl = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        blockPeriodDurationType = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        tariffType = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        tariffResolutionPeriod = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        providerId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        issuerEventId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        blockPeriodStartTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        blockPeriodDuration = deserializer.deserialize(ZclDataType.UNSIGNED_24_BIT_INTEGER);
+        blockPeriodControl = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        blockPeriodDurationType = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        tariffType = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        tariffResolutionPeriod = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
     }
 
     @Override

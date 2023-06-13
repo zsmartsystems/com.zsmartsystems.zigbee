@@ -131,8 +131,8 @@ public class ManagementPermitJoiningRequest extends ZdoRequest implements ZigBee
     public void deserialize(final ZclFieldDeserializer deserializer) {
         super.deserialize(deserializer);
 
-        permitDuration = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        tcSignificance = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
+        permitDuration = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        tcSignificance = deserializer.deserialize(ZclDataType.BOOLEAN);
     }
 
     @Override

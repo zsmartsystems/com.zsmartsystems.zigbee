@@ -163,8 +163,8 @@ public class DiscoverAttributesResponse extends ZclGeneralCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        discoveryComplete = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
-        attributeInformation = (List<AttributeInformation>) deserializer.deserialize(ZclDataType.N_X_ATTRIBUTE_INFORMATION);
+        discoveryComplete = deserializer.deserialize(ZclDataType.BOOLEAN);
+        attributeInformation = deserializer.deserialize(ZclDataType.N_X_ATTRIBUTE_INFORMATION);
     }
 
     @Override

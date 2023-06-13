@@ -192,9 +192,9 @@ public class CancelTariffCommand extends ZclPriceCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        providerId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        issuerTariffId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        tariffType = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        providerId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        issuerTariffId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        tariffType = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
     }
 
     @Override

@@ -153,9 +153,9 @@ public class StepColorCommand extends ZclColorControlCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        stepX = (Integer) deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
-        stepY = (Integer) deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
-        transitionTime = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        stepX = deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
+        stepY = deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
+        transitionTime = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

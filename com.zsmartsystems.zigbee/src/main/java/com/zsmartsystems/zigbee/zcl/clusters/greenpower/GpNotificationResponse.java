@@ -187,10 +187,10 @@ public class GpNotificationResponse extends ZclGreenPowerCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        options = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        gpdSrcId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        gpdIeee = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
-        gpdSecurityFrameCounter = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        options = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        gpdSrcId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        gpdIeee = deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        gpdSecurityFrameCounter = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
     }
 
     @Override

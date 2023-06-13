@@ -135,8 +135,8 @@ public class DefaultResponse extends ZclGeneralCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        commandIdentifier = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        statusCode = (ZclStatus) deserializer.deserialize(ZclDataType.ZCL_STATUS);
+        commandIdentifier = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        statusCode = deserializer.deserialize(ZclDataType.ZCL_STATUS);
     }
 
     @Override

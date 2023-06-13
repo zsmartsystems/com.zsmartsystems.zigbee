@@ -128,8 +128,8 @@ public class ConsumerTopUp extends ZclPrepaymentCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        originatingDevice = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        topUpCode = (ByteArray) deserializer.deserialize(ZclDataType.OCTET_STRING);
+        originatingDevice = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        topUpCode = deserializer.deserialize(ZclDataType.OCTET_STRING);
     }
 
     @Override

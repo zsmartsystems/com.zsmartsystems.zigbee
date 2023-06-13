@@ -129,8 +129,8 @@ public class AlarmCommand extends ZclAlarmsCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        alarmCode = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        clusterIdentifier = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        alarmCode = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        clusterIdentifier = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

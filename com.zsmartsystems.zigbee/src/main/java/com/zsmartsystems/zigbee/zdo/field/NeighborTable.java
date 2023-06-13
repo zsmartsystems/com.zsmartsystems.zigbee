@@ -66,19 +66,19 @@ public class NeighborTable {
      */
     public void deserialize(ZigBeeDeserializer deserializer) {
         // Deserialize the fields
-        extendedPanId = (ExtendedPanId) deserializer.readZigBeeType(ZclDataType.EXTENDED_PANID);
-        extendedAddress = (IeeeAddress) deserializer.readZigBeeType(ZclDataType.IEEE_ADDRESS);
-        networkAddress = (Integer) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        extendedPanId = deserializer.readZigBeeType(ZclDataType.EXTENDED_PANID);
+        extendedAddress = deserializer.readZigBeeType(ZclDataType.IEEE_ADDRESS);
+        networkAddress = deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
 
-        int temp = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        int temp = deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         setDeviceType(temp & 0x03);
         setRxOnWhenIdle((temp & 0x0c) >> 2);
         setRelationship((temp & 0x70) >> 4);
 
-        temp = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        temp = deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         setPermitJoining(temp & 0x03);
-        depth = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        lqi = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        depth = deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        lqi = deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     public ExtendedPanId getExtendedPanId() {

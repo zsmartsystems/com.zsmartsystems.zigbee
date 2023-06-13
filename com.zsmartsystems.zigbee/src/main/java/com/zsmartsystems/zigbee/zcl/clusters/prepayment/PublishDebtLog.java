@@ -156,8 +156,8 @@ public class PublishDebtLog extends ZclPrepaymentCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        commandIndex = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        totalNumberOfCommands = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        commandIndex = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        totalNumberOfCommands = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         debtPayload = new DebtPayload();
         debtPayload.deserialize(deserializer);
     }

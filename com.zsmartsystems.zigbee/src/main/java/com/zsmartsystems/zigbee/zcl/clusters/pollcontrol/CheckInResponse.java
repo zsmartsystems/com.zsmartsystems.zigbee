@@ -208,8 +208,8 @@ public class CheckInResponse extends ZclPollControlCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        startFastPolling = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
-        fastPollTimeout = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        startFastPolling = deserializer.deserialize(ZclDataType.BOOLEAN);
+        fastPollTimeout = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

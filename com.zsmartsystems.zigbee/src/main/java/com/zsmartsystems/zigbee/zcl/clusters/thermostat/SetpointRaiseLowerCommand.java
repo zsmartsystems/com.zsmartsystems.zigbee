@@ -124,8 +124,8 @@ public class SetpointRaiseLowerCommand extends ZclThermostatCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        mode = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        amount = (Integer) deserializer.deserialize(ZclDataType.SIGNED_8_BIT_INTEGER);
+        mode = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        amount = deserializer.deserialize(ZclDataType.SIGNED_8_BIT_INTEGER);
     }
 
     @Override

@@ -73,9 +73,9 @@ public class WriteAttributeStatusRecord implements ZclListItemField {
 
     @Override
     public void deserialize(final ZigBeeDeserializer deserializer) {
-        status = (ZclStatus) deserializer.readZigBeeType(ZclDataType.ZCL_STATUS);
+        status = deserializer.readZigBeeType(ZclDataType.ZCL_STATUS);
         if (status != ZclStatus.SUCCESS) {
-            attributeIdentifier = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+            attributeIdentifier = deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         }
     }
 

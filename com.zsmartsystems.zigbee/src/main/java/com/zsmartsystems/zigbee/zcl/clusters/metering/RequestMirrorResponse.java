@@ -119,7 +119,7 @@ public class RequestMirrorResponse extends ZclMeteringCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        endpointId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        endpointId = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

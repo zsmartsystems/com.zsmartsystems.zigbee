@@ -156,9 +156,9 @@ public class GetMeasurementProfileCommand extends ZclElectricalMeasurementComman
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        attributeId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        startTime = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        numberOfIntervals = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        attributeId = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        startTime = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        numberOfIntervals = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
     }
 
     @Override

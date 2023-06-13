@@ -124,8 +124,8 @@ public class GetWeeklySchedule extends ZclThermostatCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        daysToReturn = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        modeToReturn = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        daysToReturn = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        modeToReturn = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
     }
 
     @Override

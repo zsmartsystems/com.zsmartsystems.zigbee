@@ -95,7 +95,7 @@ public class CancelAllLoadControlEvents extends ZclDemandResponseAndLoadControlC
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        cancelControl = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        cancelControl = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
     }
 
     @Override

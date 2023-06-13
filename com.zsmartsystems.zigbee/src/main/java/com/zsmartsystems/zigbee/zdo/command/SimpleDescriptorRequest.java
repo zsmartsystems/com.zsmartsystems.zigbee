@@ -127,8 +127,8 @@ public class SimpleDescriptorRequest extends ZdoRequest implements ZigBeeTransac
     public void deserialize(final ZclFieldDeserializer deserializer) {
         super.deserialize(deserializer);
 
-        nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
-        endpoint = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        nwkAddrOfInterest = deserializer.deserialize(ZclDataType.NWK_ADDRESS);
+        endpoint = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

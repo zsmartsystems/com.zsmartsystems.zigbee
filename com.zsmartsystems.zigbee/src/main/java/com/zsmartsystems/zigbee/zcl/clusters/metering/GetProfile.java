@@ -206,9 +206,9 @@ public class GetProfile extends ZclMeteringCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        intervalChannel = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        endTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        numberOfPeriods = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        intervalChannel = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        endTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        numberOfPeriods = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

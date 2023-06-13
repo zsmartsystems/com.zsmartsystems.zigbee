@@ -99,7 +99,7 @@ public class Toggle extends ZclDoorLockCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        pin = (String) deserializer.deserialize(ZclDataType.CHARACTER_STRING);
+        pin = deserializer.deserialize(ZclDataType.CHARACTER_STRING);
     }
 
     @Override

@@ -102,8 +102,8 @@ public class BlockThresholdSubPayload implements ZigBeeSerializable {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        tierNumberOfBlockThresholds = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        blockThreshold = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_48_BIT_INTEGER);
+        tierNumberOfBlockThresholds = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        blockThreshold = deserializer.deserialize(ZclDataType.UNSIGNED_48_BIT_INTEGER);
     }
 
     @Override

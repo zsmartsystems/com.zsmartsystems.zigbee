@@ -157,9 +157,9 @@ public class GpProxyCommissioningMode extends ZclGreenPowerCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        options = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        commissioningWindow = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        channel = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        options = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        commissioningWindow = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        channel = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

@@ -105,7 +105,7 @@ public class ReadAttributesStructuredCommand extends ZclGeneralCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        attributeSelectors = (Object) deserializer.deserialize(ZclDataType.N_X_ATTRIBUTE_SELECTOR);
+        attributeSelectors = deserializer.deserialize(ZclDataType.N_X_ATTRIBUTE_SELECTOR);
     }
 
     @Override

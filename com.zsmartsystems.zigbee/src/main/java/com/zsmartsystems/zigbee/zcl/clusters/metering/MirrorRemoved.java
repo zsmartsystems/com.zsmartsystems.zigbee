@@ -107,7 +107,7 @@ public class MirrorRemoved extends ZclMeteringCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        removedEndpointId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        removedEndpointId = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

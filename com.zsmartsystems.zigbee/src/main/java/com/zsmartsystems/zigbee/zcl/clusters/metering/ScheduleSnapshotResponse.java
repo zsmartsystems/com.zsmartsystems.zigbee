@@ -152,7 +152,7 @@ public class ScheduleSnapshotResponse extends ZclMeteringCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        issuerEventId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        issuerEventId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
         snapshotResponsePayload = new SnapshotResponsePayload();
         snapshotResponsePayload.deserialize(deserializer);
     }

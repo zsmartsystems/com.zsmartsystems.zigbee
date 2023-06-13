@@ -241,11 +241,11 @@ public class GetZoneStatusResponse extends ZclIasAceCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        zoneStatusComplete = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
-        numberOfZones = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        iasAceZoneStatus = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        zoneId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        zoneStatus = (Integer) deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
+        zoneStatusComplete = deserializer.deserialize(ZclDataType.BOOLEAN);
+        numberOfZones = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        iasAceZoneStatus = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        zoneId = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        zoneStatus = deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
     }
 
     @Override

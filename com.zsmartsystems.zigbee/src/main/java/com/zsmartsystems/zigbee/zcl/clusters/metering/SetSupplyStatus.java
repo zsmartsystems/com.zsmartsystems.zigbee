@@ -271,11 +271,11 @@ public class SetSupplyStatus extends ZclMeteringCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        issuerEventId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        supplyTamperState = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        supplyDepletionState = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        supplyUncontrolledFlowState = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        loadLimitSupplyState = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        issuerEventId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        supplyTamperState = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        supplyDepletionState = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        supplyUncontrolledFlowState = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        loadLimitSupplyState = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
     }
 
     @Override

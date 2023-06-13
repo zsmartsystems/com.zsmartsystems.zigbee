@@ -99,7 +99,7 @@ public class EphemeralDataRequestCommand extends ZclKeyEstablishmentCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        ephemeralData = (ByteArray) deserializer.deserialize(ZclDataType.RAW_OCTET);
+        ephemeralData = deserializer.deserialize(ZclDataType.RAW_OCTET);
     }
 
     @Override

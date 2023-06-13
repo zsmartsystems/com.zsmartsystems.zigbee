@@ -284,10 +284,10 @@ public class GetZoneStatusCommand extends ZclIasAceCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        startingZoneId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        maxZoneIDs = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        zoneStatusMaskFlag = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
-        zoneStatusMask = (Integer) deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
+        startingZoneId = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        maxZoneIDs = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        zoneStatusMaskFlag = deserializer.deserialize(ZclDataType.BOOLEAN);
+        zoneStatusMask = deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
     }
 
     @Override

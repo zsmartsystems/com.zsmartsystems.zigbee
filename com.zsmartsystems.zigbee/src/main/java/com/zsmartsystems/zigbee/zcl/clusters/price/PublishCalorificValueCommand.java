@@ -217,11 +217,11 @@ public class PublishCalorificValueCommand extends ZclPriceCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        issuerEventId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        startTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        calorificValue = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        calorificValueUnit = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        calorificValueTrailingDigit = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        issuerEventId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        startTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        calorificValue = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        calorificValueUnit = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        calorificValueTrailingDigit = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
     }
 
     @Override

@@ -106,7 +106,7 @@ public class TakeSnapshot extends ZclMeteringCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        snapshotCause = (Integer) deserializer.deserialize(ZclDataType.BITMAP_32_BIT);
+        snapshotCause = deserializer.deserialize(ZclDataType.BITMAP_32_BIT);
     }
 
     @Override

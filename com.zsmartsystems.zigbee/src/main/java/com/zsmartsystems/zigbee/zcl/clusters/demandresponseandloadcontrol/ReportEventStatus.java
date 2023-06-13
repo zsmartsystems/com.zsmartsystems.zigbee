@@ -499,17 +499,17 @@ public class ReportEventStatus extends ZclDemandResponseAndLoadControlCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        issuerEventId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        eventStatus = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        eventStatusTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        criticalityLevelApplied = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        coolingTemperatureSetPointApplied = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        heatingTemperatureSetPointApplied = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        averageLoadAdjustmentPercentageApplied = (Integer) deserializer.deserialize(ZclDataType.SIGNED_8_BIT_INTEGER);
-        dutyCycleApplied = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        eventControl = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        signatureType = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        signature = (ByteArray) deserializer.deserialize(ZclDataType.OCTET_STRING);
+        issuerEventId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        eventStatus = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        eventStatusTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        criticalityLevelApplied = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        coolingTemperatureSetPointApplied = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        heatingTemperatureSetPointApplied = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        averageLoadAdjustmentPercentageApplied = deserializer.deserialize(ZclDataType.SIGNED_8_BIT_INTEGER);
+        dutyCycleApplied = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        eventControl = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        signatureType = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        signature = deserializer.deserialize(ZclDataType.OCTET_STRING);
     }
 
     @Override

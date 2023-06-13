@@ -164,8 +164,8 @@ public class RequestFastPollModeResponse extends ZclMeteringCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        appliedUpdatePeriod = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        fastPollModeEndtime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
+        appliedUpdatePeriod = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        fastPollModeEndtime = deserializer.deserialize(ZclDataType.UTCTIME);
     }
 
     @Override

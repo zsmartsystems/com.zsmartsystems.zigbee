@@ -104,7 +104,7 @@ public class UnlockDoorCommand extends ZclDoorLockCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        pinCode = (ByteArray) deserializer.deserialize(ZclDataType.OCTET_STRING);
+        pinCode = deserializer.deserialize(ZclDataType.OCTET_STRING);
     }
 
     @Override

@@ -184,10 +184,10 @@ public class ConsumerTopUpResponse extends ZclPrepaymentCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        resultType = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        topUpValue = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        sourceOfTopUp = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        creditRemaining = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        resultType = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        topUpValue = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        sourceOfTopUp = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        creditRemaining = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
     }
 
     @Override

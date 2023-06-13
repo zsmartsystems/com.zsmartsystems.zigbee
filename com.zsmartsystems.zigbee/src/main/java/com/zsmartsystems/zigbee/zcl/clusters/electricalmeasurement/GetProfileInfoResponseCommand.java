@@ -186,10 +186,10 @@ public class GetProfileInfoResponseCommand extends ZclElectricalMeasurementComma
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        profileCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        profileIntervalPeriod = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        maxNumberOfIntervals = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        listOfAttributes = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        profileCount = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        profileIntervalPeriod = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        maxNumberOfIntervals = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        listOfAttributes = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

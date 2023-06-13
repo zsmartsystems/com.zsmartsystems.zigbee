@@ -128,8 +128,8 @@ public class ManagementLeaveRequest extends ZdoRequest implements ZigBeeTransact
     public void deserialize(final ZclFieldDeserializer deserializer) {
         super.deserialize(deserializer);
 
-        deviceAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
-        removeChildrenRejoin = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
+        deviceAddress = deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        removeChildrenRejoin = deserializer.deserialize(ZclDataType.BOOLEAN);
     }
 
     @Override
