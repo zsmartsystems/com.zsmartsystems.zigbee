@@ -316,17 +316,17 @@ public class ImageBlockCommand extends ZclOtaUpgradeCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        fieldControl = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        manufacturerCode = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        imageType = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        fileVersion = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        fileOffset = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        maximumDataSize = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        fieldControl = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        manufacturerCode = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        imageType = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        fileVersion = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        fileOffset = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        maximumDataSize = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         if ((fieldControl & 0x01) != 0) {
-            requestNodeAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+            requestNodeAddress = deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
         }
         if ((fieldControl & 0x02) != 0) {
-            blockRequestDelay = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+            blockRequestDelay = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         }
     }
 

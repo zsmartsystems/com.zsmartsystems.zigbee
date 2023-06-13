@@ -212,10 +212,10 @@ public class ZoneStatusChangedCommand extends ZclIasAceCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        zoneId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        zoneStatus = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_16_BIT);
-        audibleNotification = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        zoneLabel = (String) deserializer.deserialize(ZclDataType.CHARACTER_STRING);
+        zoneId = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        zoneStatus = deserializer.deserialize(ZclDataType.ENUMERATION_16_BIT);
+        audibleNotification = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        zoneLabel = deserializer.deserialize(ZclDataType.CHARACTER_STRING);
     }
 
     @Override

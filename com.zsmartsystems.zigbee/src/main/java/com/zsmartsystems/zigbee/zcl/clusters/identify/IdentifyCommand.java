@@ -97,7 +97,7 @@ public class IdentifyCommand extends ZclIdentifyCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        identifyTime = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        identifyTime = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

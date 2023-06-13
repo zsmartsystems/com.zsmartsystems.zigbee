@@ -133,8 +133,8 @@ public class DiscoverCommandsReceived extends ZclGeneralCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        startCommandIdentifier = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        maximumCommandIdentifiers = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        startCommandIdentifier = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        maximumCommandIdentifiers = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

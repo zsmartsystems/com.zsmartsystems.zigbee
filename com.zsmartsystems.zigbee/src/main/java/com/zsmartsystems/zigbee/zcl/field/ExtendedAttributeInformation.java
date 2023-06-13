@@ -129,8 +129,8 @@ public class ExtendedAttributeInformation implements ZclListItemField {
 
     @Override
     public void deserialize(final ZigBeeDeserializer deserializer) {
-        attributeIdentifier = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        attributeDataType = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        attributeIdentifier = deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        attributeDataType = deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

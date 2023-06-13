@@ -335,7 +335,7 @@ public class ZigBeeNodeServiceDiscovererTest {
         tasks.add(NodeDiscoveryTask.NODE_DESCRIPTOR);
 
         TestUtilities.invokeMethod(ZigBeeNodeServiceDiscoverer.class, discoverer, "startDiscovery", Set.class, tasks);
-        Queue<NodeDiscoveryTask> tasksOut = (Queue<NodeDiscoveryTask>) TestUtilities.getField(
+        Queue<NodeDiscoveryTask> tasksOut = TestUtilities.getField(
                 ZigBeeNodeServiceDiscoverer.class, discoverer,
                 "discoveryTasks");
 

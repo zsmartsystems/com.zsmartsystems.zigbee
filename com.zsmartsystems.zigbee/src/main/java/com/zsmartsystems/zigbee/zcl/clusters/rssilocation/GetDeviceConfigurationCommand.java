@@ -96,7 +96,7 @@ public class GetDeviceConfigurationCommand extends ZclRssiLocationCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        targetAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        targetAddress = deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
     }
 
     @Override

@@ -165,8 +165,8 @@ public class ReadyDataServerToClient extends ZclSmartEnergyTunnelingCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        tunnelId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        numberOfOctetsLeft = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        tunnelId = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        numberOfOctetsLeft = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

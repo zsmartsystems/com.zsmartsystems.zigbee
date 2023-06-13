@@ -103,10 +103,10 @@ public class ParentAnnounce extends ZdoRequest {
         // Create lists
         childInfoList = new ArrayList<ParentAnnounceChildInfo>();
 
-        Integer numberOfChildren = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        Integer numberOfChildren = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         if (numberOfChildren != null) {
             for (int cnt = 0; cnt < numberOfChildren; cnt++) {
-                childInfoList.add((ParentAnnounceChildInfo) deserializer.deserialize(ZclDataType.PARENT_ANNOUNCE_CHILD_INFO));
+                childInfoList.add(deserializer.deserialize(ZclDataType.PARENT_ANNOUNCE_CHILD_INFO));
             }
         }
     }

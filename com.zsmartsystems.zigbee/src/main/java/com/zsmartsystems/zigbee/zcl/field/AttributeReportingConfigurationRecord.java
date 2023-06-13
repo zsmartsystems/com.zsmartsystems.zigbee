@@ -365,15 +365,15 @@ public class AttributeReportingConfigurationRecord implements ZclListItemField {
 
     @Override
     public void deserialize(final ZigBeeDeserializer deserializer) {
-        direction = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        attributeIdentifier = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        direction = deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        attributeIdentifier = deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         if (direction == 1) {
             // If direction is set to 0x01, then the timeout period field is included in the payload,
             // and the attribute data type field, the minimum reporting interval field, the
             // maximum reporting interval field and the reportable change field are omitted. The
             // record is sent to a cluster client (or server) to configure how it should expect
             // reports from a server (or client) of the same cluster.
-            timeoutPeriod = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+            timeoutPeriod = deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         } else {
             // If direction is set to 0x00, then the attribute data type field, the minimum
             // reporting interval field, the maximum reporting interval field and the reportable
@@ -382,8 +382,8 @@ public class AttributeReportingConfigurationRecord implements ZclListItemField {
             // a client (or server) of the same cluster.
             attributeDataType = ZclDataType
                     .getType((int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER));
-            minimumReportingInterval = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-            maximumReportingInterval = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+            minimumReportingInterval = deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+            maximumReportingInterval = deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
             if (attributeDataType.isAnalog()) {
                 // The reportable change field shall contain the minimum change to the attribute that
                 // will result in a report being issued. This field is of variable length. For attributes

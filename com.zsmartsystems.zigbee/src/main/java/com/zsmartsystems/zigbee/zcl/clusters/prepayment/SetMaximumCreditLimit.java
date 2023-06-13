@@ -216,11 +216,11 @@ public class SetMaximumCreditLimit extends ZclPrepaymentCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        providerId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        issuerEventId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        implementationDateTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        maximumCreditLevel = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        maximumCreditPerTopUp = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        providerId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        issuerEventId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        implementationDateTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        maximumCreditLevel = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        maximumCreditPerTopUp = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
     }
 
     @Override

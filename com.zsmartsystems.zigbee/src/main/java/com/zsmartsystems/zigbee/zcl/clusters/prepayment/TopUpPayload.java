@@ -134,9 +134,9 @@ public class TopUpPayload implements ZigBeeSerializable {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        topUpCode = (ByteArray) deserializer.deserialize(ZclDataType.OCTET_STRING);
-        topUpAmount = (Integer) deserializer.deserialize(ZclDataType.SIGNED_32_BIT_INTEGER);
-        topUpTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
+        topUpCode = deserializer.deserialize(ZclDataType.OCTET_STRING);
+        topUpAmount = deserializer.deserialize(ZclDataType.SIGNED_32_BIT_INTEGER);
+        topUpTime = deserializer.deserialize(ZclDataType.UTCTIME);
     }
 
     @Override

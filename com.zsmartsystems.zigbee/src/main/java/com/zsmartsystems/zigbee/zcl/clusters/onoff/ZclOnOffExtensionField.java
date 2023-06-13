@@ -58,10 +58,10 @@ public class ZclOnOffExtensionField extends ExtensionFieldSet {
 
     @Override
     public void deserialize(final ZigBeeDeserializer deserializer) {
-        clusterId = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        int size = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        clusterId = deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        int size = deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         if (size >= 1) {
-            onOff = (Boolean) deserializer.readZigBeeType(ZclDataType.BOOLEAN);
+            onOff = deserializer.readZigBeeType(ZclDataType.BOOLEAN);
         }
     }
 

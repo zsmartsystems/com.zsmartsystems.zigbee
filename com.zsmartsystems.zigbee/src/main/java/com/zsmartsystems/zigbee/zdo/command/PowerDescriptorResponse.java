@@ -125,13 +125,13 @@ public class PowerDescriptorResponse extends ZdoResponse {
     public void deserialize(final ZclFieldDeserializer deserializer) {
         super.deserialize(deserializer);
 
-        status = (ZdoStatus) deserializer.deserialize(ZclDataType.ZDO_STATUS);
+        status = deserializer.deserialize(ZclDataType.ZDO_STATUS);
         if (status != ZdoStatus.SUCCESS) {
             // Don't read the full response if we have an error
             return;
         }
-        nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
-        powerDescriptor = (PowerDescriptor) deserializer.deserialize(ZclDataType.POWER_DESCRIPTOR);
+        nwkAddrOfInterest = deserializer.deserialize(ZclDataType.NWK_ADDRESS);
+        powerDescriptor = deserializer.deserialize(ZclDataType.POWER_DESCRIPTOR);
     }
 
     @Override

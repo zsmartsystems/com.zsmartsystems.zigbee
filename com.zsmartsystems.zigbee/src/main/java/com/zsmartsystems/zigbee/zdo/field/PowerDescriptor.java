@@ -258,8 +258,8 @@ public class PowerDescriptor {
      */
     public void deserialize(ZigBeeDeserializer deserializer) {
         // Deserialize the fields
-        int byte1 = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        int byte2 = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        int byte1 = deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        int byte2 = deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
 
         setCurrentPowerMode(byte1 & 0x0f);
         setAvailablePowerSources(byte1 >> 4 & 0x0f);

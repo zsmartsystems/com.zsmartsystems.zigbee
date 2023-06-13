@@ -100,7 +100,7 @@ public class ConfirmKeyResponse extends ZclKeyEstablishmentCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        secureMessageAuthenticationCode = (ByteArray) deserializer.deserialize(ZclDataType.RAW_OCTET);
+        secureMessageAuthenticationCode = deserializer.deserialize(ZclDataType.RAW_OCTET);
     }
 
     @Override

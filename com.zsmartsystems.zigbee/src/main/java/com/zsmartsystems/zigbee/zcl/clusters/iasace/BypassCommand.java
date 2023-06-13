@@ -184,9 +184,9 @@ public class BypassCommand extends ZclIasAceCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        numberOfZones = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        zoneIds = (List<Integer>) deserializer.deserialize(ZclDataType.N_X_UNSIGNED_8_BIT_INTEGER);
-        armDisarmCode = (String) deserializer.deserialize(ZclDataType.CHARACTER_STRING);
+        numberOfZones = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        zoneIds = deserializer.deserialize(ZclDataType.N_X_UNSIGNED_8_BIT_INTEGER);
+        armDisarmCode = deserializer.deserialize(ZclDataType.CHARACTER_STRING);
     }
 
     @Override

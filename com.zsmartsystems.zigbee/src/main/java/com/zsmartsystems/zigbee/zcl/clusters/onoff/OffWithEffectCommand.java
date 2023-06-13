@@ -150,8 +150,8 @@ public class OffWithEffectCommand extends ZclOnOffCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        effectIdentifier = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        effectVariant = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        effectIdentifier = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        effectVariant = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

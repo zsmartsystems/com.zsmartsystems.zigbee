@@ -131,8 +131,8 @@ public class MoveToColorTemperatureCommand extends ZclColorControlCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        colorTemperature = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        transitionTime = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        colorTemperature = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        transitionTime = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

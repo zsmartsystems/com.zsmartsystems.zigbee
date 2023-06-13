@@ -196,9 +196,9 @@ public class ConfigureNotificationScheme extends ZclMeteringCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        issuerEventId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        notificationScheme = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        notificationFlagOrder = (Integer) deserializer.deserialize(ZclDataType.BITMAP_32_BIT);
+        issuerEventId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        notificationScheme = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        notificationFlagOrder = deserializer.deserialize(ZclDataType.BITMAP_32_BIT);
     }
 
     @Override

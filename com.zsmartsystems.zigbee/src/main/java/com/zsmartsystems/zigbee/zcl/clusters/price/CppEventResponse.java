@@ -157,8 +157,8 @@ public class CppEventResponse extends ZclPriceCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        issuerEventId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        cppAuth = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        issuerEventId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        cppAuth = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
     }
 
     @Override

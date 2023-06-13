@@ -102,8 +102,8 @@ public class IasAceZoneStatusResult implements ZigBeeSerializable {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        zoneId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        zoneStatus = (Integer) deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
+        zoneId = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        zoneStatus = deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
     }
 
     @Override

@@ -97,7 +97,7 @@ public class WindowCoveringGoToLiftValue extends ZclWindowCoveringCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        liftValue = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        liftValue = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

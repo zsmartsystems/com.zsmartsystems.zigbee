@@ -46,12 +46,12 @@ public class SimpleDescriptor {
      */
     public void deserialize(ZigBeeDeserializer deserializer) {
         // Deserialize the fields
-        endpoint = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        profileId = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        deviceId = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        deviceVersion = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        inputClusterList = (List<Integer>) deserializer.readZigBeeType(ZclDataType.N_X_UNSIGNED_16_BIT_INTEGER);
-        outputClusterList = (List<Integer>) deserializer.readZigBeeType(ZclDataType.N_X_UNSIGNED_16_BIT_INTEGER);
+        endpoint = deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        profileId = deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        deviceId = deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        deviceVersion = deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        inputClusterList = deserializer.readZigBeeType(ZclDataType.N_X_UNSIGNED_16_BIT_INTEGER);
+        outputClusterList = deserializer.readZigBeeType(ZclDataType.N_X_UNSIGNED_16_BIT_INTEGER);
     }
 
     public int getEndpoint() {

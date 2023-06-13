@@ -107,7 +107,7 @@ public class ReadAttributesCommand extends ZclGeneralCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        identifiers = (List<Integer>) deserializer.deserialize(ZclDataType.N_X_ATTRIBUTE_IDENTIFIER);
+        identifiers = deserializer.deserialize(ZclDataType.N_X_ATTRIBUTE_IDENTIFIER);
     }
 
     @Override

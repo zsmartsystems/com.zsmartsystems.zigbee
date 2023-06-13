@@ -211,11 +211,11 @@ public class SetAbsoluteLocationCommand extends ZclRssiLocationCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        coordinate1 = (Integer) deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
-        coordinate2 = (Integer) deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
-        coordinate3 = (Integer) deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
-        power = (Integer) deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
-        pathLossExponent = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        coordinate1 = deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
+        coordinate2 = deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
+        coordinate3 = deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
+        power = deserializer.deserialize(ZclDataType.SIGNED_16_BIT_INTEGER);
+        pathLossExponent = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

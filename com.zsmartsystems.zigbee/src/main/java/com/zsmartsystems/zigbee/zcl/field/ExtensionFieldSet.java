@@ -86,8 +86,8 @@ public class ExtensionFieldSet implements ZclListItemField {
 
     @Override
     public void deserialize(final ZigBeeDeserializer deserializer) {
-        clusterId = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        data = (ByteArray) deserializer.readZigBeeType(ZclDataType.BYTE_ARRAY);
+        clusterId = deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        data = deserializer.readZigBeeType(ZclDataType.BYTE_ARRAY);
     }
 
     @Override

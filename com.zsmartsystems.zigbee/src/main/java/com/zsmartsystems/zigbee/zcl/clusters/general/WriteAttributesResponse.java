@@ -107,7 +107,7 @@ public class WriteAttributesResponse extends ZclGeneralCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        records = (List<WriteAttributeStatusRecord>) deserializer.deserialize(ZclDataType.N_X_WRITE_ATTRIBUTE_STATUS_RECORD);
+        records = deserializer.deserialize(ZclDataType.N_X_WRITE_ATTRIBUTE_STATUS_RECORD);
     }
 
     @Override

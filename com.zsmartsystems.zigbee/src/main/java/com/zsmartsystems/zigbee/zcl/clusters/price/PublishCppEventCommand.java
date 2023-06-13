@@ -364,13 +364,13 @@ public class PublishCppEventCommand extends ZclPriceCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        providerId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        issuerEventId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        startTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        durationInMinutes = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        tariffType = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        cppPriceTier = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        cppAuth = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        providerId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        issuerEventId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        startTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        durationInMinutes = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        tariffType = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        cppPriceTier = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        cppAuth = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
     }
 
     @Override

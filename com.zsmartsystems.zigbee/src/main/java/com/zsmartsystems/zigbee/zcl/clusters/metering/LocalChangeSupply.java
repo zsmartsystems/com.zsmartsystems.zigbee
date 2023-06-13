@@ -108,7 +108,7 @@ public class LocalChangeSupply extends ZclMeteringCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        proposedSupplyStatus = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        proposedSupplyStatus = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
     }
 
     @Override

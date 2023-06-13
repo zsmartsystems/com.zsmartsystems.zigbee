@@ -128,8 +128,8 @@ public class StartWarningCommand extends ZclIasWdCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        header = (Integer) deserializer.deserialize(ZclDataType.DATA_8_BIT);
-        warningDuration = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        header = deserializer.deserialize(ZclDataType.DATA_8_BIT);
+        warningDuration = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

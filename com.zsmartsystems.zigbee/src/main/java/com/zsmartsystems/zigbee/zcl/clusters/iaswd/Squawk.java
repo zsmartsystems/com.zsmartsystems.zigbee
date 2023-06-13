@@ -99,7 +99,7 @@ public class Squawk extends ZclIasWdCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        squawkInfo = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        squawkInfo = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
     }
 
     @Override

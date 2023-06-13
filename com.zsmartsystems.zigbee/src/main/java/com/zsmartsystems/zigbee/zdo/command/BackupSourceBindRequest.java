@@ -179,10 +179,10 @@ public class BackupSourceBindRequest extends ZdoRequest {
     public void deserialize(final ZclFieldDeserializer deserializer) {
         super.deserialize(deserializer);
 
-        sourceTableEntries = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        startIndex = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        sourceTableListCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        sourceTableList = (List<Long>) deserializer.deserialize(ZclDataType.N_X_IEEE_ADDRESS);
+        sourceTableEntries = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        startIndex = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        sourceTableListCount = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        sourceTableList = deserializer.deserialize(ZclDataType.N_X_IEEE_ADDRESS);
     }
 
     @Override

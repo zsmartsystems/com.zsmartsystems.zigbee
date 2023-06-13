@@ -273,13 +273,13 @@ public class GpTunnelingStop extends ZclGreenPowerCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        options = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        gpdSrcId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        gpdIeee = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
-        endpoint = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        gpdSecurityFrameCounter = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        gppShortAddress = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        gppDistance = (Integer) deserializer.deserialize(ZclDataType.SIGNED_8_BIT_INTEGER);
+        options = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        gpdSrcId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        gpdIeee = deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        endpoint = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        gpdSecurityFrameCounter = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        gppShortAddress = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        gppDistance = deserializer.deserialize(ZclDataType.SIGNED_8_BIT_INTEGER);
     }
 
     @Override

@@ -168,10 +168,10 @@ public class ConfigureReportingResponse extends ZclGeneralCommand {
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
         if (deserializer.getRemainingLength() == 1) {
-            status = (ZclStatus) deserializer.deserialize(ZclDataType.ZCL_STATUS);
+            status = deserializer.deserialize(ZclDataType.ZCL_STATUS);
             return;
         }
-        records = (List<AttributeStatusRecord>) deserializer.deserialize(ZclDataType.N_X_ATTRIBUTE_STATUS_RECORD);
+        records = deserializer.deserialize(ZclDataType.N_X_ATTRIBUTE_STATUS_RECORD);
     }
 
     @Override

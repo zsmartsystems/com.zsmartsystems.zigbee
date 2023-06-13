@@ -231,10 +231,10 @@ public class SupplyStatusResponse extends ZclMeteringCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        providerId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        issuerEventId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        implementationDateTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        supplyStatus = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        providerId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        issuerEventId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        implementationDateTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        supplyStatus = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
     }
 
     @Override

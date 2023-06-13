@@ -103,7 +103,7 @@ public class SetLongPollIntervalCommand extends ZclPollControlCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        newLongPollInterval = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        newLongPollInterval = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
     }
 
     @Override

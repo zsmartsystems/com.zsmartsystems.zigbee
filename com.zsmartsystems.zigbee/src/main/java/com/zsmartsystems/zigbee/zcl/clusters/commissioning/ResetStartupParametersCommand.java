@@ -124,8 +124,8 @@ public class ResetStartupParametersCommand extends ZclCommissioningCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        option = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        index = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        option = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        index = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

@@ -157,9 +157,9 @@ public class ReportRssiMeasurementsCommand extends ZclRssiLocationCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        reportingAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
-        numberOfNeighbors = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        neighborsInformation = (List<NeighborInformation>) deserializer.deserialize(ZclDataType.N_X_NEIGHBORS_INFORMATION);
+        reportingAddress = deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        numberOfNeighbors = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        neighborsInformation = deserializer.deserialize(ZclDataType.N_X_NEIGHBORS_INFORMATION);
     }
 
     @Override

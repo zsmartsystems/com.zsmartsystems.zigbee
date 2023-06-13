@@ -202,9 +202,9 @@ public class GetBlockPeriodCommand extends ZclPriceCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        startTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        numberOfEvents = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        tariffType = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        startTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        numberOfEvents = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        tariffType = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
     }
 
     @Override

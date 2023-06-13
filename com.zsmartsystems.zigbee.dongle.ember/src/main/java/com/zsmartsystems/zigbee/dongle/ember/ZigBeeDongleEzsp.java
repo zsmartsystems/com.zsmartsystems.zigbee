@@ -1171,11 +1171,12 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                 switch (option) {
                     case CONCENTRATOR_CONFIG:
                         configuration.setResult(option,
-                                setConcentrator((ConcentratorConfig) configuration.getValue(option)));
+                                setConcentrator(configuration.getValue(option)));
                         break;
 
                     case INSTALL_KEY:
-                        ZigBeeKey nodeKey = (ZigBeeKey) configuration.getValue(option);
+                        EmberNcp ncp = getEmberNcp();
+                        ZigBeeKey nodeKey = configuration.getValue(option);
                         if (!nodeKey.hasAddress()) {
                             logger.debug("[{}]: Attempt to set INSTALL_KEY without setting address", handlerIdentifier);
                             configuration.setResult(option, ZigBeeStatus.FAILURE);
@@ -1188,32 +1189,32 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
                         break;
 
                     case RADIO_TX_POWER:
-                        configuration.setResult(option, setEmberTxPower((int) configuration.getValue(option)));
+                        configuration.setResult(option, setEmberTxPower(configuration.getValue(option)));
                         break;
 
                     case DEVICE_TYPE:
-                        deviceType = (DeviceType) configuration.getValue(option);
+                        deviceType = configuration.getValue(option);
                         configuration.setResult(option, ZigBeeStatus.SUCCESS);
                         break;
 
                     case TRUST_CENTRE_LINK_KEY:
-                        setTcLinkKey((ZigBeeKey) configuration.getValue(option));
+                        setTcLinkKey(configuration.getValue(option));
                         configuration.setResult(option, ZigBeeStatus.SUCCESS);
                         break;
 
                     case TRUST_CENTRE_JOIN_MODE:
                         configuration.setResult(option,
-                                setTcJoinMode((TrustCentreJoinMode) configuration.getValue(option)));
+                                setTcJoinMode(configuration.getValue(option)));
                         break;
 
                     case SUPPORTED_INPUT_CLUSTERS:
                         configuration.setResult(option,
-                                setSupportedInputClusters((Collection<Integer>) configuration.getValue(option)));
+                                setSupportedInputClusters(configuration.getValue(option)));
                         break;
 
                     case SUPPORTED_OUTPUT_CLUSTERS:
                         configuration.setResult(option,
-                                setSupportedOutputClusters((Collection<Integer>) configuration.getValue(option)));
+                                setSupportedOutputClusters(configuration.getValue(option)));
                         break;
 
                     default:

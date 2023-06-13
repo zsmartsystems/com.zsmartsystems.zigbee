@@ -97,7 +97,7 @@ public class WindowCoveringGoToTiltPercentage extends ZclWindowCoveringCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        percentageTiltValue = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        percentageTiltValue = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

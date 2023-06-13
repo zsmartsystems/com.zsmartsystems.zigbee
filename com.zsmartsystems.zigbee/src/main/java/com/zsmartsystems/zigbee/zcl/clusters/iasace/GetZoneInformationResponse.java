@@ -204,10 +204,10 @@ public class GetZoneInformationResponse extends ZclIasAceCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        zoneId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        zoneType = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_16_BIT);
-        ieeeAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
-        zoneLabel = (String) deserializer.deserialize(ZclDataType.CHARACTER_STRING);
+        zoneId = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        zoneType = deserializer.deserialize(ZclDataType.ENUMERATION_16_BIT);
+        ieeeAddress = deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        zoneLabel = deserializer.deserialize(ZclDataType.CHARACTER_STRING);
     }
 
     @Override

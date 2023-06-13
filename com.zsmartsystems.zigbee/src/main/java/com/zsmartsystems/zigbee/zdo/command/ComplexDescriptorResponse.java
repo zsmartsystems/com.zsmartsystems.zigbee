@@ -154,14 +154,14 @@ public class ComplexDescriptorResponse extends ZdoResponse {
     public void deserialize(final ZclFieldDeserializer deserializer) {
         super.deserialize(deserializer);
 
-        status = (ZdoStatus) deserializer.deserialize(ZclDataType.ZDO_STATUS);
+        status = deserializer.deserialize(ZclDataType.ZDO_STATUS);
         if (status != ZdoStatus.SUCCESS) {
             // Don't read the full response if we have an error
             return;
         }
-        nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
-        length = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        complexDescriptor = (ComplexDescriptor) deserializer.deserialize(ZclDataType.COMPLEX_DESCRIPTOR);
+        nwkAddrOfInterest = deserializer.deserialize(ZclDataType.NWK_ADDRESS);
+        length = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        complexDescriptor = deserializer.deserialize(ZclDataType.COMPLEX_DESCRIPTOR);
     }
 
     @Override

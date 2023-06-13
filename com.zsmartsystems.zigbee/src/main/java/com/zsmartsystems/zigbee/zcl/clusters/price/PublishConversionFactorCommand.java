@@ -215,10 +215,10 @@ public class PublishConversionFactorCommand extends ZclPriceCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        issuerEventId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        startTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        conversionFactor = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        conversionFactorTrailingDigit = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        issuerEventId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        startTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        conversionFactor = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        conversionFactorTrailingDigit = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
     }
 
     @Override

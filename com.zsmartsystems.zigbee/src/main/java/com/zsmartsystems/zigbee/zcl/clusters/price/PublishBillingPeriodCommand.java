@@ -346,12 +346,12 @@ public class PublishBillingPeriodCommand extends ZclPriceCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        providerId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        issuerEventId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        billingPeriodStartTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        billingPeriodDuration = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_24_BIT_INTEGER);
-        billingPeriodDurationType = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        tariffType = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        providerId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        issuerEventId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        billingPeriodStartTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        billingPeriodDuration = deserializer.deserialize(ZclDataType.UNSIGNED_24_BIT_INTEGER);
+        billingPeriodDurationType = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        tariffType = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
     }
 
     @Override

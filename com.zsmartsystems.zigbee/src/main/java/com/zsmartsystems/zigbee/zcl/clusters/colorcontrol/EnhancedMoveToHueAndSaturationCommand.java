@@ -157,9 +157,9 @@ public class EnhancedMoveToHueAndSaturationCommand extends ZclColorControlComman
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        enhancedHue = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        saturation = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        transitionTime = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        enhancedHue = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        saturation = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        transitionTime = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override
