@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -492,6 +492,11 @@ public class ZigBeeDongleTelegesis
         TelegesisDisplayNetworkInformationCommand networkInfo = new TelegesisDisplayNetworkInformationCommand();
         if (frameHandler.sendRequest(networkInfo) == null || networkInfo.getStatus() != TelegesisStatusCode.SUCCESS) {
             return ZigBeeStatus.BAD_RESPONSE;
+        }
+        if (networkInfo.getDevice() == TelegesisDeviceType.NOPAN) {
+            logger.debug("Telegesis network information is {}. Returning status {}.", TelegesisDeviceType.NOPAN,
+                    ZigBeeStatus.NO_NETWORK);
+            return ZigBeeStatus.NO_NETWORK;
         }
         if (networkInfo.getDevice() != TelegesisDeviceType.COO) {
             return ZigBeeStatus.INVALID_STATE;
@@ -1091,7 +1096,6 @@ public class ZigBeeDongleTelegesis
         return linkKey;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void updateTransportConfig(TransportConfig configuration) {
         for (TransportConfigOption option : configuration.getOptions()) {
@@ -1099,21 +1103,21 @@ public class ZigBeeDongleTelegesis
                 switch (option) {
                     case SUPPORTED_INPUT_CLUSTERS:
                         configuration.setResult(option,
-                                setSupportedInputClusters((Collection<Integer>) configuration.getValue(option)));
+                                setSupportedInputClusters(configuration.getValue(option)));
                         break;
 
                     case SUPPORTED_OUTPUT_CLUSTERS:
                         configuration.setResult(option,
-                                setSupportedOutputClusters((Collection<Integer>) configuration.getValue(option)));
+                                setSupportedOutputClusters(configuration.getValue(option)));
                         break;
 
                     case TRUST_CENTRE_JOIN_MODE:
                         configuration.setResult(option,
-                                setTcJoinMode((TrustCentreJoinMode) configuration.getValue(option)));
+                                setTcJoinMode(configuration.getValue(option)));
                         break;
 
                     case TRUST_CENTRE_LINK_KEY:
-                        configuration.setResult(option, setTcLinkKey((ZigBeeKey) configuration.getValue(option)));
+                        configuration.setResult(option, setTcLinkKey(configuration.getValue(option)));
                         break;
 
                     default:

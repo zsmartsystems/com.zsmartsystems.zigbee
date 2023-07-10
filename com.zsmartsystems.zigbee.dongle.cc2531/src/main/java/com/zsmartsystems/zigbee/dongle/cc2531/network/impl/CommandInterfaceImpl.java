@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -242,7 +242,7 @@ public class CommandInterfaceImpl implements ZToolPacketHandler, CommandInterfac
         if (supportMultipleSynchrounsCommand) {
             synchronized (synchronousCommandListeners) {
                 final short id = (short) (cmdId.get16BitValue() & 0x1FFF);
-                while (synchronousCommandListeners.get(cmdId) != null) {
+                while (synchronousCommandListeners.get(id) != null) {
                     try {
                         logger.trace("Waiting for other request {} to complete", id);
                         synchronousCommandListeners.wait(500);

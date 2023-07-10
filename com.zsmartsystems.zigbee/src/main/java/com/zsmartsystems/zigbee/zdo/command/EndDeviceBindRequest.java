@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -250,20 +250,20 @@ public class EndDeviceBindRequest extends ZdoRequest {
         inClusterList = new ArrayList<Integer>();
         outClusterList = new ArrayList<Integer>();
 
-        bindingTarget = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
-        srcAddress = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
-        srcEndpoint = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        profileId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        Integer inClusterCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        bindingTarget = deserializer.deserialize(ZclDataType.NWK_ADDRESS);
+        srcAddress = deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        srcEndpoint = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        profileId = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        Integer inClusterCount = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         if (inClusterCount != null) {
             for (int cnt = 0; cnt < inClusterCount; cnt++) {
-                inClusterList.add((Integer) deserializer.deserialize(ZclDataType.CLUSTERID));
+                inClusterList.add(deserializer.deserialize(ZclDataType.CLUSTERID));
             }
         }
-        Integer outClusterCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        Integer outClusterCount = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         if (outClusterCount != null) {
             for (int cnt = 0; cnt < outClusterCount; cnt++) {
-                outClusterList.add((Integer) deserializer.deserialize(ZclDataType.CLUSTERID));
+                outClusterList.add(deserializer.deserialize(ZclDataType.CLUSTERID));
             }
         }
     }

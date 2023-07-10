@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -217,11 +217,11 @@ public class EnhancedAddSceneCommand extends ZclScenesCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        groupId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        sceneId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        transitionTime = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        sceneName = (String) deserializer.deserialize(ZclDataType.CHARACTER_STRING);
-        extensionFieldSets = (List<ExtensionFieldSet>) deserializer.deserialize(ZclDataType.N_X_EXTENSION_FIELD_SET);
+        groupId = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        sceneId = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        transitionTime = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        sceneName = deserializer.deserialize(ZclDataType.CHARACTER_STRING);
+        extensionFieldSets = deserializer.deserialize(ZclDataType.N_X_EXTENSION_FIELD_SET);
     }
 
     @Override

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -55,13 +55,14 @@ public class ZclFieldDeserializer {
     /**
      * Deserializes a field.
      *
+     * @type <R> type of returned field
      * @param dataType the {@link ZclDataType} of the field.
      * @return the value
      */
-    public Object deserialize(final ZclDataType dataType) {
+    public <R> R deserialize(final ZclDataType dataType) {
         if (ZclListItemField.class.isAssignableFrom(dataType.getDataClass())) {
             final Class<?> dataTypeClass = dataType.getDataClass();
-            final List<ZclListItemField> list = new ArrayList<ZclListItemField>();
+            final List<ZclListItemField> list = new ArrayList<>();
             try {
                 while (deserializer.getSize() - deserializer.getPosition() > 0) {
                     final ZclListItemField item;
@@ -76,7 +77,10 @@ public class ZclFieldDeserializer {
             } catch (ArrayIndexOutOfBoundsException e) {
                 // Eat the exception - this terminates the list!
             }
-            return list;
+
+            @SuppressWarnings("unchecked")
+            R typeList = (R) list;
+            return typeList;
         }
 
         return deserializer.readZigBeeType(dataType);

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -33,6 +33,7 @@ public class ZclFieldSerializer {
      */
     public void serialize(final Object value, final ZclDataType dataType) {
         if (ZclListItemField.class.isAssignableFrom(dataType.getDataClass())) {
+            @SuppressWarnings("unchecked")
             final List<ZclListItemField> list = (List<ZclListItemField>) value;
             for (final ZclListItemField item : list) {
                 item.serialize(serializer);

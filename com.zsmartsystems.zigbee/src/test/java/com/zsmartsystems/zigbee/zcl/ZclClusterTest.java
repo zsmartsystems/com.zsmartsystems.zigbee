@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -88,8 +88,11 @@ public class ZclClusterTest {
         Mockito.when(endpoint.getEndpointAddress()).thenReturn(new ZigBeeEndpointAddress(1234, 5));
         commandCapture = ArgumentCaptor.forClass(ZigBeeCommand.class);
         matcherCapture = ArgumentCaptor.forClass(ZigBeeTransactionMatcher.class);
+
+        @SuppressWarnings("unchecked")
+        Future<CommandResult> future = Mockito.mock(Future.class);
         Mockito.when(node.sendTransaction(commandCapture.capture(), matcherCapture.capture()))
-                .thenReturn(Mockito.mock(Future.class));
+                .thenReturn(future);
         Mockito.doNothing().when(node).sendTransaction(commandCapture.capture());
         Mockito.when(endpoint.getParentNode()).thenReturn(node);
         Mockito.when(endpoint.sendTransaction(commandCapture.capture(), matcherCapture.capture())).thenReturn(null);
@@ -254,8 +257,7 @@ public class ZclClusterTest {
         createEndpoint();
 
         ZclCluster cluster = new ZclOnOffCluster(endpoint);
-        Set<ZclAttributeListener> attributeListeners = (Set<ZclAttributeListener>) TestUtilities
-                .getField(ZclCluster.class, cluster, "attributeListeners");
+        Set<ZclAttributeListener> attributeListeners = TestUtilities.getField(ZclCluster.class, cluster, "attributeListeners");
         assertEquals(0, attributeListeners.size());
 
         // This reports an incorrect type which is changed through the normalisation
@@ -267,13 +269,19 @@ public class ZclClusterTest {
         cluster.addAttributeListener(listenerMock);
         assertEquals(1, attributeListeners.size());
         List<AttributeReport> attributeList = new ArrayList<AttributeReport>();
-        AttributeReport report1;
-        report1 = new AttributeReport();
-        report1.setAttributeDataType(ZclDataType.SIGNED_8_BIT_INTEGER);
-        report1.setAttributeIdentifier(0);
-        report1.setAttributeValue(Integer.valueOf(1));
-        System.out.println(report1);
-        attributeList.add(report1);
+        AttributeReport report;
+        report = new AttributeReport();
+        report.setAttributeDataType(ZclDataType.SIGNED_8_BIT_INTEGER);
+        report.setAttributeIdentifier(ZclOnOffCluster.ATTR_ONOFF);
+        report.setAttributeValue(Integer.valueOf(1));
+        System.out.println(report);
+        attributeList.add(report);
+        report = new AttributeReport();
+        report.setAttributeDataType(ZclDataType.SIGNED_8_BIT_INTEGER);
+        report.setAttributeIdentifier(ZclOnOffCluster.ATTR_ONTIME);
+        report.setAttributeValue(Integer.valueOf(1));
+        System.out.println(report);
+        attributeList.add(report);
 
         ReportAttributesCommand attributeReport = new ReportAttributesCommand(attributeList);
         attributeReport.setTransactionId(123);
@@ -292,17 +300,24 @@ public class ZclClusterTest {
         ZclAttribute attribute = cluster.getAttribute(0);
         assertTrue(attribute.getLastValue() instanceof Boolean);
 
-        Mockito.verify(listenerMock, Mockito.timeout(TIMEOUT).times(1)).attributeUpdated(attributeCapture.capture(),
+        Mockito.verify(listenerMock, Mockito.timeout(TIMEOUT).times(2)).attributeUpdated(attributeCapture.capture(),
                 valueCaptor.capture());
 
         List<ZclAttribute> updatedAttributes = attributeCapture.getAllValues();
-        assertEquals(1, updatedAttributes.size());
+        assertEquals(2, updatedAttributes.size());
 
-        attribute = updatedAttributes.get(0);
-        assertTrue(attribute.getLastValue() instanceof Boolean);
-        assertEquals(ZclDataType.BOOLEAN, attribute.getDataType());
-        assertEquals(0, attribute.getId());
-        assertEquals(true, attribute.getLastValue());
+        ZclAttribute attribute1 = updatedAttributes.get(0);
+        ZclAttribute attribute2 = updatedAttributes.get(1);
+        assertTrue(attribute1.getLastValue() instanceof Boolean);
+        assertEquals(ZclDataType.BOOLEAN, attribute1.getDataType());
+        assertEquals(ZclOnOffCluster.ATTR_ONOFF, attribute1.getId());
+        assertEquals(true, attribute1.getLastValue());
+        assertTrue(attribute2.getLastValue() instanceof Integer);
+        assertEquals(ZclDataType.UNSIGNED_16_BIT_INTEGER, attribute2.getDataType());
+        assertEquals(ZclOnOffCluster.ATTR_ONTIME, attribute2.getId());
+        assertEquals(1, attribute2.getLastValue());
+
+        assertEquals(attribute1.getLastReportTime(), attribute2.getLastReportTime());
 
         cluster.removeAttributeListener(listenerMock);
         assertEquals(0, attributeListeners.size());
@@ -373,8 +388,7 @@ public class ZclClusterTest {
 
         ZclCluster cluster = new ZclOnOffCluster(endpoint);
 
-        Set<ZclCommandListener> commandListeners = (Set<ZclCommandListener>) TestUtilities.getField(ZclCluster.class,
-                cluster, "commandListeners");
+        Set<ZclCommandListener> commandListeners = TestUtilities.getField(ZclCluster.class, cluster, "commandListeners");
         assertEquals(0, commandListeners.size());
         int tid = 123;
         ZclCommand command = Mockito.mock(ZclCommand.class);
@@ -568,7 +582,8 @@ public class ZclClusterTest {
     public void discoverAttributes() throws Exception {
         createEndpoint();
         DiscoverAttributesResponse response = new DiscoverAttributesResponse(true, Collections.emptyList());
-        Future future = Mockito.mock(Future.class);
+        @SuppressWarnings("unchecked")
+        Future<CommandResult> future = Mockito.mock(Future.class);
         CommandResult result = Mockito.mock(CommandResult.class);
         Mockito.when(result.isError()).thenReturn(false);
         Mockito.when(result.getResponse()).thenReturn(response);
@@ -601,7 +616,8 @@ public class ZclClusterTest {
     @Test
     public void writeAttribute() {
         createEndpoint();
-        Future future = Mockito.mock(Future.class);
+        @SuppressWarnings("unchecked")
+        Future<CommandResult> future = Mockito.mock(Future.class);
 
         ZclOnOffCluster cluster = new ZclOnOffCluster(endpoint);
 
@@ -621,7 +637,8 @@ public class ZclClusterTest {
     @Test
     public void writeAttributes() {
         createEndpoint();
-        Future future = Mockito.mock(Future.class);
+        @SuppressWarnings("unchecked")
+        Future<CommandResult> future = Mockito.mock(Future.class);
 
         ZclOnOffCluster cluster = new ZclOnOffCluster(endpoint);
 
@@ -660,7 +677,8 @@ public class ZclClusterTest {
     @Test
     public void reportAttribute() {
         createEndpoint();
-        Future future = Mockito.mock(Future.class);
+        @SuppressWarnings("unchecked")
+        Future<CommandResult> future = Mockito.mock(Future.class);
 
         ZclOnOffCluster cluster = new ZclOnOffCluster(endpoint);
 
@@ -680,7 +698,8 @@ public class ZclClusterTest {
     @Test
     public void reportAttributes() {
         createEndpoint();
-        Future future = Mockito.mock(Future.class);
+        @SuppressWarnings("unchecked")
+        Future<CommandResult> future = Mockito.mock(Future.class);
 
         ZclOnOffCluster cluster = new ZclOnOffCluster(endpoint);
 

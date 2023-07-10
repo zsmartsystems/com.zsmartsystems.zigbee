@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -37,7 +37,7 @@ public class ZigBeeCommandNotifierTest {
         ZigBeeCommandListener commandListener = Mockito.mock(ZigBeeCommandListener.class);
         notifier.addCommandListener(commandListener);
 
-        Set<ZigBeeCommandListener> commandListeners = (Set<ZigBeeCommandListener>) TestUtilities
+        Set<ZigBeeCommandListener> commandListeners = TestUtilities
                 .getField(ZigBeeCommandNotifier.class, notifier, "commandListeners");
         assertEquals(1, commandListeners.size());
         assertEquals(commandListener, commandListeners.iterator().next());

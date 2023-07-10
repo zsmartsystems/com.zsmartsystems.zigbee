@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -103,10 +103,10 @@ public class ParentAnnounce extends ZdoRequest {
         // Create lists
         childInfoList = new ArrayList<ParentAnnounceChildInfo>();
 
-        Integer numberOfChildren = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        Integer numberOfChildren = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         if (numberOfChildren != null) {
             for (int cnt = 0; cnt < numberOfChildren; cnt++) {
-                childInfoList.add((ParentAnnounceChildInfo) deserializer.deserialize(ZclDataType.PARENT_ANNOUNCE_CHILD_INFO));
+                childInfoList.add(deserializer.deserialize(ZclDataType.PARENT_ANNOUNCE_CHILD_INFO));
             }
         }
     }

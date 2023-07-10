@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -399,17 +399,21 @@ public class ZigBeeEndpoint {
      *
      * @param application the new {@link ZigBeeApplication}
      * @return the {@link ZigBeeStatus} of the call. {@link ZigBeeStatus.SUCCESS} if the application was registered and
-     *         started, and {@link ZigBeeStatus.INVALID_STATE} if an application is already registered to the cluster
+     *         started, {@link ZigBeeStatus.INVALID_STATE} if an application is already registered to the cluster, and
+     *         {@link ZigBeeStatus.UNSUPPORTED} if a valid cluster cannot be found in the endpoint
      */
     public ZigBeeStatus addApplication(ZigBeeApplication application) {
         if (applications.get(application.getClusterId()) != null) {
             return ZigBeeStatus.INVALID_STATE;
         }
-        applications.put(application.getClusterId(), application);
         ZclCluster cluster = outputClusters.get(application.getClusterId());
         if (cluster == null) {
             cluster = inputClusters.get(application.getClusterId());
         }
+        if (cluster == null) {
+            return ZigBeeStatus.UNSUPPORTED;
+        }
+        applications.put(application.getClusterId(), application);
         return application.appStartup(cluster);
     }
 
@@ -610,10 +614,10 @@ public class ZigBeeEndpoint {
         command.setDestinationAddress(getEndpointAddress());
         return node.sendTransaction(command, responseMatcher);
     }
-    
+
     /**
      * Gets the {@link NotificationService} provided by the {@link ZigBeeNetworkManager}.
-     * 
+     *
      * @return the {@link NotificationService} provided by the {@link ZigBeeNetworkManager}.
      */
     public NotificationService getNotificationService() {

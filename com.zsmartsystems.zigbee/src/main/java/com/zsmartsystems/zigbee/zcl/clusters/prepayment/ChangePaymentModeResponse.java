@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -184,10 +184,10 @@ public class ChangePaymentModeResponse extends ZclPrepaymentCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        friendlyCredit = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        friendlyCreditCalendarId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        emergencyCreditLimit = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        emergencyCreditThreshold = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        friendlyCredit = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        friendlyCreditCalendarId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        emergencyCreditLimit = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        emergencyCreditThreshold = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
     }
 
     @Override

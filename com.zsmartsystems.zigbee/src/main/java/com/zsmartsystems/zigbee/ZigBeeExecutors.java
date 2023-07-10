@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,10 +7,16 @@
  */
 package com.zsmartsystems.zigbee;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.slf4j.Logger;
@@ -27,6 +33,13 @@ public class ZigBeeExecutors {
 
     private static Logger logger = LoggerFactory.getLogger(ZigBeeExecutors.class);
 
+    private static final int THREAD_POOL_CORE_THREADS_SIZE = 1;
+    private static final int THREAD_POOL_KEEP_ALIVE_TIME_IN_SECONDS = 60;
+    
+    private ZigBeeExecutors() {
+        throw new IllegalAccessError("Cannot be instantiated");
+    }
+
     /**
      * Creates a thread pool that creates new threads as needed, but will reuse previously constructed threads when they
      * are available, and uses the provided ThreadFactory to create new threads when needed.
@@ -41,12 +54,28 @@ public class ZigBeeExecutors {
     /**
      * Creates a thread pool that can schedule commands to run after a given delay, or to execute periodically.
      *
+     * <p>
+     * Note:<br>
+     * As we cancel scheduled tasks regularly, we want to get rid of cancelled tasks even with the penalty of the clean
+     * up overhead, so the configure the created {@link ScheduledThreadPoolExecutor} with
+     * {@link ScheduledThreadPoolExecutor#setRemoveOnCancelPolicy(boolean)}.
+     * </p>
+     *
      * @param corePoolSize the number of threads to keep in the pool, even if they are idle
      * @param name the thread pool name
      * @return a newly created scheduled thread pool
      */
     public static ScheduledExecutorService newScheduledThreadPool(int corePoolSize, String name) {
-        return Executors.newScheduledThreadPool(corePoolSize, new ThreadFactoryWithNamePrefix(name));
+        ScheduledThreadPoolExecutor scheduledThreadPool = new ScheduledThreadPoolExecutor(corePoolSize, new ThreadFactoryWithNamePrefix(name));
+
+        // as we cancel a lot we want to get rid of cancelled tasks
+        // even with the penalty of the clean up overhead
+        scheduledThreadPool.setRemoveOnCancelPolicy(true);
+        scheduledThreadPool.setKeepAliveTime(THREAD_POOL_KEEP_ALIVE_TIME_IN_SECONDS, SECONDS);
+        if (corePoolSize > 1) {
+            scheduledThreadPool.allowCoreThreadTimeOut(true);
+        }
+        return scheduledThreadPool;
     }
 
     /**
@@ -61,7 +90,8 @@ public class ZigBeeExecutors {
      * @return a newly created scheduled executor
      */
     public static ScheduledExecutorService newSingleThreadScheduledExecutor(String name) {
-        return Executors.newSingleThreadScheduledExecutor(new ThreadFactoryWithNamePrefix(name));
+        // reuse our custom method which configures removal of cancelled tasks
+        return newScheduledThreadPool(1, name);
     }
 
     /**
@@ -77,7 +107,18 @@ public class ZigBeeExecutors {
      * @return the newly created thread pool
      */
     public static ExecutorService newFixedThreadPool(int nThreads, String name) {
-        return Executors.newFixedThreadPool(nThreads, new ThreadFactoryWithNamePrefix(name));
+        // @formatter:off
+        ThreadPoolExecutor executor =  new ThreadPoolExecutor(THREAD_POOL_CORE_THREADS_SIZE,
+                                                              nThreads,
+                                                              THREAD_POOL_KEEP_ALIVE_TIME_IN_SECONDS,
+                                                              SECONDS,
+                                                              new LinkedBlockingQueue<>(),
+                                                              new ThreadFactoryWithNamePrefix(name));
+        // @formatter:on
+        if (nThreads > 1) {
+            executor.allowCoreThreadTimeOut(true);
+        }
+        return executor;
     }
 
     /**

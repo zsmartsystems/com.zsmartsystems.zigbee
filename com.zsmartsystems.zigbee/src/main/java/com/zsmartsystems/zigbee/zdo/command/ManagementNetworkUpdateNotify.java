@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -223,18 +223,18 @@ public class ManagementNetworkUpdateNotify extends ZdoRequest {
         // Create lists
         energyValues = new ArrayList<Integer>();
 
-        status = (ZdoStatus) deserializer.deserialize(ZclDataType.ZDO_STATUS);
+        status = deserializer.deserialize(ZclDataType.ZDO_STATUS);
         if (status != ZdoStatus.SUCCESS) {
             // Don't read the full response if we have an error
             return;
         }
-        scannedChannels = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        totalTransmissions = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        transmissionFailures = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        Integer scannedChannelsListCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        scannedChannels = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        totalTransmissions = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        transmissionFailures = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        Integer scannedChannelsListCount = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         if (scannedChannelsListCount != null) {
             for (int cnt = 0; cnt < scannedChannelsListCount; cnt++) {
-                energyValues.add((Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER));
+                energyValues.add(deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER));
             }
         }
     }

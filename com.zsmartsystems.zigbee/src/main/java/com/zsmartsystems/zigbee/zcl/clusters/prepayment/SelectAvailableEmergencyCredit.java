@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -188,10 +188,10 @@ public class SelectAvailableEmergencyCredit extends ZclPrepaymentCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        commandIssueDateTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        originatingDevice = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        siteId = (ByteArray) deserializer.deserialize(ZclDataType.OCTET_STRING);
-        meterSerialNumber = (ByteArray) deserializer.deserialize(ZclDataType.OCTET_STRING);
+        commandIssueDateTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        originatingDevice = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        siteId = deserializer.deserialize(ZclDataType.OCTET_STRING);
+        meterSerialNumber = deserializer.deserialize(ZclDataType.OCTET_STRING);
     }
 
     @Override

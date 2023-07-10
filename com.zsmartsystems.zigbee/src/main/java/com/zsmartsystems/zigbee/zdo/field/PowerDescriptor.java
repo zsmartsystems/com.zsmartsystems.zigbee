@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -258,8 +258,8 @@ public class PowerDescriptor {
      */
     public void deserialize(ZigBeeDeserializer deserializer) {
         // Deserialize the fields
-        int byte1 = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        int byte2 = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        int byte1 = deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        int byte2 = deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
 
         setCurrentPowerMode(byte1 & 0x0f);
         setAvailablePowerSources(byte1 >> 4 & 0x0f);

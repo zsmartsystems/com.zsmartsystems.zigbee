@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -51,7 +51,7 @@ public class ZigBeeXmlParser {
 
                 // Get all cluster specific definitions
                 NodeList nList = doc.getElementsByTagName("cluster");
-                ZigBeeXmlCluster cluster = (ZigBeeXmlCluster) processNode(nList.item(0));
+                ZigBeeXmlCluster cluster = processNode(nList.item(0));
                 clusters.add(cluster);
             }
         } catch (Exception e) {
@@ -78,7 +78,7 @@ public class ZigBeeXmlParser {
 
                 // Get all global specific definitions
                 NodeList nList = doc.getElementsByTagName("zigbee");
-                ZigBeeXmlGlobal global = (ZigBeeXmlGlobal) processNode(nList.item(0));
+                ZigBeeXmlGlobal global = processNode(nList.item(0));
                 globals.constants.addAll(global.constants);
             }
         } catch (Exception e) {
@@ -89,7 +89,7 @@ public class ZigBeeXmlParser {
         return globals;
     }
 
-    Object processNode(Node node) {
+    <R> R processNode(Node node) {
         NodeList nodes = node.getChildNodes();
         Element e;
 
@@ -99,11 +99,14 @@ public class ZigBeeXmlParser {
                 global.constants = new ArrayList<>();
                 for (int temp = 0; temp < nodes.getLength(); temp++) {
                     if (nodes.item(temp).getNodeName().equals("constant")) {
-                        global.constants.add((ZigBeeXmlConstant) processNode(nodes.item(temp)));
+                        global.constants.add(processNode(nodes.item(temp)));
                     }
                 }
                 System.out.println("Done: Global");
-                return global;
+
+                @SuppressWarnings("unchecked")
+                R globalResult = (R) global;
+                return globalResult;
 
             case "cluster":
                 ZigBeeXmlCluster cluster = new ZigBeeXmlCluster();
@@ -122,29 +125,31 @@ public class ZigBeeXmlParser {
                         cluster.name = nodes.item(temp).getTextContent().trim();
                     }
                     if (nodes.item(temp).getNodeName().equals("description")) {
-                        ZigBeeXmlDescription description = (ZigBeeXmlDescription) processNode(nodes.item(temp));
+                        ZigBeeXmlDescription description = processNode(nodes.item(temp));
                         if (description != null) {
                             cluster.description.add(description);
                         }
                     }
                     if (nodes.item(temp).getNodeName().equals("command")) {
-                        cluster.commands.add((ZigBeeXmlCommand) processNode(nodes.item(temp)));
+                        cluster.commands.add(processNode(nodes.item(temp)));
                     }
                     if (nodes.item(temp).getNodeName().equals("attribute")) {
-                        cluster.attributes.add((ZigBeeXmlAttribute) processNode(nodes.item(temp)));
+                        cluster.attributes.add(processNode(nodes.item(temp)));
                     }
                     if (nodes.item(temp).getNodeName().equals("constant")) {
-                        cluster.constants.add((ZigBeeXmlConstant) processNode(nodes.item(temp)));
+                        cluster.constants.add(processNode(nodes.item(temp)));
                     }
                     if (nodes.item(temp).getNodeName().equals("struct")) {
-                        cluster.structures.add((ZigBeeXmlStructure) processNode(nodes.item(temp)));
+                        cluster.structures.add(processNode(nodes.item(temp)));
                     }
                     if (nodes.item(temp).getNodeName().equals("scenes")) {
-                        cluster.scenes = (ZigBeeXmlScenes) processNode(nodes.item(temp));
+                        cluster.scenes = processNode(nodes.item(temp));
                     }
                 }
                 System.out.println("Done: Cluster - " + cluster.name);
-                return cluster;
+                @SuppressWarnings("unchecked")
+                R clusterResult = (R) cluster;
+                return clusterResult;
 
             case "attribute":
                 ZigBeeXmlAttribute attribute = new ZigBeeXmlAttribute();
@@ -177,14 +182,16 @@ public class ZigBeeXmlParser {
                         attribute.name = nodes.item(temp).getTextContent().trim();
                     }
                     if (nodes.item(temp).getNodeName().equals("description")) {
-                        ZigBeeXmlDescription description = (ZigBeeXmlDescription) processNode(nodes.item(temp));
+                        ZigBeeXmlDescription description = processNode(nodes.item(temp));
                         if (description != null) {
                             attribute.description.add(description);
                         }
                     }
                 }
 
-                return attribute;
+                @SuppressWarnings("unchecked")
+                R attributeResult = (R) attribute;
+                return attributeResult;
 
             case "command":
                 ZigBeeXmlCommand command = new ZigBeeXmlCommand();
@@ -202,20 +209,22 @@ public class ZigBeeXmlParser {
                         command.name = nodes.item(temp).getTextContent().trim();
                     }
                     if (nodes.item(temp).getNodeName().equals("description")) {
-                        ZigBeeXmlDescription description = (ZigBeeXmlDescription) processNode(nodes.item(temp));
+                        ZigBeeXmlDescription description = processNode(nodes.item(temp));
                         if (description != null) {
                             command.description.add(description);
                         }
                     }
                     if (nodes.item(temp).getNodeName().equals("field")) {
-                        command.fields.add((ZigBeeXmlField) processNode(nodes.item(temp)));
+                        command.fields.add(processNode(nodes.item(temp)));
                     }
                     if (nodes.item(temp).getNodeName().equals("response")) {
-                        command.response = (ZigBeeXmlResponse) processNode(nodes.item(temp));
+                        command.response = processNode(nodes.item(temp));
                     }
                 }
                 System.out.println("Done: Command - " + command.name);
-                return command;
+                @SuppressWarnings("unchecked")
+                R commandResult = (R) command;
+                return commandResult;
 
             case "field":
                 ZigBeeXmlField field = new ZigBeeXmlField();
@@ -239,20 +248,22 @@ public class ZigBeeXmlParser {
                         field.sizer = nodes.item(temp).getTextContent().trim();
                     }
                     if (nodes.item(temp).getNodeName().equals("description")) {
-                        ZigBeeXmlDescription description = (ZigBeeXmlDescription) processNode(nodes.item(temp));
+                        ZigBeeXmlDescription description = processNode(nodes.item(temp));
                         if (description != null) {
                             field.description.add(description);
                         }
                     }
                     if (nodes.item(temp).getNodeName().equals("conditional")) {
-                        field.condition = (ZigBeeXmlCondition) processNode(nodes.item(temp));
+                        field.condition = processNode(nodes.item(temp));
                     }
                     if (nodes.item(temp).getNodeName().equals("format")) {
                         field.format = nodes.item(temp).getTextContent().trim();
                     }
                 }
                 System.out.println("Done: Field - " + field.name);
-                return field;
+                @SuppressWarnings("unchecked")
+                R fieldResult = (R) field;
+                return fieldResult;
 
             case "constant":
                 ZigBeeXmlConstant constant = new ZigBeeXmlConstant();
@@ -269,7 +280,7 @@ public class ZigBeeXmlParser {
                         constant.name = nodes.item(temp).getTextContent().trim();
                     }
                     if (nodes.item(temp).getNodeName().equals("description")) {
-                        ZigBeeXmlDescription description = (ZigBeeXmlDescription) processNode(nodes.item(temp));
+                        ZigBeeXmlDescription description = processNode(nodes.item(temp));
                         if (description != null) {
                             constant.description.add(description);
                         }
@@ -284,7 +295,9 @@ public class ZigBeeXmlParser {
                     }
                 }
 
-                return constant;
+                @SuppressWarnings("unchecked")
+                R constantResult = (R) constant;
+                return constantResult;
 
             case "struct":
                 ZigBeeXmlStructure structure = new ZigBeeXmlStructure();
@@ -301,17 +314,19 @@ public class ZigBeeXmlParser {
                         structure.name = nodes.item(temp).getTextContent().trim();
                     }
                     if (nodes.item(temp).getNodeName().equals("description")) {
-                        ZigBeeXmlDescription description = (ZigBeeXmlDescription) processNode(nodes.item(temp));
+                        ZigBeeXmlDescription description = processNode(nodes.item(temp));
                         if (description != null) {
                             structure.description.add(description);
                         }
                     }
                     if (nodes.item(temp).getNodeName().equals("field")) {
-                        structure.fields.add((ZigBeeXmlField) processNode(nodes.item(temp)));
+                        structure.fields.add(processNode(nodes.item(temp)));
                     }
                 }
                 System.out.println("Done: Structure - " + structure.name);
-                return structure;
+                @SuppressWarnings("unchecked")
+                R structureResult = (R) structure;
+                return structureResult;
 
             case "description":
                 ZigBeeXmlDescription description = new ZigBeeXmlDescription();
@@ -328,7 +343,9 @@ public class ZigBeeXmlParser {
                 if (description.description == null || description.description.isEmpty()) {
                     return null;
                 }
-                return description;
+                @SuppressWarnings("unchecked")
+                R descriptionResult = (R) description;
+                return descriptionResult;
 
             case "conditional":
                 ZigBeeXmlCondition condition = new ZigBeeXmlCondition();
@@ -346,7 +363,9 @@ public class ZigBeeXmlParser {
                     }
                 }
                 System.out.println("Done: Condition - " + condition.field);
-                return condition;
+                @SuppressWarnings("unchecked")
+                R conditionResult = (R) condition;
+                return conditionResult;
 
             case "response":
                 ZigBeeXmlResponse response = new ZigBeeXmlResponse();
@@ -355,7 +374,9 @@ public class ZigBeeXmlParser {
                 response.command = e.getAttribute("command").trim();
 
                 System.out.println("Done: Response - " + response.command);
-                return response;
+                @SuppressWarnings("unchecked")
+                R responseResult = (R) response;
+                return responseResult;
 
             case "scenes":
                 ZigBeeXmlScenes scenes = new ZigBeeXmlScenes();
@@ -363,12 +384,14 @@ public class ZigBeeXmlParser {
                 e = (Element) node;
                 for (int temp = 0; temp < nodes.getLength(); temp++) {
                     if (nodes.item(temp).getNodeName().equals("extensionfield")) {
-                        scenes.extensionField = (ZigBeeXmlExtensionField) processNode(nodes.item(temp));
+                        scenes.extensionField = processNode(nodes.item(temp));
                     }
                 }
 
                 System.out.println("Done: Scenes - " + scenes);
-                return scenes;
+                @SuppressWarnings("unchecked")
+                R scenesResult = (R) scenes;
+                return scenesResult;
 
             case "extensionfield":
                 ZigBeeXmlExtensionField extensionField = new ZigBeeXmlExtensionField();
@@ -382,7 +405,9 @@ public class ZigBeeXmlParser {
                 }
 
                 System.out.println("Done: ExtensionField - " + extensionField);
-                return extensionField;
+                @SuppressWarnings("unchecked")
+                R extensionFieldResult = (R) extensionField;
+                return extensionFieldResult;
         }
 
         return null;

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -193,21 +193,21 @@ public class IeeeAddressResponse extends ZdoResponse {
         // Create lists
         nwkAddrAssocDevList = new ArrayList<Integer>();
 
-        status = (ZdoStatus) deserializer.deserialize(ZclDataType.ZDO_STATUS);
+        status = deserializer.deserialize(ZclDataType.ZDO_STATUS);
         if (status != ZdoStatus.SUCCESS) {
             // Don't read the full response if we have an error
             return;
         }
-        ieeeAddrRemoteDev = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
-        nwkAddrRemoteDev = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
+        ieeeAddrRemoteDev = deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        nwkAddrRemoteDev = deserializer.deserialize(ZclDataType.NWK_ADDRESS);
         if (deserializer.isEndOfStream()) {
             return;
         }
-        Integer numAssocDev = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        startIndex = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        Integer numAssocDev = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        startIndex = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         if (numAssocDev != null) {
             for (int cnt = 0; cnt < numAssocDev; cnt++) {
-                nwkAddrAssocDevList.add((Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS));
+                nwkAddrAssocDevList.add(deserializer.deserialize(ZclDataType.NWK_ADDRESS));
             }
         }
     }

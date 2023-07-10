@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -461,15 +461,15 @@ public class PublishConsolidatedBillCommand extends ZclPriceCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        providerId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        issuerEventId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        billingPeriodStartTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        billingPeriodDuration = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_24_BIT_INTEGER);
-        billingPeriodDurationType = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        tariffType = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        consolidatedBill = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        currency = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        billTrailingDigit = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        providerId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        issuerEventId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        billingPeriodStartTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        billingPeriodDuration = deserializer.deserialize(ZclDataType.UNSIGNED_24_BIT_INTEGER);
+        billingPeriodDurationType = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        tariffType = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        consolidatedBill = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        currency = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        billTrailingDigit = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
     }
 
     @Override

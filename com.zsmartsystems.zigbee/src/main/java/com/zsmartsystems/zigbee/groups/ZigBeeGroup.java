@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -38,7 +38,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.groups.RemoveGroupResponse;
  *
  * @author Chris Jackson
  */
-public class ZigBeeGroup implements Comparable<Object> {
+public class ZigBeeGroup implements Comparable<ZigBeeGroup> {
     static final int MAX_LABEL_LENGTH = 16;
 
     static final int GROUP_ID_MIN = 0x0000;
@@ -365,7 +365,7 @@ public class ZigBeeGroup implements Comparable<Object> {
     }
 
     @Override
-    public int compareTo(Object that) {
+    public int compareTo(ZigBeeGroup that) {
         if (this == that) {
             return 0;
         }

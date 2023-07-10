@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -317,12 +317,12 @@ public class ChangeSupply extends ZclMeteringCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        providerId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        issuerEventId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        requestDateTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        implementationDateTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        proposedSupplyStatus = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        supplyControlBits = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        providerId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        issuerEventId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        requestDateTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        implementationDateTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        proposedSupplyStatus = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        supplyControlBits = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
     }
 
     @Override

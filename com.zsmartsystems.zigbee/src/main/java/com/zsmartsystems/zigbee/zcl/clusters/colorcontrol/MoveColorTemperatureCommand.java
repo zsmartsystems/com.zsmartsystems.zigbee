@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -185,10 +185,10 @@ public class MoveColorTemperatureCommand extends ZclColorControlCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        moveMode = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        rate = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        colorTemperatureMinimum = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        colorTemperatureMaximum = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        moveMode = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        rate = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        colorTemperatureMinimum = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        colorTemperatureMaximum = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

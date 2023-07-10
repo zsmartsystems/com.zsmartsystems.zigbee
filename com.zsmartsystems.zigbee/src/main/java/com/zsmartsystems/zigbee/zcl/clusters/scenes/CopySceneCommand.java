@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -214,11 +214,11 @@ public class CopySceneCommand extends ZclScenesCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        mode = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        groupIdFrom = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        sceneIdFrom = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        groupIdTo = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        sceneIdTo = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        mode = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        groupIdFrom = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        sceneIdFrom = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        groupIdTo = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        sceneIdTo = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

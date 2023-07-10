@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -121,8 +121,14 @@ public class ZigBeeDongleEzspTest {
         assertEquals(7, EzspFrame.getEzspVersion());
         assertTrue(EzspFrame.setEzspVersion(8));
         assertEquals(8, EzspFrame.getEzspVersion());
-        assertFalse(EzspFrame.setEzspVersion(9));
-        assertEquals(8, EzspFrame.getEzspVersion());
+        assertTrue(EzspFrame.setEzspVersion(9));
+        assertEquals(9, EzspFrame.getEzspVersion());
+        assertTrue(EzspFrame.setEzspVersion(10));
+        assertEquals(10, EzspFrame.getEzspVersion());
+        assertTrue(EzspFrame.setEzspVersion(11));
+        assertEquals(11, EzspFrame.getEzspVersion());
+        assertFalse(EzspFrame.setEzspVersion(12));
+        assertEquals(11, EzspFrame.getEzspVersion());
         EzspFrame.setEzspVersion(4);
     }
 

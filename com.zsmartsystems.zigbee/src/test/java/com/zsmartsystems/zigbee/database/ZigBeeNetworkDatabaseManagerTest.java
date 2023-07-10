@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -145,16 +145,20 @@ public class ZigBeeNetworkDatabaseManagerTest {
         ZigBeeNetworkDatabaseManager databaseManager = new ZigBeeNetworkDatabaseManager(networkManager);
 
         databaseManager.setDeferredWriteTime(10);
-        assertEquals(10,
+        asserEqualsWithType(10,
                 TestUtilities.getField(ZigBeeNetworkDatabaseManager.class, databaseManager, "deferredWriteTime"));
         databaseManager.setMaxDeferredWriteTime(5);
-        assertEquals(5,
+        asserEqualsWithType(5,
                 TestUtilities.getField(ZigBeeNetworkDatabaseManager.class, databaseManager, "deferredWriteTime"));
-        assertEquals(TimeUnit.MILLISECONDS.toNanos(5),
+        asserEqualsWithType(TimeUnit.MILLISECONDS.toNanos(5),
                 TestUtilities.getField(ZigBeeNetworkDatabaseManager.class, databaseManager, "deferredWriteTimeout"));
         databaseManager.setDeferredWriteTime(3);
-        assertEquals(3,
+        asserEqualsWithType(3,
                 TestUtilities.getField(ZigBeeNetworkDatabaseManager.class, databaseManager, "deferredWriteTime"));
+    }
+
+    private <T> void asserEqualsWithType(T expected, T actual) {
+        assertEquals(expected, actual);
     }
 
     @Test

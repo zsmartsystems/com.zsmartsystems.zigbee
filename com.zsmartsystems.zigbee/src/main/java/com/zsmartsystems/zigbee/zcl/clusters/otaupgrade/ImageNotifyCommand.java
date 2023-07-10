@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -233,18 +233,18 @@ public class ImageNotifyCommand extends ZclOtaUpgradeCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        payloadType = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        payloadType = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
         if (payloadType >= 0) {
-            queryJitter = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+            queryJitter = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         }
         if (payloadType >= 1) {
-            manufacturerCode = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+            manufacturerCode = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         }
         if (payloadType >= 2) {
-            imageType = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+            imageType = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         }
         if (payloadType >= 3) {
-            newFileVersion = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+            newFileVersion = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
         }
     }
 

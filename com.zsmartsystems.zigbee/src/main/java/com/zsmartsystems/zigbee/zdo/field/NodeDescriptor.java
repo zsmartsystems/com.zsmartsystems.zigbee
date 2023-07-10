@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -396,9 +396,9 @@ public class NodeDescriptor {
         // Deserialize the fields
 
         // Some flags...
-        int value1 = (int) deserializer.readZigBeeType(ZclDataType.DATA_8_BIT);
-        int value2 = (int) deserializer.readZigBeeType(ZclDataType.DATA_8_BIT);
-        int value3 = (int) deserializer.readZigBeeType(ZclDataType.DATA_8_BIT);
+        int value1 = deserializer.readZigBeeType(ZclDataType.DATA_8_BIT);
+        int value2 = deserializer.readZigBeeType(ZclDataType.DATA_8_BIT);
+        int value3 = deserializer.readZigBeeType(ZclDataType.DATA_8_BIT);
 
         setLogicalType(value1 & 0x07);
         complexDescriptorAvailable = (value1 & 0x08) != 0;
@@ -408,13 +408,13 @@ public class NodeDescriptor {
         setFrequencyBands((value2 & 0xf8) >> 3);
         setMacCapabilities(value3);
 
-        manufacturerCode = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        bufferSize = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        incomingTransferSize = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        manufacturerCode = deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        bufferSize = deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        incomingTransferSize = deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
 
         setServerCapabilities((int) deserializer.readZigBeeType(ZclDataType.SIGNED_16_BIT_INTEGER));
-        outgoingTransferSize = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        int descriptorCapabilities = (int) deserializer.readZigBeeType(ZclDataType.SIGNED_8_BIT_INTEGER);
+        outgoingTransferSize = deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        int descriptorCapabilities = deserializer.readZigBeeType(ZclDataType.SIGNED_8_BIT_INTEGER);
 
         extendedEndpointListAvailable = (descriptorCapabilities & 0x01) != 0;
         extendedSimpleDescriptorListAvailable = (descriptorCapabilities & 0x02) != 0;

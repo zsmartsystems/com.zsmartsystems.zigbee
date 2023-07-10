@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -45,8 +45,8 @@ public class RoutingTable {
      */
     public void deserialize(ZigBeeDeserializer deserializer) {
         // Deserialize the fields
-        destinationAddress = (Integer) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        int temp = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        destinationAddress = deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        int temp = deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         switch (temp & 0x07) {
             case 0:
                 status = DiscoveryState.ACTIVE;
@@ -71,7 +71,7 @@ public class RoutingTable {
         memoryConstrained = (temp & 0x08) != 0;
         manyToOne = (temp & 0x10) != 0;
         routeRecordRequired = (temp & 0x20) != 0;
-        nextHopAddress = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        nextHopAddress = deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     public Integer getDestinationAddress() {

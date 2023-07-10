@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -46,12 +46,12 @@ public class SimpleDescriptor {
      */
     public void deserialize(ZigBeeDeserializer deserializer) {
         // Deserialize the fields
-        endpoint = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        profileId = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        deviceId = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        deviceVersion = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        inputClusterList = (List<Integer>) deserializer.readZigBeeType(ZclDataType.N_X_UNSIGNED_16_BIT_INTEGER);
-        outputClusterList = (List<Integer>) deserializer.readZigBeeType(ZclDataType.N_X_UNSIGNED_16_BIT_INTEGER);
+        endpoint = deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        profileId = deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        deviceId = deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        deviceVersion = deserializer.readZigBeeType(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        inputClusterList = deserializer.readZigBeeType(ZclDataType.N_X_UNSIGNED_16_BIT_INTEGER);
+        outputClusterList = deserializer.readZigBeeType(ZclDataType.N_X_UNSIGNED_16_BIT_INTEGER);
     }
 
     public int getEndpoint() {

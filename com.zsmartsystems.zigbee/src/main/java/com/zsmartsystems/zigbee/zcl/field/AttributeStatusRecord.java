@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -100,9 +100,9 @@ public class AttributeStatusRecord implements ZclListItemField {
 
     @Override
     public void deserialize(final ZigBeeDeserializer deserializer) {
-        status = (ZclStatus) deserializer.readZigBeeType(ZclDataType.ZCL_STATUS);
-        direction = (boolean) deserializer.readZigBeeType(ZclDataType.BOOLEAN);
-        attributeIdentifier = (int) deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        status = deserializer.readZigBeeType(ZclDataType.ZCL_STATUS);
+        direction = deserializer.readZigBeeType(ZclDataType.BOOLEAN);
+        attributeIdentifier = deserializer.readZigBeeType(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

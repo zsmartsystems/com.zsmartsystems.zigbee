@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -153,9 +153,9 @@ public class MoveToHueCommand extends ZclColorControlCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        hue = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        direction = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        transitionTime = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        hue = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        direction = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        transitionTime = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

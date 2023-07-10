@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -744,30 +744,30 @@ public class GpPairingConfiguration extends ZclGreenPowerCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        actions = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        options = (Integer) deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
-        gpdSrcId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        gpdIeee = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
-        endpoint = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        deviceId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        groupListCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        actions = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        options = deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
+        gpdSrcId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        gpdIeee = deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        endpoint = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        deviceId = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        groupListCount = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         groupList = new GpPairingConfigurationGroupList();
         groupList.deserialize(deserializer);
-        gpdAssignedAlias = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        forwardingRadius = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        securityOptions = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        gpdSecurityFrameCounter = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        gpdSecurityKey = (ZigBeeKey) deserializer.deserialize(ZclDataType.SECURITY_KEY);
-        numberOfPairedEndpoints = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        pairedEndpoints = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        applicationInformation = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        manufacturerId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        modeId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        numberOfGpdCommands = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        gpdCommandIdList = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        clusterIdListCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        clusterListServer = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        clusterListClient = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        gpdAssignedAlias = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        forwardingRadius = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        securityOptions = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        gpdSecurityFrameCounter = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        gpdSecurityKey = deserializer.deserialize(ZclDataType.SECURITY_KEY);
+        numberOfPairedEndpoints = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        pairedEndpoints = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        applicationInformation = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        manufacturerId = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        modeId = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        numberOfGpdCommands = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        gpdCommandIdList = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        clusterIdListCount = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        clusterListServer = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        clusterListClient = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

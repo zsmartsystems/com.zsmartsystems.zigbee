@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -33,7 +33,6 @@
 package com.zsmartsystems.zigbee.dongle.cc2531.zigbee.util;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 /**
  * Big Endian container for 64-bit XBee Address
@@ -78,7 +77,7 @@ public class ZToolAddress64 extends ZToolAddress {
 
     @Override
     public int hashCode() {
-        return Objects.hash(address);
+        return Arrays.hashCode(address);
     }
 
     @Override

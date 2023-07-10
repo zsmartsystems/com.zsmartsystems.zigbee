@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -176,8 +176,8 @@ public class SupportedTunnelProtocolsResponse extends ZclSmartEnergyTunnelingCom
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        protocolListComplete = (Boolean) deserializer.deserialize(ZclDataType.BOOLEAN);
-        protocolCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        protocolListComplete = deserializer.deserialize(ZclDataType.BOOLEAN);
+        protocolCount = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         protocolList = new Protocol();
         protocolList.deserialize(deserializer);
     }

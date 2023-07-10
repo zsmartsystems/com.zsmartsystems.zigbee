@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.zsmartsystems.zigbee</groupId>
@@ -9,7 +11,7 @@
 	<parent>
 		<groupId>com.zsmartsystems</groupId>
 		<artifactId>zigbee</artifactId>
-		<version>1.4.10-SNAPSHOT</version>
+		<version>1.4.12-SNAPSHOT</version>
 	</parent>
 
 	<dependencies>
@@ -17,61 +19,61 @@
 		<dependency>
 			<groupId>com.zsmartsystems.zigbee</groupId>
 			<artifactId>com.zsmartsystems.zigbee</artifactId>
-			<version>1.4.10-SNAPSHOT</version>
+			<version>1.4.12-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.zsmartsystems.zigbee</groupId>
 			<artifactId>com.zsmartsystems.zigbee.serial</artifactId>
-			<version>1.4.10-SNAPSHOT</version>
+			<version>1.4.12-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.zsmartsystems.zigbee</groupId>
 			<artifactId>com.zsmartsystems.zigbee.dongle.cc2531</artifactId>
-			<version>1.4.10-SNAPSHOT</version>
+			<version>1.4.12-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.zsmartsystems.zigbee</groupId>
 			<artifactId>com.zsmartsystems.zigbee.dongle.xbee</artifactId>
-			<version>1.4.10-SNAPSHOT</version>
+			<version>1.4.12-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.zsmartsystems.zigbee</groupId>
 			<artifactId>com.zsmartsystems.zigbee.dongle.conbee</artifactId>
-			<version>1.4.10-SNAPSHOT</version>
+			<version>1.4.12-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.zsmartsystems.zigbee</groupId>
 			<artifactId>com.zsmartsystems.zigbee.dongle.ember</artifactId>
-			<version>1.4.10-SNAPSHOT</version>
+			<version>1.4.12-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.zsmartsystems.zigbee</groupId>
 			<artifactId>com.zsmartsystems.zigbee.dongle.telegesis</artifactId>
-			<version>1.4.10-SNAPSHOT</version>
+			<version>1.4.12-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.zsmartsystems.zigbee</groupId>
 			<artifactId>com.zsmartsystems.zigbee.console</artifactId>
-			<version>1.4.10-SNAPSHOT</version>
+			<version>1.4.12-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.zsmartsystems.zigbee</groupId>
 			<artifactId>com.zsmartsystems.zigbee.console.ember</artifactId>
-			<version>1.4.10-SNAPSHOT</version>
+			<version>1.4.12-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.zsmartsystems.zigbee</groupId>
 			<artifactId>com.zsmartsystems.zigbee.console.telegesis</artifactId>
-			<version>1.4.10-SNAPSHOT</version>
+			<version>1.4.12-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
@@ -119,7 +121,8 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>com.zsmartsystems.zigbee.console.main.ZigBeeConsoleMain</mainClass>
+							<mainClass>
+								com.zsmartsystems.zigbee.console.main.ZigBeeConsoleMain</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
@@ -131,7 +134,8 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>com.zsmartsystems.zigbee.console.main.ZigBeeConsoleMain</mainClass>
+							<mainClass>
+								com.zsmartsystems.zigbee.console.main.ZigBeeConsoleMain</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>
@@ -151,15 +155,9 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>animal-sniffer-maven-plugin</artifactId>
-				<version>1.16</version>
 				<configuration>
+					<skip>true</skip>
 				</configuration>
-				<executions>
-					<execution>
-						<id>animal-sniffer</id>
-						<phase />
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -215,10 +215,10 @@ public class PublishConversionFactorCommand extends ZclPriceCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        issuerEventId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        startTime = (Calendar) deserializer.deserialize(ZclDataType.UTCTIME);
-        conversionFactor = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        conversionFactorTrailingDigit = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        issuerEventId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        startTime = deserializer.deserialize(ZclDataType.UTCTIME);
+        conversionFactor = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        conversionFactorTrailingDigit = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
     }
 
     @Override

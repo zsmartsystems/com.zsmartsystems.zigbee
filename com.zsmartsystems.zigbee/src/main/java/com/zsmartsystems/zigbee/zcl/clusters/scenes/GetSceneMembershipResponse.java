@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -214,11 +214,11 @@ public class GetSceneMembershipResponse extends ZclScenesCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        status = (ZclStatus) deserializer.deserialize(ZclDataType.ZCL_STATUS);
-        capacity = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        groupId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        sceneCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        sceneList = (List<Integer>) deserializer.deserialize(ZclDataType.N_X_UNSIGNED_8_BIT_INTEGER);
+        status = deserializer.deserialize(ZclDataType.ZCL_STATUS);
+        capacity = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        groupId = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        sceneCount = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        sceneList = deserializer.deserialize(ZclDataType.N_X_UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

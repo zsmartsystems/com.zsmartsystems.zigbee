@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -326,7 +327,7 @@ public class ZigBeeTransactionManagerTest {
         nodeQueue.put(new IeeeAddress("2222222222222222"), queue2);
         nodeQueue.put(new IeeeAddress("3333333333333333"), queue3);
 
-        List<ZigBeeTransactionQueue> outstandingQueues = new ArrayList<>();
+        Queue<ZigBeeTransactionQueue> outstandingQueues = new ConcurrentLinkedQueue<>();
         outstandingQueues.add(queue1);
         outstandingQueues.add(queue2);
         outstandingQueues.add(queue3);

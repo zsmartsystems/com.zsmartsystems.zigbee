@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -277,7 +277,7 @@ public class ZigBeeNode {
      * @param macCapabilities the node MAC capabilities
      */
     public void setMacCapabilities(Set<MacCapabilitiesType> macCapabilities) {
-        if(this.macCapabilities == null) {
+        if (this.macCapabilities == null) {
             this.macCapabilities = new TreeSet<>();
         }
         this.macCapabilities.clear();
@@ -396,11 +396,11 @@ public class ZigBeeNode {
      * @return true if the device is a Full Function Device. Returns false if not an FFD or logical type is unknown.
      */
     public boolean isFullFunctionDevice() {
-        //Prefer MAC capabilities reported in node descriptor
-        if(nodeDescriptor != null) {
+        // Prefer MAC capabilities reported in node descriptor
+        if (nodeDescriptor != null) {
             return nodeDescriptor.getMacCapabilities().contains(MacCapabilitiesType.FULL_FUNCTION_DEVICE);
         }
-        if(macCapabilities != null) {
+        if (macCapabilities != null) {
             return macCapabilities.contains(MacCapabilitiesType.FULL_FUNCTION_DEVICE);
         }
         return false;
@@ -433,11 +433,11 @@ public class ZigBeeNode {
      * @return true if the device is a Reduced Function Device
      */
     public boolean isReducedFunctionDevice() {
-        //Prefer MAC capabilities reported in node descriptor
+        // Prefer MAC capabilities reported in node descriptor
         if (nodeDescriptor != null) {
             return nodeDescriptor.getMacCapabilities().contains(MacCapabilitiesType.REDUCED_FUNCTION_DEVICE);
         }
-        if(macCapabilities != null) {
+        if (macCapabilities != null) {
             return macCapabilities.contains(MacCapabilitiesType.REDUCED_FUNCTION_DEVICE);
         }
         return false;
@@ -449,11 +449,11 @@ public class ZigBeeNode {
      * @return true if the node is capable of supporting security
      */
     public boolean isSecurityCapable() {
-        //Prefer MAC capabilities reported in node descriptor
+        // Prefer MAC capabilities reported in node descriptor
         if (nodeDescriptor != null) {
             return nodeDescriptor.getMacCapabilities().contains(MacCapabilitiesType.SECURITY_CAPABLE);
         }
-        if(macCapabilities != null) {
+        if (macCapabilities != null) {
             return macCapabilities.contains(MacCapabilitiesType.SECURITY_CAPABLE);
         }
         return false;
@@ -465,11 +465,11 @@ public class ZigBeeNode {
      * @return true if the node's receiver is ON when idle
      */
     public Boolean isReceiverOnWhenIdle() {
-        //Prefer MAC capabilities reported in node descriptor
+        // Prefer MAC capabilities reported in node descriptor
         if (nodeDescriptor != null) {
             return nodeDescriptor.getMacCapabilities().contains(MacCapabilitiesType.RECEIVER_ON_WHEN_IDLE);
         }
-        if(macCapabilities != null) {
+        if (macCapabilities != null) {
             return macCapabilities.contains(MacCapabilitiesType.RECEIVER_ON_WHEN_IDLE);
         }
         return null;
@@ -1096,7 +1096,7 @@ public class ZigBeeNode {
     /**
      * Retrieves the {@link ZigBeeLinkQualityStatistics} for the node
      *
-     * @return the {@link ZigBeeLinkQualityStatistics} for the node
+     * @return the {@link ZigBeeLinkQualityStatistics} for the node (not null)
      */
     public ZigBeeLinkQualityStatistics getLinkQualityStatistics() {
         return linkQualityStatistics;

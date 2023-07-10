@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -230,18 +230,18 @@ public class QuerySpecificFileResponse extends ZclOtaUpgradeCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        status = (ZclStatus) deserializer.deserialize(ZclDataType.ZCL_STATUS);
+        status = deserializer.deserialize(ZclDataType.ZCL_STATUS);
         if (status == ZclStatus.SUCCESS) {
-            manufacturerCode = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+            manufacturerCode = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         }
         if (status == ZclStatus.SUCCESS) {
-            imageType = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+            imageType = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
         }
         if (status == ZclStatus.SUCCESS) {
-            fileVersion = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+            fileVersion = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
         }
         if (status == ZclStatus.SUCCESS) {
-            imageSize = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+            imageSize = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
         }
     }
 

@@ -4,7 +4,7 @@
 
 	<groupId>com.zsmartsystems</groupId>
 	<artifactId>zigbee</artifactId>
-	<version>1.4.10-SNAPSHOT</version>
+	<version>1.4.12-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>ZssBee</name>
@@ -38,11 +38,15 @@
 	</developers>
 
 	<properties>
-		<license.year>2022</license.year>
+		<license.year>2023</license.year>
+		<source.version>1.8</source.version>
+		<target.version>1.8</target.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<slf4j.version>1.7.30</slf4j.version>
 		<log4j.version>1.2.17</log4j.version>
+		<animal.sniffer.version>1.23</animal.sniffer.version>
+		<error-prone.version>2.10.0</error-prone.version>
 	</properties>
 
 	<scm>
@@ -101,14 +105,45 @@
 	</reporting>
 
 	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>3.7.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>animal-sniffer-maven-plugin</artifactId>
+					<version>${animal.sniffer.version}</version>
+					<configuration>
+						<signature>
+							<groupId>org.codehaus.mojo.signature</groupId>
+							<artifactId>java18</artifactId>
+							<version>1.0</version>
+						</signature>
+						<signature>
+							<groupId>net.sf.androidscents.signature</groupId>
+							<artifactId>android-api-level-21</artifactId>
+							<version>5.0.1_r2</version>
+						</signature>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.8.0</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.0</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>${source.version}</source>
+					<target>${target.version}</target>
 					<compilerArgs>-Xpkginfo:always</compilerArgs>
 				</configuration>
 			</plugin>
@@ -240,19 +275,6 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>animal-sniffer-maven-plugin</artifactId>
-				<version>1.16</version>
-				<configuration>
-					<signature>
-						<groupId>org.codehaus.mojo.signature</groupId>
-						<artifactId>java18</artifactId>
-						<version>1.0</version>
-					</signature>
-					<signature>
-						<groupId>net.sf.androidscents.signature</groupId>
-						<artifactId>android-api-level-19</artifactId>
-						<version>4.4_r1</version>
-					</signature>
-				</configuration>
 				<executions>
 					<execution>
 						<id>animal-sniffer</id>
@@ -264,16 +286,6 @@
 				</executions>
 			</plugin>
 		</plugins>
-
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-site-plugin</artifactId>
-					<version>3.7.1</version>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 
 	<dependencies>
@@ -336,6 +348,49 @@
 								</goals>
 							</execution>
 						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<!--
+			This profile can either be selected explicitly:
+			  mvn -P error-prone-check clean compile
+			or implicitly by injecting a JDK in the version range [11,16)
+			  JAVA_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home mvn clean compile
+			-->
+			<id>error-prone-check</id>
+			<activation>
+				<!-- ErrorProne requires at least version 11 due to compiler hooks
+				and starts to require additional flags with version 16... -->
+				<jdk>[11,16)</jdk>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<configuration combine.self="override">
+							<source>${source.version}</source>
+							<target>${target.version}</target>
+							<encoding>${project.build.sourceEncoding}</encoding>
+							<compilerArgs>
+								<arg>-XDcompilePolicy=simple</arg>
+								<arg>-Xplugin:ErrorProne</arg>
+							</compilerArgs>
+							<forceJavacCompilerUse>true</forceJavacCompilerUse>
+							<annotationProcessorPaths>
+								<path>
+									<groupId>com.google.errorprone</groupId>
+									<artifactId>error_prone_core</artifactId>
+									<version>${error-prone.version}</version>
+								</path>
+								<!-- Other annotation processors go here.
+								If 'annotationProcessorPaths' is set, processors will no longer be 
+								discovered on the regular -classpath; see also 'Using Error Prone
+								together with other annotation processors' below. -->
+							</annotationProcessorPaths>
+						</configuration>
 					</plugin>
 				</plugins>
 			</build>

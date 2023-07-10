@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -244,12 +244,12 @@ public class GetMeasurementProfileResponseCommand extends ZclElectricalMeasureme
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        startTime = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        status = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        profileIntervalPeriod = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        numberOfIntervalsDelivered = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        attributeId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        intervals = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        startTime = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        status = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        profileIntervalPeriod = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        numberOfIntervalsDelivered = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        attributeId = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        intervals = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

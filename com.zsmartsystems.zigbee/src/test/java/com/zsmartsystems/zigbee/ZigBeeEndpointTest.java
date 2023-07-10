@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,6 +10,7 @@ package com.zsmartsystems.zigbee;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
 import com.zsmartsystems.zigbee.app.ZigBeeApplication;
+import com.zsmartsystems.zigbee.app.otaserver.ZclOtaUpgradeServer;
 import com.zsmartsystems.zigbee.database.ZigBeeEndpointDao;
 import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionMatcher;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
@@ -32,6 +34,7 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclColorControlCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclCustomCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclDoorLockCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclLevelControlCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclScenesCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.DefaultResponse;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
@@ -268,6 +271,31 @@ public class ZigBeeEndpointTest {
         assertEquals(2, endpoint.getDeviceId());
         assertEquals(3, endpoint.getDeviceVersion());
         assertEquals(4, endpoint.getProfileId());
+    }
+
+    @Test
+    public void addApplication() {
+        ZigBeeEndpoint endpoint = getEndpoint();
+
+        ZclOtaUpgradeServer otaServer = (ZclOtaUpgradeServer) endpoint
+                .getApplication(ZclOtaUpgradeCluster.CLUSTER_ID);
+
+        assertNull(endpoint.getApplication(ZclOtaUpgradeCluster.CLUSTER_ID));
+
+        assertEquals(ZigBeeStatus.UNSUPPORTED, endpoint.addApplication(new ZclOtaUpgradeServer()));
+        assertNull(endpoint.getApplication(ZclOtaUpgradeCluster.CLUSTER_ID));
+
+        endpoint.addInputCluster(new ZclOtaUpgradeCluster(endpoint));
+        assertEquals(ZigBeeStatus.SUCCESS, endpoint.addApplication(new ZclOtaUpgradeServer()));
+
+        endpoint.addInputCluster(new ZclOtaUpgradeCluster(endpoint));
+        assertEquals(ZigBeeStatus.INVALID_STATE, endpoint.addApplication(new ZclOtaUpgradeServer()));
+
+        otaServer = (ZclOtaUpgradeServer) endpoint.getApplication(ZclOtaUpgradeCluster.CLUSTER_ID);
+        assertNotNull(otaServer);
+
+        endpoint.removeApplication(ZclOtaUpgradeCluster.CLUSTER_ID);
+        assertNull(endpoint.getApplication(ZclOtaUpgradeCluster.CLUSTER_ID));
     }
 
     private ZigBeeEndpoint getEndpoint() {

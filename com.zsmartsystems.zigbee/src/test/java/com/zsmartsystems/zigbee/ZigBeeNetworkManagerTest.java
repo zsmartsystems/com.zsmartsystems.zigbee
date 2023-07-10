@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -1236,11 +1236,12 @@ public class ZigBeeNetworkManagerTest
 
         ZigBeeAnnounceListener announceListener = Mockito.mock(ZigBeeAnnounceListener.class);
         manager.addAnnounceListener(announceListener);
-        assertEquals(1, ((Collection<ZigBeeAnnounceListener>) TestUtilities.getField(ZigBeeNetworkManager.class,
-                manager, "announceListeners")).size());
+
+        Collection<ZigBeeAnnounceListener> announceListenersField = TestUtilities.getField(ZigBeeNetworkManager.class,
+                manager, "announceListeners");
+        assertEquals(1, announceListenersField.size());
         manager.addAnnounceListener(announceListener);
-        assertEquals(1, ((Collection<ZigBeeAnnounceListener>) TestUtilities.getField(ZigBeeNetworkManager.class,
-                manager, "announceListeners")).size());
+        assertEquals(1, announceListenersField.size());
 
         manager.nodeStatusUpdate(ZigBeeNodeStatus.DEVICE_LEFT, 1234, new IeeeAddress("123456789ABCDEF0"));
         Mockito.verify(node, Mockito.times(0)).setNodeState(ArgumentMatchers.any(ZigBeeNodeState.class));
@@ -1377,7 +1378,7 @@ public class ZigBeeNetworkManagerTest
         }
     }
 
-    private Object convertData(String data, Class clazz) {
+    private Object convertData(String data, Class<?> clazz) {
         return null;
     }
 

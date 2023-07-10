@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -136,11 +136,11 @@ public class GetGroupMembershipResponse extends ZclGroupsCommand {
         // Create lists
         groupList = new ArrayList<Integer>();
 
-        capacity = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        Integer groupCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        capacity = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        Integer groupCount = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         if (groupCount != null) {
             for (int cnt = 0; cnt < groupCount; cnt++) {
-                groupList.add((Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER));
+                groupList.add(deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER));
             }
         }
     }

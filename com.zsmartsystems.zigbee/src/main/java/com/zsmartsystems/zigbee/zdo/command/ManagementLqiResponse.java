@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -164,17 +164,17 @@ public class ManagementLqiResponse extends ZdoResponse {
         // Create lists
         neighborTableList = new ArrayList<NeighborTable>();
 
-        status = (ZdoStatus) deserializer.deserialize(ZclDataType.ZDO_STATUS);
+        status = deserializer.deserialize(ZclDataType.ZDO_STATUS);
         if (status != ZdoStatus.SUCCESS) {
             // Don't read the full response if we have an error
             return;
         }
-        neighborTableEntries = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        startIndex = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        Integer neighborTableListCount = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        neighborTableEntries = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        startIndex = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        Integer neighborTableListCount = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         if (neighborTableListCount != null) {
             for (int cnt = 0; cnt < neighborTableListCount; cnt++) {
-                neighborTableList.add((NeighborTable) deserializer.deserialize(ZclDataType.NEIGHBOR_TABLE));
+                neighborTableList.add(deserializer.deserialize(ZclDataType.NEIGHBOR_TABLE));
             }
         }
     }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -192,9 +192,9 @@ public class OnWithTimedOffCommand extends ZclOnOffCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        onOffControl = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        onTime = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        offWaitTime = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        onOffControl = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        onTime = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        offWaitTime = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
     }
 
     @Override

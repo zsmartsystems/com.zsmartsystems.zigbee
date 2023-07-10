@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -68,7 +68,7 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
     /**
      * {@inheritDoc}
      */
-    public Object readZigBeeType(ZclDataType type) {
+    public <R> R readZigBeeType(ZclDataType type) {
         if (index == payload.length) {
             return null;
         }
@@ -351,6 +351,10 @@ public class DefaultDeserializer implements ZigBeeDeserializer {
                 throw new IllegalArgumentException("No reader defined in " + ZigBeeDeserializer.class.getSimpleName()
                         + " for " + type.toString() + String.format(" (0x%02X)", type.getId()));
         }
-        return value[0];
+
+        @SuppressWarnings("unchecked")
+        R typedValue = (R) value[0];
+
+        return typedValue;
     }
 }

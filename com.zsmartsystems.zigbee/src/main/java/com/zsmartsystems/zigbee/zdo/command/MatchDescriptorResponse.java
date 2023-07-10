@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -133,16 +133,16 @@ public class MatchDescriptorResponse extends ZdoResponse {
         // Create lists
         matchList = new ArrayList<Integer>();
 
-        status = (ZdoStatus) deserializer.deserialize(ZclDataType.ZDO_STATUS);
+        status = deserializer.deserialize(ZclDataType.ZDO_STATUS);
         if (status != ZdoStatus.SUCCESS) {
             // Don't read the full response if we have an error
             return;
         }
-        nwkAddrOfInterest = (Integer) deserializer.deserialize(ZclDataType.NWK_ADDRESS);
-        Integer matchLength = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        nwkAddrOfInterest = deserializer.deserialize(ZclDataType.NWK_ADDRESS);
+        Integer matchLength = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
         if (matchLength != null) {
             for (int cnt = 0; cnt < matchLength; cnt++) {
-                matchList.add((Integer) deserializer.deserialize(ZclDataType.ENDPOINT));
+                matchList.add(deserializer.deserialize(ZclDataType.ENDPOINT));
             }
         }
     }

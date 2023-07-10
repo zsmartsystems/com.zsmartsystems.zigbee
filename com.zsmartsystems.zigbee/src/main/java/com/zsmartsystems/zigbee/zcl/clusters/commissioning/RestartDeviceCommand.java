@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -153,9 +153,9 @@ public class RestartDeviceCommand extends ZclCommissioningCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        option = (Integer) deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
-        delay = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        jitter = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        option = deserializer.deserialize(ZclDataType.BITMAP_8_BIT);
+        delay = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        jitter = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

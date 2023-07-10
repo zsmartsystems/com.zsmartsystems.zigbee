@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -392,14 +392,14 @@ public class PublishTierLabelsCommand extends ZclPriceCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        providerId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        issuerEventId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        issuerTariffId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        commandIndex = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        totalNumberOfCommands = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        numberOfLabels = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        tierId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        tierLabel = (ByteArray) deserializer.deserialize(ZclDataType.OCTET_STRING);
+        providerId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        issuerEventId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        issuerTariffId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        commandIndex = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        totalNumberOfCommands = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        numberOfLabels = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        tierId = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        tierLabel = deserializer.deserialize(ZclDataType.OCTET_STRING);
     }
 
     @Override

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -203,9 +203,9 @@ public class ArmCommand extends ZclIasAceCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        armMode = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        armDisarmCode = (String) deserializer.deserialize(ZclDataType.CHARACTER_STRING);
-        zoneId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        armMode = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        armDisarmCode = deserializer.deserialize(ZclDataType.CHARACTER_STRING);
+        zoneId = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
     }
 
     @Override

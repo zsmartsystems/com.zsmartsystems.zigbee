@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -41,7 +41,7 @@ public class ZigBeeConsoleOtaUpgradeCommand extends ZigBeeConsoleAbstractCommand
 
     @Override
     public String getSyntax() {
-        return "[STATE | FILE | START | COMPLETE] [ENDPOINT] [FILENAME]";
+        return "[STATE | FILE | START | COMPLETE | CANCEL] [ENDPOINT] [FILENAME]";
     }
 
     @Override
@@ -81,6 +81,12 @@ public class ZigBeeConsoleOtaUpgradeCommand extends ZigBeeConsoleAbstractCommand
                     throw new IllegalArgumentException("Invalid number of arguments: Endpoint required.");
                 }
                 cmdOtaComplete(networkManager, args[2], out);
+                break;
+            case "CANCEL":
+                if (args.length < 3) {
+                    throw new IllegalArgumentException("Invalid number of arguments: Endpoint required.");
+                }
+                cmdOtaCancel(networkManager, args[2], out);
                 break;
             default:
                 throw new IllegalArgumentException("Invalid command argument " + args[1]);
@@ -127,10 +133,16 @@ public class ZigBeeConsoleOtaUpgradeCommand extends ZigBeeConsoleAbstractCommand
 
     private void cmdDisplayNode(ZigBeeEndpoint endpoint, ZclOtaUpgradeServer otaServer, PrintStream out) {
         Object fileVersion = otaServer.getCurrentFileVersion();
+        String fileVersionAsStr;
+        if (fileVersion instanceof Integer) {
+            fileVersionAsStr = String.format("%08X", ((Integer) fileVersion).intValue());
+        } else {
+            fileVersionAsStr = "Unknown";
+        }
 
         out.println("OTA Upgrade configuration for " + endpoint.getEndpointAddress());
         out.println("Current state    : " + otaServer.getServerStatus());
-        out.println("Firmware Version : " + (fileVersion == null ? "Unknown" : String.format("%s%08X", fileVersion)));
+        out.println("Firmware Version : " + fileVersionAsStr);
     }
 
     private Map<Integer, ZigBeeEndpoint> getApplications(ZigBeeNetworkManager networkManager, int clusterId) {
@@ -179,7 +191,8 @@ public class ZigBeeConsoleOtaUpgradeCommand extends ZigBeeConsoleAbstractCommand
         }
         ZigBeeOtaFile otaFile = new ZigBeeOtaFile(fileData);
         otaServer.setFirmware(otaFile);
-        out.println("OTA File \"" + filename + "\" set.");
+        out.println("OTA File \"" + filename + "\" set for node " + endpoint.getEndpointAddress());
+        out.println("OTA File: " + otaFile);
     }
 
     private void cmdOtaComplete(ZigBeeNetworkManager networkManager, String endpointString, PrintStream out) {
@@ -192,5 +205,17 @@ public class ZigBeeConsoleOtaUpgradeCommand extends ZigBeeConsoleAbstractCommand
 
         boolean success = otaServer.completeUpgrade();
         out.println("OTA Upgrade completion on endpoint " + endpoint.getEndpointAddress() + " returned " + success);
+    }
+
+    private void cmdOtaCancel(ZigBeeNetworkManager networkManager, String endpointString, PrintStream out) {
+        final ZigBeeEndpoint endpoint = getEndpoint(networkManager, endpointString);
+
+        ZclOtaUpgradeServer otaServer = (ZclOtaUpgradeServer) endpoint.getApplication(ZclOtaUpgradeCluster.CLUSTER_ID);
+        if (otaServer == null) {
+            throw new IllegalArgumentException("OTA Server not supported by " + endpoint.getEndpointAddress() + "");
+        }
+
+        otaServer.cancelUpgrade();
+        out.println("OTA Upgrade cancelled on endpoint " + endpoint.getEndpointAddress());
     }
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -365,16 +365,16 @@ public class GpCommissioningNotification extends ZclGreenPowerCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        options = (Integer) deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
-        gpdSrcId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        gpdIeee = (IeeeAddress) deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
-        endpoint = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        gpdSecurityFrameCounter = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
-        gpdCommandId = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        gpdCommandPayload = (ByteArray) deserializer.deserialize(ZclDataType.OCTET_STRING);
-        gppShortAddress = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
-        gppLink = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        mic = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        options = deserializer.deserialize(ZclDataType.BITMAP_16_BIT);
+        gpdSrcId = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        gpdIeee = deserializer.deserialize(ZclDataType.IEEE_ADDRESS);
+        endpoint = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        gpdSecurityFrameCounter = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
+        gpdCommandId = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        gpdCommandPayload = deserializer.deserialize(ZclDataType.OCTET_STRING);
+        gppShortAddress = deserializer.deserialize(ZclDataType.UNSIGNED_16_BIT_INTEGER);
+        gppLink = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        mic = deserializer.deserialize(ZclDataType.UNSIGNED_32_BIT_INTEGER);
     }
 
     @Override

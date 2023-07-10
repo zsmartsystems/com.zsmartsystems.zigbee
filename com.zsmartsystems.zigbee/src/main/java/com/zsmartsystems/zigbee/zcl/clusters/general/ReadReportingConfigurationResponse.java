@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -107,7 +107,7 @@ public class ReadReportingConfigurationResponse extends ZclGeneralCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        records = (List<AttributeReportingStatusRecord>) deserializer.deserialize(ZclDataType.N_X_ATTRIBUTE_REPORTING_STATUS_RECORD);
+        records = deserializer.deserialize(ZclDataType.N_X_ATTRIBUTE_REPORTING_STATUS_RECORD);
     }
 
     @Override

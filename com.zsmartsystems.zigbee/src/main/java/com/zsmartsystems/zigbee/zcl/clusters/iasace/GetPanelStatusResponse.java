@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016-2022 by the respective copyright holders.
+ * Copyright (c) 2016-2023 by the respective copyright holders.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -242,10 +242,10 @@ public class GetPanelStatusResponse extends ZclIasAceCommand {
 
     @Override
     public void deserialize(final ZclFieldDeserializer deserializer) {
-        panelStatus = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        secondsRemaining = (Integer) deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
-        audibleNotification = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
-        alarmStatus = (Integer) deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        panelStatus = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        secondsRemaining = deserializer.deserialize(ZclDataType.UNSIGNED_8_BIT_INTEGER);
+        audibleNotification = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
+        alarmStatus = deserializer.deserialize(ZclDataType.ENUMERATION_8_BIT);
     }
 
     @Override
