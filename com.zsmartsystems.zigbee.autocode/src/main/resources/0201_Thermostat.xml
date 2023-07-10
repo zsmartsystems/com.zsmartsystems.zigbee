@@ -180,10 +180,10 @@
         <name>Start Of Week</name>
     </attribute>
     <attribute code="0x0021" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x00" maximum="0xFF">
-        <name>Numer Of Weekly Transitions</name>
+        <name>Number Of Weekly Transitions</name>
     </attribute>
     <attribute code="0x0022" type="UNSIGNED_8_BIT_INTEGER" side="server" optional="true" writable="false" reportable="false" minimum="0x00" maximum="0xFF">
-        <name>Numer Of Daily Transitions</name>
+        <name>Number Of Daily Transitions</name>
     </attribute>
     <attribute code="0x0023" type="ENUMERATION_8_BIT" side="server" optional="true" writable="true" reportable="false" minimum="0x00" maximum="0x01" default="0x00">
         <name>Temperature Setpoint Hold</name>
