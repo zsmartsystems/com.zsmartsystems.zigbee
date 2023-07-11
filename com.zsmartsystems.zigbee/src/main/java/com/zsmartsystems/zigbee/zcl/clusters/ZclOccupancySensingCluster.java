@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2023-07-10T11:08:03Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2023-07-10T16:03:50Z")
 public class ZclOccupancySensingCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
