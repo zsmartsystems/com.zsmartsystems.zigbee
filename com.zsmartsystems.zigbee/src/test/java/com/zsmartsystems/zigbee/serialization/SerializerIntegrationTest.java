@@ -276,6 +276,12 @@ public class SerializerIntegrationTest {
     }
 
     @Test
+    public void testDeserialize_DATA_40_BIT() {
+        long valIn = 0x1234;
+        testSerializer(valIn, ZclDataType.DATA_40_BIT);
+    }
+
+    @Test
     public void testDeserialize_ZIGBEE_DATA_TYPE() {
         ZclDataType valIn = ZclDataType.BITMAP_16_BIT;
         testSerializer(valIn, ZclDataType.ZIGBEE_DATA_TYPE);

@@ -212,6 +212,14 @@ public class DefaultSerializer implements ZigBeeSerializer {
                 buffer[length++] = (uint32Value >> 16) & 0xFF;
                 buffer[length++] = (uint32Value >> 24) & 0xFF;
                 break;
+            case DATA_40_BIT:
+                final long uint40Value = (Long) data;
+                buffer[length++] = (int) (uint40Value & 0xFF);
+                buffer[length++] = (int) ((uint40Value >> 8) & 0xFF);
+                buffer[length++] = (int) ((uint40Value >> 16) & 0xFF);
+                buffer[length++] = (int) ((uint40Value >> 24) & 0xFF);
+                buffer[length++] = (int) ((uint40Value >> 32) & 0xFF);
+                break;
             case UNSIGNED_48_BIT_INTEGER:
                 final long uint48Value = (Long) data;
                 buffer[length++] = (int) (uint48Value & 0xFF);

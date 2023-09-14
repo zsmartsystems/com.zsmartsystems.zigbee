@@ -34,11 +34,11 @@ import com.zsmartsystems.zigbee.zdo.field.BindingTable;
 import com.zsmartsystems.zigbee.zdo.field.ComplexDescriptor;
 import com.zsmartsystems.zigbee.zdo.field.NeighborTable;
 import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
+import com.zsmartsystems.zigbee.zdo.field.ParentAnnounceChildInfo;
 import com.zsmartsystems.zigbee.zdo.field.PowerDescriptor;
 import com.zsmartsystems.zigbee.zdo.field.RoutingTable;
 import com.zsmartsystems.zigbee.zdo.field.SimpleDescriptor;
 import com.zsmartsystems.zigbee.zdo.field.UserDescriptor;
-import com.zsmartsystems.zigbee.zdo.field.ParentAnnounceChildInfo;
 
 /**
  * Enumeration of the ZCL data types
@@ -47,13 +47,13 @@ import com.zsmartsystems.zigbee.zdo.field.ParentAnnounceChildInfo;
  */
 public enum ZclDataType {
     DATA_8_BIT(Integer.class, 0x08, false),
-    DATA_16_BIT(null, 0x09, false),
-    DATA_24_BIT(null, 0x0A, false),
-    DATA_32_BIT(null, 0x0B, false),
-    DATA_40_BIT(null, 0x0C, false),
-    DATA_48_BIT(null, 0x0D, false),
-    DATA_56_BIT(null, 0x0E, false),
-    DATA_64_BIT(null, 0x0F, false),
+    DATA_16_BIT(Integer.class, 0x09, false),
+    DATA_24_BIT(Integer.class, 0x0A, false),
+    DATA_32_BIT(Integer.class, 0x0B, false),
+    DATA_40_BIT(Long.class, 0x0C, false),
+    DATA_48_BIT(Long.class, 0x0D, false),
+    DATA_56_BIT(Long.class, 0x0E, false),
+    DATA_64_BIT(Long.class, 0x0F, false),
     BOOLEAN(Boolean.class, 0x10, false),
     BITMAP_8_BIT(Integer.class, 0x18, false),
     BITMAP_16_BIT(Integer.class, 0x19, false),
