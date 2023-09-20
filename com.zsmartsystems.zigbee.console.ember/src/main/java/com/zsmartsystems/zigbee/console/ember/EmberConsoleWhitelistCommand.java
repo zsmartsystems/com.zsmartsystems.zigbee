@@ -88,7 +88,7 @@ public class EmberConsoleWhitelistCommand extends EmberConsoleAbstractCommand {
             final int[] frame = new int[1 + (batch.size() * 8)];
             frame[0] = CUSTOM_FRAME_ADD_ALLOWED_DEVICES_ID;
             for (int idx = 0; idx < batch.size(); ++idx) {
-                int[] deviceEuidBytes = batch.get(idx).getValue();
+                int[] deviceEuidBytes = hexToBytes(batch.get(idx).toString());
                 for (int i = 0; i < deviceEuidBytes.length; ++i) {
                     frame[1 + i + (idx * 8)] = deviceEuidBytes[i];
                 }
@@ -115,7 +115,7 @@ public class EmberConsoleWhitelistCommand extends EmberConsoleAbstractCommand {
             final int[] frame = new int[1 + (batch.size() * 8)];
             frame[0] = CUSTOM_FRAME_REMOVE_ALLOWED_DEVICES_ID;
             for (int idx = 0; idx < batch.size(); ++idx) {
-                int[] deviceEuidBytes = batch.get(idx).getValue();
+                int[] deviceEuidBytes = hexToBytes(batch.get(idx).toString());
                 for (int i = 0; i < deviceEuidBytes.length; ++i) {
                     frame[1 + i + (idx * 8)] = deviceEuidBytes[i];
                 }
@@ -125,5 +125,14 @@ public class EmberConsoleWhitelistCommand extends EmberConsoleAbstractCommand {
                 throw new RuntimeException("fail to remove allowed devices");
             }
         }
+    }
+
+    private static int[] hexToBytes(String s) {
+        int len = s.length();
+        int[] data = new int[len / 2];
+        for (int i = 0; i < len; i += 2) {
+            data[i / 2] = ((Character.digit(s.charAt(i), 16) << 4) + Character.digit(s.charAt(i+1), 16));
+        }
+        return data;
     }
 }
