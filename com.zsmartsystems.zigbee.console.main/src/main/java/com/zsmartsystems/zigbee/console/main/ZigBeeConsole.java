@@ -84,6 +84,7 @@ import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionQueue;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneStatusChangeNotificationCommand;
@@ -116,6 +117,8 @@ public final class ZigBeeConsole {
      * Whether to print attribute reports.
      */
     private boolean listeningModeEnabled = false;
+
+    private Integer readAfterReportCount = null;
 
     private long initialMemory;
 
@@ -157,6 +160,7 @@ public final class ZigBeeConsole {
         commands.put("descriptor", new SetDescriptorCommand());
         commands.put("listen", new ListenCommand());
         commands.put("unlisten", new UnlistenCommand());
+        commands.put("readafterreport", new ReadAfterReportCommand());
 
         commands.put("lqi", new LqiCommand());
         commands.put("enroll", new EnrollCommand());
@@ -273,6 +277,16 @@ public final class ZigBeeConsole {
                                             : attributeReport.getAttributeIdentifier())
                                     + ", AttributeValue = " + attributeReport.getAttributeValue() + "]", System.out);
                         });
+
+                        if(readAfterReportCount != null) {
+                            ZclCluster basicCluster = node.getEndpoints().stream()
+                                .filter(endpoint -> endpoint.getInputCluster(ZclBasicCluster.CLUSTER_ID) != null)
+                                .findFirst().get()
+                                .getInputCluster(ZclBasicCluster.CLUSTER_ID);
+                            for (int i = 1; i <= readAfterReportCount; ++i) {
+                                basicCluster.readAttribute(ZclBasicCluster.ATTR_ZCLVERSION);
+                            }
+                        }
                     }
                     if (command instanceof ZoneStatusChangeNotificationCommand) {
                         print(command.toString(), System.out);
@@ -731,6 +745,46 @@ public final class ZigBeeConsole {
             listeningModeEnabled = false;
 
             out.println("Listening mode disabled. Attribute reports and IAS notifications will be ignored.");
+
+            return true;
+        }
+    }
+
+    private class ReadAfterReportCommand implements ConsoleCommand {
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getDescription() {
+            return "Set read-after-report count (0 to disable).";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String getSyntax() {
+            return "readafterreport";
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean process(final ZigBeeApi zigbeeApi, final String[] args, PrintStream out) {
+            if (args.length != 2) {
+                return false;
+            }
+
+            int count = Integer.parseInt(args[1]);
+
+            if(count <= 0) {
+                readAfterReportCount = null;
+                out.println("Read-after-report disabled.");
+            } else {
+                readAfterReportCount = count;
+                out.println("Read-after-report enabled. The attribute (cluster 0 attribute 0) will be read " + readAfterReportCount + " times after every attribute report.");
+            }
 
             return true;
         }
