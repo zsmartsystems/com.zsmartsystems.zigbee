@@ -73,6 +73,7 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleSceneCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleSetCheckInTimeoutCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleSetPollIntervalCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleSmartEnergyCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleSpamReadCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleSwitchLevelCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleSwitchOffCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleSwitchOnCommand;
@@ -184,6 +185,7 @@ public final class ZigBeeConsole {
         newCommands.put("bindtable", new ZigBeeConsoleBindingTableCommand());
 
         newCommands.put("read", new ZigBeeConsoleAttributeReadCommand());
+        newCommands.put("spamread", new ZigBeeConsoleSpamReadCommand());
         newCommands.put("write", new ZigBeeConsoleAttributeWriteCommand());
 
         newCommands.put("attsupported", new ZigBeeConsoleAttributeSupportedCommand());
