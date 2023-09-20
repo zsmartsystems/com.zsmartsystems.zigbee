@@ -20,7 +20,7 @@ public class ZigBeeConsoleSetCheckInTimeoutCommand extends ZigBeeConsoleAbstract
 
     @Override
     public String getDescription() {
-        return "Sets the check in fast poll timeout";
+        return "Sets the check in fast poll timeout in quarterseconds (-1 to disable, 0 to keep the default timeout)";
     }
 
     @Override
