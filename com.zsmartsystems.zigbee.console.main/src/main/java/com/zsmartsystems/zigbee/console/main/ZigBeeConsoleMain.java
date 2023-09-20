@@ -247,9 +247,9 @@ public class ZigBeeConsoleMain {
             ZigBeeDongleEzsp emberDongle = new ZigBeeDongleEzsp(serialPort);
             dongle = emberDongle;
 
-            emberDongle.updateDefaultConfiguration(EzspConfigId.EZSP_CONFIG_SOURCE_ROUTE_TABLE_SIZE, 32);
-            emberDongle.updateDefaultConfiguration(EzspConfigId.EZSP_CONFIG_APS_UNICAST_MESSAGE_COUNT, 16);
-            emberDongle.updateDefaultConfiguration(EzspConfigId.EZSP_CONFIG_NEIGHBOR_TABLE_SIZE, 24);
+            emberDongle.updateDefaultConfiguration(EzspConfigId.EZSP_CONFIG_SOURCE_ROUTE_TABLE_SIZE, 250);
+            emberDongle.updateDefaultConfiguration(EzspConfigId.EZSP_CONFIG_APS_UNICAST_MESSAGE_COUNT, 30);
+            emberDongle.updateDefaultConfiguration(EzspConfigId.EZSP_CONFIG_NEIGHBOR_TABLE_SIZE, 26);
 
             transportOptions.addOption(TransportConfigOption.RADIO_TX_POWER, 8);
 
@@ -260,7 +260,7 @@ public class ZigBeeConsoleMain {
             concentratorConfig.setMaxFailures(8);
             concentratorConfig.setMaxHops(0);
             concentratorConfig.setRefreshMinimum(60);
-            concentratorConfig.setRefreshMaximum(3600);
+            concentratorConfig.setRefreshMaximum(900);
             transportOptions.addOption(TransportConfigOption.CONCENTRATOR_CONFIG, concentratorConfig);
 
             // Add transport specific console commands
