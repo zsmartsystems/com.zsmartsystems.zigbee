@@ -73,15 +73,15 @@ public class EmberConsoleNcpRoutingCommand extends EmberConsoleAbstractCommand {
 //        int configRouteTableSize = ncp.getConfiguration(EzspConfigId.EZSP_CONFIG_ROUTE_TABLE_SIZE);
         int configSourceRouteTableSize = ncp.getConfiguration(EzspConfigId.EZSP_CONFIG_SOURCE_ROUTE_TABLE_SIZE);
 
-        Map<Integer, EmberRouteTableEntry> routeTableMap = new TreeMap<>();
-        for (int cnt = 0; cnt < configRouteTableSize; cnt++) {
-            EmberRouteTableEntry route = ncp.getRouteTableEntry(cnt);
-            //TODO Local (non committed) change (wrapped by if)
-//            routeTableMap.put(route.getDestination(), route);
-            if(route != null) {
-                routeTableMap.put(route.getDestination(), route);
-            }
-        }
+//        Map<Integer, EmberRouteTableEntry> routeTableMap = new TreeMap<>();
+//        for (int cnt = 0; cnt < configRouteTableSize; cnt++) {
+//            EmberRouteTableEntry route = ncp.getRouteTableEntry(cnt);
+//            //TODO Local (non committed) change (wrapped by if)
+////            routeTableMap.put(route.getDestination(), route);
+//            if(route != null) {
+//                routeTableMap.put(route.getDestination(), route);
+//            }
+//        }
 
         List<EmberSourceRouteTableEntry> sourceRouteTable = new ArrayList<>();
         for (int cnt = 0; cnt < sourceRouteFill; cnt++) {
