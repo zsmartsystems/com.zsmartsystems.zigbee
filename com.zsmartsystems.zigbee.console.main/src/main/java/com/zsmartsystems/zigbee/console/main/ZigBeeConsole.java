@@ -70,6 +70,7 @@ import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingSubscribeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleReportingUnsubscribeCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleRoutingTableCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleSceneCommand;
+import com.zsmartsystems.zigbee.console.ZigBeeConsoleSetCheckInTimeoutCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleSetPollIntervalCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleSmartEnergyCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleSwitchLevelCommand;
@@ -219,6 +220,7 @@ public final class ZigBeeConsole {
         newCommands.put("color", new ZigBeeConsoleColorCommand());
         newCommands.put("covering", new ZigBeeConsoleWindowCoveringCommand());
         newCommands.put("setpollinterval", new ZigBeeConsoleSetPollIntervalCommand());
+        newCommands.put("setcheckintimeout", new ZigBeeConsoleSetCheckInTimeoutCommand());
         newCommands.put("factoryreset", new ZigBeeConsoleFactoryResetCommand());
 
         newCommands.put("routingtable", new ZigBeeConsoleRoutingTableCommand());
