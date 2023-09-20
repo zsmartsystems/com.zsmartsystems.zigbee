@@ -9,8 +9,13 @@ package com.zsmartsystems.zigbee.console;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 import com.zsmartsystems.zigbee.CommandResult;
@@ -28,6 +33,8 @@ import com.zsmartsystems.zigbee.zcl.field.ReadAttributeStatusRecord;
  *
  */
 public class ZigBeeConsoleAttributeReadCommand extends ZigBeeConsoleAbstractCommand {
+
+    private static final int READ_ATTRIBUTES_MAX = 10;
 
     @Override
     public String getCommand() {
@@ -117,41 +124,56 @@ public class ZigBeeConsoleAttributeReadCommand extends ZigBeeConsoleAbstractComm
         }
     }
 
-    private boolean readAttribute(PrintStream out, ZclCluster cluster, Map<Integer, String> attributes)
-            throws InterruptedException, ExecutionException {
-        CommandResult result = cluster.readAttributes(new ArrayList<>(attributes.keySet())).get();
+    private boolean readAttribute(PrintStream out, ZclCluster cluster, Map<Integer, String> attributes) throws InterruptedException, ExecutionException {
+        Set<Integer> remainingAttributes = new HashSet<>(attributes.keySet());
 
-        if (result.isSuccess()) {
-            final ReadAttributesResponse response = result.getResponse();
+        out.println(String.format("Response for cluster 0x%04x", cluster.getClusterId()));
 
-            out.println(String.format("Response for cluster 0x%04x", response.getClusterId()));
+        List<ReadAttributeStatusRecord> records = new ArrayList<>(attributes.size());
+        while(!remainingAttributes.isEmpty()) {
+            List<Integer> selectedAttributes = new ArrayList<>(READ_ATTRIBUTES_MAX);
+            Iterator<Integer> iterator = remainingAttributes.iterator();
+            while (iterator.hasNext()) {
+                Integer attribute = iterator.next();
+                selectedAttributes.add(attribute);
+                iterator.remove();
+                if (selectedAttributes.size() == READ_ATTRIBUTES_MAX) {
+                    break;
+                }
+            }
 
-            if (response.getRecords().size() == 0) {
-                out.println("No records returned");
+            CommandResult result = cluster.readAttributes(selectedAttributes).get();
+            if (result.isSuccess()) {
+                final ReadAttributesResponse response = result.getResponse();
+                if(response.getRecords().size() != selectedAttributes.size()) {
+                    out.println("WARN: The attributes count in response doesn't match the request.");
+                }
+                records.addAll(response.getRecords());
+            } else {
+                out.println("Error executing command: " + result);
                 return false;
             }
-
-            for (ReadAttributeStatusRecord statusRecord : response.getRecords()) {
-                ZclAttribute attribute = cluster.getAttribute(statusRecord.getAttributeIdentifier());
-                String name = "UNKNOWN";
-                if (attribute != null) {
-                    name = attribute.getName();
-                }
-                if (statusRecord.getStatus() == ZclStatus.SUCCESS) {
-                    out.println(
-                            String.format("Attribute %4d  %-50s  %-30s  %s", statusRecord.getAttributeIdentifier(),
-                                    name,
-                                    statusRecord.getAttributeDataType(), statusRecord.getAttributeValue().toString()));
-                } else {
-                    out.println(String.format("Attribute %4d  Error %s", statusRecord.getAttributeIdentifier(),
-                            statusRecord.getStatus().toString()));
-                }
-            }
-
-            return true;
-        } else {
-            out.println("Error executing command: " + result);
-            return false;
         }
+
+        records.stream().sorted(Comparator.comparing(ReadAttributeStatusRecord::getAttributeIdentifier)).forEach(statusRecord -> {
+            ZclAttribute attribute = cluster.getAttribute(statusRecord.getAttributeIdentifier());
+            String name = "UNKNOWN";
+            if (attribute != null) {
+                name = attribute.getName();
+            }
+            if (statusRecord.getStatus() == ZclStatus.SUCCESS) {
+                out.println(
+                    String.format("Attribute %5d (0x%04x)  %-50s  %-30s  %s", statusRecord.getAttributeIdentifier(),
+                        statusRecord.getAttributeIdentifier(),
+                        name,
+                        statusRecord.getAttributeDataType(), statusRecord.getAttributeValue().toString()));
+            } else {
+                out.println(String.format("Attribute %5d (0x%04x)  Error %s", statusRecord.getAttributeIdentifier(),
+                    statusRecord.getAttributeIdentifier(),
+                    statusRecord.getStatus().toString()));
+            }
+        });
+
+        return true;
     }
 }
