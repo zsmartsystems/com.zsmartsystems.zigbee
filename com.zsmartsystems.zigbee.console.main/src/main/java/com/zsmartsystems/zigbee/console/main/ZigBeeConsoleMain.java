@@ -15,6 +15,9 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.ZigBeeAnnounceListener;
+import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -83,6 +86,8 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclPressureMeasurementCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclScenesCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclThermostatCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclWindowCoveringCluster;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The ZigBee test console. Simple console used for testing the framework.
@@ -90,6 +95,9 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclWindowCoveringCluster;
  * @author Chris Jackson
  */
 public class ZigBeeConsoleMain {
+
+    private static final Logger logger = LoggerFactory.getLogger(ZigBeeConsoleMain.class);
+
     /**
      * Private constructor to disable constructing main class.
      */
@@ -403,6 +411,18 @@ public class ZigBeeConsoleMain {
         discoveryExtension.setUpdatePeriod(0);
         discoveryExtension.setUpdateOnChange(false);
         networkManager.addExtension(discoveryExtension);
+
+        networkManager.addAnnounceListener(new ZigBeeAnnounceListener() {
+            @Override
+            public void deviceStatusUpdate(ZigBeeNodeStatus deviceStatus, Integer networkAddress, IeeeAddress ieeeAddress) {
+                logger.info("Device status update [status = " + deviceStatus + " , networkAddress = " + networkAddress + " , ieeeAddress = " + ieeeAddress + "]");
+            }
+
+            @Override
+            public void announceUnknownDevice(Integer networkAddress) {
+                logger.info("Announce unknown device [networkAddress = " + networkAddress + "]");
+            }
+        });
 
         supportedClientClusters.stream().forEach(clusterId -> networkManager.addSupportedClientCluster(clusterId));
         supportedServerClusters.stream().forEach(clusterId -> networkManager.addSupportedServerCluster(clusterId));
