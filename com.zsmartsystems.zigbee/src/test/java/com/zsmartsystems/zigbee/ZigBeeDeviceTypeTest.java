@@ -28,6 +28,7 @@ public class ZigBeeDeviceTypeTest {
         assertEquals(ZigBeeDeviceType.SMART_PLUG, ZigBeeDeviceType.getByValue(0x0051));
         assertEquals(ZigBeeDeviceType.DIMMABLE_LIGHT, ZigBeeDeviceType.getByValue(0x0101));
         assertEquals(ZigBeeDeviceType.COLOR_DIMMABLE_LIGHT, ZigBeeDeviceType.getByValue(0x0102));
+        assertEquals(ZigBeeDeviceType.ON_OFF_LIGHT, ZigBeeDeviceType.getByValue(0x0100));
 
         assertEquals(ZigBeeDeviceType.LEVEL_CONTROL_SWITCH,
                 ZigBeeDeviceType.getByValue(ZigBeeProfileType.ZIGBEE_HOME_AUTOMATION, 0x0001));
