@@ -36,7 +36,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2021-10-27T08:02:53Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2023-07-10T11:01:40Z")
 public class ZclThermostatCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -112,8 +112,8 @@ public class ZclThermostatCluster extends ZclCluster {
     public static final int ATTR_ALARMMASK = 0x001D;
     public static final int ATTR_THERMOSTATRUNNINGMODE = 0x001E;
     public static final int ATTR_STARTOFWEEK = 0x0020;
-    public static final int ATTR_NUMEROFWEEKLYTRANSITIONS = 0x0021;
-    public static final int ATTR_NUMEROFDAILYTRANSITIONS = 0x0022;
+    public static final int ATTR_NUMBEROFWEEKLYTRANSITIONS = 0x0021;
+    public static final int ATTR_NUMBEROFDAILYTRANSITIONS = 0x0022;
     public static final int ATTR_TEMPERATURESETPOINTHOLD = 0x0023;
     public static final int ATTR_TEMPERATURESETPOINTHOLDDURATION = 0x0024;
     public static final int ATTR_THERMOSTATPROGRAMMINGOPERATIONMODE = 0x0025;
@@ -174,8 +174,8 @@ public class ZclThermostatCluster extends ZclCluster {
         attributeMap.put(ATTR_ALARMMASK, new ZclAttribute(this, ATTR_ALARMMASK, "Alarm Mask", ZclDataType.BITMAP_8_BIT, false, true, false, false));
         attributeMap.put(ATTR_THERMOSTATRUNNINGMODE, new ZclAttribute(this, ATTR_THERMOSTATRUNNINGMODE, "Thermostat Running Mode", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
         attributeMap.put(ATTR_STARTOFWEEK, new ZclAttribute(this, ATTR_STARTOFWEEK, "Start Of Week", ZclDataType.ENUMERATION_8_BIT, false, true, false, false));
-        attributeMap.put(ATTR_NUMEROFWEEKLYTRANSITIONS, new ZclAttribute(this, ATTR_NUMEROFWEEKLYTRANSITIONS, "Numer Of Weekly Transitions", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
-        attributeMap.put(ATTR_NUMEROFDAILYTRANSITIONS, new ZclAttribute(this, ATTR_NUMEROFDAILYTRANSITIONS, "Numer Of Daily Transitions", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_NUMBEROFWEEKLYTRANSITIONS, new ZclAttribute(this, ATTR_NUMBEROFWEEKLYTRANSITIONS, "Number Of Weekly Transitions", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
+        attributeMap.put(ATTR_NUMBEROFDAILYTRANSITIONS, new ZclAttribute(this, ATTR_NUMBEROFDAILYTRANSITIONS, "Number Of Daily Transitions", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, false, false));
         attributeMap.put(ATTR_TEMPERATURESETPOINTHOLD, new ZclAttribute(this, ATTR_TEMPERATURESETPOINTHOLD, "Temperature Setpoint Hold", ZclDataType.ENUMERATION_8_BIT, false, true, true, false));
         attributeMap.put(ATTR_TEMPERATURESETPOINTHOLDDURATION, new ZclAttribute(this, ATTR_TEMPERATURESETPOINTHOLDDURATION, "Temperature Setpoint Hold Duration", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
         attributeMap.put(ATTR_THERMOSTATPROGRAMMINGOPERATIONMODE, new ZclAttribute(this, ATTR_THERMOSTATPROGRAMMINGOPERATIONMODE, "Thermostat Programming Operation Mode", ZclDataType.BITMAP_8_BIT, false, true, true, false));
@@ -1528,7 +1528,7 @@ public class ZclThermostatCluster extends ZclCluster {
     }
 
     /**
-     * Get the <i>Numer Of Weekly Transitions</i> attribute [attribute ID <b>0x0021</b>].
+     * Get the <i>Number Of Weekly Transitions</i> attribute [attribute ID <b>0x0021</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -1538,12 +1538,12 @@ public class ZclThermostatCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
     @Deprecated
-    public Future<CommandResult> getNumerOfWeeklyTransitionsAsync() {
-        return read(serverAttributes.get(ATTR_NUMEROFWEEKLYTRANSITIONS));
+    public Future<CommandResult> getNumberOfWeeklyTransitionsAsync() {
+        return read(serverAttributes.get(ATTR_NUMBEROFWEEKLYTRANSITIONS));
     }
 
     /**
-     * Synchronously get the <i>Numer Of Weekly Transitions</i> attribute [attribute ID <b>0x0021</b>].
+     * Synchronously get the <i>Number Of Weekly Transitions</i> attribute [attribute ID <b>0x0021</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -1561,16 +1561,16 @@ public class ZclThermostatCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Integer getNumerOfWeeklyTransitions(final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_NUMEROFWEEKLYTRANSITIONS).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_NUMEROFWEEKLYTRANSITIONS).getLastValue();
+    public Integer getNumberOfWeeklyTransitions(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_NUMBEROFWEEKLYTRANSITIONS).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_NUMBEROFWEEKLYTRANSITIONS).getLastValue();
         }
 
-        return (Integer) readSync(serverAttributes.get(ATTR_NUMEROFWEEKLYTRANSITIONS));
+        return (Integer) readSync(serverAttributes.get(ATTR_NUMBEROFWEEKLYTRANSITIONS));
     }
 
     /**
-     * Get the <i>Numer Of Daily Transitions</i> attribute [attribute ID <b>0x0022</b>].
+     * Get the <i>Number Of Daily Transitions</i> attribute [attribute ID <b>0x0022</b>].
      * <p>
      * The attribute is of type {@link Integer}.
      * <p>
@@ -1580,12 +1580,12 @@ public class ZclThermostatCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
      */
     @Deprecated
-    public Future<CommandResult> getNumerOfDailyTransitionsAsync() {
-        return read(serverAttributes.get(ATTR_NUMEROFDAILYTRANSITIONS));
+    public Future<CommandResult> getNumberOfDailyTransitionsAsync() {
+        return read(serverAttributes.get(ATTR_NUMBEROFDAILYTRANSITIONS));
     }
 
     /**
-     * Synchronously get the <i>Numer Of Daily Transitions</i> attribute [attribute ID <b>0x0022</b>].
+     * Synchronously get the <i>Number Of Daily Transitions</i> attribute [attribute ID <b>0x0022</b>].
      * <p>
      * This method can return cached data if the attribute has already been received.
      * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
@@ -1603,12 +1603,12 @@ public class ZclThermostatCluster extends ZclCluster {
      * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
      */
     @Deprecated
-    public Integer getNumerOfDailyTransitions(final long refreshPeriod) {
-        if (serverAttributes.get(ATTR_NUMEROFDAILYTRANSITIONS).isLastValueCurrent(refreshPeriod)) {
-            return (Integer) serverAttributes.get(ATTR_NUMEROFDAILYTRANSITIONS).getLastValue();
+    public Integer getNumberOfDailyTransitions(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_NUMBEROFDAILYTRANSITIONS).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_NUMBEROFDAILYTRANSITIONS).getLastValue();
         }
 
-        return (Integer) readSync(serverAttributes.get(ATTR_NUMEROFDAILYTRANSITIONS));
+        return (Integer) readSync(serverAttributes.get(ATTR_NUMBEROFDAILYTRANSITIONS));
     }
 
     /**
