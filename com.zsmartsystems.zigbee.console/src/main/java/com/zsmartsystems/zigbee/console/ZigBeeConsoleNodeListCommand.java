@@ -21,6 +21,7 @@ import com.zsmartsystems.zigbee.ZigBeeProfileType;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
+import com.zsmartsystems.zigbee.zdo.field.NodeDescriptor;
 
 /**
  * Lists the devices in the network
@@ -60,9 +61,9 @@ public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
         }
 
         Collections.sort(nodeIds);
-        String tableHeader = String.format("%-7s  %-4s  %-16s  %-12s  %-9s  %-3s  %-25s  %-25s  %-15s  %-15s",
-                "Network", "Addr", "IEEE Address", "Logical Type", "State", "EP", "Profile", "Device Type",
-                "Manufacturer", "Model");
+        String tableHeader = String.format("%-7s  %-4s  %-16s  %-12s  %-9s  %-15s  %-3s  %-25s  %-25s  %-15s  %-15s",
+            "Network", "Addr", "IEEE Address", "Logical Type", "State", "RX ON When Idle", "EP", "Profile", "Device Type",
+            "Manufacturer", "Model");
 
         out.println("Total known nodes in network: " + nodes.size());
         out.println(tableHeader);
@@ -73,9 +74,14 @@ public class ZigBeeConsoleNodeListCommand extends ZigBeeConsoleAbstractCommand {
     }
 
     private void printNode(ZigBeeNode node, PrintStream out) {
-        String nodeInfo = String.format("%7d  %04X  %-16s  %-12s  %-9s", node.getNetworkAddress(),
-                node.getNetworkAddress(), node.getIeeeAddress(), node.getLogicalType(), node.getNodeState());
-        String nodeInfoPadding = String.format("%7s  %4s  %16s  %12s  %9s", "", "", "", "", "");
+        String rxOnWhenIdle = "Unknown";
+        if(node.getNodeDescriptor() != null && node.getNodeDescriptor().getMacCapabilities() != null) {
+            rxOnWhenIdle = node.getNodeDescriptor().getMacCapabilities().contains(NodeDescriptor.MacCapabilitiesType.RECEIVER_ON_WHEN_IDLE) ? "Yes" : "No";
+        }
+
+        String nodeInfo = String.format("%7d  %04X  %-16s  %-12s  %-9s  %-15s", node.getNetworkAddress(),
+            node.getNetworkAddress(), node.getIeeeAddress(), node.getLogicalType(), node.getNodeState(), rxOnWhenIdle);
+        String nodeInfoPadding = String.format("%7s  %4s  %16s  %12s  %9s  %-15s", "", "", "", "", "", "");
 
         List<ZigBeeEndpoint> endpoints = new ArrayList<>(node.getEndpoints());
         Collections.sort(endpoints, (ep1, ep2) -> ep1.getEndpointId() - ep2.getEndpointId());
