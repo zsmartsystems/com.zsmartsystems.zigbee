@@ -121,6 +121,8 @@ public class ZclIasZoneClient implements ZigBeeApplication, ZclCommandListener {
      */
     private IeeeAddress ieeeAddress;
 
+    private long startupDelay = 10000;
+
     /**
      * The time to wait for a {@link ZoneEnrollRequestCommand} before sending the {@link ZoneEnrollResponse}
      */
@@ -227,20 +229,20 @@ public class ZclIasZoneClient implements ZigBeeApplication, ZclCommandListener {
             }
         }
 
-        Integer currentZone = (Integer) iasZoneCluster.getAttribute(ZclIasZoneCluster.ATTR_ZONEID).readValue(0);
-        if (currentZone == null) {
-            logger.debug("{}: IAS CIE zone ID request failed", iasZoneCluster.getZigBeeAddress());
-        } else {
-            logger.debug("{}: IAS CIE zone ID is currently {}", iasZoneCluster.getZigBeeAddress(), currentZone);
-        }
-
-        zoneType = (Integer) iasZoneCluster.getAttribute(ZclIasZoneCluster.ATTR_ZONETYPE).readValue(Long.MAX_VALUE);
-        if (zoneType == null) {
-            logger.debug("{}: IAS CIE zone type request failed", iasZoneCluster.getZigBeeAddress());
-        } else {
-            logger.debug("{}: IAS CIE zone type is 0x{}, {}", iasZoneCluster.getZigBeeAddress(),
-                    String.format("%04X", zoneType), ZoneTypeEnum.getByValue(zoneType));
-        }
+//        Integer currentZone = (Integer) iasZoneCluster.getAttribute(ZclIasZoneCluster.ATTR_ZONEID).readValue(0);
+//        if (currentZone == null) {
+//            logger.debug("{}: IAS CIE zone ID request failed", iasZoneCluster.getZigBeeAddress());
+//        } else {
+//            logger.debug("{}: IAS CIE zone ID is currently {}", iasZoneCluster.getZigBeeAddress(), currentZone);
+//        }
+//
+//        zoneType = (Integer) iasZoneCluster.getAttribute(ZclIasZoneCluster.ATTR_ZONETYPE).readValue(Long.MAX_VALUE);
+//        if (zoneType == null) {
+//            logger.debug("{}: IAS CIE zone type request failed", iasZoneCluster.getZigBeeAddress());
+//        } else {
+//            logger.debug("{}: IAS CIE zone type is 0x{}, {}", iasZoneCluster.getZigBeeAddress(),
+//                    String.format("%04X", zoneType), ZoneTypeEnum.getByValue(zoneType));
+//        }
 
         // Start the auto-enroll timer
         final Runnable runnableTask = new AutoEnrollmentTask();
@@ -268,12 +270,15 @@ public class ZclIasZoneClient implements ZigBeeApplication, ZclCommandListener {
      * @param the {@link ZclCommand} to send as the response
      */
     private boolean handleZoneEnrollRequestCommand(ZoneEnrollRequestCommand command) {
+        logger.debug("{}: received enroll request {}", iasZoneCluster.getZigBeeAddress(), command);
         if (autoEnrollmentTask != null) {
+            logger.debug("{}: cancel running enrollment task", iasZoneCluster.getZigBeeAddress());
             autoEnrollmentTask.cancel(true);
         }
 
         zoneType = command.getZoneType();
         ZoneEnrollResponse zoneEnrollResponse = new ZoneEnrollResponse(EnrollResponseCodeEnum.SUCCESS.getKey(), zoneId);
+        logger.debug("{}: sending enroll response {}", iasZoneCluster.getZigBeeAddress(), zoneEnrollResponse);
         iasZoneCluster.sendResponse(command, zoneEnrollResponse);
         return true;
     }
@@ -303,6 +308,7 @@ public class ZclIasZoneClient implements ZigBeeApplication, ZclCommandListener {
         public void run() {
             ZoneEnrollResponse zoneEnrollResponse = new ZoneEnrollResponse(EnrollResponseCodeEnum.SUCCESS.getKey(), zoneId);
             zoneEnrollResponse.setDisableDefaultResponse(true);
+            logger.debug("{}: sending enroll response {}", iasZoneCluster.getZigBeeAddress(), zoneEnrollResponse);
             iasZoneCluster.sendCommand(zoneEnrollResponse);
         }
     }

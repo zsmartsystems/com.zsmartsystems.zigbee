@@ -406,7 +406,7 @@ public class ZigBeeConsoleMain {
         // Add the extensions to the network
         networkManager.addExtension(new ZclPollControlExtension());
         networkManager.addExtension(new ZclOnOffExtension());
-        networkManager.addExtension(new ZigBeeIasCieExtension());
+//        networkManager.addExtension(new ZigBeeIasCieExtension());
         networkManager.addExtension(new ZigBeeOtaUpgradeExtension());
         networkManager.addExtension(new ZigBeeBasicServerExtension());
 
