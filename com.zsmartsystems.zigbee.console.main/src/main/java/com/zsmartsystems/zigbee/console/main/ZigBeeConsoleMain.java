@@ -395,7 +395,7 @@ public class ZigBeeConsoleMain {
         dongle.updateTransportConfig(transportOptions);
 
         // Add the extensions to the network
-        networkManager.addExtension(new ZigBeeIasCieExtension());
+//        networkManager.addExtension(new ZigBeeIasCieExtension());
         networkManager.addExtension(new ZigBeeOtaUpgradeExtension());
         networkManager.addExtension(new ZigBeeBasicServerExtension());
 
