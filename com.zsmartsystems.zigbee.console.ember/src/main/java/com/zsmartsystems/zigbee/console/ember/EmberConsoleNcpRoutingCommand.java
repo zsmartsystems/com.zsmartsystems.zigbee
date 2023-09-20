@@ -69,15 +69,19 @@ public class EmberConsoleNcpRoutingCommand extends EmberConsoleAbstractCommand {
         int sourceRouteSize = ncp.getSourceRouteTableTotalSize();
         int sourceRouteFill = ncp.getSourceRouteTableFilledSize();
 
-        int configDiscoveryTableSize = ncp.getConfiguration(EzspConfigId.EZSP_CONFIG_DISCOVERY_TABLE_SIZE);
-        int configRouteTableSize = ncp.getConfiguration(EzspConfigId.EZSP_CONFIG_ROUTE_TABLE_SIZE);
+//        int configDiscoveryTableSize = ncp.getConfiguration(EzspConfigId.EZSP_CONFIG_DISCOVERY_TABLE_SIZE);
+//        int configRouteTableSize = ncp.getConfiguration(EzspConfigId.EZSP_CONFIG_ROUTE_TABLE_SIZE);
         int configSourceRouteTableSize = ncp.getConfiguration(EzspConfigId.EZSP_CONFIG_SOURCE_ROUTE_TABLE_SIZE);
 
-        Map<Integer, EmberRouteTableEntry> routeTableMap = new TreeMap<>();
-        for (int cnt = 0; cnt < configRouteTableSize; cnt++) {
-            EmberRouteTableEntry route = ncp.getRouteTableEntry(cnt);
-            routeTableMap.put(route.getDestination(), route);
-        }
+//        Map<Integer, EmberRouteTableEntry> routeTableMap = new TreeMap<>();
+//        for (int cnt = 0; cnt < configRouteTableSize; cnt++) {
+//            EmberRouteTableEntry route = ncp.getRouteTableEntry(cnt);
+//            //TODO Local (non committed) change (wrapped by if)
+////            routeTableMap.put(route.getDestination(), route);
+//            if(route != null) {
+//                routeTableMap.put(route.getDestination(), route);
+//            }
+//        }
 
         List<EmberSourceRouteTableEntry> sourceRouteTable = new ArrayList<>();
         for (int cnt = 0; cnt < sourceRouteFill; cnt++) {
@@ -85,24 +89,24 @@ public class EmberConsoleNcpRoutingCommand extends EmberConsoleAbstractCommand {
             sourceRouteTable.add(route);
         }
 
-        out.println("Discovery Table Size Config    : " + configDiscoveryTableSize);
-        out.println("Route Table Size Config        : " + configRouteTableSize);
+//        out.println("Discovery Table Size Config    : " + configDiscoveryTableSize);
+//        out.println("Route Table Size Config        : " + configRouteTableSize);
         out.println("Source Route Table Size Config : " + configSourceRouteTableSize);
         out.println("Source Route Table Size Usage  : " + sourceRouteFill + "/" + sourceRouteSize);
 
-        final String ncpRouteTableFormat = "%-15s  %-15s  %-6s  %-15s  %-15s";
-        out.println();
-        out.println("NCP Route Table :");
-        out.println();
-        out.println(String.format(ncpRouteTableFormat, "Destination", "Next", "Age", "Concentrator", "Status"));
-        for (EmberRouteTableEntry route : routeTableMap.values()) {
-            out.println(String.format(ncpRouteTableFormat,
-                String.format("%04X (%5d)", route.getDestination(), route.getDestination()),
-                String.format("%04X (%5d)", route.getNextHop(), route.getNextHop()),
-                String.format("%04X", route.getAge()),
-                concentratorType.get(route.getConcentratorType()),
-                route.getConcentratorType() == 2 ? (routeStatus.get(route.getStatus()) == null ? "" : routeStatus.get(route.getStatus())) : ""));
-        }
+//        final String ncpRouteTableFormat = "%-15s  %-15s  %-6s  %-15s  %-15s";
+//        out.println();
+//        out.println("NCP Route Table :");
+//        out.println();
+//        out.println(String.format(ncpRouteTableFormat, "Destination", "Next", "Age", "Concentrator", "Status"));
+//        for (EmberRouteTableEntry route : routeTableMap.values()) {
+//            out.println(String.format(ncpRouteTableFormat,
+//                String.format("%04X (%5d)", route.getDestination(), route.getDestination()),
+//                String.format("%04X (%5d)", route.getNextHop(), route.getNextHop()),
+//                String.format("%04X", route.getAge()),
+//                concentratorType.get(route.getConcentratorType()),
+//                route.getConcentratorType() == 2 ? (routeStatus.get(route.getStatus()) == null ? "" : routeStatus.get(route.getStatus())) : ""));
+//        }
 
         final String ncpSourceRouteTableFormat = "%-6s  %-15s  %-10s  |  %s";
         out.println();
@@ -134,7 +138,9 @@ public class EmberConsoleNcpRoutingCommand extends EmberConsoleAbstractCommand {
             return;
         }
 
-        walkTheRoute(sourceRouteTable, route, routeTable.getDestination());
+        //TODO Local (non committed) change
+//        walkTheRoute(sourceRouteTable, route, routeTable.getDestination());
+        walkTheRoute(sourceRouteTable, route, routeTable.getCloserIndex());
     }
 
     private String printRoute(List<Integer> route) {
