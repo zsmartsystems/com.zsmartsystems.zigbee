@@ -53,12 +53,17 @@ public class ZigBeeDataStore implements ZigBeeNetworkDataStore {
 
     public ZigBeeDataStore(String networkId) {
         this.networkId = "database/" + networkId + "/";
-        File file = new File(this.networkId + "/" + KEYSTORE);
-        if (file.exists()) {
-            return;
+        File file = new File(this.networkId);
+        if (!file.exists()) {
+            if (!file.mkdirs()) {
+                logger.error("Error creating network database folder {}", file);
+            }
         }
-        if (!file.mkdirs()) {
-            logger.error("Error creating network database folder {}", file);
+        File keystoreDir = new File(this.networkId + "keystore/");
+        if (!keystoreDir.exists()) {
+            if (!keystoreDir.mkdirs()) {
+                logger.error("Error creating keystore folder {}", keystoreDir);
+            }
         }
     }
 
