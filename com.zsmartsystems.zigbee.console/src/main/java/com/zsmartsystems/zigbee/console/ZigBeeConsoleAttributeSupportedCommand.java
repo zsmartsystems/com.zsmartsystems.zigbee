@@ -29,12 +29,12 @@ public class ZigBeeConsoleAttributeSupportedCommand extends ZigBeeConsoleAbstrac
 
     @Override
     public String getDescription() {
-        return "Check what attributes are supported within a cluster.";
+        return "Check what attributes are supported within a cluster. The argument REDISCOVER is optional and can have the value true or false (default). The argument MANUFACTURER-CODE is optional and must be of type integer.";
     }
 
     @Override
     public String getSyntax() {
-        return "ENDPOINT CLUSTER [MANUFACTURER-CODE]";
+        return "ENDPOINT CLUSTER [REDISCOVER] [MANUFACTURER-CODE]";
     }
 
     @Override
@@ -45,30 +45,27 @@ public class ZigBeeConsoleAttributeSupportedCommand extends ZigBeeConsoleAbstrac
     @Override
     public void process(ZigBeeNetworkManager networkManager, String[] args, PrintStream out)
             throws IllegalArgumentException, InterruptedException, ExecutionException {
-        if (args.length < 3 || args.length > 4) {
+        if (args.length < 3 || args.length > 5) {
             throw new IllegalArgumentException("Invalid number of arguments");
         }
 
         final ZigBeeEndpoint endpoint = getEndpoint(networkManager, args[1]);
         ZclCluster cluster = getCluster(endpoint, args[2]);
-        Integer manufacturerCode = args.length == 4 ? parseInteger(args[3]) : null;
+        boolean rediscover = args.length >= 4 && Boolean.parseBoolean(args[3]);
+        Integer manufacturerCode = args.length == 5 ? parseInteger(args[4]) : null;
 
-        final Future<Boolean> future = cluster.discoverAttributes(false, manufacturerCode);
+        final Future<Boolean> future = cluster.discoverAttributes(rediscover, manufacturerCode);
         Boolean result = future.get();
         if (result) {
             out.println("Supported attributes for " + printCluster(cluster));
             if (manufacturerCode != null) {
                 out.println("For manufacturer code " + args[3]);
             }
-            out.println("AttrId  Data Type                  Name");
+            out.println(String.format("%-14s  %-50s  %-50s", "AttrId", "Data Type", "Name"));
             for (Integer attributeId : cluster.getSupportedAttributes()) {
-                out.print(" ");
                 ZclAttribute attribute = cluster.getAttribute(attributeId);
-                out.print(printAttributeId(attributeId));
-                if (attribute != null) {
-                    out.print("  " + printZclDataType(attribute.getDataType()) + "  " + attribute.getName());
-                }
-                out.println();
+                out.println(String.format("%5d (0x%04x)  %-50s  %-50s",
+                    attributeId, attributeId, attribute != null ? printZclDataType(attribute.getDataType()) : "", attribute != null ? attribute.getName() : ""));
             }
         } else {
             out.println("Failed to retrieve supported attributes");
