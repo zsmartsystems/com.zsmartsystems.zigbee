@@ -27,7 +27,7 @@ import com.zsmartsystems.zigbee.zcl.protocol.ZclDataType;
  * <p>
  * Code is auto-generated. Modifications may be overwritten!
  */
-@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2020-12-06T16:33:28Z")
+@Generated(value = "com.zsmartsystems.zigbee.autocode.ZigBeeCodeGenerator", date = "2023-07-10T11:08:03Z")
 public class ZclOccupancySensingCluster extends ZclCluster {
     /**
      * The ZigBee Cluster Library Cluster ID
@@ -51,6 +51,11 @@ public class ZclOccupancySensingCluster extends ZclCluster {
      * The OccupancySensorType attribute specifies the type of the occupancy sensor.
      */
     public static final int ATTR_OCCUPANCYSENSORTYPE = 0x0001;
+    /**
+     * The OccupancySensorTypeBitmap attribute specifies the types of the occupancy
+     * sensor, as listed below; a ‘1’ in each bit position indicates this type is implemented.
+     */
+    public static final int ATTR_OCCUPANCYSENSORTYPEBITMAP = 0x0002;
     /**
      * The PIROccupiedToUnoccupiedDelay attribute is 8-bits in length and specifies the
      * time delay, in seconds, before the PIR sensor changes to its occupied state when the
@@ -109,6 +114,7 @@ public class ZclOccupancySensingCluster extends ZclCluster {
 
         attributeMap.put(ATTR_OCCUPANCY, new ZclAttribute(this, ATTR_OCCUPANCY, "Occupancy", ZclDataType.BITMAP_8_BIT, true, true, false, true));
         attributeMap.put(ATTR_OCCUPANCYSENSORTYPE, new ZclAttribute(this, ATTR_OCCUPANCYSENSORTYPE, "Occupancy Sensor Type", ZclDataType.ENUMERATION_8_BIT, true, true, false, false));
+        attributeMap.put(ATTR_OCCUPANCYSENSORTYPEBITMAP, new ZclAttribute(this, ATTR_OCCUPANCYSENSORTYPEBITMAP, "Occupancy Sensor Type Bitmap", ZclDataType.BITMAP_8_BIT, true, true, false, false));
         attributeMap.put(ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY, new ZclAttribute(this, ATTR_PIROCCUPIEDTOUNOCCUPIEDDELAY, "PIR Occupied To Unoccupied Delay", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
         attributeMap.put(ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY, new ZclAttribute(this, ATTR_PIRUNOCCUPIEDTOOCCUPIEDDELAY, "PIR Unoccupied To Occupied Delay", ZclDataType.UNSIGNED_16_BIT_INTEGER, false, true, true, false));
         attributeMap.put(ATTR_PIRUNOCCUPIEDTOOCCUPIEDTHRESHOLD, new ZclAttribute(this, ATTR_PIRUNOCCUPIEDTOOCCUPIEDTHRESHOLD, "PIR Unoccupied To Occupied Threshold", ZclDataType.UNSIGNED_8_BIT_INTEGER, false, true, true, true));
@@ -266,6 +272,74 @@ public class ZclOccupancySensingCluster extends ZclCluster {
     @Deprecated
     public Future<CommandResult> setOccupancySensorTypeReporting(final int minInterval, final int maxInterval) {
         return setReporting(serverAttributes.get(ATTR_OCCUPANCYSENSORTYPE), minInterval, maxInterval);
+    }
+
+    /**
+     * Get the <i>Occupancy Sensor Type Bitmap</i> attribute [attribute ID <b>0x0002</b>].
+     * <p>
+     * The OccupancySensorTypeBitmap attribute specifies the types of the occupancy
+     * sensor, as listed below; a ‘1’ in each bit position indicates this type is implemented.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #readAttribute(int attributeId)}
+     */
+    @Deprecated
+    public Future<CommandResult> getOccupancySensorTypeBitmapAsync() {
+        return read(serverAttributes.get(ATTR_OCCUPANCYSENSORTYPEBITMAP));
+    }
+
+    /**
+     * Synchronously get the <i>Occupancy Sensor Type Bitmap</i> attribute [attribute ID <b>0x0002</b>].
+     * <p>
+     * The OccupancySensorTypeBitmap attribute specifies the types of the occupancy
+     * sensor, as listed below; a ‘1’ in each bit position indicates this type is implemented.
+     * <p>
+     * This method can return cached data if the attribute has already been received.
+     * The parameter <i>refreshPeriod</i> is used to control this. If the attribute has been received
+     * within <i>refreshPeriod</i> milliseconds, then the method will immediately return the last value
+     * received. If <i>refreshPeriod</i> is set to 0, then the attribute will always be updated.
+     * <p>
+     * This method will block until the response is received or a timeout occurs unless the current value is returned.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param refreshPeriod the maximum age of the data (in milliseconds) before an update is needed
+     * @return the {@link Integer} attribute value, or null on error
+     * @deprecated As of release 1.2.0, replaced by {@link #ZclAttribute#readValue(long refreshPeriod)}
+     */
+    @Deprecated
+    public Integer getOccupancySensorTypeBitmap(final long refreshPeriod) {
+        if (serverAttributes.get(ATTR_OCCUPANCYSENSORTYPEBITMAP).isLastValueCurrent(refreshPeriod)) {
+            return (Integer) serverAttributes.get(ATTR_OCCUPANCYSENSORTYPEBITMAP).getLastValue();
+        }
+
+        return (Integer) readSync(serverAttributes.get(ATTR_OCCUPANCYSENSORTYPEBITMAP));
+    }
+
+    /**
+     * Set reporting for the <i>Occupancy Sensor Type Bitmap</i> attribute [attribute ID <b>0x0002</b>].
+     * <p>
+     * The OccupancySensorTypeBitmap attribute specifies the types of the occupancy
+     * sensor, as listed below; a ‘1’ in each bit position indicates this type is implemented.
+     * <p>
+     * The attribute is of type {@link Integer}.
+     * <p>
+     * The implementation of this attribute by a device is MANDATORY
+     *
+     * @param minInterval minimum reporting period
+     * @param maxInterval maximum reporting period
+     * @return the {@link Future<CommandResult>} command result future
+     * @deprecated As of release 1.2.0, replaced by {@link #setReporting(int attributeId, int minInterval, int maxInterval)}
+     */
+    @Deprecated
+    public Future<CommandResult> setOccupancySensorTypeBitmapReporting(final int minInterval, final int maxInterval) {
+        return setReporting(serverAttributes.get(ATTR_OCCUPANCYSENSORTYPEBITMAP), minInterval, maxInterval);
     }
 
     /**
