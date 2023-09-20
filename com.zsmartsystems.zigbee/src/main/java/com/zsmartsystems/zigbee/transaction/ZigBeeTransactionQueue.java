@@ -7,12 +7,12 @@
  */
 package com.zsmartsystems.zigbee.transaction;
 
-import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.Future;
 
 import org.slf4j.Logger;
@@ -64,9 +64,7 @@ public class ZigBeeTransactionQueue {
      */
     private final Logger logger = LoggerFactory.getLogger(ZigBeeTransactionQueue.class);
 
-    private final static int INITIAL_QUEUE_SIZE = 10;
-
-    private final Deque<ZigBeeTransaction> queue = new ArrayDeque<>(INITIAL_QUEUE_SIZE);
+    private final Deque<ZigBeeTransaction> queue = new ConcurrentLinkedDeque<>();
 
     /**
      * The time at which the queue may release the next frame. This is used by the inter-transaction delay pacing
