@@ -37,7 +37,9 @@ import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
 import com.zsmartsystems.zigbee.ZigBeeNetworkState;
 import com.zsmartsystems.zigbee.ZigBeeNetworkStateListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.app.discovery.ZigBeeDiscoveryExtension;
+import com.zsmartsystems.zigbee.app.iasclient.ZclIasZoneClient;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeReadCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeSupportedCommand;
 import com.zsmartsystems.zigbee.console.ZigBeeConsoleAttributeWriteCommand;
@@ -84,6 +86,8 @@ import com.zsmartsystems.zigbee.transaction.ZigBeeTransactionQueue;
 import com.zsmartsystems.zigbee.transport.ZigBeeTransportTransmit;
 import com.zsmartsystems.zigbee.zcl.ZclAttribute;
 import com.zsmartsystems.zigbee.zcl.ZclCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclBasicCluster;
+import com.zsmartsystems.zigbee.zcl.clusters.ZclIasZoneCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOnOffCluster;
 import com.zsmartsystems.zigbee.zcl.clusters.general.ReportAttributesCommand;
 import com.zsmartsystems.zigbee.zcl.clusters.iaszone.ZoneStatusChangeNotificationCommand;
@@ -817,12 +821,28 @@ public final class ZigBeeConsole {
                 return false;
             }
 
-            final ZigBeeEndpoint device = getDevice(zigbeeApi, args[1]);
-            if (device == null) {
+            final ZigBeeEndpoint endpoint = getDevice(zigbeeApi, args[1]);
+            if (endpoint == null) {
                 return false;
             }
 
-            throw new UnsupportedOperationException();
+            if (endpoint.getInputCluster(ZclIasZoneCluster.CLUSTER_ID) == null) {
+                out.println("No IAS cluster found in specified endpoint.");
+                return false;
+            }
+
+            if (endpoint.getApplication(ZclIasZoneCluster.CLUSTER_ID) != null) {
+                out.println("IAS enrollment is already enabled.");
+                return false;
+            }
+
+            if(endpoint.addApplication(new ZclIasZoneClient(networkManager, networkManager.getLocalIeeeAddress(), 0)) != ZigBeeStatus.SUCCESS) {
+                out.println("Fail to enable IAS enrollment.");
+                return false;
+            }
+
+            out.println("IAS enrollment successfully enabled.");
+            return true;
         }
     }
 
