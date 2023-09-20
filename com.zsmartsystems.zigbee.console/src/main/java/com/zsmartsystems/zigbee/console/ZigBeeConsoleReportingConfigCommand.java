@@ -74,11 +74,12 @@ public class ZigBeeConsoleReportingConfigCommand extends ZigBeeConsoleAbstractCo
             final ZclStatus statusCode = attributeReportingStatusRecord.getStatus();
             if (statusCode == ZclStatus.SUCCESS) {
                 out.println("Cluster " + response.getClusterId() + ", Attribute "
-                        + attributeReportingStatusRecord.getAttributeIdentifier() + ", type "
-                        + attributeReportingStatusRecord.getAttributeDataType() + ", minimum reporting interval: "
-                        + attributeReportingStatusRecord.getMinimumReportingInterval() + ", maximum reporting interval: "
-                        + attributeReportingStatusRecord.getMaximumReportingInterval() + ", timeout: " 
-                        + attributeReportingStatusRecord.getTimeoutPeriod());
+                    + attributeReportingStatusRecord.getAttributeIdentifier() + ", type "
+                    + attributeReportingStatusRecord.getAttributeDataType() + ", minimum reporting interval: "
+                    + attributeReportingStatusRecord.getMinimumReportingInterval() + ", maximum reporting interval: "
+                    + attributeReportingStatusRecord.getMaximumReportingInterval() + ", reportableChange: "
+                    + attributeReportingStatusRecord.getReportableChange() + ", timeout: "
+                    + attributeReportingStatusRecord.getTimeoutPeriod());
             } else {
                 out.println("Attribute value read error: " + statusCode);
             }
