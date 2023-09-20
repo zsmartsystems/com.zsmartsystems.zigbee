@@ -125,7 +125,7 @@ public class ZigBeeConsoleMain {
                         ZclPollControlCluster.CLUSTER_ID, ZclOnOffCluster.CLUSTER_ID, ZclLevelControlCluster.CLUSTER_ID,
                         ZclColorControlCluster.CLUSTER_ID, ZclPressureMeasurementCluster.CLUSTER_ID,
                         ZclThermostatCluster.CLUSTER_ID, ZclWindowCoveringCluster.CLUSTER_ID,
-                        ZclBinaryInputBasicCluster.CLUSTER_ID, 1000)
+                        ZclBinaryInputBasicCluster.CLUSTER_ID, ZclIasZoneCluster.CLUSTER_ID, 1000)
                 .collect(Collectors.toSet()));
 
         final Set<Integer> supportedServerClusters = new TreeSet<>();
