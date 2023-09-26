@@ -7,13 +7,18 @@
  */
 package com.zsmartsystems.zigbee.app.otaserver;
 
+import com.zsmartsystems.zigbee.IeeeAddress;
+import com.zsmartsystems.zigbee.ZigBeeAnnounceListener;
 import com.zsmartsystems.zigbee.ZigBeeEndpoint;
 import com.zsmartsystems.zigbee.ZigBeeNetworkManager;
 import com.zsmartsystems.zigbee.ZigBeeNetworkNodeListener;
 import com.zsmartsystems.zigbee.ZigBeeNode;
+import com.zsmartsystems.zigbee.ZigBeeNodeStatus;
 import com.zsmartsystems.zigbee.ZigBeeStatus;
 import com.zsmartsystems.zigbee.app.ZigBeeNetworkExtension;
 import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Over The Air Upgrade extension. This provides the top level functionality for the OTA client.
@@ -24,7 +29,13 @@ import com.zsmartsystems.zigbee.zcl.clusters.ZclOtaUpgradeCluster;
  * @author Chris Jackson
  *
  */
-public class ZigBeeOtaUpgradeExtension implements ZigBeeNetworkExtension, ZigBeeNetworkNodeListener {
+public class ZigBeeOtaUpgradeExtension implements ZigBeeNetworkExtension, ZigBeeNetworkNodeListener, ZigBeeAnnounceListener {
+
+    /**
+     * The logger.
+     */
+    private final Logger logger = LoggerFactory.getLogger(ZigBeeOtaUpgradeExtension.class);
+
     private ZigBeeNetworkManager networkManager;
 
     @Override
@@ -33,6 +44,7 @@ public class ZigBeeOtaUpgradeExtension implements ZigBeeNetworkExtension, ZigBee
 
         networkManager.addSupportedServerCluster(ZclOtaUpgradeCluster.CLUSTER_ID);
         networkManager.addNetworkNodeListener(this);
+        networkManager.addAnnounceListener(this);
         return ZigBeeStatus.SUCCESS;
     }
 
@@ -48,6 +60,35 @@ public class ZigBeeOtaUpgradeExtension implements ZigBeeNetworkExtension, ZigBee
 
     @Override
     public void nodeAdded(ZigBeeNode node) {
+        logger.debug("OTA Upgrade Extension: {}: node added", node.getIeeeAddress());
+        registerApplication(node);
+    }
+
+    @Override
+    public void nodeUpdated(ZigBeeNode node) {
+        logger.debug("OTA Upgrade Extension: {}: node updated", node.getIeeeAddress());
+        registerApplication(node);
+    }
+
+    @Override
+    public void deviceStatusUpdate(ZigBeeNodeStatus deviceStatus, Integer networkAddress, IeeeAddress ieeeAddress) {
+        switch (deviceStatus) {
+            case UNSECURED_JOIN:
+                ZigBeeNode node = networkManager.getNode(ieeeAddress);
+                if(node != null) {
+                    for (ZigBeeEndpoint endpoint : node.getEndpoints()) {
+                        if (endpoint.getOutputCluster(ZclOtaUpgradeCluster.CLUSTER_ID) != null) {
+                            logger.debug("OTA Upgrade Extension: {}: found OTA upgrade cluster [endpoint = {}]", node.getIeeeAddress(), endpoint.getEndpointId());
+                            endpoint.removeApplication(ZclOtaUpgradeCluster.CLUSTER_ID);
+                            break;
+                        }
+                    }
+                }
+                break;
+        }
+    }
+
+    private void registerApplication(ZigBeeNode node) {
         /*
          * This method needs to register the ZclOtaUpgradeServer to an endpoint on the node. Only one endpoint should be
          * registered with the ZclOtaUpgradeServer.
@@ -63,10 +104,11 @@ public class ZigBeeOtaUpgradeExtension implements ZigBeeNetworkExtension, ZigBee
 
         /*
          * We've confirmed there is no current application registered, so register the ZclOtaUpgradeServer to the first
-         * endpoint supplorting OTA upgrades
+         * endpoint supporting OTA upgrades
          */
         for (ZigBeeEndpoint endpoint : node.getEndpoints()) {
             if (endpoint.getOutputCluster(ZclOtaUpgradeCluster.CLUSTER_ID) != null) {
+                logger.debug("OTA Upgrade Extension: {}: found OTA upgrade cluster [endpoint = {}]", node.getIeeeAddress(), endpoint.getEndpointId());
                 endpoint.addApplication(new ZclOtaUpgradeServer());
                 break;
             }
