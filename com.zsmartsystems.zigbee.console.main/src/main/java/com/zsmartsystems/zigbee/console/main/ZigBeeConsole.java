@@ -262,13 +262,14 @@ public final class ZigBeeConsole {
         networkManager.addCommandListener(new ZigBeeCommandListener() {
             @Override
             public void commandReceived(ZigBeeCommand command) {
-                if (listeningModeEnabled) {
-                    if (command instanceof ReportAttributesCommand) {
-                        final ZigBeeNode node = networkManager.getNode(command.getSourceAddress().getAddress());
+                if (command instanceof ReportAttributesCommand) {
+                    final ZigBeeNode node = networkManager.getNode(command.getSourceAddress().getAddress());
+
+                    if (listeningModeEnabled) {
                         final ZclCluster cluster = node.getEndpoints().stream()
-                                .filter(endpoint -> endpoint.getInputCluster(command.getClusterId()) != null)
-                                .findFirst()
-                                .map(endpoint -> endpoint.getInputCluster(command.getClusterId())).get();
+                            .filter(endpoint -> endpoint.getInputCluster(command.getClusterId()) != null)
+                            .findFirst()
+                            .map(endpoint -> endpoint.getInputCluster(command.getClusterId())).get();
                         ReportAttributesCommand reportAttributesCommand = (ReportAttributesCommand) command;
                         reportAttributesCommand.getReports().stream().forEach(attributeReport -> {
                             ZclAttribute attribute = null;
@@ -276,26 +277,28 @@ public final class ZigBeeConsole {
                                 attribute = cluster.getAttribute(attributeReport.getAttributeIdentifier());
                             }
                             print("[" + LocalDateTime.now().toString() + "] - Received attribute report [Device="
-                                    + command.getSourceAddress() +
-                                    ", Cluster=" + command.getClusterId() +
-                                    ", Attribute="
-                                    + (attribute != null
-                                            ? attribute.getName() + "(" + attributeReport.getAttributeIdentifier() + ")"
-                                            : attributeReport.getAttributeIdentifier())
-                                    + ", AttributeValue = " + attributeReport.getAttributeValue() + "]", System.out);
+                                + command.getSourceAddress() +
+                                ", Cluster=" + command.getClusterId() +
+                                ", Attribute="
+                                + (attribute != null
+                                ? attribute.getName() + "(" + attributeReport.getAttributeIdentifier() + ")"
+                                : attributeReport.getAttributeIdentifier())
+                                + ", AttributeValue = " + attributeReport.getAttributeValue() + "]", System.out);
                         });
+                    }
 
-                        if(readAfterReportCount != null) {
-                            ZclCluster basicCluster = node.getEndpoints().stream()
-                                .filter(endpoint -> endpoint.getInputCluster(ZclBasicCluster.CLUSTER_ID) != null)
-                                .findFirst().get()
-                                .getInputCluster(ZclBasicCluster.CLUSTER_ID);
-                            for (int i = 1; i <= readAfterReportCount; ++i) {
-                                basicCluster.readAttribute(ZclBasicCluster.ATTR_ZCLVERSION);
-                            }
+                    if(readAfterReportCount != null) {
+                        ZclCluster basicCluster = node.getEndpoints().stream()
+                            .filter(endpoint -> endpoint.getInputCluster(ZclBasicCluster.CLUSTER_ID) != null)
+                            .findFirst().get()
+                            .getInputCluster(ZclBasicCluster.CLUSTER_ID);
+                        for (int i = 1; i <= readAfterReportCount; ++i) {
+                            basicCluster.readAttribute(ZclBasicCluster.ATTR_ZCLVERSION);
                         }
                     }
-                    if (command instanceof ZoneStatusChangeNotificationCommand) {
+                }
+                if (command instanceof ZoneStatusChangeNotificationCommand) {
+                    if(listeningModeEnabled) {
                         print(command.toString(), System.out);
                     }
                 }
@@ -771,7 +774,7 @@ public final class ZigBeeConsole {
          */
         @Override
         public String getSyntax() {
-            return "readafterreport";
+            return "COUNT";
         }
 
         /**
