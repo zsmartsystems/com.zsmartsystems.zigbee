@@ -5213,6 +5213,46 @@
 				<description>The command has been filtered out by NCP.</description>
 			</value>
 			<value>
+				<name>EZSP_ERROR_SECURITY_KEY_ALREADY_SET</name>
+				<enum_value>0x0043</enum_value>
+				<description>EZSP Security Key is already set.</description>
+			</value>
+			<value>
+				<name>EZSP_ERROR_SECURITY_TYPE_INVALID</name>
+				<enum_value>0x0044</enum_value>
+				<description>EZSP Security Type is invalid.</description>
+			</value>
+			<value>
+				<name>EZSP_ERROR_SECURITY_PARAMETERS_INVALID</name>
+				<enum_value>0x0045</enum_value>
+				<description>EZSP Security Parameters are invalid.</description>
+			</value>
+			<value>
+				<name>EZSP_ERROR_SECURITY_PARAMETERS_ALREADY_SET0x46</name>
+				<enum_value>0x0046</enum_value>
+				<description>EZSP Security Parameters are already set.</description>
+			</value>
+			<value>
+				<name>EZSP_ERROR_SECURITY_KEY_NOT_SET</name>
+				<enum_value>0x0047</enum_value>
+				<description>EZSP Security Key is not set.</description>
+			</value>
+			<value>
+				<name>EZSP_ERROR_SECURITY_PARAMETERS_NOT_SET</name>
+				<enum_value>0x0048</enum_value>
+				<description>EZSP Security Parameters are not set.</description>
+			</value>
+			<value>
+				<name>EZSP_ERROR_UNSUPPORTED_CONTROL</name>
+				<enum_value>0x0049</enum_value>
+				<description>Received frame with unsupported control byte.</description>
+			</value>
+			<value>
+				<name>EZSP_ERROR_UNSECURE_FRAME</name>
+				<enum_value>0x004A</enum_value>
+				<description>Received frame is unsecure, when security is established.</description>
+			</value>
+			<value>
 				<name>EZSP_ASH_ERROR_VERSION</name>
 				<enum_value>0x0050</enum_value>
 				<description>Incompatible ASH version</description>
@@ -5361,6 +5401,11 @@
 				<name>EZSP_ASH_RX</name>
 				<enum_value>0x0085</enum_value>
 				<description>ASH RX</description>
+			</value>
+			<value>
+				<name>EZSP_CPC_ERROR_INIT</name>
+				<enum_value>0x0086</enum_value>
+				<description>Failed to connect to CPC daemon or failed to open CPC endpoint.</description>
 			</value>
 			<value>
 				<name>EZSP_NO_ERROR</name>
@@ -5691,6 +5736,21 @@
 				<name>EZSP_CONFIG_CTUNE_VALUE</name>
 				<enum_value>0x39</enum_value>
 				<description>Valid range of a CTUNE value is 0x0000-0x01FF. Higher order bits (0xFE00) of the 16-bit value are ignored.</description>
+			</value>
+			<value>
+				<name>EZSP_CONFIG_ASSUME_TC_CONCENTRATOR_TYPE</name>
+				<enum_value>0x40</enum_value>
+				<description>To configure non trust center node to assume a concentrator type of the trust center it join to, until it receive many-to-one route request from the trust center. For the trust center node, concentrator type is configured from the concentrator plugin. The stack by default assumes trust center be a low RAM concentrator that make other devices send route record to the trust center even without receiving a many-to-one route request. The default concentrator type can be changed by setting appropriate EmberAssumeTrustCenterConcentratorType config value.</description>
+			</value>
+			<value>
+				<name>EZSP_CONFIG_GP_PROXY_TABLE_SIZE</name>
+				<enum_value>0x41</enum_value>
+				<description>This is green power proxy table size. This value is readonly and cannot be set at runtime.</description>
+			</value>
+			<value>
+				<name>EZSP_CONFIG_GP_SINK_TABLE_SIZE</name>
+				<enum_value>0x42</enum_value>
+				<description>This is green power sink table size. This value is readonly and cannot be set at runtime.</description>
 			</value>
 		</values>
 	</enum>
@@ -7533,7 +7593,12 @@
 			<value>
 				<name>EZSP_VALUE_TRANSIENT_DEVICE_TIMEOUT</name>
 				<enum_value>0x43</enum_value>
-				<description>Timeout in milliseconds to store entries in the transient device table. If the devices are not authenticated before the timeout, the entry shall be purged</description>
+				<description>Timeout in milliseconds to store entries in the transient device table. If the devices are not authenticated before the timeout, the entry shall be purged.</description>
+			</value>
+			<value>
+				<name>EZSP_VALUE_KEY_STORAGE_VERSION</name>
+				<enum_value>0x44</enum_value>
+				<description>Return information about the key storage on an NCP. Returns 0 if keys are in classic key storage, and 1 if they are located in PSA key storage. Read only.</description>
 			</value>
 		</values>
 	</enum>
@@ -7825,6 +7890,32 @@
 				<name>EMBER_DISCOVERY_ACTIVE_NODE_ID</name>
 				<enum_value>0xFFFC</enum_value>
 				<description>A distinguished network ID that will never be assigned to any node. This value is used when getting the remote node ID from the address or binding tables. It indicates that the address or binding table entry is currently in use and network address discovery is underway.</description>
+			</value>
+		</values>
+	</enum>
+	<enum>
+		<name>EmberConfigTxPowerMode</name>
+		<description></description>
+		<values>
+			<value>
+				<name>EMBER_TX_POWER_MODE_DEFAULT</name>
+				<enum_value>0x00</enum_value>
+				<description>Normal power mode and bi-directional RF transmitter output.</description>
+			</value>
+			<value>
+				<name>EMBER_TX_POWER_MODE_BOOST</name>
+				<enum_value>0x01</enum_value>
+				<description>Enable boost power mode. This is a high-performance radio mode which offers increased receive sensitivity and transmit power at the cost of an increase in power consumption.</description>
+			</value>
+			<value>
+				<name>EMBER_TX_POWER_MODE_ALTERNATE</name>
+				<enum_value>0x02</enum_value>
+				<description>Enable the alternate transmitter output. This allows for simplified connection to an external power amplifier via the RF_TX_ALT_P and RF_TX_ALT_N pins.</description>
+			</value>
+			<value>
+				<name>EMBER_TX_POWER_MODE_BOOST_AND_ALTERNATE</name>
+				<enum_value>0x03</enum_value>
+				<description>Enable both boost mode and the alternate transmitter output.</description>
 			</value>
 		</values>
 	</enum>
