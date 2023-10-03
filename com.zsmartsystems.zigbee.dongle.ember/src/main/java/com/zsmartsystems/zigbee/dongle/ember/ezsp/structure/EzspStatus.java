@@ -222,6 +222,46 @@ public enum EzspStatus {
     EZSP_ERROR_COMMAND_FILTERED(0x0042),
 
     /**
+     * EZSP Security Key is already set.
+     */
+    EZSP_ERROR_SECURITY_KEY_ALREADY_SET(0x0043),
+
+    /**
+     * EZSP Security Type is invalid.
+     */
+    EZSP_ERROR_SECURITY_TYPE_INVALID(0x0044),
+
+    /**
+     * EZSP Security Parameters are invalid.
+     */
+    EZSP_ERROR_SECURITY_PARAMETERS_INVALID(0x0045),
+
+    /**
+     * EZSP Security Parameters are already set.
+     */
+    EZSP_ERROR_SECURITY_PARAMETERS_ALREADY_SET0x46(0x0046),
+
+    /**
+     * EZSP Security Key is not set.
+     */
+    EZSP_ERROR_SECURITY_KEY_NOT_SET(0x0047),
+
+    /**
+     * EZSP Security Parameters are not set.
+     */
+    EZSP_ERROR_SECURITY_PARAMETERS_NOT_SET(0x0048),
+
+    /**
+     * Received frame with unsupported control byte.
+     */
+    EZSP_ERROR_UNSUPPORTED_CONTROL(0x0049),
+
+    /**
+     * Received frame is unsecure, when security is established.
+     */
+    EZSP_ERROR_UNSECURE_FRAME(0x004A),
+
+    /**
      * Incompatible ASH version
      */
     EZSP_ASH_ERROR_VERSION(0x0050),
@@ -369,6 +409,11 @@ public enum EzspStatus {
      * ASH RX
      */
     EZSP_ASH_RX(0x0085),
+
+    /**
+     * Failed to connect to CPC daemon or failed to open CPC endpoint.
+     */
+    EZSP_CPC_ERROR_INIT(0x0086),
 
     /**
      * No reset or error

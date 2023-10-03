@@ -307,9 +307,15 @@ public enum EzspValueId {
 
     /**
      * Timeout in milliseconds to store entries in the transient device table. If the devices are
-     * not authenticated before the timeout, the entry shall be purged
+     * not authenticated before the timeout, the entry shall be purged.
      */
-    EZSP_VALUE_TRANSIENT_DEVICE_TIMEOUT(0x0043);
+    EZSP_VALUE_TRANSIENT_DEVICE_TIMEOUT(0x0043),
+
+    /**
+     * Return information about the key storage on an NCP. Returns 0 if keys are in classic key
+     * storage, and 1 if they are located in PSA key storage. Read only.
+     */
+    EZSP_VALUE_KEY_STORAGE_VERSION(0x0044);
 
     /**
      * A mapping between the integer code and its corresponding type to
