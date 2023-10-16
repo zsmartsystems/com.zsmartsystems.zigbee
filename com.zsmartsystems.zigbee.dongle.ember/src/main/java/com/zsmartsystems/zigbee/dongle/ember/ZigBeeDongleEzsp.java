@@ -136,6 +136,8 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
      */
     private final Logger logger = LoggerFactory.getLogger(ZigBeeDongleEzsp.class);
 
+    private final Logger txRxLogger = LoggerFactory.getLogger("TxRxLogger");
+
     /**
      * The serial port used to connect to the dongle
      */
@@ -849,6 +851,7 @@ public class ZigBeeDongleEzsp implements ZigBeeTransportTransmit, ZigBeeTranspor
     public void handlePacket(EzspFrame response) {
         if (response.getFrameId() != POLL_FRAME_ID) {
             logger.debug("RX EZSP: {}", response);
+            txRxLogger.debug("[" + handlerIdentifier + "] RX EZSP: {}", response);
         }
 
         if (response instanceof EzspIncomingMessageHandler) {

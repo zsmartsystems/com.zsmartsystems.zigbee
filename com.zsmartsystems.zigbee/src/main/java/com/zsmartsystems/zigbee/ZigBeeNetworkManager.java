@@ -139,6 +139,8 @@ import com.zsmartsystems.zigbee.zdo.command.NetworkAddressRequest;
  * @author Chris Jackson
  */
 public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
+    private final Logger txRxLogger = LoggerFactory.getLogger("TxRxLogger");
+
     /**
      * The local endpoint ID used for all ZCL commands
      */
@@ -819,6 +821,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         ZigBeeApsFrame apsFrame = new ZigBeeApsFrame();
 
         logger.debug("TX CMD: {}", command);
+        txRxLogger.debug("[" + networkManagerId + "] TX CMD: {}", command);
 
         apsFrame.setCluster(command.getClusterId());
         apsFrame.setApsCounter(apsCounter.getAndIncrement() & 0xff);
@@ -903,8 +906,10 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
             apsFrame.setPayload(zclHeader.serialize(fieldSerializer, fieldSerializer.getPayload()));
 
             logger.debug("TX ZCL: {}", zclHeader);
+            txRxLogger.debug("[" + networkManagerId + "] TX ZCL: {}", zclHeader);
         }
         logger.debug("TX APS: {}", apsFrame);
+        txRxLogger.debug("[" + networkManagerId + "] TX APS: {}", apsFrame);
 
         apsDataEntity.send(command.getTransactionId(), apsFrame);
         return true;
@@ -928,6 +933,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         }
 
         logger.debug("RX APS: {}", incomingApsFrame);
+        txRxLogger.debug("[" + networkManagerId + "] RX APS: {}", incomingApsFrame);
 
         // Process the APS layer - this performs services such as duplicate removal and defragmentation
         ZigBeeApsFrame apsFrame = apsDataEntity.receive(incomingApsFrame);
@@ -1001,6 +1007,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         command.setApsSecurity(apsFrame.getSecurityEnabled());
 
         logger.debug("RX CMD: {}", command);
+        txRxLogger.debug("[" + networkManagerId + "] RX CMD: {}", command);
 
         // Pass the command to the transaction manager for processing
         // If the transaction manager wants to drop this command, it returns null
@@ -1078,6 +1085,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
         // Process the ZCL header
         ZclHeader zclHeader = new ZclHeader(fieldDeserializer);
         logger.debug("RX ZCL: {}", zclHeader);
+        txRxLogger.debug("[" + networkManagerId + "] RX ZCL: {}", zclHeader);
 
         ZigBeeNode node = getNode(apsFrame.getSourceAddress());
         if (node == null) {
@@ -2009,6 +2017,7 @@ public class ZigBeeNetworkManager implements ZigBeeTransportReceive {
     @Override
     public void receiveCommandState(int msgTag, ZigBeeTransportProgressState state) {
         logger.debug("RX STA: msgTag={} state={}", String.format("%02X", msgTag), state);
+        txRxLogger.debug("[" + networkManagerId + "] RX STA: msgTag={} state={}", String.format("%02X", msgTag), state);
         if (apsDataEntity.receiveCommandState(msgTag, state)) {
             // Pass the update to the transaction if this is NACK or ACK for last/only fragment
             transactionManager.receiveCommandState(msgTag, state);
