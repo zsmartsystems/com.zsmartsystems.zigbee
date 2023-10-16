@@ -883,6 +883,7 @@ public final class ZigBeeConsole {
 
             final ZigBeeEndpoint endpoint = getDevice(zigbeeApi, args[1]);
             if (endpoint == null) {
+                out.println("Unknown node or endpoint.");
                 return false;
             }
 
